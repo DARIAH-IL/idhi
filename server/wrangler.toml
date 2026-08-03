@@ -1,0 +1,7 @@
+name = "idhi-server"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[observability.logs]
+enabled = true
+invocation_logs = true
