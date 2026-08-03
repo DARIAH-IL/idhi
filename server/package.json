@@ -3,17 +3,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "orval && vite",
+    "build": "orval && vite build",
     "deploy": "pnpm run build && wrangler deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "hono": "^4.12.33"
+    "@hono/zod-validator": "^0.9.0",
+    "hono": "^4.12.33",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.44.0",
+    "orval": "^8.23.0",
     "prettier": "^3.8.1",
     "vite": "^8.1.4",
     "wrangler": "^4.110.0"

@@ -8,7 +8,7 @@ function syncEnvToDevVars() {
     configureServer() {
       const content = ['.env', '.env.local']
         .filter(existsSync)
-        .map(f => readFileSync(f, 'utf-8').trim())
+        .map((f) => readFileSync(f, 'utf-8').trim())
         .filter(Boolean)
         .join('\n')
       if (content) writeFileSync('.dev.vars', content + '\n')

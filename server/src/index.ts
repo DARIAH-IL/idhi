@@ -1,8 +1,11 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import {Bindings, Variables} from "./types";
+import { Bindings, Variables } from './types'
+import generatedRoutes from './routes'
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
+
+app.route('/', generatedRoutes)
 
 function normalizeOrigin(value: string): string {
   const trimmed = value.trim()
@@ -19,6 +22,11 @@ function normalizeOrigin(value: string): string {
 }
 
 app.use('*', async (c, next) => {
+  c.set('requestId', crypto.randomUUID())
+  await next()
+})
+
+app.use('*', async (c, next) => {
   const allowedHosts = (c.env.SERVER_ALLOWED_HOSTS ?? '')
     .split(',')
     .map(normalizeOrigin)
@@ -33,7 +41,5 @@ app.use('*', async (c, next) => {
     },
   })(c, next)
 })
-
-app.get('/api/health', (c) => c.json({ ok: true }))
 
 export default app
