@@ -1,11 +1,19 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { Bindings, Variables } from './types'
+import { logger } from 'hono/logger'
+import { authMiddleware } from './middleware/auth'
+import {
+  errorResponseMiddleware,
+  unhandledErrorHandler,
+} from './middleware/error'
 import generatedRoutes from './routes'
+import { requestLoggerMiddleware } from './middleware/logger'
 
-const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
+type Bindings = {
+  SERVER_ALLOWED_HOSTS: string
+}
 
-app.route('/', generatedRoutes)
+const app = new Hono<{ Bindings: Bindings; Variables: {} }>()
 
 function normalizeOrigin(value: string): string {
   const trimmed = value.trim()
@@ -26,6 +34,8 @@ app.use('*', async (c, next) => {
   await next()
 })
 
+app.use('*', requestLoggerMiddleware)
+
 app.use('*', async (c, next) => {
   const allowedHosts = (c.env.SERVER_ALLOWED_HOSTS ?? '')
     .split(',')
@@ -41,5 +51,12 @@ app.use('*', async (c, next) => {
     },
   })(c, next)
 })
+
+app.use('*', logger())
+app.use('*', errorResponseMiddleware)
+app.use('*', authMiddleware)
+
+app.route('/', generatedRoutes)
+app.onError(unhandledErrorHandler)
 
 export default app

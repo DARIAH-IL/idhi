@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { assertAuthenticatedUser } from '../../middleware/auth'
 import { zValidator } from '../api.validator'
 import {
   GetApiV1UsersContext,
@@ -33,30 +34,48 @@ const factory = createFactory()
 export const getApiV1UsersHandlers = factory.createHandlers(
   zValidator('query', GetApiV1UsersQueryParams),
   zValidator('response', GetApiV1UsersResponse),
-  async (c: GetApiV1UsersContext) => {},
+  async (c: GetApiV1UsersContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const postApiV1UsersHandlers = factory.createHandlers(
   zValidator('json', PostApiV1UsersBody),
-  async (c: PostApiV1UsersContext) => {},
+  async (c: PostApiV1UsersContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const getApiV1UsersUserIdHandlers = factory.createHandlers(
   zValidator('param', GetApiV1UsersUserIdParams),
   zValidator('response', GetApiV1UsersUserIdResponse),
-  async (c: GetApiV1UsersUserIdContext) => {},
+  async (c: GetApiV1UsersUserIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const putApiV1UsersUserIdHandlers = factory.createHandlers(
   zValidator('param', PutApiV1UsersUserIdParams),
   zValidator('json', PutApiV1UsersUserIdBody),
   zValidator('response', PutApiV1UsersUserIdResponse),
-  async (c: PutApiV1UsersUserIdContext) => {},
+  async (c: PutApiV1UsersUserIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const postApiV1UsersUserIdHandlers = factory.createHandlers(
   zValidator('param', PostApiV1UsersUserIdParams),
   zValidator('json', PostApiV1UsersUserIdBody),
   zValidator('response', PostApiV1UsersUserIdResponse),
-  async (c: PostApiV1UsersUserIdContext) => {},
+  async (c: PostApiV1UsersUserIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const deleteApiV1UsersUserIdHandlers = factory.createHandlers(
   zValidator('param', DeleteApiV1UsersUserIdParams),
-  async (c: DeleteApiV1UsersUserIdContext) => {},
+  async (c: DeleteApiV1UsersUserIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )

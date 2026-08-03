@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { assertAuthenticatedUser } from '../../middleware/auth'
 import { zValidator } from '../api.validator'
 import {
   GetApiV1EntitiesContext,
@@ -33,7 +34,10 @@ export const getApiV1EntitiesHandlers = factory.createHandlers(
 )
 export const putApiV1EntitiesHandlers = factory.createHandlers(
   zValidator('json', PutApiV1EntitiesBody),
-  async (c: PutApiV1EntitiesContext) => {},
+  async (c: PutApiV1EntitiesContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const getApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   zValidator('param', GetApiV1EntitiesEntityIdParams),
@@ -44,9 +48,15 @@ export const postApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   zValidator('param', PostApiV1EntitiesEntityIdParams),
   zValidator('json', PostApiV1EntitiesEntityIdBody),
   zValidator('response', PostApiV1EntitiesEntityIdResponse),
-  async (c: PostApiV1EntitiesEntityIdContext) => {},
+  async (c: PostApiV1EntitiesEntityIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const deleteApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   zValidator('param', DeleteApiV1EntitiesEntityIdParams),
-  async (c: DeleteApiV1EntitiesEntityIdContext) => {},
+  async (c: DeleteApiV1EntitiesEntityIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
