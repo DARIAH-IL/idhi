@@ -8,8 +8,8 @@ security:
   - bearerAuth: [ ]
 
 tags:
-  - name: Records
-    description: Record search and management
+  - name: Entities
+    description: Entity search and management
   - name: UserManagement
     description: User management
 
@@ -22,12 +22,12 @@ paths:
         "200":
           description: OK
 
-  /api/v1/records:
+  /api/v1/entities:
     get:
       tags:
-        - Records
-      summary: Search records
-      description: Free text search and facet-based search across all records. Returns partial record properties and facets.
+        - Entities
+      summary: Search entities
+      description: Free text search and facet-based search across all entities. Returns partial entity properties and facets.
       security: [ ]
       parameters:
         - name: q
@@ -62,7 +62,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: "#/components/schemas/AuditedRecord"
+                      $ref: "#/components/schemas/AuditedEntity"
                   facets:
                     type: object
                     additionalProperties:
@@ -81,68 +81,68 @@ paths:
                     type: integer
     put:
       tags:
-        - Records
-      summary: Create a new record
+        - Entities
+      summary: Create a new entity
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Record"
+              $ref: "#/components/schemas/Entity"
       responses:
         "201":
-          description: Record created
+          description: Entity created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuditedRecord"
+                $ref: "#/components/schemas/AuditedEntity"
         "400":
           $ref: "#/components/responses/Error"
 
-  /api/v1/records/{recordId}:
+  /api/v1/entities/{entityId}:
     parameters:
-      - $ref: "#/components/parameters/RecordId"
+      - $ref: "#/components/parameters/EntityId"
     get:
       tags:
-        - Records
-      summary: Get a record
-      description: Returns all properties of a specific record.
+        - Entities
+      summary: Get an entity
+      description: Returns all properties of a specific entity.
       security: [ ]
       responses:
         "200":
-          description: Record found
+          description: Entity found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuditedRecord"
+                $ref: "#/components/schemas/AuditedEntity"
         "400":
           $ref: "#/components/responses/Error"
     post:
       tags:
-        - Records
-      summary: Update a record
+        - Entities
+      summary: Update an entity
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Record"
+              $ref: "#/components/schemas/Entity"
       responses:
         "200":
-          description: Record updated
+          description: Entity updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuditedRecord"
+                $ref: "#/components/schemas/AuditedEntity"
         "400":
           $ref: "#/components/responses/Error"
     delete:
       tags:
-        - Records
-      summary: Delete a record
+        - Entities
+      summary: Delete an entity
       responses:
         "204":
-          description: Record deleted
+          description: Entity deleted
         "400":
           $ref: "#/components/responses/Error"
 
@@ -276,8 +276,8 @@ components:
       bearerFormat: JWT
 
   parameters:
-    RecordId:
-      name: recordId
+    EntityId:
+      name: entityId
       in: path
       required: true
       schema:
@@ -301,7 +301,7 @@ components:
       format: date
       description: UTC date
 
-    Record:
+    Entity:
       type: object
 
     Audited:
@@ -324,9 +324,9 @@ components:
             modifiedBy:
               $ref: "#/components/schemas/UserId"
 
-    AuditedRecord:
+    AuditedEntity:
       allOf:
-        - $ref: "#/components/schemas/Record"
+        - $ref: "#/components/schemas/Entity"
         - $ref: "#/components/schemas/Audited"
 
     User:
@@ -365,7 +365,7 @@ components:
       enum:
         - Unauthorized
         - InvalidInput
-        - RecordNotFound
+        - EntityNotFound
         - UserNotFound
         - Conflict
 

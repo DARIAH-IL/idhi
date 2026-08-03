@@ -9,7 +9,7 @@ export default defineConfig({
       client: 'hono',
       formatter: 'prettier',
       target: 'src/handlers/api.ts',
-      schemas: 'src/schemas',
+      schemas: 'src/models',
       override: {
         hono: {
           compositeRoute: 'src/routes.ts',
@@ -20,6 +20,7 @@ export default defineConfig({
           },
         },
       },
+      clean: true,
     },
   },
 })

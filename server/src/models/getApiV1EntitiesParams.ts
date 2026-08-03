@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetApiV1RecordsParams = {
+export type GetApiV1EntitiesParams = {
   q?: string
   /**
    * @minimum 0

@@ -5,6 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { Audited } from './audited'
-import type { Record } from './record'
+import type { Entity } from './entity'
 
-export type AuditedRecord = Record & Audited
+export type AuditedEntity = Entity & Audited

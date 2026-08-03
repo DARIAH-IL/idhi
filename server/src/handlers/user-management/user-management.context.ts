@@ -6,7 +6,7 @@
  */
 import type { Context, Env } from 'hono'
 
-import type { GetApiV1UsersParams, UserWrite } from '../../schemas'
+import type { GetApiV1UsersParams, UserWrite } from '../../models'
 
 export type GetApiV1UsersContext<E extends Env = any> = Context<
   E,

@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetApiV1Records200FacetsItem = {
-  value: string
-  count: number
+export interface Entity {
+  [key: string]: unknown
 }

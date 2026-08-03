@@ -13,6 +13,14 @@ export default [
       '@typescript-eslint/require-await': 'off',
       'pnpm/json-enforce-catalog': 'off',
       'no-console': 'error',
+      '@typescript-eslint/no-unnecessary-condition': 'warn',
+    },
+  },
+  {
+    files: ['src/api/**'],
+    rules: {
+      '@typescript-eslint/naming-convention': 'off',
+      '@typescript-eslint/no-unnecessary-condition': 'off',
     },
   },
   {

@@ -7,12 +7,12 @@
 import { Hono } from 'hono'
 import { getApiV1HealthHandlers } from './handlers/default/default.handlers'
 import {
-  getApiV1RecordsHandlers,
-  putApiV1RecordsHandlers,
-  getApiV1RecordsRecordIdHandlers,
-  postApiV1RecordsRecordIdHandlers,
-  deleteApiV1RecordsRecordIdHandlers,
-} from './handlers/records/records.handlers'
+  getApiV1EntitiesHandlers,
+  putApiV1EntitiesHandlers,
+  getApiV1EntitiesEntityIdHandlers,
+  postApiV1EntitiesEntityIdHandlers,
+  deleteApiV1EntitiesEntityIdHandlers,
+} from './handlers/entities/entities.handlers'
 import {
   getApiV1UsersHandlers,
   postApiV1UsersHandlers,
@@ -24,11 +24,11 @@ import {
 
 const app = new Hono()
   .get('/api/v1/health', ...getApiV1HealthHandlers)
-  .get('/api/v1/records', ...getApiV1RecordsHandlers)
-  .put('/api/v1/records', ...putApiV1RecordsHandlers)
-  .get('/api/v1/records/:recordId', ...getApiV1RecordsRecordIdHandlers)
-  .post('/api/v1/records/:recordId', ...postApiV1RecordsRecordIdHandlers)
-  .delete('/api/v1/records/:recordId', ...deleteApiV1RecordsRecordIdHandlers)
+  .get('/api/v1/entities', ...getApiV1EntitiesHandlers)
+  .put('/api/v1/entities', ...putApiV1EntitiesHandlers)
+  .get('/api/v1/entities/:entityId', ...getApiV1EntitiesEntityIdHandlers)
+  .post('/api/v1/entities/:entityId', ...postApiV1EntitiesEntityIdHandlers)
+  .delete('/api/v1/entities/:entityId', ...deleteApiV1EntitiesEntityIdHandlers)
   .get('/api/v1/users', ...getApiV1UsersHandlers)
   .post('/api/v1/users', ...postApiV1UsersHandlers)
   .get('/api/v1/users/:userId', ...getApiV1UsersUserIdHandlers)

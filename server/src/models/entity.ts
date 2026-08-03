@@ -5,6 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface Record {
+export interface Entity {
   [key: string]: unknown
 }
