@@ -1,0 +1,383 @@
+openapi: 3.1.0
+
+info:
+  title: IDHI API
+  version: 1.0.0
+
+security:
+  - bearerAuth: [ ]
+
+tags:
+  - name: Records
+    description: Record search and management
+  - name: UserManagement
+    description: User management
+
+paths:
+  /api/v1/records:
+    get:
+      tags:
+        - Records
+      summary: Search records
+      description: Free text search and facet-based search across all records. Returns partial record properties and facets.
+      security: [ ]
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Search results with facets
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - results
+                  - facets
+                  - total
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AuditedRecord"
+                  facets:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - value
+                          - count
+                        properties:
+                          value:
+                            type: string
+                          count:
+                            type: integer
+                  total:
+                    type: integer
+    put:
+      tags:
+        - Records
+      summary: Create a new record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Record"
+      responses:
+        "201":
+          description: Record created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditedRecord"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/records/{recordId}:
+    parameters:
+      - $ref: "#/components/parameters/RecordId"
+    get:
+      tags:
+        - Records
+      summary: Get a record
+      description: Returns all properties of a specific record.
+      security: [ ]
+      responses:
+        "200":
+          description: Record found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditedRecord"
+        "400":
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+        - Records
+      summary: Update a record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Record"
+      responses:
+        "200":
+          description: Record updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuditedRecord"
+        "400":
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+        - Records
+      summary: Delete a record
+      responses:
+        "204":
+          description: Record deleted
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/users:
+    get:
+      tags:
+        - UserManagement
+      summary: List users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - results
+                  - total
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  total:
+                    type: integer
+        "400":
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+        - UserManagement
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWrite"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/users/{userId}:
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    get:
+      tags:
+        - UserManagement
+      summary: Get a user
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/Error"
+    put:
+      tags:
+        - UserManagement
+      summary: Replace a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWrite"
+      responses:
+        "200":
+          description: User replaced
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+        - UserManagement
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWrite"
+      responses:
+        "200":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+        - UserManagement
+      summary: Delete a user
+      responses:
+        "204":
+          description: User deleted
+        "400":
+          $ref: "#/components/responses/Error"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    RecordId:
+      name: recordId
+      in: path
+      required: true
+      schema:
+        type: string
+
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    UserId:
+      type: string
+      pattern: "^idhi:user:.+$"
+      example: "idhi:user:abc123"
+
+    Date:
+      type: string
+      format: date
+      description: UTC date
+
+    Record:
+      type: object
+
+    Audited:
+      type: object
+      properties:
+        audit:
+          type: object
+          required:
+            - createdAt
+            - createdBy
+            - modifiedAt
+            - modifiedBy
+          properties:
+            createdAt:
+              $ref: "#/components/schemas/Date"
+            createdBy:
+              $ref: "#/components/schemas/UserId"
+            modifiedAt:
+              $ref: "#/components/schemas/Date"
+            modifiedBy:
+              $ref: "#/components/schemas/UserId"
+
+    AuditedRecord:
+      allOf:
+        - $ref: "#/components/schemas/Record"
+        - $ref: "#/components/schemas/Audited"
+
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - isAdmin
+      properties:
+        id:
+          $ref: "#/components/schemas/UserId"
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        isAdmin:
+          type: boolean
+
+    UserWrite:
+      type: object
+      required:
+        - email
+        - isAdmin
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        isAdmin:
+          type: boolean
+
+    ErrorCode:
+      type: string
+      enum:
+        - Unauthorized
+        - InvalidInput
+        - RecordNotFound
+        - UserNotFound
+        - Conflict
+
+    Error:
+      type: object
+      required:
+        - errorCode
+        - message
+      properties:
+        errorCode:
+          $ref: "#/components/schemas/ErrorCode"
+        message:
+          type: string
+        entityId:
+          type: string
+
+  responses:
+    Error:
+      description: Applicative error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
