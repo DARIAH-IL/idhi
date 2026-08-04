@@ -28,6 +28,9 @@ import type {
   UserWrite,
 } from '../../models'
 
+import { customInstance } from '../../client.ts'
+import type { ErrorType, BodyType } from '../../client.ts'
+
 const withQueryKey = <T extends object, K>(
   query: T,
   queryKey: K,
@@ -46,62 +49,19 @@ const withQueryKey = <T extends object, K>(
   return result
 }
 
-export type getApiV1UsersResponse200 = {
-  data: GetApiV1Users200
-  status: 200
-}
-
-export type getApiV1UsersResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type getApiV1UsersResponseSuccess = getApiV1UsersResponse200 & {
-  headers: Headers
-}
-export type getApiV1UsersResponseError = getApiV1UsersResponse400 & {
-  headers: Headers
-}
-
-export type getApiV1UsersResponse =
-  getApiV1UsersResponseSuccess | getApiV1UsersResponseError
-
-export const getGetApiV1UsersUrl = (params?: GetApiV1UsersParams) => {
-  const normalizedParams = new URLSearchParams()
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  })
-
-  const stringifiedParams = normalizedParams.toString()
-
-  return stringifiedParams.length > 0
-    ? `/api/v1/users?${stringifiedParams}`
-    : `/api/v1/users`
-}
-
 /**
  * @summary List users
  */
-export const getApiV1Users = async (
+export const getApiV1Users = (
   params?: GetApiV1UsersParams,
-  options?: RequestInit,
-): Promise<getApiV1UsersResponse> => {
-  const res = await fetch(getGetApiV1UsersUrl(params), {
-    ...options,
+  signal?: AbortSignal,
+) => {
+  return customInstance<GetApiV1Users200>({
+    url: `/api/v1/users`,
     method: 'GET',
+    params,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: getApiV1UsersResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getApiV1UsersResponse
 }
 
 export const getGetApiV1UsersQueryKey = (params?: GetApiV1UsersParams) => {
@@ -110,23 +70,22 @@ export const getGetApiV1UsersQueryKey = (params?: GetApiV1UsersParams) => {
 
 export const getGetApiV1UsersQueryOptions = <
   TData = Awaited<ReturnType<typeof getApiV1Users>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   params?: GetApiV1UsersParams,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getApiV1Users>>, TError, TData>
     >
-    fetch?: RequestInit
   },
 ) => {
-  const { query: queryOptions, fetch: fetchOptions } = options ?? {}
+  const { query: queryOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getGetApiV1UsersQueryKey(params)
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiV1Users>>> = ({
     signal,
-  }) => getApiV1Users(params, { signal, ...fetchOptions })
+  }) => getApiV1Users(params, signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getApiV1Users>>,
@@ -138,11 +97,11 @@ export const getGetApiV1UsersQueryOptions = <
 export type GetApiV1UsersQueryResult = NonNullable<
   Awaited<ReturnType<typeof getApiV1Users>>
 >
-export type GetApiV1UsersQueryError = ErrorResponse
+export type GetApiV1UsersQueryError = ErrorType<ErrorResponse>
 
 export function useGetApiV1Users<
   TData = Awaited<ReturnType<typeof getApiV1Users>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   params: undefined | GetApiV1UsersParams,
   options: {
@@ -157,7 +116,6 @@ export function useGetApiV1Users<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -165,7 +123,7 @@ export function useGetApiV1Users<
 }
 export function useGetApiV1Users<
   TData = Awaited<ReturnType<typeof getApiV1Users>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   params?: GetApiV1UsersParams,
   options?: {
@@ -180,7 +138,6 @@ export function useGetApiV1Users<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -188,14 +145,13 @@ export function useGetApiV1Users<
 }
 export function useGetApiV1Users<
   TData = Awaited<ReturnType<typeof getApiV1Users>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   params?: GetApiV1UsersParams,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getApiV1Users>>, TError, TData>
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -207,14 +163,13 @@ export function useGetApiV1Users<
 
 export function useGetApiV1Users<
   TData = Awaited<ReturnType<typeof getApiV1Users>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   params?: GetApiV1UsersParams,
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getApiV1Users>>, TError, TData>
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -230,87 +185,54 @@ export function useGetApiV1Users<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type postApiV1UsersResponse201 = {
-  data: User
-  status: 201
-}
-
-export type postApiV1UsersResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type postApiV1UsersResponseSuccess = postApiV1UsersResponse201 & {
-  headers: Headers
-}
-export type postApiV1UsersResponseError = postApiV1UsersResponse400 & {
-  headers: Headers
-}
-
-export type postApiV1UsersResponse =
-  postApiV1UsersResponseSuccess | postApiV1UsersResponseError
-
-export const getPostApiV1UsersUrl = () => {
-  return `/api/v1/users`
-}
-
 /**
  * @summary Create a new user
  */
-export const postApiV1Users = async (
-  userWrite: UserWrite,
-  options?: RequestInit,
-): Promise<postApiV1UsersResponse> => {
-  const res = await fetch(getPostApiV1UsersUrl(), {
-    ...options,
+export const postApiV1Users = (
+  userWrite: BodyType<UserWrite>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<User>({
+    url: `/api/v1/users`,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(userWrite),
+    headers: { 'Content-Type': 'application/json' },
+    data: userWrite,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: postApiV1UsersResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postApiV1UsersResponse
 }
 
 export const getPostApiV1UsersMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiV1Users>>,
     TError,
-    { data: UserWrite },
+    { data: BodyType<UserWrite> },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiV1Users>>,
   TError,
-  { data: UserWrite },
+  { data: BodyType<UserWrite> },
   TContext
 > => {
   const mutationKey = ['postApiV1Users']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiV1Users>>,
-    { data: UserWrite }
+    { data: BodyType<UserWrite> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return postApiV1Users(data, fetchOptions)
+    return postApiV1Users(data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -319,77 +241,42 @@ export const getPostApiV1UsersMutationOptions = <
 export type PostApiV1UsersMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiV1Users>>
 >
-export type PostApiV1UsersMutationBody = UserWrite
-export type PostApiV1UsersMutationError = ErrorResponse
+export type PostApiV1UsersMutationBody = BodyType<UserWrite>
+export type PostApiV1UsersMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Create a new user
  */
-export const usePostApiV1Users = <TError = ErrorResponse, TContext = unknown>(
+export const usePostApiV1Users = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postApiV1Users>>,
       TError,
-      { data: UserWrite },
+      { data: BodyType<UserWrite> },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
   Awaited<ReturnType<typeof postApiV1Users>>,
   TError,
-  { data: UserWrite },
+  { data: BodyType<UserWrite> },
   TContext
 > => {
   return useMutation(getPostApiV1UsersMutationOptions(options), queryClient)
 }
-export type getApiV1UsersUserIdResponse200 = {
-  data: User
-  status: 200
-}
-
-export type getApiV1UsersUserIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type getApiV1UsersUserIdResponseSuccess =
-  getApiV1UsersUserIdResponse200 & {
-    headers: Headers
-  }
-export type getApiV1UsersUserIdResponseError =
-  getApiV1UsersUserIdResponse400 & {
-    headers: Headers
-  }
-
-export type getApiV1UsersUserIdResponse =
-  getApiV1UsersUserIdResponseSuccess | getApiV1UsersUserIdResponseError
-
-export const getGetApiV1UsersUserIdUrl = (userId: string) => {
-  return `/api/v1/users/${userId}`
-}
-
 /**
  * @summary Get a user
  */
-export const getApiV1UsersUserId = async (
-  userId: string,
-  options?: RequestInit,
-): Promise<getApiV1UsersUserIdResponse> => {
-  const res = await fetch(getGetApiV1UsersUserIdUrl(userId), {
-    ...options,
+export const getApiV1UsersUserId = (userId: string, signal?: AbortSignal) => {
+  return customInstance<User>({
+    url: `/api/v1/users/${encodeURIComponent(String(userId))}`,
     method: 'GET',
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: getApiV1UsersUserIdResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getApiV1UsersUserIdResponse
 }
 
 export const getGetApiV1UsersUserIdQueryKey = (userId: string) => {
@@ -398,7 +285,7 @@ export const getGetApiV1UsersUserIdQueryKey = (userId: string) => {
 
 export const getGetApiV1UsersUserIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getApiV1UsersUserId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   userId: string,
   options?: {
@@ -409,17 +296,16 @@ export const getGetApiV1UsersUserIdQueryOptions = <
         TData
       >
     >
-    fetch?: RequestInit
   },
 ) => {
-  const { query: queryOptions, fetch: fetchOptions } = options ?? {}
+  const { query: queryOptions } = options ?? {}
 
   const queryKey =
     queryOptions?.queryKey ?? getGetApiV1UsersUserIdQueryKey(userId)
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getApiV1UsersUserId>>
-  > = ({ signal }) => getApiV1UsersUserId(userId, { signal, ...fetchOptions })
+  > = ({ signal }) => getApiV1UsersUserId(userId, signal)
 
   return {
     queryKey,
@@ -436,11 +322,11 @@ export const getGetApiV1UsersUserIdQueryOptions = <
 export type GetApiV1UsersUserIdQueryResult = NonNullable<
   Awaited<ReturnType<typeof getApiV1UsersUserId>>
 >
-export type GetApiV1UsersUserIdQueryError = ErrorResponse
+export type GetApiV1UsersUserIdQueryError = ErrorType<ErrorResponse>
 
 export function useGetApiV1UsersUserId<
   TData = Awaited<ReturnType<typeof getApiV1UsersUserId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   userId: string,
   options: {
@@ -459,7 +345,6 @@ export function useGetApiV1UsersUserId<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -467,7 +352,7 @@ export function useGetApiV1UsersUserId<
 }
 export function useGetApiV1UsersUserId<
   TData = Awaited<ReturnType<typeof getApiV1UsersUserId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   userId: string,
   options?: {
@@ -486,7 +371,6 @@ export function useGetApiV1UsersUserId<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -494,7 +378,7 @@ export function useGetApiV1UsersUserId<
 }
 export function useGetApiV1UsersUserId<
   TData = Awaited<ReturnType<typeof getApiV1UsersUserId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   userId: string,
   options?: {
@@ -505,7 +389,6 @@ export function useGetApiV1UsersUserId<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -517,7 +400,7 @@ export function useGetApiV1UsersUserId<
 
 export function useGetApiV1UsersUserId<
   TData = Awaited<ReturnType<typeof getApiV1UsersUserId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   userId: string,
   options?: {
@@ -528,7 +411,6 @@ export function useGetApiV1UsersUserId<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -544,90 +426,55 @@ export function useGetApiV1UsersUserId<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type putApiV1UsersUserIdResponse200 = {
-  data: User
-  status: 200
-}
-
-export type putApiV1UsersUserIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type putApiV1UsersUserIdResponseSuccess =
-  putApiV1UsersUserIdResponse200 & {
-    headers: Headers
-  }
-export type putApiV1UsersUserIdResponseError =
-  putApiV1UsersUserIdResponse400 & {
-    headers: Headers
-  }
-
-export type putApiV1UsersUserIdResponse =
-  putApiV1UsersUserIdResponseSuccess | putApiV1UsersUserIdResponseError
-
-export const getPutApiV1UsersUserIdUrl = (userId: string) => {
-  return `/api/v1/users/${userId}`
-}
-
 /**
  * @summary Replace a user
  */
-export const putApiV1UsersUserId = async (
+export const putApiV1UsersUserId = (
   userId: string,
-  userWrite: UserWrite,
-  options?: RequestInit,
-): Promise<putApiV1UsersUserIdResponse> => {
-  const res = await fetch(getPutApiV1UsersUserIdUrl(userId), {
-    ...options,
+  userWrite: BodyType<UserWrite>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<User>({
+    url: `/api/v1/users/${encodeURIComponent(String(userId))}`,
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(userWrite),
+    headers: { 'Content-Type': 'application/json' },
+    data: userWrite,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: putApiV1UsersUserIdResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as putApiV1UsersUserIdResponse
 }
 
 export const getPutApiV1UsersUserIdMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putApiV1UsersUserId>>,
     TError,
-    { userId: string; data: UserWrite },
+    { userId: string; data: BodyType<UserWrite> },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof putApiV1UsersUserId>>,
   TError,
-  { userId: string; data: UserWrite },
+  { userId: string; data: BodyType<UserWrite> },
   TContext
 > => {
   const mutationKey = ['putApiV1UsersUserId']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof putApiV1UsersUserId>>,
-    { userId: string; data: UserWrite }
+    { userId: string; data: BodyType<UserWrite> }
   > = (props) => {
     const { userId, data } = props ?? {}
 
-    return putApiV1UsersUserId(userId, data, fetchOptions)
+    return putApiV1UsersUserId(userId, data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -636,30 +483,29 @@ export const getPutApiV1UsersUserIdMutationOptions = <
 export type PutApiV1UsersUserIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof putApiV1UsersUserId>>
 >
-export type PutApiV1UsersUserIdMutationBody = UserWrite
-export type PutApiV1UsersUserIdMutationError = ErrorResponse
+export type PutApiV1UsersUserIdMutationBody = BodyType<UserWrite>
+export type PutApiV1UsersUserIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Replace a user
  */
 export const usePutApiV1UsersUserId = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof putApiV1UsersUserId>>,
       TError,
-      { userId: string; data: UserWrite },
+      { userId: string; data: BodyType<UserWrite> },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
   Awaited<ReturnType<typeof putApiV1UsersUserId>>,
   TError,
-  { userId: string; data: UserWrite },
+  { userId: string; data: BodyType<UserWrite> },
   TContext
 > => {
   return useMutation(
@@ -667,92 +513,55 @@ export const usePutApiV1UsersUserId = <
     queryClient,
   )
 }
-export type postApiV1UsersUserIdResponse200 = {
-  data: User
-  status: 200
-}
-
-export type postApiV1UsersUserIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type postApiV1UsersUserIdResponseSuccess =
-  postApiV1UsersUserIdResponse200 & {
-    headers: Headers
-  }
-export type postApiV1UsersUserIdResponseError =
-  postApiV1UsersUserIdResponse400 & {
-    headers: Headers
-  }
-
-export type postApiV1UsersUserIdResponse =
-  postApiV1UsersUserIdResponseSuccess | postApiV1UsersUserIdResponseError
-
-export const getPostApiV1UsersUserIdUrl = (userId: string) => {
-  return `/api/v1/users/${userId}`
-}
-
 /**
  * @summary Update a user
  */
-export const postApiV1UsersUserId = async (
+export const postApiV1UsersUserId = (
   userId: string,
-  userWrite: UserWrite,
-  options?: RequestInit,
-): Promise<postApiV1UsersUserIdResponse> => {
-  const res = await fetch(getPostApiV1UsersUserIdUrl(userId), {
-    ...options,
+  userWrite: BodyType<UserWrite>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<User>({
+    url: `/api/v1/users/${encodeURIComponent(String(userId))}`,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(userWrite),
+    headers: { 'Content-Type': 'application/json' },
+    data: userWrite,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: postApiV1UsersUserIdResponse['data'] = body
-    ? JSON.parse(body)
-    : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postApiV1UsersUserIdResponse
 }
 
 export const getPostApiV1UsersUserIdMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiV1UsersUserId>>,
     TError,
-    { userId: string; data: UserWrite },
+    { userId: string; data: BodyType<UserWrite> },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiV1UsersUserId>>,
   TError,
-  { userId: string; data: UserWrite },
+  { userId: string; data: BodyType<UserWrite> },
   TContext
 > => {
   const mutationKey = ['postApiV1UsersUserId']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiV1UsersUserId>>,
-    { userId: string; data: UserWrite }
+    { userId: string; data: BodyType<UserWrite> }
   > = (props) => {
     const { userId, data } = props ?? {}
 
-    return postApiV1UsersUserId(userId, data, fetchOptions)
+    return postApiV1UsersUserId(userId, data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -761,30 +570,29 @@ export const getPostApiV1UsersUserIdMutationOptions = <
 export type PostApiV1UsersUserIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiV1UsersUserId>>
 >
-export type PostApiV1UsersUserIdMutationBody = UserWrite
-export type PostApiV1UsersUserIdMutationError = ErrorResponse
+export type PostApiV1UsersUserIdMutationBody = BodyType<UserWrite>
+export type PostApiV1UsersUserIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Update a user
  */
 export const usePostApiV1UsersUserId = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postApiV1UsersUserId>>,
       TError,
-      { userId: string; data: UserWrite },
+      { userId: string; data: BodyType<UserWrite> },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
   Awaited<ReturnType<typeof postApiV1UsersUserId>>,
   TError,
-  { userId: string; data: UserWrite },
+  { userId: string; data: BodyType<UserWrite> },
   TContext
 > => {
   return useMutation(
@@ -792,58 +600,22 @@ export const usePostApiV1UsersUserId = <
     queryClient,
   )
 }
-export type deleteApiV1UsersUserIdResponse204 = {
-  data: void
-  status: 204
-}
-
-export type deleteApiV1UsersUserIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type deleteApiV1UsersUserIdResponseSuccess =
-  deleteApiV1UsersUserIdResponse204 & {
-    headers: Headers
-  }
-export type deleteApiV1UsersUserIdResponseError =
-  deleteApiV1UsersUserIdResponse400 & {
-    headers: Headers
-  }
-
-export type deleteApiV1UsersUserIdResponse =
-  deleteApiV1UsersUserIdResponseSuccess | deleteApiV1UsersUserIdResponseError
-
-export const getDeleteApiV1UsersUserIdUrl = (userId: string) => {
-  return `/api/v1/users/${userId}`
-}
-
 /**
  * @summary Delete a user
  */
-export const deleteApiV1UsersUserId = async (
+export const deleteApiV1UsersUserId = (
   userId: string,
-  options?: RequestInit,
-): Promise<deleteApiV1UsersUserIdResponse> => {
-  const res = await fetch(getDeleteApiV1UsersUserIdUrl(userId), {
-    ...options,
+  signal?: AbortSignal,
+) => {
+  return customInstance<void>({
+    url: `/api/v1/users/${encodeURIComponent(String(userId))}`,
     method: 'DELETE',
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: deleteApiV1UsersUserIdResponse['data'] = body
-    ? JSON.parse(body)
-    : undefined
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as deleteApiV1UsersUserIdResponse
 }
 
 export const getDeleteApiV1UsersUserIdMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -852,7 +624,6 @@ export const getDeleteApiV1UsersUserIdMutationOptions = <
     { userId: string },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteApiV1UsersUserId>>,
   TError,
@@ -860,13 +631,13 @@ export const getDeleteApiV1UsersUserIdMutationOptions = <
   TContext
 > => {
   const mutationKey = ['deleteApiV1UsersUserId']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteApiV1UsersUserId>>,
@@ -874,7 +645,7 @@ export const getDeleteApiV1UsersUserIdMutationOptions = <
   > = (props) => {
     const { userId } = props ?? {}
 
-    return deleteApiV1UsersUserId(userId, fetchOptions)
+    return deleteApiV1UsersUserId(userId)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -884,13 +655,13 @@ export type DeleteApiV1UsersUserIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof deleteApiV1UsersUserId>>
 >
 
-export type DeleteApiV1UsersUserIdMutationError = ErrorResponse
+export type DeleteApiV1UsersUserIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Delete a user
  */
 export const useDeleteApiV1UsersUserId = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
@@ -900,7 +671,6 @@ export const useDeleteApiV1UsersUserId = <
       { userId: string },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<

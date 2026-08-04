@@ -17,6 +17,9 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query'
 
+import { customInstance } from '../../client.ts'
+import type { ErrorType } from '../../client.ts'
+
 const withQueryKey = <T extends object, K>(
   query: T,
   queryKey: K,
@@ -35,41 +38,11 @@ const withQueryKey = <T extends object, K>(
   return result
 }
 
-export type getApiV1HealthResponse200 = {
-  data: void
-  status: 200
-}
-
-export type getApiV1HealthResponseSuccess = getApiV1HealthResponse200 & {
-  headers: Headers
-}
-export type getApiV1HealthResponse = getApiV1HealthResponseSuccess
-
-export const getGetApiV1HealthUrl = () => {
-  return `/api/v1/health`
-}
-
 /**
  * @summary Health check
  */
-export const getApiV1Health = async (
-  options?: RequestInit,
-): Promise<getApiV1HealthResponse> => {
-  const res = await fetch(getGetApiV1HealthUrl(), {
-    ...options,
-    method: 'GET',
-  })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: getApiV1HealthResponse['data'] = body
-    ? JSON.parse(body)
-    : undefined
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getApiV1HealthResponse
+export const getApiV1Health = (signal?: AbortSignal) => {
+  return customInstance<void>({ url: `/api/v1/health`, method: 'GET', signal })
 }
 
 export const getGetApiV1HealthQueryKey = () => {
@@ -78,20 +51,19 @@ export const getGetApiV1HealthQueryKey = () => {
 
 export const getGetApiV1HealthQueryOptions = <
   TData = Awaited<ReturnType<typeof getApiV1Health>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(options?: {
   query?: Partial<
     UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
   >
-  fetch?: RequestInit
 }) => {
-  const { query: queryOptions, fetch: fetchOptions } = options ?? {}
+  const { query: queryOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getGetApiV1HealthQueryKey()
 
   const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiV1Health>>> = ({
     signal,
-  }) => getApiV1Health({ signal, ...fetchOptions })
+  }) => getApiV1Health(signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getApiV1Health>>,
@@ -103,11 +75,11 @@ export const getGetApiV1HealthQueryOptions = <
 export type GetApiV1HealthQueryResult = NonNullable<
   Awaited<ReturnType<typeof getApiV1Health>>
 >
-export type GetApiV1HealthQueryError = unknown
+export type GetApiV1HealthQueryError = ErrorType<unknown>
 
 export function useGetApiV1Health<
   TData = Awaited<ReturnType<typeof getApiV1Health>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   options: {
     query: Partial<
@@ -121,7 +93,6 @@ export function useGetApiV1Health<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -129,7 +100,7 @@ export function useGetApiV1Health<
 }
 export function useGetApiV1Health<
   TData = Awaited<ReturnType<typeof getApiV1Health>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
@@ -143,7 +114,6 @@ export function useGetApiV1Health<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -151,13 +121,12 @@ export function useGetApiV1Health<
 }
 export function useGetApiV1Health<
   TData = Awaited<ReturnType<typeof getApiV1Health>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -169,13 +138,12 @@ export function useGetApiV1Health<
 
 export function useGetApiV1Health<
   TData = Awaited<ReturnType<typeof getApiV1Health>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {

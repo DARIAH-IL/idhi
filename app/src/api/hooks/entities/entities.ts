@@ -28,6 +28,9 @@ import type {
   GetApiV1EntitiesParams,
 } from '../../models'
 
+import { customInstance } from '../../client.ts'
+import type { ErrorType, BodyType } from '../../client.ts'
+
 const withQueryKey = <T extends object, K>(
   query: T,
   queryKey: K,
@@ -46,53 +49,20 @@ const withQueryKey = <T extends object, K>(
   return result
 }
 
-export type getApiV1EntitiesResponse200 = {
-  data: GetApiV1Entities200
-  status: 200
-}
-
-export type getApiV1EntitiesResponseSuccess = getApiV1EntitiesResponse200 & {
-  headers: Headers
-}
-export type getApiV1EntitiesResponse = getApiV1EntitiesResponseSuccess
-
-export const getGetApiV1EntitiesUrl = (params?: GetApiV1EntitiesParams) => {
-  const normalizedParams = new URLSearchParams()
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  })
-
-  const stringifiedParams = normalizedParams.toString()
-
-  return stringifiedParams.length > 0
-    ? `/api/v1/entities?${stringifiedParams}`
-    : `/api/v1/entities`
-}
-
 /**
  * Free text search and facet-based search across all entities. Returns partial entity properties and facets.
  * @summary Search entities
  */
-export const getApiV1Entities = async (
+export const getApiV1Entities = (
   params?: GetApiV1EntitiesParams,
-  options?: RequestInit,
-): Promise<getApiV1EntitiesResponse> => {
-  const res = await fetch(getGetApiV1EntitiesUrl(params), {
-    ...options,
+  signal?: AbortSignal,
+) => {
+  return customInstance<GetApiV1Entities200>({
+    url: `/api/v1/entities`,
     method: 'GET',
+    params,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: getApiV1EntitiesResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getApiV1EntitiesResponse
 }
 
 export const getGetApiV1EntitiesQueryKey = (
@@ -103,7 +73,7 @@ export const getGetApiV1EntitiesQueryKey = (
 
 export const getGetApiV1EntitiesQueryOptions = <
   TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   params?: GetApiV1EntitiesParams,
   options?: {
@@ -114,16 +84,15 @@ export const getGetApiV1EntitiesQueryOptions = <
         TData
       >
     >
-    fetch?: RequestInit
   },
 ) => {
-  const { query: queryOptions, fetch: fetchOptions } = options ?? {}
+  const { query: queryOptions } = options ?? {}
 
   const queryKey = queryOptions?.queryKey ?? getGetApiV1EntitiesQueryKey(params)
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getApiV1Entities>>
-  > = ({ signal }) => getApiV1Entities(params, { signal, ...fetchOptions })
+  > = ({ signal }) => getApiV1Entities(params, signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
     Awaited<ReturnType<typeof getApiV1Entities>>,
@@ -135,11 +104,11 @@ export const getGetApiV1EntitiesQueryOptions = <
 export type GetApiV1EntitiesQueryResult = NonNullable<
   Awaited<ReturnType<typeof getApiV1Entities>>
 >
-export type GetApiV1EntitiesQueryError = unknown
+export type GetApiV1EntitiesQueryError = ErrorType<unknown>
 
 export function useGetApiV1Entities<
   TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   params: undefined | GetApiV1EntitiesParams,
   options: {
@@ -158,7 +127,6 @@ export function useGetApiV1Entities<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -166,7 +134,7 @@ export function useGetApiV1Entities<
 }
 export function useGetApiV1Entities<
   TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   params?: GetApiV1EntitiesParams,
   options?: {
@@ -185,7 +153,6 @@ export function useGetApiV1Entities<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -193,7 +160,7 @@ export function useGetApiV1Entities<
 }
 export function useGetApiV1Entities<
   TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   params?: GetApiV1EntitiesParams,
   options?: {
@@ -204,7 +171,6 @@ export function useGetApiV1Entities<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -216,7 +182,7 @@ export function useGetApiV1Entities<
 
 export function useGetApiV1Entities<
   TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = unknown,
+  TError = ErrorType<unknown>,
 >(
   params?: GetApiV1EntitiesParams,
   options?: {
@@ -227,7 +193,6 @@ export function useGetApiV1Entities<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -243,87 +208,54 @@ export function useGetApiV1Entities<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type putApiV1EntitiesResponse201 = {
-  data: AuditedEntity
-  status: 201
-}
-
-export type putApiV1EntitiesResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type putApiV1EntitiesResponseSuccess = putApiV1EntitiesResponse201 & {
-  headers: Headers
-}
-export type putApiV1EntitiesResponseError = putApiV1EntitiesResponse400 & {
-  headers: Headers
-}
-
-export type putApiV1EntitiesResponse =
-  putApiV1EntitiesResponseSuccess | putApiV1EntitiesResponseError
-
-export const getPutApiV1EntitiesUrl = () => {
-  return `/api/v1/entities`
-}
-
 /**
  * @summary Create a new entity
  */
-export const putApiV1Entities = async (
-  entity: Entity,
-  options?: RequestInit,
-): Promise<putApiV1EntitiesResponse> => {
-  const res = await fetch(getPutApiV1EntitiesUrl(), {
-    ...options,
+export const putApiV1Entities = (
+  entity: BodyType<Entity>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<AuditedEntity>({
+    url: `/api/v1/entities`,
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(entity),
+    headers: { 'Content-Type': 'application/json' },
+    data: entity,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: putApiV1EntitiesResponse['data'] = body ? JSON.parse(body) : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as putApiV1EntitiesResponse
 }
 
 export const getPutApiV1EntitiesMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putApiV1Entities>>,
     TError,
-    { data: Entity },
+    { data: BodyType<Entity> },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof putApiV1Entities>>,
   TError,
-  { data: Entity },
+  { data: BodyType<Entity> },
   TContext
 > => {
   const mutationKey = ['putApiV1Entities']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof putApiV1Entities>>,
-    { data: Entity }
+    { data: BodyType<Entity> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return putApiV1Entities(data, fetchOptions)
+    return putApiV1Entities(data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -332,81 +264,46 @@ export const getPutApiV1EntitiesMutationOptions = <
 export type PutApiV1EntitiesMutationResult = NonNullable<
   Awaited<ReturnType<typeof putApiV1Entities>>
 >
-export type PutApiV1EntitiesMutationBody = Entity
-export type PutApiV1EntitiesMutationError = ErrorResponse
+export type PutApiV1EntitiesMutationBody = BodyType<Entity>
+export type PutApiV1EntitiesMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Create a new entity
  */
-export const usePutApiV1Entities = <TError = ErrorResponse, TContext = unknown>(
+export const usePutApiV1Entities = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof putApiV1Entities>>,
       TError,
-      { data: Entity },
+      { data: BodyType<Entity> },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
   Awaited<ReturnType<typeof putApiV1Entities>>,
   TError,
-  { data: Entity },
+  { data: BodyType<Entity> },
   TContext
 > => {
   return useMutation(getPutApiV1EntitiesMutationOptions(options), queryClient)
 }
-export type getApiV1EntitiesEntityIdResponse200 = {
-  data: AuditedEntity
-  status: 200
-}
-
-export type getApiV1EntitiesEntityIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type getApiV1EntitiesEntityIdResponseSuccess =
-  getApiV1EntitiesEntityIdResponse200 & {
-    headers: Headers
-  }
-export type getApiV1EntitiesEntityIdResponseError =
-  getApiV1EntitiesEntityIdResponse400 & {
-    headers: Headers
-  }
-
-export type getApiV1EntitiesEntityIdResponse =
-  | getApiV1EntitiesEntityIdResponseSuccess
-  | getApiV1EntitiesEntityIdResponseError
-
-export const getGetApiV1EntitiesEntityIdUrl = (entityId: string) => {
-  return `/api/v1/entities/${entityId}`
-}
-
 /**
  * Returns all properties of a specific entity.
  * @summary Get an entity
  */
-export const getApiV1EntitiesEntityId = async (
+export const getApiV1EntitiesEntityId = (
   entityId: string,
-  options?: RequestInit,
-): Promise<getApiV1EntitiesEntityIdResponse> => {
-  const res = await fetch(getGetApiV1EntitiesEntityIdUrl(entityId), {
-    ...options,
+  signal?: AbortSignal,
+) => {
+  return customInstance<AuditedEntity>({
+    url: `/api/v1/entities/${encodeURIComponent(String(entityId))}`,
     method: 'GET',
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: getApiV1EntitiesEntityIdResponse['data'] = body
-    ? JSON.parse(body)
-    : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as getApiV1EntitiesEntityIdResponse
 }
 
 export const getGetApiV1EntitiesEntityIdQueryKey = (entityId: string) => {
@@ -415,7 +312,7 @@ export const getGetApiV1EntitiesEntityIdQueryKey = (entityId: string) => {
 
 export const getGetApiV1EntitiesEntityIdQueryOptions = <
   TData = Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   entityId: string,
   options?: {
@@ -426,18 +323,16 @@ export const getGetApiV1EntitiesEntityIdQueryOptions = <
         TData
       >
     >
-    fetch?: RequestInit
   },
 ) => {
-  const { query: queryOptions, fetch: fetchOptions } = options ?? {}
+  const { query: queryOptions } = options ?? {}
 
   const queryKey =
     queryOptions?.queryKey ?? getGetApiV1EntitiesEntityIdQueryKey(entityId)
 
   const queryFn: QueryFunction<
     Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>
-  > = ({ signal }) =>
-    getApiV1EntitiesEntityId(entityId, { signal, ...fetchOptions })
+  > = ({ signal }) => getApiV1EntitiesEntityId(entityId, signal)
 
   return {
     queryKey,
@@ -454,11 +349,11 @@ export const getGetApiV1EntitiesEntityIdQueryOptions = <
 export type GetApiV1EntitiesEntityIdQueryResult = NonNullable<
   Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>
 >
-export type GetApiV1EntitiesEntityIdQueryError = ErrorResponse
+export type GetApiV1EntitiesEntityIdQueryError = ErrorType<ErrorResponse>
 
 export function useGetApiV1EntitiesEntityId<
   TData = Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   entityId: string,
   options: {
@@ -477,7 +372,6 @@ export function useGetApiV1EntitiesEntityId<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): DefinedUseQueryResult<TData, TError> & {
@@ -485,7 +379,7 @@ export function useGetApiV1EntitiesEntityId<
 }
 export function useGetApiV1EntitiesEntityId<
   TData = Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   entityId: string,
   options?: {
@@ -504,7 +398,6 @@ export function useGetApiV1EntitiesEntityId<
         >,
         'initialData'
       >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -512,7 +405,7 @@ export function useGetApiV1EntitiesEntityId<
 }
 export function useGetApiV1EntitiesEntityId<
   TData = Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   entityId: string,
   options?: {
@@ -523,7 +416,6 @@ export function useGetApiV1EntitiesEntityId<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -535,7 +427,7 @@ export function useGetApiV1EntitiesEntityId<
 
 export function useGetApiV1EntitiesEntityId<
   TData = Awaited<ReturnType<typeof getApiV1EntitiesEntityId>>,
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
 >(
   entityId: string,
   options?: {
@@ -546,7 +438,6 @@ export function useGetApiV1EntitiesEntityId<
         TData
       >
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -565,93 +456,55 @@ export function useGetApiV1EntitiesEntityId<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
-export type postApiV1EntitiesEntityIdResponse200 = {
-  data: AuditedEntity
-  status: 200
-}
-
-export type postApiV1EntitiesEntityIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type postApiV1EntitiesEntityIdResponseSuccess =
-  postApiV1EntitiesEntityIdResponse200 & {
-    headers: Headers
-  }
-export type postApiV1EntitiesEntityIdResponseError =
-  postApiV1EntitiesEntityIdResponse400 & {
-    headers: Headers
-  }
-
-export type postApiV1EntitiesEntityIdResponse =
-  | postApiV1EntitiesEntityIdResponseSuccess
-  | postApiV1EntitiesEntityIdResponseError
-
-export const getPostApiV1EntitiesEntityIdUrl = (entityId: string) => {
-  return `/api/v1/entities/${entityId}`
-}
-
 /**
  * @summary Update an entity
  */
-export const postApiV1EntitiesEntityId = async (
+export const postApiV1EntitiesEntityId = (
   entityId: string,
-  entity: Entity,
-  options?: RequestInit,
-): Promise<postApiV1EntitiesEntityIdResponse> => {
-  const res = await fetch(getPostApiV1EntitiesEntityIdUrl(entityId), {
-    ...options,
+  entity: BodyType<Entity>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<AuditedEntity>({
+    url: `/api/v1/entities/${encodeURIComponent(String(entityId))}`,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(entity),
+    headers: { 'Content-Type': 'application/json' },
+    data: entity,
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: postApiV1EntitiesEntityIdResponse['data'] = body
-    ? JSON.parse(body)
-    : {}
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as postApiV1EntitiesEntityIdResponse
 }
 
 export const getPostApiV1EntitiesEntityIdMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>,
     TError,
-    { entityId: string; data: Entity },
+    { entityId: string; data: BodyType<Entity> },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>,
   TError,
-  { entityId: string; data: Entity },
+  { entityId: string; data: BodyType<Entity> },
   TContext
 > => {
   const mutationKey = ['postApiV1EntitiesEntityId']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>,
-    { entityId: string; data: Entity }
+    { entityId: string; data: BodyType<Entity> }
   > = (props) => {
     const { entityId, data } = props ?? {}
 
-    return postApiV1EntitiesEntityId(entityId, data, fetchOptions)
+    return postApiV1EntitiesEntityId(entityId, data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -660,30 +513,29 @@ export const getPostApiV1EntitiesEntityIdMutationOptions = <
 export type PostApiV1EntitiesEntityIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>
 >
-export type PostApiV1EntitiesEntityIdMutationBody = Entity
-export type PostApiV1EntitiesEntityIdMutationError = ErrorResponse
+export type PostApiV1EntitiesEntityIdMutationBody = BodyType<Entity>
+export type PostApiV1EntitiesEntityIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Update an entity
  */
 export const usePostApiV1EntitiesEntityId = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>,
       TError,
-      { entityId: string; data: Entity },
+      { entityId: string; data: BodyType<Entity> },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
   Awaited<ReturnType<typeof postApiV1EntitiesEntityId>>,
   TError,
-  { entityId: string; data: Entity },
+  { entityId: string; data: BodyType<Entity> },
   TContext
 > => {
   return useMutation(
@@ -691,59 +543,22 @@ export const usePostApiV1EntitiesEntityId = <
     queryClient,
   )
 }
-export type deleteApiV1EntitiesEntityIdResponse204 = {
-  data: void
-  status: 204
-}
-
-export type deleteApiV1EntitiesEntityIdResponse400 = {
-  data: ErrorResponse
-  status: 400
-}
-
-export type deleteApiV1EntitiesEntityIdResponseSuccess =
-  deleteApiV1EntitiesEntityIdResponse204 & {
-    headers: Headers
-  }
-export type deleteApiV1EntitiesEntityIdResponseError =
-  deleteApiV1EntitiesEntityIdResponse400 & {
-    headers: Headers
-  }
-
-export type deleteApiV1EntitiesEntityIdResponse =
-  | deleteApiV1EntitiesEntityIdResponseSuccess
-  | deleteApiV1EntitiesEntityIdResponseError
-
-export const getDeleteApiV1EntitiesEntityIdUrl = (entityId: string) => {
-  return `/api/v1/entities/${entityId}`
-}
-
 /**
  * @summary Delete an entity
  */
-export const deleteApiV1EntitiesEntityId = async (
+export const deleteApiV1EntitiesEntityId = (
   entityId: string,
-  options?: RequestInit,
-): Promise<deleteApiV1EntitiesEntityIdResponse> => {
-  const res = await fetch(getDeleteApiV1EntitiesEntityIdUrl(entityId), {
-    ...options,
+  signal?: AbortSignal,
+) => {
+  return customInstance<void>({
+    url: `/api/v1/entities/${encodeURIComponent(String(entityId))}`,
     method: 'DELETE',
+    signal,
   })
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-
-  const data: deleteApiV1EntitiesEntityIdResponse['data'] = body
-    ? JSON.parse(body)
-    : undefined
-  return {
-    data,
-    status: res.status,
-    headers: res.headers,
-  } as deleteApiV1EntitiesEntityIdResponse
 }
 
 export const getDeleteApiV1EntitiesEntityIdMutationOptions = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -752,7 +567,6 @@ export const getDeleteApiV1EntitiesEntityIdMutationOptions = <
     { entityId: string },
     TContext
   >
-  fetch?: RequestInit
 }): UseMutationOptions<
   Awaited<ReturnType<typeof deleteApiV1EntitiesEntityId>>,
   TError,
@@ -760,13 +574,13 @@ export const getDeleteApiV1EntitiesEntityIdMutationOptions = <
   TContext
 > => {
   const mutationKey = ['deleteApiV1EntitiesEntityId']
-  const { mutation: mutationOptions, fetch: fetchOptions } = options
+  const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
       options.mutation.mutationKey
       ? options
       : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, fetch: undefined }
+    : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteApiV1EntitiesEntityId>>,
@@ -774,7 +588,7 @@ export const getDeleteApiV1EntitiesEntityIdMutationOptions = <
   > = (props) => {
     const { entityId } = props ?? {}
 
-    return deleteApiV1EntitiesEntityId(entityId, fetchOptions)
+    return deleteApiV1EntitiesEntityId(entityId)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -784,13 +598,13 @@ export type DeleteApiV1EntitiesEntityIdMutationResult = NonNullable<
   Awaited<ReturnType<typeof deleteApiV1EntitiesEntityId>>
 >
 
-export type DeleteApiV1EntitiesEntityIdMutationError = ErrorResponse
+export type DeleteApiV1EntitiesEntityIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Delete an entity
  */
 export const useDeleteApiV1EntitiesEntityId = <
-  TError = ErrorResponse,
+  TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
@@ -800,7 +614,6 @@ export const useDeleteApiV1EntitiesEntityId = <
       { entityId: string },
       TContext
     >
-    fetch?: RequestInit
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
