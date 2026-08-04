@@ -4,6 +4,11 @@ export default defineConfig({
   idhi: {
     input: {
       target: '../openapi.yaml',
+      parserOptions: {
+        externalRefs: {
+          allow: ['*'],
+        },
+      },
     },
     output: {
       mode: 'tags-split',

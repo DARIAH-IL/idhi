@@ -302,7 +302,70 @@ components:
       description: UTC date
 
     Entity:
-      type: object
+      oneOf:
+        - $ref: "#/components/schemas/Person"
+        - $ref: "#/components/schemas/Organization"
+        - $ref: "#/components/schemas/Facility"
+        - $ref: "#/components/schemas/Project"
+        - $ref: "#/components/schemas/Tool"
+        - $ref: "#/components/schemas/Service"
+        - $ref: "#/components/schemas/Publication"
+        - $ref: "#/components/schemas/Event"
+        - $ref: "#/components/schemas/Location"
+        - $ref: "#/components/schemas/TimePeriod"
+        - $ref: "#/components/schemas/Catalog"
+        - $ref: "#/components/schemas/Dataset"
+      discriminator:
+        propertyName: type
+        mapping:
+          "idhi:Person": "#/components/schemas/Person"
+          "idhi:Organization": "#/components/schemas/Organization"
+          "idhi:Facility": "#/components/schemas/Facility"
+          "idhi:Project": "#/components/schemas/Project"
+          "idhi:Tool": "#/components/schemas/Tool"
+          "idhi:Service": "#/components/schemas/Service"
+          "idhi:Publication": "#/components/schemas/Publication"
+          "idhi:Event": "#/components/schemas/Event"
+          "idhi:Location": "#/components/schemas/Location"
+          "idhi:TimePeriod": "#/components/schemas/TimePeriod"
+          "idhi:Catalog": "#/components/schemas/Catalog"
+          "idhi:Dataset": "#/components/schemas/Dataset"
+
+    Person:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Person"
+
+    Organization:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Organization"
+
+    Facility:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Facility"
+
+    Project:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Project"
+
+    Tool:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Tool"
+
+    Service:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Service"
+
+    Publication:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Publication"
+
+    Event:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Event"
+
+    Location:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Location"
+
+    TimePeriod:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/TimePeriod"
+
+    Catalog:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Catalog"
+
+    Dataset:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Dataset"
 
     Audited:
       type: object

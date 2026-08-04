@@ -4,7 +4,29 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { Catalog } from './catalog'
+import type { Dataset } from './dataset'
+import type { Event } from './event'
+import type { Facility } from './facility'
+import type { Location } from './location'
+import type { Organization } from './organization'
+import type { Person } from './person'
+import type { Project } from './project'
+import type { Publication } from './publication'
+import type { Service } from './service'
+import type { TimePeriod } from './timePeriod'
+import type { Tool } from './tool'
 
-export interface Entity {
-  [key: string]: unknown
-}
+export type Entity =
+  | Person
+  | Organization
+  | Facility
+  | Project
+  | Tool
+  | Service
+  | Publication
+  | Event
+  | Location
+  | TimePeriod
+  | Catalog
+  | Dataset
