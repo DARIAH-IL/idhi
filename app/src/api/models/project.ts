@@ -6,14 +6,17 @@
  */
 import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
+import type { ProjectFundingItem } from './projectFundingItem.ts'
 import type { ProjectNameItem } from './projectNameItem.ts'
 import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem.ts'
 import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem.ts'
 import type { ProjectResearchDisciplinesItem } from './projectResearchDisciplinesItem.ts'
+import type { ProjectStudiedPeriodsItem } from './projectStudiedPeriodsItem.ts'
+import type { ProjectStudiedPlacesItem } from './projectStudiedPlacesItem.ts'
 import type { ProjectType } from './projectType.ts'
 
 /**
- * A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.
+ * A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.
  */
 export interface Project {
   /**
@@ -32,16 +35,21 @@ export interface Project {
    */
   description?: ProjectDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?:
     ProjectDigitalHumanitiesActivitiesItem[] | null
   /**
-   * Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.
+   * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
    * @nullable
    */
-  funding_amount?: number | null
+  end_date?: string | null
+  /**
+   * Funding awards received by the project. Use one entry for each funding organization and award.
+   * @nullable
+   */
+  funding?: ProjectFundingItem[] | null
   /**
    * Public landing page of the entity, if one exists.
    * @nullable
@@ -50,17 +58,13 @@ export interface Project {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:project:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
-   * @nullable
-   */
-  identifiers?: string[] | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: ProjectNameItem[] | null
@@ -90,12 +94,7 @@ export interface Project {
    */
   project_participations?: ProjectProjectParticipationsItem[] | null
   /**
-   * The project's OWN runtime (when the research is/was conducted). Do not confuse with studied_periods.
-   * @nullable
-   */
-  project_period?: string | null
-  /**
-   * Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.
+   * Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.
    * @nullable
    */
   research_disciplines?: ProjectResearchDisciplinesItem[] | null
@@ -105,15 +104,25 @@ export interface Project {
    */
   same_as?: string[] | null
   /**
-   * Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.
+   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
    * @nullable
    */
-  studied_periods?: string[] | null
+  start_date?: string | null
   /**
-   * Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.
+   * Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.
    * @nullable
    */
-  studied_places?: string[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  studied_periods?: ProjectStudiedPeriodsItem[] | null
+  /**
+   * Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.
+   * @nullable
+   */
+  studied_places?: ProjectStudiedPlacesItem[] | null
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: ProjectType
 }

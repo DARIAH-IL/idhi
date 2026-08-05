@@ -4,13 +4,15 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { FacilityAddressItem } from './facilityAddressItem.ts'
 import type { FacilityDescriptionItem } from './facilityDescriptionItem.ts'
 import type { FacilityFacilityAffiliationsItem } from './facilityFacilityAffiliationsItem.ts'
+import type { FacilityLocationItem } from './facilityLocationItem.ts'
 import type { FacilityNameItem } from './facilityNameItem.ts'
 import type { FacilityType } from './facilityType.ts'
 
 /**
- * A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.
+ * A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.
  */
 export interface Facility {
   /**
@@ -18,6 +20,11 @@ export interface Facility {
    * @nullable
    */
   additional_urls?: string[] | null
+  /**
+   * Postal address, multilingual.
+   * @nullable
+   */
+  address?: FacilityAddressItem[] | null
   /**
    * A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.
    * @nullable
@@ -41,22 +48,18 @@ export interface Facility {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:facility:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
+   * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */
-  identifiers?: string[] | null
+  location?: FacilityLocationItem[] | null
   /**
-   * Where the organization, facility or event is physically situated.
-   * @nullable
-   */
-  location?: string | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: FacilityNameItem[] | null
@@ -71,10 +74,15 @@ export interface Facility {
    */
   services_offered?: string[] | null
   /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /**
    * Tools this facility maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
    * @nullable
    */
   tools_provided?: string[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: FacilityType
 }

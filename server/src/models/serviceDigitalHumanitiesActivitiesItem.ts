@@ -6,7 +6,7 @@
  */
 
 /**
- * Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).
+ * Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.
  */
 export type ServiceDigitalHumanitiesActivitiesItem =
   (typeof ServiceDigitalHumanitiesActivitiesItem)[keyof typeof ServiceDigitalHumanitiesActivitiesItem]

@@ -6,7 +6,7 @@
  */
 
 /**
- * The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).
+ * The kind of publication, including journal article, book part, conference paper and thesis.
  */
 export type PublicationPublicationType =
   (typeof PublicationPublicationType)[keyof typeof PublicationPublicationType]

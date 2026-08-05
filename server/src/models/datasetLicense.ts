@@ -6,7 +6,7 @@
  */
 
 /**
- * Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.
+ * Common licenses for tools and datasets. Extend as needed with canonical meanings.
  */
 export type DatasetLicense =
   (typeof DatasetLicense)[keyof typeof DatasetLicense]

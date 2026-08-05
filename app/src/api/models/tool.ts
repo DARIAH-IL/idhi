@@ -12,7 +12,7 @@ import type { ToolToolType } from './toolToolType.ts'
 import type { ToolType } from './toolType.ts'
 
 /**
- * A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.
+ * A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.
  */
 export interface Tool {
   /**
@@ -36,7 +36,7 @@ export interface Tool {
    */
   description?: ToolDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?: ToolDigitalHumanitiesActivitiesItem[] | null
@@ -53,19 +53,15 @@ export interface Tool {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:tool:[0-9a-z]{4,12}$
    */
   id: string
-  /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
-   * @nullable
-   */
-  identifiers?: string[] | null
-  /** Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical. */
+  /** Common licenses for tools and datasets. Extend as needed with canonical meanings. */
   license?: ToolLicense
   /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: ToolNameItem[] | null
@@ -79,8 +75,13 @@ export interface Tool {
    * @nullable
    */
   same_as?: string[] | null
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
   /** Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values. */
   tool_type?: ToolToolType
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: ToolType
 }

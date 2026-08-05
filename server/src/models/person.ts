@@ -7,12 +7,11 @@
 import type { PersonAffiliationsItem } from './personAffiliationsItem'
 import type { PersonAuthorshipsItem } from './personAuthorshipsItem'
 import type { PersonDescriptionItem } from './personDescriptionItem'
-import type { PersonNameItem } from './personNameItem'
 import type { PersonProjectParticipationsItem } from './personProjectParticipationsItem'
 import type { PersonType } from './personType'
 
 /**
- * A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.
+ * A human agent in the DH index: researcher, developer, librarian, student, etc.
  */
 export interface Person {
   /**
@@ -36,12 +35,12 @@ export interface Person {
    */
   emails?: string[] | null
   /**
-   * Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.
+   * Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.
    * @nullable
    */
   family_name?: string | null
   /**
-   * Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.
+   * Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.
    * @nullable
    */
   given_name?: string | null
@@ -53,24 +52,14 @@ export interface Person {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:person:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
+   * The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.
    * @nullable
-   */
-  identifiers?: string[] | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
-   * @nullable
-   */
-  name?: PersonNameItem[] | null
-  /**
-   * The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.
-   * @nullable
-   * @pattern ORCID:\d{4}-\d{4}-\d{4}-\d{3}[0-9X]
+   * @pattern https://orcid.org/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]
    */
   orcid?: string | null
   /**
@@ -83,6 +72,11 @@ export interface Person {
    * @nullable
    */
   same_as?: string[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: PersonType
 }

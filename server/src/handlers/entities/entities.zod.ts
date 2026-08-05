@@ -29,41 +29,46 @@ export const getApiV1EntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const getApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const getApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const getApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const getApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const getApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const getApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesResponseResultsItemOneOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesResponseResultsItemOneOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const getApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
@@ -96,7 +101,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     member: zod
                       .string()
@@ -112,11 +117,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
-                    "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+                    "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
                   ),
               )
               .nullish()
@@ -142,7 +147,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     publication: zod
                       .string()
@@ -153,7 +158,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
@@ -176,11 +181,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -197,13 +202,13 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .nullish()
               .describe(
-                "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+                "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
               ),
             given_name: zod
               .string()
               .nullish()
               .describe(
-                "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+                "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
               ),
             homepage: zod
               .url()
@@ -213,43 +218,14 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneOneIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-              ),
-            name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             orcid: zod
-              .string()
+              .url()
               .regex(getApiV1EntitiesResponseResultsItemOneOneOrcidRegExp)
               .nullish()
               .describe(
-                "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+                "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
               ),
             project_participations: zod
               .array(
@@ -259,7 +235,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     participant: zod
                       .string()
@@ -289,7 +265,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
@@ -306,14 +282,20 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
             type: zod
               .enum(['idhi:Person'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+            'A human agent in the DH index: researcher, developer, librarian, student, etc.',
           ),
         zod
           .strictObject({
@@ -323,6 +305,27 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
               ),
+            address: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe('Postal address, multilingual.'),
             contact_email: zod
               .string()
               .nullish()
@@ -341,11 +344,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -360,19 +363,30 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneTwoIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             location: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                'Where the organization, facility or event is physically situated.',
+                'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
               .array(
@@ -386,16 +400,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             organization_type: zod
               .enum([
@@ -417,10 +432,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                 "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
               ),
             ror: zod
-              .string()
+              .url()
+              .regex(getApiV1EntitiesResponseResultsItemOneTwoRorRegExp)
               .nullish()
               .describe(
-                "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+                "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
               ),
             same_as: zod
               .array(zod.url())
@@ -428,14 +444,20 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
             type: zod
               .enum(['idhi:Organization'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+            'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
           ),
         zod
           .strictObject({
@@ -445,6 +467,27 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
               ),
+            address: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe('Postal address, multilingual.'),
             contact_email: zod
               .string()
               .nullish()
@@ -463,11 +506,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -482,7 +525,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     facility: zod
                       .string()
@@ -498,7 +541,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
@@ -517,19 +560,30 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneThreeIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             location: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                'Where the organization, facility or event is physically situated.',
+                'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
               .array(
@@ -543,16 +597,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             same_as: zod
               .array(zod.url())
@@ -566,6 +621,12 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
               ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
             tools_provided: zod
               .array(zod.string())
               .nullish()
@@ -575,11 +636,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
             type: zod
               .enum(['idhi:Facility'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+            'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
           ),
         zod
           .strictObject({
@@ -607,11 +668,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -792,18 +853,42 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     'tadirah:writing',
                   ])
                   .describe(
-                    'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                    'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
                   ),
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
-            funding_amount: zod
-              .number()
+            end_date: zod.iso
+              .date()
               .nullish()
               .describe(
-                'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+              ),
+            funding: zod
+              .array(
+                zod
+                  .strictObject({
+                    funding_amount: zod
+                      .number()
+                      .nullish()
+                      .describe(
+                        'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                      ),
+                    funding_organization: zod
+                      .string()
+                      .describe(
+                        'The organization that provides this funding award (by IDHI URN).',
+                      ),
+                  })
+                  .describe(
+                    'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Funding awards received by the project. Use one entry for each funding organization and award.',
               ),
             homepage: zod
               .url()
@@ -813,13 +898,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneFourIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
               .array(
@@ -833,16 +912,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             organization_roles: zod
               .array(
@@ -852,7 +932,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     org_project_role: zod
                       .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -874,11 +954,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
-                    "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                    "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
                   ),
               )
               .nullish()
@@ -907,7 +987,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     participant: zod
                       .string()
@@ -937,7 +1017,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
@@ -947,12 +1027,6 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .nullish()
               .describe(
                 "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-              ),
-            project_period: zod
-              .string()
-              .nullish()
-              .describe(
-                "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
               ),
             research_disciplines: zod
               .array(
@@ -966,16 +1040,16 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
               .describe(
-                'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+                'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
               ),
             same_as: zod
               .array(zod.url())
@@ -983,26 +1057,72 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
-            studied_periods: zod
-              .array(zod.string())
+            start_date: zod.iso
+              .date()
               .nullish()
               .describe(
-                'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+                "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+              ),
+            studied_periods: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
               ),
             studied_places: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+              ),
+            tags: zod
               .array(zod.string())
               .nullish()
               .describe(
-                'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
               ),
             type: zod
               .enum(['idhi:Project'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+            'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
           ),
         zod
           .strictObject({
@@ -1036,11 +1156,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1221,12 +1341,12 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     'tadirah:writing',
                   ])
                   .describe(
-                    'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                    'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
                   ),
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
             documentation_url: zod
               .url()
@@ -1242,13 +1362,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneFiveIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             license: zod
               .enum([
@@ -1261,7 +1375,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               ])
               .optional()
               .describe(
-                'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+                'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
               ),
             name: zod
               .array(
@@ -1275,16 +1389,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             programming_language: zod
               .string()
@@ -1297,6 +1412,12 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .nullish()
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+              ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
               ),
             tool_type: zod
               .enum([
@@ -1316,11 +1437,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
             type: zod
               .enum(['idhi:Tool'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+            'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
           ),
         zod
           .strictObject({
@@ -1348,11 +1469,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1533,12 +1654,12 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     'tadirah:writing',
                   ])
                   .describe(
-                    'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                    'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
                   ),
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
             documentation_url: zod
               .url()
@@ -1554,13 +1675,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneSixIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
               .array(
@@ -1574,16 +1689,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             provider: zod
               .string()
@@ -1612,10 +1728,16 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
               ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
             type: zod
               .enum(['idhi:Service'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
@@ -1642,7 +1764,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     publication: zod
                       .string()
@@ -1653,7 +1775,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                       ),
                   })
                   .describe(
@@ -1682,11 +1804,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1694,10 +1816,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                 'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
               ),
             doi: zod
-              .string()
+              .url()
+              .regex(getApiV1EntitiesResponseResultsItemOneSevenDoiRegExp)
               .nullish()
               .describe(
-                "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+                "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
               ),
             homepage: zod
               .url()
@@ -1707,13 +1830,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneSevenIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
               .array(
@@ -1727,16 +1844,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             part_of: zod
               .string()
@@ -1865,7 +1983,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               ])
               .optional()
               .describe(
-                'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+                'The kind of publication, including journal article, book part, conference paper and thesis.',
               ),
             published_in: zod
               .array(
@@ -1879,11 +1997,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1894,7 +2012,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .nullish()
               .describe(
-                'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+                'The organization publishing the dataset or publication (by IDHI URN).',
               ),
             same_as: zod
               .array(zod.url())
@@ -1902,14 +2020,20 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
             type: zod
               .enum(['idhi:Publication'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+            'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
           ),
         zod
           .strictObject({
@@ -1919,6 +2043,27 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
               ),
+            address: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe('Postal address, multilingual.'),
             contact_email: zod
               .string()
               .nullish()
@@ -1937,11 +2082,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1952,7 +2097,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .date()
               .nullish()
               .describe(
-                'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
               ),
             event_type: zod
               .enum([
@@ -1973,19 +2118,30 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .string()
               .regex(getApiV1EntitiesResponseResultsItemOneEightIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             location: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                'Where the organization, facility or event is physically situated.',
+                'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
               .array(
@@ -1999,16 +2155,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2020,12 +2177,18 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .date()
               .nullish()
               .describe(
-                "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+              ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
               ),
             type: zod
               .enum(['idhi:Event'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
@@ -2033,317 +2196,12 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
           ),
         zod
           .strictObject({
-            address: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe('Postal address, multilingual.'),
-            description: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-              ),
-            homepage: zod
-              .url()
-              .nullish()
-              .describe('Public landing page of the entity, if one exists.'),
-            id: zod
-              .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneNineIdRegExp)
-              .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-              ),
-            latitude: zod
-              .number()
-              .nullish()
-              .describe('WGS84 latitude in decimal degrees.'),
-            longitude: zod
-              .number()
-              .nullish()
-              .describe('WGS84 longitude in decimal degrees.'),
-            name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-              ),
-            same_as: zod
-              .array(zod.url())
-              .nullish()
-              .describe(
-                "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-              ),
-            type: zod
-              .enum(['idhi:Location'])
-              .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-              ),
-          })
-          .describe(
-            'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-          ),
-        zod
-          .strictObject({
-            begin_date: zod
-              .string()
-              .nullish()
-              .describe(
-                'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-              ),
-            description: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-              ),
-            end_date: zod.iso
-              .date()
-              .nullish()
-              .describe(
-                'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-              ),
-            homepage: zod
-              .url()
-              .nullish()
-              .describe('Public landing page of the entity, if one exists.'),
-            id: zod
-              .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp)
-              .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-              ),
-            name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-              ),
-            same_as: zod
-              .array(zod.url())
-              .nullish()
-              .describe(
-                "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-              ),
-            type: zod
-              .enum(['idhi:TimePeriod'])
-              .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-              ),
-          })
-          .describe(
-            'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-          ),
-        zod
-          .strictObject({
             datasets: zod
               .array(zod.string())
               .nullish()
-              .describe('The datasets this catalog aggregates (by id).'),
-            description: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
               .describe(
-                'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+                'Datasets aggregated by a Dataset that functions as a catalog (by id).',
               ),
-            homepage: zod
-              .url()
-              .nullish()
-              .describe('Public landing page of the entity, if one exists.'),
-            id: zod
-              .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneOneoneIdRegExp)
-              .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-              ),
-            name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-              ),
-            publisher: zod
-              .string()
-              .nullish()
-              .describe(
-                'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-              ),
-            same_as: zod
-              .array(zod.url())
-              .nullish()
-              .describe(
-                "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-              ),
-            themes: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "The text itself, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .nullish()
-              .describe(
-                'Thematic keywords for the catalog\/dataset, multilingual.',
-              ),
-            type: zod
-              .enum(['idhi:Catalog'])
-              .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-              ),
-          })
-          .describe(
-            'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-          ),
-        zod
-          .strictObject({
             date_issued: zod.iso
               .date()
               .nullish()
@@ -2362,11 +2220,11 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2383,15 +2241,9 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneOnetwoIdRegExp)
+              .regex(getApiV1EntitiesResponseResultsItemOneNineIdRegExp)
               .describe(
-                'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-              ),
-            identifiers: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             license: zod
               .enum([
@@ -2404,7 +2256,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               ])
               .optional()
               .describe(
-                'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+                'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
               ),
             name: zod
               .array(
@@ -2418,28 +2270,35 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
+              .min(1)
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             publisher: zod
               .string()
               .nullish()
               .describe(
-                'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+                'The organization publishing the dataset or publication (by IDHI URN).',
               ),
             same_as: zod
               .array(zod.url())
               .nullish()
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+              ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
               ),
             themes: zod
               .array(
@@ -2453,25 +2312,23 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
                     value: zod
                       .string()
                       .describe(
-                        "The text itself, in the language given by 'language'.",
+                        "A localized text, in the language given by 'language'.",
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
-              .describe(
-                'Thematic keywords for the catalog\/dataset, multilingual.',
-              ),
+              .describe('Thematic keywords for the dataset, multilingual.'),
             type: zod
               .enum(['idhi:Dataset'])
               .describe(
-                'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
               ),
           })
           .describe(
-            'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+            'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
           ),
       ])
       .and(
@@ -2511,39 +2368,43 @@ export const putApiV1EntitiesBodyOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const putApiV1EntitiesBodyOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const putApiV1EntitiesBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const putApiV1EntitiesBodyTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const putApiV1EntitiesBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const putApiV1EntitiesBodySevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesBodyNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
 
@@ -2571,7 +2432,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               member: zod
                 .string()
@@ -2587,11 +2448,11 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
-              "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+              "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
             ),
         )
         .nullish()
@@ -2617,7 +2478,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               publication: zod
                 .string()
@@ -2626,7 +2487,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -2649,11 +2510,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -2670,13 +2531,13 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+          "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
         ),
       given_name: zod
         .string()
         .nullish()
         .describe(
-          "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+          "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
         ),
       homepage: zod
         .url()
@@ -2686,43 +2547,14 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyOneIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       orcid: zod
-        .string()
+        .url()
         .regex(putApiV1EntitiesBodyOneOrcidRegExp)
         .nullish()
         .describe(
-          "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+          "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
         ),
       project_participations: zod
         .array(
@@ -2732,7 +2564,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               participant: zod
                 .string()
@@ -2762,7 +2594,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -2779,14 +2611,20 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Person'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+      'A human agent in the DH index: researcher, developer, librarian, student, etc.',
     ),
   zod
     .object({
@@ -2796,6 +2634,27 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -2814,11 +2673,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -2833,19 +2692,30 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyTwoIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -2859,16 +2729,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_type: zod
         .enum([
@@ -2890,10 +2761,11 @@ export const PutApiV1EntitiesBody = zod.union([
           "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
         ),
       ror: zod
-        .string()
+        .url()
+        .regex(putApiV1EntitiesBodyTwoRorRegExp)
         .nullish()
         .describe(
-          "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+          "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
         ),
       same_as: zod
         .array(zod.url())
@@ -2901,14 +2773,20 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Organization'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
     ),
   zod
     .object({
@@ -2918,6 +2796,27 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -2936,11 +2835,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -2955,7 +2854,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               facility: zod
                 .string()
@@ -2971,7 +2870,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -2990,19 +2889,30 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyThreeIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -3016,16 +2926,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -3039,6 +2950,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       tools_provided: zod
         .array(zod.string())
         .nullish()
@@ -3048,11 +2965,11 @@ export const PutApiV1EntitiesBody = zod.union([
       type: zod
         .enum(['idhi:Facility'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
     ),
   zod
     .object({
@@ -3080,11 +2997,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3265,18 +3182,42 @@ export const PutApiV1EntitiesBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
-      funding_amount: zod
-        .number()
+      end_date: zod.iso
+        .date()
         .nullish()
         .describe(
-          'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+        ),
+      funding: zod
+        .array(
+          zod
+            .object({
+              funding_amount: zod
+                .number()
+                .nullish()
+                .describe(
+                  'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                ),
+              funding_organization: zod
+                .string()
+                .describe(
+                  'The organization that provides this funding award (by IDHI URN).',
+                ),
+            })
+            .describe(
+              'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Funding awards received by the project. Use one entry for each funding organization and award.',
         ),
       homepage: zod
         .url()
@@ -3286,13 +3227,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyFourIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -3306,16 +3241,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_roles: zod
         .array(
@@ -3325,7 +3261,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
                 .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -3347,11 +3283,11 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
-              "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+              "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
             ),
         )
         .nullish()
@@ -3378,7 +3314,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               participant: zod
                 .string()
@@ -3408,7 +3344,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -3418,12 +3354,6 @@ export const PutApiV1EntitiesBody = zod.union([
         .nullish()
         .describe(
           "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-        ),
-      project_period: zod
-        .string()
-        .nullish()
-        .describe(
-          "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
         ),
       research_disciplines: zod
         .array(
@@ -3437,16 +3367,16 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
         .describe(
-          'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+          'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
         ),
       same_as: zod
         .array(zod.url())
@@ -3454,26 +3384,72 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
-      studied_periods: zod
-        .array(zod.string())
+      start_date: zod.iso
+        .date()
         .nullish()
         .describe(
-          'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+        ),
+      studied_periods: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
         ),
       studied_places: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+        ),
+      tags: zod
         .array(zod.string())
         .nullish()
         .describe(
-          'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
         .enum(['idhi:Project'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
     ),
   zod
     .object({
@@ -3505,11 +3481,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3690,12 +3666,12 @@ export const PutApiV1EntitiesBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -3711,13 +3687,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyFiveIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       license: zod
         .enum([
@@ -3730,7 +3700,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
         ),
       name: zod
         .array(
@@ -3744,16 +3714,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       programming_language: zod
         .string()
@@ -3766,6 +3737,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .nullish()
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       tool_type: zod
         .enum([
@@ -3785,11 +3762,11 @@ export const PutApiV1EntitiesBody = zod.union([
       type: zod
         .enum(['idhi:Tool'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
     ),
   zod
     .object({
@@ -3817,11 +3794,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4002,12 +3979,12 @@ export const PutApiV1EntitiesBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -4023,13 +4000,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodySixIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -4043,16 +4014,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       provider: zod
         .string()
@@ -4081,10 +4053,16 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Service'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
@@ -4111,7 +4089,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               publication: zod
                 .string()
@@ -4120,7 +4098,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -4149,11 +4127,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4161,10 +4139,11 @@ export const PutApiV1EntitiesBody = zod.union([
           'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
         ),
       doi: zod
-        .string()
+        .url()
+        .regex(putApiV1EntitiesBodySevenDoiRegExp)
         .nullish()
         .describe(
-          "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+          "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
         ),
       homepage: zod
         .url()
@@ -4174,13 +4153,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodySevenIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -4194,16 +4167,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       part_of: zod
         .string()
@@ -4332,7 +4306,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ])
         .optional()
         .describe(
-          'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+          'The kind of publication, including journal article, book part, conference paper and thesis.',
         ),
       published_in: zod
         .array(
@@ -4346,11 +4320,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4361,7 +4335,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+          'The organization publishing the dataset or publication (by IDHI URN).',
         ),
       same_as: zod
         .array(zod.url())
@@ -4369,14 +4343,20 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Publication'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+      'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
     ),
   zod
     .object({
@@ -4386,6 +4366,27 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -4404,11 +4405,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4419,7 +4420,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .date()
         .nullish()
         .describe(
-          'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
       event_type: zod
         .enum([
@@ -4440,19 +4441,30 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .regex(putApiV1EntitiesBodyEightIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -4466,16 +4478,17 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4487,12 +4500,18 @@ export const PutApiV1EntitiesBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
         .enum(['idhi:Event'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
@@ -4500,315 +4519,12 @@ export const PutApiV1EntitiesBody = zod.union([
     ),
   zod
     .object({
-      address: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe('Postal address, multilingual.'),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-        ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyNineIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      latitude: zod
-        .number()
-        .nullish()
-        .describe('WGS84 latitude in decimal degrees.'),
-      longitude: zod
-        .number()
-        .nullish()
-        .describe('WGS84 longitude in decimal degrees.'),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      type: zod
-        .enum(['idhi:Location'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-    ),
-  zod
-    .object({
-      begin_date: zod
-        .string()
-        .nullish()
-        .describe(
-          'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-        ),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-        ),
-      end_date: zod.iso
-        .date()
-        .nullish()
-        .describe(
-          'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-        ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyOnezeroIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      type: zod
-        .enum(['idhi:TimePeriod'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-    ),
-  zod
-    .object({
       datasets: zod
         .array(zod.string())
         .nullish()
-        .describe('The datasets this catalog aggregates (by id).'),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
         .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+          'Datasets aggregated by a Dataset that functions as a catalog (by id).',
         ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyOneoneIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      publisher: zod
-        .string()
-        .nullish()
-        .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      themes: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe('Thematic keywords for the catalog\/dataset, multilingual.'),
-      type: zod
-        .enum(['idhi:Catalog'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-    ),
-  zod
-    .object({
       date_issued: zod.iso
         .date()
         .nullish()
@@ -4827,11 +4543,11 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4848,15 +4564,9 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
         .string()
-        .regex(putApiV1EntitiesBodyOnetwoIdRegExp)
+        .regex(putApiV1EntitiesBodyNineIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       license: zod
         .enum([
@@ -4869,7 +4579,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
         ),
       name: zod
         .array(
@@ -4883,28 +4593,35 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       publisher: zod
         .string()
         .nullish()
         .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+          'The organization publishing the dataset or publication (by IDHI URN).',
         ),
       same_as: zod
         .array(zod.url())
         .nullish()
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       themes: zod
         .array(
@@ -4918,23 +4635,23 @@ export const PutApiV1EntitiesBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
-        .describe('Thematic keywords for the catalog\/dataset, multilingual.'),
+        .describe('Thematic keywords for the dataset, multilingual.'),
       type: zod
         .enum(['idhi:Dataset'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+      'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
 ])
 
@@ -4942,41 +4659,46 @@ export const putApiV1EntitiesResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const putApiV1EntitiesResponseOneOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const putApiV1EntitiesResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const putApiV1EntitiesResponseOneTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const putApiV1EntitiesResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const putApiV1EntitiesResponseOneSevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseOneNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesResponseOneOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesResponseOneOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesResponseOneOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+
 export const putApiV1EntitiesResponseTwoAuditCreatedByRegExp = new RegExp(
   '^idhi:user:.+$',
 )
@@ -5009,7 +4731,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 member: zod
                   .string()
@@ -5025,11 +4747,11 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
               ),
           )
           .nullish()
@@ -5055,7 +4777,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -5064,7 +4786,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -5087,11 +4809,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -5108,13 +4830,13 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
           ),
         given_name: zod
           .string()
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
           ),
         homepage: zod
           .url()
@@ -5124,43 +4846,14 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneOneIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         orcid: zod
-          .string()
+          .url()
           .regex(putApiV1EntitiesResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
-            "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+            "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
           ),
         project_participations: zod
           .array(
@@ -5170,7 +4863,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -5200,7 +4893,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -5217,14 +4910,20 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Person'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+        'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
       .strictObject({
@@ -5234,6 +4933,27 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -5252,11 +4972,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -5271,19 +4991,30 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneTwoIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -5297,16 +5028,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -5328,10 +5060,11 @@ export const PutApiV1EntitiesResponse = zod
             "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
           ),
         ror: zod
-          .string()
+          .url()
+          .regex(putApiV1EntitiesResponseOneTwoRorRegExp)
           .nullish()
           .describe(
-            "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+            "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
           ),
         same_as: zod
           .array(zod.url())
@@ -5339,14 +5072,20 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Organization'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .strictObject({
@@ -5356,6 +5095,27 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -5374,11 +5134,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -5393,7 +5153,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 facility: zod
                   .string()
@@ -5409,7 +5169,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -5428,19 +5188,30 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneThreeIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -5454,16 +5225,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -5477,6 +5249,12 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         tools_provided: zod
           .array(zod.string())
           .nullish()
@@ -5486,11 +5264,11 @@ export const PutApiV1EntitiesResponse = zod
         type: zod
           .enum(['idhi:Facility'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .strictObject({
@@ -5518,11 +5296,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -5703,18 +5481,42 @@ export const PutApiV1EntitiesResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
-        funding_amount: zod
-          .number()
+        end_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+          ),
+        funding: zod
+          .array(
+            zod
+              .strictObject({
+                funding_amount: zod
+                  .number()
+                  .nullish()
+                  .describe(
+                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                  ),
+                funding_organization: zod
+                  .string()
+                  .describe(
+                    'The organization that provides this funding award (by IDHI URN).',
+                  ),
+              })
+              .describe(
+                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Funding awards received by the project. Use one entry for each funding organization and award.',
           ),
         homepage: zod
           .url()
@@ -5724,13 +5526,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneFourIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -5744,16 +5540,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -5763,7 +5560,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
                   .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -5785,11 +5582,11 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
               ),
           )
           .nullish()
@@ -5816,7 +5613,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -5846,7 +5643,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -5856,12 +5653,6 @@ export const PutApiV1EntitiesResponse = zod
           .nullish()
           .describe(
             "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-          ),
-        project_period: zod
-          .string()
-          .nullish()
-          .describe(
-            "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
           ),
         research_disciplines: zod
           .array(
@@ -5875,16 +5666,16 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
           .describe(
-            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
           ),
         same_as: zod
           .array(zod.url())
@@ -5892,26 +5683,72 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        studied_periods: zod
-          .array(zod.string())
+        start_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        studied_periods: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
           ),
         studied_places: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+          ),
+        tags: zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Project'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
       .strictObject({
@@ -5943,11 +5780,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6128,12 +5965,12 @@ export const PutApiV1EntitiesResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -6149,13 +5986,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneFiveIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -6168,7 +5999,7 @@ export const PutApiV1EntitiesResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -6182,16 +6013,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -6204,6 +6036,12 @@ export const PutApiV1EntitiesResponse = zod
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         tool_type: zod
           .enum([
@@ -6223,11 +6061,11 @@ export const PutApiV1EntitiesResponse = zod
         type: zod
           .enum(['idhi:Tool'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
       .strictObject({
@@ -6255,11 +6093,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6440,12 +6278,12 @@ export const PutApiV1EntitiesResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -6461,13 +6299,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneSixIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -6481,16 +6313,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -6519,10 +6352,16 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Service'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -6549,7 +6388,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -6558,7 +6397,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -6587,11 +6426,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6599,10 +6438,11 @@ export const PutApiV1EntitiesResponse = zod
             'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
           ),
         doi: zod
-          .string()
+          .url()
+          .regex(putApiV1EntitiesResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
           ),
         homepage: zod
           .url()
@@ -6612,13 +6452,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneSevenIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -6632,16 +6466,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -6770,7 +6605,7 @@ export const PutApiV1EntitiesResponse = zod
           ])
           .optional()
           .describe(
-            'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+            'The kind of publication, including journal article, book part, conference paper and thesis.',
           ),
         published_in: zod
           .array(
@@ -6784,11 +6619,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6799,7 +6634,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
@@ -6807,14 +6642,20 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Publication'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+        'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
       .strictObject({
@@ -6824,6 +6665,27 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -6842,11 +6704,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6857,7 +6719,7 @@ export const PutApiV1EntitiesResponse = zod
           .date()
           .nullish()
           .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
         event_type: zod
           .enum([
@@ -6878,19 +6740,30 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .regex(putApiV1EntitiesResponseOneEightIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -6904,16 +6777,17 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -6925,12 +6799,18 @@ export const PutApiV1EntitiesResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Event'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -6938,317 +6818,12 @@ export const PutApiV1EntitiesResponse = zod
       ),
     zod
       .strictObject({
-        address: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe('Postal address, multilingual.'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(putApiV1EntitiesResponseOneNineIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        latitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 latitude in decimal degrees.'),
-        longitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 longitude in decimal degrees.'),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:Location'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-      ),
-    zod
-      .strictObject({
-        begin_date: zod
-          .string()
-          .nullish()
-          .describe(
-            'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-          ),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        end_date: zod.iso
-          .date()
-          .nullish()
-          .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(putApiV1EntitiesResponseOneOnezeroIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:TimePeriod'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-      ),
-    zod
-      .strictObject({
         datasets: zod
           .array(zod.string())
           .nullish()
-          .describe('The datasets this catalog aggregates (by id).'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
           .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+            'Datasets aggregated by a Dataset that functions as a catalog (by id).',
           ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(putApiV1EntitiesResponseOneOneoneIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        publisher: zod
-          .string()
-          .nullish()
-          .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        themes: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
-        type: zod
-          .enum(['idhi:Catalog'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-      ),
-    zod
-      .strictObject({
         date_issued: zod.iso
           .date()
           .nullish()
@@ -7267,11 +6842,11 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7288,15 +6863,9 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneOnetwoIdRegExp)
+          .regex(putApiV1EntitiesResponseOneNineIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -7309,7 +6878,7 @@ export const PutApiV1EntitiesResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -7323,28 +6892,35 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         themes: zod
           .array(
@@ -7358,25 +6934,23 @@ export const PutApiV1EntitiesResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
+          .describe('Thematic keywords for the dataset, multilingual.'),
         type: zod
           .enum(['idhi:Dataset'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
   ])
   .and(
@@ -7404,41 +6978,46 @@ export const getApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const getApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const getApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const getApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const getApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesEntityIdResponseOneOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const getApiV1EntitiesEntityIdResponseOneOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+
 export const getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -7469,7 +7048,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 member: zod
                   .string()
@@ -7485,11 +7064,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
               ),
           )
           .nullish()
@@ -7515,7 +7094,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -7524,7 +7103,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -7547,11 +7126,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7568,13 +7147,13 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
           ),
         given_name: zod
           .string()
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
           ),
         homepage: zod
           .url()
@@ -7584,43 +7163,14 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneOneIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         orcid: zod
-          .string()
+          .url()
           .regex(getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
-            "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+            "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
           ),
         project_participations: zod
           .array(
@@ -7630,7 +7180,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -7660,7 +7210,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -7677,14 +7227,20 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Person'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+        'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
       .strictObject({
@@ -7694,6 +7250,27 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -7712,11 +7289,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7731,19 +7308,30 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -7757,16 +7345,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -7788,10 +7377,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
           ),
         ror: zod
-          .string()
+          .url()
+          .regex(getApiV1EntitiesEntityIdResponseOneTwoRorRegExp)
           .nullish()
           .describe(
-            "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+            "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
           ),
         same_as: zod
           .array(zod.url())
@@ -7799,14 +7389,20 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Organization'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .strictObject({
@@ -7816,6 +7412,27 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -7834,11 +7451,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7853,7 +7470,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 facility: zod
                   .string()
@@ -7869,7 +7486,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -7888,19 +7505,30 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -7914,16 +7542,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -7937,6 +7566,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         tools_provided: zod
           .array(zod.string())
           .nullish()
@@ -7946,11 +7581,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         type: zod
           .enum(['idhi:Facility'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .strictObject({
@@ -7978,11 +7613,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8163,18 +7798,42 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
-        funding_amount: zod
-          .number()
+        end_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+          ),
+        funding: zod
+          .array(
+            zod
+              .strictObject({
+                funding_amount: zod
+                  .number()
+                  .nullish()
+                  .describe(
+                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                  ),
+                funding_organization: zod
+                  .string()
+                  .describe(
+                    'The organization that provides this funding award (by IDHI URN).',
+                  ),
+              })
+              .describe(
+                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Funding awards received by the project. Use one entry for each funding organization and award.',
           ),
         homepage: zod
           .url()
@@ -8184,13 +7843,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneFourIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -8204,16 +7857,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -8223,7 +7877,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
                   .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -8245,11 +7899,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
               ),
           )
           .nullish()
@@ -8276,7 +7930,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -8306,7 +7960,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -8316,12 +7970,6 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-          ),
-        project_period: zod
-          .string()
-          .nullish()
-          .describe(
-            "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
           ),
         research_disciplines: zod
           .array(
@@ -8335,16 +7983,16 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
           .describe(
-            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
           ),
         same_as: zod
           .array(zod.url())
@@ -8352,26 +8000,72 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        studied_periods: zod
-          .array(zod.string())
+        start_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        studied_periods: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
           ),
         studied_places: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+          ),
+        tags: zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Project'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
       .strictObject({
@@ -8403,11 +8097,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8588,12 +8282,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -8609,13 +8303,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneFiveIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -8628,7 +8316,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -8642,16 +8330,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -8664,6 +8353,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         tool_type: zod
           .enum([
@@ -8683,11 +8378,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         type: zod
           .enum(['idhi:Tool'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
       .strictObject({
@@ -8715,11 +8410,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8900,12 +8595,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -8921,13 +8616,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneSixIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -8941,16 +8630,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -8979,10 +8669,16 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Service'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -9009,7 +8705,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -9018,7 +8714,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -9047,11 +8743,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9059,10 +8755,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
           ),
         doi: zod
-          .string()
+          .url()
+          .regex(getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
           ),
         homepage: zod
           .url()
@@ -9072,13 +8769,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -9092,16 +8783,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -9230,7 +8922,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+            'The kind of publication, including journal article, book part, conference paper and thesis.',
           ),
         published_in: zod
           .array(
@@ -9244,11 +8936,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9259,7 +8951,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
@@ -9267,14 +8959,20 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Publication'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+        'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
       .strictObject({
@@ -9284,6 +8982,27 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -9302,11 +9021,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9317,7 +9036,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
         event_type: zod
           .enum([
@@ -9338,19 +9057,30 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(getApiV1EntitiesEntityIdResponseOneEightIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -9364,16 +9094,17 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9385,12 +9116,18 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Event'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -9398,317 +9135,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
       ),
     zod
       .strictObject({
-        address: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe('Postal address, multilingual.'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneNineIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        latitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 latitude in decimal degrees.'),
-        longitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 longitude in decimal degrees.'),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:Location'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-      ),
-    zod
-      .strictObject({
-        begin_date: zod
-          .string()
-          .nullish()
-          .describe(
-            'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-          ),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        end_date: zod.iso
-          .date()
-          .nullish()
-          .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:TimePeriod'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-      ),
-    zod
-      .strictObject({
         datasets: zod
           .array(zod.string())
           .nullish()
-          .describe('The datasets this catalog aggregates (by id).'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
           .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+            'Datasets aggregated by a Dataset that functions as a catalog (by id).',
           ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneOneoneIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        publisher: zod
-          .string()
-          .nullish()
-          .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        themes: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
-        type: zod
-          .enum(['idhi:Catalog'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-      ),
-    zod
-      .strictObject({
         date_issued: zod.iso
           .date()
           .nullish()
@@ -9727,11 +9159,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9748,15 +9180,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneOnetwoIdRegExp)
+          .regex(getApiV1EntitiesEntityIdResponseOneNineIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -9769,7 +9195,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -9783,28 +9209,35 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         themes: zod
           .array(
@@ -9818,25 +9251,23 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
+          .describe('Thematic keywords for the dataset, multilingual.'),
         type: zod
           .enum(['idhi:Dataset'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
   ])
   .and(
@@ -9864,39 +9295,43 @@ export const postApiV1EntitiesEntityIdBodyOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const postApiV1EntitiesEntityIdBodyOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const postApiV1EntitiesEntityIdBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const postApiV1EntitiesEntityIdBodyTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const postApiV1EntitiesEntityIdBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const postApiV1EntitiesEntityIdBodySevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdBodyNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdBodyOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdBodyOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdBodyOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
 
@@ -9924,7 +9359,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               member: zod
                 .string()
@@ -9940,11 +9375,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
-              "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+              "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
             ),
         )
         .nullish()
@@ -9970,7 +9405,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               publication: zod
                 .string()
@@ -9979,7 +9414,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -10002,11 +9437,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -10023,13 +9458,13 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+          "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
         ),
       given_name: zod
         .string()
         .nullish()
         .describe(
-          "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+          "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
         ),
       homepage: zod
         .url()
@@ -10039,43 +9474,14 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyOneIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       orcid: zod
-        .string()
+        .url()
         .regex(postApiV1EntitiesEntityIdBodyOneOrcidRegExp)
         .nullish()
         .describe(
-          "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+          "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
         ),
       project_participations: zod
         .array(
@@ -10085,7 +9491,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               participant: zod
                 .string()
@@ -10115,7 +9521,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -10132,14 +9538,20 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Person'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+      'A human agent in the DH index: researcher, developer, librarian, student, etc.',
     ),
   zod
     .object({
@@ -10149,6 +9561,27 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -10167,11 +9600,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -10186,19 +9619,30 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyTwoIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -10212,16 +9656,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_type: zod
         .enum([
@@ -10243,10 +9688,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
         ),
       ror: zod
-        .string()
+        .url()
+        .regex(postApiV1EntitiesEntityIdBodyTwoRorRegExp)
         .nullish()
         .describe(
-          "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+          "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
         ),
       same_as: zod
         .array(zod.url())
@@ -10254,14 +9700,20 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Organization'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
     ),
   zod
     .object({
@@ -10271,6 +9723,27 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -10289,11 +9762,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -10308,7 +9781,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               facility: zod
                 .string()
@@ -10324,7 +9797,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -10343,19 +9816,30 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyThreeIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -10369,16 +9853,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -10392,6 +9877,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       tools_provided: zod
         .array(zod.string())
         .nullish()
@@ -10401,11 +9892,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
       type: zod
         .enum(['idhi:Facility'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
     ),
   zod
     .object({
@@ -10433,11 +9924,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -10618,18 +10109,42 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
-      funding_amount: zod
-        .number()
+      end_date: zod.iso
+        .date()
         .nullish()
         .describe(
-          'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+        ),
+      funding: zod
+        .array(
+          zod
+            .object({
+              funding_amount: zod
+                .number()
+                .nullish()
+                .describe(
+                  'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                ),
+              funding_organization: zod
+                .string()
+                .describe(
+                  'The organization that provides this funding award (by IDHI URN).',
+                ),
+            })
+            .describe(
+              'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Funding awards received by the project. Use one entry for each funding organization and award.',
         ),
       homepage: zod
         .url()
@@ -10639,13 +10154,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyFourIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -10659,16 +10168,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_roles: zod
         .array(
@@ -10678,7 +10188,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
                 .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -10700,11 +10210,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
-              "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+              "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
             ),
         )
         .nullish()
@@ -10731,7 +10241,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               participant: zod
                 .string()
@@ -10761,7 +10271,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -10771,12 +10281,6 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe(
           "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-        ),
-      project_period: zod
-        .string()
-        .nullish()
-        .describe(
-          "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
         ),
       research_disciplines: zod
         .array(
@@ -10790,16 +10294,16 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
         .describe(
-          'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+          'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
         ),
       same_as: zod
         .array(zod.url())
@@ -10807,26 +10311,72 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
-      studied_periods: zod
-        .array(zod.string())
+      start_date: zod.iso
+        .date()
         .nullish()
         .describe(
-          'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+        ),
+      studied_periods: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
         ),
       studied_places: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+        ),
+      tags: zod
         .array(zod.string())
         .nullish()
         .describe(
-          'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
         .enum(['idhi:Project'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
     ),
   zod
     .object({
@@ -10858,11 +10408,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11043,12 +10593,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -11064,13 +10614,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyFiveIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       license: zod
         .enum([
@@ -11083,7 +10627,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
         ),
       name: zod
         .array(
@@ -11097,16 +10641,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       programming_language: zod
         .string()
@@ -11119,6 +10664,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       tool_type: zod
         .enum([
@@ -11138,11 +10689,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
       type: zod
         .enum(['idhi:Tool'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
     ),
   zod
     .object({
@@ -11170,11 +10721,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11355,12 +10906,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               'tadirah:writing',
             ])
             .describe(
-              'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
             ),
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -11376,13 +10927,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodySixIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -11396,16 +10941,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       provider: zod
         .string()
@@ -11434,10 +10980,16 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Service'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
@@ -11464,7 +11016,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               publication: zod
                 .string()
@@ -11473,7 +11025,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                 ),
             })
             .describe(
@@ -11502,11 +11054,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11514,10 +11066,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
         ),
       doi: zod
-        .string()
+        .url()
+        .regex(postApiV1EntitiesEntityIdBodySevenDoiRegExp)
         .nullish()
         .describe(
-          "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+          "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
         ),
       homepage: zod
         .url()
@@ -11527,13 +11080,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodySevenIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
         .array(
@@ -11547,16 +11094,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       part_of: zod
         .string()
@@ -11685,7 +11233,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ])
         .optional()
         .describe(
-          'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+          'The kind of publication, including journal article, book part, conference paper and thesis.',
         ),
       published_in: zod
         .array(
@@ -11699,11 +11247,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11714,7 +11262,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+          'The organization publishing the dataset or publication (by IDHI URN).',
         ),
       same_as: zod
         .array(zod.url())
@@ -11722,14 +11270,20 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
       type: zod
         .enum(['idhi:Publication'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+      'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
     ),
   zod
     .object({
@@ -11739,6 +11293,27 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
         ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
       contact_email: zod
         .string()
         .nullish()
@@ -11757,11 +11332,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11772,7 +11347,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .date()
         .nullish()
         .describe(
-          'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
       event_type: zod
         .enum([
@@ -11793,19 +11368,30 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .regex(postApiV1EntitiesEntityIdBodyEightIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       location: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'Where the organization, facility or event is physically situated.',
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
         .array(
@@ -11819,16 +11405,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -11840,12 +11427,18 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
         .enum(['idhi:Event'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
@@ -11853,315 +11446,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
     ),
   zod
     .object({
-      address: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe('Postal address, multilingual.'),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-        ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyNineIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      latitude: zod
-        .number()
-        .nullish()
-        .describe('WGS84 latitude in decimal degrees.'),
-      longitude: zod
-        .number()
-        .nullish()
-        .describe('WGS84 longitude in decimal degrees.'),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      type: zod
-        .enum(['idhi:Location'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-    ),
-  zod
-    .object({
-      begin_date: zod
-        .string()
-        .nullish()
-        .describe(
-          'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-        ),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-        ),
-      end_date: zod.iso
-        .date()
-        .nullish()
-        .describe(
-          'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-        ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyOnezeroIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      type: zod
-        .enum(['idhi:TimePeriod'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-    ),
-  zod
-    .object({
       datasets: zod
         .array(zod.string())
         .nullish()
-        .describe('The datasets this catalog aggregates (by id).'),
-      description: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
         .describe(
-          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+          'Datasets aggregated by a Dataset that functions as a catalog (by id).',
         ),
-      homepage: zod
-        .url()
-        .nullish()
-        .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyOneoneIdRegExp)
-        .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-        ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-        ),
-      publisher: zod
-        .string()
-        .nullish()
-        .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-        ),
-      same_as: zod
-        .array(zod.url())
-        .nullish()
-        .describe(
-          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-        ),
-      themes: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "The text itself, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .nullish()
-        .describe('Thematic keywords for the catalog\/dataset, multilingual.'),
-      type: zod
-        .enum(['idhi:Catalog'])
-        .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-        ),
-    })
-    .describe(
-      'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-    ),
-  zod
-    .object({
       date_issued: zod.iso
         .date()
         .nullish()
@@ -12180,11 +11470,11 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12201,15 +11491,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
         .string()
-        .regex(postApiV1EntitiesEntityIdBodyOnetwoIdRegExp)
+        .regex(postApiV1EntitiesEntityIdBodyNineIdRegExp)
         .describe(
-          'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-        ),
-      identifiers: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       license: zod
         .enum([
@@ -12222,7 +11506,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
         ),
       name: zod
         .array(
@@ -12236,28 +11520,35 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
+        .min(1)
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       publisher: zod
         .string()
         .nullish()
         .describe(
-          'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+          'The organization publishing the dataset or publication (by IDHI URN).',
         ),
       same_as: zod
         .array(zod.url())
         .nullish()
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       themes: zod
         .array(
@@ -12271,23 +11562,23 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               value: zod
                 .string()
                 .describe(
-                  "The text itself, in the language given by 'language'.",
+                  "A localized text, in the language given by 'language'.",
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
-        .describe('Thematic keywords for the catalog\/dataset, multilingual.'),
+        .describe('Thematic keywords for the dataset, multilingual.'),
       type: zod
         .enum(['idhi:Dataset'])
         .describe(
-          'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
     })
     .describe(
-      'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+      'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
 ])
 
@@ -12295,41 +11586,46 @@ export const postApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
-  'ORCID:\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
 export const postApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+
+export const postApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
 export const postApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
+)
+
+export const postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
-  '^idhi:location:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
-  '^idhi:time_period:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdResponseOneOneoneIdRegExp = new RegExp(
-  '^idhi:catalog:[0-9a-z]{4,12}$',
-)
-export const postApiV1EntitiesEntityIdResponseOneOnetwoIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+
 export const postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -12360,7 +11656,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 member: zod
                   .string()
@@ -12376,11 +11672,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "A person's employment\/membership at an organization, with a position and dates (CERIF cfPerson_OrganisationUnit). Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
               ),
           )
           .nullish()
@@ -12406,7 +11702,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -12415,7 +11711,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -12438,11 +11734,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -12459,13 +11755,13 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
           ),
         given_name: zod
           .string()
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Explicitly optional — the authoritative multilingual display name lives in 'name'.",
+            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
           ),
         homepage: zod
           .url()
@@ -12475,43 +11771,14 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneOneIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         orcid: zod
-          .string()
+          .url()
           .regex(postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
-            "The person's ORCID iD, as CURIE (ORCID:0000-0002-1825-0097) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+            "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
           ),
         project_participations: zod
           .array(
@@ -12521,7 +11788,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -12551,7 +11818,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -12568,14 +11835,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Person'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A human agent in the DH index: researcher, developer, librarian, student, etc. Create a Person record once per human being and reference it everywhere by id; do not duplicate people per project.',
+        'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
       .strictObject({
@@ -12585,6 +11858,27 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -12603,11 +11897,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -12622,19 +11916,30 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -12648,16 +11953,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -12679,10 +11985,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
           ),
         ror: zod
-          .string()
+          .url()
+          .regex(postApiV1EntitiesEntityIdResponseOneTwoRorRegExp)
           .nullish()
           .describe(
-            "The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+            "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
           ),
         same_as: zod
           .array(zod.url())
@@ -12690,14 +11997,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Organization'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .strictObject({
@@ -12707,6 +12020,27 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -12725,11 +12059,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -12744,7 +12078,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 facility: zod
                   .string()
@@ -12760,7 +12094,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -12779,19 +12113,30 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -12805,16 +12150,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -12828,6 +12174,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         tools_provided: zod
           .array(zod.string())
           .nullish()
@@ -12837,11 +12189,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         type: zod
           .enum(['idhi:Facility'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations (CERIF Facility). Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .strictObject({
@@ -12869,11 +12221,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -13054,18 +12406,42 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
-        funding_amount: zod
-          .number()
+        end_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Total awarded funding, if public, in ILS unless noted in the project description. Omit rather than guess.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+          ),
+        funding: zod
+          .array(
+            zod
+              .strictObject({
+                funding_amount: zod
+                  .number()
+                  .nullish()
+                  .describe(
+                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                  ),
+                funding_organization: zod
+                  .string()
+                  .describe(
+                    'The organization that provides this funding award (by IDHI URN).',
+                  ),
+              })
+              .describe(
+                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Funding awards received by the project. Use one entry for each funding organization and award.',
           ),
         homepage: zod
           .url()
@@ -13075,13 +12451,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneFourIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -13095,16 +12465,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -13114,7 +12485,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
                   .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
@@ -13136,11 +12507,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
-                "An organization's engagement in a project (CERIF cfProject_OrganisationUnit). Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
               ),
           )
           .nullish()
@@ -13167,7 +12538,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 participant: zod
                   .string()
@@ -13197,7 +12568,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -13207,12 +12578,6 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
-          ),
-        project_period: zod
-          .string()
-          .nullish()
-          .describe(
-            "The project's OWN runtime (when the research is\/was conducted). Do not confuse with studied_periods.",
           ),
         research_disciplines: zod
           .array(
@@ -13226,16 +12591,16 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
           .describe(
-            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled SKOS scheme is a planned upgrade.',
+            'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
           ),
         same_as: zod
           .array(zod.url())
@@ -13243,26 +12608,72 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        studied_periods: zod
-          .array(zod.string())
+        start_date: zod.iso
+          .date()
           .nullish()
           .describe(
-            'Historical period(s) the project studies (e.g. Ottoman period), as TimePeriod records — distinct from project_period.',
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        studied_periods: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
           ),
         studied_places: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+          ),
+        tags: zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Geographic focus of the research (places studied), as Location records — distinct from where the project team sits.',
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Project'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by TaDiRAH research activities and by research discipline. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
       .strictObject({
@@ -13294,11 +12705,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -13479,12 +12890,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -13500,13 +12911,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneFiveIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -13519,7 +12924,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -13533,16 +12938,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -13555,6 +12961,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         tool_type: zod
           .enum([
@@ -13574,11 +12986,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         type: zod
           .enum(['idhi:Tool'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project (schema:SoftwareApplication). Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
       .strictObject({
@@ -13606,11 +13018,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -13791,12 +13203,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 'tadirah:writing',
               ])
               .describe(
-                'Digital-humanities research activities, as any TaDiRAH 2.0 research-activity concept: the 7 top concepts (Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing) or any narrower concept reachable beneath them via skos:narrower (e.g. tadirah:topicModeling).',
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
               ),
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service, as TaDiRAH 2.0 concepts. Prefer the most specific applicable concept (e.g. tadirah:topicModeling rather than tadirah:analyzing); multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -13812,13 +13224,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneSixIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -13832,16 +13238,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -13870,10 +13277,16 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Service'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -13900,7 +13313,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 publication: zod
                   .string()
@@ -13909,7 +13322,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
                   ),
               })
               .describe(
@@ -13938,11 +13351,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -13950,10 +13363,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
           ),
         doi: zod
-          .string()
+          .url()
+          .regex(postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's DOI, as CURIE (DOI:10.1234\/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.",
+            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
           ),
         homepage: zod
           .url()
@@ -13963,13 +13377,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
           .array(
@@ -13983,16 +13391,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -14121,7 +13530,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis).',
+            'The kind of publication, including journal article, book part, conference paper and thesis.',
           ),
         published_in: zod
           .array(
@@ -14135,11 +13544,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14150,7 +13559,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
@@ -14158,14 +13567,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
         type: zod
           .enum(['idhi:Publication'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).',
+        'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
       .strictObject({
@@ -14175,6 +13590,27 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
           ),
+        address: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe('Postal address, multilingual.'),
         contact_email: zod
           .string()
           .nullish()
@@ -14193,11 +13629,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14208,7 +13644,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
+            'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
         event_type: zod
           .enum([
@@ -14229,19 +13665,30 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .regex(postApiV1EntitiesEntityIdResponseOneEightIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         location: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'Where the organization, facility or event is physically situated.',
+            'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
           .array(
@@ -14255,16 +13702,17 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -14276,12 +13724,18 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         type: zod
           .enum(['idhi:Event'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
@@ -14289,317 +13743,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
       ),
     zod
       .strictObject({
-        address: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe('Postal address, multilingual.'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneNineIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        latitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 latitude in decimal degrees.'),
-        longitude: zod
-          .number()
-          .nullish()
-          .describe('WGS84 longitude in decimal degrees.'),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:Location'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A place, optionally with geographic coordinates. Used both for where things ARE (org\/facility\/event location) and for places STUDIED by a project (studied_places).',
-      ),
-    zod
-      .strictObject({
-        begin_date: zod
-          .string()
-          .nullish()
-          .describe(
-            'Start of the time span. A string (not date) on purpose: historical periods need values like \"-0100\" or \"circa 1500\". Prefer ISO 8601 \/ EDTF where possible.',
-          ),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
-          ),
-        end_date: zod.iso
-          .date()
-          .nullish()
-          .describe(
-            'End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.',
-          ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        type: zod
-          .enum(['idhi:TimePeriod'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A time span (EDM TimeSpan). Deliberately reused for two purposes: a project\'s runtime (project_period) and historical periods studied by a project (studied_periods), e.g. \"Second Temple period\". For historical periods, prefer linking same_as to a PeriodO or Wikidata URI.',
-      ),
-    zod
-      .strictObject({
         datasets: zod
           .array(zod.string())
           .nullish()
-          .describe('The datasets this catalog aggregates (by id).'),
-        description: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
           .describe(
-            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+            'Datasets aggregated by a Dataset that functions as a catalog (by id).',
           ),
-        homepage: zod
-          .url()
-          .nullish()
-          .describe('Public landing page of the entity, if one exists.'),
-        id: zod
-          .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneOneoneIdRegExp)
-          .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
-          ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
-          ),
-        publisher: zod
-          .string()
-          .nullish()
-          .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
-          ),
-        same_as: zod
-          .array(zod.url())
-          .nullish()
-          .describe(
-            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
-          ),
-        themes: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "The text itself, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
-        type: zod
-          .enum(['idhi:Catalog'])
-          .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
-          ),
-      })
-      .describe(
-        'A digital archive \/ catalog of resources (DCAT Catalog), i.e. a curated collection of datasets and records with its own identity, such as a digital archive portal.',
-      ),
-    zod
-      .strictObject({
         date_issued: zod.iso
           .date()
           .nullish()
@@ -14618,11 +13767,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14639,15 +13788,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneOnetwoIdRegExp)
+          .regex(postApiV1EntitiesEntityIdResponseOneNineIdRegExp)
           .describe(
-            'The entity\'s primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use \"organization\"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.',
-          ),
-        identifiers: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID\/ROR\/DOI slots, as CURIEs\/URIs (e.g. Wikidata QIDs, VIAF, ISNI).',
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         license: zod
           .enum([
@@ -14660,7 +13803,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical.',
+            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
           ),
         name: zod
           .array(
@@ -14674,28 +13817,35 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
+          .min(1)
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. \"Smith, John\" rather than \"John Smith\") for people and organizations; for projects, tools and services, use the name the team itself uses.',
+            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the catalog, dataset or publication (by IDHI URN).',
+            'The organization publishing the dataset or publication (by IDHI URN).',
           ),
         same_as: zod
           .array(zod.url())
           .nullish()
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
           ),
         themes: zod
           .array(
@@ -14709,25 +13859,23 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 value: zod
                   .string()
                   .describe(
-                    "The text itself, in the language given by 'language'.",
+                    "A localized text, in the language given by 'language'.",
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
-          .describe(
-            'Thematic keywords for the catalog\/dataset, multilingual.',
-          ),
+          .describe('Thematic keywords for the dataset, multilingual.'),
         type: zod
           .enum(['idhi:Dataset'])
           .describe(
-            'Discriminator carrying the class URI; used for polymorphic serialization and deserialization.',
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
           ),
       })
       .describe(
-        'A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.',
+        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
   ])
   .and(

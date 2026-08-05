@@ -11,9 +11,14 @@ import type { DatasetThemesItem } from './datasetThemesItem.ts'
 import type { DatasetType } from './datasetType.ts'
 
 /**
- * A dataset produced or curated by a project (DCAT Dataset): corpora, databases, image collections, annotation sets, etc.
+ * A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.
  */
 export interface Dataset {
+  /**
+   * Datasets aggregated by a Dataset that functions as a catalog (by id).
+   * @nullable
+   */
+  datasets?: string[] | null
   /**
    * Formal publication date (or year-01-01 if only the year is known).
    * @nullable
@@ -37,24 +42,20 @@ export interface Dataset {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:dataset:[0-9a-z]{4,12}$
    */
   id: string
-  /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
-   * @nullable
-   */
-  identifiers?: string[] | null
-  /** Common licenses for tools and datasets. `meaning:` records the canonical URI (SPDX for software licenses, creativecommons.org for CC). Extend as needed; keep meanings canonical. */
+  /** Common licenses for tools and datasets. Extend as needed with canonical meanings. */
   license?: DatasetLicense
   /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: DatasetNameItem[] | null
   /**
-   * The organization publishing the catalog, dataset or publication (by IDHI URN).
+   * The organization publishing the dataset or publication (by IDHI URN).
    * @nullable
    */
   publisher?: string | null
@@ -64,10 +65,15 @@ export interface Dataset {
    */
   same_as?: string[] | null
   /**
-   * Thematic keywords for the catalog/dataset, multilingual.
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /**
+   * Thematic keywords for the dataset, multilingual.
    * @nullable
    */
   themes?: DatasetThemesItem[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: DatasetType
 }

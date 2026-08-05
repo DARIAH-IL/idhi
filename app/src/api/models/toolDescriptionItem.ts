@@ -7,11 +7,11 @@
 import type { ToolDescriptionItemLanguage } from './toolDescriptionItemLanguage.ts'
 
 /**
- * A single language-tagged text value. Instances are combined in a multivalued slot to give English/Hebrew/Arabic variants of one field. Follows the LinkML community rdf:langString convention. Use one LangString per language; do not repeat a language within the same field.
+ * A single language-tagged text value. Instances are combined in a multivalued slot to give English/Hebrew/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.
  */
 export type ToolDescriptionItem = {
   /** Languages supported for free-text fields (BCP-47 tags). */
   language: ToolDescriptionItemLanguage
-  /** The text itself, in the language given by 'language'. */
+  /** A localized text, in the language given by 'language'. */
   value: string
 }

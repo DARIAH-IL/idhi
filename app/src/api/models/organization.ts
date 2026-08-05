@@ -4,13 +4,15 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { OrganizationAddressItem } from './organizationAddressItem.ts'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
+import type { OrganizationLocationItem } from './organizationLocationItem.ts'
 import type { OrganizationNameItem } from './organizationNameItem.ts'
 import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
 import type { OrganizationType } from './organizationType.ts'
 
 /**
- * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type, which is the canonical machine-readable discriminator. Use the subclasses below only as optional sugar when a single, unambiguous type applies. All organizations — including instances of the subclasses — use the idhi:organization:<shortid> URN form.
+ * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.
  */
 export interface Organization {
   /**
@@ -18,6 +20,11 @@ export interface Organization {
    * @nullable
    */
   additional_urls?: string[] | null
+  /**
+   * Postal address, multilingual.
+   * @nullable
+   */
+  address?: OrganizationAddressItem[] | null
   /**
    * A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.
    * @nullable
@@ -36,22 +43,18 @@ export interface Organization {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:organization:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
+   * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */
-  identifiers?: string[] | null
+  location?: OrganizationLocationItem[] | null
   /**
-   * Where the organization, facility or event is physically situated.
-   * @nullable
-   */
-  location?: string | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: OrganizationNameItem[] | null
@@ -63,8 +66,9 @@ export interface Organization {
    */
   parent_organization?: string | null
   /**
-   * The organization's ROR ID, as CURIE (ROR:04aj4c181) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record it whenever the organization is registered in ROR — most universities and research institutes are.
+   * The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.
    * @nullable
+   * @pattern https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}
    */
   ror?: string | null
   /**
@@ -72,6 +76,11 @@ export interface Organization {
    * @nullable
    */
   same_as?: string[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: OrganizationType
 }

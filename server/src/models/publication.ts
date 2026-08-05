@@ -12,7 +12,7 @@ import type { PublicationPublishedInItem } from './publicationPublishedInItem'
 import type { PublicationType } from './publicationType'
 
 /**
- * An academic publication (BIBO document): journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type (COAR resource type).
+ * An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.
  */
 export interface Publication {
   /**
@@ -31,8 +31,9 @@ export interface Publication {
    */
   description?: PublicationDescriptionItem[] | null
   /**
-   * The publication's DOI, as CURIE (DOI:10.1234/abcd) or full URL. A supplementary external identifier — the record's primary id is always the IDHI URN. Record whenever one exists; it is the preferred dedup key.
+   * The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.
    * @nullable
+   * @pattern https://doi.org/.+
    */
   doi?: string | null
   /**
@@ -43,17 +44,13 @@ export interface Publication {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:publication:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
-   * @nullable
-   */
-  identifiers?: string[] | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: PublicationNameItem[] | null
@@ -67,7 +64,7 @@ export interface Publication {
    * @nullable
    */
   presented_at?: string[] | null
-  /** The kind of publication, as any concept from the COAR Resource Types vocabulary (the de-facto repository standard, required by OpenAIRE) — e.g. coar:c_6501 (journal article), coar:c_3248 (book part), coar:c_5794 (conference paper), coar:c_46ec (thesis). */
+  /** The kind of publication, including journal article, book part, conference paper and thesis. */
   publication_type?: PublicationPublicationType
   /**
    * Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.
@@ -75,7 +72,7 @@ export interface Publication {
    */
   published_in?: PublicationPublishedInItem[] | null
   /**
-   * The organization publishing the catalog, dataset or publication (by IDHI URN).
+   * The organization publishing the dataset or publication (by IDHI URN).
    * @nullable
    */
   publisher?: string | null
@@ -84,6 +81,11 @@ export interface Publication {
    * @nullable
    */
   same_as?: string[] | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: PublicationType
 }

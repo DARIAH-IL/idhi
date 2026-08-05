@@ -10,7 +10,7 @@
  */
 export type FacilityFacilityAffiliationsItem = {
   /**
-   * End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.
+   * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
    * @nullable
    */
   end_date?: string | null
@@ -19,7 +19,7 @@ export type FacilityFacilityAffiliationsItem = {
   /** The organization side of the relationship (by IDHI URN). */
   organization: string
   /**
-   * Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
    * @nullable
    */
   start_date?: string | null

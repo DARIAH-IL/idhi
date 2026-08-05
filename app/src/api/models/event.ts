@@ -4,8 +4,10 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { EventAddressItem } from './eventAddressItem.ts'
 import type { EventDescriptionItem } from './eventDescriptionItem.ts'
 import type { EventEventType } from './eventEventType.ts'
+import type { EventLocationItem } from './eventLocationItem.ts'
 import type { EventNameItem } from './eventNameItem.ts'
 import type { EventType } from './eventType.ts'
 
@@ -19,6 +21,11 @@ export interface Event {
    */
   additional_urls?: string[] | null
   /**
+   * Postal address, multilingual.
+   * @nullable
+   */
+  address?: EventAddressItem[] | null
+  /**
    * A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.
    * @nullable
    */
@@ -29,7 +36,7 @@ export interface Event {
    */
   description?: EventDescriptionItem[] | null
   /**
-   * End of the event, relationship or time period. Omit for ongoing relationships and open-ended periods.
+   * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
    * @nullable
    */
   end_date?: string | null
@@ -43,22 +50,18 @@ export interface Event {
   /**
    * The entity's primary identifier: an IDHI URN of the form
    *   idhi:<class name>:<random short alphanumeric id>
-   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name (Organization subclasses use "organization"); each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
+   * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:event:[0-9a-z]{4,12}$
    */
   id: string
   /**
-   * Additional EXTERNAL identifiers beyond the primary IDHI URN and the dedicated ORCID/ROR/DOI slots, as CURIEs/URIs (e.g. Wikidata QIDs, VIAF, ISNI).
+   * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */
-  identifiers?: string[] | null
+  location?: EventLocationItem[] | null
   /**
-   * Where the organization, facility or event is physically situated.
-   * @nullable
-   */
-  location?: string | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name (e.g. "Smith, John" rather than "John Smith") for people and organizations; for projects, tools and services, use the name the team itself uses.
+   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
+   * @minItems 1
    * @nullable
    */
   name?: EventNameItem[] | null
@@ -68,10 +71,15 @@ export interface Event {
    */
   same_as?: string[] | null
   /**
-   * Start of the event or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
    * @nullable
    */
   start_date?: string | null
-  /** Discriminator carrying the class URI; used for polymorphic serialization and deserialization. */
+  /**
+   * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+   * @nullable
+   */
+  tags?: string[] | null
+  /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: EventType
 }

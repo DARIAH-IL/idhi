@@ -6,7 +6,7 @@
  */
 
 /**
- * Discriminator carrying the class URI; used for polymorphic serialization and deserialization.
+ * Discriminator identifying the record's class; used for polymorphic serialization and deserialization.
  */
 export type EventType = (typeof EventType)[keyof typeof EventType]
 

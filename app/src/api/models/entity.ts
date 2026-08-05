@@ -4,17 +4,14 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Catalog } from './catalog.ts'
 import type { Dataset } from './dataset.ts'
 import type { Event } from './event.ts'
 import type { Facility } from './facility.ts'
-import type { Location } from './location.ts'
 import type { Organization } from './organization.ts'
 import type { Person } from './person.ts'
 import type { Project } from './project.ts'
 import type { Publication } from './publication.ts'
 import type { Service } from './service.ts'
-import type { TimePeriod } from './timePeriod.ts'
 import type { Tool } from './tool.ts'
 
 export type Entity =
@@ -26,7 +23,4 @@ export type Entity =
   | Service
   | Publication
   | Event
-  | Location
-  | TimePeriod
-  | Catalog
   | Dataset
