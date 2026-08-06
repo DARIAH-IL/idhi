@@ -1,7 +1,17 @@
 import type { MiddlewareHandler } from 'hono'
+import { verify } from 'hono/jwt'
+import { z } from 'zod'
+import type { Bindings } from '../bindings'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
 import type { User } from '../models/user'
+
+const userClaimsSchema = z.object({
+  id: z.string().regex(/^idhi:user:.+$/),
+  name: z.string().optional(),
+  email: z.email(),
+  isAdmin: z.boolean(),
+})
 
 function isPathWithin(path: string, basePath: string): boolean {
   return path === basePath || path.startsWith(`${basePath}/`)
@@ -28,13 +38,30 @@ function requireAdmin(user: User): Response | undefined {
   }
 }
 
-async function getUserFromJwt(jwt: string): Promise<User | undefined> {
-  // TODO - implement this!!!
-  return undefined
+function userFromPayload(payload: Record<string, unknown>): User | undefined {
+  const result = userClaimsSchema.safeParse(payload)
+
+  return result.success ? result.data : undefined
+}
+
+async function getUserFromJwt(
+  jwt: string,
+  secret: string,
+): Promise<User | undefined> {
+  if (!secret) {
+    throw new Error('JWT_SECRET is missing')
+  }
+
+  try {
+    return userFromPayload(await verify(jwt, secret, 'HS256'))
+  } catch {
+    return undefined
+  }
 }
 
 async function getUserFromAuthorizationHeader(
   authorizationHeader: string | undefined,
+  secret: string,
 ): Promise<User | undefined> {
   const jwt = authorizationHeader?.match(/^Bearer\s+(.+)$/i)?.[1]
 
@@ -42,7 +69,7 @@ async function getUserFromAuthorizationHeader(
     return undefined
   }
 
-  return getUserFromJwt(jwt)
+  return getUserFromJwt(jwt, secret)
 }
 
 export function assertAuthenticatedUser(
@@ -53,11 +80,15 @@ export function assertAuthenticatedUser(
   }
 }
 
-export const authMiddleware: MiddlewareHandler = async (c, next) => {
+export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
+  c,
+  next,
+) => {
   const { method, path } = c.req
   const getAuthenticatedUser = async () => {
     const user = await getUserFromAuthorizationHeader(
       c.req.header('Authorization'),
+      c.env.JWT_SECRET,
     )
 
     if (user) {

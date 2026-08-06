@@ -22,6 +22,7 @@ const serializationOptions: ToObjectOptions<StoredUserInvite> = {
 const userInviteSchema = new Schema<StoredUserInvite>(
   {
     _id: { type: String, alias: 'id' },
+    email: { type: String, required: true },
   },
   {
     id: false,
@@ -33,10 +34,17 @@ const userInviteSchema = new Schema<StoredUserInvite>(
   },
 )
 
+const emailCollation = { locale: 'en', strength: 2 } as const
+
 export interface UserInviteDatabaseService {
   get(inviteId: string): Promise<UserInvite | null>
   add(invite: UserInvite): Promise<UserInvite>
   delete(inviteId: string): Promise<boolean>
+  takePendingByEmail(email: string): Promise<UserInvite | null>
+}
+
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase()
 }
 
 function exposeUserInvite(
@@ -45,13 +53,22 @@ function exposeUserInvite(
   return invite.toObject<UserInvite>()
 }
 
-export function createUserInviteDatabaseService(
+export async function createUserInviteDatabaseService(
   connection: Connection,
-): UserInviteDatabaseService {
+): Promise<UserInviteDatabaseService> {
   const userInvites = connection.model<StoredUserInvite>(
     'UserInvite',
     userInviteSchema,
     'userInvites',
+  )
+
+  await userInvites.collection.createIndex(
+    { email: 1 },
+    {
+      name: 'user_invites_email_unique_case_insensitive',
+      unique: true,
+      collation: emailCollation,
+    },
   )
 
   return {
@@ -63,7 +80,7 @@ export function createUserInviteDatabaseService(
 
     async add(invite) {
       const createdInvite = new userInvites()
-      createdInvite.set(invite)
+      createdInvite.set({ ...invite, email: normalizeEmail(invite.email) })
       await createdInvite.save()
 
       return exposeUserInvite(createdInvite)
@@ -73,6 +90,18 @@ export function createUserInviteDatabaseService(
       const result = await userInvites.deleteOne({ _id: inviteId }).exec()
 
       return result.deletedCount === 1
+    },
+
+    async takePendingByEmail(email) {
+      const invite = await userInvites
+        .findOneAndDelete({
+          email: normalizeEmail(email),
+          expiration: { $gt: new Date().toISOString() },
+        })
+        .collation(emailCollation)
+        .exec()
+
+      return invite ? exposeUserInvite(invite) : null
     },
   }
 }

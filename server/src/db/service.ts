@@ -32,11 +32,12 @@ export const createDatabaseService = async (
     databaseServicePromise = Promise.all([
       createDistributedLockDatabaseService(connection),
       createUserDatabaseService(connection),
+      createUserInviteDatabaseService(connection),
     ])
-      .then(([locks, users]) => ({
+      .then(([locks, users, userInvites]) => ({
         authChallenges: createAuthChallengeDatabaseService(connection),
         locks,
-        userInvites: createUserInviteDatabaseService(connection),
+        userInvites,
         users,
       }))
       .catch((error) => {
