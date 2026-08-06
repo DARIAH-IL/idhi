@@ -4,11 +4,11 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuditedEntity } from './auditedEntity.ts'
+import type { Audited } from './audited.ts'
 import type { Date } from './date.ts'
 import type { InviteId } from './inviteId.ts'
 
-export type UserInvite = AuditedEntity & {
+export type UserInvite = Audited & {
   id: InviteId
   email: string
   message?: string
