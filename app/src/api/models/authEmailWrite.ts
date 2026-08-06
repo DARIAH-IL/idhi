@@ -5,7 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * UTC date and time
- */
-export type Date = string
+export interface AuthEmailWrite {
+  email: string
+}

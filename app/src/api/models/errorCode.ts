@@ -12,5 +12,8 @@ export const ErrorCode = {
   InvalidInput: 'InvalidInput',
   EntityNotFound: 'EntityNotFound',
   UserNotFound: 'UserNotFound',
-  Conflict: 'Conflict',
+  UserAlreadyInvitedOrRegistered: 'UserAlreadyInvitedOrRegistered',
+  WrongOtpCode: 'WrongOtpCode',
+  TooManyAuthAttempts: 'TooManyAuthAttempts',
+  AuthChallengeNotFoundOrExpired: 'AuthChallengeNotFoundOrExpired',
 } as const
