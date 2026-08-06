@@ -689,7 +689,7 @@ components:
 
     UserInvite:
       allOf:
-        - $ref: "#/components/schemas/AuditedEntity"
+        - $ref: "#/components/schemas/Audited"
         - type: object
           required:
             - id
