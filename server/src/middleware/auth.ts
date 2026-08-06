@@ -103,9 +103,38 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
       path,
       resolution,
     })
+  const authorizeAdmin = async (
+    scope: string,
+  ): Promise<Response | undefined> => {
+    const user = await getAuthenticatedUser()
+
+    if (!user) {
+      logResolution(`${scope}_unauthenticated`)
+      return unauthorized('Authentication required')
+    }
+
+    const response = requireAdmin(user)
+
+    if (response) {
+      logResolution(`${scope}_not_admin`)
+      return response
+    }
+
+    logResolution(`${scope}_admin`)
+  }
 
   if (method === 'GET' && path === '/api/v1/health') {
     logResolution('health_allowed')
+    return next()
+  }
+
+  if (isPathWithin(path, '/api/v1/auth')) {
+    if (await getAuthenticatedUser()) {
+      logResolution('auth_authenticated')
+      return unauthorized('Authentication routes require an anonymous user')
+    }
+
+    logResolution('auth_anonymous')
     return next()
   }
 
@@ -126,23 +155,19 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
     return next()
   }
 
+  if (
+    isPathWithin(path, '/api/v1/users/invite') ||
+    isPathWithin(path, '/api/v1/users/invites')
+  ) {
+    const response = await authorizeAdmin('user_invites')
+
+    return response ?? next()
+  }
+
   if (isPathWithin(path, '/api/v1/users')) {
-    const user = await getAuthenticatedUser()
+    const response = await authorizeAdmin('user_management')
 
-    if (!user) {
-      logResolution('user_management_unauthenticated')
-      return unauthorized('Authentication required')
-    }
-
-    const adminResponse = requireAdmin(user)
-
-    if (adminResponse) {
-      logResolution('user_management_not_admin')
-      return adminResponse
-    }
-
-    logResolution('user_management_admin')
-    return next()
+    return response ?? next()
   }
 
   logResolution('route_blocked')

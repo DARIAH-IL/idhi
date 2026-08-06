@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { assertAuthenticatedUser } from '../../middleware/auth'
 import { zValidator } from '../api.validator'
 import {
   PostApiV1UsersInviteContext,
@@ -20,13 +21,22 @@ import {
 const factory = createFactory()
 export const postApiV1UsersInviteHandlers = factory.createHandlers(
   zValidator('json', PostApiV1UsersInviteBody),
-  async (c: PostApiV1UsersInviteContext) => {},
+  async (c: PostApiV1UsersInviteContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const getApiV1UsersInvitesHandlers = factory.createHandlers(
   zValidator('response', GetApiV1UsersInvitesResponse),
-  async (c: GetApiV1UsersInvitesContext) => {},
+  async (c: GetApiV1UsersInvitesContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
 export const deleteApiV1UsersInvitesInviteIdHandlers = factory.createHandlers(
   zValidator('param', DeleteApiV1UsersInvitesInviteIdParams),
-  async (c: DeleteApiV1UsersInvitesInviteIdContext) => {},
+  async (c: DeleteApiV1UsersInvitesInviteIdContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+  },
 )
