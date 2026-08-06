@@ -8,6 +8,7 @@ import type { AuthChallenge } from '../models/AuthChallenge'
 
 type StoredAuthChallenge = Omit<AuthChallenge, 'challengeId'> & {
   _id: string
+  expiresAt: Date
 }
 
 const serializationOptions: ToObjectOptions<StoredAuthChallenge> = {
@@ -15,6 +16,7 @@ const serializationOptions: ToObjectOptions<StoredAuthChallenge> = {
   virtuals: true,
   transform(_document, challenge) {
     Reflect.deleteProperty(challenge, '_id')
+    Reflect.deleteProperty(challenge, 'expiresAt')
     return challenge
   },
 }
@@ -22,6 +24,7 @@ const serializationOptions: ToObjectOptions<StoredAuthChallenge> = {
 const authChallengeSchema = new Schema<StoredAuthChallenge>(
   {
     _id: { type: String, alias: 'challengeId' },
+    expiresAt: { type: Date, required: true },
   },
   {
     id: false,
@@ -37,6 +40,7 @@ export interface AuthChallengeDatabaseService {
   getById(challengeId: string): Promise<AuthChallenge | null>
   takeById(challengeId: string): Promise<AuthChallenge | null>
   insert(challenge: AuthChallenge): Promise<AuthChallenge>
+  update(challenge: AuthChallenge): Promise<AuthChallenge | null>
   delete(challengeId: string): Promise<boolean>
 }
 
@@ -46,13 +50,21 @@ function exposeAuthChallenge(
   return challenge.toObject<AuthChallenge>()
 }
 
-export function createAuthChallengeDatabaseService(
+export async function createAuthChallengeDatabaseService(
   connection: Connection,
-): AuthChallengeDatabaseService {
+): Promise<AuthChallengeDatabaseService> {
   const authChallenges = connection.model<StoredAuthChallenge>(
     'AuthChallenge',
     authChallengeSchema,
     'authChallenges',
+  )
+
+  await authChallenges.collection.createIndex(
+    { expiresAt: 1 },
+    {
+      name: 'auth_challenges_expiration',
+      expireAfterSeconds: 0,
+    },
   )
 
   return {
@@ -72,10 +84,31 @@ export function createAuthChallengeDatabaseService(
 
     async insert(challenge) {
       const createdChallenge = new authChallenges()
-      createdChallenge.set(challenge)
+      createdChallenge.set({
+        ...challenge,
+        expiresAt: new Date(challenge.expiresAtEpoch),
+      })
       await createdChallenge.save()
 
       return exposeAuthChallenge(createdChallenge)
+    },
+
+    async update(challenge) {
+      const { challengeId, ...values } = challenge
+      const updatedChallenge = await authChallenges
+        .findByIdAndUpdate(
+          challengeId,
+          {
+            $set: {
+              ...values,
+              expiresAt: new Date(values.expiresAtEpoch),
+            },
+          },
+          { new: true },
+        )
+        .exec()
+
+      return updatedChallenge ? exposeAuthChallenge(updatedChallenge) : null
     },
 
     async delete(challengeId) {

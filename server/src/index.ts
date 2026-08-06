@@ -10,6 +10,7 @@ import {
 import generatedRoutes from './routes'
 import { requestLoggerMiddleware } from './middleware/logger'
 import { Bindings } from './bindings'
+import { splitValues } from './utils/values'
 
 const app = new Hono<{ Bindings: Bindings; Variables: {} }>()
 
@@ -35,10 +36,9 @@ app.use('*', async (c, next) => {
 app.use('*', requestLoggerMiddleware)
 
 app.use('*', async (c, next) => {
-  const allowedHosts = (c.env.SERVER_ALLOWED_HOSTS ?? '')
-    .split(',')
-    .map(normalizeOrigin)
-    .filter(Boolean)
+  const allowedHosts = splitValues(c.env.SERVER_ALLOWED_HOSTS).map(
+    normalizeOrigin,
+  )
 
   return cors({
     origin: (origin) => {

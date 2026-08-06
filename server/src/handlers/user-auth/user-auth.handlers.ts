@@ -20,7 +20,10 @@ import { serializeError, type RequestLogger } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
 import { createId } from '../../utils/id'
 import { createJwtForUser } from '../../utils/jwt'
+import { createOtp, otpDigits, otpMaxAttempts } from '../../utils/otp'
+import { sendOtpEmail } from '../../utils/smtp'
 import { resolveUserForEmail } from '../../utils/users'
+import { splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
   PostApiV1AuthOtpContext,
@@ -50,7 +53,9 @@ import {
 const factory = createFactory()
 const RP_NAME = 'IDHI'
 const DEFAULT_CHALLENGE_TIMEOUT_MS = 5 * 60 * 1000
+const LOCK_TTL_MS = 10 * 1000
 
+type OtpChallenge = Extract<AuthChallenge, { type: 'otp' }>
 type PasskeyCreateChallenge = Extract<AuthChallenge, { type: 'passkeyCreate' }>
 type PasskeyLoginChallenge = Extract<AuthChallenge, { type: 'passkeyLogin' }>
 
@@ -68,11 +73,7 @@ function relyingParty(
   allowedHosts: string | undefined,
 ): { origin: string; rpID: string } {
   const origin = normalizeOrigin(requestOrigin ?? requestUrl)
-  const allowedOrigins = (allowedHosts ?? '')
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean)
-    .map(normalizeOrigin)
+  const allowedOrigins = splitValues(allowedHosts).map(normalizeOrigin)
 
   if (allowedOrigins.length > 0 && !allowedOrigins.includes(origin)) {
     throw new ApiError(ErrorCode.InvalidInput, 'WebAuthn origin is not allowed')
@@ -142,16 +143,197 @@ function invalidPasskey(message: string): ApiError {
   return new ApiError(ErrorCode.InvalidInput, message)
 }
 
+async function getOtpChallenge(
+  db: DatabaseService,
+  logger: RequestLogger,
+  challengeId: string,
+): Promise<OtpChallenge> {
+  const challenge = await db.authChallenges.getById(challengeId)
+  const expired = challenge ? challenge.expiresAtEpoch <= Date.now() : false
+
+  if (!challenge || challenge.type !== 'otp' || expired) {
+    if (challenge && expired) {
+      await db.authChallenges.delete(challengeId)
+    }
+
+    logger.warn('OTP challenge unavailable', {
+      challengeId,
+      actualType: challenge?.type,
+      expired,
+    })
+    throw challengeNotFound()
+  }
+
+  return challenge
+}
+
 export const postApiV1AuthOtpHandlers = factory.createHandlers(
   zValidator('json', PostApiV1AuthOtpBody),
   zValidator('response', PostApiV1AuthOtpResponse),
-  async (c: PostApiV1AuthOtpContext) => {},
+  async (c: PostApiV1AuthOtpContext) => {
+    const { email } = c.req.valid('json')
+    const digits = otpDigits(c.env.OTP_DIGITS)
+    const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
+    const code = createOtp(digits)
+    const challengeId = createId('auth_challenge')
+    const expiresAtEpoch = Date.now() + DEFAULT_CHALLENGE_TIMEOUT_MS
+
+    await c.var.db.authChallenges.insert({
+      challengeId,
+      type: 'otp',
+      code,
+      attempts: 0,
+      email: user.email,
+      expiresAtEpoch,
+    })
+
+    try {
+      await sendOtpEmail(user.email, code, expiresAtEpoch, c.env)
+    } catch (error) {
+      let challengeDeleted = false
+
+      try {
+        challengeDeleted = await c.var.db.authChallenges.delete(challengeId)
+      } catch (cleanupError) {
+        c.var.logger.error('OTP challenge cleanup after email failure threw', {
+          challengeId,
+          userId: user.id,
+          error: serializeError(cleanupError),
+        })
+      }
+
+      c.var.logger.error('OTP email delivery failed', {
+        challengeId,
+        userId: user.id,
+        challengeDeleted,
+        error: serializeError(error),
+      })
+      throw error
+    }
+
+    c.var.logger.debug('OTP challenge created and delivered', {
+      challengeId,
+      userId: user.id,
+      expiresAtEpoch,
+    })
+
+    return c.json({
+      challengeId,
+      expiration: new Date(expiresAtEpoch).toISOString(),
+    })
+  },
 )
 export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
   zValidator('param', PostApiV1AuthOtpChallengeIdParams),
   zValidator('json', PostApiV1AuthOtpChallengeIdBody),
   zValidator('response', PostApiV1AuthOtpChallengeIdResponse),
-  async (c: PostApiV1AuthOtpChallengeIdContext) => {},
+  async (c: PostApiV1AuthOtpChallengeIdContext) => {
+    const { challengeId } = c.req.valid('param')
+    const { otp } = c.req.valid('json')
+    const lock = await c.var.db.locks.tryLock(
+      `otp_attempt:${challengeId}`,
+      LOCK_TTL_MS,
+    )
+
+    if (!lock) {
+      c.var.logger.warn('OTP challenge attempt lock unavailable', {
+        challengeId,
+      })
+      throw new ApiError(
+        ErrorCode.InvalidInput,
+        'OTP challenge is currently being processed',
+      )
+    }
+
+    try {
+      const challenge = await getOtpChallenge(
+        c.var.db,
+        c.var.logger,
+        challengeId,
+      )
+      const maxAttempts = otpMaxAttempts(c.env.OTP_MAX_ATTEMPTS)
+
+      if (challenge.attempts >= maxAttempts) {
+        await c.var.db.authChallenges.delete(challengeId)
+        c.var.logger.warn('OTP challenge attempt limit reached', {
+          challengeId,
+          attempts: challenge.attempts,
+          maxAttempts,
+        })
+        throw new ApiError(
+          ErrorCode.TooManyAuthAttempts,
+          'Maximum OTP attempts reached',
+        )
+      }
+
+      if (challenge.code !== otp) {
+        const attempts = challenge.attempts + 1
+
+        if (attempts >= maxAttempts) {
+          await c.var.db.authChallenges.delete(challengeId)
+          c.var.logger.warn('OTP challenge attempt limit reached', {
+            challengeId,
+            attempts,
+            maxAttempts,
+          })
+          throw new ApiError(
+            ErrorCode.TooManyAuthAttempts,
+            'Maximum OTP attempts reached',
+          )
+        }
+
+        challenge.attempts = attempts
+        const updatedChallenge = await c.var.db.authChallenges.update(challenge)
+
+        if (!updatedChallenge) {
+          throw challengeNotFound()
+        }
+
+        c.var.logger.warn('Incorrect OTP submitted', {
+          challengeId,
+          attempts,
+          maxAttempts,
+        })
+        throw new ApiError(ErrorCode.WrongOtpCode, 'Incorrect OTP code')
+      }
+
+      if (!(await c.var.db.authChallenges.delete(challengeId))) {
+        throw challengeNotFound()
+      }
+
+      const user = await c.var.db.users.getByEmail(challenge.email)
+
+      if (!user) {
+        c.var.logger.warn('OTP authentication user no longer exists', {
+          challengeId,
+        })
+        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+      }
+
+      c.var.logger.debug('OTP authentication completed', {
+        challengeId,
+        userId: user.id,
+        attempts: challenge.attempts,
+      })
+
+      return c.json({ jwt: await createJwtForUser(user, c.env) })
+    } finally {
+      try {
+        if (!(await lock.release())) {
+          c.var.logger.warn('OTP challenge attempt lock was not released', {
+            challengeId,
+            lockId: lock.lockId,
+          })
+        }
+      } catch (error) {
+        c.var.logger.error('OTP challenge attempt lock release threw', {
+          challengeId,
+          lockId: lock.lockId,
+          error: serializeError(error),
+        })
+      }
+    }
+  },
 )
 export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyCreateResponse),

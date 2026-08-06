@@ -20,6 +20,7 @@ interface PasskeyLoginChallenge extends PasskeyChallenge {
 interface OtpChallenge {
   code: string
   attempts: number
+  email: string
 }
 
 export type AuthChallenge = {

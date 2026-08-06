@@ -5,6 +5,7 @@ import type { Bindings } from '../bindings'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
 import type { User } from '../models/user'
+import { requiredValue } from '../utils/values'
 
 const userClaimsSchema = z.object({
   id: z.string().regex(/^idhi:user:.+$/),
@@ -46,14 +47,12 @@ function userFromPayload(payload: Record<string, unknown>): User | undefined {
 
 async function getUserFromJwt(
   jwt: string,
-  secret: string,
+  bindings: Bindings,
 ): Promise<User | undefined> {
-  if (!secret) {
-    throw new Error('JWT_SECRET is missing')
-  }
+  const jwtSecret = requiredValue(bindings, 'JWT_SECRET')
 
   try {
-    return userFromPayload(await verify(jwt, secret, 'HS256'))
+    return userFromPayload(await verify(jwt, jwtSecret, 'HS256'))
   } catch {
     return undefined
   }
@@ -61,7 +60,7 @@ async function getUserFromJwt(
 
 async function getUserFromAuthorizationHeader(
   authorizationHeader: string | undefined,
-  secret: string,
+  bindings: Bindings,
 ): Promise<User | undefined> {
   const jwt = authorizationHeader?.match(/^Bearer\s+(.+)$/i)?.[1]
 
@@ -69,7 +68,7 @@ async function getUserFromAuthorizationHeader(
     return undefined
   }
 
-  return getUserFromJwt(jwt, secret)
+  return getUserFromJwt(jwt, bindings)
 }
 
 export function assertAuthenticatedUser(
@@ -88,7 +87,7 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
   const getAuthenticatedUser = async () => {
     const user = await getUserFromAuthorizationHeader(
       c.req.header('Authorization'),
-      c.env.JWT_SECRET,
+      c.env,
     )
 
     if (user) {

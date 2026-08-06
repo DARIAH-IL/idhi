@@ -1,6 +1,18 @@
 export type Bindings = {
   JWT_EXPIRATION_SECONDS?: string
   JWT_SECRET: string
+
   MONGODB_CONNECTION_STRING: string
+
+  OTP_DIGITS?: string
+  OTP_MAX_ATTEMPTS?: string
+
   SERVER_ALLOWED_HOSTS: string
+
+  SMTP_FROM_EMAIL: string
+  SMTP_HOST: string
+  SMTP_PASSWORD: string
+  SMTP_PORT?: string
+  SMTP_SECURE?: string
+  SMTP_USERNAME: string
 }

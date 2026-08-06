@@ -1,10 +1,9 @@
 import { sign } from 'hono/jwt'
 import type { Bindings } from '../bindings'
 import type { User } from '../models/user'
+import { requiredValue } from './values'
 
 const DEFAULT_EXPIRATION_SECONDS = 7 * 24 * 60 * 60
-
-type JwtBindings = Pick<Bindings, 'JWT_EXPIRATION_SECONDS' | 'JWT_SECRET'>
 
 function expirationSeconds(value: string | undefined): number {
   if (value === undefined || value.trim() === '') {
@@ -20,17 +19,9 @@ function expirationSeconds(value: string | undefined): number {
   return seconds
 }
 
-function requireSecret(secret: string): string {
-  if (!secret) {
-    throw new Error('JWT_SECRET is missing')
-  }
-
-  return secret
-}
-
 export async function createJwtForUser(
   user: User,
-  bindings: JwtBindings,
+  bindings: Bindings,
 ): Promise<string> {
   const issuedAt = Math.floor(Date.now() / 1000)
 
@@ -43,7 +34,7 @@ export async function createJwtForUser(
       iat: issuedAt,
       exp: issuedAt + expirationSeconds(bindings.JWT_EXPIRATION_SECONDS),
     },
-    requireSecret(bindings.JWT_SECRET),
+    requiredValue(bindings, 'JWT_SECRET'),
     'HS256',
   )
 }
