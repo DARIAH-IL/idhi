@@ -5,7 +5,7 @@ import {
 } from '@simplewebauthn/server'
 import { User } from '../../models'
 
-interface PasskeyCredentials {
+export interface PasskeyCredential {
   id: Base64URLString
   publicKey: Uint8Array
   webauthnUserID: Base64URLString
@@ -16,5 +16,5 @@ interface PasskeyCredentials {
 }
 
 export interface UserWithCredentials extends User {
-  passkeyCredentials: PasskeyCredentials[]
+  passkeyCredentials: PasskeyCredential[]
 }

@@ -128,6 +128,18 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
   }
 
   if (isPathWithin(path, '/api/v1/auth')) {
+    if (isPathWithin(path, '/api/v1/auth/passkey/create')) {
+      const response = requireAuthenticated(await getAuthenticatedUser())
+
+      if (response) {
+        logResolution('passkey_create_unauthenticated')
+        return response
+      }
+
+      logResolution('passkey_create_authenticated')
+      return next()
+    }
+
     if (await getAuthenticatedUser()) {
       logResolution('auth_authenticated')
       return unauthorized('Authentication routes require an anonymous user')

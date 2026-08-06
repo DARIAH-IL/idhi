@@ -77,13 +77,6 @@ paths:
       tags:
         - UserAuth
       summary: Start passkey registration
-      security: [ ]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AuthEmailWrite"
       responses:
         "200":
           description: Passkey registration challenge started
@@ -101,7 +94,6 @@ paths:
       tags:
         - UserAuth
       summary: Complete passkey registration
-      security: [ ]
       requestBody:
         required: true
         content:

@@ -38,8 +38,7 @@ export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
 >
 export type PostApiV1AuthPasskeyCreateContext<E extends Env = any> = Context<
   E,
-  '/api/v1/auth/passkey/create',
-  { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
+  '/api/v1/auth/passkey/create'
 >
 export type PostApiV1AuthPasskeyCreateChallengeIdContext<E extends Env = any> =
   Context<

@@ -4,7 +4,10 @@ import {
   type HydratedDocument,
   type ToObjectOptions,
 } from 'mongoose'
-import type { UserWithCredentials } from '../models/UserWithCredentials'
+import type {
+  PasskeyCredential,
+  UserWithCredentials,
+} from '../models/UserWithCredentials'
 import type { UserWrite } from '../../models/userWrite'
 import { COLLECTIONS } from '../collections'
 
@@ -45,9 +48,14 @@ const emailCollation = { locale: 'en', strength: 2 } as const
 export interface UserDatabaseService {
   list(page: number, pageSize: number): Promise<UserListResult>
   get(userId: string): Promise<UserWithCredentials | null>
+  getPasskeyCredentials(userId: string): Promise<PasskeyCredential[]>
   getByEmail(email: string): Promise<UserWithCredentials | null>
   insert(user: UserWithCredentials): Promise<UserWithCredentials>
   update(user: UserWithCredentials): Promise<UserWithCredentials | null>
+  enrollPasskeyCredential(
+    userId: string,
+    credential: PasskeyCredential,
+  ): Promise<'enrolled' | 'duplicate' | 'userNotFound'>
   replace(userId: string, user: UserWrite): Promise<UserWithCredentials | null>
   delete(userId: string): Promise<boolean>
 }
@@ -98,6 +106,15 @@ export async function createUserDatabaseService(
       return user ? exposeUser(user) : null
     },
 
+    async getPasskeyCredentials(userId) {
+      const user = await users
+        .findById(userId)
+        .select({ passkeyCredentials: 1 })
+        .exec()
+
+      return user?.passkeyCredentials ?? []
+    },
+
     async getByEmail(email) {
       const user = await users
         .findOne({ email: normalizeEmail(email) })
@@ -126,6 +143,24 @@ export async function createUserDatabaseService(
         .exec()
 
       return updatedUser ? exposeUser(updatedUser) : null
+    },
+
+    async enrollPasskeyCredential(userId, credential) {
+      const result = await users.updateOne(
+        {
+          _id: userId,
+          'passkeyCredentials.id': { $ne: credential.id },
+        },
+        { $push: { passkeyCredentials: credential } },
+      )
+
+      if (result.modifiedCount === 1) {
+        return 'enrolled'
+      }
+
+      return (await users.exists({ _id: userId }))
+        ? 'duplicate'
+        : 'userNotFound'
     },
 
     async replace(userId, user) {

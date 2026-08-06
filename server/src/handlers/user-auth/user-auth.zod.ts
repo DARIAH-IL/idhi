@@ -27,10 +27,6 @@ export const PostApiV1AuthOtpChallengeIdResponse = zod.strictObject({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
 
-export const PostApiV1AuthPasskeyCreateBody = zod.object({
-  email: zod.email(),
-})
-
 export const PostApiV1AuthPasskeyCreateResponse = zod.strictObject({
   challengeId: zod.string(),
   expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),

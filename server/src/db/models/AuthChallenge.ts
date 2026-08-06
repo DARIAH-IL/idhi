@@ -4,16 +4,17 @@ import {
 } from '@simplewebauthn/server'
 
 interface PasskeyChallenge {
-  email: string
   expectedOrigin: string
   expectedRPID: string
 }
 
 interface PasskeyCreateChallenge extends PasskeyChallenge {
+  userId: string
   options: PublicKeyCredentialCreationOptionsJSON
 }
 
 interface PasskeyLoginChallenge extends PasskeyChallenge {
+  email: string
   options: PublicKeyCredentialRequestOptionsJSON
 }
 
