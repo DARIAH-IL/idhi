@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { databaseMiddleware } from './middleware/db'
 import { authMiddleware } from './middleware/auth'
 import {
   errorResponseMiddleware,
@@ -8,10 +9,7 @@ import {
 } from './middleware/error'
 import generatedRoutes from './routes'
 import { requestLoggerMiddleware } from './middleware/logger'
-
-type Bindings = {
-  SERVER_ALLOWED_HOSTS: string
-}
+import { Bindings } from './bindings'
 
 const app = new Hono<{ Bindings: Bindings; Variables: {} }>()
 
@@ -54,6 +52,7 @@ app.use('*', async (c, next) => {
 
 app.use('*', logger())
 app.use('*', errorResponseMiddleware)
+app.use('*', databaseMiddleware)
 app.use('*', authMiddleware)
 
 app.route('/', generatedRoutes)
