@@ -1,13 +1,19 @@
 import {
-  PublicKeyCredentialCreationOptionsJSON,
-  PublicKeyCredentialRequestOptionsJSON,
+  type PublicKeyCredentialCreationOptionsJSON,
+  type PublicKeyCredentialRequestOptionsJSON,
 } from '@simplewebauthn/server'
 
-interface PasskeyCreateChallenge {
+interface PasskeyChallenge {
+  email: string
+  expectedOrigin: string
+  expectedRPID: string
+}
+
+interface PasskeyCreateChallenge extends PasskeyChallenge {
   options: PublicKeyCredentialCreationOptionsJSON
 }
 
-interface PasskeyLoginChallenge {
+interface PasskeyLoginChallenge extends PasskeyChallenge {
   options: PublicKeyCredentialRequestOptionsJSON
 }
 
@@ -28,5 +34,5 @@ export type AuthChallenge = {
     } & PasskeyLoginChallenge)
   | ({
       type: 'otp'
-    } & PasskeyLoginChallenge)
+    } & OtpChallenge)
 )

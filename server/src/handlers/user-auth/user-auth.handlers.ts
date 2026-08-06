@@ -5,6 +5,22 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import {
+  generateAuthenticationOptions,
+  generateRegistrationOptions,
+  verifyAuthenticationResponse,
+  verifyRegistrationResponse,
+  type AuthenticationResponseJSON,
+  type RegistrationResponseJSON,
+} from '@simplewebauthn/server'
+import type { DatabaseService } from '../../db/service'
+import type { AuthChallenge } from '../../db/models/AuthChallenge'
+import { ApiError } from '../../errors/ApiError'
+import { serializeError, type RequestLogger } from '../../middleware/logger'
+import { ErrorCode } from '../../models/errorCode'
+import { createId } from '../../utils/id'
+import { createJwtForUser } from '../../utils/jwt'
+import { resolveUserForEmail } from '../../utils/users'
 import { zValidator } from '../api.validator'
 import {
   PostApiV1AuthOtpContext,
@@ -32,6 +48,100 @@ import {
 } from './user-auth.zod'
 
 const factory = createFactory()
+const RP_NAME = 'IDHI'
+const DEFAULT_CHALLENGE_TIMEOUT_MS = 5 * 60 * 1000
+
+type PasskeyCreateChallenge = Extract<AuthChallenge, { type: 'passkeyCreate' }>
+type PasskeyLoginChallenge = Extract<AuthChallenge, { type: 'passkeyLogin' }>
+
+function normalizeOrigin(value: string): string {
+  try {
+    return new URL(value).origin.toLowerCase()
+  } catch {
+    throw new ApiError(ErrorCode.InvalidInput, 'Invalid WebAuthn origin')
+  }
+}
+
+function relyingParty(
+  requestUrl: string,
+  requestOrigin: string | undefined,
+  allowedHosts: string | undefined,
+): { origin: string; rpID: string } {
+  const origin = normalizeOrigin(requestOrigin ?? requestUrl)
+  const allowedOrigins = (allowedHosts ?? '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .map(normalizeOrigin)
+
+  if (allowedOrigins.length > 0 && !allowedOrigins.includes(origin)) {
+    throw new ApiError(ErrorCode.InvalidInput, 'WebAuthn origin is not allowed')
+  }
+
+  return { origin, rpID: new URL(origin).hostname }
+}
+
+function expirationFor(options: { timeout?: number }): number {
+  return Date.now() + (options.timeout ?? DEFAULT_CHALLENGE_TIMEOUT_MS)
+}
+
+function challengeNotFound(): ApiError {
+  return new ApiError(
+    ErrorCode.AuthChallengeNotFoundOrExpired,
+    'Authentication challenge was not found or has expired',
+  )
+}
+
+async function takeCreateChallenge(
+  db: DatabaseService,
+  logger: RequestLogger,
+  challengeId: string,
+): Promise<PasskeyCreateChallenge> {
+  const challenge = await db.authChallenges.takeById(challengeId)
+
+  if (
+    !challenge ||
+    challenge.type !== 'passkeyCreate' ||
+    challenge.expiresAtEpoch <= Date.now()
+  ) {
+    logger.warn('Passkey registration challenge unavailable', {
+      challengeId,
+      actualType: challenge?.type,
+      expired: challenge ? challenge.expiresAtEpoch <= Date.now() : undefined,
+    })
+    throw challengeNotFound()
+  }
+
+  return challenge
+}
+
+async function takeLoginChallenge(
+  db: DatabaseService,
+  logger: RequestLogger,
+  challengeId: string,
+): Promise<PasskeyLoginChallenge> {
+  const challenge = await db.authChallenges.takeById(challengeId)
+
+  if (
+    !challenge ||
+    challenge.type !== 'passkeyLogin' ||
+    challenge.expiresAtEpoch <= Date.now()
+  ) {
+    logger.warn('Passkey authentication challenge unavailable', {
+      challengeId,
+      actualType: challenge?.type,
+      expired: challenge ? challenge.expiresAtEpoch <= Date.now() : undefined,
+    })
+    throw challengeNotFound()
+  }
+
+  return challenge
+}
+
+function invalidPasskey(message: string): ApiError {
+  return new ApiError(ErrorCode.InvalidInput, message)
+}
+
 export const postApiV1AuthOtpHandlers = factory.createHandlers(
   zValidator('json', PostApiV1AuthOtpBody),
   zValidator('response', PostApiV1AuthOtpResponse),
@@ -46,23 +156,280 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
 export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyCreateResponse),
   zValidator('json', PostApiV1AuthPasskeyCreateBody),
-  async (c: PostApiV1AuthPasskeyCreateContext) => {},
+  async (c: PostApiV1AuthPasskeyCreateContext) => {
+    const { email } = c.req.valid('json')
+    const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
+    const { origin, rpID } = relyingParty(
+      c.req.url,
+      c.req.header('Origin'),
+      c.env.SERVER_ALLOWED_HOSTS,
+    )
+    const options = await generateRegistrationOptions({
+      rpName: RP_NAME,
+      rpID,
+      userName: user.email,
+      userDisplayName: user.name ?? user.email,
+      userID: new TextEncoder().encode(user.id),
+      attestationType: 'none',
+      authenticatorSelection: {
+        residentKey: 'preferred',
+        userVerification: 'required',
+      },
+      excludeCredentials: user.passkeyCredentials.map((credential) => ({
+        id: credential.id,
+        transports: credential.transports,
+      })),
+    })
+    const challengeId = createId('auth_challenge')
+    const expiresAtEpoch = expirationFor(options)
+
+    await c.var.db.authChallenges.insert({
+      challengeId,
+      type: 'passkeyCreate',
+      email: user.email,
+      expectedOrigin: origin,
+      expectedRPID: rpID,
+      expiresAtEpoch,
+      options,
+    })
+
+    c.var.logger.debug('Passkey registration challenge created', {
+      challengeId,
+      userId: user.id,
+      rpID,
+      expiresAtEpoch,
+      excludedCredentialCount: user.passkeyCredentials.length,
+    })
+
+    return c.json({
+      challengeId,
+      expiration: new Date(expiresAtEpoch).toISOString(),
+      options,
+    })
+  },
 )
 export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
   factory.createHandlers(
     zValidator('param', PostApiV1AuthPasskeyCreateChallengeIdParams),
     zValidator('json', PostApiV1AuthPasskeyCreateChallengeIdBody),
-    async (c: PostApiV1AuthPasskeyCreateChallengeIdContext) => {},
+    async (c: PostApiV1AuthPasskeyCreateChallengeIdContext) => {
+      const { challengeId } = c.req.valid('param')
+      const response = c.req.valid(
+        'json',
+      ) as unknown as RegistrationResponseJSON
+      const challenge = await takeCreateChallenge(
+        c.var.db,
+        c.var.logger,
+        challengeId,
+      )
+      let verification
+
+      try {
+        verification = await verifyRegistrationResponse({
+          response,
+          expectedChallenge: challenge.options.challenge,
+          expectedOrigin: challenge.expectedOrigin,
+          expectedRPID: challenge.expectedRPID,
+        })
+      } catch (error) {
+        c.var.logger.warn('Passkey registration verification threw', {
+          challengeId,
+          error: serializeError(error),
+        })
+        throw invalidPasskey('Passkey registration could not be verified')
+      }
+
+      if (!verification.verified) {
+        c.var.logger.warn('Passkey registration verification failed', {
+          challengeId,
+        })
+        throw invalidPasskey('Passkey registration could not be verified')
+      }
+
+      const user = await c.var.db.users.getByEmail(challenge.email)
+
+      if (!user) {
+        c.var.logger.warn('Passkey registration user no longer exists', {
+          challengeId,
+        })
+        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+      }
+
+      const { credential, credentialDeviceType, credentialBackedUp } =
+        verification.registrationInfo
+
+      if (
+        user.passkeyCredentials.some(
+          (existingCredential) => existingCredential.id === credential.id,
+        )
+      ) {
+        c.var.logger.warn('Passkey is already registered for user', {
+          challengeId,
+          userId: user.id,
+        })
+        throw invalidPasskey('Passkey is already registered')
+      }
+
+      user.passkeyCredentials.push({
+        id: credential.id,
+        publicKey: credential.publicKey,
+        webauthnUserID: challenge.options.user.id,
+        counter: credential.counter,
+        deviceType: credentialDeviceType,
+        backedUp: credentialBackedUp,
+        transports: credential.transports,
+      })
+      const updatedUser = await c.var.db.users.update(user)
+
+      if (!updatedUser) {
+        c.var.logger.warn('Passkey registration user update missed', {
+          challengeId,
+          userId: user.id,
+        })
+        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+      }
+
+      c.var.logger.debug('Passkey registration completed', {
+        challengeId,
+        userId: updatedUser.id,
+      })
+
+      return c.body(null, 204)
+    },
   )
 export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyLoginResponse),
   zValidator('json', PostApiV1AuthPasskeyLoginBody),
-  async (c: PostApiV1AuthPasskeyLoginContext) => {},
+  async (c: PostApiV1AuthPasskeyLoginContext) => {
+    const { email } = c.req.valid('json')
+    const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
+    const { origin, rpID } = relyingParty(
+      c.req.url,
+      c.req.header('Origin'),
+      c.env.SERVER_ALLOWED_HOSTS,
+    )
+    const options = await generateAuthenticationOptions({
+      rpID,
+      userVerification: 'required',
+      allowCredentials: user.passkeyCredentials.map((credential) => ({
+        id: credential.id,
+        transports: credential.transports,
+      })),
+    })
+    const challengeId = createId('auth_challenge')
+    const expiresAtEpoch = expirationFor(options)
+
+    await c.var.db.authChallenges.insert({
+      challengeId,
+      type: 'passkeyLogin',
+      email: user.email,
+      expectedOrigin: origin,
+      expectedRPID: rpID,
+      expiresAtEpoch,
+      options,
+    })
+
+    c.var.logger.debug('Passkey authentication challenge created', {
+      challengeId,
+      userId: user.id,
+      rpID,
+      expiresAtEpoch,
+      allowedCredentialCount: user.passkeyCredentials.length,
+    })
+
+    return c.json({
+      challengeId,
+      expiration: new Date(expiresAtEpoch).toISOString(),
+      options,
+    })
+  },
 )
 export const postApiV1AuthPasskeyLoginChallengeIdHandlers =
   factory.createHandlers(
     zValidator('param', PostApiV1AuthPasskeyLoginChallengeIdParams),
     zValidator('json', PostApiV1AuthPasskeyLoginChallengeIdBody),
     zValidator('response', PostApiV1AuthPasskeyLoginChallengeIdResponse),
-    async (c: PostApiV1AuthPasskeyLoginChallengeIdContext) => {},
+    async (c: PostApiV1AuthPasskeyLoginChallengeIdContext) => {
+      const { challengeId } = c.req.valid('param')
+      const response = c.req.valid(
+        'json',
+      ) as unknown as AuthenticationResponseJSON
+      const challenge = await takeLoginChallenge(
+        c.var.db,
+        c.var.logger,
+        challengeId,
+      )
+      const user = await c.var.db.users.getByEmail(challenge.email)
+
+      if (!user) {
+        c.var.logger.warn('Passkey authentication user no longer exists', {
+          challengeId,
+        })
+        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+      }
+
+      const credential = user.passkeyCredentials.find(
+        (candidate) => candidate.id === response.id,
+      )
+
+      if (!credential) {
+        c.var.logger.warn('Passkey is not registered for user', {
+          challengeId,
+          userId: user.id,
+        })
+        throw invalidPasskey('Passkey is not registered for this user')
+      }
+
+      let verification
+
+      try {
+        verification = await verifyAuthenticationResponse({
+          response,
+          expectedChallenge: challenge.options.challenge,
+          expectedOrigin: challenge.expectedOrigin,
+          expectedRPID: challenge.expectedRPID,
+          credential: {
+            id: credential.id,
+            publicKey: new Uint8Array(credential.publicKey),
+            counter: credential.counter,
+            transports: credential.transports,
+          },
+        })
+      } catch (error) {
+        c.var.logger.warn('Passkey authentication verification threw', {
+          challengeId,
+          userId: user.id,
+          error: serializeError(error),
+        })
+        throw invalidPasskey('Passkey authentication could not be verified')
+      }
+
+      if (!verification.verified) {
+        c.var.logger.warn('Passkey authentication verification failed', {
+          challengeId,
+          userId: user.id,
+        })
+        throw invalidPasskey('Passkey authentication could not be verified')
+      }
+
+      credential.counter = verification.authenticationInfo.newCounter
+      const updatedUser = await c.var.db.users.update(user)
+
+      if (!updatedUser) {
+        c.var.logger.warn('Passkey authentication user update missed', {
+          challengeId,
+          userId: user.id,
+        })
+        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+      }
+
+      c.var.logger.debug('Passkey authentication completed', {
+        challengeId,
+        userId: updatedUser.id,
+      })
+
+      return c.json({
+        jwt: await createJwtForUser(updatedUser, c.env),
+      })
+    },
   )

@@ -2,6 +2,7 @@ import type { ErrorHandler, MiddlewareHandler } from 'hono'
 import { ApiError } from '../errors/ApiError'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
+import { serializeError } from './logger'
 
 function internalServerError(): Response {
   const error: ErrorResponse = {
@@ -44,11 +45,7 @@ export const unhandledErrorHandler: ErrorHandler = (error, c) => {
   c.get('logger').error('Unhandled request error', {
     method: c.req.method,
     path: c.req.path,
-    error: {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    },
+    error: serializeError(error),
   })
 
   return internalServerError()

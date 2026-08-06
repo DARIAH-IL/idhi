@@ -1,11 +1,6 @@
 import { sign } from 'hono/jwt'
 import type { Bindings } from '../bindings'
-import type { DatabaseService } from '../db/service'
-import type { UserWithCredentials } from '../db/models/UserWithCredentials'
-import { ApiError } from '../errors/ApiError'
-import { ErrorCode } from '../models/errorCode'
 import type { User } from '../models/user'
-import { createId } from './id'
 
 const DEFAULT_EXPIRATION_SECONDS = 7 * 24 * 60 * 60
 
@@ -33,53 +28,18 @@ function requireSecret(secret: string): string {
   return secret
 }
 
-function exposeUser(user: UserWithCredentials): User {
-  return {
-    id: user.id,
-    ...(user.name === undefined ? {} : { name: user.name }),
-    email: user.email,
-    isAdmin: user.isAdmin,
-  }
-}
-
-async function resolveUser(
-  email: string,
-  db: DatabaseService,
-): Promise<UserWithCredentials> {
-  const existingUser = await db.users.getByEmail(email)
-
-  if (existingUser) {
-    return existingUser
-  }
-
-  const invite = await db.userInvites.takePendingByEmail(email)
-
-  if (!invite) {
-    throw new ApiError(
-      ErrorCode.UserNotFound,
-      'No registered or invited user exists for this email',
-    )
-  }
-
-  return db.users.insert({
-    id: createId('user'),
-    email: invite.email,
-    isAdmin: false,
-    passkeyCredentials: [],
-  })
-}
-
-export async function createJwtForEmail(
-  email: string,
-  db: DatabaseService,
+export async function createJwtForUser(
+  user: User,
   bindings: JwtBindings,
 ): Promise<string> {
-  const user = exposeUser(await resolveUser(email, db))
   const issuedAt = Math.floor(Date.now() / 1000)
 
   return sign(
     {
-      ...user,
+      id: user.id,
+      ...(user.name === undefined ? {} : { name: user.name }),
+      email: user.email,
+      isAdmin: user.isAdmin,
       iat: issuedAt,
       exp: issuedAt + expirationSeconds(bindings.JWT_EXPIRATION_SECONDS),
     },

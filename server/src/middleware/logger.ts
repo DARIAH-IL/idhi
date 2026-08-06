@@ -6,6 +6,21 @@ export type RequestLogger = {
   error(message: string, attributes: Record<string, unknown>): void
 }
 
+export function serializeError(error: unknown): Record<string, unknown> {
+  if (error instanceof Error) {
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    }
+  }
+
+  return {
+    name: 'UnknownError',
+    message: String(error),
+  }
+}
+
 function log(
   level: 'debug' | 'warn' | 'error',
   message: string,

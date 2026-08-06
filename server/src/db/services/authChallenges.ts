@@ -35,6 +35,7 @@ const authChallengeSchema = new Schema<StoredAuthChallenge>(
 
 export interface AuthChallengeDatabaseService {
   getById(challengeId: string): Promise<AuthChallenge | null>
+  takeById(challengeId: string): Promise<AuthChallenge | null>
   insert(challenge: AuthChallenge): Promise<AuthChallenge>
   delete(challengeId: string): Promise<boolean>
 }
@@ -57,6 +58,14 @@ export function createAuthChallengeDatabaseService(
   return {
     async getById(challengeId) {
       const challenge = await authChallenges.findById(challengeId).exec()
+
+      return challenge ? exposeAuthChallenge(challenge) : null
+    },
+
+    async takeById(challengeId) {
+      const challenge = await authChallenges
+        .findByIdAndDelete(challengeId)
+        .exec()
 
       return challenge ? exposeAuthChallenge(challenge) : null
     },
