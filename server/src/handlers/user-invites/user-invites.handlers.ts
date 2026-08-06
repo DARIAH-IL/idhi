@@ -5,7 +5,11 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { ErrorCode } from '../../models/errorCode'
+import { isDuplicateKeyError } from '../../utils/mongo'
+import { createId } from '../../utils/id'
 import { zValidator } from '../api.validator'
 import {
   PostApiV1UsersInviteContext,
@@ -14,16 +18,68 @@ import {
 } from './user-invites.context'
 import {
   PostApiV1UsersInviteBody,
+  PostApiV1UsersInviteResponse,
   GetApiV1UsersInvitesResponse,
   DeleteApiV1UsersInvitesInviteIdParams,
 } from './user-invites.zod'
 
 const factory = createFactory()
+
+const DEFAULT_EXPIRY_DAYS = 7
+
+function duplicateInvite(): ApiError {
+  return new ApiError(
+    ErrorCode.UserAlreadyInvitedOrRegistered,
+    'A user or pending invite with this email already exists',
+  )
+}
+
 export const postApiV1UsersInviteHandlers = factory.createHandlers(
   zValidator('json', PostApiV1UsersInviteBody),
   async (c: PostApiV1UsersInviteContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { email, message, expiryDays } = c.req.valid('json')
+
+    if (await c.var.db.users.getByEmail(email)) {
+      throw duplicateInvite()
+    }
+
+    const existingInvite = await c.var.db.userInvites.getByEmail(email)
+
+    if (existingInvite) {
+      if (existingInvite.expiration > new Date().toISOString()) {
+        throw duplicateInvite()
+      }
+      await c.var.db.userInvites.delete(existingInvite.id)
+    }
+
+    const now = new Date().toISOString()
+
+    try {
+      const invite = await c.var.db.userInvites.add({
+        id: createId('invite'),
+        email,
+        message,
+        expiration: new Date(
+          Date.now() +
+            (expiryDays || DEFAULT_EXPIRY_DAYS) * 24 * 60 * 60 * 1000,
+        ).toISOString(),
+        audit: {
+          createdAt: now,
+          createdBy: user.id,
+          modifiedAt: now,
+          modifiedBy: user.id,
+        },
+      })
+
+      return c.json(invite, 201)
+    } catch (error) {
+      if (isDuplicateKeyError(error)) {
+        throw duplicateInvite()
+      }
+      throw error
+    }
   },
 )
 export const getApiV1UsersInvitesHandlers = factory.createHandlers(
@@ -31,6 +87,7 @@ export const getApiV1UsersInvitesHandlers = factory.createHandlers(
   async (c: GetApiV1UsersInvitesContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    return c.json(await c.var.db.userInvites.listPending())
   },
 )
 export const deleteApiV1UsersInvitesInviteIdHandlers = factory.createHandlers(
@@ -38,5 +95,12 @@ export const deleteApiV1UsersInvitesInviteIdHandlers = factory.createHandlers(
   async (c: DeleteApiV1UsersInvitesInviteIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { inviteId } = c.req.valid('param')
+
+    if (!(await c.var.db.userInvites.delete(inviteId))) {
+      throw new ApiError(ErrorCode.InvalidInput, 'User invite was not found')
+    }
+
+    return c.body(null, 204)
   },
 )

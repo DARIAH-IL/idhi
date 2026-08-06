@@ -6,6 +6,9 @@
  */
 import { createFactory } from 'hono/factory'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { ApiError } from '../../errors/ApiError'
+import { ErrorCode } from '../../models/errorCode'
+import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
 import {
   GetApiV1EntitiesContext,
@@ -18,6 +21,7 @@ import {
   GetApiV1EntitiesQueryParams,
   GetApiV1EntitiesResponse,
   PutApiV1EntitiesBody,
+  PutApiV1EntitiesResponse,
   GetApiV1EntitiesEntityIdParams,
   GetApiV1EntitiesEntityIdResponse,
   PostApiV1EntitiesEntityIdParams,
@@ -27,22 +31,66 @@ import {
 } from './entities.zod'
 
 const factory = createFactory()
+
+const DEFAULT_PAGE_SIZE = 50
+
+function entityNotFound(entityId: string): ApiError {
+  return new ApiError(
+    ErrorCode.EntityNotFound,
+    `Entity ${entityId} was not found`,
+  )
+}
+
 export const getApiV1EntitiesHandlers = factory.createHandlers(
   zValidator('query', GetApiV1EntitiesQueryParams),
   zValidator('response', GetApiV1EntitiesResponse),
-  async (c: GetApiV1EntitiesContext) => {},
+  async (c: GetApiV1EntitiesContext) => {
+    const { q, page, pageSize } = c.req.valid('query')
+    return c.json(
+      await c.var.db.entities.search(
+        q,
+        page || 0,
+        pageSize || DEFAULT_PAGE_SIZE,
+      ),
+    )
+  },
 )
 export const putApiV1EntitiesHandlers = factory.createHandlers(
   zValidator('json', PutApiV1EntitiesBody),
   async (c: PutApiV1EntitiesContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    try {
+      const entity = await c.var.db.entities.insert(
+        c.req.valid('json'),
+        user.id,
+      )
+
+      return c.json(entity, 201)
+    } catch (error) {
+      if (isDuplicateKeyError(error)) {
+        throw new ApiError(
+          ErrorCode.InvalidInput,
+          'An entity with this ID already exists',
+        )
+      }
+      throw error
+    }
   },
 )
 export const getApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   zValidator('param', GetApiV1EntitiesEntityIdParams),
   zValidator('response', GetApiV1EntitiesEntityIdResponse),
-  async (c: GetApiV1EntitiesEntityIdContext) => {},
+  async (c: GetApiV1EntitiesEntityIdContext) => {
+    const { entityId } = c.req.valid('param')
+    const entity = await c.var.db.entities.get(entityId)
+
+    if (!entity) {
+      throw entityNotFound(entityId)
+    }
+
+    return c.json(entity)
+  },
 )
 export const postApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   zValidator('param', PostApiV1EntitiesEntityIdParams),
@@ -51,6 +99,27 @@ export const postApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   async (c: PostApiV1EntitiesEntityIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { entityId } = c.req.valid('param')
+    const entity = c.req.valid('json')
+
+    if (entity.id !== entityId) {
+      throw new ApiError(
+        ErrorCode.InvalidInput,
+        'The entity ID in the request body must match the URL',
+      )
+    }
+
+    const updatedEntity = await c.var.db.entities.replace(
+      entityId,
+      entity,
+      user.id,
+    )
+
+    if (!updatedEntity) {
+      throw entityNotFound(entityId)
+    }
+
+    return c.json(updatedEntity)
   },
 )
 export const deleteApiV1EntitiesEntityIdHandlers = factory.createHandlers(
@@ -58,5 +127,12 @@ export const deleteApiV1EntitiesEntityIdHandlers = factory.createHandlers(
   async (c: DeleteApiV1EntitiesEntityIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { entityId } = c.req.valid('param')
+
+    if (!(await c.var.db.entities.delete(entityId, user.id))) {
+      throw entityNotFound(entityId)
+    }
+
+    return c.body(null, 204)
   },
 )

@@ -5,7 +5,15 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import type { DatabaseService } from '../../db/service'
+import type { UserWithCredentials } from '../../db/models/UserWithCredentials'
+import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { ErrorCode } from '../../models/errorCode'
+import type { User } from '../../models/user'
+import type { UserWrite } from '../../models/userWrite'
+import { isDuplicateKeyError } from '../../utils/mongo'
+import { createId } from '../../utils/id'
 import { zValidator } from '../api.validator'
 import {
   GetApiV1UsersContext,
@@ -19,6 +27,7 @@ import {
   GetApiV1UsersQueryParams,
   GetApiV1UsersResponse,
   PostApiV1UsersBody,
+  PostApiV1UsersResponse,
   GetApiV1UsersUserIdParams,
   GetApiV1UsersUserIdResponse,
   PutApiV1UsersUserIdParams,
@@ -31,12 +40,61 @@ import {
 } from './user-management.zod'
 
 const factory = createFactory()
+
+function publicUser(user: UserWithCredentials): User {
+  const publicValues = { ...user }
+  Reflect.deleteProperty(publicValues, 'passkeyCredentials')
+  return publicValues
+}
+
+function userNotFound(userId: string): ApiError {
+  return new ApiError(ErrorCode.UserNotFound, `User ${userId} was not found`)
+}
+
+function duplicateUser(): ApiError {
+  return new ApiError(ErrorCode.InvalidInput, 'A user with this email exists')
+}
+
+async function replaceUser(
+  db: DatabaseService,
+  userId: string,
+  values: UserWrite,
+): Promise<User> {
+  const userWithEmail = await db.users.getByEmail(values.email)
+
+  if (userWithEmail && userWithEmail.id !== userId) {
+    throw duplicateUser()
+  }
+
+  try {
+    const user = await db.users.replace(userId, values)
+
+    if (!user) {
+      throw userNotFound(userId)
+    }
+
+    return publicUser(user)
+  } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      throw duplicateUser()
+    }
+    throw error
+  }
+}
+
 export const getApiV1UsersHandlers = factory.createHandlers(
   zValidator('query', GetApiV1UsersQueryParams),
   zValidator('response', GetApiV1UsersResponse),
   async (c: GetApiV1UsersContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { page, pageSize } = c.req.valid('query')
+    const users = await c.var.db.users.list(page, pageSize)
+
+    return c.json({
+      results: users.results.map(publicUser),
+      total: users.total,
+    })
   },
 )
 export const postApiV1UsersHandlers = factory.createHandlers(
@@ -44,6 +102,26 @@ export const postApiV1UsersHandlers = factory.createHandlers(
   async (c: PostApiV1UsersContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const values = c.req.valid('json')
+
+    if (await c.var.db.users.getByEmail(values.email)) {
+      throw duplicateUser()
+    }
+
+    try {
+      const createdUser = await c.var.db.users.insert({
+        id: createId('user'),
+        ...values,
+        passkeyCredentials: [],
+      })
+
+      return c.json(publicUser(createdUser), 201)
+    } catch (error) {
+      if (isDuplicateKeyError(error)) {
+        throw duplicateUser()
+      }
+      throw error
+    }
   },
 )
 export const getApiV1UsersUserIdHandlers = factory.createHandlers(
@@ -52,6 +130,14 @@ export const getApiV1UsersUserIdHandlers = factory.createHandlers(
   async (c: GetApiV1UsersUserIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { userId } = c.req.valid('param')
+    const requestedUser = await c.var.db.users.get(userId)
+
+    if (!requestedUser) {
+      throw userNotFound(userId)
+    }
+
+    return c.json(publicUser(requestedUser))
   },
 )
 export const putApiV1UsersUserIdHandlers = factory.createHandlers(
@@ -61,6 +147,8 @@ export const putApiV1UsersUserIdHandlers = factory.createHandlers(
   async (c: PutApiV1UsersUserIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { userId } = c.req.valid('param')
+    return c.json(await replaceUser(c.var.db, userId, c.req.valid('json')))
   },
 )
 export const postApiV1UsersUserIdHandlers = factory.createHandlers(
@@ -70,6 +158,8 @@ export const postApiV1UsersUserIdHandlers = factory.createHandlers(
   async (c: PostApiV1UsersUserIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { userId } = c.req.valid('param')
+    return c.json(await replaceUser(c.var.db, userId, c.req.valid('json')))
   },
 )
 export const deleteApiV1UsersUserIdHandlers = factory.createHandlers(
@@ -77,5 +167,12 @@ export const deleteApiV1UsersUserIdHandlers = factory.createHandlers(
   async (c: DeleteApiV1UsersUserIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { userId } = c.req.valid('param')
+
+    if (!(await c.var.db.users.delete(userId))) {
+      throw userNotFound(userId)
+    }
+
+    return c.body(null, 204)
   },
 )

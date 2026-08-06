@@ -5,9 +5,17 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { ApiError } from '../../errors/ApiError'
+import { ErrorCode } from '../../models/errorCode'
 import { GetApiV1HealthContext } from './default.context'
 
 const factory = createFactory()
 export const getApiV1HealthHandlers = factory.createHandlers(
-  async (c: GetApiV1HealthContext) => {},
+  async (c: GetApiV1HealthContext) => {
+    if (!(await c.var.db.isLive())) {
+      throw new ApiError(ErrorCode.InvalidInput, 'Database is unavailable', 503)
+    }
+
+    return c.json({ status: 'ok' })
+  },
 )

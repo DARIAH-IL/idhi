@@ -5,6 +5,7 @@ import {
   type ToObjectOptions,
 } from 'mongoose'
 import type { UserInvite } from '../../models/userInvite'
+import { COLLECTIONS } from '../collections'
 
 type StoredUserInvite = Omit<UserInvite, 'id'> & {
   _id: string
@@ -37,7 +38,9 @@ const userInviteSchema = new Schema<StoredUserInvite>(
 const emailCollation = { locale: 'en', strength: 2 } as const
 
 export interface UserInviteDatabaseService {
+  listPending(): Promise<UserInvite[]>
   get(inviteId: string): Promise<UserInvite | null>
+  getByEmail(email: string): Promise<UserInvite | null>
   add(invite: UserInvite): Promise<UserInvite>
   delete(inviteId: string): Promise<boolean>
   takePendingByEmail(email: string): Promise<UserInvite | null>
@@ -59,7 +62,7 @@ export async function createUserInviteDatabaseService(
   const userInvites = connection.model<StoredUserInvite>(
     'UserInvite',
     userInviteSchema,
-    'userInvites',
+    COLLECTIONS.userInvites,
   )
 
   await userInvites.collection.createIndex(
@@ -72,8 +75,26 @@ export async function createUserInviteDatabaseService(
   )
 
   return {
+    async listPending() {
+      const invites = await userInvites
+        .find({ expiration: { $gt: new Date().toISOString() } })
+        .sort({ expiration: 1, _id: 1 })
+        .exec()
+
+      return invites.map(exposeUserInvite)
+    },
+
     async get(inviteId) {
       const invite = await userInvites.findById(inviteId).exec()
+
+      return invite ? exposeUserInvite(invite) : null
+    },
+
+    async getByEmail(email) {
+      const invite = await userInvites
+        .findOne({ email: normalizeEmail(email) })
+        .collation(emailCollation)
+        .exec()
 
       return invite ? exposeUserInvite(invite) : null
     },

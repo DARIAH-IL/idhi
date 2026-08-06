@@ -5,6 +5,7 @@ import {
   type ToObjectOptions,
 } from 'mongoose'
 import type { AuthChallenge } from '../models/AuthChallenge'
+import { COLLECTIONS } from '../collections'
 
 type StoredAuthChallenge = Omit<AuthChallenge, 'challengeId'> & {
   _id: string
@@ -56,7 +57,7 @@ export async function createAuthChallengeDatabaseService(
   const authChallenges = connection.model<StoredAuthChallenge>(
     'AuthChallenge',
     authChallengeSchema,
-    'authChallenges',
+    COLLECTIONS.authChallenges,
   )
 
   await authChallenges.collection.createIndex(

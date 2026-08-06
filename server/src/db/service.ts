@@ -8,6 +8,10 @@ import {
   type DistributedLockDatabaseService,
 } from './services/locks'
 import {
+  createEntityDatabaseService,
+  type EntityDatabaseService,
+} from './services/entities'
+import {
   createUserDatabaseService,
   type UserDatabaseService,
 } from './services/users'
@@ -18,6 +22,8 @@ import {
 
 export interface DatabaseService {
   authChallenges: AuthChallengeDatabaseService
+  entities: EntityDatabaseService
+  isLive(): Promise<boolean>
   locks: DistributedLockDatabaseService
   userInvites: UserInviteDatabaseService
   users: UserDatabaseService
@@ -31,12 +37,26 @@ export const createDatabaseService = async (
   if (!databaseServicePromise) {
     databaseServicePromise = Promise.all([
       createAuthChallengeDatabaseService(connection),
+      createEntityDatabaseService(connection),
       createDistributedLockDatabaseService(connection),
       createUserDatabaseService(connection),
       createUserInviteDatabaseService(connection),
     ])
-      .then(([authChallenges, locks, users, userInvites]) => ({
+      .then(([authChallenges, entities, locks, users, userInvites]) => ({
         authChallenges,
+        entities,
+        async isLive() {
+          if (connection.readyState !== 1 || !connection.db) {
+            return false
+          }
+
+          try {
+            await connection.db.admin().ping()
+            return true
+          } catch {
+            return false
+          }
+        },
         locks,
         userInvites,
         users,

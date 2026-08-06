@@ -5,6 +5,13 @@ import {
   type ToObjectOptions,
 } from 'mongoose'
 import type { UserWithCredentials } from '../models/UserWithCredentials'
+import type { UserWrite } from '../../models/userWrite'
+import { COLLECTIONS } from '../collections'
+
+export interface UserListResult {
+  results: UserWithCredentials[]
+  total: number
+}
 
 type StoredUser = Omit<UserWithCredentials, 'id'> & {
   _id: string
@@ -36,9 +43,13 @@ const userSchema = new Schema<StoredUser>(
 const emailCollation = { locale: 'en', strength: 2 } as const
 
 export interface UserDatabaseService {
+  list(page: number, pageSize: number): Promise<UserListResult>
+  get(userId: string): Promise<UserWithCredentials | null>
   getByEmail(email: string): Promise<UserWithCredentials | null>
   insert(user: UserWithCredentials): Promise<UserWithCredentials>
   update(user: UserWithCredentials): Promise<UserWithCredentials | null>
+  replace(userId: string, user: UserWrite): Promise<UserWithCredentials | null>
+  delete(userId: string): Promise<boolean>
 }
 
 function normalizeEmail(email: string): string {
@@ -52,7 +63,11 @@ function exposeUser(user: HydratedDocument<StoredUser>): UserWithCredentials {
 export async function createUserDatabaseService(
   connection: Connection,
 ): Promise<UserDatabaseService> {
-  const users = connection.model<StoredUser>('User', userSchema, 'users')
+  const users = connection.model<StoredUser>(
+    'User',
+    userSchema,
+    COLLECTIONS.users,
+  )
 
   await users.collection.createIndex(
     { email: 1 },
@@ -64,6 +79,25 @@ export async function createUserDatabaseService(
   )
 
   return {
+    async list(page, pageSize) {
+      const [documents, total] = await Promise.all([
+        users
+          .find()
+          .sort({ email: 1, _id: 1 })
+          .skip(page * pageSize)
+          .limit(pageSize)
+          .exec(),
+        users.countDocuments().exec(),
+      ])
+
+      return { results: documents.map(exposeUser), total }
+    },
+
+    async get(userId) {
+      const user = await users.findById(userId).exec()
+      return user ? exposeUser(user) : null
+    },
+
     async getByEmail(email) {
       const user = await users
         .findOne({ email: normalizeEmail(email) })
@@ -92,6 +126,23 @@ export async function createUserDatabaseService(
         .exec()
 
       return updatedUser ? exposeUser(updatedUser) : null
+    },
+
+    async replace(userId, user) {
+      const updatedUser = await users
+        .findByIdAndUpdate(
+          userId,
+          { $set: { ...user, email: normalizeEmail(user.email) } },
+          { new: true },
+        )
+        .exec()
+
+      return updatedUser ? exposeUser(updatedUser) : null
+    },
+
+    async delete(userId) {
+      const result = await users.deleteOne({ _id: userId }).exec()
+      return result.deletedCount === 1
     },
   }
 }

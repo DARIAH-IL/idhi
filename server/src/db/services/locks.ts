@@ -1,6 +1,6 @@
 import { mongo, Schema, type Connection } from 'mongoose'
-
-const MONGO_DUPLICATE_KEY_ERROR_CODE = 11000
+import { COLLECTIONS } from '../collections'
+import { isDuplicateKeyError } from '../../utils/mongo'
 
 type StoredLock = {
   _id: string
@@ -46,7 +46,7 @@ export async function createDistributedLockDatabaseService(
   const locks = connection.model<StoredLock>(
     'DistributedLock',
     lockSchema,
-    'distributedLocks',
+    COLLECTIONS.distributedLocks,
   )
 
   await locks.collection.createIndex(
@@ -88,10 +88,7 @@ export async function createDistributedLockDatabaseService(
           },
         }
       } catch (error) {
-        if (
-          error instanceof mongo.MongoServerError &&
-          error.code === MONGO_DUPLICATE_KEY_ERROR_CODE
-        ) {
+        if (isDuplicateKeyError(error)) {
           return null
         }
 
