@@ -45,9 +45,7 @@ function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
 }
 
-function exposeUser(
-  user: HydratedDocument<StoredUser>,
-): UserWithCredentials {
+function exposeUser(user: HydratedDocument<StoredUser>): UserWithCredentials {
   return user.toObject<UserWithCredentials>()
 }
 

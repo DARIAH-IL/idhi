@@ -7,8 +7,8 @@
 import type { Context, Env } from 'hono'
 
 import type {
+  AuthEmailWrite,
   OtpChallengeCompletion,
-  OtpChallengeWrite,
   PasskeyAuthenticationResponse,
   PasskeyRegistrationResponse,
 } from '../../models'
@@ -16,7 +16,7 @@ import type {
 export type PostApiV1AuthOtpContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/otp',
-  { in: { json: OtpChallengeWrite }; out: { json: OtpChallengeWrite } }
+  { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
 >
 export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
   E,
@@ -38,7 +38,8 @@ export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
 >
 export type PostApiV1AuthPasskeyCreateContext<E extends Env = any> = Context<
   E,
-  '/api/v1/auth/passkey/create'
+  '/api/v1/auth/passkey/create',
+  { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
 >
 export type PostApiV1AuthPasskeyCreateChallengeIdContext<E extends Env = any> =
   Context<
@@ -61,7 +62,8 @@ export type PostApiV1AuthPasskeyCreateChallengeIdContext<E extends Env = any> =
   >
 export type PostApiV1AuthPasskeyLoginContext<E extends Env = any> = Context<
   E,
-  '/api/v1/auth/passkey/login'
+  '/api/v1/auth/passkey/login',
+  { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
 >
 export type PostApiV1AuthPasskeyLoginChallengeIdContext<E extends Env = any> =
   Context<

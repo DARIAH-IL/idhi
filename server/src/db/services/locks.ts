@@ -15,7 +15,10 @@ export interface DistributedLock {
 }
 
 export interface DistributedLockDatabaseService {
-  tryLock(lockId: string, ttlMilliseconds: number): Promise<DistributedLock | null>
+  tryLock(
+    lockId: string,
+    ttlMilliseconds: number,
+  ): Promise<DistributedLock | null>
 }
 
 const lockSchema = new Schema<StoredLock>(
@@ -79,9 +82,7 @@ export async function createDistributedLockDatabaseService(
           lockId,
           expiresAt,
           async release() {
-            const result = await locks
-              .deleteOne({ _id: lockId, token })
-              .exec()
+            const result = await locks.deleteOne({ _id: lockId, token }).exec()
 
             return result.deletedCount === 1
           },

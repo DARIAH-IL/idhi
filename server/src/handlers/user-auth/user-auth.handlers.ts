@@ -20,9 +20,11 @@ import {
   PostApiV1AuthOtpChallengeIdParams,
   PostApiV1AuthOtpChallengeIdBody,
   PostApiV1AuthOtpChallengeIdResponse,
+  PostApiV1AuthPasskeyCreateBody,
   PostApiV1AuthPasskeyCreateResponse,
   PostApiV1AuthPasskeyCreateChallengeIdParams,
   PostApiV1AuthPasskeyCreateChallengeIdBody,
+  PostApiV1AuthPasskeyLoginBody,
   PostApiV1AuthPasskeyLoginResponse,
   PostApiV1AuthPasskeyLoginChallengeIdParams,
   PostApiV1AuthPasskeyLoginChallengeIdBody,
@@ -43,6 +45,7 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
 )
 export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyCreateResponse),
+  zValidator('json', PostApiV1AuthPasskeyCreateBody),
   async (c: PostApiV1AuthPasskeyCreateContext) => {},
 )
 export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
@@ -53,6 +56,7 @@ export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
   )
 export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyLoginResponse),
+  zValidator('json', PostApiV1AuthPasskeyLoginBody),
   async (c: PostApiV1AuthPasskeyLoginContext) => {},
 )
 export const postApiV1AuthPasskeyLoginChallengeIdHandlers =

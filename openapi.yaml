@@ -37,7 +37,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/OtpChallengeWrite"
+              $ref: "#/components/schemas/AuthEmailWrite"
       responses:
         "200":
           description: OTP challenge started
@@ -77,6 +77,12 @@ paths:
       tags:
         - UserAuth
       summary: Start passkey registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthEmailWrite"
       responses:
         "200":
           description: Passkey registration challenge started
@@ -112,6 +118,12 @@ paths:
         - UserAuth
       summary: Start passkey authentication
       security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthEmailWrite"
       responses:
         "200":
           description: Passkey authentication challenge started
@@ -515,7 +527,7 @@ components:
           type: string
           description: JSON Web Token used as a bearer token
 
-    OtpChallengeWrite:
+    AuthEmailWrite:
       type: object
       required:
         - email

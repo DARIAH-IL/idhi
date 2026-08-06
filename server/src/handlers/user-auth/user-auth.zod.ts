@@ -27,6 +27,10 @@ export const PostApiV1AuthOtpChallengeIdResponse = zod.strictObject({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
 
+export const PostApiV1AuthPasskeyCreateBody = zod.object({
+  email: zod.email(),
+})
+
 export const PostApiV1AuthPasskeyCreateResponse = zod.strictObject({
   challengeId: zod.string(),
   expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
@@ -46,6 +50,10 @@ export const PostApiV1AuthPasskeyCreateChallengeIdBody = zod
   .describe('Matches @simplewebauthn\/RegistrationResponseJSON.')
 
 export const PostApiV1AuthPasskeyCreateChallengeIdResponse = zod.void()
+
+export const PostApiV1AuthPasskeyLoginBody = zod.object({
+  email: zod.email(),
+})
 
 export const PostApiV1AuthPasskeyLoginResponse = zod.strictObject({
   challengeId: zod.string(),

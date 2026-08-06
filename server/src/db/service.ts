@@ -11,10 +11,15 @@ import {
   createUserDatabaseService,
   type UserDatabaseService,
 } from './services/users'
+import {
+  createUserInviteDatabaseService,
+  type UserInviteDatabaseService,
+} from './services/userInvites'
 
 export interface DatabaseService {
   authChallenges: AuthChallengeDatabaseService
   locks: DistributedLockDatabaseService
+  userInvites: UserInviteDatabaseService
   users: UserDatabaseService
 }
 
@@ -31,6 +36,7 @@ export const createDatabaseService = async (
       .then(([locks, users]) => ({
         authChallenges: createAuthChallengeDatabaseService(connection),
         locks,
+        userInvites: createUserInviteDatabaseService(connection),
         users,
       }))
       .catch((error) => {
