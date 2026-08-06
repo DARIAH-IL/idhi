@@ -12,6 +12,10 @@ tags:
     description: Entity search and management
   - name: UserManagement
     description: User management
+  - name: UserInvites
+    description: User invite management
+  - name: UserAuth
+    description: User authentication
 
 paths:
   /api/v1/health:
@@ -21,6 +25,126 @@ paths:
       responses:
         "200":
           description: OK
+
+  /api/v1/auth/otp:
+    post:
+      tags:
+        - UserAuth
+      summary: Start an OTP challenge
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpChallengeWrite"
+      responses:
+        "200":
+          description: OTP challenge started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthChallenge"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/auth/otp/{challengeId}:
+    parameters:
+      - $ref: "#/components/parameters/ChallengeId"
+    post:
+      tags:
+        - UserAuth
+      summary: Complete an OTP challenge
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpChallengeCompletion"
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthToken"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/auth/passkey/create:
+    post:
+      tags:
+        - UserAuth
+      summary: Start passkey registration
+      responses:
+        "200":
+          description: Passkey registration challenge started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PasskeyRegistrationChallenge"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/auth/passkey/create/{challengeId}:
+    parameters:
+      - $ref: "#/components/parameters/ChallengeId"
+    post:
+      tags:
+        - UserAuth
+      summary: Complete passkey registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasskeyRegistrationResponse"
+      responses:
+        "204":
+          description: Passkey registered
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/auth/passkey/login:
+    post:
+      tags:
+        - UserAuth
+      summary: Start passkey authentication
+      security: [ ]
+      responses:
+        "200":
+          description: Passkey authentication challenge started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PasskeyAuthenticationChallenge"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/auth/passkey/login/{challengeId}:
+    parameters:
+      - $ref: "#/components/parameters/ChallengeId"
+    post:
+      tags:
+        - UserAuth
+      summary: Complete passkey authentication
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasskeyAuthenticationResponse"
+      responses:
+        "200":
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthToken"
+        "400":
+          $ref: "#/components/responses/Error"
 
   /api/v1/entities:
     get:
@@ -204,6 +328,57 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
 
+  /api/v1/users/invite:
+    post:
+      tags:
+        - UserInvites
+      summary: Invite a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInviteWrite"
+      responses:
+        "201":
+          description: User invite created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInvite"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/users/invites:
+    get:
+      tags:
+        - UserInvites
+      summary: List pending users invites
+      responses:
+        "200":
+          description: List of pending users invites
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserInvite"
+        "400":
+          $ref: "#/components/responses/Error"
+
+  /api/v1/users/invites/{inviteId}:
+    parameters:
+      - $ref: "#/components/parameters/InviteId"
+    delete:
+      tags:
+        - UserInvites
+      summary: Revoke a user invite
+      responses:
+        "204":
+          description: User invite revoked
+        "400":
+          $ref: "#/components/responses/Error"
+
   /api/v1/users/{userId}:
     parameters:
       - $ref: "#/components/parameters/UserId"
@@ -290,16 +465,106 @@ components:
       schema:
         type: string
 
+    InviteId:
+      name: inviteId
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/InviteId"
+
+    ChallengeId:
+      name: challengeId
+      in: path
+      required: true
+      schema:
+        type: string
+
   schemas:
     UserId:
       type: string
       pattern: "^idhi:user:.+$"
       example: "idhi:user:abc123"
 
+    InviteId:
+      type: string
+      pattern: "^idhi:invite:.+$"
+      example: "idhi:invite:abc123"
+
     Date:
       type: string
-      format: date
-      description: UTC date
+      format: date-time
+      description: UTC date and time
+
+    AuthChallenge:
+      type: object
+      required:
+        - challengeId
+        - expiration
+      properties:
+        challengeId:
+          type: string
+        expiration:
+          $ref: "#/components/schemas/Date"
+
+    AuthToken:
+      type: object
+      required:
+        - jwt
+      properties:
+        jwt:
+          type: string
+          description: JSON Web Token used as a bearer token
+
+    OtpChallengeWrite:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+
+    OtpChallengeCompletion:
+      type: object
+      required:
+        - otp
+      properties:
+        otp:
+          type: string
+
+    PasskeyRegistrationChallenge:
+      allOf:
+        - $ref: "#/components/schemas/AuthChallenge"
+        - type: object
+          required:
+            - options
+          properties:
+            options:
+              type: object
+              additionalProperties: true
+              description: Matches @simplewebauthn/PublicKeyCredentialCreationOptionsJSON.
+
+    PasskeyRegistrationResponse:
+      type: object
+      additionalProperties: true
+      description: Matches @simplewebauthn/RegistrationResponseJSON.
+
+    PasskeyAuthenticationChallenge:
+      allOf:
+        - $ref: "#/components/schemas/AuthChallenge"
+        - type: object
+          required:
+            - options
+          properties:
+            options:
+              type: object
+              additionalProperties: true
+              description: Matches @simplewebauthn/PublicKeyCredentialRequestOptionsJSON.
+
+    PasskeyAuthenticationResponse:
+      type: object
+      additionalProperties: true
+      description: Matches @simplewebauthn/AuthenticationResponseJSON.
 
     Entity:
       oneOf:
@@ -408,6 +673,41 @@ components:
         isAdmin:
           type: boolean
 
+    UserInvite:
+      allOf:
+        - $ref: "#/components/schemas/AuditedEntity"
+        - type: object
+          required:
+            - id
+            - email
+            - expiration
+          properties:
+            id:
+              $ref: "#/components/schemas/InviteId"
+            email:
+              type: string
+              format: email
+            message:
+              type: string
+            expiration:
+              $ref: "#/components/schemas/Date"
+
+    UserInviteWrite:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+        message:
+          type: string
+        expiryDays:
+          type: integer
+          minimum: 1
+          maximum: 30
+          default: 7
+
     ErrorCode:
       type: string
       enum:
@@ -415,7 +715,10 @@ components:
         - InvalidInput
         - EntityNotFound
         - UserNotFound
-        - Conflict
+        - UserAlreadyInvitedOrRegistered
+        - WrongOtpCode
+        - TooManyAuthAttempts
+        - AuthChallengeNotFoundOrExpired
 
     Error:
       type: object

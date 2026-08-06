@@ -7,6 +7,14 @@
 import { Hono } from 'hono'
 import { getApiV1HealthHandlers } from './handlers/default/default.handlers'
 import {
+  postApiV1AuthOtpHandlers,
+  postApiV1AuthOtpChallengeIdHandlers,
+  postApiV1AuthPasskeyCreateHandlers,
+  postApiV1AuthPasskeyCreateChallengeIdHandlers,
+  postApiV1AuthPasskeyLoginHandlers,
+  postApiV1AuthPasskeyLoginChallengeIdHandlers,
+} from './handlers/user-auth/user-auth.handlers'
+import {
   getApiV1EntitiesHandlers,
   putApiV1EntitiesHandlers,
   getApiV1EntitiesEntityIdHandlers,
@@ -21,9 +29,26 @@ import {
   postApiV1UsersUserIdHandlers,
   deleteApiV1UsersUserIdHandlers,
 } from './handlers/user-management/user-management.handlers'
+import {
+  postApiV1UsersInviteHandlers,
+  getApiV1UsersInvitesHandlers,
+  deleteApiV1UsersInvitesInviteIdHandlers,
+} from './handlers/user-invites/user-invites.handlers'
 
 const app = new Hono()
   .get('/api/v1/health', ...getApiV1HealthHandlers)
+  .post('/api/v1/auth/otp', ...postApiV1AuthOtpHandlers)
+  .post('/api/v1/auth/otp/:challengeId', ...postApiV1AuthOtpChallengeIdHandlers)
+  .post('/api/v1/auth/passkey/create', ...postApiV1AuthPasskeyCreateHandlers)
+  .post(
+    '/api/v1/auth/passkey/create/:challengeId',
+    ...postApiV1AuthPasskeyCreateChallengeIdHandlers,
+  )
+  .post('/api/v1/auth/passkey/login', ...postApiV1AuthPasskeyLoginHandlers)
+  .post(
+    '/api/v1/auth/passkey/login/:challengeId',
+    ...postApiV1AuthPasskeyLoginChallengeIdHandlers,
+  )
   .get('/api/v1/entities', ...getApiV1EntitiesHandlers)
   .put('/api/v1/entities', ...putApiV1EntitiesHandlers)
   .get('/api/v1/entities/:entityId', ...getApiV1EntitiesEntityIdHandlers)
@@ -31,6 +56,12 @@ const app = new Hono()
   .delete('/api/v1/entities/:entityId', ...deleteApiV1EntitiesEntityIdHandlers)
   .get('/api/v1/users', ...getApiV1UsersHandlers)
   .post('/api/v1/users', ...postApiV1UsersHandlers)
+  .post('/api/v1/users/invite', ...postApiV1UsersInviteHandlers)
+  .get('/api/v1/users/invites', ...getApiV1UsersInvitesHandlers)
+  .delete(
+    '/api/v1/users/invites/:inviteId',
+    ...deleteApiV1UsersInvitesInviteIdHandlers,
+  )
   .get('/api/v1/users/:userId', ...getApiV1UsersUserIdHandlers)
   .put('/api/v1/users/:userId', ...putApiV1UsersUserIdHandlers)
   .post('/api/v1/users/:userId', ...postApiV1UsersUserIdHandlers)

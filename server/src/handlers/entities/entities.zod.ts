@@ -2335,13 +2335,17 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
         zod.strictObject({
           audit: zod
             .strictObject({
-              createdAt: zod.iso.date().describe('UTC date'),
+              createdAt: zod.iso
+                .datetime({ offset: true })
+                .describe('UTC date and time'),
               createdBy: zod
                 .string()
                 .regex(
                   getApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp,
                 ),
-              modifiedAt: zod.iso.date().describe('UTC date'),
+              modifiedAt: zod.iso
+                .datetime({ offset: true })
+                .describe('UTC date and time'),
               modifiedBy: zod
                 .string()
                 .regex(
@@ -6957,11 +6961,15 @@ export const PutApiV1EntitiesResponse = zod
     zod.strictObject({
       audit: zod
         .strictObject({
-          createdAt: zod.iso.date().describe('UTC date'),
+          createdAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           createdBy: zod
             .string()
             .regex(putApiV1EntitiesResponseTwoAuditCreatedByRegExp),
-          modifiedAt: zod.iso.date().describe('UTC date'),
+          modifiedAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           modifiedBy: zod
             .string()
             .regex(putApiV1EntitiesResponseTwoAuditModifiedByRegExp),
@@ -9274,11 +9282,15 @@ export const GetApiV1EntitiesEntityIdResponse = zod
     zod.strictObject({
       audit: zod
         .strictObject({
-          createdAt: zod.iso.date().describe('UTC date'),
+          createdAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           createdBy: zod
             .string()
             .regex(getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp),
-          modifiedAt: zod.iso.date().describe('UTC date'),
+          modifiedAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           modifiedBy: zod
             .string()
             .regex(getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp),
@@ -13882,11 +13894,15 @@ export const PostApiV1EntitiesEntityIdResponse = zod
     zod.strictObject({
       audit: zod
         .strictObject({
-          createdAt: zod.iso.date().describe('UTC date'),
+          createdAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           createdBy: zod
             .string()
             .regex(postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp),
-          modifiedAt: zod.iso.date().describe('UTC date'),
+          modifiedAt: zod.iso
+            .datetime({ offset: true })
+            .describe('UTC date and time'),
           modifiedBy: zod
             .string()
             .regex(postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp),

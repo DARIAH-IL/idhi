@@ -4,8 +4,9 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { Date } from './date'
 
-/**
- * UTC date and time
- */
-export type Date = string
+export interface AuthChallenge {
+  challengeId: string
+  expiration: Date
+}

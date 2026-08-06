@@ -6,6 +6,6 @@
  */
 
 /**
- * UTC date and time
+ * @pattern ^idhi:invite:.+$
  */
-export type Date = string
+export type InviteId = string
