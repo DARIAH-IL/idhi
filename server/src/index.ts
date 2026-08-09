@@ -10,7 +10,7 @@ import {
 import generatedRoutes from './routes'
 import { requestLoggerMiddleware } from './middleware/logger'
 import { Bindings } from './bindings'
-import { splitValues } from './utils/values'
+import { requiredValue, splitValues } from './utils/values'
 
 const app = new Hono<{ Bindings: Bindings; Variables: {} }>()
 
@@ -36,9 +36,13 @@ app.use('*', async (c, next) => {
 app.use('*', requestLoggerMiddleware)
 
 app.use('*', async (c, next) => {
-  const allowedHosts = splitValues(c.env.SERVER_ALLOWED_HOSTS).map(
-    normalizeOrigin,
-  )
+  const allowedHosts = splitValues(
+    requiredValue(c.env, 'SERVER_ALLOWED_HOSTS'),
+  ).map(normalizeOrigin)
+
+  if (allowedHosts.length === 0) {
+    throw new Error('SERVER_ALLOWED_HOSTS must contain at least one origin')
+  }
 
   return cors({
     origin: (origin) => {

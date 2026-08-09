@@ -1,5 +1,9 @@
 import type { Connection } from 'mongoose'
 import {
+  createAuthRateLimitDatabaseService,
+  type AuthRateLimitDatabaseService,
+} from './services/authRateLimits'
+import {
   createAuthChallengeDatabaseService,
   type AuthChallengeDatabaseService,
 } from './services/authChallenges'
@@ -22,6 +26,7 @@ import {
 
 export interface DatabaseService {
   authChallenges: AuthChallengeDatabaseService
+  authRateLimits: AuthRateLimitDatabaseService
   entities: EntityDatabaseService
   isLive(): Promise<boolean>
   locks: DistributedLockDatabaseService
@@ -37,30 +42,41 @@ export const createDatabaseService = async (
   if (!databaseServicePromise) {
     databaseServicePromise = Promise.all([
       createAuthChallengeDatabaseService(connection),
+      createAuthRateLimitDatabaseService(connection),
       createEntityDatabaseService(connection),
       createDistributedLockDatabaseService(connection),
       createUserDatabaseService(connection),
       createUserInviteDatabaseService(connection),
     ])
-      .then(([authChallenges, entities, locks, users, userInvites]) => ({
-        authChallenges,
-        entities,
-        async isLive() {
-          if (connection.readyState !== 1 || !connection.db) {
-            return false
-          }
+      .then(
+        ([
+          authChallenges,
+          authRateLimits,
+          entities,
+          locks,
+          users,
+          userInvites,
+        ]) => ({
+          authChallenges,
+          authRateLimits,
+          entities,
+          async isLive() {
+            if (connection.readyState !== 1 || !connection.db) {
+              return false
+            }
 
-          try {
-            await connection.db.admin().ping()
-            return true
-          } catch {
-            return false
-          }
-        },
-        locks,
-        userInvites,
-        users,
-      }))
+            try {
+              await connection.db.admin().ping()
+              return true
+            } catch {
+              return false
+            }
+          },
+          locks,
+          userInvites,
+          users,
+        }),
+      )
       .catch((error) => {
         databaseServicePromise = undefined
         throw error
