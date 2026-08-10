@@ -11,15 +11,17 @@ import { ErrorCode } from '../../models/errorCode'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
 import {
-  GetApiV1EntitiesContext,
+  PostApiV1EntitiesContext,
   PutApiV1EntitiesContext,
   GetApiV1EntitiesEntityIdContext,
   PostApiV1EntitiesEntityIdContext,
   DeleteApiV1EntitiesEntityIdContext,
 } from './entities.context'
 import {
-  GetApiV1EntitiesQueryParams,
-  GetApiV1EntitiesResponse,
+  PostApiV1EntitiesBody,
+  PostApiV1EntitiesResponse,
+  postApiV1EntitiesBodyPageDefault,
+  postApiV1EntitiesBodyPageSizeDefault,
   PutApiV1EntitiesBody,
   PutApiV1EntitiesResponse,
   GetApiV1EntitiesEntityIdParams,
@@ -32,8 +34,6 @@ import {
 
 const factory = createFactory()
 
-const DEFAULT_PAGE_SIZE = 50
-
 function entityNotFound(entityId: string): ApiError {
   return new ApiError(
     ErrorCode.EntityNotFound,
@@ -41,16 +41,18 @@ function entityNotFound(entityId: string): ApiError {
   )
 }
 
-export const getApiV1EntitiesHandlers = factory.createHandlers(
-  zValidator('query', GetApiV1EntitiesQueryParams),
-  zValidator('response', GetApiV1EntitiesResponse),
-  async (c: GetApiV1EntitiesContext) => {
-    const { q, page, pageSize } = c.req.valid('query')
+export const postApiV1EntitiesHandlers = factory.createHandlers(
+  zValidator('json', PostApiV1EntitiesBody),
+  zValidator('response', PostApiV1EntitiesResponse),
+  async (c: PostApiV1EntitiesContext) => {
+    const { q, facets, filter, page, pageSize } = c.req.valid('json')
     return c.json(
       await c.var.db.entities.search(
         q,
-        page || 0,
-        pageSize || DEFAULT_PAGE_SIZE,
+        facets,
+        filter,
+        page ?? postApiV1EntitiesBodyPageDefault,
+        pageSize ?? postApiV1EntitiesBodyPageSizeDefault,
       ),
     )
   },

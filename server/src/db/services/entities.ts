@@ -1,11 +1,17 @@
 import {
   type Connection,
   type HydratedDocument,
+  type QueryFilter,
   Schema,
   type ToObjectOptions,
 } from 'mongoose'
-import type { AuditedEntity } from '../../models'
-import type { Entity } from '../../models'
+import type {
+  AuditedEntity,
+  Entity,
+  Filter as EntityFilter,
+  FilterOperator,
+  FilterableField,
+} from '../../models'
 import { createId } from '../../utils/id'
 import { searchDump } from '../../utils/searchDump'
 import { COLLECTIONS } from '../collections'
@@ -37,6 +43,8 @@ export interface EntitySearchResult {
 export interface EntityDatabaseService {
   search(
     query: string | undefined,
+    facets: FilterableField[] | undefined,
+    filter: EntityFilter | undefined,
     page: number,
     pageSize: number,
   ): Promise<EntitySearchResult>
@@ -96,6 +104,53 @@ function exposeEntity(entity: HydratedDocument<StoredEntity>): AuditedEntity {
   return entity.toObject<AuditedEntity>()
 }
 
+const MONGO_OPERATORS: Record<FilterOperator, string> = {
+  eq: '$eq',
+  ne: '$ne',
+  gt: '$gt',
+  gte: '$gte',
+  lt: '$lt',
+  lte: '$lte',
+  in: '$in',
+  nin: '$nin',
+  exists: '$exists',
+}
+
+function storedField(field: FilterableField): string {
+  return field === 'id' ? '_id' : field
+}
+
+function comparisonFilter(
+  field: FilterableField,
+  operator: FilterOperator,
+  value: unknown,
+): QueryFilter<StoredEntity> {
+  const mongoValue =
+    operator === 'in' || operator === 'nin'
+      ? Array.isArray(value)
+        ? value
+        : [value]
+      : operator === 'exists'
+        ? Boolean(value)
+        : value
+
+  return {
+    [storedField(field)]: { [MONGO_OPERATORS[operator]]: mongoValue },
+  }
+}
+
+function toMongoFilter(filter: EntityFilter): QueryFilter<StoredEntity> {
+  if ('and' in filter) {
+    return { $and: filter.and.map(toMongoFilter) }
+  }
+
+  if ('or' in filter) {
+    return { $or: filter.or.map(toMongoFilter) }
+  }
+
+  return comparisonFilter(filter.field, filter.op, filter.value)
+}
+
 export async function createEntityDatabaseService(
   connection: Connection,
 ): Promise<EntityDatabaseService> {
@@ -125,12 +180,14 @@ export async function createEntityDatabaseService(
   )
 
   return {
-    async search(query, page, pageSize) {
+    async search(query, requestedFacets, structuredFilter, page, pageSize) {
       const normalizedQuery = query?.trim()
-      const filter = normalizedQuery
-        ? { $text: { $search: normalizedQuery } }
-        : {}
-      const [documents, total] = await Promise.all([
+      const filter: QueryFilter<StoredEntity> = {
+        ...(normalizedQuery ? { $text: { $search: normalizedQuery } } : {}),
+        ...(structuredFilter ? toMongoFilter(structuredFilter) : {}),
+      }
+      const facetFields = [...new Set(requestedFacets)]
+      const [documents, total, facetEntries] = await Promise.all([
         entities
           .find(filter)
           .sort({ 'audit.modifiedAt': -1, _id: 1 })
@@ -138,11 +195,35 @@ export async function createEntityDatabaseService(
           .limit(pageSize)
           .exec(),
         entities.countDocuments(filter).exec(),
+        Promise.all(
+          facetFields.map(async (field) => {
+            const fieldPath = storedField(field)
+            const values = await entities
+              .aggregate<{ _id: string; count: number }>([
+                { $match: filter },
+                { $unwind: `$${fieldPath}` },
+                { $match: { [fieldPath]: { $type: 'string' } } },
+                {
+                  $group: {
+                    _id: { entity: '$_id', value: `$${fieldPath}` },
+                  },
+                },
+                { $group: { _id: '$_id.value', count: { $sum: 1 } } },
+                { $sort: { count: -1, _id: 1 } },
+              ])
+              .exec()
+
+            return [
+              field,
+              values.map(({ _id: value, count }) => ({ value, count })),
+            ] as const
+          }),
+        ),
       ])
 
       return {
         results: documents.map(exposeEntity),
-        facets: {},
+        facets: Object.fromEntries(facetEntries),
         total,
       }
     },

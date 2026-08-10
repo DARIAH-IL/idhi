@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "orval && vite",
-    "build": "orval && vite build",
+    "build": "orval && tsc --noEmit && vite build",
     "deploy": "pnpm run build && wrangler deploy",
     "format": "prettier --write ."
   },
