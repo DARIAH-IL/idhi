@@ -23,9 +23,9 @@ import type {
 import type {
   AuditedEntity,
   Entity,
+  EntitySearch,
   ErrorResponse,
-  GetApiV1Entities200,
-  GetApiV1EntitiesParams,
+  PostApiV1Entities200,
 } from '../../models'
 
 import { customInstance } from '../../client.ts'
@@ -53,161 +53,86 @@ const withQueryKey = <T extends object, K>(
  * Free text search and facet-based search across all entities. Returns partial entity properties and facets.
  * @summary Search entities
  */
-export const getApiV1Entities = (
-  params?: GetApiV1EntitiesParams,
+export const postApiV1Entities = (
+  entitySearch: BodyType<EntitySearch>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<GetApiV1Entities200>({
+  return customInstance<PostApiV1Entities200>({
     url: `/api/v1/entities`,
-    method: 'GET',
-    params,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: entitySearch,
     signal,
   })
 }
 
-export const getGetApiV1EntitiesQueryKey = (
-  params?: GetApiV1EntitiesParams,
-) => {
-  return [`/api/v1/entities`, ...(params ? [params] : [])] as const
-}
-
-export const getGetApiV1EntitiesQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiV1Entities>>,
+export const getPostApiV1EntitiesMutationOptions = <
   TError = ErrorType<unknown>,
->(
-  params?: GetApiV1EntitiesParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1Entities>>,
-        TError,
-        TData
-      >
-    >
-  },
-) => {
-  const { query: queryOptions } = options ?? {}
-
-  const queryKey = queryOptions?.queryKey ?? getGetApiV1EntitiesQueryKey(params)
-
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiV1Entities>>
-  > = ({ signal }) => getApiV1Entities(params, signal)
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiV1Entities>>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof postApiV1Entities>>,
     TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
+    { data: BodyType<EntitySearch> },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof postApiV1Entities>>,
+  TError,
+  { data: BodyType<EntitySearch> },
+  TContext
+> => {
+  const mutationKey = ['postApiV1Entities']
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof postApiV1Entities>>,
+    { data: BodyType<EntitySearch> }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return postApiV1Entities(data)
+  }
+
+  return { mutationFn, ...mutationOptions }
 }
 
-export type GetApiV1EntitiesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiV1Entities>>
+export type PostApiV1EntitiesMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postApiV1Entities>>
 >
-export type GetApiV1EntitiesQueryError = ErrorType<unknown>
+export type PostApiV1EntitiesMutationBody = BodyType<EntitySearch>
+export type PostApiV1EntitiesMutationError = ErrorType<unknown>
 
-export function useGetApiV1Entities<
-  TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = ErrorType<unknown>,
->(
-  params: undefined | GetApiV1EntitiesParams,
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1Entities>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1Entities>>,
-          TError,
-          Awaited<ReturnType<typeof getApiV1Entities>>
-        >,
-        'initialData'
-      >
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useGetApiV1Entities<
-  TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = ErrorType<unknown>,
->(
-  params?: GetApiV1EntitiesParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1Entities>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1Entities>>,
-          TError,
-          Awaited<ReturnType<typeof getApiV1Entities>>
-        >,
-        'initialData'
-      >
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
-export function useGetApiV1Entities<
-  TData = Awaited<ReturnType<typeof getApiV1Entities>>,
-  TError = ErrorType<unknown>,
->(
-  params?: GetApiV1EntitiesParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1Entities>>,
-        TError,
-        TData
-      >
-    >
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-}
 /**
  * @summary Search entities
  */
-
-export function useGetApiV1Entities<
-  TData = Awaited<ReturnType<typeof getApiV1Entities>>,
+export const usePostApiV1Entities = <
   TError = ErrorType<unknown>,
+  TContext = unknown,
 >(
-  params?: GetApiV1EntitiesParams,
   options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1Entities>>,
-        TError,
-        TData
-      >
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof postApiV1Entities>>,
+      TError,
+      { data: BodyType<EntitySearch> },
+      TContext
     >
   },
   queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>
-} {
-  const queryOptions = getGetApiV1EntitiesQueryOptions(params, options)
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> }
-
-  return withQueryKey(query, queryOptions.queryKey)
+): UseMutationResult<
+  Awaited<ReturnType<typeof postApiV1Entities>>,
+  TError,
+  { data: BodyType<EntitySearch> },
+  TContext
+> => {
+  return useMutation(getPostApiV1EntitiesMutationOptions(options), queryClient)
 }
-
 /**
  * @summary Create a new entity
  */
