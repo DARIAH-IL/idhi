@@ -4,15 +4,9 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { AuthEmailWrite } from './authEmailWrite'
 import type { Language } from './language'
 
-export interface UserInviteWrite {
-  email: string
-  message?: string
-  /**
-   * @minimum 1
-   * @maximum 30
-   */
-  expiryDays?: number
+export type AuthOtpStartWrite = AuthEmailWrite & {
   lang?: Language
 }

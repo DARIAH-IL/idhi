@@ -1,4 +1,8 @@
 export type Bindings = {
+  DEFAULT_LANG?: string
+
+  FRONTEND_URL: string
+
   JWT_EXPIRATION_SECONDS?: string
   JWT_SECRET: string
 

@@ -7,9 +7,14 @@
 import { createFactory } from 'hono/factory'
 import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { serializeError } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { createId } from '../../utils/id'
+import { defaultLang } from '../../emails/localization'
+import { createOtp, otpDigits } from '../../utils/otp'
+import { sendInviteEmail } from '../../utils/smtp'
+import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
   PostApiV1UsersInviteContext,
@@ -39,7 +44,7 @@ export const postApiV1UsersInviteHandlers = factory.createHandlers(
   async (c: PostApiV1UsersInviteContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
-    const { email, message, expiryDays } = c.req.valid('json')
+    const { email, message, expiryDays, lang } = c.req.valid('json')
 
     if (await c.var.db.users.getByEmail(email)) {
       throw duplicateInvite()
@@ -55,16 +60,15 @@ export const postApiV1UsersInviteHandlers = factory.createHandlers(
     }
 
     const now = new Date().toISOString()
+    const expiresAtEpoch =
+      Date.now() + (expiryDays || DEFAULT_EXPIRY_DAYS) * 24 * 60 * 60 * 1000
 
     try {
       const invite = await c.var.db.userInvites.add({
         id: createId('invite'),
         email,
         message,
-        expiration: new Date(
-          Date.now() +
-            (expiryDays || DEFAULT_EXPIRY_DAYS) * 24 * 60 * 60 * 1000,
-        ).toISOString(),
+        expiration: new Date(expiresAtEpoch).toISOString(),
         audit: {
           createdAt: now,
           createdBy: user.id,
@@ -72,6 +76,44 @@ export const postApiV1UsersInviteHandlers = factory.createHandlers(
           modifiedBy: user.id,
         },
       })
+
+      const challengeId = createId('auth_challenge')
+      const otp = createOtp(otpDigits(c.env.OTP_DIGITS))
+
+      await c.var.db.authChallenges.insert({
+        challengeId,
+        type: 'otp',
+        code: otp,
+        attempts: 0,
+        email,
+        expiresAtEpoch,
+      })
+
+      try {
+        const resolvedLang = lang ?? defaultLang(c.env.DEFAULT_LANG)
+        const frontendUrl = requiredValue(c.env, 'FRONTEND_URL')
+        const inviteUrl = `${frontendUrl}?challengeId=${challengeId}&otp=${otp}&lang=${resolvedLang}`
+
+        await sendInviteEmail(email, inviteUrl, resolvedLang, c.env)
+      } catch (error) {
+        try {
+          await c.var.db.authChallenges.delete(challengeId)
+          await c.var.db.userInvites.delete(invite.id)
+        } catch (cleanupError) {
+          c.var.logger.error('Invite cleanup after email failure threw', {
+            challengeId,
+            inviteId: invite.id,
+            error: serializeError(cleanupError),
+          })
+        }
+
+        c.var.logger.error('Invite email delivery failed', {
+          challengeId,
+          inviteId: invite.id,
+          error: serializeError(error),
+        })
+        throw error
+      }
 
       return c.json(invite, 201)
     } catch (error) {

@@ -21,6 +21,7 @@ import { serializeError, type RequestLogger } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
 import { createId } from '../../utils/id'
 import { createJwtForUser } from '../../utils/jwt'
+import { defaultLang } from '../../emails/localization'
 import { createOtp, otpDigits, otpMaxAttempts } from '../../utils/otp'
 import { sendOtpEmail } from '../../utils/smtp'
 import { resolveUserForEmail } from '../../utils/users'
@@ -171,7 +172,7 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
   zValidator('json', PostApiV1AuthOtpBody),
   zValidator('response', PostApiV1AuthOtpResponse),
   async (c: PostApiV1AuthOtpContext) => {
-    const { email } = c.req.valid('json')
+    const { email, lang } = c.req.valid('json')
     const digits = otpDigits(c.env.OTP_DIGITS)
     const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
     const code = createOtp(digits)
@@ -188,7 +189,13 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
     })
 
     try {
-      await sendOtpEmail(user.email, code, expiresAtEpoch, c.env)
+      await sendOtpEmail(
+        user.email,
+        code,
+        expiresAtEpoch,
+        lang ?? defaultLang(c.env.DEFAULT_LANG),
+        c.env,
+      )
     } catch (error) {
       let challengeDeleted = false
 

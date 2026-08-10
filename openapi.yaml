@@ -37,7 +37,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AuthEmailWrite"
+              $ref: "#/components/schemas/AuthOtpStartWrite"
       responses:
         "200":
           description: OTP challenge started
@@ -530,6 +530,17 @@ components:
           type: string
           format: email
 
+    Language:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/LanguageEnum"
+
+    AuthOtpStartWrite:
+      allOf:
+        - $ref: "#/components/schemas/AuthEmailWrite"
+        - type: object
+          properties:
+            lang:
+              $ref: "#/components/schemas/Language"
+
     OtpChallengeCompletion:
       type: object
       required:
@@ -713,6 +724,8 @@ components:
           minimum: 1
           maximum: 30
           default: 7
+        lang:
+          $ref: "#/components/schemas/Language"
 
     ErrorCode:
       type: string

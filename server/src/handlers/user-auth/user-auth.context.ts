@@ -8,6 +8,7 @@ import type { Context, Env } from 'hono'
 
 import type {
   AuthEmailWrite,
+  AuthOtpStartWrite,
   OtpChallengeCompletion,
   PasskeyAuthenticationResponse,
   PasskeyRegistrationResponse,
@@ -16,7 +17,7 @@ import type {
 export type PostApiV1AuthOtpContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/otp',
-  { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
+  { in: { json: AuthOtpStartWrite }; out: { json: AuthOtpStartWrite } }
 >
 export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
   E,

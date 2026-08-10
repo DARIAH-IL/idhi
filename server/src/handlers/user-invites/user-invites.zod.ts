@@ -17,6 +17,10 @@ export const PostApiV1UsersInviteBody = zod.object({
     .min(1)
     .max(postApiV1UsersInviteBodyExpiryDaysMax)
     .default(postApiV1UsersInviteBodyExpiryDaysDefault),
+  lang: zod
+    .enum(['en', 'he', 'ar'])
+    .optional()
+    .describe('Languages supported for free-text fields (BCP-47 tags).'),
 })
 
 export const postApiV1UsersInviteResponseOneAuditCreatedByRegExp = new RegExp(

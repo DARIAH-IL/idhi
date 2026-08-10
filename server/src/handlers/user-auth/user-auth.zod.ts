@@ -6,9 +6,18 @@
  */
 import { z as zod } from 'zod'
 
-export const PostApiV1AuthOtpBody = zod.object({
-  email: zod.email(),
-})
+export const PostApiV1AuthOtpBody = zod
+  .object({
+    email: zod.email(),
+  })
+  .and(
+    zod.object({
+      lang: zod
+        .enum(['en', 'he', 'ar'])
+        .optional()
+        .describe('Languages supported for free-text fields (BCP-47 tags).'),
+    }),
+  )
 
 export const PostApiV1AuthOtpResponse = zod.strictObject({
   challengeId: zod.string(),
