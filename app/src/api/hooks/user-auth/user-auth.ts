@@ -201,15 +201,10 @@ export const usePostApiV1AuthOtpChallengeId = <
 /**
  * @summary Start passkey registration
  */
-export const postApiV1AuthPasskeyCreate = (
-  authEmailWrite: BodyType<AuthEmailWrite>,
-  signal?: AbortSignal,
-) => {
+export const postApiV1AuthPasskeyCreate = (signal?: AbortSignal) => {
   return customInstance<PasskeyRegistrationChallenge>({
     url: `/api/v1/auth/passkey/create`,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    data: authEmailWrite,
     signal,
   })
 }
@@ -221,13 +216,13 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
     TError,
-    { data: BodyType<AuthEmailWrite> },
+    void,
     TContext
   >
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
   TError,
-  { data: BodyType<AuthEmailWrite> },
+  void,
   TContext
 > => {
   const mutationKey = ['postApiV1AuthPasskeyCreate']
@@ -241,11 +236,9 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
-    { data: BodyType<AuthEmailWrite> }
-  > = (props) => {
-    const { data } = props ?? {}
-
-    return postApiV1AuthPasskeyCreate(data)
+    void
+  > = () => {
+    return postApiV1AuthPasskeyCreate()
   }
 
   return { mutationFn, ...mutationOptions }
@@ -254,7 +247,7 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
 export type PostApiV1AuthPasskeyCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>
 >
-export type PostApiV1AuthPasskeyCreateMutationBody = BodyType<AuthEmailWrite>
+
 export type PostApiV1AuthPasskeyCreateMutationError = ErrorType<ErrorResponse>
 
 /**
@@ -268,7 +261,7 @@ export const usePostApiV1AuthPasskeyCreate = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
       TError,
-      { data: BodyType<AuthEmailWrite> },
+      void,
       TContext
     >
   },
@@ -276,7 +269,7 @@ export const usePostApiV1AuthPasskeyCreate = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
   TError,
-  { data: BodyType<AuthEmailWrite> },
+  void,
   TContext
 > => {
   return useMutation(
