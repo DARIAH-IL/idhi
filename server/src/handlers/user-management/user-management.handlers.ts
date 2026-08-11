@@ -26,6 +26,8 @@ import {
 import {
   GetApiV1UsersQueryParams,
   GetApiV1UsersResponse,
+  getApiV1UsersQueryPageDefault,
+  getApiV1UsersQueryPageSizeDefault,
   PostApiV1UsersBody,
   PostApiV1UsersResponse,
   GetApiV1UsersUserIdParams,
@@ -89,7 +91,10 @@ export const getApiV1UsersHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { page, pageSize } = c.req.valid('query')
-    const users = await c.var.db.users.list(page, pageSize)
+    const users = await c.var.db.users.list(
+      page ?? getApiV1UsersQueryPageDefault,
+      pageSize ?? getApiV1UsersQueryPageSizeDefault,
+    )
 
     return c.json({
       results: users.results.map(publicUser),

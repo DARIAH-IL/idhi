@@ -6,15 +6,12 @@
  */
 import type { Context, Env } from 'hono'
 
-import type { Entity, GetApiV1EntitiesParams } from '../../models'
+import type { Entity, EntitySearch } from '../../models'
 
-export type GetApiV1EntitiesContext<E extends Env = any> = Context<
+export type PostApiV1EntitiesContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities',
-  {
-    in: { query: GetApiV1EntitiesParams }
-    out: { query: GetApiV1EntitiesParams }
-  }
+  { in: { json: EntitySearch }; out: { json: EntitySearch } }
 >
 export type PutApiV1EntitiesContext<E extends Env = any> = Context<
   E,

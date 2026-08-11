@@ -24,7 +24,14 @@ import { createJwtForUser } from '../../utils/jwt'
 import { defaultLang } from '../../emails/localization'
 import { createOtp, otpDigits, otpMaxAttempts } from '../../utils/otp'
 import { sendOtpEmail } from '../../utils/smtp'
-import { resolveUserForEmail } from '../../utils/users'
+import {
+  createInvitedUserAfterAuthentication,
+  resolveAuthenticationTarget,
+} from '../../utils/users'
+import {
+  authRateLimits,
+  enforceAuthRateLimits,
+} from '../../utils/authRateLimit'
 import { splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
@@ -76,7 +83,11 @@ function relyingParty(
   const origin = normalizeOrigin(requestOrigin ?? requestUrl)
   const allowedOrigins = splitValues(allowedHosts).map(normalizeOrigin)
 
-  if (allowedOrigins.length > 0 && !allowedOrigins.includes(origin)) {
+  if (allowedOrigins.length === 0) {
+    throw new Error('Allowed origins must contain at least one origin')
+  }
+
+  if (!allowedOrigins.includes(origin)) {
     throw new ApiError(ErrorCode.InvalidInput, 'WebAuthn origin is not allowed')
   }
 
@@ -173,8 +184,16 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthOtpResponse),
   async (c: PostApiV1AuthOtpContext) => {
     const { email, lang } = c.req.valid('json')
+    await enforceAuthRateLimits(c, [
+      authRateLimits.otpStartEmail(email),
+      authRateLimits.otpStartEmailDaily(email),
+    ])
     const digits = otpDigits(c.env.OTP_DIGITS)
-    const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
+    const target = await resolveAuthenticationTarget(
+      email,
+      c.var.db,
+      c.var.logger,
+    )
     const code = createOtp(digits)
     const challengeId = createId('auth_challenge')
     const expiresAtEpoch = Date.now() + DEFAULT_CHALLENGE_TIMEOUT_MS
@@ -184,13 +203,13 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
       type: 'otp',
       code,
       attempts: 0,
-      email: user.email,
+      email: target.email,
       expiresAtEpoch,
     })
 
     try {
       await sendOtpEmail(
-        user.email,
+        target.email,
         code,
         expiresAtEpoch,
         lang ?? defaultLang(c.env.DEFAULT_LANG),
@@ -204,14 +223,14 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
       } catch (cleanupError) {
         c.var.logger.error('OTP challenge cleanup after email failure threw', {
           challengeId,
-          userId: user.id,
+          userId: target.user?.id,
           error: serializeError(cleanupError),
         })
       }
 
       c.var.logger.error('OTP email delivery failed', {
         challengeId,
-        userId: user.id,
+        userId: target.user?.id,
         challengeDeleted,
         error: serializeError(error),
       })
@@ -220,7 +239,7 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
 
     c.var.logger.debug('OTP challenge created and delivered', {
       challengeId,
-      userId: user.id,
+      userId: target.user?.id,
       expiresAtEpoch,
     })
 
@@ -237,6 +256,9 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
   async (c: PostApiV1AuthOtpChallengeIdContext) => {
     const { challengeId } = c.req.valid('param')
     const { otp } = c.req.valid('json')
+    await enforceAuthRateLimits(c, [
+      authRateLimits.otpCompletionChallenge(challengeId),
+    ])
     const lock = await c.var.db.locks.tryLock(
       `otp_attempt:${challengeId}`,
       LOCK_TTL_MS,
@@ -257,6 +279,14 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
         c.var.db,
         c.var.logger,
         challengeId,
+      )
+      await enforceAuthRateLimits(
+        c,
+        [
+          authRateLimits.otpCompletionEmail(challenge.email),
+          authRateLimits.otpCompletionEmailDaily(challenge.email),
+        ],
+        { includeClientIp: false },
       )
       const maxAttempts = otpMaxAttempts(c.env.OTP_MAX_ATTEMPTS)
 
@@ -308,14 +338,11 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
         throw challengeNotFound()
       }
 
-      const user = await c.var.db.users.getByEmail(challenge.email)
-
-      if (!user) {
-        c.var.logger.warn('OTP authentication user no longer exists', {
-          challengeId,
-        })
-        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
-      }
+      const user = await createInvitedUserAfterAuthentication(
+        challenge.email,
+        c.var.db,
+        c.var.logger,
+      )
 
       c.var.logger.debug('OTP authentication completed', {
         challengeId,
@@ -347,6 +374,9 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
   async (c: PostApiV1AuthPasskeyCreateContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    await enforceAuthRateLimits(c, [
+      authRateLimits.passkeyCreateStartUser(user.id),
+    ])
     const passkeyCredentials = await c.var.db.users.getPasskeyCredentials(
       user.id,
     )
@@ -408,6 +438,9 @@ export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
       const authenticatedUser = c.get('user')
       assertAuthenticatedUser(authenticatedUser)
       const { challengeId } = c.req.valid('param')
+      await enforceAuthRateLimits(c, [
+        authRateLimits.passkeyCreateCompletionUser(authenticatedUser.id),
+      ])
       const response = c.req.valid(
         'json',
       ) as unknown as RegistrationResponseJSON
@@ -494,7 +527,14 @@ export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
   zValidator('json', PostApiV1AuthPasskeyLoginBody),
   async (c: PostApiV1AuthPasskeyLoginContext) => {
     const { email } = c.req.valid('json')
-    const user = await resolveUserForEmail(email, c.var.db, c.var.logger)
+    await enforceAuthRateLimits(c, [
+      authRateLimits.passkeyLoginStartEmail(email),
+    ])
+    const target = await resolveAuthenticationTarget(
+      email,
+      c.var.db,
+      c.var.logger,
+    )
     const { origin, rpID } = relyingParty(
       c.req.url,
       c.req.header('Origin'),
@@ -503,10 +543,12 @@ export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
     const options = await generateAuthenticationOptions({
       rpID,
       userVerification: 'required',
-      allowCredentials: user.passkeyCredentials.map((credential) => ({
-        id: credential.id,
-        transports: credential.transports,
-      })),
+      allowCredentials: (target.user?.passkeyCredentials ?? []).map(
+        (credential) => ({
+          id: credential.id,
+          transports: credential.transports,
+        }),
+      ),
     })
     const challengeId = createId('auth_challenge')
     const expiresAtEpoch = expirationFor(options)
@@ -514,7 +556,7 @@ export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
     await c.var.db.authChallenges.insert({
       challengeId,
       type: 'passkeyLogin',
-      email: user.email,
+      email: target.email,
       expectedOrigin: origin,
       expectedRPID: rpID,
       expiresAtEpoch,
@@ -523,10 +565,10 @@ export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
 
     c.var.logger.debug('Passkey authentication challenge created', {
       challengeId,
-      userId: user.id,
+      userId: target.user?.id,
       rpID,
       expiresAtEpoch,
-      allowedCredentialCount: user.passkeyCredentials.length,
+      allowedCredentialCount: target.user?.passkeyCredentials.length ?? 0,
     })
 
     return c.json({
@@ -543,6 +585,9 @@ export const postApiV1AuthPasskeyLoginChallengeIdHandlers =
     zValidator('response', PostApiV1AuthPasskeyLoginChallengeIdResponse),
     async (c: PostApiV1AuthPasskeyLoginChallengeIdContext) => {
       const { challengeId } = c.req.valid('param')
+      await enforceAuthRateLimits(c, [
+        authRateLimits.passkeyLoginCompletionChallenge(challengeId),
+      ])
       const response = c.req.valid(
         'json',
       ) as unknown as AuthenticationResponseJSON

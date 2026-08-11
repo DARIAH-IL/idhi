@@ -6,75 +6,192 @@
  */
 import { z as zod } from 'zod'
 
-export const getApiV1EntitiesQueryPageDefault = 0
-export const getApiV1EntitiesQueryPageMin = 0
+export const postApiV1EntitiesBodyFacetsItemRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
+export const postApiV1EntitiesBodyFilterOneFieldRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
+export const postApiV1EntitiesBodyFilterTwoAndItemOneFieldRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
 
-export const getApiV1EntitiesQueryPageSizeDefault = 20
-export const getApiV1EntitiesQueryPageSizeMax = 100
+export const postApiV1EntitiesBodyFilterThreeOrItemOneFieldRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
 
-export const GetApiV1EntitiesQueryParams = zod.object({
-  q: zod.string().optional(),
+export const postApiV1EntitiesBodyPageDefault = 0
+export const postApiV1EntitiesBodyPageMin = 0
+
+export const postApiV1EntitiesBodyPageSizeDefault = 20
+export const postApiV1EntitiesBodyPageSizeMax = 100
+
+export const PostApiV1EntitiesBody = zod.object({
+  q: zod.string().optional().describe('Optional free-text search query.'),
+  facets: zod
+    .array(
+      zod
+        .string()
+        .regex(postApiV1EntitiesBodyFacetsItemRegExp)
+        .describe(
+          'A dot-separated entity field path. Operators and array indexes are not allowed.',
+        ),
+    )
+    .optional()
+    .describe('Entity fields for which facet counts should be returned.'),
+  filter: zod
+    .union([
+      zod.object({
+        field: zod
+          .string()
+          .regex(postApiV1EntitiesBodyFilterOneFieldRegExp)
+          .describe(
+            'A dot-separated entity field path. Operators and array indexes are not allowed.',
+          ),
+        op: zod.enum([
+          'eq',
+          'ne',
+          'gt',
+          'gte',
+          'lt',
+          'lte',
+          'in',
+          'nin',
+          'exists',
+        ]),
+        value: zod.unknown(),
+      }),
+      zod.object({
+        and: zod
+          .array(
+            zod.union([
+              zod.object({
+                field: zod
+                  .string()
+                  .regex(postApiV1EntitiesBodyFilterTwoAndItemOneFieldRegExp)
+                  .describe(
+                    'A dot-separated entity field path. Operators and array indexes are not allowed.',
+                  ),
+                op: zod.enum([
+                  'eq',
+                  'ne',
+                  'gt',
+                  'gte',
+                  'lt',
+                  'lte',
+                  'in',
+                  'nin',
+                  'exists',
+                ]),
+                value: zod.unknown(),
+              }),
+              zod.object({
+                and: zod.array(zod.unknown()).min(1),
+              }),
+              zod.object({
+                or: zod.array(zod.unknown()).min(1),
+              }),
+            ]),
+          )
+          .min(1),
+      }),
+      zod.object({
+        or: zod
+          .array(
+            zod.union([
+              zod.object({
+                field: zod
+                  .string()
+                  .regex(postApiV1EntitiesBodyFilterThreeOrItemOneFieldRegExp)
+                  .describe(
+                    'A dot-separated entity field path. Operators and array indexes are not allowed.',
+                  ),
+                op: zod.enum([
+                  'eq',
+                  'ne',
+                  'gt',
+                  'gte',
+                  'lt',
+                  'lte',
+                  'in',
+                  'nin',
+                  'exists',
+                ]),
+                value: zod.unknown(),
+              }),
+              zod.object({
+                and: zod.array(zod.unknown()).min(1),
+              }),
+              zod.object({
+                or: zod.array(zod.unknown()).min(1),
+              }),
+            ]),
+          )
+          .min(1),
+      }),
+    ])
+    .optional(),
   page: zod
     .int()
-    .min(getApiV1EntitiesQueryPageMin)
-    .default(getApiV1EntitiesQueryPageDefault),
+    .min(postApiV1EntitiesBodyPageMin)
+    .default(postApiV1EntitiesBodyPageDefault),
   pageSize: zod
     .int()
     .min(1)
-    .max(getApiV1EntitiesQueryPageSizeMax)
-    .default(getApiV1EntitiesQueryPageSizeDefault),
+    .max(postApiV1EntitiesBodyPageSizeMax)
+    .default(postApiV1EntitiesBodyPageSizeDefault),
 })
 
-export const getApiV1EntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const getApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const getApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const getApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
+export const postApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
 
-export const getApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
+export const postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
-export const getApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
+export const postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
   new RegExp('^idhi:user:.+$')
 
-export const GetApiV1EntitiesResponse = zod.strictObject({
+export const PostApiV1EntitiesResponse = zod.strictObject({
   results: zod.array(
     zod
       .union([
@@ -216,13 +333,13 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneOneIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneOneIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             orcid: zod
               .url()
-              .regex(getApiV1EntitiesResponseResultsItemOneOneOrcidRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp)
               .nullish()
               .describe(
                 "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
@@ -361,7 +478,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneTwoIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneTwoIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -433,7 +550,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               ),
             ror: zod
               .url()
-              .regex(getApiV1EntitiesResponseResultsItemOneTwoRorRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneTwoRorRegExp)
               .nullish()
               .describe(
                 "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -558,7 +675,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneThreeIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneThreeIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -896,7 +1013,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneFourIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneFourIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -1360,7 +1477,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneFiveIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneFiveIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -1673,7 +1790,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneSixIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneSixIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -1817,7 +1934,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               ),
             doi: zod
               .url()
-              .regex(getApiV1EntitiesResponseResultsItemOneSevenDoiRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp)
               .nullish()
               .describe(
                 "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
@@ -1828,7 +1945,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneSevenIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneSevenIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2116,7 +2233,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneEightIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneEightIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2241,7 +2358,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(getApiV1EntitiesResponseResultsItemOneNineIdRegExp)
+              .regex(postApiV1EntitiesResponseResultsItemOneNineIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2341,7 +2458,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               createdBy: zod
                 .string()
                 .regex(
-                  getApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp,
+                  postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp,
                 ),
               modifiedAt: zod.iso
                 .datetime({ offset: true })
@@ -2349,7 +2466,7 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
               modifiedBy: zod
                 .string()
                 .regex(
-                  getApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp,
+                  postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp,
                 ),
             })
             .optional(),
@@ -2365,7 +2482,9 @@ export const GetApiV1EntitiesResponse = zod.strictObject({
       }),
     ),
   ),
-  total: zod.int(),
+  total: zod
+    .int()
+    .describe('Total number of matching entities across all pages.'),
 })
 
 export const putApiV1EntitiesBodyOneIdRegExp = new RegExp(

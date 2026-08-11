@@ -15,7 +15,7 @@ import {
   postApiV1AuthPasskeyLoginChallengeIdHandlers,
 } from './handlers/user-auth/user-auth.handlers'
 import {
-  getApiV1EntitiesHandlers,
+  postApiV1EntitiesHandlers,
   putApiV1EntitiesHandlers,
   getApiV1EntitiesEntityIdHandlers,
   postApiV1EntitiesEntityIdHandlers,
@@ -49,7 +49,7 @@ const app = new Hono()
     '/api/v1/auth/passkey/login/:challengeId',
     ...postApiV1AuthPasskeyLoginChallengeIdHandlers,
   )
-  .get('/api/v1/entities', ...getApiV1EntitiesHandlers)
+  .post('/api/v1/entities', ...postApiV1EntitiesHandlers)
   .put('/api/v1/entities', ...putApiV1EntitiesHandlers)
   .get('/api/v1/entities/:entityId', ...getApiV1EntitiesEntityIdHandlers)
   .post('/api/v1/entities/:entityId', ...postApiV1EntitiesEntityIdHandlers)

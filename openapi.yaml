@@ -153,30 +153,18 @@ paths:
           $ref: "#/components/responses/Error"
 
   /api/v1/entities:
-    get:
+    post:
       tags:
         - Entities
       summary: Search entities
       description: Free text search and facet-based search across all entities. Returns partial entity properties and facets.
       security: [ ]
-      parameters:
-        - name: q
-          in: query
-          schema:
-            type: string
-        - name: page
-          in: query
-          schema:
-            type: integer
-            minimum: 0
-            default: 0
-        - name: pageSize
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-            default: 20
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntitySearch"
       responses:
         "200":
           description: Search results with facets
@@ -209,6 +197,7 @@ paths:
                             type: integer
                   total:
                     type: integer
+                    description: Total number of matching entities across all pages.
     put:
       tags:
         - Entities
@@ -500,6 +489,84 @@ components:
       type: string
       format: date-time
       description: UTC date and time
+
+    FilterableField:
+      type: string
+      pattern: "^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$"
+      description: A dot-separated entity field path. Operators and array indexes are not allowed.
+
+    FilterOperator:
+      type: string
+      enum:
+        - eq
+        - ne
+        - gt
+        - gte
+        - lt
+        - lte
+        - in
+        - nin
+        - exists
+
+    Filter:
+      $dynamicAnchor: filter
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required:
+            - field
+            - op
+            - value
+          properties:
+            field:
+              $ref: "#/components/schemas/FilterableField"
+            op:
+              $ref: "#/components/schemas/FilterOperator"
+            value: { }
+        - type: object
+          additionalProperties: false
+          required:
+            - and
+          properties:
+            and:
+              type: array
+              minItems: 1
+              items:
+                $dynamicRef: "#filter"
+        - type: object
+          additionalProperties: false
+          required:
+            - or
+          properties:
+            or:
+              type: array
+              minItems: 1
+              items:
+                $dynamicRef: "#filter"
+
+    EntitySearch:
+      type: object
+      additionalProperties: false
+      properties:
+        q:
+          type: string
+          description: Optional free-text search query.
+        facets:
+          type: array
+          description: Entity fields for which facet counts should be returned.
+          items:
+            $ref: "#/components/schemas/FilterableField"
+        filter:
+          $ref: "#/components/schemas/Filter"
+        page:
+          type: integer
+          minimum: 0
+          default: 0
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
 
     AuthChallenge:
       type: object
