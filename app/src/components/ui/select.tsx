@@ -10,14 +10,15 @@ import {
   SearchField,
   Select as SelectPrimitive,
   SelectValue as SelectValuePrimitive,
-  Separator as SeparatorPrimitive
-  
-  
-  
-  
-  
+  Separator as SeparatorPrimitive,
 } from 'react-aria-components'
-import type {ListBoxProps, SearchFieldProps, ListBoxSectionProps as SelectGroupProps, SelectProps, SelectValueProps} from 'react-aria-components';
+import type {
+  ListBoxProps,
+  SearchFieldProps,
+  ListBoxSectionProps as SelectGroupProps,
+  SelectProps,
+  SelectValueProps,
+} from 'react-aria-components'
 
 import { cn } from '@/lib/utils'
 import {
@@ -32,10 +33,10 @@ import {
   Tick02Icon,
 } from '@hugeicons/core-free-icons'
 
-function Select<T extends object, M extends 'single' | 'multiple' = 'single'>({
-  className,
-  ...props
-}: SelectProps<T, M>) {
+function Select<
+  T extends object,
+  TSelectionMode extends 'single' | 'multiple' = 'single',
+>({ className, ...props }: SelectProps<T, TSelectionMode>) {
   return (
     <SelectPrimitive
       data-slot="select"
@@ -239,10 +240,10 @@ function SelectItem({
       )}
       {...props}
     >
-      {composeRenderProps(children, (children, { isSelected }) => (
+      {composeRenderProps(children, (renderedChildren, { isSelected }) => (
         <>
           <span className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
-            {children}
+            {renderedChildren}
           </span>
           <span className="pointer-events-none absolute right-2 flex items-center justify-center">
             {isSelected ? (

@@ -2,8 +2,10 @@ import { useCallback, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
 import { getPostApiV1EntitiesQueryOptions } from '@/api/hooks/entities/entities'
 import type { EntitySearch, Filter } from '@/api/models'
+import type { EntityType } from '@/lib/entity'
 import {
   ENTITY_TYPES,
   getEntityDisplayName,
@@ -12,7 +14,7 @@ import {
   auditedEntityId,
 } from '@/lib/entity'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
   Table,
@@ -24,15 +26,16 @@ import {
 } from '@/components/ui/table'
 
 const PAGE_SIZE = 20
+const entityBoardSearchSchema = z.object({
+  q: z.string().optional(),
+  type: z.enum(ENTITY_TYPES).optional(),
+  page: z.number().int().nonnegative().optional().catch(undefined),
+})
 
 export const Route = createFileRoute('/_app/entities/')({
-  validateSearch: (s: Record<string, unknown>) => ({
-    q: typeof s['q'] === 'string' ? s['q'] : undefined,
-    type: typeof s['type'] === 'string' ? s['type'] : undefined,
-    page: typeof s['page'] === 'number' ? s['page'] : 0,
-  }),
-  loaderDeps: ({ search }) => search,
-  loader: ({ context, deps }) => {
+  validateSearch: entityBoardSearchSchema,
+  loaderDeps: ({ search: { q, type, page } }) => ({ q, type, page }),
+  loader: async ({ context, deps }) => {
     const filter: Filter | undefined = deps.type
       ? { field: 'type', op: 'eq', value: deps.type }
       : undefined
@@ -42,7 +45,7 @@ export const Route = createFileRoute('/_app/entities/')({
       pageSize: PAGE_SIZE,
       filter,
     }
-    return context.queryClient.ensureQueryData(
+    await context.queryClient.ensureQueryData(
       getPostApiV1EntitiesQueryOptions(search),
     )
   },
@@ -51,7 +54,7 @@ export const Route = createFileRoute('/_app/entities/')({
 
 function EntityBoard() {
   const { t } = useTranslation()
-  const navigate = useNavigate({ from: '/entities' })
+  const navigate = useNavigate({ from: Route.fullPath })
   const { q, type, page } = Route.useSearch()
 
   const [searchInput, setSearchInput] = useState(q ?? '')
@@ -68,7 +71,11 @@ function EntityBoard() {
 
   const updateSearch = useCallback(
     (
-      updates: Partial<{ q: string; type: string | undefined; page: number }>,
+      updates: Partial<{
+        q: string
+        type: EntityType | undefined
+        page: number
+      }>,
     ) => {
       void navigate({
         search: (prev) => ({ ...prev, ...updates }),
@@ -90,9 +97,9 @@ function EntityBoard() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{t('board.title')}</h1>
-        <Button asChild size="default">
-          <Link to="/entities/new">{t('board.new_entity')}</Link>
-        </Button>
+        <Link to="/entities/new" className={buttonVariants()}>
+          {t('board.new_entity')}
+        </Link>
       </div>
 
       <form onSubmit={handleSearchSubmit} className="flex gap-2">
@@ -100,7 +107,7 @@ function EntityBoard() {
           type="search"
           placeholder={t('board.search_placeholder')}
           value={searchInput}
-          onChange={setSearchInput}
+          onChange={(event) => setSearchInput(event.target.value)}
           className="max-w-sm"
         />
         <Button type="submit" variant="outline" size="default">

@@ -20,8 +20,12 @@ export function TextField({
         {(field) => (
           <Input
             type={type}
-            value={(field.state.value) ?? ''}
-            onChange={(v) => field.handleChange(v as never)}
+            value={
+              typeof field.state.value === 'string' ? field.state.value : ''
+            }
+            onChange={(event) =>
+              field.handleChange(event.target.value as never)
+            }
             placeholder={placeholder}
           />
         )}

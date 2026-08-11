@@ -154,6 +154,7 @@ paths:
 
   /api/v1/entities:
     post:
+      operationId: postApiV1Entities
       tags:
         - Entities
       summary: Search entities

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
 import {
   usePostApiV1AuthOtp,
   usePostApiV1AuthOtpChallengeId,
 } from '@/api/hooks/user-auth/user-auth'
-import type { ErrorResponse } from '@/api/models'
-import type { AxiosError } from 'axios'
+import { getApiErrorMessage } from '@/lib/api-error'
 import { useAuthStore } from '@/stores/auth'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -19,27 +19,14 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 
-export const Route = createFileRoute('/login')({
-  validateSearch: (s: Record<string, unknown>) => ({
-    redirect: typeof s['redirect'] === 'string' ? s['redirect'] : undefined,
-  }),
-  component: LoginPage,
+const loginSearchSchema = z.object({
+  redirect: z.string().optional(),
 })
 
-function extractErrorMessage(
-  err: unknown,
-  t: ReturnType<typeof useTranslation>['t'],
-): string {
-  const axiosErr = err as AxiosError<ErrorResponse>
-  const errorCode = axiosErr?.response?.data?.errorCode
-  if (
-    errorCode &&
-    t(`auth.errors.${errorCode}`) !== `auth.errors.${errorCode}`
-  ) {
-    return t(`auth.errors.${errorCode}`)
-  }
-  return t('auth.errors.generic')
-}
+export const Route = createFileRoute('/login')({
+  validateSearch: loginSearchSchema,
+  component: LoginPage,
+})
 
 function LoginPage() {
   const { t } = useTranslation()
@@ -58,7 +45,7 @@ function LoginPage() {
         setChallengeId(data.challengeId)
         setError(null)
       },
-      onError: (err) => setError(extractErrorMessage(err, t)),
+      onError: (err) => setError(getApiErrorMessage(err)),
     },
   })
 
@@ -68,7 +55,7 @@ function LoginPage() {
         setToken(data.jwt)
         void navigate({ to: redirect ?? '/entities', replace: true })
       },
-      onError: (err) => setError(extractErrorMessage(err, t)),
+      onError: (err) => setError(getApiErrorMessage(err)),
     },
   })
 
@@ -106,8 +93,8 @@ function LoginPage() {
                   autoComplete="email"
                   placeholder={t('auth.email_placeholder')}
                   value={email}
-                  onChange={setEmail}
-                  isRequired
+                  onChange={(event) => setEmail(event.target.value)}
+                required
                 />
               </div>
               {error && <p className="text-xs text-destructive">{error}</p>}
@@ -131,9 +118,9 @@ function LoginPage() {
                   autoComplete="one-time-code"
                   placeholder={t('auth.otp_placeholder')}
                   value={otp}
-                  onChange={setOtp}
+                  onChange={(event) => setOtp(event.target.value)}
                   autoFocus
-                  isRequired
+                  required
                 />
               </div>
               {error && <p className="text-xs text-destructive">{error}</p>}

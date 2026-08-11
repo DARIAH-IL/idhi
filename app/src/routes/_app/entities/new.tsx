@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { usePutApiV1Entities } from '@/api/hooks/entities/entities'
-import type { Entity } from '@/api/models'
 import { ENTITY_TYPES, getEntityTypeLabel } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/entity/EntityForm'
@@ -21,6 +21,7 @@ function NewEntityPage() {
   const createMutation = usePutApiV1Entities({
     mutation: {
       onSuccess: (entity) => {
+        toast.success(t('entity.notifications.created'))
         const id = (entity as unknown as Record<string, string>)['id'] ?? ''
         void navigate({
           to: '/entities/$entityId',
@@ -75,8 +76,7 @@ function NewEntityPage() {
       <EntityForm
         entityType={selectedType}
         onSubmit={(data) => {
-          const entityData = { ...data, type: selectedType } as Entity
-          createMutation.mutate({ data: entityData })
+          createMutation.mutate({ data })
         }}
         isSubmitting={createMutation.isPending}
       />

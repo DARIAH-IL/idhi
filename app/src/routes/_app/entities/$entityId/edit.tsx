@@ -2,12 +2,11 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import {
   getGetApiV1EntitiesEntityIdQueryOptions,
   usePostApiV1EntitiesEntityId,
 } from '@/api/hooks/entities/entities'
-import type { Entity } from '@/api/models'
-import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/entity/EntityForm'
 
 export const Route = createFileRoute('/_app/entities/$entityId/edit')({
@@ -35,6 +34,7 @@ function EditEntityPage() {
   const updateMutation = usePostApiV1EntitiesEntityId({
     mutation: {
       onSuccess: () => {
+        toast.success(t('entity.notifications.updated'))
         void navigate({ to: '/entities/$entityId', params: { entityId } })
       },
       onError: () => setServerError(t('common.error')),
@@ -56,7 +56,7 @@ function EditEntityPage() {
         defaultValues={entity}
         isEdit
         onSubmit={(data) => {
-          updateMutation.mutate({ entityId: decodedId, data: data as Entity })
+          updateMutation.mutate({ entityId: decodedId, data })
         }}
         isSubmitting={updateMutation.isPending}
       />

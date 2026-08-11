@@ -2,8 +2,8 @@ import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import type { Entity, AuditedEntity } from '@/api/models'
 import type { EntityType } from '@/lib/entity'
-import { formContext  } from './form-type'
-import type {EntityFormValues} from './form-type';
+import { formContext } from './form-type'
+import type { EntityFormValues } from './form-type'
 import { FieldRow } from './FieldRow'
 import { TextField } from './TextField'
 import { LangStringField } from './LangStringField'
@@ -24,7 +24,7 @@ import { Separator } from '@/components/ui/separator'
 interface Props {
   entityType: EntityType
   defaultValues?: Partial<AuditedEntity>
-  onSubmit: (data: Omit<Entity, 'id'> & { id?: string }) => void
+  onSubmit: (data: Entity) => void
   isSubmitting?: boolean
   isEdit?: boolean
 }
@@ -37,11 +37,14 @@ export function EntityForm({
   isEdit,
 }: Props) {
   const { t } = useTranslation()
+  const initialValues: EntityFormValues = { type: entityType }
+
+  if (defaultValues) {
+    Object.assign(initialValues, defaultValues)
+  }
 
   const form = useForm({
-    defaultValues: (defaultValues
-      ? { ...(defaultValues as EntityFormValues), type: entityType }
-      : { type: entityType }),
+    defaultValues: initialValues,
     onSubmit: ({ value }) => {
       const cleaned = Object.fromEntries(
         Object.entries(value).filter(([, v]) => {
@@ -50,7 +53,7 @@ export function EntityForm({
           return true
         }),
       )
-      onSubmit(cleaned as Omit<Entity, 'id'> & { id?: string })
+      onSubmit(cleaned as unknown as Entity)
     },
   })
 
@@ -68,20 +71,24 @@ export function EntityForm({
             {t('entity.form.sections.basic')}
           </p>
 
-          {isEdit && (
-            <form.Field name="id">
-              {(field) => (
-                <FieldRow label={t('entity.form.fields.id')}>
-                  <Input
-                    value={(field.state.value) ?? ''}
-                    onChange={() => {}}
-                    isReadOnly
-                    className="font-mono text-xs"
-                  />
-                </FieldRow>
-              )}
-            </form.Field>
-          )}
+          <form.Field name="id">
+            {(field) => (
+              <FieldRow label={t('entity.form.fields.id')}>
+                <Input
+                  value={
+                    typeof field.state.value === 'string'
+                      ? field.state.value
+                      : ''
+                  }
+                  onChange={(event) => field.handleChange(event.target.value)}
+                  placeholder={`idhi:${entityType.slice('idhi:'.length).toLowerCase()}:…`}
+                  readOnly={isEdit}
+                  required
+                  className="font-mono text-xs"
+                />
+              </FieldRow>
+            )}
+          </form.Field>
 
           <TextField
             name="homepage"

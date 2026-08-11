@@ -41,7 +41,7 @@ function pickLang(
 }
 
 export function getEntityDisplayName(entity: Entity): string {
-  const e = entity as Record<string, unknown>
+  const e = entity as unknown as Record<string, unknown>
   if (entity.type === 'idhi:Person') {
     const parts = [e['given_name'], e['family_name']].filter(Boolean)
     if (parts.length) return parts.join(' ')
@@ -52,7 +52,7 @@ export function getEntityDisplayName(entity: Entity): string {
 }
 
 export function getEntityDescription(entity: Entity): string | undefined {
-  const e = entity as Record<string, unknown>
+  const e = entity as unknown as Record<string, unknown>
   return pickLang(e['description'] as LangString[] | undefined)
 }
 

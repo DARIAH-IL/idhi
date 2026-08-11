@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import {
   getGetApiV1EntitiesEntityIdQueryOptions,
   useDeleteApiV1EntitiesEntityId,
@@ -11,13 +12,12 @@ import {
   getEntityTypeLabel,
   formatDate,
 } from '@/lib/entity'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import {
   Dialog,
-  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -49,6 +49,7 @@ function EntityDetailPage() {
   const deleteMutation = useDeleteApiV1EntitiesEntityId({
     mutation: {
       onSuccess: () => {
+        toast.success(t('entity.notifications.deleted'))
         void navigate({ to: '/entities' })
       },
     },
@@ -112,11 +113,13 @@ function EntityDetailPage() {
           <p className="text-xs text-muted-foreground font-mono">{decodedId}</p>
         </div>
         <div className="flex gap-2 shrink-0">
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/entities/$entityId/edit" params={{ entityId }}>
-              {t('entity.detail.edit')}
-            </Link>
-          </Button>
+          <Link
+            to="/entities/$entityId/edit"
+            params={{ entityId }}
+            className={buttonVariants({ variant: 'outline', size: 'sm' })}
+          >
+            {t('entity.detail.edit')}
+          </Link>
           <Button
             variant="destructive"
             size="sm"
@@ -186,26 +189,24 @@ function EntityDetailPage() {
       </Card>
 
       <Dialog isOpen={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t('common.delete_confirm_title')}</DialogTitle>
-            <DialogDescription>{t('common.confirm_delete')}</DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onPress={() => setDeleteOpen(false)}>
-              {t('common.cancel')}
-            </Button>
-            <Button
-              variant="destructive"
-              isDisabled={deleteMutation.isPending}
-              onPress={() => deleteMutation.mutate({ entityId: decodedId })}
-            >
-              {deleteMutation.isPending
-                ? t('common.loading')
-                : t('common.delete')}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t('common.delete_confirm_title')}</DialogTitle>
+          <DialogDescription>{t('common.confirm_delete')}</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onPress={() => setDeleteOpen(false)}>
+            {t('common.cancel')}
+          </Button>
+          <Button
+            variant="destructive"
+            isDisabled={deleteMutation.isPending}
+            onPress={() => deleteMutation.mutate({ entityId: decodedId })}
+          >
+            {deleteMutation.isPending
+              ? t('common.loading')
+              : t('common.delete')}
+          </Button>
+        </DialogFooter>
       </Dialog>
     </div>
   )

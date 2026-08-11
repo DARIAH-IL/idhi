@@ -23,11 +23,14 @@ export function EnumSelectField({
       <form.Field name={name as never}>
         {(field) => (
           <Select
-            selectedKey={(field.state.value) ?? null}
+            placeholder="Select…"
+            selectedKey={
+              typeof field.state.value === 'string' ? field.state.value : null
+            }
             onSelectionChange={(k) => field.handleChange(k as never)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select…" />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {Object.entries(options).map(([key]) => (

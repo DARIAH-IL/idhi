@@ -23,28 +23,36 @@ export function StringArrayField({
         {(field) => (
           <>
             <div className="flex flex-col gap-1.5">
-              {((field.state.value as string[]) ?? []).map((_, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <form.Field name={`${name}[${i}]` as never}>
-                    {(itemField) => (
-                      <Input
-                        value={(itemField.state.value) ?? ''}
-                        onChange={(v) => itemField.handleChange(v as never)}
-                        placeholder={placeholder}
-                        className="flex-1"
-                      />
-                    )}
-                  </form.Field>
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    onPress={() => field.removeValue(i)}
-                    aria-label={t('common.remove')}
-                  >
-                    ×
-                  </Button>
-                </div>
-              ))}
+              {(Array.isArray(field.state.value) ? field.state.value : []).map(
+                (_, i) => (
+                  <div key={i} className="flex gap-2 items-center">
+                    <form.Field name={`${name}[${i}]` as never}>
+                      {(itemField) => (
+                        <Input
+                          value={
+                            typeof itemField.state.value === 'string'
+                              ? itemField.state.value
+                              : ''
+                          }
+                          onChange={(event) =>
+                            itemField.handleChange(event.target.value as never)
+                          }
+                          placeholder={placeholder}
+                          className="flex-1"
+                        />
+                      )}
+                    </form.Field>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      onPress={() => field.removeValue(i)}
+                      aria-label={t('common.remove')}
+                    >
+                      ×
+                    </Button>
+                  </div>
+                ),
+              )}
             </div>
             <Button
               variant="outline"

@@ -14,6 +14,20 @@
     "remove": "Remove",
     "new": "New"
   },
+  "api": {
+    "errors": {
+      "Unauthorized": "Your session has expired. Please sign in again.",
+      "InvalidInput": "The submitted information is invalid. Please review it and try again.",
+      "EntityNotFound": "The requested entity could not be found.",
+      "UserNotFound": "The requested user could not be found.",
+      "UserAlreadyInvitedOrRegistered": "This user is already invited or registered.",
+      "WrongOtpCode": "The one-time code is incorrect. Please try again.",
+      "TooManyAuthAttempts": "Too many authentication attempts. Please try again later.",
+      "AuthChallengeNotFoundOrExpired": "The authentication request has expired. Please start again.",
+      "network": "The server could not be reached. Check your connection and try again.",
+      "generic": "Something went wrong while communicating with the server."
+    }
+  },
   "auth": {
     "title": "IDHI",
     "email_label": "Email address",
@@ -51,6 +65,11 @@
     "new_entity": "New entity"
   },
   "entity": {
+    "notifications": {
+      "created": "Entity created successfully.",
+      "updated": "Entity updated successfully.",
+      "deleted": "Entity deleted successfully."
+    },
     "types": {
       "idhi:Person": "Person",
       "idhi:Organization": "Organization",
