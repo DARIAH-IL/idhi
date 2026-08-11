@@ -7,6 +7,7 @@ export type Bindings = {
   JWT_SECRET: string
 
   MONGODB_CONNECTION_STRING: string
+  MONGODB_DATABASE_NAME: string
 
   OTP_DIGITS?: string
   OTP_MAX_ATTEMPTS?: string

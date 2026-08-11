@@ -10,11 +10,14 @@ export const databaseMiddleware: MiddlewareHandler<{
   Bindings: Bindings
 }> = async (c, next) => {
   const connectionString = requiredValue(c.env, 'MONGODB_CONNECTION_STRING')
+  const databaseName = requiredValue(c.env, 'MONGODB_DATABASE_NAME')
 
   try {
     c.set(
       'db',
-      await createDatabaseService(await connectToDatabase(connectionString)),
+      await createDatabaseService(
+        await connectToDatabase(connectionString, databaseName),
+      ),
     )
   } catch (error) {
     if (c.req.method === 'GET' && c.req.path === '/api/v1/health') {
