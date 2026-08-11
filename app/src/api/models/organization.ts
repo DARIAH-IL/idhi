@@ -7,6 +7,7 @@
 import type { OrganizationAddressItem } from './organizationAddressItem.ts'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
 import type { OrganizationLocationItem } from './organizationLocationItem.ts'
+import type { OrganizationNameItem } from './organizationNameItem.ts'
 import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
 import type { OrganizationType } from './organizationType.ts'
 
@@ -56,8 +57,8 @@ export interface Organization {
    * @nullable
    */
   marketplace_sync?: boolean | null
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: OrganizationNameItem[]
   /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
   organization_type?: OrganizationOrganizationType
   /**

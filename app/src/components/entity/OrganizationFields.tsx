@@ -11,7 +11,11 @@ export function OrganizationFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <EnumSelectField
         name="organization_type"
         label={t('entity.form.fields.organization_type')}

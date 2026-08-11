@@ -2,9 +2,7 @@ node_modules
 .DS_Store
 dist
 dist-ssr
-*.local
-.env
-!app/.env
+.env.local
 .nitro
 .tanstack
 .wrangler

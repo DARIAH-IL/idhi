@@ -10,6 +10,7 @@ import type { TrainingMaterialEducationalLevelItem } from './trainingMaterialEdu
 import type { TrainingMaterialInLanguagesItem } from './trainingMaterialInLanguagesItem.ts'
 import type { TrainingMaterialLearningOutcomesItem } from './trainingMaterialLearningOutcomesItem.ts'
 import type { TrainingMaterialLicense } from './trainingMaterialLicense.ts'
+import type { TrainingMaterialNameItem } from './trainingMaterialNameItem.ts'
 import type { TrainingMaterialPrerequisitesItem } from './trainingMaterialPrerequisitesItem.ts'
 import type { TrainingMaterialTargetAudiencesItem } from './trainingMaterialTargetAudiencesItem.ts'
 import type { TrainingMaterialTrainingMaterialType } from './trainingMaterialTrainingMaterialType.ts'
@@ -89,8 +90,8 @@ export interface TrainingMaterial {
    * @nullable
    */
   media_type?: string | null
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: TrainingMaterialNameItem[]
   /**
    * The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.
    * @nullable

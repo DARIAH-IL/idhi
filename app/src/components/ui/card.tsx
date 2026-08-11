@@ -12,7 +12,7 @@ function Card({
       data-slot="card"
       data-size={size}
       className={cn(
-        'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg bg-oklch(1 0 0) py-(--card-spacing) text-xs/relaxed text-oklch(0.145 0 0) ring-1 ring-oklch(0.145 0 0)/10 [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg dark:bg-oklch(0.205 0 0) dark:text-oklch(0.985 0 0) dark:ring-oklch(0.985 0 0)/10',
+        'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg bg-oklch(1 0 0) py-(--card-spacing) text-xs/relaxed text-oklch(0.145 0 0) ring-1 ring-oklch(0.145 0 0)/10 [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg',
         className,
       )}
       {...props}
@@ -47,10 +47,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-description"
-      className={cn(
-        'text-xs/relaxed text-oklch(0.556 0 0) dark:text-oklch(0.708 0 0)',
-        className,
-      )}
+      className={cn('text-xs/relaxed text-oklch(0.556 0 0)', className)}
       {...props}
     />
   )

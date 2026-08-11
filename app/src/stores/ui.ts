@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type Language = 'en' | 'he' | 'ar'
+import type { Language } from '@/api/models'
 
 interface UIState {
   language: Language

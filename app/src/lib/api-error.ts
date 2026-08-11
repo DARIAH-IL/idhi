@@ -1,9 +1,10 @@
 import axios from 'axios'
+import type { ParseKeys } from 'i18next'
 import type { ErrorCode, ErrorResponse } from '@/api/models'
 import { ErrorCode as ErrorCodes } from '@/api/models'
 import i18n from '@/i18n'
 
-const errorTranslationKeys: Record<ErrorCode, string> = {
+const errorTranslationKeys = {
   [ErrorCodes.Unauthorized]: 'api.errors.Unauthorized',
   [ErrorCodes.InvalidInput]: 'api.errors.InvalidInput',
   [ErrorCodes.EntityNotFound]: 'api.errors.EntityNotFound',
@@ -14,7 +15,7 @@ const errorTranslationKeys: Record<ErrorCode, string> = {
   [ErrorCodes.TooManyAuthAttempts]: 'api.errors.TooManyAuthAttempts',
   [ErrorCodes.AuthChallengeNotFoundOrExpired]:
     'api.errors.AuthChallengeNotFoundOrExpired',
-}
+} as const satisfies Record<ErrorCode, ParseKeys>
 
 export function getApiErrorResponse(error: unknown): ErrorResponse | undefined {
   if (!axios.isAxiosError(error)) return undefined

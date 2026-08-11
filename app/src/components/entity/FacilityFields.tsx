@@ -9,7 +9,11 @@ export function FacilityFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <TextField
         name="contact_email"
         label={t('entity.form.fields.contact_email')}

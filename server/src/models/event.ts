@@ -8,6 +8,7 @@ import type { EventAddressItem } from './eventAddressItem'
 import type { EventDescriptionItem } from './eventDescriptionItem'
 import type { EventEventType } from './eventEventType'
 import type { EventLocationItem } from './eventLocationItem'
+import type { EventNameItem } from './eventNameItem'
 import type { EventType } from './eventType'
 
 /**
@@ -58,8 +59,8 @@ export interface Event {
    * @nullable
    */
   location?: EventLocationItem[] | null
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: EventNameItem[]
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

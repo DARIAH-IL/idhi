@@ -7,6 +7,7 @@
 import type { ProjectDescriptionItem } from './projectDescriptionItem'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem'
 import type { ProjectFundingItem } from './projectFundingItem'
+import type { ProjectNameItem } from './projectNameItem'
 import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem'
 import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem'
 import type { ProjectResearchDisciplinesItem } from './projectResearchDisciplinesItem'
@@ -61,8 +62,8 @@ export interface Project {
    * @pattern ^idhi:project:[0-9a-z]{4,12}$
    */
   id: string
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: ProjectNameItem[]
   /**
    * Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).
    * @nullable

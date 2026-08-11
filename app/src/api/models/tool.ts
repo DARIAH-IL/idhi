@@ -7,6 +7,7 @@
 import type { ToolDescriptionItem } from './toolDescriptionItem.ts'
 import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem.ts'
 import type { ToolLicense } from './toolLicense.ts'
+import type { ToolNameItem } from './toolNameItem.ts'
 import type { ToolToolType } from './toolToolType.ts'
 import type { ToolType } from './toolType.ts'
 
@@ -58,10 +59,10 @@ export interface Tool {
   id: string
   /** Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings. */
   license?: ToolLicense
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: ToolNameItem[]
   /**
-   * Main implementation language(s), comma-free single value preferred.
+   * Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.
    * @nullable
    */
   programming_language?: string | null

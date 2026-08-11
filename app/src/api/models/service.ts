@@ -6,6 +6,7 @@
  */
 import type { ServiceDescriptionItem } from './serviceDescriptionItem.ts'
 import type { ServiceDigitalHumanitiesActivitiesItem } from './serviceDigitalHumanitiesActivitiesItem.ts'
+import type { ServiceNameItem } from './serviceNameItem.ts'
 import type { ServiceServiceType } from './serviceServiceType.ts'
 import type { ServiceType } from './serviceType.ts'
 
@@ -51,8 +52,8 @@ export interface Service {
    * @pattern ^idhi:service:[0-9a-z]{4,12}$
    */
   id: string
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: ServiceNameItem[]
   /**
    * The organization formally responsible for delivering the service (the one you'd contact or contract with) — set this even when the service is listed under a Facility.
    * @nullable

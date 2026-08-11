@@ -15,7 +15,11 @@ export function ProjectFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <TextField
         name="start_date"
         label={t('entity.form.fields.start_date')}

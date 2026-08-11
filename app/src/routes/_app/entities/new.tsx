@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Navigate,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { usePutApiV1Entities } from '@/api/hooks/entities/entities'
@@ -8,13 +13,18 @@ import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/entity/EntityForm'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { Button } from '@/components/ui/button'
+import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/new')({
+  beforeLoad: () => {
+    if (!useAuthStore.getState().token) throw redirect({ to: '/entities' })
+  },
   component: NewEntityPage,
 })
 
 function NewEntityPage() {
   const { t } = useTranslation()
+  const token = useAuthStore((state) => state.token)
   const navigate = useNavigate()
   const [selectedType, setSelectedType] = useState<EntityType | null>(null)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -32,6 +42,8 @@ function NewEntityPage() {
       onError: () => setServerError(t('common.error')),
     },
   })
+
+  if (!token) return <Navigate to="/entities" replace />
 
   if (!selectedType) {
     return (

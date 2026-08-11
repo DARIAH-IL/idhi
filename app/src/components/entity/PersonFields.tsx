@@ -5,6 +5,7 @@ import {
   PersonProjectParticipationsItemParticipationRole,
 } from '@/api/models'
 import { TextField } from './TextField'
+import { LangStringField } from './LangStringField'
 import { EnumSelectField } from './EnumSelectField'
 import { StringArrayField } from './StringArrayField'
 import { ArraySection } from './ArraySection'
@@ -15,8 +16,11 @@ export function PersonFields() {
 
   return (
     <>
-      <TextField name="given_name" label={t('entity.form.fields.given_name')} />
-      <TextField
+      <LangStringField
+        name="given_name"
+        label={t('entity.form.fields.given_name')}
+      />
+      <LangStringField
         name="family_name"
         label={t('entity.form.fields.family_name')}
       />

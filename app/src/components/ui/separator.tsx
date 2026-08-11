@@ -12,7 +12,7 @@ function Separator({
       data-slot="separator"
       orientation={orientation}
       className={cn(
-        'block shrink-0 border-0 bg-oklch(0.922 0 0) aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=vertical]:w-px aria-[orientation=vertical]:self-stretch [:is(hr)]:h-px [:is(hr)]:w-full dark:bg-oklch(1 0 0 / 10%)',
+        'block shrink-0 border-0 bg-oklch(0.922 0 0) aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=vertical]:w-px aria-[orientation=vertical]:self-stretch [:is(hr)]:h-px [:is(hr)]:w-full',
         className,
       )}
       {...props}

@@ -310,16 +310,50 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
               ),
             family_name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+                "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
               ),
             given_name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+                "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
               ),
             homepage: zod
               .url()
@@ -506,9 +540,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             organization_type: zod
               .enum([
@@ -684,9 +735,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             same_as: zod
               .array(zod.url())
@@ -980,9 +1048,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             organization_roles: zod
               .array(
@@ -1444,15 +1529,32 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             programming_language: zod
               .string()
               .nullish()
               .describe(
-                'Main implementation language(s), comma-free single value preferred.',
+                'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
               ),
             same_as: zod
               .array(zod.url())
@@ -1725,9 +1827,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             provider: zod
               .string()
@@ -1861,9 +1980,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             part_of: zod
               .string()
@@ -2153,9 +2289,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2249,9 +2402,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             publisher: zod
               .string()
@@ -2625,9 +2795,26 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
               ),
             name: zod
-              .string()
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .describe(
-                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
             part_of_training_material: zod
               .string()
@@ -2939,16 +3126,50 @@ export const PutApiV1EntitiesBody = zod.union([
           'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
         ),
       family_name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+          "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
         ),
       given_name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+          "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
         ),
       homepage: zod
         .url()
@@ -3135,9 +3356,26 @@ export const PutApiV1EntitiesBody = zod.union([
           "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       organization_type: zod
         .enum([
@@ -3313,9 +3551,26 @@ export const PutApiV1EntitiesBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       same_as: zod
         .array(zod.url())
@@ -3609,9 +3864,26 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       organization_roles: zod
         .array(
@@ -4069,15 +4341,32 @@ export const PutApiV1EntitiesBody = zod.union([
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       programming_language: zod
         .string()
         .nullish()
         .describe(
-          'Main implementation language(s), comma-free single value preferred.',
+          'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4350,9 +4639,26 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       provider: zod
         .string()
@@ -4484,9 +4790,26 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       part_of: zod
         .string()
@@ -4776,9 +5099,26 @@ export const PutApiV1EntitiesBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4872,9 +5212,26 @@ export const PutApiV1EntitiesBody = zod.union([
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       publisher: zod
         .string()
@@ -5248,9 +5605,26 @@ export const PutApiV1EntitiesBody = zod.union([
           'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       part_of_training_material: zod
         .string()
@@ -5531,16 +5905,50 @@ export const PutApiV1EntitiesResponse = zod
             'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
           ),
         family_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+            "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         given_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+            "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         homepage: zod
           .url()
@@ -5727,9 +6135,26 @@ export const PutApiV1EntitiesResponse = zod
             "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_type: zod
           .enum([
@@ -5905,9 +6330,26 @@ export const PutApiV1EntitiesResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -6201,9 +6643,26 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_roles: zod
           .array(
@@ -6661,15 +7120,32 @@ export const PutApiV1EntitiesResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         programming_language: zod
           .string()
           .nullish()
           .describe(
-            'Main implementation language(s), comma-free single value preferred.',
+            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
           ),
         same_as: zod
           .array(zod.url())
@@ -6942,9 +7418,26 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         provider: zod
           .string()
@@ -7076,9 +7569,26 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of: zod
           .string()
@@ -7368,9 +7878,26 @@ export const PutApiV1EntitiesResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -7464,9 +7991,26 @@ export const PutApiV1EntitiesResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         publisher: zod
           .string()
@@ -7840,9 +8384,26 @@ export const PutApiV1EntitiesResponse = zod
             'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of_training_material: zod
           .string()
@@ -8145,16 +8706,50 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
           ),
         family_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+            "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         given_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+            "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         homepage: zod
           .url()
@@ -8341,9 +8936,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_type: zod
           .enum([
@@ -8519,9 +9131,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -8815,9 +9444,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_roles: zod
           .array(
@@ -9275,15 +9921,32 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         programming_language: zod
           .string()
           .nullish()
           .describe(
-            'Main implementation language(s), comma-free single value preferred.',
+            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9556,9 +10219,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         provider: zod
           .string()
@@ -9690,9 +10370,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of: zod
           .string()
@@ -9982,9 +10679,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -10078,9 +10792,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         publisher: zod
           .string()
@@ -10454,9 +11185,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of_training_material: zod
           .string()
@@ -10754,16 +11502,50 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
         ),
       family_name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+          "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
         ),
       given_name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+          "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
         ),
       homepage: zod
         .url()
@@ -10950,9 +11732,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       organization_type: zod
         .enum([
@@ -11128,9 +11927,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       same_as: zod
         .array(zod.url())
@@ -11424,9 +12240,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       organization_roles: zod
         .array(
@@ -11884,15 +12717,32 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       programming_language: zod
         .string()
         .nullish()
         .describe(
-          'Main implementation language(s), comma-free single value preferred.',
+          'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
         ),
       same_as: zod
         .array(zod.url())
@@ -12165,9 +13015,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       provider: zod
         .string()
@@ -12299,9 +13166,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       part_of: zod
         .string()
@@ -12591,9 +13475,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       same_as: zod
         .array(zod.url())
@@ -12687,9 +13588,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       publisher: zod
         .string()
@@ -13063,9 +13981,26 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
         ),
       name: zod
-        .string()
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .describe(
-          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
       part_of_training_material: zod
         .string()
@@ -13344,16 +14279,50 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
           ),
         family_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.",
+            "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         given_name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            "Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.",
+            "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
           ),
         homepage: zod
           .url()
@@ -13540,9 +14509,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_type: zod
           .enum([
@@ -13718,9 +14704,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -14014,9 +15017,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         organization_roles: zod
           .array(
@@ -14474,15 +15494,32 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         programming_language: zod
           .string()
           .nullish()
           .describe(
-            'Main implementation language(s), comma-free single value preferred.',
+            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
           ),
         same_as: zod
           .array(zod.url())
@@ -14755,9 +15792,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         provider: zod
           .string()
@@ -14889,9 +15943,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of: zod
           .string()
@@ -15181,9 +16252,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         same_as: zod
           .array(zod.url())
@@ -15277,9 +16365,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         publisher: zod
           .string()
@@ -15653,9 +16758,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
           ),
         name: zod
-          .string()
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .describe(
-            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
         part_of_training_material: zod
           .string()

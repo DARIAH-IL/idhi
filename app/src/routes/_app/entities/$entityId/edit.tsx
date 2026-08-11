@@ -1,4 +1,9 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Navigate,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,8 +15,17 @@ import {
 import { EntityForm } from '@/components/entity/EntityForm'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { getEntityDisplayName } from '@/lib/entity'
+import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/$entityId/edit')({
+  beforeLoad: ({ params }) => {
+    if (!useAuthStore.getState().token) {
+      throw redirect({
+        to: '/entities/$entityId',
+        params: { entityId: params.entityId },
+      })
+    }
+  },
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(
       getGetApiV1EntitiesEntityIdQueryOptions(
@@ -23,6 +37,7 @@ export const Route = createFileRoute('/_app/entities/$entityId/edit')({
 
 function EditEntityPage() {
   const { t } = useTranslation()
+  const token = useAuthStore((state) => state.token)
   const { entityId } = Route.useParams()
   const navigate = useNavigate()
   const [serverError, setServerError] = useState<string | null>(null)
@@ -42,6 +57,10 @@ function EditEntityPage() {
       onError: () => setServerError(t('common.error')),
     },
   })
+
+  if (!token) {
+    return <Navigate to="/entities/$entityId" params={{ entityId }} replace />
+  }
 
   if (!entity) {
     return <p className="text-muted-foreground">{t('common.loading')}</p>

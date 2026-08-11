@@ -7,6 +7,8 @@
 import type { PersonAffiliationsItem } from './personAffiliationsItem'
 import type { PersonAuthorshipsItem } from './personAuthorshipsItem'
 import type { PersonDescriptionItem } from './personDescriptionItem'
+import type { PersonFamilyNameItem } from './personFamilyNameItem'
+import type { PersonGivenNameItem } from './personGivenNameItem'
 import type { PersonProjectParticipationsItem } from './personProjectParticipationsItem'
 import type { PersonType } from './personType'
 
@@ -35,15 +37,15 @@ export interface Person {
    */
   emails?: string[] | null
   /**
-   * Family (last) name, in the person's preferred romanization. Use with given_name when the person's name is conventionally expressed in that form.
+   * Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.
    * @nullable
    */
-  family_name?: string | null
+  family_name?: PersonFamilyNameItem[] | null
   /**
-   * Given (first) name, in the person's preferred romanization. Use with family_name when the person's name is conventionally expressed in that form.
+   * Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.
    * @nullable
    */
-  given_name?: string | null
+  given_name?: PersonGivenNameItem[] | null
   /**
    * Public landing page of the entity, if one exists.
    * @nullable

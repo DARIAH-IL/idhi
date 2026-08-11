@@ -5,6 +5,7 @@ import {
   ToolDigitalHumanitiesActivitiesItem,
 } from '@/api/models'
 import { TextField } from './TextField'
+import { LangStringField } from './LangStringField'
 import { EnumSelectField } from './EnumSelectField'
 import { StringArrayField } from './StringArrayField'
 
@@ -12,7 +13,11 @@ export function ToolFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <EnumSelectField
         name="tool_type"
         label={t('entity.form.fields.tool_type')}

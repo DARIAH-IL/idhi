@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/dialog'
 import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
@@ -38,6 +39,7 @@ export const Route = createFileRoute('/_app/entities/$entityId/')({
 
 function EntityDetailPage() {
   const { t } = useTranslation()
+  const isAuthenticated = useAuthStore((state) => Boolean(state.token))
   const { entityId } = Route.useParams()
   const navigate = useNavigate()
   const [deleteOpen, setDeleteOpen] = useState(false)
@@ -118,27 +120,29 @@ function EntityDetailPage() {
           </div>
           <p className="text-xs text-muted-foreground font-mono">{decodedId}</p>
         </div>
-        <div className="flex gap-2 shrink-0">
-          <Link
-            to="/entities/$entityId/edit"
-            params={{ entityId }}
-            className={buttonVariants({ variant: 'outline', size: 'sm' })}
-          >
-            {t('entity.detail.edit')}
-          </Link>
-          <Button
-            variant="destructive"
-            size="sm"
-            onPress={() => setDeleteOpen(true)}
-          >
-            {t('entity.detail.delete')}
-          </Button>
-        </div>
+        {isAuthenticated && (
+          <div className="flex gap-2 shrink-0">
+            <Link
+              to="/entities/$entityId/edit"
+              params={{ entityId }}
+              className={buttonVariants({ variant: 'outline', size: 'sm' })}
+            >
+              {t('entity.detail.edit')}
+            </Link>
+            <Button
+              variant="destructive"
+              size="sm"
+              onPress={() => setDeleteOpen(true)}
+            >
+              {t('entity.detail.delete')}
+            </Button>
+          </div>
+        )}
       </div>
 
       <Separator />
 
-      {audit && (
+      {isAuthenticated && audit && (
         <Card size="sm">
           <CardHeader>
             <CardTitle>{t('entity.detail.audit')}</CardTitle>
@@ -196,26 +200,28 @@ function EntityDetailPage() {
         </CardContent>
       </Card>
 
-      <Dialog isOpen={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogHeader>
-          <DialogTitle>{t('common.delete_confirm_title')}</DialogTitle>
-          <DialogDescription>{t('common.confirm_delete')}</DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onPress={() => setDeleteOpen(false)}>
-            {t('common.cancel')}
-          </Button>
-          <Button
-            variant="destructive"
-            isDisabled={deleteMutation.isPending}
-            onPress={() => deleteMutation.mutate({ entityId: decodedId })}
-          >
-            {deleteMutation.isPending
-              ? t('common.loading')
-              : t('common.delete')}
-          </Button>
-        </DialogFooter>
-      </Dialog>
+      {isAuthenticated && (
+        <Dialog isOpen={deleteOpen} onOpenChange={setDeleteOpen}>
+          <DialogHeader>
+            <DialogTitle>{t('common.delete_confirm_title')}</DialogTitle>
+            <DialogDescription>{t('common.confirm_delete')}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onPress={() => setDeleteOpen(false)}>
+              {t('common.cancel')}
+            </Button>
+            <Button
+              variant="destructive"
+              isDisabled={deleteMutation.isPending}
+              onPress={() => deleteMutation.mutate({ entityId: decodedId })}
+            >
+              {deleteMutation.isPending
+                ? t('common.loading')
+                : t('common.delete')}
+            </Button>
+          </DialogFooter>
+        </Dialog>
+      )}
     </div>
   )
 }

@@ -16,7 +16,11 @@ export function TrainingMaterialFields() {
 
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <EnumSelectField
         name="training_material_type"
         label={t('entity.form.fields.training_material_type')}

@@ -24,13 +24,17 @@ client.interceptors.response.use(
 
     // API failures are intentionally surfaced in developer tools as well as UI.
     // eslint-disable-next-line no-console
-    console.error('API request failed', {
-      method: err.config?.method?.toUpperCase(),
-      url: err.config?.url,
-      status: err.response?.status,
-      errorCode: apiError?.errorCode,
-      message: apiError?.message ?? err.message,
-    })
+    console.error(
+      'API request failed',
+      {
+        method: err.config?.method?.toUpperCase(),
+        url: err.config?.url,
+        status: err.response?.status,
+        errorCode: apiError?.errorCode,
+        message: apiError?.message ?? err.message,
+      },
+      err,
+    )
 
     toast.error(getApiErrorMessage(err), {
       id: `api-error:${err.config?.method}:${err.config?.url}:${apiError?.errorCode ?? err.code}`,

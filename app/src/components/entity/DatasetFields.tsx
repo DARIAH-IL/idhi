@@ -9,7 +9,11 @@ export function DatasetFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <TextField
         name="date_issued"
         label={t('entity.form.fields.date_issued')}

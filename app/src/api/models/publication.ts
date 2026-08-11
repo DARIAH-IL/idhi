@@ -6,6 +6,7 @@
  */
 import type { PublicationAuthorshipsItem } from './publicationAuthorshipsItem.ts'
 import type { PublicationDescriptionItem } from './publicationDescriptionItem.ts'
+import type { PublicationNameItem } from './publicationNameItem.ts'
 import type { PublicationPublicationType } from './publicationPublicationType.ts'
 import type { PublicationPublishedInItem } from './publicationPublishedInItem.ts'
 import type { PublicationType } from './publicationType.ts'
@@ -47,8 +48,8 @@ export interface Publication {
    * @pattern ^idhi:publication:[0-9a-z]{4,12}$
    */
   id: string
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: PublicationNameItem[]
   /**
    * The containing work (book for a chapter, proceedings for a paper), by IDHI URN or external URI.
    * @nullable

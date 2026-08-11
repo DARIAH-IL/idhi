@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { useAuthStore } from '@/stores/auth'
 import {
   Table,
   TableBody,
@@ -55,6 +56,7 @@ export const Route = createFileRoute('/_app/entities/')({
 
 function EntityBoard() {
   const { t } = useTranslation()
+  const isAuthenticated = useAuthStore((state) => Boolean(state.token))
   const navigate = useNavigate({ from: Route.fullPath })
   const { q, type, page } = Route.useSearch()
 
@@ -98,9 +100,11 @@ function EntityBoard() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{t('board.title')}</h1>
-        <Link to="/entities/new" className={buttonVariants()}>
-          {t('board.new_entity')}
-        </Link>
+        {isAuthenticated && (
+          <Link to="/entities/new" className={buttonVariants()}>
+            {t('board.new_entity')}
+          </Link>
+        )}
       </div>
 
       <form onSubmit={handleSearchSubmit} className="flex gap-2">
@@ -141,7 +145,7 @@ function EntityBoard() {
               <EntityTypeIcon
                 type={et}
                 size="sm"
-                className="size-5 bg-transparent dark:bg-transparent"
+                className="size-5 bg-transparent"
               />
               {getEntityTypeLabel(et)}
             </span>
@@ -161,7 +165,9 @@ function EntityBoard() {
             <TableRow>
               <TableHead isRowHeader>{t('board.columns.name')}</TableHead>
               <TableHead>{t('board.columns.type')}</TableHead>
-              <TableHead>{t('board.columns.modified')}</TableHead>
+              {isAuthenticated && (
+                <TableHead>{t('board.columns.modified')}</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody
@@ -202,18 +208,20 @@ function EntityBoard() {
                       {getEntityTypeLabel(entity.type)}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {formatDate(
-                      (entity as unknown as Record<string, unknown>)['audit']
-                        ? (
-                            entity as unknown as Record<
-                              string,
-                              Record<string, string>
-                            >
-                          )['audit']?.['modifiedAt']
-                        : undefined,
-                    )}
-                  </TableCell>
+                  {isAuthenticated && (
+                    <TableCell className="text-muted-foreground">
+                      {formatDate(
+                        (entity as unknown as Record<string, unknown>)['audit']
+                          ? (
+                              entity as unknown as Record<
+                                string,
+                                Record<string, string>
+                              >
+                            )['audit']?.['modifiedAt']
+                          : undefined,
+                      )}
+                    </TableCell>
+                  )}
                 </TableRow>
               )
             })}

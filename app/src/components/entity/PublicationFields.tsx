@@ -13,7 +13,11 @@ export function PublicationFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <EnumSelectField
         name="publication_type"
         label={t('entity.form.fields.publication_type')}

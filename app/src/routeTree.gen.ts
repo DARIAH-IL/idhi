@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppEntitiesIndexRouteImport } from './routes/_app/entities/index'
 import { Route as AppEntitiesNewRouteImport } from './routes/_app/entities/new'
 import { Route as AppEntitiesEntityIdIndexRouteImport } from './routes/_app/entities/$entityId/index'
@@ -24,11 +23,6 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppEntitiesIndexRoute = AppEntitiesIndexRouteImport.update({
@@ -55,7 +49,6 @@ const AppEntitiesEntityIdEditRoute = AppEntitiesEntityIdEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/entities/new': typeof AppEntitiesNewRoute
   '/entities/': typeof AppEntitiesIndexRoute
   '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -63,7 +56,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/entities/new': typeof AppEntitiesNewRoute
   '/entities': typeof AppEntitiesIndexRoute
   '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -73,7 +65,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
-  '/login': typeof LoginRoute
   '/_app/entities/new': typeof AppEntitiesNewRoute
   '/_app/entities/': typeof AppEntitiesIndexRoute
   '/_app/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -83,7 +74,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/entities/new'
     | '/entities/'
     | '/entities/$entityId/edit'
@@ -91,7 +81,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
     | '/entities/new'
     | '/entities'
     | '/entities/$entityId/edit'
@@ -100,7 +89,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
-    | '/login'
     | '/_app/entities/new'
     | '/_app/entities/'
     | '/_app/entities/$entityId/edit'
@@ -110,7 +98,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -127,13 +114,6 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/entities/': {
@@ -186,7 +166,6 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

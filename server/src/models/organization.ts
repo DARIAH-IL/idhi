@@ -7,6 +7,7 @@
 import type { OrganizationAddressItem } from './organizationAddressItem'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem'
 import type { OrganizationLocationItem } from './organizationLocationItem'
+import type { OrganizationNameItem } from './organizationNameItem'
 import type { OrganizationOrganizationType } from './organizationOrganizationType'
 import type { OrganizationType } from './organizationType'
 
@@ -56,8 +57,8 @@ export interface Organization {
    * @nullable
    */
   marketplace_sync?: boolean | null
-  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
-  name: string
+  /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
+  name: OrganizationNameItem[]
   /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
   organization_type?: OrganizationOrganizationType
   /**

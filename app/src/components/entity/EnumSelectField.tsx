@@ -44,9 +44,7 @@ export function EnumSelectField({
             <>
               <Select
                 placeholder="Select…"
-                selectedKey={
-                  typeof rawValue === 'string' ? rawValue : null
-                }
+                selectedKey={typeof rawValue === 'string' ? rawValue : null}
                 onSelectionChange={(k) => field.handleChange(k as never)}
                 isInvalid={Boolean(error)}
                 isRequired={required}

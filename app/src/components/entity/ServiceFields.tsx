@@ -4,6 +4,7 @@ import {
   ServiceServiceType,
 } from '@/api/models'
 import { TextField } from './TextField'
+import { LangStringField } from './LangStringField'
 import { EnumSelectField } from './EnumSelectField'
 import { StringArrayField } from './StringArrayField'
 import { EntityRefField } from './EntityRefField'
@@ -12,7 +13,11 @@ export function ServiceFields() {
   const { t } = useTranslation()
   return (
     <>
-      <TextField name="name" label={t('entity.form.fields.name')} required />
+      <LangStringField
+        name="name"
+        label={t('entity.form.fields.name')}
+        required
+      />
       <EnumSelectField
         name="service_type"
         label={t('entity.form.fields.service_type')}
