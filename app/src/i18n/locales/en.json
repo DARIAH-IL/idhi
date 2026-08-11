@@ -25,6 +25,7 @@
     "errors": {
       "Unauthorized": "Your session has expired. Please sign in again.",
       "InvalidInput": "The submitted information is invalid. Please review it and try again.",
+      "InternalServerError": "The server encountered an unexpected error. Please try again later.",
       "EntityNotFound": "The requested entity could not be found.",
       "UserNotFound": "The requested user could not be found.",
       "UserAlreadyInvitedOrRegistered": "This user is already invited or registered.",
@@ -37,6 +38,7 @@
   },
   "auth": {
     "title": "IDHI",
+    "description": "You can log in if you have an account or a pending invitation.",
     "email_label": "Email address",
     "email_placeholder": "you@example.com",
     "continue": "Continue",

@@ -5,10 +5,10 @@ import {
   TrainingMaterialDigitalHumanitiesActivitiesItem,
   TrainingMaterialInLanguagesItem,
 } from '@/api/models'
-import { EnumSelectField } from './EnumSelectField'
-import { LangStringField } from './LangStringField'
-import { StringArrayField } from './StringArrayField'
-import { TextField } from './TextField'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { StringArrayField } from '@/components/form-fields/StringArrayField'
+import { TextField } from '@/components/form-fields/TextField'
 import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function TrainingMaterialFields() {

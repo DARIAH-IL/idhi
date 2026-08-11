@@ -12,7 +12,7 @@ import {
   getGetApiV1EntitiesEntityIdQueryOptions,
   usePostApiV1EntitiesEntityId,
 } from '@/api/hooks/entities/entities'
-import { EntityForm } from '@/components/entity/EntityForm'
+import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { getEntityDisplayName } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'

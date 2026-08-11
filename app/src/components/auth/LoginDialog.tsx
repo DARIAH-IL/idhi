@@ -76,10 +76,15 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
   }
 
   return (
-    <Dialog isOpen={isOpen} onOpenChange={handleOpenChange}>
-      <DialogHeader className="items-center text-center">
+    <Dialog
+      isOpen={isOpen}
+      onOpenChange={handleOpenChange}
+      className="min-h-[24.5rem] content-center px-8 sm:max-w-[28.8rem]"
+    >
+      <DialogHeader className="items-center text-center mb-6">
         <img src="/logo.png" alt="" className="mb-2 h-20 w-auto" />
-        <DialogTitle>{t('auth.title')}</DialogTitle>
+        <DialogTitle>{t('common.site_name')}</DialogTitle>
+        <DialogDescription>{t('auth.description')}</DialogDescription>
         {challengeId && (
           <DialogDescription>
             {t('auth.email_sent', { email })}
@@ -88,7 +93,10 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
       </DialogHeader>
 
       {!challengeId ? (
-        <form onSubmit={handleEmailSubmit} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleEmailSubmit}
+          className="flex flex-col gap-4 px-16"
+        >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="login-email">{t('auth.email_label')}</Label>
             <Input

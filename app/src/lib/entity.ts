@@ -77,16 +77,6 @@ export function getEntityTypeLabel(type: EntityType): string {
   return i18n.t(`entity.types.${type}`)
 }
 
-export function formatDate(date: string | null | undefined): string {
-  if (!date) return '—'
-
-  return new Date(date).toLocaleDateString(`${getCurrentLanguage()}-IL`, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
 export function getEntityIdSegment(type: EntityType): string {
   return ENTITY_TYPE_METADATA[type].idSegment
 }

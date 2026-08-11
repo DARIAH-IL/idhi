@@ -17,7 +17,6 @@ import {
   ENTITY_TYPES,
   getEntityDisplayName,
   getEntityTypeLabel,
-  formatDate,
   auditedEntityId,
 } from '@/lib/entity'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -29,6 +28,7 @@ import {
 } from '@/components/ui/input-group'
 import { Badge } from '@/components/ui/badge'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
 import {
   Table,
@@ -361,7 +361,7 @@ function EntityBoard() {
                           </div>
                         </TableCell>
                         <TableCell className="text-muted-foreground">
-                          {formatDate(entity.audit?.modifiedAt)}
+                          <TimeAgo date={entity.audit?.modifiedAt} />
                         </TableCell>
                       </TableRow>
                     )

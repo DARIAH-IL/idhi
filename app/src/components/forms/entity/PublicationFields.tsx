@@ -3,10 +3,10 @@ import {
   PublicationAuthorshipsItemAuthorshipRole,
   PublicationPublicationType,
 } from '@/api/models'
-import { TextField } from './TextField'
-import { EnumSelectField } from './EnumSelectField'
-import { LangStringField } from './LangStringField'
-import { ArraySection } from './ArraySection'
+import { TextField } from '@/components/form-fields/TextField'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { ArraySection } from '@/components/form-fields/ArraySection'
 import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function PublicationFields() {

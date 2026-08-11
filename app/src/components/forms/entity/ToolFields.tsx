@@ -4,10 +4,10 @@ import {
   ToolLicense,
   ToolDigitalHumanitiesActivitiesItem,
 } from '@/api/models'
-import { TextField } from './TextField'
-import { LangStringField } from './LangStringField'
-import { EnumSelectField } from './EnumSelectField'
-import { StringArrayField } from './StringArrayField'
+import { TextField } from '@/components/form-fields/TextField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
+import { StringArrayField } from '@/components/form-fields/StringArrayField'
 
 export function ToolFields() {
   const { t } = useTranslation()

@@ -4,11 +4,11 @@ import {
   PersonAuthorshipsItemAuthorshipRole,
   PersonProjectParticipationsItemParticipationRole,
 } from '@/api/models'
-import { TextField } from './TextField'
-import { LangStringField } from './LangStringField'
-import { EnumSelectField } from './EnumSelectField'
-import { StringArrayField } from './StringArrayField'
-import { ArraySection } from './ArraySection'
+import { TextField } from '@/components/form-fields/TextField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
+import { StringArrayField } from '@/components/form-fields/StringArrayField'
+import { ArraySection } from '@/components/form-fields/ArraySection'
 import { EntityRefField } from './EntityRefField'
 
 export function PersonFields() {

@@ -7,6 +7,7 @@ import i18n from '@/i18n'
 const errorTranslationKeys = {
   [ErrorCodes.Unauthorized]: 'api.errors.Unauthorized',
   [ErrorCodes.InvalidInput]: 'api.errors.InvalidInput',
+  [ErrorCodes.InternalServerError]: 'api.errors.InternalServerError',
   [ErrorCodes.EntityNotFound]: 'api.errors.EntityNotFound',
   [ErrorCodes.UserNotFound]: 'api.errors.UserNotFound',
   [ErrorCodes.UserAlreadyInvitedOrRegistered]:

@@ -4,11 +4,11 @@ import {
   ProjectOrganizationRolesItemOrgProjectRole,
   ProjectProjectParticipationsItemParticipationRole,
 } from '@/api/models'
-import { TextField } from './TextField'
-import { LangStringField } from './LangStringField'
-import { StringArrayField } from './StringArrayField'
-import { ArraySection } from './ArraySection'
-import { EnumSelectField } from './EnumSelectField'
+import { TextField } from '@/components/form-fields/TextField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { StringArrayField } from '@/components/form-fields/StringArrayField'
+import { ArraySection } from '@/components/form-fields/ArraySection'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
 import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function ProjectFields() {

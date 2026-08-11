@@ -2,11 +2,11 @@ import type { EntityType } from '@/lib/entity'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { EntityPicker } from './EntityPicker'
-import { EntityReferenceCard } from './EntityReferenceCard'
-import { FieldError } from './FieldError'
-import { firstError, validateValue } from './validation'
-import { useFormContext } from './form-type'
+import { EntityPicker } from '@/components/entity/EntityPicker'
+import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
+import { FieldError } from '@/components/form-fields/FieldError'
+import { firstError, validateValue } from '@/components/form-fields/validation'
+import { useFormContext } from '@/components/forms/form-context'
 
 export function EntityRefField({
   name,

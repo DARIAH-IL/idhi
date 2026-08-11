@@ -3,13 +3,13 @@ import {
   BookOpen01Icon,
   Building03Icon,
   Calendar03Icon,
-  CustomerService01Icon,
+  UngroupLayersIcon,
   Database01Icon,
   File01Icon,
   FolderManagementIcon,
-  LabsIcon,
-  School01Icon,
-  ToolsIcon,
+  HierarchyIcon,
+  GraduationCapIcon,
+  DrawingCompassIcon,
   UserIcon,
 } from '@hugeicons/core-free-icons'
 import type { EntityType } from '@/lib/entity'
@@ -18,14 +18,14 @@ import { cn } from '@/lib/utils'
 const ICONS = {
   'idhi:Person': UserIcon,
   'idhi:Organization': Building03Icon,
-  'idhi:Facility': LabsIcon,
+  'idhi:Facility': HierarchyIcon,
   'idhi:Project': FolderManagementIcon,
-  'idhi:Tool': ToolsIcon,
-  'idhi:Service': CustomerService01Icon,
+  'idhi:Tool': DrawingCompassIcon,
+  'idhi:Service': UngroupLayersIcon,
   'idhi:Publication': BookOpen01Icon,
   'idhi:Event': Calendar03Icon,
   'idhi:Dataset': Database01Icon,
-  'idhi:TrainingMaterial': School01Icon,
+  'idhi:TrainingMaterial': GraduationCapIcon,
 } satisfies Record<EntityType, typeof UserIcon>
 
 const COLORS = {

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useFormContext } from './form-type'
+import { useFormContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'

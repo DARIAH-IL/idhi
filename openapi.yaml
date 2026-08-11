@@ -805,6 +805,7 @@ components:
       enum:
         - Unauthorized
         - InvalidInput
+        - InternalServerError
         - EntityNotFound
         - UserNotFound
         - UserAlreadyInvitedOrRegistered

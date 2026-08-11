@@ -23,6 +23,10 @@ function AppLayout() {
     void i18n.changeLanguage(language)
   }, [language])
 
+  useEffect(() => {
+    document.title = t('common.site_name')
+  }, [t])
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex min-h-14 items-center justify-between gap-4 border-b px-4 py-2">

@@ -1,11 +1,15 @@
 import { spawnSync } from 'node:child_process'
 import { pathToFileURL } from 'node:url'
+import { createConnection } from 'mongoose'
 
 /** @typedef {import('../src/models/entity.ts').Entity} Entity */
 
 const ENTITY_COUNT = 5
 const CREATED_BY = 'idhi:user:mockseed'
 const IMPORTED_AT = '2026-01-01T00:00:00.000Z'
+const INVITE_ID = 'idhi:invite:mockseed'
+const INVITE_EMAIL = 'reallyliri@gmail.com'
+const INVITE_EXPIRY_DAYS = 30
 
 function entityId(kind, index) {
   return `idhi:${kind}:${String(index + 1).padStart(4, '0')}mock`
@@ -323,18 +327,12 @@ function toStoredEntity(entity) {
   return { _id: id, ...values, audit, _s: searchValues.join(' ') }
 }
 
-function main() {
-  const connectionString = process.env.MONGODB_CONNECTION_STRING
-  const databaseName = process.env.MONGODB_DATABASE_NAME
-
-  if (!connectionString || !databaseName) {
-    console.error(
-      'MONGODB_CONNECTION_STRING and MONGODB_DATABASE_NAME must be set (server/.env.local is loaded automatically).',
-    )
-    process.exit(1)
-  }
-
-  const documents = entities.map(toStoredEntity)
+function importCollection(
+  connectionString,
+  databaseName,
+  collection,
+  documents,
+) {
   const result = spawnSync(
     'mongoimport',
     [
@@ -343,12 +341,8 @@ function main() {
       '--db',
       databaseName,
       '--collection',
-      'entities',
+      collection,
       '--jsonArray',
-      '--mode',
-      'upsert',
-      '--upsertFields',
-      '_id',
     ],
     {
       input: JSON.stringify(documents),
@@ -362,9 +356,56 @@ function main() {
   }
 
   if (result.status !== 0) process.exit(result.status ?? 1)
+}
+
+async function dropDatabase(connectionString, databaseName) {
+  const connection = await createConnection(connectionString, {
+    bufferCommands: false,
+    dbName: databaseName,
+  }).asPromise()
+
+  try {
+    await connection.dropDatabase()
+  } finally {
+    await connection.close()
+  }
+}
+
+async function main() {
+  const connectionString = process.env.MONGODB_CONNECTION_STRING
+  const databaseName = process.env.MONGODB_DATABASE_NAME
+
+  if (!connectionString || !databaseName) {
+    console.error(
+      'MONGODB_CONNECTION_STRING and MONGODB_DATABASE_NAME must be set (server/.env.local is loaded automatically).',
+    )
+    process.exit(1)
+  }
+
+  await dropDatabase(connectionString, databaseName)
+
+  const documents = entities.map(toStoredEntity)
+  const now = new Date()
+  const importedAt = now.toISOString()
+  const invite = {
+    _id: INVITE_ID,
+    email: INVITE_EMAIL,
+    expiration: new Date(
+      now.getTime() + INVITE_EXPIRY_DAYS * 24 * 60 * 60 * 1000,
+    ).toISOString(),
+    audit: {
+      createdAt: importedAt,
+      createdBy: CREATED_BY,
+      modifiedAt: importedAt,
+      modifiedBy: CREATED_BY,
+    },
+  }
+
+  importCollection(connectionString, databaseName, 'entities', documents)
+  importCollection(connectionString, databaseName, 'userInvites', [invite])
 
   console.log(
-    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type).`,
+    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type) and an invite for ${INVITE_EMAIL}.`,
   )
 }
 
@@ -372,5 +413,5 @@ if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
-  main()
+  await main()
 }

@@ -7,11 +7,7 @@ import {
   getGetApiV1EntitiesEntityIdQueryOptions,
   useDeleteApiV1EntitiesEntityId,
 } from '@/api/hooks/entities/entities'
-import {
-  getEntityDisplayName,
-  getEntityTypeLabel,
-  formatDate,
-} from '@/lib/entity'
+import { getEntityDisplayName, getEntityTypeLabel } from '@/lib/entity'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -25,6 +21,7 @@ import {
 } from '@/components/ui/dialog'
 import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
@@ -152,7 +149,7 @@ function EntityDetailPage() {
               <span className="text-muted-foreground">
                 {t('entity.detail.created')}:{' '}
               </span>
-              {formatDate(audit['createdAt'])}
+              <TimeAgo date={audit['createdAt']} />
               {audit['createdBy'] && (
                 <>
                   {' '}
@@ -167,7 +164,7 @@ function EntityDetailPage() {
               <span className="text-muted-foreground">
                 {t('entity.detail.modified')}:{' '}
               </span>
-              {formatDate(audit['modifiedAt'])}
+              <TimeAgo date={audit['modifiedAt']} />
               {audit['modifiedBy'] && (
                 <>
                   {' '}

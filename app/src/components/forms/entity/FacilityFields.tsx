@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { TextField } from './TextField'
-import { LangStringField } from './LangStringField'
-import { StringArrayField } from './StringArrayField'
-import { ArraySection } from './ArraySection'
+import { TextField } from '@/components/form-fields/TextField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
+import { StringArrayField } from '@/components/form-fields/StringArrayField'
+import { ArraySection } from '@/components/form-fields/ArraySection'
 import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function FacilityFields() {

@@ -23,10 +23,10 @@ From the workspace root, run:
 pnpm --filter @idhi/server test-data:import
 ```
 
-The script invokes `mongoimport` directly. Its deterministic `idhi:*:*mock`
-records are upserted, so it is safe to rerun and does not remove unrelated
-records. Do not point it at a database where those IDs are used for non-test
-data.
+The script drops the entire configured database, then invokes `mongoimport` to
+load the deterministic mock entities and an invite for `reallyliri@gmail.com`
+that expires 30 days after the import. Do not point it at a database containing
+non-test data.
 
 ## Gmail SMTP setup
 

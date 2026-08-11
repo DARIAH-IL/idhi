@@ -62,13 +62,13 @@ function jsonResponse(
   return Response.json(body, { status, headers })
 }
 
-function internalServerError(): Response {
+function internalServerError(sourceHeaders?: Headers): Response {
   const error: ErrorResponse = {
-    errorCode: ErrorCode.InvalidInput,
+    errorCode: ErrorCode.InternalServerError,
     message: 'An unexpected error occurred',
   }
 
-  return jsonResponse(error, 500)
+  return jsonResponse(error, 500, sourceHeaders)
 }
 
 export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
@@ -104,15 +104,8 @@ export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
       originalError: readableOriginalError(responseBody),
     })
 
-    const error: ErrorResponse = {
-      errorCode: ErrorCode.InvalidInput,
-      message:
-        status >= 500
-          ? 'An unexpected error occurred'
-          : 'The request could not be completed',
-    }
-
-    c.res = jsonResponse(error, status, c.res.headers)
+    c.res = internalServerError(c.res.headers)
+    return
   }
 
   if (status < 500) {

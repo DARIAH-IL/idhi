@@ -1,5 +1,5 @@
 import { Checkbox } from 'react-aria-components'
-import { useFormContext } from './form-type'
+import { useFormContext } from '@/components/forms/form-context'
 
 export function BooleanField({ name, label }: { name: string; label: string }) {
   const form = useFormContext()

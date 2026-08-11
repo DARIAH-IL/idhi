@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { DatasetLicense } from '@/api/models'
-import { TextField } from './TextField'
-import { EnumSelectField } from './EnumSelectField'
-import { LangStringField } from './LangStringField'
+import { TextField } from '@/components/form-fields/TextField'
+import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
+import { LangStringField } from '@/components/form-fields/LangStringField'
 import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function DatasetFields() {

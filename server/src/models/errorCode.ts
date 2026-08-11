@@ -10,6 +10,7 @@ export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode]
 export const ErrorCode = {
   Unauthorized: 'Unauthorized',
   InvalidInput: 'InvalidInput',
+  InternalServerError: 'InternalServerError',
   EntityNotFound: 'EntityNotFound',
   UserNotFound: 'UserNotFound',
   UserAlreadyInvitedOrRegistered: 'UserAlreadyInvitedOrRegistered',
