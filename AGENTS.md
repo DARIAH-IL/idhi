@@ -1,0 +1,92 @@
+# IDHI project guide
+
+## Repository shape
+
+This is a pnpm workspace with two TypeScript packages:
+
+- `app/` is the browser application: React 19, Vite, TanStack Router, TanStack Query, Tailwind CSS, React Aria Components, and shadcn-style UI components.
+- `server/` is the HTTP API: Hono running as a Cloudflare Worker through the Cloudflare Vite plugin, with MongoDB accessed through Mongoose.
+- `openapi.yaml` at the workspace root is the canonical API contract shared by both packages.
+
+Use pnpm from the workspace root. Scope package commands with `pnpm --filter @idhi/app ...` or `pnpm --filter @idhi/server ...`. Preserve package boundaries and use ESM imports throughout.
+
+## Contract-first API design
+
+API changes start in `openapi.yaml`. It defines paths, methods, parameters, request and response bodies, reusable schemas, error shapes, and bearer-auth requirements. Do not independently duplicate or reshape the contract in app or server code.
+
+The API is rooted at `/api/v1`. Top-level bearer authentication applies by default; an operation with `security: []` is public. Keep the specification and the server authorization policy aligned whenever routes or security requirements change.
+
+OpenAPI tags are architectural: Orval uses `tags-split` mode, so a tag determines the generated client module and server handler group. Reuse the established PascalCase tags and give every non-default operation the appropriate tag. Stable paths and methods produce stable generated symbol names; add an explicit `operationId` when a contract needs a name that should not be derived from the route.
+
+Prefer reusable definitions under `components` for domain models, parameters, responses, and security schemes. Model every status code and media type handlers may return. Keep required/optional fields, formats, defaults, bounds, discriminators, and nullability precise because they become TypeScript types and server-side Zod validation. Remote IDHI manifest schemas are legitimate OpenAPI inputs; both Orval configs allow external references, so generation may require network access.
+
+## Orval generation
+
+Orval is the only API code generator. Both packages read `../openapi.yaml` and use `orval.config.ts` in their package directory.
+
+After every contract edit, regenerate both sides from the workspace root:
+
+```sh
+pnpm --filter @idhi/server exec orval
+pnpm --filter @idhi/app exec orval
+```
+
+The `dev` and `build` scripts also run Orval before Vite. Review generated diffs together with the OpenAPI diff; unexpected broad deletion or renaming usually means a tag, path, schema name, or external reference changed.
+
+Never hand-edit generated API artifacts. Fix `openapi.yaml`, an Orval config, or a handwritten extension point and regenerate instead.
+
+### Server generation and handler ownership
+
+`server/orval.config.ts` uses Orval's `hono` client in `tags-split` mode. It derives:
+
+- `server/src/routes.ts`, the composite Hono route registration;
+- `server/src/models/`, TypeScript API models;
+- `server/src/handlers/<tag>/*.context.ts`, typed Hono contexts;
+- `server/src/handlers/<tag>/*.zod.ts`, request and response schemas;
+- `server/src/handlers/api.validator.ts`, the Hono/Zod validation adapter.
+
+Files ending in `*.handlers.ts` are the handwritten implementation seam. The server Orval clean rule preserves them so business logic survives regeneration. When a new tag or operation creates a handler scaffold, replace scaffold behavior with real handlers but retain the exact generated export names expected by `server/src/routes.ts`. Import request data from `c.req.valid(...)` after the generated validators and type handlers with the generated context types. Do not bypass generated validation by reparsing the same payload manually.
+
+Handler modules should stay thin: authorize the resolved user, call services, translate expected domain failures into `ApiError`, and return the status/body declared by OpenAPI. Put persistence in `server/src/db/services/`, shared infrastructure in middleware or utilities, and API error codes/shapes in the OpenAPI contract.
+
+### Client generation and runtime ownership
+
+`app/orval.config.ts` uses the `react-query` client with Axios in `tags-split` mode. It derives:
+
+- `app/src/api/hooks/<tag>/`, request functions, query keys/options, query hooks, and mutation hooks;
+- `app/src/api/models/`, TypeScript API models.
+
+`app/src/api/client.ts` is the handwritten Axios mutator used by every generated request. Centralize API base URL, bearer-token attachment, transport behavior, and cross-cutting error handling there. Feature code should consume generated request functions/hooks and generated model types rather than creating parallel endpoint wrappers or handwritten wire types. Use generated query-key helpers for cache reads, invalidation, and optimistic updates.
+
+The app generator uses `clean: true`; files placed inside generated hook/model output directories can be removed. Keep handwritten client helpers outside those generated directories.
+
+## Server architecture and infrastructure
+
+`server/src/index.ts` owns the root Hono application and global middleware order. Requests receive a request ID and structured logger, CORS is restricted by `SERVER_ALLOWED_HOSTS`, errors are normalized, MongoDB services are attached to the Hono context, and JWT identity/authorization is resolved before generated routes are mounted. Preserve middleware ordering when adding cross-cutting behavior.
+
+Hono context variables are declared in `server/src/hono.d.ts`; Cloudflare environment bindings are typed in `server/src/bindings.ts`. Add a binding type whenever server code consumes a new environment value. Read required values through the validation helpers in `server/src/utils/values.ts`, never hard-code secrets, log credentials/tokens, or commit `.env`, `.env.local`, or `.dev.vars` files.
+
+Runtime configuration includes frontend/CORS origins, JWT settings, MongoDB connection, OTP limits, and SMTP credentials. Local development loads Vite environment files and mirrors declared keys to the Worker's ignored `.dev.vars`; deployment uses Wrangler. `server/wrangler.toml` defines the Worker entry point, Node compatibility, and observability. Treat production bindings and secrets as deployment configuration rather than source files.
+
+Authentication uses bearer JWTs, OTP challenges, passkeys through SimpleWebAuthn, and SMTP email. `authMiddleware` is the route-level policy gate; handlers still assert and use the typed authenticated user for protected mutations. Keep anonymous-only auth routes, authenticated entity writes, and administrator-only user/invite operations synchronized with OpenAPI security declarations.
+
+Mongo access is exposed through `DatabaseService`. Add collection names centrally in `server/src/db/collections.ts`, schemas under `server/src/db/models/`, and domain operations under `server/src/db/services/`. Reuse the cached connection/service construction. IDs use the `idhi:<type>:<random>` convention through `server/src/utils/id.ts`; keep public ID patterns reflected in OpenAPI schemas.
+
+Throw `ApiError` for expected API failures and use an `ErrorCode` declared by the contract. Let the global error handler log and serialize failures. Use the request-scoped structured logger rather than `console` in request/business code, and avoid sensitive values in log attributes.
+
+## App architecture
+
+Routes live under `app/src/routes/` and TanStack Router generates `app/src/routeTree.gen.ts`; do not edit that generated route tree. Route-aware data loading should use generated TanStack Query options/hooks, with URL/search state represented through TanStack Router. Shared UI primitives live in `app/src/components/ui/`, shared browser helpers in `app/src/lib/`, and global styling in `app/src/styles.css`.
+
+Use the `#/*` or `@/*` aliases for app source imports where appropriate. Maintain strict TypeScript behavior and the existing accessibility-oriented React Aria/component conventions. Keep server-only code and secrets out of the browser bundle.
+
+<!-- intent-skills:start -->
+## Skill Loading
+
+Before editing files for a substantial task:
+- Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
+- If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files.
+- Use the loaded `SKILL.md` guidance while making the change.
+- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
+- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+<!-- intent-skills:end -->
