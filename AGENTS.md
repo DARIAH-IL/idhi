@@ -10,6 +10,10 @@ This is a pnpm workspace with two TypeScript packages:
 
 Use pnpm from the workspace root. Scope package commands with `pnpm --filter @idhi/app ...` or `pnpm --filter @idhi/server ...`. Preserve package boundaries and use ESM imports throughout.
 
+## Command execution
+
+Do not run `pnpm`, `npm`, `npx`, `yarn`, `bun`, or similar package-manager commands unless the user explicitly directs you to run them. The same restriction applies to project scripts and tooling commands, including dependency installation, generators, development servers, builds, tests, linters, formatters, type-checkers, and database or deployment commands. Instructions elsewhere in this file describe how to run these commands when authorized; they do not constitute authorization. Read-only shell commands used to inspect the repository are allowed.
+
 ## Contract-first API design
 
 API changes start in `openapi.yaml`. It defines paths, methods, parameters, request and response bodies, reusable schemas, error shapes, and bearer-auth requirements. Do not independently duplicate or reshape the contract in app or server code.
@@ -80,13 +84,5 @@ Routes live under `app/src/routes/` and TanStack Router generates `app/src/route
 
 Use the `#/*` or `@/*` aliases for app source imports where appropriate. Maintain strict TypeScript behavior and the existing accessibility-oriented React Aria/component conventions. Keep server-only code and secrets out of the browser bundle.
 
-<!-- intent-skills:start -->
-## Skill Loading
-
-Before editing files for a substantial task:
-- Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
-- If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files.
-- Use the loaded `SKILL.md` guidance while making the change.
-- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
-- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
-<!-- intent-skills:end -->
+All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.
+Always use css start/end and not left/right.

@@ -1,9 +1,14 @@
 //  @ts-check
 
 import { tanstackConfig } from '@tanstack/eslint-config'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default [
   ...tanstackConfig,
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    ...jsxA11y.flatConfigs.recommended,
+  },
   {
     rules: {
       'import/no-cycle': 'off',
@@ -13,6 +18,7 @@ export default [
       '@typescript-eslint/require-await': 'off',
       'pnpm/json-enforce-catalog': 'off',
       'no-console': 'error',
+      'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }],
       '@typescript-eslint/no-unnecessary-condition': 'warn',
     },
   },

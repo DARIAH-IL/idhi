@@ -42,6 +42,7 @@ function validateLock(lockId: string, ttlMilliseconds: number): void {
 
 export async function createDistributedLockDatabaseService(
   connection: Connection,
+  initializeIndexes: boolean,
 ): Promise<DistributedLockDatabaseService> {
   const locks = connection.model<StoredLock>(
     'DistributedLock',
@@ -49,13 +50,15 @@ export async function createDistributedLockDatabaseService(
     COLLECTIONS.distributedLocks,
   )
 
-  await locks.collection.createIndex(
-    { expiresAt: 1 },
-    {
-      name: 'distributed_locks_expiration',
-      expireAfterSeconds: 0,
-    },
-  )
+  if (initializeIndexes) {
+    await locks.collection.createIndex(
+      { expiresAt: 1 },
+      {
+        name: 'distributed_locks_expiration',
+        expireAfterSeconds: 0,
+      },
+    )
+  }
 
   return {
     async tryLock(lockId, ttlMilliseconds) {

@@ -4,23 +4,122 @@ import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
 import { serializeError } from './logger'
 
+const errorCodes = new Set<string>(Object.values(ErrorCode))
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function readableOriginalError(value: unknown): unknown {
+  if (!isRecord(value)) {
+    return value
+  }
+
+  const nestedError = isRecord(value.error) ? value.error : value
+  const message = nestedError.message
+
+  if (typeof message !== 'string') {
+    return nestedError
+  }
+
+  try {
+    return {
+      ...nestedError,
+      message: JSON.parse(message) as unknown,
+    }
+  } catch {
+    return nestedError
+  }
+}
+
+function declaredErrorResponse(value: unknown): ErrorResponse | undefined {
+  if (
+    !isRecord(value) ||
+    typeof value.errorCode !== 'string' ||
+    !errorCodes.has(value.errorCode) ||
+    typeof value.message !== 'string' ||
+    (value.entityId !== undefined && typeof value.entityId !== 'string')
+  ) {
+    return undefined
+  }
+
+  return {
+    errorCode: value.errorCode as ErrorResponse['errorCode'],
+    message: value.message,
+    ...(value.entityId === undefined ? {} : { entityId: value.entityId }),
+  }
+}
+
+function jsonResponse(
+  body: ErrorResponse,
+  status: number,
+  sourceHeaders?: Headers,
+): Response {
+  const headers = new Headers(sourceHeaders)
+  headers.delete('content-length')
+  headers.set('content-type', 'application/json; charset=UTF-8')
+
+  return Response.json(body, { status, headers })
+}
+
 function internalServerError(): Response {
   const error: ErrorResponse = {
     errorCode: ErrorCode.InvalidInput,
     message: 'An unexpected error occurred',
   }
 
-  return Response.json(error, { status: 500 })
+  return jsonResponse(error, 500)
 }
 
 export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
   await next()
 
-  if (c.res.status >= 400 && c.res.status < 500) {
+  if (c.res.status < 400) {
+    return
+  }
+
+  const status = c.res.status
+  let responseBody: unknown
+
+  if (c.res.headers.get('content-type')?.includes('application/json')) {
+    try {
+      responseBody = await c.res.clone().json()
+    } catch {
+      responseBody = undefined
+    }
+  }
+
+  const declaredError = declaredErrorResponse(responseBody)
+
+  if (declaredError) {
+    c.res = jsonResponse(declaredError, status, c.res.headers)
+  } else {
+    c.get('logger').error('Normalized non-contract error response', {
+      method: c.req.method,
+      path: c.req.path,
+      status,
+      responseType: isRecord(responseBody)
+        ? Object.keys(responseBody).sort().join(',')
+        : typeof responseBody,
+      originalError: readableOriginalError(responseBody),
+    })
+
+    const error: ErrorResponse = {
+      errorCode: ErrorCode.InvalidInput,
+      message:
+        status >= 500
+          ? 'An unexpected error occurred'
+          : 'The request could not be completed',
+    }
+
+    c.res = jsonResponse(error, status, c.res.headers)
+  }
+
+  if (status < 500) {
     c.get('logger').warn('Client error response', {
       method: c.req.method,
       path: c.req.path,
-      status: c.res.status,
+      status,
     })
   }
 }
@@ -39,7 +138,7 @@ export const unhandledErrorHandler: ErrorHandler = (error, c) => {
       message: error.message,
     }
 
-    return Response.json(response, { status: error.status })
+    return jsonResponse(response, error.status)
   }
 
   c.get('logger').error('Unhandled request error', {

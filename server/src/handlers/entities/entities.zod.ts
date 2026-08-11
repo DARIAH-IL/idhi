@@ -185,16 +185,16 @@ export const postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
 export const postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
   new RegExp('^idhi:user:.+$')
 
-export const PostApiV1EntitiesResponse = zod.strictObject({
+export const PostApiV1EntitiesResponse = zod.object({
   results: zod.array(
     zod
       .union([
         zod
-          .strictObject({
+          .object({
             affiliations: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     affiliation_role: zod
                       .enum([
                         'PROFESSOR',
@@ -242,7 +242,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             authorships: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     author: zod
                       .string()
                       .describe('The contributing person (by IDHI URN).'),
@@ -283,7 +283,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -312,7 +312,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             family_name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -335,7 +335,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             given_name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -375,7 +375,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             project_participations: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     end_date: zod.iso
                       .date()
                       .nullish()
@@ -443,7 +443,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A human agent in the DH index: researcher, developer, librarian, student, etc.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -453,7 +453,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             address: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -480,7 +480,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -513,7 +513,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             location: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -542,7 +542,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -609,7 +609,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -619,7 +619,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             address: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -646,7 +646,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -669,7 +669,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             facility_affiliations: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     end_date: zod.iso
                       .date()
                       .nullish()
@@ -714,7 +714,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             location: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -737,7 +737,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -790,7 +790,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -806,7 +806,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1016,7 +1016,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             funding: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     funding_amount: zod
                       .number()
                       .nullish()
@@ -1050,7 +1050,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1072,7 +1072,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             organization_roles: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     end_date: zod.iso
                       .date()
                       .nullish()
@@ -1133,7 +1133,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             project_participations: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     end_date: zod.iso
                       .date()
                       .nullish()
@@ -1182,7 +1182,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             research_disciplines: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1217,7 +1217,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             studied_periods: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1240,7 +1240,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             studied_places: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1276,7 +1276,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -1298,7 +1298,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1531,7 +1531,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1593,7 +1593,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -1609,7 +1609,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1829,7 +1829,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1891,11 +1891,11 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.',
           ),
         zod
-          .strictObject({
+          .object({
             authorships: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     author: zod
                       .string()
                       .describe('The contributing person (by IDHI URN).'),
@@ -1942,7 +1942,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -1982,7 +1982,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2133,7 +2133,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             published_in: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2181,7 +2181,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -2191,7 +2191,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             address: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2218,7 +2218,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2268,7 +2268,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             location: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2291,7 +2291,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2338,7 +2338,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.',
           ),
         zod
-          .strictObject({
+          .object({
             datasets: zod
               .array(zod.string())
               .nullish()
@@ -2354,7 +2354,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2404,7 +2404,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2444,7 +2444,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             themes: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2472,7 +2472,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
           ),
         zod
-          .strictObject({
+          .object({
             additional_urls: zod
               .array(zod.url())
               .nullish()
@@ -2500,7 +2500,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             description: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2704,7 +2704,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             educational_level: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2749,7 +2749,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             learning_outcomes: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2797,7 +2797,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             name: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2825,7 +2825,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             prerequisites: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2884,7 +2884,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
             target_audiences: zod
               .array(
                 zod
-                  .strictObject({
+                  .object({
                     language: zod
                       .enum(['en', 'he', 'ar'])
                       .describe(
@@ -2928,9 +2928,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
           ),
       ])
       .and(
-        zod.strictObject({
+        zod.object({
           audit: zod
-            .strictObject({
+            .object({
               createdAt: zod.iso
                 .datetime({ offset: true })
                 .describe('UTC date and time'),
@@ -2955,7 +2955,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
   facets: zod.record(
     zod.string(),
     zod.array(
-      zod.strictObject({
+      zod.object({
         value: zod.string(),
         count: zod.int(),
       }),
@@ -5787,11 +5787,11 @@ export const putApiV1EntitiesResponseTwoAuditModifiedByRegExp = new RegExp(
 export const PutApiV1EntitiesResponse = zod
   .union([
     zod
-      .strictObject({
+      .object({
         affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 affiliation_role: zod
                   .enum([
                     'PROFESSOR',
@@ -5839,7 +5839,7 @@ export const PutApiV1EntitiesResponse = zod
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -5878,7 +5878,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -5907,7 +5907,7 @@ export const PutApiV1EntitiesResponse = zod
         family_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -5930,7 +5930,7 @@ export const PutApiV1EntitiesResponse = zod
         given_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -5970,7 +5970,7 @@ export const PutApiV1EntitiesResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -6038,7 +6038,7 @@ export const PutApiV1EntitiesResponse = zod
         'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -6048,7 +6048,7 @@ export const PutApiV1EntitiesResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6075,7 +6075,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6108,7 +6108,7 @@ export const PutApiV1EntitiesResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6137,7 +6137,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6204,7 +6204,7 @@ export const PutApiV1EntitiesResponse = zod
         'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -6214,7 +6214,7 @@ export const PutApiV1EntitiesResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6241,7 +6241,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6264,7 +6264,7 @@ export const PutApiV1EntitiesResponse = zod
         facility_affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -6309,7 +6309,7 @@ export const PutApiV1EntitiesResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6332,7 +6332,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6385,7 +6385,7 @@ export const PutApiV1EntitiesResponse = zod
         'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -6401,7 +6401,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6611,7 +6611,7 @@ export const PutApiV1EntitiesResponse = zod
         funding: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -6645,7 +6645,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6667,7 +6667,7 @@ export const PutApiV1EntitiesResponse = zod
         organization_roles: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -6726,7 +6726,7 @@ export const PutApiV1EntitiesResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -6775,7 +6775,7 @@ export const PutApiV1EntitiesResponse = zod
         research_disciplines: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6810,7 +6810,7 @@ export const PutApiV1EntitiesResponse = zod
         studied_periods: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6833,7 +6833,7 @@ export const PutApiV1EntitiesResponse = zod
         studied_places: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -6869,7 +6869,7 @@ export const PutApiV1EntitiesResponse = zod
         'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -6889,7 +6889,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7122,7 +7122,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7184,7 +7184,7 @@ export const PutApiV1EntitiesResponse = zod
         'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -7200,7 +7200,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7420,7 +7420,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7482,11 +7482,11 @@ export const PutApiV1EntitiesResponse = zod
         'A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.',
       ),
     zod
-      .strictObject({
+      .object({
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -7531,7 +7531,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7571,7 +7571,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7722,7 +7722,7 @@ export const PutApiV1EntitiesResponse = zod
         published_in: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7770,7 +7770,7 @@ export const PutApiV1EntitiesResponse = zod
         'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -7780,7 +7780,7 @@ export const PutApiV1EntitiesResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7807,7 +7807,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7857,7 +7857,7 @@ export const PutApiV1EntitiesResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7880,7 +7880,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7927,7 +7927,7 @@ export const PutApiV1EntitiesResponse = zod
         'A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.',
       ),
     zod
-      .strictObject({
+      .object({
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -7943,7 +7943,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -7993,7 +7993,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8033,7 +8033,7 @@ export const PutApiV1EntitiesResponse = zod
         themes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8061,7 +8061,7 @@ export const PutApiV1EntitiesResponse = zod
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -8089,7 +8089,7 @@ export const PutApiV1EntitiesResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8293,7 +8293,7 @@ export const PutApiV1EntitiesResponse = zod
         educational_level: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8338,7 +8338,7 @@ export const PutApiV1EntitiesResponse = zod
         learning_outcomes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8386,7 +8386,7 @@ export const PutApiV1EntitiesResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8414,7 +8414,7 @@ export const PutApiV1EntitiesResponse = zod
         prerequisites: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8473,7 +8473,7 @@ export const PutApiV1EntitiesResponse = zod
         target_audiences: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8517,9 +8517,9 @@ export const PutApiV1EntitiesResponse = zod
       ),
   ])
   .and(
-    zod.strictObject({
+    zod.object({
       audit: zod
-        .strictObject({
+        .object({
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
@@ -8588,11 +8588,11 @@ export const getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
 export const GetApiV1EntitiesEntityIdResponse = zod
   .union([
     zod
-      .strictObject({
+      .object({
         affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 affiliation_role: zod
                   .enum([
                     'PROFESSOR',
@@ -8640,7 +8640,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -8679,7 +8679,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8708,7 +8708,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         family_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8731,7 +8731,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         given_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8771,7 +8771,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -8839,7 +8839,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -8849,7 +8849,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8876,7 +8876,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8909,7 +8909,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -8938,7 +8938,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9005,7 +9005,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -9015,7 +9015,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9042,7 +9042,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9065,7 +9065,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         facility_affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -9110,7 +9110,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9133,7 +9133,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9186,7 +9186,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -9202,7 +9202,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9412,7 +9412,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         funding: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -9446,7 +9446,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9468,7 +9468,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         organization_roles: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -9527,7 +9527,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -9576,7 +9576,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         research_disciplines: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9611,7 +9611,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         studied_periods: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9634,7 +9634,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         studied_places: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9670,7 +9670,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -9690,7 +9690,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9923,7 +9923,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -9985,7 +9985,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -10001,7 +10001,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10221,7 +10221,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10283,11 +10283,11 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.',
       ),
     zod
-      .strictObject({
+      .object({
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -10332,7 +10332,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10372,7 +10372,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10523,7 +10523,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         published_in: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10571,7 +10571,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -10581,7 +10581,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10608,7 +10608,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10658,7 +10658,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10681,7 +10681,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10728,7 +10728,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.',
       ),
     zod
-      .strictObject({
+      .object({
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -10744,7 +10744,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10794,7 +10794,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10834,7 +10834,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         themes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -10862,7 +10862,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -10890,7 +10890,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11094,7 +11094,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         educational_level: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11139,7 +11139,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         learning_outcomes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11187,7 +11187,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11215,7 +11215,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         prerequisites: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11274,7 +11274,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         target_audiences: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -11318,9 +11318,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
       ),
   ])
   .and(
-    zod.strictObject({
+    zod.object({
       audit: zod
-        .strictObject({
+        .object({
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
@@ -14161,11 +14161,11 @@ export const postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
 export const PostApiV1EntitiesEntityIdResponse = zod
   .union([
     zod
-      .strictObject({
+      .object({
         affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 affiliation_role: zod
                   .enum([
                     'PROFESSOR',
@@ -14213,7 +14213,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -14252,7 +14252,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14281,7 +14281,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         family_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14304,7 +14304,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         given_name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14344,7 +14344,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -14412,7 +14412,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A human agent in the DH index: researcher, developer, librarian, student, etc.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -14422,7 +14422,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14449,7 +14449,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14482,7 +14482,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14511,7 +14511,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14578,7 +14578,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -14588,7 +14588,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14615,7 +14615,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14638,7 +14638,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         facility_affiliations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -14683,7 +14683,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14706,7 +14706,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14759,7 +14759,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -14775,7 +14775,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -14985,7 +14985,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         funding: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -15019,7 +15019,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15041,7 +15041,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         organization_roles: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -15100,7 +15100,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         project_participations: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 end_date: zod.iso
                   .date()
                   .nullish()
@@ -15149,7 +15149,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         research_disciplines: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15184,7 +15184,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         studied_periods: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15207,7 +15207,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         studied_places: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15243,7 +15243,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -15263,7 +15263,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15496,7 +15496,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15558,7 +15558,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -15574,7 +15574,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15794,7 +15794,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15856,11 +15856,11 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.',
       ),
     zod
-      .strictObject({
+      .object({
         authorships: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 author: zod
                   .string()
                   .describe('The contributing person (by IDHI URN).'),
@@ -15905,7 +15905,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -15945,7 +15945,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16096,7 +16096,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         published_in: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16144,7 +16144,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -16154,7 +16154,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         address: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16181,7 +16181,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16231,7 +16231,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         location: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16254,7 +16254,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16301,7 +16301,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.',
       ),
     zod
-      .strictObject({
+      .object({
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -16317,7 +16317,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16367,7 +16367,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16407,7 +16407,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         themes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16435,7 +16435,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
-      .strictObject({
+      .object({
         additional_urls: zod
           .array(zod.url())
           .nullish()
@@ -16463,7 +16463,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         description: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16667,7 +16667,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         educational_level: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16712,7 +16712,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         learning_outcomes: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16760,7 +16760,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         name: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16788,7 +16788,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         prerequisites: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16847,7 +16847,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         target_audiences: zod
           .array(
             zod
-              .strictObject({
+              .object({
                 language: zod
                   .enum(['en', 'he', 'ar'])
                   .describe(
@@ -16891,9 +16891,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
       ),
   ])
   .and(
-    zod.strictObject({
+    zod.object({
       audit: zod
-        .strictObject({
+        .object({
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),

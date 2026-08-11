@@ -53,6 +53,7 @@ function exposeAuthChallenge(
 
 export async function createAuthChallengeDatabaseService(
   connection: Connection,
+  initializeIndexes: boolean,
 ): Promise<AuthChallengeDatabaseService> {
   const authChallenges = connection.model<StoredAuthChallenge>(
     'AuthChallenge',
@@ -60,13 +61,15 @@ export async function createAuthChallengeDatabaseService(
     COLLECTIONS.authChallenges,
   )
 
-  await authChallenges.collection.createIndex(
-    { expiresAt: 1 },
-    {
-      name: 'auth_challenges_expiration',
-      expireAfterSeconds: 0,
-    },
-  )
+  if (initializeIndexes) {
+    await authChallenges.collection.createIndex(
+      { expiresAt: 1 },
+      {
+        name: 'auth_challenges_expiration',
+        expireAfterSeconds: 0,
+      },
+    )
+  }
 
   return {
     async getById(challengeId) {

@@ -153,6 +153,7 @@ function toMongoFilter(filter: EntityFilter): QueryFilter<StoredEntity> {
 
 export async function createEntityDatabaseService(
   connection: Connection,
+  initializeIndexes: boolean,
 ): Promise<EntityDatabaseService> {
   const entities = connection.model<StoredEntity>(
     'Entity',
@@ -170,14 +171,18 @@ export async function createEntityDatabaseService(
     COLLECTIONS.audit,
   )
 
-  await entities.collection.createIndex(
-    { _s: 'text' },
-    { name: 'entities_search' },
-  )
-  await entityAudit.collection.createIndex(
-    { entityId: 1, at: -1 },
-    { name: 'audit_entity_history' },
-  )
+  if (initializeIndexes) {
+    await Promise.all([
+      entities.collection.createIndex(
+        { _s: 'text' },
+        { name: 'entities_search' },
+      ),
+      entityAudit.collection.createIndex(
+        { entityId: 1, at: -1 },
+        { name: 'audit_entity_history' },
+      ),
+    ])
+  }
 
   return {
     async search(query, requestedFacets, structuredFilter, page, pageSize) {

@@ -19,11 +19,6 @@ export default defineConfig({
         hono: {
           compositeRoute: 'src/routes.ts',
         },
-        zod: {
-          strict: {
-            response: true,
-          },
-        },
       },
       clean: ['!**/*.handlers.ts'],
     },

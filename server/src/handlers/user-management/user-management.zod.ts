@@ -28,9 +28,9 @@ export const getApiV1UsersResponseResultsItemIdRegExp = new RegExp(
   '^idhi:user:.+$',
 )
 
-export const GetApiV1UsersResponse = zod.strictObject({
+export const GetApiV1UsersResponse = zod.object({
   results: zod.array(
-    zod.strictObject({
+    zod.object({
       id: zod.string().regex(getApiV1UsersResponseResultsItemIdRegExp),
       name: zod.string().optional(),
       email: zod.email(),
@@ -48,7 +48,7 @@ export const PostApiV1UsersBody = zod.object({
 
 export const postApiV1UsersResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PostApiV1UsersResponse = zod.strictObject({
+export const PostApiV1UsersResponse = zod.object({
   id: zod.string().regex(postApiV1UsersResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
@@ -61,7 +61,7 @@ export const GetApiV1UsersUserIdParams = zod.object({
 
 export const getApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const GetApiV1UsersUserIdResponse = zod.strictObject({
+export const GetApiV1UsersUserIdResponse = zod.object({
   id: zod.string().regex(getApiV1UsersUserIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
@@ -80,7 +80,7 @@ export const PutApiV1UsersUserIdBody = zod.object({
 
 export const putApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PutApiV1UsersUserIdResponse = zod.strictObject({
+export const PutApiV1UsersUserIdResponse = zod.object({
   id: zod.string().regex(putApiV1UsersUserIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
@@ -99,7 +99,7 @@ export const PostApiV1UsersUserIdBody = zod.object({
 
 export const postApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PostApiV1UsersUserIdResponse = zod.strictObject({
+export const PostApiV1UsersUserIdResponse = zod.object({
   id: zod.string().regex(postApiV1UsersUserIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),

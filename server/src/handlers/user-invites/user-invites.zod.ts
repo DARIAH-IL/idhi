@@ -33,28 +33,35 @@ export const postApiV1UsersInviteResponseTwoIdRegExp = new RegExp(
   '^idhi:invite:.+$',
 )
 
-export const PostApiV1UsersInviteResponse = zod.strictObject({
-  audit: zod
-    .strictObject({
-      createdAt: zod.iso
+export const PostApiV1UsersInviteResponse = zod
+  .object({
+    audit: zod
+      .object({
+        createdAt: zod.iso
+          .datetime({ offset: true })
+          .describe('UTC date and time'),
+        createdBy: zod
+          .string()
+          .regex(postApiV1UsersInviteResponseOneAuditCreatedByRegExp),
+        modifiedAt: zod.iso
+          .datetime({ offset: true })
+          .describe('UTC date and time'),
+        modifiedBy: zod
+          .string()
+          .regex(postApiV1UsersInviteResponseOneAuditModifiedByRegExp),
+      })
+      .optional(),
+  })
+  .and(
+    zod.object({
+      id: zod.string().regex(postApiV1UsersInviteResponseTwoIdRegExp),
+      email: zod.email(),
+      message: zod.string().optional(),
+      expiration: zod.iso
         .datetime({ offset: true })
         .describe('UTC date and time'),
-      createdBy: zod
-        .string()
-        .regex(postApiV1UsersInviteResponseOneAuditCreatedByRegExp),
-      modifiedAt: zod.iso
-        .datetime({ offset: true })
-        .describe('UTC date and time'),
-      modifiedBy: zod
-        .string()
-        .regex(postApiV1UsersInviteResponseOneAuditModifiedByRegExp),
-    })
-    .optional(),
-  id: zod.string().regex(postApiV1UsersInviteResponseTwoIdRegExp),
-  email: zod.email(),
-  message: zod.string().optional(),
-  expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
-})
+    }),
+  )
 
 export const getApiV1UsersInvitesResponseOneAuditCreatedByRegExp = new RegExp(
   '^idhi:user:.+$',
@@ -66,28 +73,35 @@ export const getApiV1UsersInvitesResponseTwoIdRegExp = new RegExp(
   '^idhi:invite:.+$',
 )
 
-export const GetApiV1UsersInvitesResponseItem = zod.strictObject({
-  audit: zod
-    .strictObject({
-      createdAt: zod.iso
+export const GetApiV1UsersInvitesResponseItem = zod
+  .object({
+    audit: zod
+      .object({
+        createdAt: zod.iso
+          .datetime({ offset: true })
+          .describe('UTC date and time'),
+        createdBy: zod
+          .string()
+          .regex(getApiV1UsersInvitesResponseOneAuditCreatedByRegExp),
+        modifiedAt: zod.iso
+          .datetime({ offset: true })
+          .describe('UTC date and time'),
+        modifiedBy: zod
+          .string()
+          .regex(getApiV1UsersInvitesResponseOneAuditModifiedByRegExp),
+      })
+      .optional(),
+  })
+  .and(
+    zod.object({
+      id: zod.string().regex(getApiV1UsersInvitesResponseTwoIdRegExp),
+      email: zod.email(),
+      message: zod.string().optional(),
+      expiration: zod.iso
         .datetime({ offset: true })
         .describe('UTC date and time'),
-      createdBy: zod
-        .string()
-        .regex(getApiV1UsersInvitesResponseOneAuditCreatedByRegExp),
-      modifiedAt: zod.iso
-        .datetime({ offset: true })
-        .describe('UTC date and time'),
-      modifiedBy: zod
-        .string()
-        .regex(getApiV1UsersInvitesResponseOneAuditModifiedByRegExp),
-    })
-    .optional(),
-  id: zod.string().regex(getApiV1UsersInvitesResponseTwoIdRegExp),
-  email: zod.email(),
-  message: zod.string().optional(),
-  expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
-})
+    }),
+  )
 export const GetApiV1UsersInvitesResponse = zod.array(
   GetApiV1UsersInvitesResponseItem,
 )

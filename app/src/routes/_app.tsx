@@ -25,9 +25,16 @@ function AppLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex h-11 items-center justify-between border-b px-4">
-        <Link to="/entities" aria-label="IDHI home">
+      <header className="flex min-h-14 items-center justify-between gap-4 border-b px-4 py-2">
+        <Link
+          to="/entities"
+          aria-label={t('common.home')}
+          className="flex items-center gap-3"
+        >
           <img src="/logo.png" alt="IDHI" className="h-7 w-auto" />
+          <span className="text-sm font-semibold sm:text-base">
+            {t('common.site_name')}
+          </span>
         </Link>
         {token ? (
           <Button variant="ghost" size="sm" onPress={logout}>
@@ -43,6 +50,10 @@ function AppLayout() {
       <main className="flex-1 p-6">
         <Outlet />
       </main>
+      <footer className="border-t px-4 py-4 text-center text-xs text-muted-foreground">
+        <p>{t('common.copyright')}</p>
+        <p className="mt-1">{t('common.work_in_progress')}</p>
+      </footer>
       <LoginDialog isOpen={loginOpen} onOpenChange={setLoginOpen} />
     </div>
   )

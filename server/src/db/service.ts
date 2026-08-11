@@ -34,54 +34,41 @@ export interface DatabaseService {
   users: UserDatabaseService
 }
 
-let databaseServicePromise: Promise<DatabaseService> | undefined
+let indexesInitialized = false
 
 export const createDatabaseService = async (
   connection: Connection,
 ): Promise<DatabaseService> => {
-  if (!databaseServicePromise) {
-    databaseServicePromise = Promise.all([
-      createAuthChallengeDatabaseService(connection),
-      createAuthRateLimitDatabaseService(connection),
-      createEntityDatabaseService(connection),
-      createDistributedLockDatabaseService(connection),
-      createUserDatabaseService(connection),
-      createUserInviteDatabaseService(connection),
+  const initializeIndexes = !indexesInitialized
+  const [authChallenges, authRateLimits, entities, locks, users, userInvites] =
+    await Promise.all([
+      createAuthChallengeDatabaseService(connection, initializeIndexes),
+      createAuthRateLimitDatabaseService(connection, initializeIndexes),
+      createEntityDatabaseService(connection, initializeIndexes),
+      createDistributedLockDatabaseService(connection, initializeIndexes),
+      createUserDatabaseService(connection, initializeIndexes),
+      createUserInviteDatabaseService(connection, initializeIndexes),
     ])
-      .then(
-        ([
-          authChallenges,
-          authRateLimits,
-          entities,
-          locks,
-          users,
-          userInvites,
-        ]) => ({
-          authChallenges,
-          authRateLimits,
-          entities,
-          async isLive() {
-            if (connection.readyState !== 1 || !connection.db) {
-              return false
-            }
+  indexesInitialized = true
 
-            try {
-              await connection.db.admin().ping()
-              return true
-            } catch {
-              return false
-            }
-          },
-          locks,
-          userInvites,
-          users,
-        }),
-      )
-      .catch((error) => {
-        databaseServicePromise = undefined
-        throw error
-      })
+  return {
+    authChallenges,
+    authRateLimits,
+    entities,
+    async isLive() {
+      if (connection.readyState !== 1 || !connection.db) {
+        return false
+      }
+
+      try {
+        await connection.db.admin().ping()
+        return true
+      } catch {
+        return false
+      }
+    },
+    locks,
+    userInvites,
+    users,
   }
-
-  return databaseServicePromise
 }

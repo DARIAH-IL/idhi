@@ -19,7 +19,7 @@ export const PostApiV1AuthOtpBody = zod
     }),
   )
 
-export const PostApiV1AuthOtpResponse = zod.strictObject({
+export const PostApiV1AuthOtpResponse = zod.object({
   challengeId: zod.string(),
   expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
 })
@@ -32,19 +32,26 @@ export const PostApiV1AuthOtpChallengeIdBody = zod.object({
   otp: zod.string(),
 })
 
-export const PostApiV1AuthOtpChallengeIdResponse = zod.strictObject({
+export const PostApiV1AuthOtpChallengeIdResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
 
-export const PostApiV1AuthPasskeyCreateResponse = zod.strictObject({
-  challengeId: zod.string(),
-  expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
-  options: zod
-    .record(zod.string(), zod.unknown())
-    .describe(
-      'Matches @simplewebauthn\/PublicKeyCredentialCreationOptionsJSON.',
-    ),
-})
+export const PostApiV1AuthPasskeyCreateResponse = zod
+  .object({
+    challengeId: zod.string(),
+    expiration: zod.iso
+      .datetime({ offset: true })
+      .describe('UTC date and time'),
+  })
+  .and(
+    zod.object({
+      options: zod
+        .record(zod.string(), zod.unknown())
+        .describe(
+          'Matches @simplewebauthn\/PublicKeyCredentialCreationOptionsJSON.',
+        ),
+    }),
+  )
 
 export const PostApiV1AuthPasskeyCreateChallengeIdParams = zod.object({
   challengeId: zod.string(),
@@ -60,15 +67,22 @@ export const PostApiV1AuthPasskeyLoginBody = zod.object({
   email: zod.email(),
 })
 
-export const PostApiV1AuthPasskeyLoginResponse = zod.strictObject({
-  challengeId: zod.string(),
-  expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
-  options: zod
-    .record(zod.string(), zod.unknown())
-    .describe(
-      'Matches @simplewebauthn\/PublicKeyCredentialRequestOptionsJSON.',
-    ),
-})
+export const PostApiV1AuthPasskeyLoginResponse = zod
+  .object({
+    challengeId: zod.string(),
+    expiration: zod.iso
+      .datetime({ offset: true })
+      .describe('UTC date and time'),
+  })
+  .and(
+    zod.object({
+      options: zod
+        .record(zod.string(), zod.unknown())
+        .describe(
+          'Matches @simplewebauthn\/PublicKeyCredentialRequestOptionsJSON.',
+        ),
+    }),
+  )
 
 export const PostApiV1AuthPasskeyLoginChallengeIdParams = zod.object({
   challengeId: zod.string(),
@@ -78,6 +92,6 @@ export const PostApiV1AuthPasskeyLoginChallengeIdBody = zod
   .record(zod.string(), zod.unknown())
   .describe('Matches @simplewebauthn\/AuthenticationResponseJSON.')
 
-export const PostApiV1AuthPasskeyLoginChallengeIdResponse = zod.strictObject({
+export const PostApiV1AuthPasskeyLoginChallengeIdResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
