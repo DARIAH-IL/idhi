@@ -6,7 +6,6 @@
  */
 import type { ServiceDescriptionItem } from './serviceDescriptionItem.ts'
 import type { ServiceDigitalHumanitiesActivitiesItem } from './serviceDigitalHumanitiesActivitiesItem.ts'
-import type { ServiceNameItem } from './serviceNameItem.ts'
 import type { ServiceServiceType } from './serviceServiceType.ts'
 import type { ServiceType } from './serviceType.ts'
 
@@ -30,7 +29,7 @@ export interface Service {
    */
   description?: ServiceDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?:
@@ -52,12 +51,8 @@ export interface Service {
    * @pattern ^idhi:service:[0-9a-z]{4,12}$
    */
   id: string
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: ServiceNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * The organization formally responsible for delivering the service (the one you'd contact or contract with) — set this even when the service is listed under a Facility.
    * @nullable

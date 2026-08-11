@@ -7,7 +7,6 @@
 import type { OrganizationAddressItem } from './organizationAddressItem.ts'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
 import type { OrganizationLocationItem } from './organizationLocationItem.ts'
-import type { OrganizationNameItem } from './organizationNameItem.ts'
 import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
 import type { OrganizationType } from './organizationType.ts'
 
@@ -53,11 +52,12 @@ export interface Organization {
    */
   location?: OrganizationLocationItem[] | null
   /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
+   * Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.
    * @nullable
    */
-  name?: OrganizationNameItem[] | null
+  marketplace_sync?: boolean | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
   organization_type?: OrganizationOrganizationType
   /**

@@ -6,7 +6,6 @@
  */
 import type { PublicationAuthorshipsItem } from './publicationAuthorshipsItem.ts'
 import type { PublicationDescriptionItem } from './publicationDescriptionItem.ts'
-import type { PublicationNameItem } from './publicationNameItem.ts'
 import type { PublicationPublicationType } from './publicationPublicationType.ts'
 import type { PublicationPublishedInItem } from './publicationPublishedInItem.ts'
 import type { PublicationType } from './publicationType.ts'
@@ -48,12 +47,8 @@ export interface Publication {
    * @pattern ^idhi:publication:[0-9a-z]{4,12}$
    */
   id: string
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: PublicationNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * The containing work (book for a chapter, proceedings for a paper), by IDHI URN or external URI.
    * @nullable
@@ -72,7 +67,7 @@ export interface Publication {
    */
   published_in?: PublicationPublishedInItem[] | null
   /**
-   * The organization publishing the dataset or publication (by IDHI URN).
+   * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
    * @nullable
    */
   publisher?: string | null

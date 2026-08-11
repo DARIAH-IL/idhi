@@ -7,7 +7,6 @@
 import type { ToolDescriptionItem } from './toolDescriptionItem.ts'
 import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem.ts'
 import type { ToolLicense } from './toolLicense.ts'
-import type { ToolNameItem } from './toolNameItem.ts'
 import type { ToolToolType } from './toolToolType.ts'
 import type { ToolType } from './toolType.ts'
 
@@ -36,7 +35,7 @@ export interface Tool {
    */
   description?: ToolDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?: ToolDigitalHumanitiesActivitiesItem[] | null
@@ -57,14 +56,10 @@ export interface Tool {
    * @pattern ^idhi:tool:[0-9a-z]{4,12}$
    */
   id: string
-  /** Common licenses for tools and datasets. Extend as needed with canonical meanings. */
+  /** Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings. */
   license?: ToolLicense
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: ToolNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * Main implementation language(s), comma-free single value preferred.
    * @nullable

@@ -8,7 +8,6 @@ import type { EventAddressItem } from './eventAddressItem.ts'
 import type { EventDescriptionItem } from './eventDescriptionItem.ts'
 import type { EventEventType } from './eventEventType.ts'
 import type { EventLocationItem } from './eventLocationItem.ts'
-import type { EventNameItem } from './eventNameItem.ts'
 import type { EventType } from './eventType.ts'
 
 /**
@@ -59,12 +58,8 @@ export interface Event {
    * @nullable
    */
   location?: EventLocationItem[] | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: EventNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

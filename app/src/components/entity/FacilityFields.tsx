@@ -3,12 +3,13 @@ import { TextField } from './TextField'
 import { LangStringField } from './LangStringField'
 import { StringArrayField } from './StringArrayField'
 import { ArraySection } from './ArraySection'
+import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function FacilityFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <TextField
         name="contact_email"
         label={t('entity.form.fields.contact_email')}
@@ -19,17 +20,20 @@ export function FacilityFields() {
         label={t('entity.form.fields.location')}
       />
       <LangStringField name="address" label={t('entity.form.fields.address')} />
-      <StringArrayField
+      <EntityRefArrayField
         name="services_offered"
         label={t('entity.form.fields.services_offered')}
+        entityTypes={['idhi:Service']}
       />
-      <StringArrayField
+      <EntityRefArrayField
         name="tools_provided"
         label={t('entity.form.fields.tools_provided')}
+        entityTypes={['idhi:Tool']}
       />
       <StringArrayField
         name="additional_urls"
         label={t('entity.form.fields.additional_urls')}
+        validationKind="url"
       />
 
       <ArraySection
@@ -39,9 +43,11 @@ export function FacilityFields() {
       >
         {(i) => (
           <>
-            <TextField
+            <EntityRefField
               name={`facility_affiliations[${i}].organization`}
               label={t('entity.form.organization_ref')}
+              entityTypes={['idhi:Organization']}
+              required
             />
             <TextField
               name={`facility_affiliations[${i}].start_date`}

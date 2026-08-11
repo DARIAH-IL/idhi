@@ -23,6 +23,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
+import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
@@ -86,11 +88,14 @@ function EntityDetailPage() {
                 <span className="font-medium text-muted-foreground min-w-24">
                   {key}
                 </span>
-                <span>{String(val)}</span>
+                <span className="min-w-0 flex-1">{renderValue(val)}</span>
               </div>
             ))}
         </div>
       )
+    }
+    if (typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)) {
+      return <EntityReferenceCard entityId={v} />
     }
     return String(v)
   }
@@ -105,6 +110,7 @@ function EntityDetailPage() {
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
+            <EntityTypeIcon type={entity.type} size="lg" />
             <Badge variant="secondary">{getEntityTypeLabel(entity.type)}</Badge>
             <h1 className="text-lg font-semibold">
               {getEntityDisplayName(entity)}
@@ -180,7 +186,9 @@ function EntityDetailPage() {
                 key={key}
                 className="grid grid-cols-[12rem_1fr] gap-2 text-xs"
               >
-                <dt className="text-muted-foreground font-medium">{key}</dt>
+                <dt className="text-muted-foreground font-medium">
+                  {key.replaceAll('_', ' ')}
+                </dt>
                 <dd>{renderValue(value)}</dd>
               </div>
             ))}

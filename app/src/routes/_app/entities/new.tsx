@@ -6,6 +6,7 @@ import { usePutApiV1Entities } from '@/api/hooks/entities/entities'
 import { ENTITY_TYPES, getEntityTypeLabel } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/entity/EntityForm'
+import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { Button } from '@/components/ui/button'
 
 export const Route = createFileRoute('/_app/entities/new')({
@@ -41,16 +42,17 @@ function NewEntityPage() {
         <p className="text-sm text-muted-foreground">
           {t('entity.form.select_type_description')}
         </p>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {ENTITY_TYPES.map((et) => (
             <Button
               key={et}
               variant="outline"
               size="lg"
-              className="h-12 flex-col"
+              className="h-24 flex-col gap-2"
               onPress={() => setSelectedType(et)}
             >
-              {getEntityTypeLabel(et)}
+              <EntityTypeIcon type={et} size="lg" />
+              <span>{getEntityTypeLabel(et)}</span>
             </Button>
           ))}
         </div>
@@ -61,11 +63,14 @@ function NewEntityPage() {
   return (
     <div className="flex flex-col gap-4 max-w-2xl">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">
-          {t('entity.form.new_title', {
-            type: getEntityTypeLabel(selectedType),
-          })}
-        </h1>
+        <div className="flex items-center gap-2.5">
+          <EntityTypeIcon type={selectedType} />
+          <h1 className="text-lg font-semibold">
+            {t('entity.form.new_title', {
+              type: getEntityTypeLabel(selectedType),
+            })}
+          </h1>
+        </div>
         <Button variant="ghost" size="sm" onPress={() => setSelectedType(null)}>
           {t('common.back')}
         </Button>

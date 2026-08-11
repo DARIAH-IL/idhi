@@ -6,7 +6,7 @@
  */
 
 /**
- * Common licenses for tools and datasets. Extend as needed with canonical meanings.
+ * Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.
  */
 export type DatasetLicense =
   (typeof DatasetLicense)[keyof typeof DatasetLicense]

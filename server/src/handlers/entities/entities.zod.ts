@@ -151,41 +151,35 @@ export const postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
 export const postApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const postApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-
+export const postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp =
+  new RegExp('^idhi:training_material:[0-9a-z]{4,12}$')
 export const postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
@@ -505,29 +499,16 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               .describe(
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
-            name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
+            marketplace_sync: zod
+              .boolean()
               .nullish()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+              ),
+            name: zod
+              .string()
+              .describe(
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             organization_type: zod
               .enum([
@@ -703,28 +684,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             same_as: zod
               .array(zod.url())
@@ -975,7 +937,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
             end_date: zod.iso
               .date()
@@ -1018,28 +980,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             organization_roles: zod
               .array(
@@ -1096,6 +1039,12 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               .array(zod.string())
               .nullish()
               .describe('Tools produced by this project (by id).'),
+            outputs_training_materials: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+              ),
             project_participations: zod
               .array(
                 zod
@@ -1463,7 +1412,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
             documentation_url: zod
               .url()
@@ -1492,31 +1441,12 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               ])
               .optional()
               .describe(
-                'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+                'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             programming_language: zod
               .string()
@@ -1776,7 +1706,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               )
               .nullish()
               .describe(
-                'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+                'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
             documentation_url: zod
               .url()
@@ -1795,28 +1725,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             provider: zod
               .string()
@@ -1950,28 +1861,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             part_of: zod
               .string()
@@ -2129,7 +2021,7 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               .string()
               .nullish()
               .describe(
-                'The organization publishing the dataset or publication (by IDHI URN).',
+                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2261,28 +2153,9 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2373,37 +2246,18 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
               ])
               .optional()
               .describe(
-                'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+                'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
               ),
             name: zod
-              .array(
-                zod
-                  .strictObject({
-                    language: zod
-                      .enum(['en', 'he', 'ar'])
-                      .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
-                      ),
-                    value: zod
-                      .string()
-                      .describe(
-                        "A localized text, in the language given by 'language'.",
-                      ),
-                  })
-                  .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-                  ),
-              )
-              .min(1)
-              .nullish()
+              .string()
               .describe(
-                'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
               ),
             publisher: zod
               .string()
               .nullish()
               .describe(
-                'The organization publishing the dataset or publication (by IDHI URN).',
+                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2446,6 +2300,444 @@ export const PostApiV1EntitiesResponse = zod.strictObject({
           })
           .describe(
             'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+          ),
+        zod
+          .strictObject({
+            additional_urls: zod
+              .array(zod.url())
+              .nullish()
+              .describe(
+                'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+              ),
+            contact_email: zod
+              .string()
+              .nullish()
+              .describe(
+                "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+              ),
+            creators: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+              ),
+            date_issued: zod.iso
+              .date()
+              .nullish()
+              .describe(
+                'Formal publication date (or year-01-01 if only the year is known).',
+              ),
+            description: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+              ),
+            digital_humanities_activities: zod
+              .array(
+                zod
+                  .enum([
+                    'tadirah:abstractThinking',
+                    'tadirah:academicPublishing',
+                    'tadirah:adding',
+                    'tadirah:aggregating',
+                    'tadirah:analyzing',
+                    'tadirah:annotating',
+                    'tadirah:archiving',
+                    'tadirah:associate',
+                    'tadirah:associating',
+                    'tadirah:audioAnnotation',
+                    'tadirah:audioConferencing',
+                    'tadirah:audioRecording',
+                    'tadirah:authorshipAttribution',
+                    'tadirah:bitStreamPreservation',
+                    'tadirah:blogging',
+                    'tadirah:browsing',
+                    'tadirah:capturing',
+                    'tadirah:cataloging',
+                    'tadirah:clusterAnalysis',
+                    'tadirah:coOccurrence',
+                    'tadirah:collaborating',
+                    'tadirah:collating',
+                    'tadirah:collecting',
+                    'tadirah:collocationAnalysis',
+                    'tadirah:commenting',
+                    'tadirah:communicating',
+                    'tadirah:comparing',
+                    'tadirah:compiling',
+                    'tadirah:conceptualizing',
+                    'tadirah:concordance',
+                    'tadirah:contentAnalysis',
+                    'tadirah:contextualizing',
+                    'tadirah:contrastiveAnalysis',
+                    'tadirah:converting',
+                    'tadirah:correcting',
+                    'tadirah:creating',
+                    'tadirah:cropping',
+                    'tadirah:crowdsourcing',
+                    'tadirah:dataCleansing',
+                    'tadirah:dataIngestion',
+                    'tadirah:dataMapping',
+                    'tadirah:dataMining',
+                    'tadirah:dataRecognition',
+                    'tadirah:dataVisualization',
+                    'tadirah:debugging',
+                    'tadirah:defining',
+                    'tadirah:description',
+                    'tadirah:designing',
+                    'tadirah:diagramming',
+                    'tadirah:digitalObjectIdentifier',
+                    'tadirah:digitalPublishing',
+                    'tadirah:discourseAnalysis',
+                    'tadirah:discovering',
+                    'tadirah:discussing',
+                    'tadirah:disseminating',
+                    'tadirah:distanceMeasures',
+                    'tadirah:drawing',
+                    'tadirah:eMailing',
+                    'tadirah:editing',
+                    'tadirah:emulation',
+                    'tadirah:encoding',
+                    'tadirah:enriching',
+                    'tadirah:explanation',
+                    'tadirah:exploration',
+                    'tadirah:expressingOpinion',
+                    'tadirah:extracting',
+                    'tadirah:finding',
+                    'tadirah:formatting',
+                    'tadirah:gamification',
+                    'tadirah:gathering',
+                    'tadirah:genreRecognition',
+                    'tadirah:georeferencing',
+                    'tadirah:graphicsProgramming',
+                    'tadirah:highlighting',
+                    'tadirah:identifier',
+                    'tadirah:identifying',
+                    'tadirah:imaging',
+                    'tadirah:improving',
+                    'tadirah:informationMining',
+                    'tadirah:informationRetrieval',
+                    'tadirah:instantMessaging',
+                    'tadirah:integrating',
+                    'tadirah:interpreting',
+                    'tadirah:knowledgeDiscovery',
+                    'tadirah:knowledgeExtraction',
+                    'tadirah:lemmatizing',
+                    'tadirah:lettering',
+                    'tadirah:linkedOpenData',
+                    'tadirah:machineLearning',
+                    'tadirah:managing',
+                    'tadirah:mapping',
+                    'tadirah:merging',
+                    'tadirah:microblogging',
+                    'tadirah:migration',
+                    'tadirah:mindMapping',
+                    'tadirah:modeling',
+                    'tadirah:modifying',
+                    'tadirah:namedEntityRecognition',
+                    'tadirah:namingConvention',
+                    'tadirah:naturalLanguageProcessing',
+                    'tadirah:networkAnalysis',
+                    'tadirah:opticalCharacterRecognition',
+                    'tadirah:opticalMusicRecognition',
+                    'tadirah:organizing',
+                    'tadirah:parsing',
+                    'tadirah:patternRecognition',
+                    'tadirah:persistentIdentifier',
+                    'tadirah:photographing',
+                    'tadirah:plotting',
+                    'tadirah:posTagging',
+                    'tadirah:posting',
+                    'tadirah:preprocessing',
+                    'tadirah:preservationMetadata',
+                    'tadirah:preserving',
+                    'tadirah:principalComponentAnalysis',
+                    'tadirah:programming',
+                    'tadirah:pseudoCoding',
+                    'tadirah:publishing',
+                    'tadirah:querying',
+                    'tadirah:reasoning',
+                    'tadirah:recording',
+                    'tadirah:relationalAnalysis',
+                    'tadirah:removing',
+                    'tadirah:replication',
+                    'tadirah:rhetoricalAnalysis',
+                    'tadirah:scanning',
+                    'tadirah:screencast',
+                    'tadirah:searching',
+                    'tadirah:segmenting',
+                    'tadirah:semantification',
+                    'tadirah:sentimentAnalysis',
+                    'tadirah:sequenceAlignment',
+                    'tadirah:sharing',
+                    'tadirah:socialNetworking',
+                    'tadirah:spatialAnalysis',
+                    'tadirah:speechRecognizing',
+                    'tadirah:storing',
+                    'tadirah:structuralAnalysis',
+                    'tadirah:stylisticAnalysis',
+                    'tadirah:stylometry',
+                    'tadirah:subtracting',
+                    'tadirah:supplementing',
+                    'tadirah:tagging',
+                    'tadirah:teaching',
+                    'tadirah:textCategorization',
+                    'tadirah:textMessaging',
+                    'tadirah:theorizing',
+                    'tadirah:topicModeling',
+                    'tadirah:transcoding',
+                    'tadirah:transcribing',
+                    'tadirah:transformation',
+                    'tadirah:translating',
+                    'tadirah:treeTagging',
+                    'tadirah:tweet',
+                    'tadirah:uniformResourceIdentifier',
+                    'tadirah:upload',
+                    'tadirah:userGeneratedContent',
+                    'tadirah:versioning',
+                    'tadirah:videoCapture',
+                    'tadirah:videoConference',
+                    'tadirah:videoEditing',
+                    'tadirah:visualAnalysis',
+                    'tadirah:visualAnnotation',
+                    'tadirah:webCrawling',
+                    'tadirah:webDevelopment',
+                    'tadirah:webScraping',
+                    'tadirah:wireframing',
+                    'tadirah:writing',
+                  ])
+                  .describe(
+                    'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+              ),
+            educational_level: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+              ),
+            homepage: zod
+              .url()
+              .nullish()
+              .describe('Public landing page of the entity, if one exists.'),
+            id: zod
+              .string()
+              .regex(postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp)
+              .describe(
+                "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            in_languages: zod
+              .array(
+                zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+              ),
+            learning_outcomes: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+              ),
+            license: zod
+              .enum([
+                'CC_BY_4_0',
+                'CC_BY_SA_4_0',
+                'CC0_1_0',
+                'MIT',
+                'APACHE_2_0',
+                'GPL_3_0',
+              ])
+              .optional()
+              .describe(
+                'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+              ),
+            material_url: zod
+              .url()
+              .nullish()
+              .describe(
+                'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+              ),
+            media_type: zod
+              .string()
+              .nullish()
+              .describe(
+                'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+              ),
+            name: zod
+              .string()
+              .describe(
+                'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+              ),
+            part_of_training_material: zod
+              .string()
+              .nullish()
+              .describe(
+                'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+              ),
+            prerequisites: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+              ),
+            publisher: zod
+              .string()
+              .nullish()
+              .describe(
+                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+              ),
+            related_datasets: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+              ),
+            related_services: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+              ),
+            related_tools: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+              ),
+            same_as: zod
+              .array(zod.url())
+              .nullish()
+              .describe(
+                "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+              ),
+            tags: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+              ),
+            target_audiences: zod
+              .array(
+                zod
+                  .strictObject({
+                    language: zod
+                      .enum(['en', 'he', 'ar'])
+                      .describe(
+                        'Languages supported for free-text fields (BCP-47 tags).',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+              ),
+            training_material_type: zod
+              .enum([
+                'TUTORIAL',
+                'LESSON',
+                'COURSE_MATERIAL',
+                'WORKSHOP_MATERIAL',
+                'SELF_PACED_EXERCISE',
+                'OTHER_DIDACTIC_RESOURCE',
+              ])
+              .optional()
+              .describe(
+                "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+              ),
+            type: zod
+              .enum(['idhi:TrainingMaterial'])
+              .describe(
+                "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+              ),
+          })
+          .describe(
+            'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
           ),
       ])
       .and(
@@ -2496,39 +2788,35 @@ export const putApiV1EntitiesBodyOneOrcidRegExp = new RegExp(
 export const putApiV1EntitiesBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const putApiV1EntitiesBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodySevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const putApiV1EntitiesBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesBodyNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesBodyOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
 )
 
 export const PutApiV1EntitiesBody = zod.union([
@@ -2840,29 +3128,16 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
+      marketplace_sync: zod
+        .boolean()
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+        ),
+      name: zod
+        .string()
+        .describe(
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_type: zod
         .enum([
@@ -3038,28 +3313,9 @@ export const PutApiV1EntitiesBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -3310,7 +3566,7 @@ export const PutApiV1EntitiesBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       end_date: zod.iso
         .date()
@@ -3353,28 +3609,9 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_roles: zod
         .array(
@@ -3429,6 +3666,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe('Tools produced by this project (by id).'),
+      outputs_training_materials: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+        ),
       project_participations: zod
         .array(
           zod
@@ -3794,7 +4037,7 @@ export const PutApiV1EntitiesBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -3823,31 +4066,12 @@ export const PutApiV1EntitiesBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       programming_language: zod
         .string()
@@ -4107,7 +4331,7 @@ export const PutApiV1EntitiesBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -4126,28 +4350,9 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       provider: zod
         .string()
@@ -4279,28 +4484,9 @@ export const PutApiV1EntitiesBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       part_of: zod
         .string()
@@ -4458,7 +4644,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization publishing the dataset or publication (by IDHI URN).',
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4590,28 +4776,9 @@ export const PutApiV1EntitiesBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4702,37 +4869,18 @@ export const PutApiV1EntitiesBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       publisher: zod
         .string()
         .nullish()
         .describe(
-          'The organization publishing the dataset or publication (by IDHI URN).',
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
         ),
       same_as: zod
         .array(zod.url())
@@ -4776,6 +4924,444 @@ export const PutApiV1EntitiesBody = zod.union([
     .describe(
       'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      creators: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+        ),
+      date_issued: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'Formal publication date (or year-01-01 if only the year is known).',
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      educational_level: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .string()
+        .regex(putApiV1EntitiesBodyOnezeroIdRegExp)
+        .describe(
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      in_languages: zod
+        .array(
+          zod
+            .enum(['en', 'he', 'ar'])
+            .describe(
+              'Languages supported for free-text fields (BCP-47 tags).',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+        ),
+      learning_outcomes: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+        ),
+      license: zod
+        .enum([
+          'CC_BY_4_0',
+          'CC_BY_SA_4_0',
+          'CC0_1_0',
+          'MIT',
+          'APACHE_2_0',
+          'GPL_3_0',
+        ])
+        .optional()
+        .describe(
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+        ),
+      material_url: zod
+        .url()
+        .nullish()
+        .describe(
+          'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+        ),
+      media_type: zod
+        .string()
+        .nullish()
+        .describe(
+          'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+        ),
+      name: zod
+        .string()
+        .describe(
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+        ),
+      part_of_training_material: zod
+        .string()
+        .nullish()
+        .describe(
+          'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+        ),
+      prerequisites: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+        ),
+      publisher: zod
+        .string()
+        .nullish()
+        .describe(
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+        ),
+      related_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+        ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      target_audiences: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+        ),
+      training_material_type: zod
+        .enum([
+          'TUTORIAL',
+          'LESSON',
+          'COURSE_MATERIAL',
+          'WORKSHOP_MATERIAL',
+          'SELF_PACED_EXERCISE',
+          'OTHER_DIDACTIC_RESOURCE',
+        ])
+        .optional()
+        .describe(
+          "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+        ),
+      type: zod
+        .enum(['idhi:TrainingMaterial'])
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
+    ),
 ])
 
 export const putApiV1EntitiesResponseOneOneIdRegExp = new RegExp(
@@ -4787,41 +5373,36 @@ export const putApiV1EntitiesResponseOneOneOrcidRegExp = new RegExp(
 export const putApiV1EntitiesResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const putApiV1EntitiesResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const putApiV1EntitiesResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const putApiV1EntitiesResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-
+export const putApiV1EntitiesResponseOneOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
+)
 export const putApiV1EntitiesResponseTwoAuditCreatedByRegExp = new RegExp(
   '^idhi:user:.+$',
 )
@@ -5139,29 +5720,16 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
+        marketplace_sync: zod
+          .boolean()
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -5337,28 +5905,9 @@ export const PutApiV1EntitiesResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -5609,7 +6158,7 @@ export const PutApiV1EntitiesResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         end_date: zod.iso
           .date()
@@ -5652,28 +6201,9 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -5728,6 +6258,12 @@ export const PutApiV1EntitiesResponse = zod
           .array(zod.string())
           .nullish()
           .describe('Tools produced by this project (by id).'),
+        outputs_training_materials: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+          ),
         project_participations: zod
           .array(
             zod
@@ -6093,7 +6629,7 @@ export const PutApiV1EntitiesResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -6122,31 +6658,12 @@ export const PutApiV1EntitiesResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -6406,7 +6923,7 @@ export const PutApiV1EntitiesResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -6425,28 +6942,9 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -6578,28 +7076,9 @@ export const PutApiV1EntitiesResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -6757,7 +7236,7 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -6889,28 +7368,9 @@ export const PutApiV1EntitiesResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -7001,37 +7461,18 @@ export const PutApiV1EntitiesResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -7075,6 +7516,444 @@ export const PutApiV1EntitiesResponse = zod
       .describe(
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
+    zod
+      .strictObject({
+        additional_urls: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+          ),
+        contact_email: zod
+          .string()
+          .nullish()
+          .describe(
+            "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+          ),
+        creators: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+          ),
+        date_issued: zod.iso
+          .date()
+          .nullish()
+          .describe(
+            'Formal publication date (or year-01-01 if only the year is known).',
+          ),
+        description: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+          ),
+        digital_humanities_activities: zod
+          .array(
+            zod
+              .enum([
+                'tadirah:abstractThinking',
+                'tadirah:academicPublishing',
+                'tadirah:adding',
+                'tadirah:aggregating',
+                'tadirah:analyzing',
+                'tadirah:annotating',
+                'tadirah:archiving',
+                'tadirah:associate',
+                'tadirah:associating',
+                'tadirah:audioAnnotation',
+                'tadirah:audioConferencing',
+                'tadirah:audioRecording',
+                'tadirah:authorshipAttribution',
+                'tadirah:bitStreamPreservation',
+                'tadirah:blogging',
+                'tadirah:browsing',
+                'tadirah:capturing',
+                'tadirah:cataloging',
+                'tadirah:clusterAnalysis',
+                'tadirah:coOccurrence',
+                'tadirah:collaborating',
+                'tadirah:collating',
+                'tadirah:collecting',
+                'tadirah:collocationAnalysis',
+                'tadirah:commenting',
+                'tadirah:communicating',
+                'tadirah:comparing',
+                'tadirah:compiling',
+                'tadirah:conceptualizing',
+                'tadirah:concordance',
+                'tadirah:contentAnalysis',
+                'tadirah:contextualizing',
+                'tadirah:contrastiveAnalysis',
+                'tadirah:converting',
+                'tadirah:correcting',
+                'tadirah:creating',
+                'tadirah:cropping',
+                'tadirah:crowdsourcing',
+                'tadirah:dataCleansing',
+                'tadirah:dataIngestion',
+                'tadirah:dataMapping',
+                'tadirah:dataMining',
+                'tadirah:dataRecognition',
+                'tadirah:dataVisualization',
+                'tadirah:debugging',
+                'tadirah:defining',
+                'tadirah:description',
+                'tadirah:designing',
+                'tadirah:diagramming',
+                'tadirah:digitalObjectIdentifier',
+                'tadirah:digitalPublishing',
+                'tadirah:discourseAnalysis',
+                'tadirah:discovering',
+                'tadirah:discussing',
+                'tadirah:disseminating',
+                'tadirah:distanceMeasures',
+                'tadirah:drawing',
+                'tadirah:eMailing',
+                'tadirah:editing',
+                'tadirah:emulation',
+                'tadirah:encoding',
+                'tadirah:enriching',
+                'tadirah:explanation',
+                'tadirah:exploration',
+                'tadirah:expressingOpinion',
+                'tadirah:extracting',
+                'tadirah:finding',
+                'tadirah:formatting',
+                'tadirah:gamification',
+                'tadirah:gathering',
+                'tadirah:genreRecognition',
+                'tadirah:georeferencing',
+                'tadirah:graphicsProgramming',
+                'tadirah:highlighting',
+                'tadirah:identifier',
+                'tadirah:identifying',
+                'tadirah:imaging',
+                'tadirah:improving',
+                'tadirah:informationMining',
+                'tadirah:informationRetrieval',
+                'tadirah:instantMessaging',
+                'tadirah:integrating',
+                'tadirah:interpreting',
+                'tadirah:knowledgeDiscovery',
+                'tadirah:knowledgeExtraction',
+                'tadirah:lemmatizing',
+                'tadirah:lettering',
+                'tadirah:linkedOpenData',
+                'tadirah:machineLearning',
+                'tadirah:managing',
+                'tadirah:mapping',
+                'tadirah:merging',
+                'tadirah:microblogging',
+                'tadirah:migration',
+                'tadirah:mindMapping',
+                'tadirah:modeling',
+                'tadirah:modifying',
+                'tadirah:namedEntityRecognition',
+                'tadirah:namingConvention',
+                'tadirah:naturalLanguageProcessing',
+                'tadirah:networkAnalysis',
+                'tadirah:opticalCharacterRecognition',
+                'tadirah:opticalMusicRecognition',
+                'tadirah:organizing',
+                'tadirah:parsing',
+                'tadirah:patternRecognition',
+                'tadirah:persistentIdentifier',
+                'tadirah:photographing',
+                'tadirah:plotting',
+                'tadirah:posTagging',
+                'tadirah:posting',
+                'tadirah:preprocessing',
+                'tadirah:preservationMetadata',
+                'tadirah:preserving',
+                'tadirah:principalComponentAnalysis',
+                'tadirah:programming',
+                'tadirah:pseudoCoding',
+                'tadirah:publishing',
+                'tadirah:querying',
+                'tadirah:reasoning',
+                'tadirah:recording',
+                'tadirah:relationalAnalysis',
+                'tadirah:removing',
+                'tadirah:replication',
+                'tadirah:rhetoricalAnalysis',
+                'tadirah:scanning',
+                'tadirah:screencast',
+                'tadirah:searching',
+                'tadirah:segmenting',
+                'tadirah:semantification',
+                'tadirah:sentimentAnalysis',
+                'tadirah:sequenceAlignment',
+                'tadirah:sharing',
+                'tadirah:socialNetworking',
+                'tadirah:spatialAnalysis',
+                'tadirah:speechRecognizing',
+                'tadirah:storing',
+                'tadirah:structuralAnalysis',
+                'tadirah:stylisticAnalysis',
+                'tadirah:stylometry',
+                'tadirah:subtracting',
+                'tadirah:supplementing',
+                'tadirah:tagging',
+                'tadirah:teaching',
+                'tadirah:textCategorization',
+                'tadirah:textMessaging',
+                'tadirah:theorizing',
+                'tadirah:topicModeling',
+                'tadirah:transcoding',
+                'tadirah:transcribing',
+                'tadirah:transformation',
+                'tadirah:translating',
+                'tadirah:treeTagging',
+                'tadirah:tweet',
+                'tadirah:uniformResourceIdentifier',
+                'tadirah:upload',
+                'tadirah:userGeneratedContent',
+                'tadirah:versioning',
+                'tadirah:videoCapture',
+                'tadirah:videoConference',
+                'tadirah:videoEditing',
+                'tadirah:visualAnalysis',
+                'tadirah:visualAnnotation',
+                'tadirah:webCrawling',
+                'tadirah:webDevelopment',
+                'tadirah:webScraping',
+                'tadirah:wireframing',
+                'tadirah:writing',
+              ])
+              .describe(
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          ),
+        educational_level: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+          ),
+        homepage: zod
+          .url()
+          .nullish()
+          .describe('Public landing page of the entity, if one exists.'),
+        id: zod
+          .string()
+          .regex(putApiV1EntitiesResponseOneOnezeroIdRegExp)
+          .describe(
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        in_languages: zod
+          .array(
+            zod
+              .enum(['en', 'he', 'ar'])
+              .describe(
+                'Languages supported for free-text fields (BCP-47 tags).',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+          ),
+        learning_outcomes: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+          ),
+        license: zod
+          .enum([
+            'CC_BY_4_0',
+            'CC_BY_SA_4_0',
+            'CC0_1_0',
+            'MIT',
+            'APACHE_2_0',
+            'GPL_3_0',
+          ])
+          .optional()
+          .describe(
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+          ),
+        material_url: zod
+          .url()
+          .nullish()
+          .describe(
+            'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+          ),
+        media_type: zod
+          .string()
+          .nullish()
+          .describe(
+            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          ),
+        part_of_training_material: zod
+          .string()
+          .nullish()
+          .describe(
+            'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+          ),
+        prerequisites: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+          ),
+        publisher: zod
+          .string()
+          .nullish()
+          .describe(
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+          ),
+        related_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+          ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          ),
+        same_as: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
+        target_audiences: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+          ),
+        training_material_type: zod
+          .enum([
+            'TUTORIAL',
+            'LESSON',
+            'COURSE_MATERIAL',
+            'WORKSHOP_MATERIAL',
+            'SELF_PACED_EXERCISE',
+            'OTHER_DIDACTIC_RESOURCE',
+          ])
+          .optional()
+          .describe(
+            "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+          ),
+        type: zod
+          .enum(['idhi:TrainingMaterial'])
+          .describe(
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+      })
+      .describe(
+        'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
+      ),
   ])
   .and(
     zod.strictObject({
@@ -7110,41 +7989,36 @@ export const getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
 export const getApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const getApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const getApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const getApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-
+export const getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
+)
 export const getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -7460,29 +8334,16 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
+        marketplace_sync: zod
+          .boolean()
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -7658,28 +8519,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -7930,7 +8772,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         end_date: zod.iso
           .date()
@@ -7973,28 +8815,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -8049,6 +8872,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe('Tools produced by this project (by id).'),
+        outputs_training_materials: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+          ),
         project_participations: zod
           .array(
             zod
@@ -8414,7 +9243,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -8443,31 +9272,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -8727,7 +9537,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -8746,28 +9556,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -8899,28 +9690,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -9078,7 +9850,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9210,28 +9982,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9322,37 +10075,18 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9396,6 +10130,444 @@ export const GetApiV1EntitiesEntityIdResponse = zod
       .describe(
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
+    zod
+      .strictObject({
+        additional_urls: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+          ),
+        contact_email: zod
+          .string()
+          .nullish()
+          .describe(
+            "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+          ),
+        creators: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+          ),
+        date_issued: zod.iso
+          .date()
+          .nullish()
+          .describe(
+            'Formal publication date (or year-01-01 if only the year is known).',
+          ),
+        description: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+          ),
+        digital_humanities_activities: zod
+          .array(
+            zod
+              .enum([
+                'tadirah:abstractThinking',
+                'tadirah:academicPublishing',
+                'tadirah:adding',
+                'tadirah:aggregating',
+                'tadirah:analyzing',
+                'tadirah:annotating',
+                'tadirah:archiving',
+                'tadirah:associate',
+                'tadirah:associating',
+                'tadirah:audioAnnotation',
+                'tadirah:audioConferencing',
+                'tadirah:audioRecording',
+                'tadirah:authorshipAttribution',
+                'tadirah:bitStreamPreservation',
+                'tadirah:blogging',
+                'tadirah:browsing',
+                'tadirah:capturing',
+                'tadirah:cataloging',
+                'tadirah:clusterAnalysis',
+                'tadirah:coOccurrence',
+                'tadirah:collaborating',
+                'tadirah:collating',
+                'tadirah:collecting',
+                'tadirah:collocationAnalysis',
+                'tadirah:commenting',
+                'tadirah:communicating',
+                'tadirah:comparing',
+                'tadirah:compiling',
+                'tadirah:conceptualizing',
+                'tadirah:concordance',
+                'tadirah:contentAnalysis',
+                'tadirah:contextualizing',
+                'tadirah:contrastiveAnalysis',
+                'tadirah:converting',
+                'tadirah:correcting',
+                'tadirah:creating',
+                'tadirah:cropping',
+                'tadirah:crowdsourcing',
+                'tadirah:dataCleansing',
+                'tadirah:dataIngestion',
+                'tadirah:dataMapping',
+                'tadirah:dataMining',
+                'tadirah:dataRecognition',
+                'tadirah:dataVisualization',
+                'tadirah:debugging',
+                'tadirah:defining',
+                'tadirah:description',
+                'tadirah:designing',
+                'tadirah:diagramming',
+                'tadirah:digitalObjectIdentifier',
+                'tadirah:digitalPublishing',
+                'tadirah:discourseAnalysis',
+                'tadirah:discovering',
+                'tadirah:discussing',
+                'tadirah:disseminating',
+                'tadirah:distanceMeasures',
+                'tadirah:drawing',
+                'tadirah:eMailing',
+                'tadirah:editing',
+                'tadirah:emulation',
+                'tadirah:encoding',
+                'tadirah:enriching',
+                'tadirah:explanation',
+                'tadirah:exploration',
+                'tadirah:expressingOpinion',
+                'tadirah:extracting',
+                'tadirah:finding',
+                'tadirah:formatting',
+                'tadirah:gamification',
+                'tadirah:gathering',
+                'tadirah:genreRecognition',
+                'tadirah:georeferencing',
+                'tadirah:graphicsProgramming',
+                'tadirah:highlighting',
+                'tadirah:identifier',
+                'tadirah:identifying',
+                'tadirah:imaging',
+                'tadirah:improving',
+                'tadirah:informationMining',
+                'tadirah:informationRetrieval',
+                'tadirah:instantMessaging',
+                'tadirah:integrating',
+                'tadirah:interpreting',
+                'tadirah:knowledgeDiscovery',
+                'tadirah:knowledgeExtraction',
+                'tadirah:lemmatizing',
+                'tadirah:lettering',
+                'tadirah:linkedOpenData',
+                'tadirah:machineLearning',
+                'tadirah:managing',
+                'tadirah:mapping',
+                'tadirah:merging',
+                'tadirah:microblogging',
+                'tadirah:migration',
+                'tadirah:mindMapping',
+                'tadirah:modeling',
+                'tadirah:modifying',
+                'tadirah:namedEntityRecognition',
+                'tadirah:namingConvention',
+                'tadirah:naturalLanguageProcessing',
+                'tadirah:networkAnalysis',
+                'tadirah:opticalCharacterRecognition',
+                'tadirah:opticalMusicRecognition',
+                'tadirah:organizing',
+                'tadirah:parsing',
+                'tadirah:patternRecognition',
+                'tadirah:persistentIdentifier',
+                'tadirah:photographing',
+                'tadirah:plotting',
+                'tadirah:posTagging',
+                'tadirah:posting',
+                'tadirah:preprocessing',
+                'tadirah:preservationMetadata',
+                'tadirah:preserving',
+                'tadirah:principalComponentAnalysis',
+                'tadirah:programming',
+                'tadirah:pseudoCoding',
+                'tadirah:publishing',
+                'tadirah:querying',
+                'tadirah:reasoning',
+                'tadirah:recording',
+                'tadirah:relationalAnalysis',
+                'tadirah:removing',
+                'tadirah:replication',
+                'tadirah:rhetoricalAnalysis',
+                'tadirah:scanning',
+                'tadirah:screencast',
+                'tadirah:searching',
+                'tadirah:segmenting',
+                'tadirah:semantification',
+                'tadirah:sentimentAnalysis',
+                'tadirah:sequenceAlignment',
+                'tadirah:sharing',
+                'tadirah:socialNetworking',
+                'tadirah:spatialAnalysis',
+                'tadirah:speechRecognizing',
+                'tadirah:storing',
+                'tadirah:structuralAnalysis',
+                'tadirah:stylisticAnalysis',
+                'tadirah:stylometry',
+                'tadirah:subtracting',
+                'tadirah:supplementing',
+                'tadirah:tagging',
+                'tadirah:teaching',
+                'tadirah:textCategorization',
+                'tadirah:textMessaging',
+                'tadirah:theorizing',
+                'tadirah:topicModeling',
+                'tadirah:transcoding',
+                'tadirah:transcribing',
+                'tadirah:transformation',
+                'tadirah:translating',
+                'tadirah:treeTagging',
+                'tadirah:tweet',
+                'tadirah:uniformResourceIdentifier',
+                'tadirah:upload',
+                'tadirah:userGeneratedContent',
+                'tadirah:versioning',
+                'tadirah:videoCapture',
+                'tadirah:videoConference',
+                'tadirah:videoEditing',
+                'tadirah:visualAnalysis',
+                'tadirah:visualAnnotation',
+                'tadirah:webCrawling',
+                'tadirah:webDevelopment',
+                'tadirah:webScraping',
+                'tadirah:wireframing',
+                'tadirah:writing',
+              ])
+              .describe(
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          ),
+        educational_level: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+          ),
+        homepage: zod
+          .url()
+          .nullish()
+          .describe('Public landing page of the entity, if one exists.'),
+        id: zod
+          .string()
+          .regex(getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
+          .describe(
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        in_languages: zod
+          .array(
+            zod
+              .enum(['en', 'he', 'ar'])
+              .describe(
+                'Languages supported for free-text fields (BCP-47 tags).',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+          ),
+        learning_outcomes: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+          ),
+        license: zod
+          .enum([
+            'CC_BY_4_0',
+            'CC_BY_SA_4_0',
+            'CC0_1_0',
+            'MIT',
+            'APACHE_2_0',
+            'GPL_3_0',
+          ])
+          .optional()
+          .describe(
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+          ),
+        material_url: zod
+          .url()
+          .nullish()
+          .describe(
+            'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+          ),
+        media_type: zod
+          .string()
+          .nullish()
+          .describe(
+            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          ),
+        part_of_training_material: zod
+          .string()
+          .nullish()
+          .describe(
+            'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+          ),
+        prerequisites: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+          ),
+        publisher: zod
+          .string()
+          .nullish()
+          .describe(
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+          ),
+        related_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+          ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          ),
+        same_as: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
+        target_audiences: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+          ),
+        training_material_type: zod
+          .enum([
+            'TUTORIAL',
+            'LESSON',
+            'COURSE_MATERIAL',
+            'WORKSHOP_MATERIAL',
+            'SELF_PACED_EXERCISE',
+            'OTHER_DIDACTIC_RESOURCE',
+          ])
+          .optional()
+          .describe(
+            "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+          ),
+        type: zod
+          .enum(['idhi:TrainingMaterial'])
+          .describe(
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+      })
+      .describe(
+        'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
+      ),
   ])
   .and(
     zod.strictObject({
@@ -9431,39 +10603,35 @@ export const postApiV1EntitiesEntityIdBodyOneOrcidRegExp = new RegExp(
 export const postApiV1EntitiesEntityIdBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const postApiV1EntitiesEntityIdBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodySevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdBodyNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesEntityIdBodyOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
 )
 
 export const PostApiV1EntitiesEntityIdBody = zod.union([
@@ -9775,29 +10943,16 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
-      name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
+      marketplace_sync: zod
+        .boolean()
         .nullish()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+        ),
+      name: zod
+        .string()
+        .describe(
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_type: zod
         .enum([
@@ -9973,28 +11128,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -10245,7 +11381,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       end_date: zod.iso
         .date()
@@ -10288,28 +11424,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       organization_roles: zod
         .array(
@@ -10364,6 +11481,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe('Tools produced by this project (by id).'),
+      outputs_training_materials: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+        ),
       project_participations: zod
         .array(
           zod
@@ -10729,7 +11852,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -10758,31 +11881,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       programming_language: zod
         .string()
@@ -11042,7 +12146,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         )
         .nullish()
         .describe(
-          'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
       documentation_url: zod
         .url()
@@ -11061,28 +12165,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       provider: zod
         .string()
@@ -11214,28 +12299,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       part_of: zod
         .string()
@@ -11393,7 +12459,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization publishing the dataset or publication (by IDHI URN).',
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
         ),
       same_as: zod
         .array(zod.url())
@@ -11525,28 +12591,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       same_as: zod
         .array(zod.url())
@@ -11637,37 +12684,18 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ])
         .optional()
         .describe(
-          'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
       name: zod
-        .array(
-          zod
-            .object({
-              language: zod
-                .enum(['en', 'he', 'ar'])
-                .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
-                ),
-              value: zod
-                .string()
-                .describe(
-                  "A localized text, in the language given by 'language'.",
-                ),
-            })
-            .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-            ),
-        )
-        .min(1)
-        .nullish()
+        .string()
         .describe(
-          'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
         ),
       publisher: zod
         .string()
         .nullish()
         .describe(
-          'The organization publishing the dataset or publication (by IDHI URN).',
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
         ),
       same_as: zod
         .array(zod.url())
@@ -11711,6 +12739,444 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
     .describe(
       'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      creators: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+        ),
+      date_issued: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'Formal publication date (or year-01-01 if only the year is known).',
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      educational_level: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .string()
+        .regex(postApiV1EntitiesEntityIdBodyOnezeroIdRegExp)
+        .describe(
+          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      in_languages: zod
+        .array(
+          zod
+            .enum(['en', 'he', 'ar'])
+            .describe(
+              'Languages supported for free-text fields (BCP-47 tags).',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+        ),
+      learning_outcomes: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+        ),
+      license: zod
+        .enum([
+          'CC_BY_4_0',
+          'CC_BY_SA_4_0',
+          'CC0_1_0',
+          'MIT',
+          'APACHE_2_0',
+          'GPL_3_0',
+        ])
+        .optional()
+        .describe(
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+        ),
+      material_url: zod
+        .url()
+        .nullish()
+        .describe(
+          'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+        ),
+      media_type: zod
+        .string()
+        .nullish()
+        .describe(
+          'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+        ),
+      name: zod
+        .string()
+        .describe(
+          'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+        ),
+      part_of_training_material: zod
+        .string()
+        .nullish()
+        .describe(
+          'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+        ),
+      prerequisites: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+        ),
+      publisher: zod
+        .string()
+        .nullish()
+        .describe(
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+        ),
+      related_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+        ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      target_audiences: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .enum(['en', 'he', 'ar'])
+                .describe(
+                  'Languages supported for free-text fields (BCP-47 tags).',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+        ),
+      training_material_type: zod
+        .enum([
+          'TUTORIAL',
+          'LESSON',
+          'COURSE_MATERIAL',
+          'WORKSHOP_MATERIAL',
+          'SELF_PACED_EXERCISE',
+          'OTHER_DIDACTIC_RESOURCE',
+        ])
+        .optional()
+        .describe(
+          "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+        ),
+      type: zod
+        .enum(['idhi:TrainingMaterial'])
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
+    ),
 ])
 
 export const postApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
@@ -11722,41 +13188,36 @@ export const postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
 export const postApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
 export const postApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-
 export const postApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-
+export const postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
+)
 export const postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -12072,29 +13533,16 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
-        name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
+        marketplace_sync: zod
+          .boolean()
           .nullish()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_type: zod
           .enum([
@@ -12270,28 +13718,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -12542,7 +13971,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         end_date: zod.iso
           .date()
@@ -12585,28 +14014,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         organization_roles: zod
           .array(
@@ -12661,6 +14071,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe('Tools produced by this project (by id).'),
+        outputs_training_materials: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+          ),
         project_participations: zod
           .array(
             zod
@@ -13026,7 +14442,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -13055,31 +14471,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         programming_language: zod
           .string()
@@ -13339,7 +14736,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           )
           .nullish()
           .describe(
-            'Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
         documentation_url: zod
           .url()
@@ -13358,28 +14755,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         provider: zod
           .string()
@@ -13511,28 +14889,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         part_of: zod
           .string()
@@ -13690,7 +15049,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -13822,28 +15181,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         same_as: zod
           .array(zod.url())
@@ -13934,37 +15274,18 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ])
           .optional()
           .describe(
-            'Common licenses for tools and datasets. Extend as needed with canonical meanings.',
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
         name: zod
-          .array(
-            zod
-              .strictObject({
-                language: zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
-                  ),
-                value: zod
-                  .string()
-                  .describe(
-                    "A localized text, in the language given by 'language'.",
-                  ),
-              })
-              .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
-              ),
-          )
-          .min(1)
-          .nullish()
+          .string()
           .describe(
-            'Multilingual name\/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
           ),
         publisher: zod
           .string()
           .nullish()
           .describe(
-            'The organization publishing the dataset or publication (by IDHI URN).',
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
           ),
         same_as: zod
           .array(zod.url())
@@ -14007,6 +15328,444 @@ export const PostApiV1EntitiesEntityIdResponse = zod
       })
       .describe(
         'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+      ),
+    zod
+      .strictObject({
+        additional_urls: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+          ),
+        contact_email: zod
+          .string()
+          .nullish()
+          .describe(
+            "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+          ),
+        creators: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+          ),
+        date_issued: zod.iso
+          .date()
+          .nullish()
+          .describe(
+            'Formal publication date (or year-01-01 if only the year is known).',
+          ),
+        description: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+          ),
+        digital_humanities_activities: zod
+          .array(
+            zod
+              .enum([
+                'tadirah:abstractThinking',
+                'tadirah:academicPublishing',
+                'tadirah:adding',
+                'tadirah:aggregating',
+                'tadirah:analyzing',
+                'tadirah:annotating',
+                'tadirah:archiving',
+                'tadirah:associate',
+                'tadirah:associating',
+                'tadirah:audioAnnotation',
+                'tadirah:audioConferencing',
+                'tadirah:audioRecording',
+                'tadirah:authorshipAttribution',
+                'tadirah:bitStreamPreservation',
+                'tadirah:blogging',
+                'tadirah:browsing',
+                'tadirah:capturing',
+                'tadirah:cataloging',
+                'tadirah:clusterAnalysis',
+                'tadirah:coOccurrence',
+                'tadirah:collaborating',
+                'tadirah:collating',
+                'tadirah:collecting',
+                'tadirah:collocationAnalysis',
+                'tadirah:commenting',
+                'tadirah:communicating',
+                'tadirah:comparing',
+                'tadirah:compiling',
+                'tadirah:conceptualizing',
+                'tadirah:concordance',
+                'tadirah:contentAnalysis',
+                'tadirah:contextualizing',
+                'tadirah:contrastiveAnalysis',
+                'tadirah:converting',
+                'tadirah:correcting',
+                'tadirah:creating',
+                'tadirah:cropping',
+                'tadirah:crowdsourcing',
+                'tadirah:dataCleansing',
+                'tadirah:dataIngestion',
+                'tadirah:dataMapping',
+                'tadirah:dataMining',
+                'tadirah:dataRecognition',
+                'tadirah:dataVisualization',
+                'tadirah:debugging',
+                'tadirah:defining',
+                'tadirah:description',
+                'tadirah:designing',
+                'tadirah:diagramming',
+                'tadirah:digitalObjectIdentifier',
+                'tadirah:digitalPublishing',
+                'tadirah:discourseAnalysis',
+                'tadirah:discovering',
+                'tadirah:discussing',
+                'tadirah:disseminating',
+                'tadirah:distanceMeasures',
+                'tadirah:drawing',
+                'tadirah:eMailing',
+                'tadirah:editing',
+                'tadirah:emulation',
+                'tadirah:encoding',
+                'tadirah:enriching',
+                'tadirah:explanation',
+                'tadirah:exploration',
+                'tadirah:expressingOpinion',
+                'tadirah:extracting',
+                'tadirah:finding',
+                'tadirah:formatting',
+                'tadirah:gamification',
+                'tadirah:gathering',
+                'tadirah:genreRecognition',
+                'tadirah:georeferencing',
+                'tadirah:graphicsProgramming',
+                'tadirah:highlighting',
+                'tadirah:identifier',
+                'tadirah:identifying',
+                'tadirah:imaging',
+                'tadirah:improving',
+                'tadirah:informationMining',
+                'tadirah:informationRetrieval',
+                'tadirah:instantMessaging',
+                'tadirah:integrating',
+                'tadirah:interpreting',
+                'tadirah:knowledgeDiscovery',
+                'tadirah:knowledgeExtraction',
+                'tadirah:lemmatizing',
+                'tadirah:lettering',
+                'tadirah:linkedOpenData',
+                'tadirah:machineLearning',
+                'tadirah:managing',
+                'tadirah:mapping',
+                'tadirah:merging',
+                'tadirah:microblogging',
+                'tadirah:migration',
+                'tadirah:mindMapping',
+                'tadirah:modeling',
+                'tadirah:modifying',
+                'tadirah:namedEntityRecognition',
+                'tadirah:namingConvention',
+                'tadirah:naturalLanguageProcessing',
+                'tadirah:networkAnalysis',
+                'tadirah:opticalCharacterRecognition',
+                'tadirah:opticalMusicRecognition',
+                'tadirah:organizing',
+                'tadirah:parsing',
+                'tadirah:patternRecognition',
+                'tadirah:persistentIdentifier',
+                'tadirah:photographing',
+                'tadirah:plotting',
+                'tadirah:posTagging',
+                'tadirah:posting',
+                'tadirah:preprocessing',
+                'tadirah:preservationMetadata',
+                'tadirah:preserving',
+                'tadirah:principalComponentAnalysis',
+                'tadirah:programming',
+                'tadirah:pseudoCoding',
+                'tadirah:publishing',
+                'tadirah:querying',
+                'tadirah:reasoning',
+                'tadirah:recording',
+                'tadirah:relationalAnalysis',
+                'tadirah:removing',
+                'tadirah:replication',
+                'tadirah:rhetoricalAnalysis',
+                'tadirah:scanning',
+                'tadirah:screencast',
+                'tadirah:searching',
+                'tadirah:segmenting',
+                'tadirah:semantification',
+                'tadirah:sentimentAnalysis',
+                'tadirah:sequenceAlignment',
+                'tadirah:sharing',
+                'tadirah:socialNetworking',
+                'tadirah:spatialAnalysis',
+                'tadirah:speechRecognizing',
+                'tadirah:storing',
+                'tadirah:structuralAnalysis',
+                'tadirah:stylisticAnalysis',
+                'tadirah:stylometry',
+                'tadirah:subtracting',
+                'tadirah:supplementing',
+                'tadirah:tagging',
+                'tadirah:teaching',
+                'tadirah:textCategorization',
+                'tadirah:textMessaging',
+                'tadirah:theorizing',
+                'tadirah:topicModeling',
+                'tadirah:transcoding',
+                'tadirah:transcribing',
+                'tadirah:transformation',
+                'tadirah:translating',
+                'tadirah:treeTagging',
+                'tadirah:tweet',
+                'tadirah:uniformResourceIdentifier',
+                'tadirah:upload',
+                'tadirah:userGeneratedContent',
+                'tadirah:versioning',
+                'tadirah:videoCapture',
+                'tadirah:videoConference',
+                'tadirah:videoEditing',
+                'tadirah:visualAnalysis',
+                'tadirah:visualAnnotation',
+                'tadirah:webCrawling',
+                'tadirah:webDevelopment',
+                'tadirah:webScraping',
+                'tadirah:wireframing',
+                'tadirah:writing',
+              ])
+              .describe(
+                'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+          ),
+        educational_level: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+          ),
+        homepage: zod
+          .url()
+          .nullish()
+          .describe('Public landing page of the entity, if one exists.'),
+        id: zod
+          .string()
+          .regex(postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
+          .describe(
+            "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        in_languages: zod
+          .array(
+            zod
+              .enum(['en', 'he', 'ar'])
+              .describe(
+                'Languages supported for free-text fields (BCP-47 tags).',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+          ),
+        learning_outcomes: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+          ),
+        license: zod
+          .enum([
+            'CC_BY_4_0',
+            'CC_BY_SA_4_0',
+            'CC0_1_0',
+            'MIT',
+            'APACHE_2_0',
+            'GPL_3_0',
+          ])
+          .optional()
+          .describe(
+            'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+          ),
+        material_url: zod
+          .url()
+          .nullish()
+          .describe(
+            'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+          ),
+        media_type: zod
+          .string()
+          .nullish()
+          .describe(
+            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+          ),
+        name: zod
+          .string()
+          .describe(
+            'The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses.',
+          ),
+        part_of_training_material: zod
+          .string()
+          .nullish()
+          .describe(
+            'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+          ),
+        prerequisites: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+          ),
+        publisher: zod
+          .string()
+          .nullish()
+          .describe(
+            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+          ),
+        related_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+          ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          ),
+        same_as: zod
+          .array(zod.url())
+          .nullish()
+          .describe(
+            "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+          ),
+        tags: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+          ),
+        target_audiences: zod
+          .array(
+            zod
+              .strictObject({
+                language: zod
+                  .enum(['en', 'he', 'ar'])
+                  .describe(
+                    'Languages supported for free-text fields (BCP-47 tags).',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+          ),
+        training_material_type: zod
+          .enum([
+            'TUTORIAL',
+            'LESSON',
+            'COURSE_MATERIAL',
+            'WORKSHOP_MATERIAL',
+            'SELF_PACED_EXERCISE',
+            'OTHER_DIDACTIC_RESOURCE',
+          ])
+          .optional()
+          .describe(
+            "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+          ),
+        type: zod
+          .enum(['idhi:TrainingMaterial'])
+          .describe(
+            "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+      })
+      .describe(
+        'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
       ),
   ])
   .and(

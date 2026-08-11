@@ -9,7 +9,7 @@ export function EventFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <EnumSelectField
         name="event_type"
         label={t('entity.form.fields.event_type')}
@@ -38,6 +38,7 @@ export function EventFields() {
       <StringArrayField
         name="additional_urls"
         label={t('entity.form.fields.additional_urls')}
+        validationKind="url"
       />
     </>
   )

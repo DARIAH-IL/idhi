@@ -1,24 +1,32 @@
 import { useTranslation } from 'react-i18next'
-import { ServiceServiceType } from '@/api/models'
+import {
+  ServiceDigitalHumanitiesActivitiesItem,
+  ServiceServiceType,
+} from '@/api/models'
 import { TextField } from './TextField'
 import { EnumSelectField } from './EnumSelectField'
-import { LangStringField } from './LangStringField'
 import { StringArrayField } from './StringArrayField'
+import { EntityRefField } from './EntityRefField'
 
 export function ServiceFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <EnumSelectField
         name="service_type"
         label={t('entity.form.fields.service_type')}
         options={ServiceServiceType}
       />
-      <TextField name="provider" label={t('entity.form.fields.provider')} />
+      <EntityRefField
+        name="provider"
+        label={t('entity.form.fields.provider')}
+        entityTypes={['idhi:Organization']}
+      />
       <TextField
         name="documentation_url"
         label={t('entity.form.fields.documentation_url')}
+        type="url"
       />
       <TextField
         name="contact_email"
@@ -29,10 +37,12 @@ export function ServiceFields() {
         name="digital_humanities_activities"
         label={t('entity.form.fields.digital_humanities_activities')}
         placeholder="tadirah:…"
+        options={ServiceDigitalHumanitiesActivitiesItem}
       />
       <StringArrayField
         name="additional_urls"
         label={t('entity.form.fields.additional_urls')}
+        validationKind="url"
       />
     </>
   )

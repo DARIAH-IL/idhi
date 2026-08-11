@@ -1,6 +1,7 @@
 import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import type { Entity, AuditedEntity } from '@/api/models'
+import { getEntityIdSegment } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import { formContext } from './form-type'
 import type { EntityFormValues } from './form-type'
@@ -17,9 +18,12 @@ import { ServiceFields } from './ServiceFields'
 import { PublicationFields } from './PublicationFields'
 import { EventFields } from './EventFields'
 import { DatasetFields } from './DatasetFields'
+import { TrainingMaterialFields } from './TrainingMaterialFields'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { FieldError } from './FieldError'
+import { firstError, validateValue } from './validation'
 
 interface Props {
   entityType: EntityType
@@ -46,13 +50,7 @@ export function EntityForm({
   const form = useForm({
     defaultValues: initialValues,
     onSubmit: ({ value }) => {
-      const cleaned = Object.fromEntries(
-        Object.entries(value).filter(([, v]) => {
-          if (v === '' || v === null || v === undefined) return false
-          if (Array.isArray(v) && v.length === 0) return false
-          return true
-        }),
-      )
+      const cleaned = prepareEntity(value)
       onSubmit(cleaned as unknown as Entity)
     },
   })
@@ -71,7 +69,23 @@ export function EntityForm({
             {t('entity.form.sections.basic')}
           </p>
 
-          <form.Field name="id">
+          <form.Field
+            name="id"
+            validators={{
+              onBlur: ({ value }) =>
+                validateValue(value, {
+                  required: true,
+                  kind: 'entityId',
+                  entityTypes: [entityType],
+                }),
+              onSubmit: ({ value }) =>
+                validateValue(value, {
+                  required: true,
+                  kind: 'entityId',
+                  entityTypes: [entityType],
+                }),
+            }}
+          >
             {(field) => (
               <FieldRow label={t('entity.form.fields.id')}>
                 <Input
@@ -81,11 +95,14 @@ export function EntityForm({
                       : ''
                   }
                   onChange={(event) => field.handleChange(event.target.value)}
-                  placeholder={`idhi:${entityType.slice('idhi:'.length).toLowerCase()}:…`}
+                  placeholder={`idhi:${getEntityIdSegment(entityType)}:…`}
                   readOnly={isEdit}
                   required
+                  onBlur={field.handleBlur}
+                  aria-invalid={Boolean(firstError(field.state.meta.errors))}
                   className="font-mono text-xs"
                 />
+                <FieldError error={firstError(field.state.meta.errors)} />
               </FieldRow>
             )}
           </form.Field>
@@ -106,6 +123,7 @@ export function EntityForm({
             name="same_as"
             label={t('entity.form.fields.same_as')}
             placeholder="https://…"
+            validationKind="url"
           />
         </div>
 
@@ -124,6 +142,7 @@ export function EntityForm({
         {entityType === 'idhi:Publication' && <PublicationFields />}
         {entityType === 'idhi:Event' && <EventFields />}
         {entityType === 'idhi:Dataset' && <DatasetFields />}
+        {entityType === 'idhi:TrainingMaterial' && <TrainingMaterialFields />}
 
         <Separator />
 
@@ -138,4 +157,61 @@ export function EntityForm({
       </form>
     </formContext.Provider>
   )
+}
+
+function cleanValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value
+      .map(cleanValue)
+      .filter(
+        (item) =>
+          item !== undefined && !(Array.isArray(item) && item.length === 0),
+      )
+  }
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value)
+      .map(([key, item]) => [key, cleanValue(item)] as const)
+      .filter(
+        ([, item]) =>
+          item !== undefined && !(Array.isArray(item) && item.length === 0),
+      )
+    return Object.fromEntries(entries)
+  }
+  return value === '' || value === null || value === undefined
+    ? undefined
+    : value
+}
+
+function prepareEntity(value: Record<string, unknown>) {
+  const cleaned = cleanValue(value) as Record<string, unknown>
+  delete cleaned.audit
+  const id = String(cleaned.id)
+  const addSelf = (key: string, selfKey: string) => {
+    const items = cleaned[key]
+    if (Array.isArray(items)) {
+      cleaned[key] = items.map((item) => ({
+        ...(item as Record<string, unknown>),
+        [selfKey]: id,
+      }))
+    }
+  }
+
+  switch (cleaned.type) {
+    case 'idhi:Person':
+      addSelf('affiliations', 'member')
+      addSelf('authorships', 'author')
+      addSelf('project_participations', 'participant')
+      break
+    case 'idhi:Facility':
+      addSelf('facility_affiliations', 'facility')
+      break
+    case 'idhi:Project':
+      addSelf('project_participations', 'project')
+      addSelf('organization_roles', 'project')
+      break
+    case 'idhi:Publication':
+      addSelf('authorships', 'publication')
+      break
+  }
+  return cleaned
 }

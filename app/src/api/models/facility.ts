@@ -8,7 +8,6 @@ import type { FacilityAddressItem } from './facilityAddressItem.ts'
 import type { FacilityDescriptionItem } from './facilityDescriptionItem.ts'
 import type { FacilityFacilityAffiliationsItem } from './facilityFacilityAffiliationsItem.ts'
 import type { FacilityLocationItem } from './facilityLocationItem.ts'
-import type { FacilityNameItem } from './facilityNameItem.ts'
 import type { FacilityType } from './facilityType.ts'
 
 /**
@@ -57,12 +56,8 @@ export interface Facility {
    * @nullable
    */
   location?: FacilityLocationItem[] | null
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: FacilityNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

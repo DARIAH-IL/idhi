@@ -6,7 +6,6 @@
  */
 import type { DatasetDescriptionItem } from './datasetDescriptionItem.ts'
 import type { DatasetLicense } from './datasetLicense.ts'
-import type { DatasetNameItem } from './datasetNameItem.ts'
 import type { DatasetThemesItem } from './datasetThemesItem.ts'
 import type { DatasetType } from './datasetType.ts'
 
@@ -46,16 +45,12 @@ export interface Dataset {
    * @pattern ^idhi:dataset:[0-9a-z]{4,12}$
    */
   id: string
-  /** Common licenses for tools and datasets. Extend as needed with canonical meanings. */
+  /** Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings. */
   license?: DatasetLicense
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: DatasetNameItem[] | null
-  /**
-   * The organization publishing the dataset or publication (by IDHI URN).
+   * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
    * @nullable
    */
   publisher?: string | null

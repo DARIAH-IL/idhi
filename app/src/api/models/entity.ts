@@ -13,6 +13,7 @@ import type { Project } from './project.ts'
 import type { Publication } from './publication.ts'
 import type { Service } from './service.ts'
 import type { Tool } from './tool.ts'
+import type { TrainingMaterial } from './trainingMaterial.ts'
 
 export type Entity =
   | Person
@@ -24,3 +25,4 @@ export type Entity =
   | Publication
   | Event
   | Dataset
+  | TrainingMaterial

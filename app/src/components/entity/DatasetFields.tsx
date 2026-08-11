@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next'
-import { ToolLicense } from '@/api/models'
+import { DatasetLicense } from '@/api/models'
 import { TextField } from './TextField'
 import { EnumSelectField } from './EnumSelectField'
 import { LangStringField } from './LangStringField'
-import { StringArrayField } from './StringArrayField'
+import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function DatasetFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <TextField
         name="date_issued"
         label={t('entity.form.fields.date_issued')}
@@ -18,17 +18,23 @@ export function DatasetFields() {
       <TextField
         name="distribution_url"
         label={t('entity.form.fields.distribution_url')}
+        type="url"
       />
-      <TextField name="publisher" label={t('entity.form.fields.publisher')} />
+      <EntityRefField
+        name="publisher"
+        label={t('entity.form.fields.publisher')}
+        entityTypes={['idhi:Organization']}
+      />
       <EnumSelectField
         name="license"
         label={t('entity.form.fields.license')}
-        options={ToolLicense}
+        options={DatasetLicense}
       />
       <LangStringField name="themes" label={t('entity.form.fields.themes')} />
-      <StringArrayField
+      <EntityRefArrayField
         name="datasets"
         label={t('entity.form.fields.datasets')}
+        entityTypes={['idhi:Dataset']}
       />
     </>
   )

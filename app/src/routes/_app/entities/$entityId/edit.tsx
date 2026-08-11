@@ -8,6 +8,8 @@ import {
   usePostApiV1EntitiesEntityId,
 } from '@/api/hooks/entities/entities'
 import { EntityForm } from '@/components/entity/EntityForm'
+import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { getEntityDisplayName } from '@/lib/entity'
 
 export const Route = createFileRoute('/_app/entities/$entityId/edit')({
   loader: ({ context, params }) =>
@@ -47,7 +49,17 @@ function EditEntityPage() {
 
   return (
     <div className="flex flex-col gap-4 max-w-2xl">
-      <h1 className="text-lg font-semibold">{t('entity.form.edit_title')}</h1>
+      <div className="flex items-center gap-2.5">
+        <EntityTypeIcon type={entity.type} />
+        <div>
+          <h1 className="text-lg font-semibold">
+            {t('entity.form.edit_title')}
+          </h1>
+          <p className="text-xs text-muted-foreground">
+            {getEntityDisplayName(entity)}
+          </p>
+        </div>
+      </div>
 
       {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 

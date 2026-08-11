@@ -7,7 +7,6 @@
 import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
 import type { ProjectFundingItem } from './projectFundingItem.ts'
-import type { ProjectNameItem } from './projectNameItem.ts'
 import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem.ts'
 import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem.ts'
 import type { ProjectResearchDisciplinesItem } from './projectResearchDisciplinesItem.ts'
@@ -35,7 +34,7 @@ export interface Project {
    */
   description?: ProjectDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?:
@@ -62,12 +61,8 @@ export interface Project {
    * @pattern ^idhi:project:[0-9a-z]{4,12}$
    */
   id: string
-  /**
-   * Multilingual name/title. Provide at least one language; English, Hebrew and Arabic variants are each a separate LangString. Preferably a sortable name for organizations; for projects, tools and services, use the name the team itself uses.
-   * @minItems 1
-   * @nullable
-   */
-  name?: ProjectNameItem[] | null
+  /** The single name or title used to identify the entity. Use one plain-text value only; do not use LangString or provide translated variants. Prefer a sortable name for organizations; for projects, tools and services, use the name the team itself uses. */
+  name: string
   /**
    * Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).
    * @nullable
@@ -88,6 +83,11 @@ export interface Project {
    * @nullable
    */
   outputs_tools?: string[] | null
+  /**
+   * Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.
+   * @nullable
+   */
+  outputs_training_materials?: string[] | null
   /**
    * The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.
    * @nullable

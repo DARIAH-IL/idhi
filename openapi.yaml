@@ -662,6 +662,7 @@ components:
         - $ref: "#/components/schemas/Publication"
         - $ref: "#/components/schemas/Event"
         - $ref: "#/components/schemas/Dataset"
+        - $ref: "#/components/schemas/TrainingMaterial"
       discriminator:
         propertyName: type
         mapping:
@@ -674,6 +675,7 @@ components:
           "idhi:Publication": "#/components/schemas/Publication"
           "idhi:Event": "#/components/schemas/Event"
           "idhi:Dataset": "#/components/schemas/Dataset"
+          "idhi:TrainingMaterial": "#/components/schemas/TrainingMaterial"
 
     Person:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Person"
@@ -701,6 +703,9 @@ components:
 
     Dataset:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Dataset"
+
+    TrainingMaterial:
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/TrainingMaterial"
 
     Audited:
       type: object

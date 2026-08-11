@@ -9,6 +9,7 @@ import {
   PublicationType,
   EventType,
   DatasetType,
+  TrainingMaterialType,
 } from '@/api/models'
 
 export const ENTITY_TYPES = [
@@ -21,6 +22,7 @@ export const ENTITY_TYPES = [
   PublicationType['idhi:Publication'],
   EventType['idhi:Event'],
   DatasetType['idhi:Dataset'],
+  TrainingMaterialType['idhi:TrainingMaterial'],
 ] as const
 
 export type EntityType = (typeof ENTITY_TYPES)[number]
@@ -47,7 +49,11 @@ export function getEntityDisplayName(entity: Entity): string {
     if (parts.length) return parts.join(' ')
     return entity.id
   }
-  const name = pickLang(e['name'] as LangString[] | undefined)
+  const rawName = e['name']
+  const name =
+    typeof rawName === 'string'
+      ? rawName
+      : pickLang(rawName as LangString[] | undefined)
   return name ?? entity.id
 }
 
@@ -67,6 +73,7 @@ export function getEntityTypeLabel(type: string): string {
     [PublicationType['idhi:Publication']]: 'Publication',
     [EventType['idhi:Event']]: 'Event',
     [DatasetType['idhi:Dataset']]: 'Dataset',
+    [TrainingMaterialType['idhi:TrainingMaterial']]: 'Training material',
   }
   return labels[type] ?? type
 }
@@ -90,6 +97,15 @@ const ID_SEGMENT_TO_TYPE: Record<string, EntityType> = {
   publication: PublicationType['idhi:Publication'],
   event: EventType['idhi:Event'],
   dataset: DatasetType['idhi:Dataset'],
+  training_material: TrainingMaterialType['idhi:TrainingMaterial'],
+}
+
+const TYPE_TO_ID_SEGMENT = Object.fromEntries(
+  Object.entries(ID_SEGMENT_TO_TYPE).map(([segment, type]) => [type, segment]),
+) as Record<EntityType, string>
+
+export function getEntityIdSegment(type: EntityType): string {
+  return TYPE_TO_ID_SEGMENT[type]
 }
 
 export function getEntityTypeFromId(id: string): EntityType {

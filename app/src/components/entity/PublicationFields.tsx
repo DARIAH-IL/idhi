@@ -1,16 +1,19 @@
 import { useTranslation } from 'react-i18next'
-import { PublicationPublicationType } from '@/api/models'
+import {
+  PublicationAuthorshipsItemAuthorshipRole,
+  PublicationPublicationType,
+} from '@/api/models'
 import { TextField } from './TextField'
 import { EnumSelectField } from './EnumSelectField'
 import { LangStringField } from './LangStringField'
-import { StringArrayField } from './StringArrayField'
 import { ArraySection } from './ArraySection'
+import { EntityRefArrayField, EntityRefField } from './EntityRefField'
 
 export function PublicationFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <EnumSelectField
         name="publication_type"
         label={t('entity.form.fields.publication_type')}
@@ -20,21 +23,32 @@ export function PublicationFields() {
         name="doi"
         label={t('entity.form.fields.doi')}
         placeholder="https://doi.org/…"
+        validationKind="doi"
       />
       <TextField
         name="date_issued"
         label={t('entity.form.fields.date_issued')}
         type="date"
       />
-      <TextField name="publisher" label={t('entity.form.fields.publisher')} />
-      <TextField name="part_of" label={t('entity.form.fields.part_of')} />
+      <EntityRefField
+        name="publisher"
+        label={t('entity.form.fields.publisher')}
+        entityTypes={['idhi:Organization']}
+      />
+      <EntityRefField
+        name="part_of"
+        label={t('entity.form.fields.part_of')}
+        entityTypes={['idhi:Publication']}
+        allowExternalUrl
+      />
       <LangStringField
         name="published_in"
         label={t('entity.form.fields.published_in')}
       />
-      <StringArrayField
+      <EntityRefArrayField
         name="presented_at"
         label={t('entity.form.fields.presented_at')}
+        entityTypes={['idhi:Event']}
       />
 
       <ArraySection
@@ -44,14 +58,33 @@ export function PublicationFields() {
       >
         {(i) => (
           <>
-            <TextField
+            <EntityRefField
               name={`authorships[${i}].author`}
               label={t('entity.form.member_ref')}
+              entityTypes={['idhi:Person']}
+              required
             />
             <TextField
               name={`authorships[${i}].author_order`}
               label={t('entity.form.author_order')}
               type="number"
+              validationKind="integer"
+              min={1}
+            />
+            <EnumSelectField
+              name={`authorships[${i}].authorship_role`}
+              label={t('entity.form.authorship_role')}
+              options={PublicationAuthorshipsItemAuthorshipRole}
+            />
+            <TextField
+              name={`authorships[${i}].start_date`}
+              label={t('entity.form.fields.start_date')}
+              type="date"
+            />
+            <TextField
+              name={`authorships[${i}].end_date`}
+              label={t('entity.form.fields.end_date')}
+              type="date"
             />
           </>
         )}

@@ -1,15 +1,18 @@
 import { useTranslation } from 'react-i18next'
-import { ToolToolType, ToolLicense } from '@/api/models'
+import {
+  ToolToolType,
+  ToolLicense,
+  ToolDigitalHumanitiesActivitiesItem,
+} from '@/api/models'
 import { TextField } from './TextField'
 import { EnumSelectField } from './EnumSelectField'
-import { LangStringField } from './LangStringField'
 import { StringArrayField } from './StringArrayField'
 
 export function ToolFields() {
   const { t } = useTranslation()
   return (
     <>
-      <LangStringField name="name" label={t('entity.form.fields.name')} />
+      <TextField name="name" label={t('entity.form.fields.name')} required />
       <EnumSelectField
         name="tool_type"
         label={t('entity.form.fields.tool_type')}
@@ -23,10 +26,12 @@ export function ToolFields() {
       <TextField
         name="code_repository"
         label={t('entity.form.fields.code_repository')}
+        type="url"
       />
       <TextField
         name="documentation_url"
         label={t('entity.form.fields.documentation_url')}
+        type="url"
       />
       <TextField
         name="programming_language"
@@ -41,10 +46,12 @@ export function ToolFields() {
         name="digital_humanities_activities"
         label={t('entity.form.fields.digital_humanities_activities')}
         placeholder="tadirah:…"
+        options={ToolDigitalHumanitiesActivitiesItem}
       />
       <StringArrayField
         name="additional_urls"
         label={t('entity.form.fields.additional_urls')}
+        validationKind="url"
       />
     </>
   )

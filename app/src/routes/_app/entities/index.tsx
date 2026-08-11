@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import {
   Table,
   TableBody,
@@ -136,7 +137,14 @@ function EntityBoard() {
                 : 'border-border hover:bg-muted'
             }`}
           >
-            {getEntityTypeLabel(et)}
+            <span className="flex items-center gap-1.5">
+              <EntityTypeIcon
+                type={et}
+                size="sm"
+                className="size-5 bg-transparent dark:bg-transparent"
+              />
+              {getEntityTypeLabel(et)}
+            </span>
           </button>
         ))}
       </div>
@@ -178,13 +186,16 @@ function EntityBoard() {
                   className="cursor-pointer"
                 >
                   <TableCell>
-                    <Link
-                      to="/entities/$entityId"
-                      params={{ entityId: encodeURIComponent(id) }}
-                      className="hover:underline font-medium"
-                    >
-                      {getEntityDisplayName(entity)}
-                    </Link>
+                    <div className="flex items-center gap-2.5">
+                      <EntityTypeIcon type={entity.type} />
+                      <Link
+                        to="/entities/$entityId"
+                        params={{ entityId: encodeURIComponent(id) }}
+                        className="hover:underline font-medium"
+                      >
+                        {getEntityDisplayName(entity)}
+                      </Link>
+                    </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">

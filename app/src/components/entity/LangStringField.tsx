@@ -11,6 +11,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
+import { FieldError } from './FieldError'
+import { firstError, validateValue } from './validation'
 
 const LANGUAGES = ['en', 'he', 'ar'] as const
 
@@ -18,10 +20,12 @@ export function LangStringField({
   name,
   label,
   multiline = false,
+  required = false,
 }: {
   name: string
   label: string
   multiline?: boolean
+  required?: boolean
 }) {
   const { t } = useTranslation()
   const form = useFormContext()
@@ -29,9 +33,38 @@ export function LangStringField({
   return (
     <div className="flex flex-col gap-2">
       <Label>{label}</Label>
-      <form.Field name={name as never} mode="array">
+      <form.Field
+        name={name as never}
+        mode="array"
+        validators={{
+          onSubmit: ({ value }) => {
+            const items = value as unknown as Array<{
+              language?: string
+              value?: string
+            }>
+            if (required && (!Array.isArray(items) || items.length === 0))
+              return 'Add at least one language value.'
+            if (!Array.isArray(items)) return undefined
+            const languages = items.map((item) => item.language)
+            if (
+              languages.some(
+                (language) => !LANGUAGES.includes(language as never),
+              )
+            )
+              return 'Choose a supported language.'
+            if (new Set(languages).size !== languages.length)
+              return 'Use each language only once.'
+            return items.some((item) =>
+              validateValue(item.value, { required: true }),
+            )
+              ? 'Every language value must have text.'
+              : undefined
+          },
+        }}
+      >
         {(field) => (
           <div className="flex flex-col gap-2">
+            <FieldError error={firstError(field.state.meta.errors)} />
             {(Array.isArray(field.state.value) ? field.state.value : []).map(
               (_, i) => (
                 <div key={i} className="flex gap-2 items-start">

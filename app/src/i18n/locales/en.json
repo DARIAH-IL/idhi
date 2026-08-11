@@ -79,7 +79,8 @@
       "idhi:Service": "Service",
       "idhi:Publication": "Publication",
       "idhi:Event": "Event",
-      "idhi:Dataset": "Dataset"
+      "idhi:Dataset": "Dataset",
+      "idhi:TrainingMaterial": "Training material"
     },
     "detail": {
       "id": "ID",
@@ -140,6 +141,7 @@
         "outputs_datasets": "Output datasets (IDs)",
         "outputs_publications": "Output publications (IDs)",
         "outputs_tools": "Output tools (IDs)",
+        "outputs_training_materials": "Output training materials",
         "code_repository": "Code repository",
         "documentation_url": "Documentation URL",
         "programming_language": "Programming language",
@@ -161,7 +163,22 @@
         "tools_provided": "Tools provided (IDs)",
         "datasets": "Aggregated datasets (IDs)",
         "distribution_url": "Distribution URL",
-        "themes": "Themes"
+        "themes": "Themes",
+        "training_material_type": "Training material type",
+        "creators": "Creators (IDs)",
+        "learning_outcomes": "Learning outcomes",
+        "target_audiences": "Target audiences",
+        "prerequisites": "Prerequisites",
+        "educational_level": "Educational level",
+        "in_languages": "Content languages",
+        "material_url": "Material URL",
+        "media_type": "Media type",
+        "related_tools": "Related tools (IDs)",
+        "related_services": "Related services (IDs)",
+        "related_datasets": "Related datasets (IDs)",
+        "part_of_training_material": "Part of training material (ID)",
+        "marketplace_sync": "Allow Marketplace synchronization",
+        "funding_amount": "Funding amount (ILS)"
       },
       "add_lang_string": "Add language variant",
       "add_item": "Add item",
@@ -178,6 +195,7 @@
       "publication_ref": "Publication (ID)",
       "project_ref": "Project (ID)",
       "author_order": "Author order",
+      "authorship_role": "Authorship role",
       "participation_role": "Participation role",
       "org_project_role": "Organization role"
     }
