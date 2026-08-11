@@ -10,33 +10,107 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppEntitiesIndexRouteImport } from './routes/_app/entities/index'
+import { Route as AppEntitiesNewRouteImport } from './routes/_app/entities/new'
+import { Route as AppEntitiesEntityIdIndexRouteImport } from './routes/_app/entities/$entityId/index'
+import { Route as AppEntitiesEntityIdEditRouteImport } from './routes/_app/entities/$entityId/edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppEntitiesIndexRoute = AppEntitiesIndexRouteImport.update({
+  id: '/entities/',
+  path: '/entities/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEntitiesNewRoute = AppEntitiesNewRouteImport.update({
+  id: '/entities/new',
+  path: '/entities/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEntitiesEntityIdIndexRoute =
+  AppEntitiesEntityIdIndexRouteImport.update({
+    id: '/entities/$entityId/',
+    path: '/entities/$entityId/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppEntitiesEntityIdEditRoute = AppEntitiesEntityIdEditRouteImport.update({
+  id: '/entities/$entityId/edit',
+  path: '/entities/$entityId/edit',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/entities/new': typeof AppEntitiesNewRoute
+  '/entities/': typeof AppEntitiesIndexRoute
+  '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
+  '/entities/$entityId/': typeof AppEntitiesEntityIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/entities/new': typeof AppEntitiesNewRoute
+  '/entities': typeof AppEntitiesIndexRoute
+  '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
+  '/entities/$entityId': typeof AppEntitiesEntityIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_app/entities/new': typeof AppEntitiesNewRoute
+  '/_app/entities/': typeof AppEntitiesIndexRoute
+  '/_app/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
+  '/_app/entities/$entityId/': typeof AppEntitiesEntityIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/entities/new'
+    | '/entities/'
+    | '/entities/$entityId/edit'
+    | '/entities/$entityId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/entities/new'
+    | '/entities'
+    | '/entities/$entityId/edit'
+    | '/entities/$entityId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/login'
+    | '/_app/entities/new'
+    | '/_app/entities/'
+    | '/_app/entities/$entityId/edit'
+    | '/_app/entities/$entityId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +122,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/entities/': {
+      id: '/_app/entities/'
+      path: '/entities'
+      fullPath: '/entities/'
+      preLoaderRoute: typeof AppEntitiesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/entities/new': {
+      id: '/_app/entities/new'
+      path: '/entities/new'
+      fullPath: '/entities/new'
+      preLoaderRoute: typeof AppEntitiesNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/entities/$entityId/': {
+      id: '/_app/entities/$entityId/'
+      path: '/entities/$entityId'
+      fullPath: '/entities/$entityId/'
+      preLoaderRoute: typeof AppEntitiesEntityIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/entities/$entityId/edit': {
+      id: '/_app/entities/$entityId/edit'
+      path: '/entities/$entityId/edit'
+      fullPath: '/entities/$entityId/edit'
+      preLoaderRoute: typeof AppEntitiesEntityIdEditRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppEntitiesNewRoute: typeof AppEntitiesNewRoute
+  AppEntitiesIndexRoute: typeof AppEntitiesIndexRoute
+  AppEntitiesEntityIdEditRoute: typeof AppEntitiesEntityIdEditRoute
+  AppEntitiesEntityIdIndexRoute: typeof AppEntitiesEntityIdIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppEntitiesNewRoute: AppEntitiesNewRoute,
+  AppEntitiesIndexRoute: AppEntitiesIndexRoute,
+  AppEntitiesEntityIdEditRoute: AppEntitiesEntityIdEditRoute,
+  AppEntitiesEntityIdIndexRoute: AppEntitiesEntityIdIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

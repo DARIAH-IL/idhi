@@ -1,0 +1,23 @@
+import { Separator as SeparatorPrimitive } from 'react-aria-components'
+
+import { cn } from '@/lib/utils'
+
+function Separator({
+  className,
+  orientation = 'horizontal',
+  ...props
+}: React.ComponentProps<typeof SeparatorPrimitive>) {
+  return (
+    <SeparatorPrimitive
+      data-slot="separator"
+      orientation={orientation}
+      className={cn(
+        'block shrink-0 border-0 bg-oklch(0.922 0 0) aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=vertical]:w-px aria-[orientation=vertical]:self-stretch [:is(hr)]:h-px [:is(hr)]:w-full dark:bg-oklch(1 0 0 / 10%)',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Separator }

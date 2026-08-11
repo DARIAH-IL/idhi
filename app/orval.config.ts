@@ -20,6 +20,13 @@ export default defineConfig({
       httpClient: 'axios',
       clean: true,
       override: {
+        operations: {
+          postApiV1Entities: {
+            query: {
+              useQuery: true,
+            },
+          },
+        },
         mutator: {
           path: 'src/api/client.ts',
           name: 'customInstance',
