@@ -1,12 +1,20 @@
 import { useCallback, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
+import { infiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Checkbox } from 'react-aria-components'
+import { Checkbox, type SortDescriptor } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Cancel01Icon, Tick02Icon } from '@hugeicons/core-free-icons'
+import {
+  Cancel01Icon,
+  SortingDownIcon,
+  SortingUpIcon,
+  Tick02Icon,
+} from '@hugeicons/core-free-icons'
 import { z } from 'zod'
-import { getPostApiV1EntitiesQueryOptions } from '@/api/hooks/entities/entities'
+import {
+  getPostApiV1EntitiesQueryKey,
+  postApiV1Entities,
+} from '@/api/hooks/entities/entities'
 import type {
   EntitySearch,
   Filter,
@@ -36,6 +44,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
+  TableLoadMoreItem,
   TableRow,
 } from '@/components/ui/table'
 
@@ -48,13 +57,23 @@ const facetSelectionSchema = z.object({
 const facetFiltersSchema = z.object({
   type: facetSelectionSchema.optional(),
 })
+const sortPropertySchema = z.enum(['name.value', 'type', 'audit.modifiedAt'])
+const sortSchema = z.object({
+  property: sortPropertySchema,
+  direction: z.enum(['asc', 'desc']),
+})
+const DEFAULT_SORT = {
+  property: 'audit.modifiedAt',
+  direction: 'desc',
+} as const
 
 type FacetFilters = z.infer<typeof facetFiltersSchema>
+type EntitySort = z.infer<typeof sortSchema>
 
 const entityBoardSearchSchema = z.object({
   q: z.string().optional(),
   facetFilters: facetFiltersSchema.optional(),
-  page: z.number().int().nonnegative().optional().catch(undefined),
+  sort: sortSchema.optional(),
 })
 
 function buildFacetFilter(facetFilters: FacetFilters | undefined) {
@@ -75,29 +94,46 @@ function buildFacetFilter(facetFilters: FacetFilters | undefined) {
 function createEntitySearch(
   q: string | undefined,
   facetFilters: FacetFilters | undefined,
-  page: number | undefined,
+  sort: EntitySort | undefined,
 ): EntitySearch {
   return {
     q,
     facets: [...DEFAULT_FACETS],
     filter: buildFacetFilter(facetFilters),
-    page,
+    sort: [sort ?? DEFAULT_SORT],
     pageSize: PAGE_SIZE,
   }
 }
 
+function getInfiniteEntityQueryOptions(
+  q: string | undefined,
+  facetFilters: FacetFilters | undefined,
+  sort: EntitySort | undefined,
+) {
+  const search = createEntitySearch(q, facetFilters, sort)
+
+  return infiniteQueryOptions({
+    queryKey: [...getPostApiV1EntitiesQueryKey(search), 'infinite'] as const,
+    queryFn: ({ pageParam, signal }) =>
+      postApiV1Entities({ ...search, page: pageParam }, signal),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _pages, lastPageParam) => {
+      const nextPage = lastPageParam + 1
+      return nextPage * PAGE_SIZE < lastPage.total ? nextPage : undefined
+    },
+  })
+}
+
 export const Route = createFileRoute('/_app/entities/')({
   validateSearch: entityBoardSearchSchema,
-  loaderDeps: ({ search: { q, facetFilters, page } }) => ({
+  loaderDeps: ({ search: { q, facetFilters, sort } }) => ({
     q,
     facetFilters,
-    page,
+    sort,
   }),
   loader: async ({ context, deps }) => {
-    await context.queryClient.prefetchQuery(
-      getPostApiV1EntitiesQueryOptions(
-        createEntitySearch(deps.q, deps.facetFilters, deps.page),
-      ),
+    await context.queryClient.prefetchInfiniteQuery(
+      getInfiniteEntityQueryOptions(deps.q, deps.facetFilters, deps.sort),
     )
   },
   component: EntityBoard,
@@ -107,23 +143,35 @@ function EntityBoard() {
   const { t } = useTranslation()
   const isAuthenticated = useAuthStore((state) => Boolean(state.token))
   const navigate = useNavigate({ from: Route.fullPath })
-  const { q, facetFilters, page } = Route.useSearch()
+  const { q, facetFilters, sort } = Route.useSearch()
 
   const [searchInput, setSearchInput] = useState(q ?? '')
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const search = createEntitySearch(q, facetFilters, page)
+  const activeSort = sort ?? DEFAULT_SORT
+  const sortDescriptor: SortDescriptor = {
+    column: activeSort.property,
+    direction: activeSort.direction === 'asc' ? 'ascending' : 'descending',
+  }
 
-  const { data, isLoading, isError } = useQuery(
-    getPostApiV1EntitiesQueryOptions(search),
-  )
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isError,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery(getInfiniteEntityQueryOptions(q, facetFilters, sort))
+  const results = data?.pages.flatMap((resultPage) => resultPage.results) ?? []
+  const total = data?.pages[0]?.total ?? 0
+  const facets = data?.pages[0]?.facets ?? {}
 
   const updateSearch = useCallback(
     (
       updates: Partial<{
         q: string
         facetFilters: FacetFilters | undefined
-        page: number
+        sort: EntitySort
       }>,
     ) => {
       void navigate({
@@ -136,18 +184,30 @@ function EntityBoard() {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    updateSearch({ q: searchInput || undefined, page: 0 })
+    updateSearch({ q: searchInput || undefined })
+  }
+
+  const handleSortChange = (descriptor: SortDescriptor) => {
+    const property = sortPropertySchema.safeParse(descriptor.column)
+    if (!property.success) return
+
+    updateSearch({
+      sort: {
+        property: property.data,
+        direction: descriptor.direction === 'ascending' ? 'asc' : 'desc',
+      },
+    })
   }
 
   const clearSearch = () => {
     setSearchInput('')
-    if (q) updateSearch({ q: undefined, page: 0 })
+    if (q) updateSearch({ q: undefined })
     searchInputRef.current?.focus()
   }
 
   const clearFilters = () => {
     setSearchInput('')
-    updateSearch({ q: undefined, facetFilters: undefined, page: 0 })
+    updateSearch({ q: undefined, facetFilters: undefined })
     searchInputRef.current?.focus()
   }
 
@@ -169,16 +229,12 @@ function EntityBoard() {
     updateSearch({
       facetFilters:
         Object.keys(nextFacetFilters).length > 0 ? nextFacetFilters : undefined,
-      page: 0,
     })
   }
 
   const activeFacetFilters = DEFAULT_FACETS.flatMap((field) =>
     (facetFilters?.[field]?.include ?? []).map((value) => ({ field, value })),
   )
-
-  const totalPages = data ? Math.ceil(data.total / PAGE_SIZE) : 0
-  const currentPage = page ?? 0
 
   return (
     <div className="flex flex-col gap-4">
@@ -274,7 +330,7 @@ function EntityBoard() {
       <div className="grid items-start gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
         <FacetPanel
           key={JSON.stringify(facetFilters ?? {})}
-          facets={data?.facets ?? {}}
+          facets={facets}
           initialFilters={facetFilters ?? {}}
           isLoading={isLoading}
           onApply={(nextFacetFilters) =>
@@ -284,7 +340,6 @@ function EntityBoard() {
                 Object.keys(nextFacetFilters).length > 0
                   ? nextFacetFilters
                   : undefined,
-              page: 0,
             })
           }
         />
@@ -299,7 +354,10 @@ function EntityBoard() {
 
           {!isLoading && data && (
             <p aria-live="polite" className="text-xs text-muted-foreground">
-              {t('board.result_count', { count: data.total })}
+              {t('board.loaded_count', {
+                loaded: results.length,
+                total,
+              })}
             </p>
           )}
 
@@ -308,14 +366,46 @@ function EntityBoard() {
               {t('common.loading')}
             </p>
           ) : (
-            <Table aria-label={t('board.results_label')}>
+            <Table
+              aria-label={t('board.results_label')}
+              containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto"
+              sortDescriptor={sortDescriptor}
+              onSortChange={handleSortChange}
+            >
               <TableHeader>
-                <TableHead isRowHeader>{t('board.columns.name')}</TableHead>
-                <TableHead>{t('board.columns.type')}</TableHead>
-                <TableHead>{t('board.columns.modified')}</TableHead>
+                <TableHead
+                  id="name.value"
+                  isRowHeader
+                  allowsSorting
+                  className="cursor-pointer"
+                >
+                  <SortableColumnLabel
+                    label={t('board.columns.name')}
+                    property="name.value"
+                    sort={activeSort}
+                  />
+                </TableHead>
+                <TableHead id="type" allowsSorting className="cursor-pointer">
+                  <SortableColumnLabel
+                    label={t('board.columns.type')}
+                    property="type"
+                    sort={activeSort}
+                  />
+                </TableHead>
+                <TableHead
+                  id="audit.modifiedAt"
+                  allowsSorting
+                  className="cursor-pointer"
+                >
+                  <SortableColumnLabel
+                    label={t('board.columns.modified')}
+                    property="audit.modifiedAt"
+                    sort={activeSort}
+                  />
+                </TableHead>
               </TableHeader>
               <TableBody>
-                {data?.results.length === 0 ? (
+                {results.length === 0 ? (
                   <TableRow id="empty-state" className="hover:bg-transparent">
                     <TableCell
                       colSpan={3}
@@ -329,7 +419,7 @@ function EntityBoard() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  (data?.results ?? []).map((entity) => {
+                  results.map((entity) => {
                     const id = auditedEntityId(entity)
                     return (
                       <TableRow
@@ -367,41 +457,48 @@ function EntityBoard() {
                     )
                   })
                 )}
+                {hasNextPage && (
+                  <TableLoadMoreItem
+                    isLoading={isFetchingNextPage}
+                    onLoadMore={() => {
+                      if (!isFetchingNextPage) void fetchNextPage()
+                    }}
+                  >
+                    {t('common.loading')}
+                  </TableLoadMoreItem>
+                )}
               </TableBody>
             </Table>
-          )}
-
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-xs text-muted-foreground">
-                {t('board.pagination.page', {
-                  page: currentPage + 1,
-                  total: totalPages,
-                })}
-              </span>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  isDisabled={currentPage === 0}
-                  onPress={() => updateSearch({ page: currentPage - 1 })}
-                >
-                  {t('board.pagination.previous')}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  isDisabled={currentPage >= totalPages - 1}
-                  onPress={() => updateSearch({ page: currentPage + 1 })}
-                >
-                  {t('board.pagination.next')}
-                </Button>
-              </div>
-            </div>
           )}
         </section>
       </div>
     </div>
+  )
+}
+
+function SortableColumnLabel({
+  label,
+  property,
+  sort,
+}: {
+  label: string
+  property: EntitySort['property']
+  sort: EntitySort
+}) {
+  const direction = sort.property === property ? sort.direction : undefined
+
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      {label}
+      {direction && (
+        <HugeiconsIcon
+          icon={direction === 'asc' ? SortingUpIcon : SortingDownIcon}
+          className="size-3.5"
+          strokeWidth={2}
+          aria-hidden="true"
+        />
+      )}
+    </span>
   )
 }
 

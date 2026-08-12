@@ -509,6 +509,24 @@ components:
         - nin
         - exists
 
+    SortDirection:
+      type: string
+      enum:
+        - asc
+        - desc
+
+    SortCriterion:
+      type: object
+      additionalProperties: false
+      required:
+        - property
+        - direction
+      properties:
+        property:
+          $ref: "#/components/schemas/FilterableField"
+        direction:
+          $ref: "#/components/schemas/SortDirection"
+
     Filter:
       $dynamicAnchor: filter
       oneOf:
@@ -559,6 +577,12 @@ components:
             $ref: "#/components/schemas/FilterableField"
         filter:
           $ref: "#/components/schemas/Filter"
+        sort:
+          type: array
+          minItems: 1
+          description: Ordered property and direction pairs used to sort matching entities. When omitted, entities are sorted by audit.modifiedAt descending.
+          items:
+            $ref: "#/components/schemas/SortCriterion"
         page:
           type: integer
           minimum: 0

@@ -11,6 +11,7 @@ import type {
   Filter as EntityFilter,
   FilterOperator,
   FilterableField,
+  SortCriterion,
 } from '../../models'
 import { createId } from '../../utils/id'
 import { searchDump } from '../../utils/searchDump'
@@ -45,6 +46,7 @@ export interface EntityDatabaseService {
     query: string | undefined,
     facets: FilterableField[] | undefined,
     filter: EntityFilter | undefined,
+    sort: SortCriterion[] | undefined,
     page: number,
     pageSize: number,
   ): Promise<EntitySearchResult>
@@ -151,6 +153,25 @@ function toMongoFilter(filter: EntityFilter): QueryFilter<StoredEntity> {
   return comparisonFilter(filter.field, filter.op, filter.value)
 }
 
+function toMongoSort(
+  sort: SortCriterion[] | undefined,
+): Record<string, 1 | -1> {
+  if (!sort?.length) {
+    return { 'audit.modifiedAt': -1, _id: 1 }
+  }
+
+  const fields = new Map<string, 1 | -1>()
+  for (const criterion of sort) {
+    fields.set(
+      storedField(criterion.property),
+      criterion.direction === 'asc' ? 1 : -1,
+    )
+  }
+  if (!fields.has('_id')) fields.set('_id', 1)
+
+  return Object.fromEntries(fields)
+}
+
 export async function createEntityDatabaseService(
   connection: Connection,
   initializeIndexes: boolean,
@@ -185,7 +206,14 @@ export async function createEntityDatabaseService(
   }
 
   return {
-    async search(query, requestedFacets, structuredFilter, page, pageSize) {
+    async search(
+      query,
+      requestedFacets,
+      structuredFilter,
+      sort,
+      page,
+      pageSize,
+    ) {
       const normalizedQuery = query?.trim()
       const filter: QueryFilter<StoredEntity> = {
         ...(normalizedQuery ? { $text: { $search: normalizedQuery } } : {}),
@@ -195,7 +223,7 @@ export async function createEntityDatabaseService(
       const [documents, total, facetEntries] = await Promise.all([
         entities
           .find(filter)
-          .sort({ 'audit.modifiedAt': -1, _id: 1 })
+          .sort(toMongoSort(sort))
           .skip(page * pageSize)
           .limit(pageSize)
           .exec(),

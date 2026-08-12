@@ -20,6 +20,10 @@ export const postApiV1EntitiesBodyFilterThreeOrItemOneFieldRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
 )
 
+export const postApiV1EntitiesBodySortItemPropertyRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
+
 export const postApiV1EntitiesBodyPageDefault = 0
 export const postApiV1EntitiesBodyPageMin = 0
 
@@ -131,6 +135,23 @@ export const PostApiV1EntitiesBody = zod.object({
       }),
     ])
     .optional(),
+  sort: zod
+    .array(
+      zod.object({
+        property: zod
+          .string()
+          .regex(postApiV1EntitiesBodySortItemPropertyRegExp)
+          .describe(
+            'A dot-separated entity field path. Operators and array indexes are not allowed.',
+          ),
+        direction: zod.enum(['asc', 'desc']),
+      }),
+    )
+    .min(1)
+    .optional()
+    .describe(
+      'Ordered property and direction pairs used to sort matching entities. When omitted, entities are sorted by audit.modifiedAt descending.',
+    ),
   page: zod
     .int()
     .min(postApiV1EntitiesBodyPageMin)

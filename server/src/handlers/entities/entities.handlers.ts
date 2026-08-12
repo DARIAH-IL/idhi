@@ -45,12 +45,13 @@ export const postApiV1EntitiesHandlers = factory.createHandlers(
   zValidator('json', PostApiV1EntitiesBody),
   zValidator('response', PostApiV1EntitiesResponse),
   async (c: PostApiV1EntitiesContext) => {
-    const { q, facets, filter, page, pageSize } = c.req.valid('json')
+    const { q, facets, filter, sort, page, pageSize } = c.req.valid('json')
     return c.json(
       await c.var.db.entities.search(
         q,
         facets,
         filter,
+        sort,
         page ?? postApiV1EntitiesBodyPageDefault,
         pageSize ?? postApiV1EntitiesBodyPageSizeDefault,
       ),

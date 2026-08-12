@@ -6,6 +6,7 @@
  */
 import type { Filter } from './filter'
 import type { FilterableField } from './filterableField'
+import type { SortCriterion } from './sortCriterion'
 
 export interface EntitySearch {
   /** Optional free-text search query. */
@@ -13,6 +14,11 @@ export interface EntitySearch {
   /** Entity fields for which facet counts should be returned. */
   facets?: FilterableField[]
   filter?: Filter
+  /**
+   * Ordered property and direction pairs used to sort matching entities. When omitted, entities are sorted by audit.modifiedAt descending.
+   * @minItems 1
+   */
+  sort?: SortCriterion[]
   /** @minimum 0 */
   page?: number
   /**

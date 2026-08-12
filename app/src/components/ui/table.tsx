@@ -6,6 +6,7 @@ import {
   TableBody as TableBodyPrimitive,
   TableFooter as TableFooterPrimitive,
   TableHeader as TableHeaderPrimitive,
+  TableLoadMoreItem as TableLoadMoreItemPrimitive,
   Table as TablePrimitive,
 } from 'react-aria-components'
 import type {
@@ -15,16 +16,25 @@ import type {
   TableBodyProps,
   TableFooterProps,
   TableHeaderProps,
+  TableLoadMoreItemProps,
   TableProps,
 } from 'react-aria-components'
 
 import { cn } from '@/lib/utils'
 
-function Table({ className, ...props }: TableProps) {
+type StyledTableProps = TableProps & {
+  containerClassName?: string
+}
+
+function Table({
+  className,
+  containerClassName,
+  ...props
+}: StyledTableProps) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className={cn('relative w-full overflow-x-auto', containerClassName)}
     >
       <TablePrimitive
         data-slot="table"
@@ -110,6 +120,19 @@ function TableCell({ className, ...props }: CellProps) {
   )
 }
 
+function TableLoadMoreItem({ className, ...props }: TableLoadMoreItemProps) {
+  return (
+    <TableLoadMoreItemPrimitive
+      data-slot="table-load-more"
+      className={cn(
+        'h-10 text-center text-xs text-muted-foreground',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
 function TableCaption({
   className,
   ...props
@@ -134,5 +157,6 @@ export {
   TableHead,
   TableRow,
   TableCell,
+  TableLoadMoreItem,
   TableCaption,
 }
