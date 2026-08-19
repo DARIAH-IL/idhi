@@ -59,6 +59,11 @@ export interface Person {
    */
   id: string
   /**
+   * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
+   * @nullable
+   */
+  image?: string | null
+  /**
    * The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.
    * @nullable
    * @pattern https://orcid.org/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]

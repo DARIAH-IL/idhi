@@ -48,6 +48,11 @@ export interface Organization {
    */
   id: string
   /**
+   * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
+   * @nullable
+   */
+  image?: string | null
+  /**
    * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */

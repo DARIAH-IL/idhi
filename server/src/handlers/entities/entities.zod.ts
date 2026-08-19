@@ -386,6 +386,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+              ),
             orcid: zod
               .url()
               .regex(postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp)
@@ -530,6 +536,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneTwoIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             location: zod
               .array(
@@ -731,6 +743,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneThreeIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             location: zod
               .array(
@@ -1067,6 +1085,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneFourIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             name: zod
               .array(
@@ -1536,6 +1560,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+              ),
             license: zod
               .enum([
                 'CC_BY_4_0',
@@ -1847,6 +1877,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+              ),
             name: zod
               .array(
                 zod
@@ -1999,6 +2035,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneSevenIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             name: zod
               .array(
@@ -2286,6 +2328,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+              ),
             location: zod
               .array(
                 zod
@@ -2408,6 +2456,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneNineIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             license: zod
               .enum([
@@ -2754,6 +2808,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+              ),
+            image: zod
+              .string()
+              .nullish()
+              .describe(
+                'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
             in_languages: zod
               .array(
@@ -3202,6 +3262,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       orcid: zod
         .url()
         .regex(putApiV1EntitiesBodyOneOrcidRegExp)
@@ -3346,6 +3412,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodyTwoIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       location: zod
         .array(
@@ -3547,6 +3619,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodyThreeIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       location: zod
         .array(
@@ -3883,6 +3961,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodyFourIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       name: zod
         .array(
@@ -4348,6 +4432,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       license: zod
         .enum([
           'CC_BY_4_0',
@@ -4659,6 +4749,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       name: zod
         .array(
           zod
@@ -4809,6 +4905,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodySevenIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       name: zod
         .array(
@@ -5096,6 +5198,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       location: zod
         .array(
           zod
@@ -5218,6 +5326,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodyNineIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       license: zod
         .enum([
@@ -5564,6 +5678,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodyOnezeroIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       in_languages: zod
         .array(
@@ -5981,6 +6101,12 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         orcid: zod
           .url()
           .regex(putApiV1EntitiesResponseOneOneOrcidRegExp)
@@ -6125,6 +6251,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -6326,6 +6458,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -6662,6 +6800,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -7127,6 +7271,12 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -7438,6 +7588,12 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         name: zod
           .array(
             zod
@@ -7588,6 +7744,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -7875,6 +8037,12 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         location: zod
           .array(
             zod
@@ -7997,6 +8165,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         license: zod
           .enum([
@@ -8343,6 +8517,12 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         in_languages: zod
           .array(
@@ -8782,6 +8962,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         orcid: zod
           .url()
           .regex(getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
@@ -8926,6 +9112,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -9127,6 +9319,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -9463,6 +9661,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -9928,6 +10132,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -10239,6 +10449,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         name: zod
           .array(
             zod
@@ -10389,6 +10605,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -10676,6 +10898,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         location: zod
           .array(
             zod
@@ -10798,6 +11026,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         license: zod
           .enum([
@@ -11144,6 +11378,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         in_languages: zod
           .array(
@@ -11578,6 +11818,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       orcid: zod
         .url()
         .regex(postApiV1EntitiesEntityIdBodyOneOrcidRegExp)
@@ -11722,6 +11968,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodyTwoIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       location: zod
         .array(
@@ -11923,6 +12175,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodyThreeIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       location: zod
         .array(
@@ -12259,6 +12517,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodyFourIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       name: zod
         .array(
@@ -12724,6 +12988,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       license: zod
         .enum([
           'CC_BY_4_0',
@@ -13035,6 +13305,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       name: zod
         .array(
           zod
@@ -13185,6 +13461,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodySevenIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       name: zod
         .array(
@@ -13472,6 +13754,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
         ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
       location: zod
         .array(
           zod
@@ -13594,6 +13882,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodyNineIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       license: zod
         .enum([
@@ -13940,6 +14234,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodyOnezeroIdRegExp)
         .describe(
           "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+        ),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       in_languages: zod
         .array(
@@ -14355,6 +14655,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         orcid: zod
           .url()
           .regex(postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
@@ -14499,6 +14805,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -14700,6 +15012,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         location: zod
           .array(
@@ -15036,6 +15354,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -15501,6 +15825,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -15812,6 +16142,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         name: zod
           .array(
             zod
@@ -15962,6 +16298,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         name: zod
           .array(
@@ -16249,6 +16591,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+          ),
         location: zod
           .array(
             zod
@@ -16371,6 +16719,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         license: zod
           .enum([
@@ -16717,6 +17071,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+          ),
+        image: zod
+          .string()
+          .nullish()
+          .describe(
+            'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
         in_languages: zod
           .array(

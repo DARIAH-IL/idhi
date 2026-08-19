@@ -62,6 +62,11 @@ export interface Project {
    * @pattern ^idhi:project:[0-9a-z]{4,12}$
    */
   id: string
+  /**
+   * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
+   * @nullable
+   */
+  image?: string | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: ProjectNameItem[]
   /**
