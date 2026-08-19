@@ -180,6 +180,7 @@
     "no_results": "No entities found.",
     "no_matching_results": "No matching entities found.",
     "columns": {
+      "image": "Image",
       "name": "Name",
       "type": "Type",
       "modified": "Last modified"
@@ -217,6 +218,9 @@
     "form": {
       "new_title": "New {{type}}",
       "edit_title": "Edit entity",
+      "image_error": "The selected file could not be read as an image.",
+      "image_preview": "Entity image preview",
+      "remove_image": "Remove image",
       "select_type": "Select entity type",
       "select_type_description": "Choose the type of entity you want to create.",
       "sections": {
@@ -233,6 +237,7 @@
       },
       "fields": {
         "id": "ID",
+        "image": "Image",
         "given_name": "Given name",
         "family_name": "Family name",
         "emails": "Email addresses",

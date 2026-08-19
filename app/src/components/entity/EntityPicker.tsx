@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { EntityReferenceCard } from './EntityReferenceCard'
-import { EntityTypeIcon } from './EntityTypeIcon'
+import { EntityImage } from './EntityImage'
 
 interface Props {
   value?: string
@@ -90,7 +90,11 @@ export function EntityPicker({
                   }}
                 >
                   <span className="flex min-w-0 items-center gap-2">
-                    <EntityTypeIcon type={entity.type} />
+                    <EntityImage
+                      image={entity.image}
+                      type={entity.type}
+                      alt={getEntityDisplayName(entity)}
+                    />
                     <span className="min-w-0">
                       <span className="block truncate text-sm font-medium">
                         {getEntityDisplayName(entity)}

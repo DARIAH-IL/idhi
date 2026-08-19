@@ -8,7 +8,7 @@ import {
   getEntityDisplayName,
   getEntityTypeLabel,
 } from '@/lib/entity'
-import { EntityTypeIcon } from './EntityTypeIcon'
+import { EntityImage } from './EntityImage'
 
 export function EntityReferenceCard({ entityId }: { entityId: string }) {
   const { data, isLoading, isError } = useQuery(
@@ -31,7 +31,11 @@ export function EntityReferenceCard({ entityId }: { entityId: string }) {
         ) : (
           <div className="flex items-start justify-between gap-3">
             <div className="flex min-w-0 gap-2.5">
-              <EntityTypeIcon type={data.type} />
+              <EntityImage
+                image={data.image}
+                type={data.type}
+                alt={getEntityDisplayName(data)}
+              />
               <div className="min-w-0">
                 <Link
                   to="/entities/$entityId"

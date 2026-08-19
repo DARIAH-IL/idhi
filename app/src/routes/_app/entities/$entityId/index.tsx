@@ -20,7 +20,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
-import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { EntityImage } from '@/components/entity/EntityImage'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
 
@@ -99,7 +99,7 @@ function EntityDetailPage() {
     return String(v)
   }
 
-  const skipKeys = new Set(['type', 'id', 'audit'])
+  const skipKeys = new Set(['type', 'id', 'image', 'audit'])
   const entityFields = Object.entries(raw).filter(
     ([k, v]) => !skipKeys.has(k) && v !== null && v !== undefined,
   )
@@ -109,7 +109,12 @@ function EntityDetailPage() {
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <EntityTypeIcon type={entity.type} size="lg" />
+            <EntityImage
+              image={entity.image}
+              type={entity.type}
+              alt={getEntityDisplayName(entity)}
+              size="lg"
+            />
             <Badge variant="secondary">{getEntityTypeLabel(entity.type)}</Badge>
             <h1 className="text-lg font-semibold">
               {getEntityDisplayName(entity)}

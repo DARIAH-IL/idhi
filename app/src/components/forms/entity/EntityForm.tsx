@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { FieldError } from '@/components/form-fields/FieldError'
 import { firstError, validateValue } from '@/components/form-fields/validation'
+import { ImageField } from './ImageField'
 
 interface Props {
   entityType: EntityType
@@ -113,6 +114,7 @@ export function EntityForm({
             type="url"
             placeholder="https://…"
           />
+          <ImageField entityType={entityType} />
           <LangStringField
             name="description"
             label={t('entity.form.fields.description')}

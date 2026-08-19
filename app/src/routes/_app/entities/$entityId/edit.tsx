@@ -13,7 +13,7 @@ import {
   usePostApiV1EntitiesEntityId,
 } from '@/api/hooks/entities/entities'
 import { EntityForm } from '@/components/forms/entity/EntityForm'
-import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { EntityImage } from '@/components/entity/EntityImage'
 import { getEntityDisplayName } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'
 
@@ -69,7 +69,11 @@ function EditEntityPage() {
   return (
     <div className="flex flex-col gap-4 max-w-2xl">
       <div className="flex items-center gap-2.5">
-        <EntityTypeIcon type={entity.type} />
+        <EntityImage
+          image={entity.image}
+          type={entity.type}
+          alt={getEntityDisplayName(entity)}
+        />
         <div>
           <h1 className="text-lg font-semibold">
             {t('entity.form.edit_title')}

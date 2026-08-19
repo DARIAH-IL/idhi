@@ -55,18 +55,22 @@ function NewEntityPage() {
           {t('entity.form.select_type_description')}
         </p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {ENTITY_TYPES.map((et) => (
-            <Button
-              key={et}
-              variant="outline"
-              size="lg"
-              className="h-24 flex-col gap-2"
-              onPress={() => setSelectedType(et)}
-            >
-              <EntityTypeIcon type={et} size="lg" />
-              <span>{getEntityTypeLabel(et)}</span>
-            </Button>
-          ))}
+          {[...ENTITY_TYPES]
+            .sort((a, b) =>
+              getEntityTypeLabel(a).localeCompare(getEntityTypeLabel(b)),
+            )
+            .map((et) => (
+              <Button
+                key={et}
+                variant="outline"
+                size="lg"
+                className="h-24 flex-col gap-2"
+                onPress={() => setSelectedType(et)}
+              >
+                <EntityTypeIcon type={et} size="lg" />
+                <span>{getEntityTypeLabel(et)}</span>
+              </Button>
+            ))}
         </div>
       </div>
     )

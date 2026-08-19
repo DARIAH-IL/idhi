@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/input-group'
 import { Badge } from '@/components/ui/badge'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
+import { EntityImage } from '@/components/entity/EntityImage'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
 import {
@@ -374,6 +375,7 @@ function EntityBoard() {
               onSortChange={handleSortChange}
             >
               <TableHeader>
+                <TableHead id="image" aria-label={t('board.columns.image')} />
                 <TableHead
                   id="name.value"
                   isRowHeader
@@ -409,7 +411,7 @@ function EntityBoard() {
                 {results.length === 0 ? (
                   <TableRow id="empty-state" className="hover:bg-transparent">
                     <TableCell
-                      colSpan={3}
+                      colSpan={4}
                       className="h-24 text-center text-sm text-muted-foreground"
                     >
                       {t(
@@ -434,6 +436,13 @@ function EntityBoard() {
                         }
                         className="cursor-pointer"
                       >
+                        <TableCell className="w-12">
+                          <EntityImage
+                            image={entity.image}
+                            type={entity.type}
+                            alt={getEntityDisplayName(entity)}
+                          />
+                        </TableCell>
                         <TableCell>
                           <Link
                             to="/entities/$entityId"
@@ -444,12 +453,9 @@ function EntityBoard() {
                           </Link>
                         </TableCell>
                         <TableCell>
-                          <div className="flex items-center gap-2.5">
-                            <EntityTypeIcon type={entity.type} />
-                            <Badge variant="secondary">
-                              {getEntityTypeLabel(entity.type)}
-                            </Badge>
-                          </div>
+                          <Badge variant="secondary">
+                            {getEntityTypeLabel(entity.type)}
+                          </Badge>
                         </TableCell>
                         <TableCell className="text-muted-foreground">
                           <TimeAgo date={entity.audit?.modifiedAt} />
