@@ -6,10 +6,13 @@ import { createConnection } from 'mongoose'
 
 const ENTITY_COUNT = 5
 const CREATED_BY = 'idhi:user:mockseed'
-const IMPORTED_AT = '2026-01-01T00:00:00.000Z'
 const INVITE_ID = 'idhi:invite:mockseed'
 const INVITE_EMAIL = 'reallyliri@gmail.com'
 const INVITE_EXPIRY_DAYS = 30
+const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000
+const MOCK_IMAGE = Buffer.from(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"><rect width="320" height="180" rx="20" fill="#312e81"/><circle cx="80" cy="90" r="48" fill="#818cf8"/><path d="M150 58h118v16H150zm0 32h86v16h-86zm0 32h104v16H150z" fill="#e0e7ff"/></svg>',
+).toString('base64')
 
 function entityId(kind, index) {
   return `idhi:${kind}:${String(index + 1).padStart(4, '0')}mock`
@@ -30,6 +33,34 @@ function localized(value, index) {
 
 function related(values, index) {
   return values[index % values.length]
+}
+
+function image(index) {
+  return index % 3 === 0 ? MOCK_IMAGE : undefined
+}
+
+function auditTimestamps(index) {
+  const createdAt = new Date(
+    Date.UTC(
+      2018 + (index % 6),
+      (index * 7) % 12,
+      1 + ((index * 11) % 27),
+      (index * 5) % 24,
+      (index * 13) % 60,
+      (index * 17) % 60,
+    ),
+  )
+  const modifiedAt = new Date(
+    createdAt.getTime() +
+      (3 + ((index * 37) % 540)) * DAY_IN_MILLISECONDS +
+      ((index * 43) % 24) * 60 * 60 * 1000 +
+      ((index * 47) % 60) * 60 * 1000,
+  )
+
+  return {
+    createdAt: createdAt.toISOString(),
+    modifiedAt: modifiedAt.toISOString(),
+  }
 }
 
 const personIds = ids('person')
@@ -61,6 +92,7 @@ export const entities = [
     location: localized('Jerusalem', index),
     contact_email: `organization${index + 1}@example.test`,
     homepage: `https://example.test/organizations/${index + 1}`,
+    image: image(index),
     marketplace_sync: index % 2 === 0,
     tags: ['mock-data', 'digital-humanities'],
   })),
@@ -97,6 +129,7 @@ export const entities = [
       },
     ],
     homepage: `https://example.test/people/${index + 1}`,
+    image: image(index + 1),
     tags: ['mock-data', index % 2 === 0 ? 'history' : 'linguistics'],
   })),
   ...toolIds.map((id, index) => ({
@@ -114,6 +147,7 @@ export const entities = [
     code_repository: `https://example.test/tools/${index + 1}/source`,
     documentation_url: `https://example.test/tools/${index + 1}/docs`,
     homepage: `https://example.test/tools/${index + 1}`,
+    image: image(index + 2),
     tags: ['mock-data', 'research-software'],
   })),
   ...serviceIds.map((id, index) => ({
@@ -134,6 +168,7 @@ export const entities = [
     contact_email: `service${index + 1}@example.test`,
     documentation_url: `https://example.test/services/${index + 1}/docs`,
     homepage: `https://example.test/services/${index + 1}`,
+    image: image(index),
     tags: ['mock-data', 'research-service'],
   })),
   ...facilityIds.map((id, index) => ({
@@ -154,6 +189,7 @@ export const entities = [
     address: localized('1 Mock Street', index),
     contact_email: `facility${index + 1}@example.test`,
     homepage: `https://example.test/facilities/${index + 1}`,
+    image: image(index + 1),
     tags: ['mock-data', 'laboratory'],
   })),
   ...eventIds.map((id, index) => ({
@@ -176,6 +212,7 @@ export const entities = [
     location: localized('Tel Aviv', index),
     address: localized('10 Example Avenue', index),
     homepage: `https://example.test/events/${index + 1}`,
+    image: image(index + 2),
     tags: ['mock-data', 'event'],
   })),
   ...publicationIds.map((id, index) => ({
@@ -197,6 +234,7 @@ export const entities = [
     date_issued: `202${index}-06-01`,
     doi: `https://doi.org/10.5555/mock.${index + 1}`,
     homepage: `https://example.test/publications/${index + 1}`,
+    image: image(index),
     tags: ['mock-data', 'publication'],
   })),
   ...datasetIds.map((id, index) => ({
@@ -214,6 +252,7 @@ export const entities = [
     date_issued: `202${index}-07-01`,
     distribution_url: `https://example.test/datasets/${index + 1}/download`,
     homepage: `https://example.test/datasets/${index + 1}`,
+    image: image(index + 1),
     tags: ['mock-data', 'open-data'],
   })),
   ...trainingMaterialIds.map((id, index) => ({
@@ -245,6 +284,7 @@ export const entities = [
     media_type: 'text/html',
     material_url: `https://example.test/training/${index + 1}/start`,
     homepage: `https://example.test/training/${index + 1}`,
+    image: image(index + 2),
     tags: ['mock-data', 'training'],
   })),
   ...projectIds.map((id, index) => ({
@@ -295,6 +335,7 @@ export const entities = [
     start_date: `202${index}-01-01`,
     end_date: index === ENTITY_COUNT - 1 ? null : `202${index + 2}-12-31`,
     homepage: `https://example.test/projects/${index + 1}`,
+    image: image(index),
     tags: ['mock-data', 'research-project'],
   })),
 ]
@@ -313,12 +354,13 @@ function appendSearchValues(value, values) {
   values.push(String(value))
 }
 
-function toStoredEntity(entity) {
+function toStoredEntity(entity, index) {
   const { id, ...values } = entity
+  const { createdAt, modifiedAt } = auditTimestamps(index)
   const audit = {
-    createdAt: IMPORTED_AT,
+    createdAt,
     createdBy: CREATED_BY,
-    modifiedAt: IMPORTED_AT,
+    modifiedAt,
     modifiedBy: CREATED_BY,
   }
   const searchableEntity = { id, ...values, audit }

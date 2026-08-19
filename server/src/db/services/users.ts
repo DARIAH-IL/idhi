@@ -79,9 +79,7 @@ export interface UserDatabaseService {
     userId: string,
     replacingCredentialId: string,
     credential: PasskeyCredential,
-  ): Promise<
-    'replaced' | 'duplicate' | 'credentialNotFound' | 'userNotFound'
-  >
+  ): Promise<'replaced' | 'duplicate' | 'credentialNotFound' | 'userNotFound'>
   replace(userId: string, user: UserWrite): Promise<UserWithCredentials | null>
   delete(userId: string): Promise<boolean>
 }
@@ -188,9 +186,7 @@ export async function createUserDatabaseService(
       createdUser.set({
         ...user,
         email: normalizeEmail(user.email),
-        passkeyCredentials: user.passkeyCredentials.map(
-          storePasskeyCredential,
-        ),
+        passkeyCredentials: user.passkeyCredentials.map(storePasskeyCredential),
       })
       await createdUser.save()
 
@@ -237,11 +233,7 @@ export async function createUserDatabaseService(
         : 'userNotFound'
     },
 
-    async replacePasskeyCredential(
-      userId,
-      replacingCredentialId,
-      credential,
-    ) {
+    async replacePasskeyCredential(userId, replacingCredentialId, credential) {
       const storedCredential = storePasskeyCredential(credential)
       const result = await users.updateOne(
         {
