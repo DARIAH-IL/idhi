@@ -13,8 +13,8 @@ import type {
 } from '@tanstack/react-query'
 
 import type {
-  AuthChallenge,
   AuthEmailWrite,
+  AuthOtpChallenge,
   AuthOtpStartWrite,
   AuthToken,
   ErrorResponse,
@@ -35,7 +35,7 @@ export const postApiV1AuthOtp = (
   authOtpStartWrite: BodyType<AuthOtpStartWrite>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<AuthChallenge>({
+  return customInstance<AuthOtpChallenge>({
     url: `/api/v1/auth/otp`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

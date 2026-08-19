@@ -246,6 +246,7 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
     return c.json({
       challengeId,
       expiration: new Date(expiresAtEpoch).toISOString(),
+      digits,
     })
   },
 )

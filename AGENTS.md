@@ -14,6 +14,8 @@ Use pnpm from the workspace root. Scope package commands with `pnpm --filter @id
 
 Do not run `pnpm`, `npm`, `npx`, `yarn`, `bun`, or similar package-manager commands unless the user explicitly directs you to run them. The same restriction applies to project scripts and tooling commands, including dependency installation, generators, development servers, builds, tests, linters, formatters, type-checkers, and database or deployment commands. Instructions elsewhere in this file describe how to run these commands when authorized; they do not constitute authorization. Read-only shell commands used to inspect the repository are allowed.
 
+Do not compromise on the requested implementation or replace an established generator, installer, or project workflow with a hand-written workaround merely because permission to run its command is missing. Stop before making the workaround, explain which command or permission is required and why, and ask the user to authorize it. Continue only after authorization or after the user explicitly chooses an alternative approach.
+
 ## Contract-first API design
 
 API changes start in `openapi.yaml`. It defines paths, methods, parameters, request and response bodies, reusable schemas, error shapes, and bearer-auth requirements. Do not independently duplicate or reshape the contract in app or server code.

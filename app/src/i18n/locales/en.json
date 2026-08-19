@@ -39,6 +39,9 @@
   },
   "auth": {
     "title": "IDHI",
+    "user_menu": "User menu",
+    "signed_in_as": "Signed in as",
+    "user_actions": "User actions",
     "description": "You can log in if you have an account or a pending invitation.",
     "email_label": "Email address",
     "email_placeholder": "you@example.com",

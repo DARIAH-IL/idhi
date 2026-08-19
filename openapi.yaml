@@ -44,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthChallenge"
+                $ref: "#/components/schemas/AuthOtpChallenge"
         "400":
           $ref: "#/components/responses/Error"
 
@@ -632,6 +632,19 @@ components:
           properties:
             lang:
               $ref: "#/components/schemas/Language"
+
+    AuthOtpChallenge:
+      allOf:
+        - $ref: "#/components/schemas/AuthChallenge"
+        - type: object
+          required:
+            - digits
+          properties:
+            digits:
+              type: integer
+              minimum: 1
+              maximum: 32
+              description: Number of digits required to complete the OTP challenge.
 
     OtpChallengeCompletion:
       type: object

@@ -19,10 +19,24 @@ export const PostApiV1AuthOtpBody = zod
     }),
   )
 
-export const PostApiV1AuthOtpResponse = zod.object({
-  challengeId: zod.string(),
-  expiration: zod.iso.datetime({ offset: true }).describe('UTC date and time'),
-})
+export const postApiV1AuthOtpResponseTwoDigitsMax = 32
+
+export const PostApiV1AuthOtpResponse = zod
+  .object({
+    challengeId: zod.string(),
+    expiration: zod.iso
+      .datetime({ offset: true })
+      .describe('UTC date and time'),
+  })
+  .and(
+    zod.object({
+      digits: zod
+        .int()
+        .min(1)
+        .max(postApiV1AuthOtpResponseTwoDigitsMax)
+        .describe('Number of digits required to complete the OTP challenge.'),
+    }),
+  )
 
 export const PostApiV1AuthOtpChallengeIdParams = zod.object({
   challengeId: zod.string(),

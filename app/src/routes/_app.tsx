@@ -7,6 +7,7 @@ import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { LoginDialog } from '@/components/auth/LoginDialog'
+import { UserMenu } from '@/components/auth/UserMenu'
 
 export const Route = createFileRoute('/_app')({
   component: AppLayout,
@@ -15,8 +16,7 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { t } = useTranslation()
   const [loginOpen, setLoginOpen] = useState(false)
-  const token = useAuthStore((s) => s.token)
-  const logout = useAuthStore((s) => s.logout)
+  const user = useAuthStore((s) => s.user)
   const language = useUIStore((s) => s.language)
 
   useEffect(() => {
@@ -40,10 +40,8 @@ function AppLayout() {
             {t('common.site_name')}
           </span>
         </Link>
-        {token ? (
-          <Button variant="ghost" size="sm" onPress={logout}>
-            {t('common.logout')}
-          </Button>
+        {user ? (
+          <UserMenu />
         ) : (
           <Button variant="ghost" size="sm" onPress={() => setLoginOpen(true)}>
             {t('common.login')}

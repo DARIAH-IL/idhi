@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { useTranslation } from 'react-i18next'
 import {
   usePostApiV1AuthOtp,
@@ -14,6 +15,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from '@/components/ui/input-otp'
 import { Label } from '@/components/ui/label'
 
 interface LoginDialogProps {
@@ -26,12 +32,14 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
   const setToken = useAuthStore((state) => state.setToken)
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
+  const [otpDigits, setOtpDigits] = useState<number | null>(null)
   const [challengeId, setChallengeId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const reset = () => {
     setEmail('')
     setOtp('')
+    setOtpDigits(null)
     setChallengeId(null)
     setError(null)
   }
@@ -45,6 +53,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
     mutation: {
       onSuccess: (data) => {
         setChallengeId(data.challengeId)
+        setOtpDigits(data.digits)
         setError(null)
       },
       onError: (err) => setError(getApiErrorMessage(err)),
@@ -68,11 +77,18 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
     startOtp.mutate({ data: { email: email.trim() } })
   }
 
+  const submitOtp = (value: string) => {
+    if (value.length !== otpDigits || !challengeId || completeOtp.isPending) {
+      return
+    }
+
+    setError(null)
+    completeOtp.mutate({ challengeId, data: { otp: value } })
+  }
+
   const handleOtpSubmit = (event: React.FormEvent) => {
     event.preventDefault()
-    if (!otp.trim() || !challengeId) return
-    setError(null)
-    completeOtp.mutate({ challengeId, data: { otp: otp.trim() } })
+    submitOtp(otp)
   }
 
   return (
@@ -124,24 +140,31 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
         <form onSubmit={handleOtpSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="login-otp">{t('auth.otp_label')}</Label>
-            <Input
+            <InputOTP
               id="login-otp"
-              type="text"
-              inputMode="numeric"
+              maxLength={otpDigits ?? 0}
+              pattern={REGEXP_ONLY_DIGITS}
               autoComplete="one-time-code"
-              placeholder={t('auth.otp_placeholder')}
               value={otp}
-              onChange={(event) => setOtp(event.target.value)}
+              onChange={setOtp}
+              onComplete={submitOtp}
+              containerClassName="justify-center"
               autoFocus
               required
-            />
+            >
+              <InputOTPGroup>
+                {Array.from({ length: otpDigits ?? 0 }, (_, index) => (
+                  <InputOTPSlot key={index} index={index} />
+                ))}
+              </InputOTPGroup>
+            </InputOTP>
           </div>
           {error && <p className="text-xs text-destructive">{error}</p>}
           <Button
             type="submit"
             className="w-full"
             size="lg"
-            isDisabled={completeOtp.isPending}
+            isDisabled={completeOtp.isPending || otp.length !== otpDigits}
           >
             {completeOtp.isPending ? t('common.loading') : t('auth.verify')}
           </Button>
@@ -151,6 +174,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
             onPress={() => {
               setChallengeId(null)
               setOtp('')
+              setOtpDigits(null)
               setError(null)
             }}
           >

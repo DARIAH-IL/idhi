@@ -26,11 +26,7 @@ type StyledTableProps = TableProps & {
   containerClassName?: string
 }
 
-function Table({
-  className,
-  containerClassName,
-  ...props
-}: StyledTableProps) {
+function Table({ className, containerClassName, ...props }: StyledTableProps) {
   return (
     <div
       data-slot="table-container"

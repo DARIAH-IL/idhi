@@ -2,7 +2,8 @@ import { useCallback, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { infiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Checkbox, type SortDescriptor } from 'react-aria-components'
+import { Checkbox  } from 'react-aria-components'
+import type {SortDescriptor} from 'react-aria-components';
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Cancel01Icon,
