@@ -77,6 +77,12 @@ paths:
       tags:
         - UserAuth
       summary: Start passkey registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasskeyRegistrationWrite"
       responses:
         "200":
           description: Passkey registration challenge started
@@ -665,6 +671,16 @@ components:
               type: object
               additionalProperties: true
               description: Matches @simplewebauthn/PublicKeyCredentialCreationOptionsJSON.
+
+    PasskeyRegistrationWrite:
+      type: object
+      additionalProperties: false
+      properties:
+        replacingCredentialId:
+          type: string
+          minLength: 1
+          pattern: "^[A-Za-z0-9_-]+$"
+          description: Existing credential to replace after successful registration.
 
     PasskeyRegistrationResponse:
       type: object

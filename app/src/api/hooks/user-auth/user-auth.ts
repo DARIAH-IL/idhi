@@ -23,6 +23,7 @@ import type {
   PasskeyAuthenticationResponse,
   PasskeyRegistrationChallenge,
   PasskeyRegistrationResponse,
+  PasskeyRegistrationWrite,
 } from '../../models'
 
 import { customInstance } from '../../client.ts'
@@ -202,10 +203,15 @@ export const usePostApiV1AuthOtpChallengeId = <
 /**
  * @summary Start passkey registration
  */
-export const postApiV1AuthPasskeyCreate = (signal?: AbortSignal) => {
+export const postApiV1AuthPasskeyCreate = (
+  passkeyRegistrationWrite: BodyType<PasskeyRegistrationWrite>,
+  signal?: AbortSignal,
+) => {
   return customInstance<PasskeyRegistrationChallenge>({
     url: `/api/v1/auth/passkey/create`,
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: passkeyRegistrationWrite,
     signal,
   })
 }
@@ -217,13 +223,13 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
     TError,
-    void,
+    { data: BodyType<PasskeyRegistrationWrite> },
     TContext
   >
 }): UseMutationOptions<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
   TError,
-  void,
+  { data: BodyType<PasskeyRegistrationWrite> },
   TContext
 > => {
   const mutationKey = ['postApiV1AuthPasskeyCreate']
@@ -237,9 +243,11 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
-    void
-  > = () => {
-    return postApiV1AuthPasskeyCreate()
+    { data: BodyType<PasskeyRegistrationWrite> }
+  > = (props) => {
+    const { data } = props ?? {}
+
+    return postApiV1AuthPasskeyCreate(data)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -248,7 +256,8 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
 export type PostApiV1AuthPasskeyCreateMutationResult = NonNullable<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>
 >
-
+export type PostApiV1AuthPasskeyCreateMutationBody =
+  BodyType<PasskeyRegistrationWrite>
 export type PostApiV1AuthPasskeyCreateMutationError = ErrorType<ErrorResponse>
 
 /**
@@ -262,7 +271,7 @@ export const usePostApiV1AuthPasskeyCreate = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
       TError,
-      void,
+      { data: BodyType<PasskeyRegistrationWrite> },
       TContext
     >
   },
@@ -270,7 +279,7 @@ export const usePostApiV1AuthPasskeyCreate = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
   TError,
-  void,
+  { data: BodyType<PasskeyRegistrationWrite> },
   TContext
 > => {
   return useMutation(

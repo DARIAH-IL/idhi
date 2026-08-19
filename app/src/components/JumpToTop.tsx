@@ -37,7 +37,6 @@ export function JumpToTop() {
   return (
     <Button
       aria-label={t('common.jump_to_top')}
-      title={t('common.jump_to_top')}
       variant="secondary"
       size="icon-lg"
       className="fixed end-6 bottom-6 z-50 size-10 rounded-full shadow-lg"

@@ -14,7 +14,8 @@ export type AuthRateLimitResult = {
 
 export interface AuthRateLimitDatabaseService {
   consume(
-    key: string,
+    scope: string,
+    identity: string,
     limit: number,
     windowMilliseconds: number,
   ): Promise<AuthRateLimitResult>
@@ -50,12 +51,12 @@ export async function createAuthRateLimitDatabaseService(
   }
 
   return {
-    async consume(key, limit, windowMilliseconds) {
+    async consume(scope, identity, limit, windowMilliseconds) {
       const now = Date.now()
       const bucketStart =
         Math.floor(now / windowMilliseconds) * windowMilliseconds
       const retryAfterEpoch = bucketStart + windowMilliseconds
-      const bucketId = `${key}:${bucketStart}`
+      const bucketId = `${identity}:${scope}:${bucketStart}`
       const counter = await authRateLimits
         .findByIdAndUpdate(
           bucketId,

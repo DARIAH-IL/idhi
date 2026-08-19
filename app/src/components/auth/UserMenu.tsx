@@ -1,5 +1,10 @@
-import { Logout01Icon, UserIcon } from '@hugeicons/core-free-icons'
+import {
+  Logout01Icon,
+  UserIcon,
+  UserShield01Icon,
+} from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { useNavigate } from '@tanstack/react-router'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/stores/auth'
@@ -9,6 +14,7 @@ export function UserMenu() {
   const { t } = useTranslation()
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
+  const navigate = useNavigate()
 
   if (!user) return null
 
@@ -42,6 +48,16 @@ export function UserMenu() {
         </div>
         <div className="my-1 h-px bg-border" />
         <Menu aria-label={t('auth.user_actions')} className="outline-none">
+          {user.isAdmin && (
+            <MenuItem
+              id="admin"
+              onAction={() => void navigate({ to: '/admin' })}
+              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground"
+            >
+              <HugeiconsIcon icon={UserShield01Icon} strokeWidth={2} />
+              {t('admin.menu_item')}
+            </MenuItem>
+          )}
           <MenuItem
             id="logout"
             onAction={logout}

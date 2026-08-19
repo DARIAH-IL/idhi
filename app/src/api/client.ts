@@ -9,6 +9,12 @@ const client = axios.create({
   baseURL: import.meta.env['VITE_API_URL'] ?? 'http://localhost:8787',
 })
 
+const AUTH_FLOW_URL_PREFIX = '/api/v1/auth/'
+
+function isAuthFlowRequest(url: string | undefined): boolean {
+  return !!url && url.startsWith(AUTH_FLOW_URL_PREFIX)
+}
+
 client.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token
   if (token) {
@@ -36,9 +42,11 @@ client.interceptors.response.use(
       err,
     )
 
-    toast.error(getApiErrorMessage(err), {
-      id: `api-error:${err.config?.method}:${err.config?.url}:${apiError?.errorCode ?? err.code}`,
-    })
+    if (!isAuthFlowRequest(err.config?.url)) {
+      toast.error(getApiErrorMessage(err), {
+        id: `api-error:${err.config?.method}:${err.config?.url}:${apiError?.errorCode ?? err.code}`,
+      })
+    }
 
     if (apiError?.errorCode === ErrorCode.Unauthorized) {
       useAuthStore.getState().logout()

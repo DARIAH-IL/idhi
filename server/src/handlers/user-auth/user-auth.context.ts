@@ -12,6 +12,7 @@ import type {
   OtpChallengeCompletion,
   PasskeyAuthenticationResponse,
   PasskeyRegistrationResponse,
+  PasskeyRegistrationWrite,
 } from '../../models'
 
 export type PostApiV1AuthOtpContext<E extends Env = any> = Context<
@@ -39,7 +40,11 @@ export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
 >
 export type PostApiV1AuthPasskeyCreateContext<E extends Env = any> = Context<
   E,
-  '/api/v1/auth/passkey/create'
+  '/api/v1/auth/passkey/create',
+  {
+    in: { json: PasskeyRegistrationWrite }
+    out: { json: PasskeyRegistrationWrite }
+  }
 >
 export type PostApiV1AuthPasskeyCreateChallengeIdContext<E extends Env = any> =
   Context<

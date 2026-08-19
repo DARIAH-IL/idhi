@@ -50,6 +50,18 @@ export const PostApiV1AuthOtpChallengeIdResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
 
+export const postApiV1AuthPasskeyCreateBodyReplacingCredentialIdRegExp =
+  new RegExp('^[A-Za-z0-9_-]+$')
+
+export const PostApiV1AuthPasskeyCreateBody = zod.object({
+  replacingCredentialId: zod
+    .string()
+    .min(1)
+    .regex(postApiV1AuthPasskeyCreateBodyReplacingCredentialIdRegExp)
+    .optional()
+    .describe('Existing credential to replace after successful registration.'),
+})
+
 export const PostApiV1AuthPasskeyCreateResponse = zod
   .object({
     challengeId: zod.string(),

@@ -105,12 +105,27 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
   const authorizeAdmin = async (
     scope: string,
   ): Promise<Response | undefined> => {
-    const user = await getAuthenticatedUser()
+    const tokenUser = await getAuthenticatedUser()
 
-    if (!user) {
+    if (!tokenUser) {
       logResolution(`${scope}_unauthenticated`)
       return unauthorized('Authentication required')
     }
+
+    const storedUser = await c.var.db.users.get(tokenUser.id)
+
+    if (!storedUser) {
+      logResolution(`${scope}_user_not_found`)
+      return unauthorized('Authentication required')
+    }
+
+    const user: User = {
+      id: storedUser.id,
+      email: storedUser.email,
+      isAdmin: storedUser.isAdmin,
+      ...(storedUser.name ? { name: storedUser.name } : {}),
+    }
+    c.set('user', user)
 
     const response = requireAdmin(user)
 

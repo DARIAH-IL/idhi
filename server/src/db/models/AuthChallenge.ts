@@ -10,6 +10,7 @@ interface PasskeyChallenge {
 
 interface PasskeyCreateChallenge extends PasskeyChallenge {
   userId: string
+  replacingCredentialId?: string
   options: PublicKeyCredentialCreationOptionsJSON
 }
 

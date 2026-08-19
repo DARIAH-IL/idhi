@@ -95,17 +95,6 @@ export const authRateLimits = {
   },
 }
 
-async function digest(value: string): Promise<string> {
-  const bytes = await crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(value),
-  )
-
-  return Array.from(new Uint8Array(bytes), (byte) =>
-    byte.toString(16).padStart(2, '0'),
-  ).join('')
-}
-
 export async function enforceAuthRateLimits(
   c: Context,
   limits: AuthRateLimit[],
@@ -132,9 +121,9 @@ export async function enforceAuthRateLimits(
       : limits
 
   for (const limit of effectiveLimits) {
-    const key = await digest(`${limit.scope}\u0000${limit.identity}`)
     const result = await c.var.db.authRateLimits.consume(
-      key,
+      limit.scope,
+      limit.identity,
       limit.limit,
       limit.windowMilliseconds,
     )

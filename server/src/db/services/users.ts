@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import {
   Schema,
   type Connection,
@@ -29,9 +30,27 @@ const serializationOptions: ToObjectOptions<StoredUser> = {
   },
 }
 
+const passkeyCredentialSchema = new Schema<PasskeyCredential>(
+  {
+    id: { type: String, required: true },
+    publicKey: { type: Schema.Types.Buffer, required: true },
+    webauthnUserID: { type: String, required: true },
+    counter: { type: Number, required: true },
+    deviceType: { type: String, required: true },
+    backedUp: { type: Boolean, required: true },
+    transports: { type: [String], required: false },
+  },
+  { _id: false },
+)
+
 const userSchema = new Schema<StoredUser>(
   {
     _id: { type: String, alias: 'id' },
+    passkeyCredentials: {
+      type: [passkeyCredentialSchema],
+      required: true,
+      default: [],
+    },
   },
   {
     id: false,
@@ -56,6 +75,13 @@ export interface UserDatabaseService {
     userId: string,
     credential: PasskeyCredential,
   ): Promise<'enrolled' | 'duplicate' | 'userNotFound'>
+  replacePasskeyCredential(
+    userId: string,
+    replacingCredentialId: string,
+    credential: PasskeyCredential,
+  ): Promise<
+    'replaced' | 'duplicate' | 'credentialNotFound' | 'userNotFound'
+  >
   replace(userId: string, user: UserWrite): Promise<UserWithCredentials | null>
   delete(userId: string): Promise<boolean>
 }
@@ -64,8 +90,38 @@ function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
 }
 
+function exposePasskeyCredential(
+  credential: PasskeyCredential,
+): PasskeyCredential {
+  return {
+    id: credential.id,
+    publicKey: new Uint8Array(credential.publicKey),
+    webauthnUserID: credential.webauthnUserID,
+    counter: credential.counter,
+    deviceType: credential.deviceType,
+    backedUp: credential.backedUp,
+    ...(credential.transports
+      ? { transports: [...credential.transports] }
+      : {}),
+  }
+}
+
+function storePasskeyCredential(
+  credential: PasskeyCredential,
+): PasskeyCredential {
+  return {
+    ...credential,
+    publicKey: Buffer.from(credential.publicKey),
+  }
+}
+
 function exposeUser(user: HydratedDocument<StoredUser>): UserWithCredentials {
-  return user.toObject<UserWithCredentials>()
+  const exposed = user.toObject<UserWithCredentials>()
+
+  return {
+    ...exposed,
+    passkeyCredentials: user.passkeyCredentials.map(exposePasskeyCredential),
+  }
 }
 
 export async function createUserDatabaseService(
@@ -115,7 +171,7 @@ export async function createUserDatabaseService(
         .select({ passkeyCredentials: 1 })
         .exec()
 
-      return user?.passkeyCredentials ?? []
+      return user?.passkeyCredentials.map(exposePasskeyCredential) ?? []
     },
 
     async getByEmail(email) {
@@ -129,18 +185,32 @@ export async function createUserDatabaseService(
 
     async insert(user) {
       const createdUser = new users()
-      createdUser.set({ ...user, email: normalizeEmail(user.email) })
+      createdUser.set({
+        ...user,
+        email: normalizeEmail(user.email),
+        passkeyCredentials: user.passkeyCredentials.map(
+          storePasskeyCredential,
+        ),
+      })
       await createdUser.save()
 
       return exposeUser(createdUser)
     },
 
     async update(user) {
-      const { id, ...values } = user
+      const { id, passkeyCredentials, ...values } = user
       const updatedUser = await users
         .findByIdAndUpdate(
           id,
-          { $set: { ...values, email: normalizeEmail(values.email) } },
+          {
+            $set: {
+              ...values,
+              email: normalizeEmail(values.email),
+              passkeyCredentials: passkeyCredentials.map(
+                storePasskeyCredential,
+              ),
+            },
+          },
           { new: true },
         )
         .exec()
@@ -149,12 +219,13 @@ export async function createUserDatabaseService(
     },
 
     async enrollPasskeyCredential(userId, credential) {
+      const storedCredential = storePasskeyCredential(credential)
       const result = await users.updateOne(
         {
           _id: userId,
           'passkeyCredentials.id': { $ne: credential.id },
         },
-        { $push: { passkeyCredentials: credential } },
+        { $push: { passkeyCredentials: storedCredential } },
       )
 
       if (result.modifiedCount === 1) {
@@ -164,6 +235,44 @@ export async function createUserDatabaseService(
       return (await users.exists({ _id: userId }))
         ? 'duplicate'
         : 'userNotFound'
+    },
+
+    async replacePasskeyCredential(
+      userId,
+      replacingCredentialId,
+      credential,
+    ) {
+      const storedCredential = storePasskeyCredential(credential)
+      const result = await users.updateOne(
+        {
+          _id: userId,
+          passkeyCredentials: { $elemMatch: { id: replacingCredentialId } },
+          ...(credential.id === replacingCredentialId
+            ? {}
+            : { 'passkeyCredentials.id': { $ne: credential.id } }),
+        },
+        { $set: { 'passkeyCredentials.$': storedCredential } },
+      )
+
+      if (result.matchedCount === 1) {
+        return 'replaced'
+      }
+
+      const user = await users.findById(userId).exec()
+
+      if (!user) {
+        return 'userNotFound'
+      }
+
+      if (
+        user.passkeyCredentials.some(
+          (candidate) => candidate.id === credential.id,
+        )
+      ) {
+        return 'duplicate'
+      }
+
+      return 'credentialNotFound'
     },
 
     async replace(userId, user) {

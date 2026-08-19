@@ -48,6 +48,7 @@ import {
   PostApiV1AuthOtpChallengeIdParams,
   PostApiV1AuthOtpChallengeIdBody,
   PostApiV1AuthOtpChallengeIdResponse,
+  PostApiV1AuthPasskeyCreateBody,
   PostApiV1AuthPasskeyCreateResponse,
   PostApiV1AuthPasskeyCreateChallengeIdParams,
   PostApiV1AuthPasskeyCreateChallengeIdBody,
@@ -372,7 +373,9 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
 )
 export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
   zValidator('response', PostApiV1AuthPasskeyCreateResponse),
+  zValidator('json', PostApiV1AuthPasskeyCreateBody),
   async (c: PostApiV1AuthPasskeyCreateContext) => {
+    const { replacingCredentialId } = c.req.valid('json')
     const user = c.get('user')
     assertAuthenticatedUser(user)
     await enforceAuthRateLimits(c, [
@@ -381,6 +384,21 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
     const passkeyCredentials = await c.var.db.users.getPasskeyCredentials(
       user.id,
     )
+
+    if (
+      replacingCredentialId &&
+      !passkeyCredentials.some(
+        (credential) => credential.id === replacingCredentialId,
+      )
+    ) {
+      throw invalidPasskey('Passkey to replace is not registered')
+    }
+
+    const excludedCredentials = replacingCredentialId
+      ? passkeyCredentials.filter(
+          (credential) => credential.id !== replacingCredentialId,
+        )
+      : passkeyCredentials
 
     const { origin, rpID } = relyingParty(
       c.req.url,
@@ -398,7 +416,7 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
         residentKey: 'preferred',
         userVerification: 'required',
       },
-      excludeCredentials: passkeyCredentials.map((credential) => ({
+      excludeCredentials: excludedCredentials.map((credential) => ({
         id: credential.id,
         transports: credential.transports,
       })),
@@ -410,6 +428,7 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
       challengeId,
       type: 'passkeyCreate',
       userId: user.id,
+      ...(replacingCredentialId ? { replacingCredentialId } : {}),
       expectedOrigin: origin,
       expectedRPID: rpID,
       expiresAtEpoch,
@@ -421,7 +440,8 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
       userId: user.id,
       rpID,
       expiresAtEpoch,
-      excludedCredentialCount: passkeyCredentials.length,
+      replacingCredentialId,
+      excludedCredentialCount: excludedCredentials.length,
     })
 
     return c.json({
@@ -486,18 +506,25 @@ export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
 
       const { credential, credentialDeviceType, credentialBackedUp } =
         verification.registrationInfo
-      const enrollment = await c.var.db.users.enrollPasskeyCredential(
-        challenge.userId,
-        {
-          id: credential.id,
-          publicKey: credential.publicKey,
-          webauthnUserID: challenge.options.user.id,
-          counter: credential.counter,
-          deviceType: credentialDeviceType,
-          backedUp: credentialBackedUp,
-          transports: credential.transports,
-        },
-      )
+      const passkeyCredential = {
+        id: credential.id,
+        publicKey: credential.publicKey,
+        webauthnUserID: challenge.options.user.id,
+        counter: credential.counter,
+        deviceType: credentialDeviceType,
+        backedUp: credentialBackedUp,
+        transports: credential.transports,
+      }
+      const enrollment = challenge.replacingCredentialId
+        ? await c.var.db.users.replacePasskeyCredential(
+            challenge.userId,
+            challenge.replacingCredentialId,
+            passkeyCredential,
+          )
+        : await c.var.db.users.enrollPasskeyCredential(
+            challenge.userId,
+            passkeyCredential,
+          )
 
       if (enrollment === 'duplicate') {
         c.var.logger.warn('Passkey is already registered for user', {
@@ -515,9 +542,18 @@ export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
         throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
       }
 
+      if (enrollment === 'credentialNotFound') {
+        c.var.logger.warn('Passkey replacement target no longer exists', {
+          challengeId,
+          userId: challenge.userId,
+        })
+        throw invalidPasskey('Passkey to replace is no longer registered')
+      }
+
       c.var.logger.debug('Passkey registration completed', {
         challengeId,
         userId: challenge.userId,
+        replacedCredential: enrollment === 'replaced',
       })
 
       return c.body(null, 204)

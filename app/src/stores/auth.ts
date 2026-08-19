@@ -45,7 +45,9 @@ function userFromToken(token: string): User | null {
       id: payload.id,
       email: payload.email,
       isAdmin: payload.isAdmin,
-      ...(typeof payload.name === 'string' ? { name: payload.name } : {}),
+      ...('name' in payload && typeof payload.name === 'string'
+        ? { name: payload.name }
+        : {}),
     }
   } catch {
     return null
