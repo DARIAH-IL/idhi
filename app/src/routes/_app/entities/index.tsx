@@ -6,9 +6,9 @@ import { Checkbox } from 'react-aria-components'
 import type { SortDescriptor } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
   Cancel01Icon,
-  SortingDownIcon,
-  SortingUpIcon,
   Tick02Icon,
 } from '@hugeicons/core-free-icons'
 import { z } from 'zod'
@@ -493,7 +493,7 @@ function SortableColumnLabel({
       {label}
       {direction && (
         <HugeiconsIcon
-          icon={direction === 'asc' ? SortingUpIcon : SortingDownIcon}
+          icon={direction === 'asc' ? ArrowUp01Icon : ArrowDown01Icon}
           className="size-3.5"
           strokeWidth={2}
           aria-hidden="true"
@@ -561,7 +561,11 @@ function FacetPanel({
 
       <div className="p-4">
         <div className="mb-4 border-b pb-4">
-          <Button className="w-full" onPress={() => onApply(draftFilters)}>
+          <Button
+            className="w-full"
+            isDisabled={Object.keys(draftFilters).length === 0}
+            onPress={() => onApply(draftFilters)}
+          >
             {t('board.facets.apply')}
           </Button>
         </div>

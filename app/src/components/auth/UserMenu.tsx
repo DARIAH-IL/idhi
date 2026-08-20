@@ -7,6 +7,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useNavigate } from '@tanstack/react-router'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth'
 import { Button } from '@/components/ui/button'
 
@@ -60,7 +61,10 @@ export function UserMenu() {
           )}
           <MenuItem
             id="logout"
-            onAction={logout}
+            onAction={() => {
+              logout()
+              toast.success(t('auth.signed_out'))
+            }}
             className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground"
           >
             <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
