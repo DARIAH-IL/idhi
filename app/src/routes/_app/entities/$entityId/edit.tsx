@@ -52,7 +52,7 @@ function EditEntityPage() {
     mutation: {
       onSuccess: () => {
         toast.success(t('entity.notifications.updated'))
-        void navigate({ to: '/entities/$entityId', params: { entityId } })
+        void navigate({ to: '/entities' })
       },
       onError: () => setServerError(t('common.error')),
     },

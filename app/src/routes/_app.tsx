@@ -29,7 +29,7 @@ function AppLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex min-h-14 items-center justify-between gap-4 border-b px-4 py-2">
+      <header className="flex min-h-14 items-center justify-between gap-4 border-b px-6 py-2">
         <Link
           to="/entities"
           aria-label={t('common.home')}
