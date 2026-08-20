@@ -6,7 +6,7 @@ import { getApiErrorMessage, getApiErrorResponse } from '@/lib/api-error'
 import { useAuthStore } from '@/stores/auth'
 
 const client = axios.create({
-  baseURL: import.meta.env['VITE_API_URL'] ?? 'http://localhost:8787',
+  baseURL: import.meta.env['VITE_SERVER_URL'] ?? 'http://localhost:8787',
 })
 
 const AUTH_FLOW_URL_PREFIX = '/api/v1/auth/'

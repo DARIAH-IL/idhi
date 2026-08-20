@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { browserSupportsWebAuthn } from '@simplewebauthn/browser'
 import { useTranslation } from 'react-i18next'
 import {
@@ -28,11 +28,12 @@ import {
 interface LoginDialogProps {
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
+  inviteParams?: { challengeId: string; otp: string } | null
 }
 
-type LoginStep = 'start' | 'email' | 'otp' | 'enroll'
+type LoginStep = 'start' | 'email' | 'otp' | 'enroll' | 'loading'
 
-export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
+export function LoginDialog({ isOpen, onOpenChange, inviteParams }: LoginDialogProps) {
   const { t } = useTranslation()
   const setToken = useAuthStore((state) => state.setToken)
   const credentialId = usePasskeyStore((state) => state.credentialId)
@@ -46,6 +47,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
   const [challengeId, setChallengeId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [replacePasskey, setReplacePasskey] = useState(false)
+  const isInviteMode = useRef(false)
 
   const reset = () => {
     setStep('start')
@@ -103,6 +105,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
   const completeOtp = usePostApiV1AuthOtpChallengeId({
     mutation: {
       onSuccess: (data) => {
+        isInviteMode.current = false
         setToken(data.jwt)
         if (supportsPasskeys && (!credentialId || replacePasskey)) {
           setError(null)
@@ -114,13 +117,27 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
       },
       onError: (err) => {
         setError(getApiErrorMessage(err))
-        if (getApiErrorResponse(err)?.errorCode !== ErrorCode.WrongOtpCode) {
+        if (isInviteMode.current) {
+          isInviteMode.current = false
+          resetChallenge()
+          setStep('email')
+        } else if (getApiErrorResponse(err)?.errorCode !== ErrorCode.WrongOtpCode) {
           resetChallenge()
           setStep('start')
         }
       },
     },
   })
+
+  useEffect(() => {
+    if (!inviteParams) return
+    isInviteMode.current = true
+    setStep('loading')
+    completeOtp.mutate({
+      challengeId: inviteParams.challengeId,
+      data: { otp: inviteParams.otp },
+    })
+  }, [inviteParams])
 
   const startEmailLogin = (loginEmail: string) => {
     const normalizedEmail = loginEmail.trim()
@@ -173,7 +190,9 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
         )}
       </DialogHeader>
 
-      {step === 'start' && hasPasskey ? (
+      {step === 'loading' ? (
+        <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
+      ) : step === 'start' && hasPasskey ? (
         <LoginPasskeyStep
           email={passkeyEmail}
           passkeyBusy={passkeyLogin.busy}
