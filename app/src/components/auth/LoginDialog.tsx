@@ -7,6 +7,7 @@ import {
 } from '@/api/hooks/user-auth/user-auth'
 import { ErrorCode } from '@/api/models'
 import { getApiErrorMessage, getApiErrorResponse } from '@/lib/api-error'
+import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth'
 import { usePasskeyStore } from '@/stores/passkey'
 import {
@@ -70,6 +71,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
   const passkeyLogin = usePasskeyLogin({
     onToken: (jwt) => {
       setToken(jwt)
+      toast.success(t('auth.signed_in'))
       handleOpenChange(false)
     },
     onStaleCredential: (staleEmail, message) => {
@@ -106,6 +108,7 @@ export function LoginDialog({ isOpen, onOpenChange }: LoginDialogProps) {
           setError(null)
           setStep('enroll')
         } else {
+          toast.success(t('auth.signed_in'))
           handleOpenChange(false)
         }
       },

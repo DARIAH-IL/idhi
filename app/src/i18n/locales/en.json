@@ -64,6 +64,7 @@
     "passkey_create_failed": "The passkey could not be created. Please try again.",
     "passkey_created": "Passkey created. You can now use it to sign in on this device.",
     "passkey_not_now": "Not now",
+    "signed_in": "You've been signed in.",
     "signed_out": "You've been signed out.",
     "errors": {
       "UserNotFound": "No account found for this email address.",
