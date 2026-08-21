@@ -69,7 +69,7 @@ function TableFooter<T>({ className, ...props }: TableFooterProps<T>) {
     <TableFooterPrimitive
       data-slot="table-footer"
       className={cn(
-        'border-t bg-oklch(0.97 0 0)/50 font-medium [&>tr]:last:border-b-0',
+        'border-t bg-muted/50 font-medium [&>tr]:last:border-b-0',
         className,
       )}
       {...props}
@@ -82,7 +82,7 @@ function TableRow<T>({ className, ...props }: RowProps<T>) {
     <RowPrimitive
       data-slot="table-row"
       className={cn(
-        'border-b transition-colors hover:bg-oklch(0.97 0 0)/50 has-aria-expanded:bg-oklch(0.97 0 0)/50 data-[state=selected]:bg-oklch(0.97 0 0) data-selected:bg-oklch(0.97 0 0)',
+        'border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted data-selected:bg-muted',
         className,
       )}
       {...props}
@@ -95,7 +95,7 @@ function TableHead({ className, ...props }: ColumnProps) {
     <ColumnPrimitive
       data-slot="table-head"
       className={cn(
-        'h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-oklch(0.145 0 0) [&:has([data-slot=checkbox])]:pr-0 [&:has([role=checkbox])]:pr-0',
+        'h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([data-slot=checkbox])]:pr-0 [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}
@@ -137,7 +137,7 @@ function TableCaption({
     <figcaption
       data-slot="table-caption"
       className={cn(
-        'mt-4 text-center text-xs text-oklch(0.556 0 0)',
+        'mt-4 text-center text-xs text-muted-foreground',
         className,
       )}
       {...props}

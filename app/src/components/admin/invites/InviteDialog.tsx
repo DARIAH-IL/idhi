@@ -109,8 +109,11 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
               />
             </div>
             <div className="grid gap-1.5">
-              <Label>{t('admin.fields.language')}</Label>
+              <Label id="invite-language-label">
+                {t('admin.fields.language')}
+              </Label>
               <Select
+                aria-labelledby="invite-language-label"
                 selectedKey={lang}
                 onSelectionChange={(key) => setLang(key as Language)}
               >

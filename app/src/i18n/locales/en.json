@@ -58,6 +58,8 @@
     "passkey_use_passkey": "Sign in with a passkey instead",
     "passkey_not_recognized": "This device's passkey is no longer linked to your account. Please sign in with a one-time code.",
     "passkey_failed": "Passkey sign-in failed. Please try again.",
+    "invite_welcome_title": "Welcome aboard!",
+    "invite_welcome_description": "We're setting up your account, just a moment.",
     "passkey_offer_title": "Set up a passkey?",
     "passkey_offer_description": "Sign in faster next time with this device's screen lock, fingerprint, or security key.",
     "passkey_create": "Create a passkey",

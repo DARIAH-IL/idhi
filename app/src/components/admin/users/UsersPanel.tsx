@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { Add01Icon } from '@hugeicons/core-free-icons'
+import { Add01Icon, UserMultipleIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -10,6 +10,7 @@ import {
   useGetApiV1Users,
 } from '@/api/hooks/user-management/user-management'
 import type { User } from '@/api/models'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -39,9 +40,15 @@ export function UsersPanel() {
 
   return (
     <>
-      <Card role="tabpanel" aria-labelledby="users-tab">
+      <Card>
         <CardHeader className="border-b">
-          <CardTitle>{t('admin.users.title')}</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <HugeiconsIcon icon={UserMultipleIcon} strokeWidth={1.8} />
+            {t('admin.users.title')}
+            <Badge variant="secondary">
+              {users.isPending ? '…' : totalUsers}
+            </Badge>
+          </CardTitle>
           <CardDescription>{t('admin.users.description')}</CardDescription>
           <CardAction>
             <Button onPress={() => setUserDialog('new')}>

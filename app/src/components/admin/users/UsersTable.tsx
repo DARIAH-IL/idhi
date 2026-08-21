@@ -50,10 +50,10 @@ export function UsersTable({
           <TableRow key={user.id} id={user.id}>
             <TableCell>
               <div className="min-w-44">
-                <p className="font-medium">
-                  {user.name || t('admin.users.unnamed')}
-                </p>
-                <p className="text-muted-foreground">{user.email}</p>
+                <p className="font-medium">{user.email}</p>
+                {user.name && (
+                  <p className="text-muted-foreground">{user.name}</p>
+                )}
               </div>
             </TableCell>
             <TableCell>

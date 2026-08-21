@@ -33,8 +33,8 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
   return (
     <form.Field name={'image' as never}>
       {(field) => {
-        const image =
-          typeof field.state.value === 'string' ? field.state.value : undefined
+        const rawValue = field.state.value as unknown
+        const image = typeof rawValue === 'string' ? rawValue : undefined
 
         return (
           <FieldRow label={t('entity.form.fields.image')}>

@@ -13,11 +13,13 @@ export const getApiV1UsersQueryPageSizeDefault = 20
 export const getApiV1UsersQueryPageSizeMax = 100
 
 export const GetApiV1UsersQueryParams = zod.object({
-  page: zod
+  page: zod.coerce
+    .number()
     .int()
     .min(getApiV1UsersQueryPageMin)
     .default(getApiV1UsersQueryPageDefault),
-  pageSize: zod
+  pageSize: zod.coerce
+    .number()
     .int()
     .min(1)
     .max(getApiV1UsersQueryPageSizeMax)

@@ -51,6 +51,7 @@ export function LoginDialog({
   const [challengeId, setChallengeId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [replacePasskey, setReplacePasskey] = useState(false)
+  const [isInviteFlow, setIsInviteFlow] = useState(false)
   const isInviteMode = useRef(false)
 
   const reset = () => {
@@ -61,6 +62,7 @@ export function LoginDialog({
     setChallengeId(null)
     setError(null)
     setReplacePasskey(false)
+    setIsInviteFlow(false)
   }
 
   const handleOpenChange = (open: boolean) => {
@@ -138,6 +140,7 @@ export function LoginDialog({
   useEffect(() => {
     if (!inviteParams) return
     isInviteMode.current = true
+    setIsInviteFlow(true)
     setStep('loading')
     completeOtp.mutate({
       challengeId: inviteParams.challengeId,
@@ -181,13 +184,19 @@ export function LoginDialog({
         <img src="/logo.png" alt="" className="mb-2 h-20 w-auto" />
         <DialogTitle>
           {step === 'enroll'
-            ? t('auth.passkey_offer_title')
-            : t('common.site_name')}
+            ? isInviteFlow
+              ? t('auth.invite_welcome_title')
+              : t('auth.passkey_offer_title')
+            : step === 'loading' && isInviteFlow
+              ? t('auth.invite_welcome_title')
+              : t('common.site_name')}
         </DialogTitle>
         <DialogDescription>
           {step === 'enroll'
             ? t('auth.passkey_offer_description')
-            : t('auth.description')}
+            : step === 'loading' && isInviteFlow
+              ? t('auth.invite_welcome_description')
+              : t('auth.description')}
         </DialogDescription>
         {step === 'otp' && (
           <DialogDescription>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { MailAdd01Icon } from '@hugeicons/core-free-icons'
+import { MailAdd01Icon, MailOpenIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -10,6 +10,7 @@ import {
   useGetApiV1UsersInvites,
 } from '@/api/hooks/user-invites/user-invites'
 import type { UserInvite } from '@/api/models'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -31,9 +32,15 @@ export function InvitesPanel() {
 
   return (
     <>
-      <Card role="tabpanel" aria-labelledby="invites-tab">
+      <Card>
         <CardHeader className="border-b">
-          <CardTitle>{t('admin.invites.title')}</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <HugeiconsIcon icon={MailOpenIcon} strokeWidth={1.8} />
+            {t('admin.invites.title')}
+            <Badge variant="secondary">
+              {invites.isPending ? '…' : (invites.data?.length ?? 0)}
+            </Badge>
+          </CardTitle>
           <CardDescription>{t('admin.invites.description')}</CardDescription>
           <CardAction>
             <Button onPress={() => setInviteDialogOpen(true)}>
