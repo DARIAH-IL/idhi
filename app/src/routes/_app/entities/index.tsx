@@ -464,9 +464,9 @@ function EntityBoard() {
                         >
                           <TableCell className="w-12">
                             <EntityImage
-                                image={entity.image}
-                                type={entity.type}
-                                alt={getEntityDisplayName(entity)}
+                              image={entity.image}
+                              type={entity.type}
+                              alt={getEntityDisplayName(entity)}
                             />
                           </TableCell>
                           <TableCell>

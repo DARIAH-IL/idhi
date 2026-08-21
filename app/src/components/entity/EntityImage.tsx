@@ -61,7 +61,11 @@ export function EntityImage({
 
   if (!source || failedSource === source) {
     return (
-      <EntityTypeIcon type={type} size={dimensions.icon} className={className} />
+      <EntityTypeIcon
+        type={type}
+        size={dimensions.icon}
+        className={className}
+      />
     )
   }
 

@@ -33,7 +33,11 @@ interface LoginDialogProps {
 
 type LoginStep = 'start' | 'email' | 'otp' | 'enroll' | 'loading'
 
-export function LoginDialog({ isOpen, onOpenChange, inviteParams }: LoginDialogProps) {
+export function LoginDialog({
+  isOpen,
+  onOpenChange,
+  inviteParams,
+}: LoginDialogProps) {
   const { t } = useTranslation()
   const setToken = useAuthStore((state) => state.setToken)
   const credentialId = usePasskeyStore((state) => state.credentialId)
@@ -121,7 +125,9 @@ export function LoginDialog({ isOpen, onOpenChange, inviteParams }: LoginDialogP
           isInviteMode.current = false
           resetChallenge()
           setStep('email')
-        } else if (getApiErrorResponse(err)?.errorCode !== ErrorCode.WrongOtpCode) {
+        } else if (
+          getApiErrorResponse(err)?.errorCode !== ErrorCode.WrongOtpCode
+        ) {
           resetChallenge()
           setStep('start')
         }
