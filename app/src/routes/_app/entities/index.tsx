@@ -1,14 +1,19 @@
 import { useCallback, useRef, useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { infiniteQueryOptions, useInfiniteQuery } from '@tanstack/react-query'
+import {
+  infiniteQueryOptions,
+  keepPreviousData,
+  useInfiniteQuery,
+} from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Checkbox } from 'react-aria-components'
 import type { SortDescriptor } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
   Cancel01Icon,
-  SortingDownIcon,
-  SortingUpIcon,
+  Loading03Icon,
   Tick02Icon,
 } from '@hugeicons/core-free-icons'
 import { z } from 'zod'
@@ -123,6 +128,7 @@ function getInfiniteEntityQueryOptions(
       const nextPage = lastPageParam + 1
       return nextPage * PAGE_SIZE < lastPage.total ? nextPage : undefined
     },
+    placeholderData: keepPreviousData,
   })
 }
 
@@ -133,8 +139,8 @@ export const Route = createFileRoute('/_app/entities/')({
     facetFilters,
     sort,
   }),
-  loader: async ({ context, deps }) => {
-    await context.queryClient.prefetchInfiniteQuery(
+  loader: ({ context, deps }) => {
+    void context.queryClient.prefetchInfiniteQuery(
       getInfiniteEntityQueryOptions(deps.q, deps.facetFilters, deps.sort),
     )
   },
@@ -163,7 +169,9 @@ function EntityBoard() {
     isError,
     isFetchingNextPage,
     isLoading,
+    isFetching,
   } = useInfiniteQuery(getInfiniteEntityQueryOptions(q, facetFilters, sort))
+  const isRefetching = isFetching && !isLoading && !isFetchingNextPage
   const results = data?.pages.flatMap((resultPage) => resultPage.results) ?? []
   const total = data?.pages[0]?.total ?? 0
   const facets = data?.pages[0]?.facets ?? {}
@@ -335,6 +343,7 @@ function EntityBoard() {
           facets={facets}
           initialFilters={facetFilters ?? {}}
           isLoading={isLoading}
+          isRefetching={isRefetching}
           onApply={(nextFacetFilters) =>
             updateSearch({
               q: searchInput || undefined,
@@ -349,12 +358,13 @@ function EntityBoard() {
         <section
           aria-label={t('board.results_label')}
           className="min-w-0 space-y-4"
+          aria-busy={isFetching}
         >
           {isError && (
             <p className="text-sm text-destructive">{t('common.error')}</p>
           )}
 
-          {!isLoading && data && (
+          {data && (
             <p aria-live="polite" className="text-xs text-muted-foreground">
               {t('board.loaded_count', {
                 loaded: results.length,
@@ -363,120 +373,137 @@ function EntityBoard() {
             </p>
           )}
 
-          {isLoading ? (
-            <p className="text-sm text-muted-foreground">
-              {t('common.loading')}
-            </p>
-          ) : (
-            <Table
-              aria-label={t('board.results_label')}
-              containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto"
-              sortDescriptor={sortDescriptor}
-              onSortChange={handleSortChange}
-            >
-              <TableHeader>
-                <TableHead id="image" aria-label={t('board.columns.image')} />
-                <TableHead
-                  id="name.value"
-                  isRowHeader
-                  allowsSorting
-                  className="cursor-pointer"
+          <div className="relative">
+            {(isLoading || isRefetching) && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-background/80">
+                <div
+                  role="status"
+                  className="flex flex-col items-center gap-3 text-muted-foreground"
                 >
-                  <SortableColumnLabel
-                    label={t('board.columns.name')}
-                    property="name.value"
-                    sort={activeSort}
+                  <HugeiconsIcon
+                    icon={Loading03Icon}
+                    strokeWidth={2}
+                    className="size-6 animate-spin"
+                    aria-hidden="true"
                   />
-                </TableHead>
-                <TableHead id="type" allowsSorting className="cursor-pointer">
-                  <SortableColumnLabel
-                    label={t('board.columns.type')}
-                    property="type"
-                    sort={activeSort}
-                  />
-                </TableHead>
-                <TableHead
-                  id="audit.modifiedAt"
-                  allowsSorting
-                  className="cursor-pointer"
-                >
-                  <SortableColumnLabel
-                    label={t('board.columns.modified')}
-                    property="audit.modifiedAt"
-                    sort={activeSort}
-                  />
-                </TableHead>
-              </TableHeader>
-              <TableBody>
-                {results.length === 0 ? (
-                  <TableRow id="empty-state" className="hover:bg-transparent">
-                    <TableCell
-                      colSpan={4}
-                      className="h-24 text-center text-sm text-muted-foreground"
-                    >
-                      {t(
-                        q || Object.keys(facetFilters ?? {}).length > 0
-                          ? 'board.no_matching_results'
-                          : 'board.no_results',
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  results.map((entity) => {
-                    const id = auditedEntityId(entity)
-                    return (
-                      <TableRow
-                        key={id}
-                        id={id}
-                        onAction={() =>
-                          void navigate({
-                            to: '/entities/$entityId',
-                            params: { entityId: encodeURIComponent(id) },
-                          })
-                        }
-                        className="cursor-pointer"
-                      >
-                        <TableCell className="w-12">
-                          <EntityImage
-                            image={entity.image}
-                            type={entity.type}
-                            alt={getEntityDisplayName(entity)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            to="/entities/$entityId"
-                            params={{ entityId: encodeURIComponent(id) }}
-                            className="hover:underline font-medium"
-                          >
-                            {getEntityDisplayName(entity)}
-                          </Link>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="secondary">
-                            {getEntityTypeLabel(entity.type)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          <TimeAgo date={entity.audit?.modifiedAt} />
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })
-                )}
-                {hasNextPage && (
-                  <TableLoadMoreItem
-                    isLoading={isFetchingNextPage}
-                    onLoadMore={() => {
-                      if (!isFetchingNextPage) void fetchNextPage()
-                    }}
+                  <p className="text-sm">{t('common.loading')}</p>
+                </div>
+              </div>
+            )}
+
+            {isLoading ? (
+              <div className="min-h-64" />
+            ) : (
+              <Table
+                aria-label={t('board.results_label')}
+                containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto"
+                sortDescriptor={sortDescriptor}
+                onSortChange={handleSortChange}
+              >
+                <TableHeader>
+                  <TableHead id="image" aria-label={t('board.columns.image')} />
+                  <TableHead
+                    id="name.value"
+                    isRowHeader
+                    allowsSorting
+                    className="cursor-pointer"
                   >
-                    {t('common.loading')}
-                  </TableLoadMoreItem>
-                )}
-              </TableBody>
-            </Table>
-          )}
+                    <SortableColumnLabel
+                      label={t('board.columns.name')}
+                      property="name.value"
+                      sort={activeSort}
+                    />
+                  </TableHead>
+                  <TableHead id="type" allowsSorting className="cursor-pointer">
+                    <SortableColumnLabel
+                      label={t('board.columns.type')}
+                      property="type"
+                      sort={activeSort}
+                    />
+                  </TableHead>
+                  <TableHead
+                    id="audit.modifiedAt"
+                    allowsSorting
+                    className="cursor-pointer"
+                  >
+                    <SortableColumnLabel
+                      label={t('board.columns.modified')}
+                      property="audit.modifiedAt"
+                      sort={activeSort}
+                    />
+                  </TableHead>
+                </TableHeader>
+                <TableBody>
+                  {results.length === 0 ? (
+                    <TableRow id="empty-state" className="hover:bg-transparent">
+                      <TableCell
+                        colSpan={3}
+                        className="h-24 text-center text-sm text-muted-foreground"
+                      >
+                        {t(
+                          q || Object.keys(facetFilters ?? {}).length > 0
+                            ? 'board.no_matching_results'
+                            : 'board.no_results',
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    results.map((entity) => {
+                      const id = auditedEntityId(entity)
+                      return (
+                        <TableRow
+                          key={id}
+                          id={id}
+                          onAction={() =>
+                            void navigate({
+                              to: '/entities/$entityId',
+                              params: { entityId: encodeURIComponent(id) },
+                            })
+                          }
+                          className="cursor-pointer"
+                        >
+                          <TableCell className="w-12">
+                            <EntityImage
+                                image={entity.image}
+                                type={entity.type}
+                                alt={getEntityDisplayName(entity)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Link
+                              to="/entities/$entityId"
+                              params={{ entityId: encodeURIComponent(id) }}
+                              className="hover:underline font-medium"
+                            >
+                              {getEntityDisplayName(entity)}
+                            </Link>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="secondary">
+                              {getEntityTypeLabel(entity.type)}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-muted-foreground">
+                            <TimeAgo date={entity.audit?.modifiedAt} />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })
+                  )}
+                  {hasNextPage && (
+                    <TableLoadMoreItem
+                      isLoading={isFetchingNextPage}
+                      onLoadMore={() => {
+                        if (!isFetchingNextPage) void fetchNextPage()
+                      }}
+                    >
+                      {t('common.loading')}
+                    </TableLoadMoreItem>
+                  )}
+                </TableBody>
+              </Table>
+            )}
+          </div>
         </section>
       </div>
     </div>
@@ -499,7 +526,7 @@ function SortableColumnLabel({
       {label}
       {direction && (
         <HugeiconsIcon
-          icon={direction === 'asc' ? SortingUpIcon : SortingDownIcon}
+          icon={direction === 'asc' ? ArrowUp01Icon : ArrowDown01Icon}
           className="size-3.5"
           strokeWidth={2}
           aria-hidden="true"
@@ -513,6 +540,7 @@ interface FacetPanelProps {
   facets: PostApiV1Entities200Facets
   initialFilters: FacetFilters
   isLoading: boolean
+  isRefetching: boolean
   onApply: (facetFilters: FacetFilters) => void
 }
 
@@ -520,6 +548,7 @@ function FacetPanel({
   facets,
   initialFilters,
   isLoading,
+  isRefetching,
   onApply,
 }: FacetPanelProps) {
   const { t } = useTranslation()
@@ -567,7 +596,11 @@ function FacetPanel({
 
       <div className="p-4">
         <div className="mb-4 border-b pb-4">
-          <Button className="w-full" onPress={() => onApply(draftFilters)}>
+          <Button
+            className="w-full"
+            isDisabled={Object.keys(draftFilters).length === 0}
+            onPress={() => onApply(draftFilters)}
+          >
             {t('board.facets.apply')}
           </Button>
         </div>
@@ -667,7 +700,9 @@ function FacetPanel({
                 </Button>
               </div>
 
-              <div className="mt-2 grid gap-0.5">
+              <div
+                className={`mt-2 grid gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
+              >
                 {isLoading ? (
                   <p className="px-1 py-3 text-xs text-muted-foreground">
                     {t('board.facets.loading')}

@@ -22,5 +22,10 @@ export function TimeAgo({ date }: TimeAgoProps) {
 
   if (!date) return '—'
 
-  return <ReactTimeAgo date={date} formatter={formatters[language]} />
+  const d = new Date(date)
+  const title = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+
+  return (
+    <ReactTimeAgo date={date} formatter={formatters[language]} title={title} />
+  )
 }

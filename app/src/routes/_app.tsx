@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
+import { useInviteStore } from '@/stores/invite'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { LoginDialog } from '@/components/auth/LoginDialog'
@@ -16,8 +17,13 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { t } = useTranslation()
   const [loginOpen, setLoginOpen] = useState(false)
+  const [inviteParams, setInviteParams] = useState<{
+    challengeId: string
+    otp: string
+  } | null>(null)
   const user = useAuthStore((s) => s.user)
   const language = useUIStore((s) => s.language)
+  const inviteConsumedRef = useRef(false)
 
   useEffect(() => {
     void i18n.changeLanguage(language)
@@ -27,9 +33,20 @@ function AppLayout() {
     document.title = t('common.site_name')
   }, [t])
 
+  useEffect(() => {
+    if (inviteConsumedRef.current) return
+    inviteConsumedRef.current = true
+    const { challengeId, otp, clear } = useInviteStore.getState()
+    if (challengeId && otp) {
+      clear()
+      setInviteParams({ challengeId, otp })
+      setLoginOpen(true)
+    }
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex min-h-14 items-center justify-between gap-4 border-b px-4 py-2">
+      <header className="flex min-h-14 items-center justify-between gap-4 border-b px-6 py-2">
         <Link
           to="/entities"
           aria-label={t('common.home')}
@@ -56,7 +73,14 @@ function AppLayout() {
         <p>{t('common.copyright')}</p>
         <p className="mt-1">{t('common.work_in_progress')}</p>
       </footer>
-      <LoginDialog isOpen={loginOpen} onOpenChange={setLoginOpen} />
+      <LoginDialog
+        isOpen={loginOpen}
+        onOpenChange={(open) => {
+          setLoginOpen(open)
+          if (!open) setInviteParams(null)
+        }}
+        inviteParams={inviteParams}
+      />
     </div>
   )
 }

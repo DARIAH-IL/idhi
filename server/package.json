@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "orval && vite",
     "build": "orval && tsc --noEmit && vite build",
-    "deploy": "pnpm run build && wrangler deploy",
+    "deploy": "pnpm run build && wrangler secret bulk .dev.vars && wrangler deploy",
     "format": "prettier --write .",
     "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs"
   },
@@ -13,7 +13,7 @@
     "@hono/zod-validator": "^0.9.0",
     "@simplewebauthn/server": "^13.3.2",
     "hono": "^4.12.33",
-    "mongoose": "^9.9.1",
+    "mongoose": "^9.9.3",
     "nodemailer": "^9.0.4",
     "zod": "^4.4.3"
   },
@@ -24,6 +24,6 @@
     "prettier": "^3.8.1",
     "typescript": "^6.0.3",
     "vite": "^8.1.4",
-    "wrangler": "^4.110.0"
+    "wrangler": "^4.124.0"
   }
 }

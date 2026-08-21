@@ -10,11 +10,21 @@ import {
 import type { QueryParamAdapterComponent } from 'use-query-params'
 import { Language } from '@/api/models'
 import { useUIStore } from '@/stores/ui'
+import { useInviteStore } from '@/stores/invite'
 import { getRouter } from './router'
 
 const LANGUAGE_QUERY_PARAM = 'lang'
+const CHALLENGE_ID_QUERY_PARAM = 'challengeId'
+const OTP_QUERY_PARAM = 'otp'
 
 const router = getRouter()
+
+const _initialUrl = new URL(window.location.href)
+const _challengeId = _initialUrl.searchParams.get(CHALLENGE_ID_QUERY_PARAM)
+const _otp = _initialUrl.searchParams.get(OTP_QUERY_PARAM)
+if (_challengeId && _otp) {
+  useInviteStore.getState().set({ challengeId: _challengeId, otp: _otp })
+}
 
 const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
   const getPath = (search: string) => {
@@ -41,6 +51,11 @@ function App() {
     LANGUAGE_QUERY_PARAM,
     StringParam,
   )
+  const [challengeId, setChallengeIdQueryParam] = useQueryParam(
+    CHALLENGE_ID_QUERY_PARAM,
+    StringParam,
+  )
+  const [otp, setOtpQueryParam] = useQueryParam(OTP_QUERY_PARAM, StringParam)
   const setLanguage = useUIStore((state) => state.setLanguage)
 
   useEffect(() => {
@@ -49,6 +64,12 @@ function App() {
     if (isLanguage(language)) setLanguage(language)
     setLanguageQueryParam(undefined, 'replaceIn')
   }, [language, setLanguage, setLanguageQueryParam])
+
+  useEffect(() => {
+    if (!challengeId || !otp) return
+    setChallengeIdQueryParam(undefined, 'replaceIn')
+    setOtpQueryParam(undefined, 'replaceIn')
+  }, [challengeId, otp, setChallengeIdQueryParam, setOtpQueryParam])
 
   return <RouterProvider router={router} />
 }

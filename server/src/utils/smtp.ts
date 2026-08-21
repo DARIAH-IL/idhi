@@ -3,6 +3,7 @@ import type { Bindings } from '../bindings'
 import { inviteEmailContent, otpEmailContent } from '../emails/localization'
 import type { Language } from '../models/language'
 import { requiredValue } from './values'
+import { formatDate } from './date'
 
 const DEFAULT_SMTP_PORT = 465
 
@@ -76,7 +77,7 @@ export async function sendOtpEmail(
   lang: Language,
   bindings: Bindings,
 ): Promise<void> {
-  const expiration = new Date(expiresAtEpoch).toISOString()
+  const expiration = formatDate(expiresAtEpoch)
   const { subject, html } = otpEmailContent(lang, otp, expiration)
 
   await sendEmail(bindings, recipient, subject, html)

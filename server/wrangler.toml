@@ -2,6 +2,8 @@ name = "idhi-server"
 main = "src/index.ts"
 compatibility_date = "2026-03-17"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+preview_urls = false
 
 [observability.logs]
 enabled = true
