@@ -71,6 +71,7 @@ export function LangStringField({
                   <form.Field name={`${name}[${i}].language` as never}>
                     {(langField) => (
                       <Select
+                        aria-label={t('entity.form.language')}
                         placeholder="lang"
                         selectedKey={
                           typeof langField.state.value === 'string'

@@ -33,10 +33,14 @@ import {
   Tick02Icon,
 } from '@hugeicons/core-free-icons'
 
+type SelectLabelProps =
+  | { 'aria-label': string; 'aria-labelledby'?: never }
+  | { 'aria-labelledby': string; 'aria-label'?: never }
+
 function Select<
   T extends object,
   TSelectionMode extends 'single' | 'multiple' = 'single',
->({ className, ...props }: SelectProps<T, TSelectionMode>) {
+>({ className, ...props }: SelectProps<T, TSelectionMode> & SelectLabelProps) {
   return (
     <SelectPrimitive
       data-slot="select"

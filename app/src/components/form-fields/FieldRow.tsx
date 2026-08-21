@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { Label } from '@/components/ui/label'
 
 export function FieldRow({
@@ -5,12 +6,13 @@ export function FieldRow({
   children,
 }: {
   label: string
-  children: React.ReactNode
+  children: React.ReactNode | ((labelId: string) => React.ReactNode)
 }) {
+  const labelId = useId()
   return (
     <div className="flex flex-col gap-1">
-      <Label>{label}</Label>
-      {children}
+      <Label id={labelId}>{label}</Label>
+      {typeof children === 'function' ? children(labelId) : children}
     </div>
   )
 }
