@@ -5,11 +5,11 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { AuditedEntity } from './auditedEntity.ts'
-import type { PostApiV1Entities200Facets } from './postApiV1Entities200Facets.ts'
+import type { SearchEntities200Facets } from './searchEntities200Facets.ts'
 
-export type PostApiV1Entities200 = {
+export type SearchEntities200 = {
   results: AuditedEntity[]
-  facets: PostApiV1Entities200Facets
+  facets: SearchEntities200Facets
   /** Total number of matching entities across all pages. */
   total: number
 }

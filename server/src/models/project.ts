@@ -64,7 +64,7 @@ export interface Project {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:project:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable
@@ -73,7 +73,7 @@ export interface Project {
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: ProjectNameItem[]
   /**
-   * Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.
+   * Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.
    * @nullable
    */
   organization_roles?: ProjectOrganizationRolesItem[] | null
@@ -98,7 +98,7 @@ export interface Project {
    */
   outputs_training_materials?: string[] | null
   /**
-   * The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.
+   * People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.
    * @nullable
    */
   project_participations?: ProjectProjectParticipationsItem[] | null
@@ -113,7 +113,7 @@ export interface Project {
    */
   same_as?: string[] | null
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null
@@ -134,4 +134,19 @@ export interface Project {
   tags?: string[] | null
   /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: ProjectType
+  /**
+   * Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.
+   * @nullable
+   */
+  uses_datasets?: string[] | null
+  /**
+   * Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.
+   * @nullable
+   */
+  uses_services?: string[] | null
+  /**
+   * Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.
+   * @nullable
+   */
+  uses_tools?: string[] | null
 }

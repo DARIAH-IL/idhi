@@ -8,6 +8,7 @@ import type { OrganizationAddressItem } from './organizationAddressItem'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem'
 import type { OrganizationLocationItem } from './organizationLocationItem'
 import type { OrganizationNameItem } from './organizationNameItem'
+import type { OrganizationOrganizationHierarchyItem } from './organizationOrganizationHierarchyItem'
 import type { OrganizationOrganizationType } from './organizationOrganizationType'
 import type { OrganizationType } from './organizationType'
 
@@ -46,7 +47,7 @@ export interface Organization {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:organization:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable
@@ -64,13 +65,13 @@ export interface Organization {
   marketplace_sync?: boolean | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: OrganizationNameItem[]
-  /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
-  organization_type?: OrganizationOrganizationType
   /**
-   * The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.
+   * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
    * @nullable
    */
-  parent_organization?: string | null
+  organization_hierarchy?: OrganizationOrganizationHierarchyItem[] | null
+  /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
+  organization_type?: OrganizationOrganizationType
   /**
    * The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.
    * @nullable

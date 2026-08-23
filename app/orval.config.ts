@@ -21,7 +21,7 @@ export default defineConfig({
       clean: true,
       override: {
         operations: {
-          postApiV1Entities: {
+          searchEntities: {
             query: {
               useQuery: true,
             },

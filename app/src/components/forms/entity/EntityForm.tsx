@@ -1,10 +1,10 @@
 import { useForm } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import type { Entity, AuditedEntity } from '@/api/models'
+import { cleanValue } from '@/lib/clean-value'
 import { getEntityIdSegment } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import { formContext } from '@/components/forms/form-context'
-import type { EntityFormValues } from './form-type'
 import { FieldRow } from '@/components/form-fields/FieldRow'
 import { TextField } from '@/components/form-fields/TextField'
 import { LangStringField } from '@/components/form-fields/LangStringField'
@@ -34,6 +34,11 @@ interface Props {
   isEdit?: boolean
 }
 
+type EntityFormValues = {
+  type: EntityType
+  id?: string
+} & Entity
+
 export function EntityForm({
   entityType,
   defaultValues,
@@ -42,7 +47,9 @@ export function EntityForm({
   isEdit,
 }: Props) {
   const { t } = useTranslation()
-  const initialValues: EntityFormValues = { type: entityType }
+  // A new entity is intentionally incomplete until form validation succeeds.
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const initialValues: EntityFormValues = { type: entityType } as Entity
 
   if (defaultValues) {
     Object.assign(initialValues, defaultValues)
@@ -51,8 +58,8 @@ export function EntityForm({
   const form = useForm({
     defaultValues: initialValues,
     onSubmit: ({ value }) => {
-      const cleaned = prepareEntity(value)
-      onSubmit(cleaned as unknown as Entity)
+      const cleaned = cleanValue(value)
+      onSubmit(cleaned)
     },
   })
 
@@ -159,61 +166,4 @@ export function EntityForm({
       </form>
     </formContext.Provider>
   )
-}
-
-function cleanValue(value: unknown): unknown {
-  if (Array.isArray(value)) {
-    return value
-      .map(cleanValue)
-      .filter(
-        (item) =>
-          item !== undefined && !(Array.isArray(item) && item.length === 0),
-      )
-  }
-  if (value && typeof value === 'object') {
-    const entries = Object.entries(value)
-      .map(([key, item]) => [key, cleanValue(item)] as const)
-      .filter(
-        ([, item]) =>
-          item !== undefined && !(Array.isArray(item) && item.length === 0),
-      )
-    return Object.fromEntries(entries)
-  }
-  return value === '' || value === null || value === undefined
-    ? undefined
-    : value
-}
-
-function prepareEntity(value: Record<string, unknown>) {
-  const cleaned = cleanValue(value) as Record<string, unknown>
-  delete cleaned.audit
-  const id = String(cleaned.id)
-  const addSelf = (key: string, selfKey: string) => {
-    const items = cleaned[key]
-    if (Array.isArray(items)) {
-      cleaned[key] = items.map((item) => ({
-        ...(item as Record<string, unknown>),
-        [selfKey]: id,
-      }))
-    }
-  }
-
-  switch (cleaned.type) {
-    case 'idhi:Person':
-      addSelf('affiliations', 'member')
-      addSelf('authorships', 'author')
-      addSelf('project_participations', 'participant')
-      break
-    case 'idhi:Facility':
-      addSelf('facility_affiliations', 'facility')
-      break
-    case 'idhi:Project':
-      addSelf('project_participations', 'project')
-      addSelf('organization_roles', 'project')
-      break
-    case 'idhi:Publication':
-      addSelf('authorships', 'publication')
-      break
-  }
-  return cleaned
 }

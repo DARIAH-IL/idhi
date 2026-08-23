@@ -17,15 +17,15 @@ import { sendInviteEmail } from '../../utils/smtp'
 import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
-  PostApiV1UsersInviteContext,
-  GetApiV1UsersInvitesContext,
-  DeleteApiV1UsersInvitesInviteIdContext,
+  InviteUserContext,
+  ListUserInvitesContext,
+  RevokeUserInviteByIdContext,
 } from './user-invites.context'
 import {
-  PostApiV1UsersInviteBody,
-  PostApiV1UsersInviteResponse,
-  GetApiV1UsersInvitesResponse,
-  DeleteApiV1UsersInvitesInviteIdParams,
+  InviteUserBody,
+  InviteUserResponse,
+  ListUserInvitesResponse,
+  RevokeUserInviteByIdParams,
 } from './user-invites.zod'
 
 const factory = createFactory()
@@ -39,9 +39,9 @@ function duplicateInvite(): ApiError {
   )
 }
 
-export const postApiV1UsersInviteHandlers = factory.createHandlers(
-  zValidator('json', PostApiV1UsersInviteBody),
-  async (c: PostApiV1UsersInviteContext) => {
+export const inviteUserHandlers = factory.createHandlers(
+  zValidator('json', InviteUserBody),
+  async (c: InviteUserContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { email, message, expiryDays, lang } = c.req.valid('json')
@@ -124,17 +124,17 @@ export const postApiV1UsersInviteHandlers = factory.createHandlers(
     }
   },
 )
-export const getApiV1UsersInvitesHandlers = factory.createHandlers(
-  zValidator('response', GetApiV1UsersInvitesResponse),
-  async (c: GetApiV1UsersInvitesContext) => {
+export const listUserInvitesHandlers = factory.createHandlers(
+  zValidator('response', ListUserInvitesResponse),
+  async (c: ListUserInvitesContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     return c.json(await c.var.db.userInvites.listPending())
   },
 )
-export const deleteApiV1UsersInvitesInviteIdHandlers = factory.createHandlers(
-  zValidator('param', DeleteApiV1UsersInvitesInviteIdParams),
-  async (c: DeleteApiV1UsersInvitesInviteIdContext) => {
+export const revokeUserInviteByIdHandlers = factory.createHandlers(
+  zValidator('param', RevokeUserInviteByIdParams),
+  async (c: RevokeUserInviteByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { inviteId } = c.req.valid('param')

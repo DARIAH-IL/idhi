@@ -99,7 +99,7 @@ export function usePasskeyLogin({
 
       const { jwt } = await postApiV1AuthPasskeyLoginChallengeId(
         challenge.challengeId,
-        authResponse as unknown as PasskeyAuthenticationResponse,
+        authResponse,
       )
       onToken(jwt)
     } catch (err) {
@@ -154,7 +154,7 @@ export function usePasskeyEnroll({
 
       await postApiV1AuthPasskeyCreateChallengeId(
         challenge.challengeId,
-        registrationResponse as unknown as PasskeyRegistrationResponse,
+        registrationResponse,
       )
       setCredential(registrationResponse.id, accountEmail)
       toast.success(t('auth.passkey_created'))

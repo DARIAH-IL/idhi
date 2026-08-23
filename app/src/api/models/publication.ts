@@ -16,7 +16,7 @@ import type { PublicationType } from './publicationType.ts'
  */
 export interface Publication {
   /**
-   * The person's publication contributions, as reified Authorship objects carrying byline order and role.
+   * People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.
    * @nullable
    */
   authorships?: PublicationAuthorshipsItem[] | null

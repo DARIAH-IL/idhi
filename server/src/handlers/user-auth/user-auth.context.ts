@@ -15,12 +15,12 @@ import type {
   PasskeyRegistrationWrite,
 } from '../../models'
 
-export type PostApiV1AuthOtpContext<E extends Env = any> = Context<
+export type StartOtpChallengeContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/otp',
   { in: { json: AuthOtpStartWrite }; out: { json: AuthOtpStartWrite } }
 >
-export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
+export type CompleteOtpChallengeContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/otp/:challengeId',
   {
@@ -38,7 +38,7 @@ export type PostApiV1AuthOtpChallengeIdContext<E extends Env = any> = Context<
     }
   }
 >
-export type PostApiV1AuthPasskeyCreateContext<E extends Env = any> = Context<
+export type StartPasskeyRegistrationContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/passkey/create',
   {
@@ -46,46 +46,44 @@ export type PostApiV1AuthPasskeyCreateContext<E extends Env = any> = Context<
     out: { json: PasskeyRegistrationWrite }
   }
 >
-export type PostApiV1AuthPasskeyCreateChallengeIdContext<E extends Env = any> =
-  Context<
-    E,
-    '/api/v1/auth/passkey/create/:challengeId',
-    {
-      in: {
-        param: {
-          challengeId: string
-        }
-        json: PasskeyRegistrationResponse
+export type CompletePasskeyRegistrationContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/auth/passkey/create/:challengeId',
+  {
+    in: {
+      param: {
+        challengeId: string
       }
-      out: {
-        param: {
-          challengeId: string
-        }
-        json: PasskeyRegistrationResponse
-      }
+      json: PasskeyRegistrationResponse
     }
-  >
-export type PostApiV1AuthPasskeyLoginContext<E extends Env = any> = Context<
+    out: {
+      param: {
+        challengeId: string
+      }
+      json: PasskeyRegistrationResponse
+    }
+  }
+>
+export type StartPasskeyAuthenticationContext<E extends Env = any> = Context<
   E,
   '/api/v1/auth/passkey/login',
   { in: { json: AuthEmailWrite }; out: { json: AuthEmailWrite } }
 >
-export type PostApiV1AuthPasskeyLoginChallengeIdContext<E extends Env = any> =
-  Context<
-    E,
-    '/api/v1/auth/passkey/login/:challengeId',
-    {
-      in: {
-        param: {
-          challengeId: string
-        }
-        json: PasskeyAuthenticationResponse
+export type CompletePasskeyAuthenticationContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/auth/passkey/login/:challengeId',
+  {
+    in: {
+      param: {
+        challengeId: string
       }
-      out: {
-        param: {
-          challengeId: string
-        }
-        json: PasskeyAuthenticationResponse
-      }
+      json: PasskeyAuthenticationResponse
     }
-  >
+    out: {
+      param: {
+        challengeId: string
+      }
+      json: PasskeyAuthenticationResponse
+    }
+  }
+>

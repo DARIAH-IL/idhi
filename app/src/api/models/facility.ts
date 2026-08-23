@@ -36,7 +36,7 @@ export interface Facility {
    */
   description?: FacilityDescriptionItem[] | null
   /**
-   * The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.
+   * The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.
    * @nullable
    */
   facility_affiliations?: FacilityFacilityAffiliationsItem[] | null

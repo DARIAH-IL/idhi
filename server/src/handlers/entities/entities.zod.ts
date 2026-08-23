@@ -6,37 +6,37 @@
  */
 import { z as zod } from 'zod'
 
-export const postApiV1EntitiesBodyFacetsItemRegExp = new RegExp(
+export const searchEntitiesBodyFacetsItemRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
 )
-export const postApiV1EntitiesBodyFilterOneFieldRegExp = new RegExp(
+export const searchEntitiesBodyFilterOneFieldRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
 )
-export const postApiV1EntitiesBodyFilterTwoAndItemOneFieldRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
-)
-
-export const postApiV1EntitiesBodyFilterThreeOrItemOneFieldRegExp = new RegExp(
+export const searchEntitiesBodyFilterTwoAndItemOneFieldRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
 )
 
-export const postApiV1EntitiesBodySortItemPropertyRegExp = new RegExp(
+export const searchEntitiesBodyFilterThreeOrItemOneFieldRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
 )
 
-export const postApiV1EntitiesBodyPageDefault = 0
-export const postApiV1EntitiesBodyPageMin = 0
+export const searchEntitiesBodySortItemPropertyRegExp = new RegExp(
+  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+)
 
-export const postApiV1EntitiesBodyPageSizeDefault = 20
-export const postApiV1EntitiesBodyPageSizeMax = 100
+export const searchEntitiesBodyPageDefault = 0
+export const searchEntitiesBodyPageMin = 0
 
-export const PostApiV1EntitiesBody = zod.object({
+export const searchEntitiesBodyPageSizeDefault = 20
+export const searchEntitiesBodyPageSizeMax = 100
+
+export const SearchEntitiesBody = zod.object({
   q: zod.string().optional().describe('Optional free-text search query.'),
   facets: zod
     .array(
       zod
         .string()
-        .regex(postApiV1EntitiesBodyFacetsItemRegExp)
+        .regex(searchEntitiesBodyFacetsItemRegExp)
         .describe(
           'A dot-separated entity field path. Operators and array indexes are not allowed.',
         ),
@@ -48,7 +48,7 @@ export const PostApiV1EntitiesBody = zod.object({
       zod.object({
         field: zod
           .string()
-          .regex(postApiV1EntitiesBodyFilterOneFieldRegExp)
+          .regex(searchEntitiesBodyFilterOneFieldRegExp)
           .describe(
             'A dot-separated entity field path. Operators and array indexes are not allowed.',
           ),
@@ -72,7 +72,7 @@ export const PostApiV1EntitiesBody = zod.object({
               zod.object({
                 field: zod
                   .string()
-                  .regex(postApiV1EntitiesBodyFilterTwoAndItemOneFieldRegExp)
+                  .regex(searchEntitiesBodyFilterTwoAndItemOneFieldRegExp)
                   .describe(
                     'A dot-separated entity field path. Operators and array indexes are not allowed.',
                   ),
@@ -106,7 +106,7 @@ export const PostApiV1EntitiesBody = zod.object({
               zod.object({
                 field: zod
                   .string()
-                  .regex(postApiV1EntitiesBodyFilterThreeOrItemOneFieldRegExp)
+                  .regex(searchEntitiesBodyFilterThreeOrItemOneFieldRegExp)
                   .describe(
                     'A dot-separated entity field path. Operators and array indexes are not allowed.',
                   ),
@@ -140,7 +140,7 @@ export const PostApiV1EntitiesBody = zod.object({
       zod.object({
         property: zod
           .string()
-          .regex(postApiV1EntitiesBodySortItemPropertyRegExp)
+          .regex(searchEntitiesBodySortItemPropertyRegExp)
           .describe(
             'A dot-separated entity field path. Operators and array indexes are not allowed.',
           ),
@@ -154,147 +154,149 @@ export const PostApiV1EntitiesBody = zod.object({
     ),
   page: zod
     .int()
-    .min(postApiV1EntitiesBodyPageMin)
-    .default(postApiV1EntitiesBodyPageDefault),
+    .min(searchEntitiesBodyPageMin)
+    .default(searchEntitiesBodyPageDefault),
   pageSize: zod
     .int()
     .min(1)
-    .max(postApiV1EntitiesBodyPageSizeMax)
-    .default(postApiV1EntitiesBodyPageSizeDefault),
+    .max(searchEntitiesBodyPageSizeMax)
+    .default(searchEntitiesBodyPageSizeDefault),
 })
 
-export const postApiV1EntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const postApiV1EntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneTwoNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneTwoNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const postApiV1EntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneThreeNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneThreeNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneFourNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneFiveDoiRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneFiveDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneFiveNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneFiveNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneSixNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneSixNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneSevenNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneSevenNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneEightAddressItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneEightAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneEightLocationItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneEightLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneEightNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneEightNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneNineDoiRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneNineDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
+export const searchEntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesResponseResultsItemOneNineInLanguagesItemRegExp =
+export const searchEntitiesResponseResultsItemOneNineInLanguagesItemRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneNineNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneNineNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneNineThemesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneNineThemesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroDoiRegExp =
-  new RegExp('https://doi.org/.+')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const searchEntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp =
-  new RegExp('^idhi:training_material:[0-9a-z]{4,12}$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroIdRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
+)
+export const searchEntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp =
+export const searchEntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
+export const searchEntitiesResponseResultsItemTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
-export const postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
+export const searchEntitiesResponseResultsItemTwoAuditModifiedByRegExp =
   new RegExp('^idhi:user:.+$')
 
-export const PostApiV1EntitiesResponse = zod.object({
+export const SearchEntitiesResponse = zod.object({
   results: zod.array(
     zod
       .union([
@@ -323,71 +325,25 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .describe(
                         'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
-                    member: zod
-                      .string()
-                      .describe(
-                        'The person affiliated with the organization (by IDHI URN).',
-                      ),
                     organization: zod
                       .string()
                       .describe(
-                        'The organization side of the relationship (by IDHI URN).',
+                        'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                       ),
                     start_date: zod.iso
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
-                    "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+                    "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
                   ),
               )
               .nullish()
               .describe(
-                "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-              ),
-            authorships: zod
-              .array(
-                zod
-                  .object({
-                    author: zod
-                      .string()
-                      .describe('The contributing person (by IDHI URN).'),
-                    author_order: zod
-                      .int()
-                      .nullish()
-                      .describe('Position in the byline; 1 = first author.'),
-                    authorship_role: zod
-                      .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                      .optional()
-                      .describe('The kind of contribution to a publication.'),
-                    end_date: zod.iso
-                      .date()
-                      .nullish()
-                      .describe(
-                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                      ),
-                    publication: zod
-                      .string()
-                      .describe(
-                        'The publication contributed to (by IDHI URN).',
-                      ),
-                    start_date: zod.iso
-                      .date()
-                      .nullish()
-                      .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                      ),
-                  })
-                  .describe(
-                    "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-                  ),
-              )
-              .nullish()
-              .describe(
-                "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+                "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
               ),
             description: zod
               .array(
@@ -396,7 +352,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -428,7 +384,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -454,7 +410,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -479,7 +435,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneOneIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneOneIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -491,62 +447,10 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
             orcid: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp)
+              .regex(searchEntitiesResponseResultsItemOneOneOrcidRegExp)
               .nullish()
               .describe(
                 "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-              ),
-            project_participations: zod
-              .array(
-                zod
-                  .object({
-                    end_date: zod.iso
-                      .date()
-                      .nullish()
-                      .describe(
-                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                      ),
-                    participant: zod
-                      .string()
-                      .describe(
-                        'The person taking part in the project (by IDHI URN).',
-                      ),
-                    participation_role: zod
-                      .enum([
-                        'PRINCIPAL_INVESTIGATOR',
-                        'CO_PI',
-                        'RESEARCHER',
-                        'DH_LEAD',
-                        'TECHNICAL_LEAD',
-                        'DEVELOPER',
-                        'STUDENT',
-                        'ADVISOR',
-                        'CONSULTANT',
-                        'CONTRIBUTOR',
-                      ])
-                      .optional()
-                      .describe(
-                        "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                      ),
-                    project: zod
-                      .string()
-                      .describe(
-                        'The project side of the relationship (by IDHI URN).',
-                      ),
-                    start_date: zod.iso
-                      .date()
-                      .nullish()
-                      .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                      ),
-                  })
-                  .describe(
-                    "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-                  ),
-              )
-              .nullish()
-              .describe(
-                "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
               ),
             same_as: zod
               .array(zod.url())
@@ -584,7 +488,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -614,7 +518,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -639,7 +543,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneTwoIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneTwoIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -656,7 +560,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -688,7 +592,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneTwoNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneTwoNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -706,6 +610,36 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
+            organization_hierarchy: zod
+              .array(
+                zod
+                  .object({
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
+                    parent_organization: zod
+                      .string()
+                      .describe(
+                        'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                      ),
+                  })
+                  .describe(
+                    'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+              ),
             organization_type: zod
               .enum([
                 'ACADEMIC_INSTITUTION',
@@ -720,15 +654,9 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
               ),
-            parent_organization: zod
-              .string()
-              .nullish()
-              .describe(
-                "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-              ),
             ror: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneTwoRorRegExp)
+              .regex(searchEntitiesResponseResultsItemOneTwoRorRegExp)
               .nullish()
               .describe(
                 "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -769,7 +697,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -799,7 +727,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -828,30 +756,30 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .describe(
                         'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
-                    facility: zod
-                      .string()
+                    facility_affiliation_role: zod
+                      .enum(['HOST', 'OWNER'])
                       .describe(
-                        'The facility side of the relationship (by IDHI URN).',
+                        'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                       ),
                     organization: zod
                       .string()
                       .describe(
-                        'The organization side of the relationship (by IDHI URN).',
+                        'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                       ),
                     start_date: zod.iso
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
-                    "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+                    "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
                   ),
               )
               .nullish()
               .describe(
-                'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+                'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
               ),
             homepage: zod
               .url()
@@ -859,7 +787,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneThreeIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneThreeIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -876,7 +804,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -902,7 +830,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneThreeNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneThreeNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -974,7 +902,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1208,7 +1136,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                             language: zod
                               .string()
                               .regex(
-                                postApiV1EntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp,
+                                searchEntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp,
                               )
                               .describe(
                                 'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1240,7 +1168,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                             language: zod
                               .string()
                               .regex(
-                                postApiV1EntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp,
+                                searchEntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp,
                               )
                               .describe(
                                 'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1269,7 +1197,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
@@ -1298,7 +1226,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneFourIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneFourIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -1315,7 +1243,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFourNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFourNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1358,27 +1286,22 @@ export const PostApiV1EntitiesResponse = zod.object({
                     organization: zod
                       .string()
                       .describe(
-                        'The organization side of the relationship (by IDHI URN).',
-                      ),
-                    project: zod
-                      .string()
-                      .describe(
-                        'The project side of the relationship (by IDHI URN).',
+                        'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                       ),
                     start_date: zod.iso
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
-                    "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                    "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
                   ),
               )
               .nullish()
               .describe(
-                'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+                'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
               ),
             outputs_datasets: zod
               .array(zod.string())
@@ -1413,7 +1336,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     participant: zod
                       .string()
                       .describe(
-                        'The person taking part in the project (by IDHI URN).',
+                        'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                       ),
                     participation_role: zod
                       .enum([
@@ -1432,25 +1355,20 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .describe(
                         "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                       ),
-                    project: zod
-                      .string()
-                      .describe(
-                        'The project side of the relationship (by IDHI URN).',
-                      ),
                     start_date: zod.iso
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
-                    "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+                    "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
                   ),
               )
               .nullish()
               .describe(
-                "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+                'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
               ),
             research_disciplines: zod
               .array(
@@ -1459,7 +1377,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1488,7 +1406,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .date()
               .nullish()
               .describe(
-                "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
               ),
             studied_periods: zod
               .array(
@@ -1497,7 +1415,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1523,7 +1441,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1552,6 +1470,24 @@ export const PostApiV1EntitiesResponse = zod.object({
               .enum(['idhi:Project'])
               .describe(
                 "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+              ),
+            uses_datasets: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+              ),
+            uses_services: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+              ),
+            uses_tools: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
               ),
           })
           .describe(
@@ -1584,7 +1520,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1792,7 +1728,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
             doi: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneFiveDoiRegExp)
+              .regex(searchEntitiesResponseResultsItemOneFiveDoiRegExp)
               .nullish()
               .describe(
                 "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -1803,7 +1739,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneFiveIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneFiveIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -1833,7 +1769,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneFiveNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneFiveNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -1856,6 +1792,47 @@ export const PostApiV1EntitiesResponse = zod.object({
               .nullish()
               .describe(
                 'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+              ),
+            resource_contributions: zod
+              .array(
+                zod
+                  .object({
+                    contributor: zod
+                      .string()
+                      .describe(
+                        'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                      ),
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
+                    resource_contribution_role: zod
+                      .enum([
+                        'CREATOR',
+                        'DEVELOPER',
+                        'MAINTAINER',
+                        'DATA_CURATOR',
+                        'CONTRIBUTOR',
+                      ])
+                      .describe(
+                        'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                      ),
+                  })
+                  .describe(
+                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
               ),
             same_as: zod
               .array(zod.url())
@@ -1914,7 +1891,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2126,7 +2103,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneSixIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneSixIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2143,7 +2120,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneSixNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneSixNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2211,7 +2188,9 @@ export const PostApiV1EntitiesResponse = zod.object({
                   .object({
                     author: zod
                       .string()
-                      .describe('The contributing person (by IDHI URN).'),
+                      .describe(
+                        'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                      ),
                     author_order: zod
                       .int()
                       .nullish()
@@ -2226,25 +2205,20 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .describe(
                         'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
-                    publication: zod
-                      .string()
-                      .describe(
-                        'The publication contributed to (by IDHI URN).',
-                      ),
                     start_date: zod.iso
                       .date()
                       .nullish()
                       .describe(
-                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                       ),
                   })
                   .describe(
-                    "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+                    "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
                   ),
               )
               .nullish()
               .describe(
-                "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+                'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
               ),
             date_issued: zod.iso
               .date()
@@ -2259,7 +2233,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2280,7 +2254,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
             doi: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp)
+              .regex(searchEntitiesResponseResultsItemOneSevenDoiRegExp)
               .nullish()
               .describe(
                 "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -2291,7 +2265,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneSevenIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneSevenIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2308,7 +2282,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneSevenNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneSevenNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2462,7 +2436,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2523,7 +2497,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneEightAddressItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneEightAddressItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2553,7 +2527,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2578,6 +2552,48 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
               ),
+            event_agent_roles: zod
+              .array(
+                zod
+                  .object({
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
+                    event_agent: zod
+                      .string()
+                      .describe(
+                        'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                      ),
+                    event_agent_role: zod
+                      .enum([
+                        'ORGANIZER',
+                        'HOST',
+                        'SPEAKER',
+                        'PANELIST',
+                        'PARTICIPANT',
+                        'SPONSOR',
+                      ])
+                      .describe(
+                        'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                      ),
+                  })
+                  .describe(
+                    'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+              ),
             event_type: zod
               .enum([
                 'CONFERENCE',
@@ -2595,7 +2611,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneEightIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneEightIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2612,7 +2628,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneEightLocationItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneEightLocationItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2638,7 +2654,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneEightNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneEightNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2666,7 +2682,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .date()
               .nullish()
               .describe(
-                "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
               ),
             tags: zod
               .array(zod.string())
@@ -2731,7 +2747,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2756,7 +2772,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Direct download or access URL for the dataset.'),
             doi: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneNineDoiRegExp)
+              .regex(searchEntitiesResponseResultsItemOneNineDoiRegExp)
               .nullish()
               .describe(
                 "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -2773,7 +2789,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneNineIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneNineIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -2788,7 +2804,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .string()
                   .regex(
-                    postApiV1EntitiesResponseResultsItemOneNineInLanguagesItemRegExp,
+                    searchEntitiesResponseResultsItemOneNineInLanguagesItemRegExp,
                   ),
               )
               .nullish()
@@ -2821,7 +2837,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneNineNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneNineNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2851,6 +2867,47 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
               ),
+            resource_contributions: zod
+              .array(
+                zod
+                  .object({
+                    contributor: zod
+                      .string()
+                      .describe(
+                        'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                      ),
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
+                    resource_contribution_role: zod
+                      .enum([
+                        'CREATOR',
+                        'DEVELOPER',
+                        'MAINTAINER',
+                        'DATA_CURATOR',
+                        'CONTRIBUTOR',
+                      ])
+                      .describe(
+                        'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                      ),
+                  })
+                  .describe(
+                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+              ),
             same_as: zod
               .array(zod.url())
               .nullish()
@@ -2870,7 +2927,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneNineThemesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneNineThemesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -2929,7 +2986,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3131,7 +3188,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
             doi: zod
               .url()
-              .regex(postApiV1EntitiesResponseResultsItemOneOnezeroDoiRegExp)
+              .regex(searchEntitiesResponseResultsItemOneOnezeroDoiRegExp)
               .nullish()
               .describe(
                 "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -3143,7 +3200,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3168,7 +3225,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe('Public landing page of the entity, if one exists.'),
             id: zod
               .string()
-              .regex(postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp)
+              .regex(searchEntitiesResponseResultsItemOneOnezeroIdRegExp)
               .describe(
                 "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
               ),
@@ -3183,7 +3240,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .string()
                   .regex(
-                    postApiV1EntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp,
+                    searchEntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp,
                   ),
               )
               .nullish()
@@ -3197,7 +3254,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3248,7 +3305,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3279,7 +3336,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3341,7 +3398,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                     language: zod
                       .string()
                       .regex(
-                        postApiV1EntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp,
+                        searchEntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp,
                       )
                       .describe(
                         'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -3393,7 +3450,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               createdBy: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp,
+                  searchEntitiesResponseResultsItemTwoAuditCreatedByRegExp,
                 ),
               modifiedAt: zod.iso
                 .datetime({ offset: true })
@@ -3401,7 +3458,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               modifiedBy: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp,
+                  searchEntitiesResponseResultsItemTwoAuditModifiedByRegExp,
                 ),
             })
             .optional(),
@@ -3422,162 +3479,131 @@ export const PostApiV1EntitiesResponse = zod.object({
     .describe('Total number of matching entities across all pages.'),
 })
 
-export const putApiV1EntitiesBodyOneDescriptionItemLanguageRegExp = new RegExp(
+export const createEntityBodyOneDescriptionItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyOneFamilyNameItemLanguageRegExp = new RegExp(
+export const createEntityBodyOneFamilyNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyOneGivenNameItemLanguageRegExp = new RegExp(
+export const createEntityBodyOneGivenNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyOneIdRegExp = new RegExp(
-  '^idhi:person:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyOneOrcidRegExp = new RegExp(
+export const createEntityBodyOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const putApiV1EntitiesBodyTwoAddressItemLanguageRegExp = new RegExp(
+export const createEntityBodyTwoAddressItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyTwoDescriptionItemLanguageRegExp = new RegExp(
+export const createEntityBodyTwoDescriptionItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyTwoIdRegExp = new RegExp(
-  '^idhi:organization:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyTwoLocationItemLanguageRegExp = new RegExp(
+export const createEntityBodyTwoLocationItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyTwoNameItemLanguageRegExp = new RegExp(
+export const createEntityBodyTwoNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyTwoRorRegExp = new RegExp(
+export const createEntityBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const putApiV1EntitiesBodyThreeAddressItemLanguageRegExp = new RegExp(
+export const createEntityBodyThreeAddressItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyThreeDescriptionItemLanguageRegExp =
+export const createEntityBodyThreeDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyThreeLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyThreeNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyFourDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyThreeIdRegExp = new RegExp(
-  '^idhi:facility:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyThreeLocationItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyThreeNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyFourDescriptionItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyFourFundingItemFundingProgramItemLanguageRegExp =
+export const createEntityBodyFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyFourFundingItemGrantNameItemLanguageRegExp =
+export const createEntityBodyFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyFourIdRegExp = new RegExp(
-  '^idhi:project:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyFourNameItemLanguageRegExp = new RegExp(
+export const createEntityBodyFourStudiedPeriodsItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesBodyFourResearchDisciplinesItemLanguageRegExp =
+export const createEntityBodyFourStudiedPlacesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyFiveDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyFiveDoiRegExp = new RegExp('https://doi.org/.+')
+export const createEntityBodyFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySixDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySevenDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySevenDoiRegExp = new RegExp('https://doi.org/.+')
+export const createEntityBodySevenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySevenPublishedInItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyEightAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyEightDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyEightLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyEightNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyNineDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyNineDoiRegExp = new RegExp('https://doi.org/.+')
+export const createEntityBodyNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyNineThemesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyOnezeroDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyOnezeroDoiRegExp = new RegExp('https://doi.org/.+')
+export const createEntityBodyOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyFourStudiedPeriodsItemLanguageRegExp =
+export const createEntityBodyOnezeroInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyFourStudiedPlacesItemLanguageRegExp =
+export const createEntityBodyOnezeroNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodyOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyFiveDescriptionItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyFiveDoiRegExp = new RegExp(
-  'https://doi.org/.+',
-)
-export const putApiV1EntitiesBodyFiveIdRegExp = new RegExp(
-  '^idhi:tool:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyFiveNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodySixDescriptionItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodySixIdRegExp = new RegExp(
-  '^idhi:service:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodySixNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodySevenDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodySevenDoiRegExp = new RegExp(
-  'https://doi.org/.+',
-)
-export const putApiV1EntitiesBodySevenIdRegExp = new RegExp(
-  '^idhi:publication:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodySevenNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodySevenPublishedInItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyEightAddressItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyEightDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyEightIdRegExp = new RegExp(
-  '^idhi:event:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyEightLocationItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyEightNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyNineDescriptionItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyNineDoiRegExp = new RegExp(
-  'https://doi.org/.+',
-)
-export const putApiV1EntitiesBodyNineIdRegExp = new RegExp(
-  '^idhi:dataset:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyNineInLanguagesItemRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyNineNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyNineThemesItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyOnezeroDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyOnezeroDoiRegExp = new RegExp(
-  'https://doi.org/.+',
-)
-export const putApiV1EntitiesBodyOnezeroEducationalLevelItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyOnezeroIdRegExp = new RegExp(
-  '^idhi:training_material:[0-9a-z]{4,12}$',
-)
-export const putApiV1EntitiesBodyOnezeroInLanguagesItemRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyOnezeroLearningOutcomesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyOnezeroNameItemLanguageRegExp = new RegExp(
-  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
-)
-export const putApiV1EntitiesBodyOnezeroPrerequisitesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesBodyOnezeroTargetAudiencesItemLanguageRegExp =
+export const createEntityBodyOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 
-export const PutApiV1EntitiesBody = zod.union([
+export const CreateEntityBody = zod.union([
   zod
     .object({
       affiliations: zod
@@ -3603,69 +3629,25 @@ export const PutApiV1EntitiesBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              member: zod
-                .string()
-                .describe(
-                  'The person affiliated with the organization (by IDHI URN).',
-                ),
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
             ),
         )
         .nullish()
         .describe(
-          "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-        ),
-      authorships: zod
-        .array(
-          zod
-            .object({
-              author: zod
-                .string()
-                .describe('The contributing person (by IDHI URN).'),
-              author_order: zod
-                .int()
-                .nullish()
-                .describe('Position in the byline; 1 = first author.'),
-              authorship_role: zod
-                .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                .optional()
-                .describe('The kind of contribution to a publication.'),
-              end_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                ),
-              publication: zod
-                .string()
-                .describe('The publication contributed to (by IDHI URN).'),
-              start_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                ),
-            })
-            .describe(
-              "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-            ),
-        )
-        .nullish()
-        .describe(
-          "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
         ),
       description: zod
         .array(
@@ -3673,7 +3655,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyOneDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyOneDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3703,7 +3685,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyOneFamilyNameItemLanguageRegExp)
+                .regex(createEntityBodyOneFamilyNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3727,7 +3709,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyOneGivenNameItemLanguageRegExp)
+                .regex(createEntityBodyOneGivenNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3749,12 +3731,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyOneIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -3763,62 +3740,10 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
       orcid: zod
         .url()
-        .regex(putApiV1EntitiesBodyOneOrcidRegExp)
+        .regex(createEntityBodyOneOrcidRegExp)
         .nullish()
         .describe(
           "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-        ),
-      project_participations: zod
-        .array(
-          zod
-            .object({
-              end_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                ),
-              participant: zod
-                .string()
-                .describe(
-                  'The person taking part in the project (by IDHI URN).',
-                ),
-              participation_role: zod
-                .enum([
-                  'PRINCIPAL_INVESTIGATOR',
-                  'CO_PI',
-                  'RESEARCHER',
-                  'DH_LEAD',
-                  'TECHNICAL_LEAD',
-                  'DEVELOPER',
-                  'STUDENT',
-                  'ADVISOR',
-                  'CONSULTANT',
-                  'CONTRIBUTOR',
-                ])
-                .optional()
-                .describe(
-                  "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
-                ),
-              start_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                ),
-            })
-            .describe(
-              "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-            ),
-        )
-        .nullish()
-        .describe(
-          "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
         ),
       same_as: zod
         .array(zod.url())
@@ -3833,7 +3758,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Person'])
+        .literal('idhi:Person')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -3855,7 +3780,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyTwoAddressItemLanguageRegExp)
+                .regex(createEntityBodyTwoAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3883,7 +3808,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyTwoDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyTwoDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3905,12 +3830,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyTwoIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -3923,7 +3843,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyTwoLocationItemLanguageRegExp)
+                .regex(createEntityBodyTwoLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3953,7 +3873,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyTwoNameItemLanguageRegExp)
+                .regex(createEntityBodyTwoNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -3970,6 +3890,36 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
+      organization_hierarchy: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              parent_organization: zod
+                .string()
+                .describe(
+                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+        ),
       organization_type: zod
         .enum([
           'ACADEMIC_INSTITUTION',
@@ -3984,15 +3934,9 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
         ),
-      parent_organization: zod
-        .string()
-        .nullish()
-        .describe(
-          "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-        ),
       ror: zod
         .url()
-        .regex(putApiV1EntitiesBodyTwoRorRegExp)
+        .regex(createEntityBodyTwoRorRegExp)
         .nullish()
         .describe(
           "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -4010,7 +3954,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Organization'])
+        .literal('idhi:Organization')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -4032,7 +3976,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyThreeAddressItemLanguageRegExp)
+                .regex(createEntityBodyThreeAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4060,7 +4004,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyThreeDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyThreeDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4088,41 +4032,36 @@ export const PutApiV1EntitiesBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              facility: zod
-                .string()
+              facility_affiliation_role: zod
+                .enum(['HOST', 'OWNER'])
                 .describe(
-                  'The facility side of the relationship (by IDHI URN).',
+                  'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                 ),
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+              "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
             ),
         )
         .nullish()
         .describe(
-          'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+          'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
         ),
       homepage: zod
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyThreeIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -4135,7 +4074,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyThreeLocationItemLanguageRegExp)
+                .regex(createEntityBodyThreeLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4159,7 +4098,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyThreeNameItemLanguageRegExp)
+                .regex(createEntityBodyThreeNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4201,7 +4140,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Tools this facility maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
         ),
       type: zod
-        .enum(['idhi:Facility'])
+        .literal('idhi:Facility')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -4229,7 +4168,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFourDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyFourDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4462,7 +4401,7 @@ export const PutApiV1EntitiesBody = zod.union([
                       language: zod
                         .string()
                         .regex(
-                          putApiV1EntitiesBodyFourFundingItemFundingProgramItemLanguageRegExp,
+                          createEntityBodyFourFundingItemFundingProgramItemLanguageRegExp,
                         )
                         .describe(
                           'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -4494,7 +4433,7 @@ export const PutApiV1EntitiesBody = zod.union([
                       language: zod
                         .string()
                         .regex(
-                          putApiV1EntitiesBodyFourFundingItemGrantNameItemLanguageRegExp,
+                          createEntityBodyFourFundingItemGrantNameItemLanguageRegExp,
                         )
                         .describe(
                           'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -4523,7 +4462,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
@@ -4550,12 +4489,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyFourIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -4568,7 +4502,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFourNameItemLanguageRegExp)
+                .regex(createEntityBodyFourNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4610,27 +4544,22 @@ export const PutApiV1EntitiesBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
-                ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -4663,7 +4592,7 @@ export const PutApiV1EntitiesBody = zod.union([
               participant: zod
                 .string()
                 .describe(
-                  'The person taking part in the project (by IDHI URN).',
+                  'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                 ),
               participation_role: zod
                 .enum([
@@ -4682,25 +4611,20 @@ export const PutApiV1EntitiesBody = zod.union([
                 .describe(
                   "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                 ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
-                ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+              "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
             ),
         )
         .nullish()
         .describe(
-          "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+          'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
         ),
       research_disciplines: zod
         .array(
@@ -4709,7 +4633,7 @@ export const PutApiV1EntitiesBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  putApiV1EntitiesBodyFourResearchDisciplinesItemLanguageRegExp,
+                  createEntityBodyFourResearchDisciplinesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -4738,7 +4662,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
         ),
       studied_periods: zod
         .array(
@@ -4746,7 +4670,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFourStudiedPeriodsItemLanguageRegExp)
+                .regex(createEntityBodyFourStudiedPeriodsItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4770,7 +4694,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFourStudiedPlacesItemLanguageRegExp)
+                .regex(createEntityBodyFourStudiedPlacesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -4795,9 +4719,27 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Project'])
+        .literal('idhi:Project')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+      uses_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+        ),
+      uses_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+        ),
+      uses_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
         ),
     })
     .describe(
@@ -4827,7 +4769,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFiveDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyFiveDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5034,7 +4976,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(putApiV1EntitiesBodyFiveDoiRegExp)
+        .regex(createEntityBodyFiveDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -5043,12 +4985,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyFiveIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -5074,7 +5011,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyFiveNameItemLanguageRegExp)
+                .regex(createEntityBodyFiveNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5096,6 +5033,47 @@ export const PutApiV1EntitiesBody = zod.union([
         .nullish()
         .describe(
           'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+        ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
         ),
       same_as: zod
         .array(zod.url())
@@ -5125,7 +5103,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
         ),
       type: zod
-        .enum(['idhi:Tool'])
+        .literal('idhi:Tool')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -5153,7 +5131,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodySixDescriptionItemLanguageRegExp)
+                .regex(createEntityBodySixDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5362,12 +5340,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodySixIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -5380,7 +5353,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodySixNameItemLanguageRegExp)
+                .regex(createEntityBodySixNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5431,7 +5404,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Service'])
+        .literal('idhi:Service')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -5447,7 +5420,9 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               author: zod
                 .string()
-                .describe('The contributing person (by IDHI URN).'),
+                .describe(
+                  'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                ),
               author_order: zod
                 .int()
                 .nullish()
@@ -5462,23 +5437,20 @@ export const PutApiV1EntitiesBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              publication: zod
-                .string()
-                .describe('The publication contributed to (by IDHI URN).'),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+              "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
             ),
         )
         .nullish()
         .describe(
-          "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+          'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
         ),
       date_issued: zod.iso
         .date()
@@ -5492,7 +5464,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodySevenDescriptionItemLanguageRegExp)
+                .regex(createEntityBodySevenDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5512,7 +5484,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(putApiV1EntitiesBodySevenDoiRegExp)
+        .regex(createEntityBodySevenDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -5521,12 +5493,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodySevenIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -5539,7 +5506,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodySevenNameItemLanguageRegExp)
+                .regex(createEntityBodySevenNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5691,7 +5658,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodySevenPublishedInItemLanguageRegExp)
+                .regex(createEntityBodySevenPublishedInItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5728,7 +5695,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Publication'])
+        .literal('idhi:Publication')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -5750,7 +5717,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyEightAddressItemLanguageRegExp)
+                .regex(createEntityBodyEightAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5778,7 +5745,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyEightDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyEightDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5802,6 +5769,48 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
+      event_agent_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              event_agent: zod
+                .string()
+                .describe(
+                  'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                ),
+              event_agent_role: zod
+                .enum([
+                  'ORGANIZER',
+                  'HOST',
+                  'SPEAKER',
+                  'PANELIST',
+                  'PARTICIPANT',
+                  'SPONSOR',
+                ])
+                .describe(
+                  'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+        ),
       event_type: zod
         .enum([
           'CONFERENCE',
@@ -5817,12 +5826,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyEightIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -5835,7 +5839,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyEightLocationItemLanguageRegExp)
+                .regex(createEntityBodyEightLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5859,7 +5863,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyEightNameItemLanguageRegExp)
+                .regex(createEntityBodyEightNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5886,7 +5890,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
         ),
       tags: zod
         .array(zod.string())
@@ -5895,7 +5899,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Event'])
+        .literal('idhi:Event')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -5950,7 +5954,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyNineDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyNineDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -5974,7 +5978,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe('Direct download or access URL for the dataset.'),
       doi: zod
         .url()
-        .regex(putApiV1EntitiesBodyNineDoiRegExp)
+        .regex(createEntityBodyNineDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -5989,12 +5993,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyNineIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -6002,9 +6001,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       in_languages: zod
-        .array(
-          zod.string().regex(putApiV1EntitiesBodyNineInLanguagesItemRegExp),
-        )
+        .array(zod.string().regex(createEntityBodyNineInLanguagesItemRegExp))
         .nullish()
         .describe(
           'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
@@ -6034,7 +6031,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyNineNameItemLanguageRegExp)
+                .regex(createEntityBodyNineNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6063,6 +6060,47 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
         ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+        ),
       same_as: zod
         .array(zod.url())
         .nullish()
@@ -6081,7 +6119,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyNineThemesItemLanguageRegExp)
+                .regex(createEntityBodyNineThemesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6098,7 +6136,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .nullish()
         .describe('Thematic keywords for the dataset, multilingual.'),
       type: zod
-        .enum(['idhi:Dataset'])
+        .literal('idhi:Dataset')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -6138,7 +6176,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyOnezeroDescriptionItemLanguageRegExp)
+                .regex(createEntityBodyOnezeroDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6339,7 +6377,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(putApiV1EntitiesBodyOnezeroDoiRegExp)
+        .regex(createEntityBodyOnezeroDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -6351,7 +6389,7 @@ export const PutApiV1EntitiesBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  putApiV1EntitiesBodyOnezeroEducationalLevelItemLanguageRegExp,
+                  createEntityBodyOnezeroEducationalLevelItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -6374,12 +6412,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
-      id: zod
-        .string()
-        .regex(putApiV1EntitiesBodyOnezeroIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+      id: zod.union([zod.null(), zod.literal('')]).optional(),
       image: zod
         .string()
         .nullish()
@@ -6387,9 +6420,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
       in_languages: zod
-        .array(
-          zod.string().regex(putApiV1EntitiesBodyOnezeroInLanguagesItemRegExp),
-        )
+        .array(zod.string().regex(createEntityBodyOnezeroInLanguagesItemRegExp))
         .nullish()
         .describe(
           'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
@@ -6401,7 +6432,7 @@ export const PutApiV1EntitiesBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  putApiV1EntitiesBodyOnezeroLearningOutcomesItemLanguageRegExp,
+                  createEntityBodyOnezeroLearningOutcomesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -6451,7 +6482,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(putApiV1EntitiesBodyOnezeroNameItemLanguageRegExp)
+                .regex(createEntityBodyOnezeroNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6480,9 +6511,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  putApiV1EntitiesBodyOnezeroPrerequisitesItemLanguageRegExp,
-                )
+                .regex(createEntityBodyOnezeroPrerequisitesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6542,9 +6571,7 @@ export const PutApiV1EntitiesBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  putApiV1EntitiesBodyOnezeroTargetAudiencesItemLanguageRegExp,
-                )
+                .regex(createEntityBodyOnezeroTargetAudiencesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -6576,7 +6603,7 @@ export const PutApiV1EntitiesBody = zod.union([
           "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
         ),
       type: zod
-        .enum(['idhi:TrainingMaterial'])
+        .literal('idhi:TrainingMaterial')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -6586,148 +6613,159 @@ export const PutApiV1EntitiesBody = zod.union([
     ),
 ])
 
-export const putApiV1EntitiesResponseOneOneDescriptionItemLanguageRegExp =
+export const createEntityResponseOneOneDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOneFamilyNameItemLanguageRegExp =
+export const createEntityResponseOneOneFamilyNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOneGivenNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOneIdRegExp = new RegExp(
+export const createEntityResponseOneOneGivenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneOneOrcidRegExp = new RegExp(
+export const createEntityResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const putApiV1EntitiesResponseOneTwoAddressItemLanguageRegExp =
+export const createEntityResponseOneTwoAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneTwoDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneTwoDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneTwoIdRegExp = new RegExp(
+export const createEntityResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneTwoLocationItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneTwoNameItemLanguageRegExp = new RegExp(
+export const createEntityResponseOneTwoLocationItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneTwoRorRegExp = new RegExp(
+export const createEntityResponseOneTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const putApiV1EntitiesResponseOneThreeAddressItemLanguageRegExp =
+export const createEntityResponseOneThreeAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneThreeDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneThreeDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneThreeIdRegExp = new RegExp(
+export const createEntityResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneThreeLocationItemLanguageRegExp =
+export const createEntityResponseOneThreeLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneThreeNameItemLanguageRegExp =
+export const createEntityResponseOneThreeNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneFourDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourDescriptionItemLanguageRegExp =
+export const createEntityResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+export const createEntityResponseOneFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourFundingItemGrantNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourIdRegExp = new RegExp(
+export const createEntityResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneFourNameItemLanguageRegExp = new RegExp(
+export const createEntityResponseOneFourNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneFourResearchDisciplinesItemLanguageRegExp =
+export const createEntityResponseOneFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourStudiedPeriodsItemLanguageRegExp =
+export const createEntityResponseOneFourStudiedPeriodsItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFourStudiedPlacesItemLanguageRegExp =
+export const createEntityResponseOneFourStudiedPlacesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFiveDescriptionItemLanguageRegExp =
+export const createEntityResponseOneFiveDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneFiveDoiRegExp = new RegExp(
+export const createEntityResponseOneFiveDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const putApiV1EntitiesResponseOneFiveIdRegExp = new RegExp(
+export const createEntityResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneFiveNameItemLanguageRegExp = new RegExp(
+export const createEntityResponseOneFiveNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneSixDescriptionItemLanguageRegExp =
+export const createEntityResponseOneSixDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneSixIdRegExp = new RegExp(
+export const createEntityResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneSixNameItemLanguageRegExp = new RegExp(
+export const createEntityResponseOneSixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneSevenDescriptionItemLanguageRegExp =
+export const createEntityResponseOneSevenDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneSevenDoiRegExp = new RegExp(
+export const createEntityResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const putApiV1EntitiesResponseOneSevenIdRegExp = new RegExp(
+export const createEntityResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneSevenNameItemLanguageRegExp =
+export const createEntityResponseOneSevenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneSevenPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneSevenPublishedInItemLanguageRegExp =
+export const createEntityResponseOneEightAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneEightDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneEightAddressItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneEightDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneEightIdRegExp = new RegExp(
+export const createEntityResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneEightLocationItemLanguageRegExp =
+export const createEntityResponseOneEightLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneEightNameItemLanguageRegExp =
+export const createEntityResponseOneEightNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneNineDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneNineDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneNineDoiRegExp = new RegExp(
+export const createEntityResponseOneNineDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const putApiV1EntitiesResponseOneNineIdRegExp = new RegExp(
+export const createEntityResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneNineInLanguagesItemRegExp = new RegExp(
+export const createEntityResponseOneNineInLanguagesItemRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneNineNameItemLanguageRegExp = new RegExp(
+export const createEntityResponseOneNineNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
-export const putApiV1EntitiesResponseOneNineThemesItemLanguageRegExp =
+export const createEntityResponseOneNineThemesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneOnezeroDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroDoiRegExp = new RegExp(
+export const createEntityResponseOneOnezeroDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const putApiV1EntitiesResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+export const createEntityResponseOneOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroIdRegExp = new RegExp(
+export const createEntityResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
-export const putApiV1EntitiesResponseOneOnezeroInLanguagesItemRegExp =
+export const createEntityResponseOneOnezeroInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+export const createEntityResponseOneOnezeroNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroNameItemLanguageRegExp =
+export const createEntityResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroPrerequisitesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const putApiV1EntitiesResponseTwoAuditCreatedByRegExp = new RegExp(
+export const createEntityResponseTwoAuditCreatedByRegExp = new RegExp(
   '^idhi:user:.+$',
 )
-export const putApiV1EntitiesResponseTwoAuditModifiedByRegExp = new RegExp(
+export const createEntityResponseTwoAuditModifiedByRegExp = new RegExp(
   '^idhi:user:.+$',
 )
 
-export const PutApiV1EntitiesResponse = zod
+export const CreateEntityResponse = zod
   .union([
     zod
       .object({
@@ -6754,69 +6792,25 @@ export const PutApiV1EntitiesResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                member: zod
-                  .string()
-                  .describe(
-                    'The person affiliated with the organization (by IDHI URN).',
-                  ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-          ),
-        authorships: zod
-          .array(
-            zod
-              .object({
-                author: zod
-                  .string()
-                  .describe('The contributing person (by IDHI URN).'),
-                author_order: zod
-                  .int()
-                  .nullish()
-                  .describe('Position in the byline; 1 = first author.'),
-                authorship_role: zod
-                  .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                  .optional()
-                  .describe('The kind of contribution to a publication.'),
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -6825,7 +6819,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOneDescriptionItemLanguageRegExp,
+                    createEntityResponseOneOneDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -6856,9 +6850,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneOneFamilyNameItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneOneFamilyNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -6882,9 +6874,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneOneGivenNameItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneOneGivenNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -6908,7 +6898,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneOneIdRegExp)
+          .regex(createEntityResponseOneOneIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -6920,62 +6910,10 @@ export const PutApiV1EntitiesResponse = zod
           ),
         orcid: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneOneOrcidRegExp)
+          .regex(createEntityResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
             "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-          ),
-        project_participations: zod
-          .array(
-            zod
-              .object({
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                participant: zod
-                  .string()
-                  .describe(
-                    'The person taking part in the project (by IDHI URN).',
-                  ),
-                participation_role: zod
-                  .enum([
-                    'PRINCIPAL_INVESTIGATOR',
-                    'CO_PI',
-                    'RESEARCHER',
-                    'DH_LEAD',
-                    'TECHNICAL_LEAD',
-                    'DEVELOPER',
-                    'STUDENT',
-                    'ADVISOR',
-                    'CONSULTANT',
-                    'CONTRIBUTOR',
-                  ])
-                  .optional()
-                  .describe(
-                    "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
           ),
         same_as: zod
           .array(zod.url())
@@ -7012,9 +6950,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneTwoAddressItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneTwoAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7043,7 +6979,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneTwoDescriptionItemLanguageRegExp,
+                    createEntityResponseOneTwoDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7068,7 +7004,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneTwoIdRegExp)
+          .regex(createEntityResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -7084,9 +7020,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneTwoLocationItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneTwoLocationItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7116,7 +7050,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneTwoNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneTwoNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7133,6 +7067,36 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
+        organization_hierarchy: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                parent_organization: zod
+                  .string()
+                  .describe(
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+          ),
         organization_type: zod
           .enum([
             'ACADEMIC_INSTITUTION',
@@ -7147,15 +7111,9 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
           ),
-        parent_organization: zod
-          .string()
-          .nullish()
-          .describe(
-            "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-          ),
         ror: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneTwoRorRegExp)
+          .regex(createEntityResponseOneTwoRorRegExp)
           .nullish()
           .describe(
             "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -7195,9 +7153,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneThreeAddressItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneThreeAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7226,7 +7182,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneThreeDescriptionItemLanguageRegExp,
+                    createEntityResponseOneThreeDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7255,30 +7211,30 @@ export const PutApiV1EntitiesResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                facility: zod
-                  .string()
+                facility_affiliation_role: zod
+                  .enum(['HOST', 'OWNER'])
                   .describe(
-                    'The facility side of the relationship (by IDHI URN).',
+                    'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                   ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+                "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
               ),
           )
           .nullish()
           .describe(
-            'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+            'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
           ),
         homepage: zod
           .url()
@@ -7286,7 +7242,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneThreeIdRegExp)
+          .regex(createEntityResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -7302,9 +7258,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneThreeLocationItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneThreeLocationItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7328,7 +7282,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneThreeNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneThreeNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7399,7 +7353,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneFourDescriptionItemLanguageRegExp,
+                    createEntityResponseOneFourDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7633,7 +7587,7 @@ export const PutApiV1EntitiesResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            putApiV1EntitiesResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                            createEntityResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7665,7 +7619,7 @@ export const PutApiV1EntitiesResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            putApiV1EntitiesResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                            createEntityResponseOneFourFundingItemGrantNameItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7694,7 +7648,7 @@ export const PutApiV1EntitiesResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
@@ -7723,7 +7677,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneFourIdRegExp)
+          .regex(createEntityResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -7739,7 +7693,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneFourNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneFourNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -7781,27 +7735,22 @@ export const PutApiV1EntitiesResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -7834,7 +7783,7 @@ export const PutApiV1EntitiesResponse = zod
                 participant: zod
                   .string()
                   .describe(
-                    'The person taking part in the project (by IDHI URN).',
+                    'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                   ),
                 participation_role: zod
                   .enum([
@@ -7853,25 +7802,20 @@ export const PutApiV1EntitiesResponse = zod
                   .describe(
                     "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                   ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+                "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
               ),
           )
           .nullish()
           .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+            'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
           ),
         research_disciplines: zod
           .array(
@@ -7880,7 +7824,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                    createEntityResponseOneFourResearchDisciplinesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7909,7 +7853,7 @@ export const PutApiV1EntitiesResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         studied_periods: zod
           .array(
@@ -7918,7 +7862,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                    createEntityResponseOneFourStudiedPeriodsItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7944,7 +7888,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneFourStudiedPlacesItemLanguageRegExp,
+                    createEntityResponseOneFourStudiedPlacesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -7973,6 +7917,24 @@ export const PutApiV1EntitiesResponse = zod
           .enum(['idhi:Project'])
           .describe(
             "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+        uses_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+          ),
+        uses_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+          ),
+        uses_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
           ),
       })
       .describe(
@@ -8003,7 +7965,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneFiveDescriptionItemLanguageRegExp,
+                    createEntityResponseOneFiveDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -8211,7 +8173,7 @@ export const PutApiV1EntitiesResponse = zod
           ),
         doi: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneFiveDoiRegExp)
+          .regex(createEntityResponseOneFiveDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -8222,7 +8184,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneFiveIdRegExp)
+          .regex(createEntityResponseOneFiveIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -8251,7 +8213,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneFiveNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneFiveNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -8273,6 +8235,47 @@ export const PutApiV1EntitiesResponse = zod
           .nullish()
           .describe(
             'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+          ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
           ),
         same_as: zod
           .array(zod.url())
@@ -8331,7 +8334,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneSixDescriptionItemLanguageRegExp,
+                    createEntityResponseOneSixDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -8543,7 +8546,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneSixIdRegExp)
+          .regex(createEntityResponseOneSixIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -8559,7 +8562,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneSixNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneSixNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -8626,7 +8629,9 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 author: zod
                   .string()
-                  .describe('The contributing person (by IDHI URN).'),
+                  .describe(
+                    'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                  ),
                 author_order: zod
                   .int()
                   .nullish()
@@ -8641,23 +8646,20 @@ export const PutApiV1EntitiesResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+                "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
               ),
           )
           .nullish()
           .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
           ),
         date_issued: zod.iso
           .date()
@@ -8672,7 +8674,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneSevenDescriptionItemLanguageRegExp,
+                    createEntityResponseOneSevenDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -8693,7 +8695,7 @@ export const PutApiV1EntitiesResponse = zod
           ),
         doi: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneSevenDoiRegExp)
+          .regex(createEntityResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -8704,7 +8706,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneSevenIdRegExp)
+          .regex(createEntityResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -8720,7 +8722,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneSevenNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneSevenNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -8873,7 +8875,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneSevenPublishedInItemLanguageRegExp,
+                    createEntityResponseOneSevenPublishedInItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -8933,9 +8935,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneEightAddressItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneEightAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -8964,7 +8964,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneEightDescriptionItemLanguageRegExp,
+                    createEntityResponseOneEightDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -8989,6 +8989,48 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        event_agent_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                event_agent: zod
+                  .string()
+                  .describe(
+                    'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                  ),
+                event_agent_role: zod
+                  .enum([
+                    'ORGANIZER',
+                    'HOST',
+                    'SPEAKER',
+                    'PANELIST',
+                    'PARTICIPANT',
+                    'SPONSOR',
+                  ])
+                  .describe(
+                    'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+          ),
         event_type: zod
           .enum([
             'CONFERENCE',
@@ -9006,7 +9048,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneEightIdRegExp)
+          .regex(createEntityResponseOneEightIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -9022,9 +9064,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneEightLocationItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneEightLocationItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -9048,7 +9088,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneEightNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneEightNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -9075,7 +9115,7 @@ export const PutApiV1EntitiesResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         tags: zod
           .array(zod.string())
@@ -9140,7 +9180,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneNineDescriptionItemLanguageRegExp,
+                    createEntityResponseOneNineDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9165,7 +9205,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Direct download or access URL for the dataset.'),
         doi: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneNineDoiRegExp)
+          .regex(createEntityResponseOneNineDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -9182,7 +9222,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneNineIdRegExp)
+          .regex(createEntityResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -9196,7 +9236,7 @@ export const PutApiV1EntitiesResponse = zod
           .array(
             zod
               .string()
-              .regex(putApiV1EntitiesResponseOneNineInLanguagesItemRegExp),
+              .regex(createEntityResponseOneNineInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -9227,7 +9267,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(putApiV1EntitiesResponseOneNineNameItemLanguageRegExp)
+                  .regex(createEntityResponseOneNineNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -9256,6 +9296,47 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -9274,9 +9355,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneNineThemesItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneNineThemesItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -9334,7 +9413,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOnezeroDescriptionItemLanguageRegExp,
+                    createEntityResponseOneOnezeroDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9536,7 +9615,7 @@ export const PutApiV1EntitiesResponse = zod
           ),
         doi: zod
           .url()
-          .regex(putApiV1EntitiesResponseOneOnezeroDoiRegExp)
+          .regex(createEntityResponseOneOnezeroDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -9548,7 +9627,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                    createEntityResponseOneOnezeroEducationalLevelItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9573,7 +9652,7 @@ export const PutApiV1EntitiesResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(putApiV1EntitiesResponseOneOnezeroIdRegExp)
+          .regex(createEntityResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -9587,7 +9666,7 @@ export const PutApiV1EntitiesResponse = zod
           .array(
             zod
               .string()
-              .regex(putApiV1EntitiesResponseOneOnezeroInLanguagesItemRegExp),
+              .regex(createEntityResponseOneOnezeroInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -9600,7 +9679,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                    createEntityResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9650,9 +9729,7 @@ export const PutApiV1EntitiesResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    putApiV1EntitiesResponseOneOnezeroNameItemLanguageRegExp,
-                  )
+                  .regex(createEntityResponseOneOnezeroNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -9682,7 +9759,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                    createEntityResponseOneOnezeroPrerequisitesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9744,7 +9821,7 @@ export const PutApiV1EntitiesResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    putApiV1EntitiesResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                    createEntityResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -9795,156 +9872,172 @@ export const PutApiV1EntitiesResponse = zod
             .describe('UTC date and time'),
           createdBy: zod
             .string()
-            .regex(putApiV1EntitiesResponseTwoAuditCreatedByRegExp),
+            .regex(createEntityResponseTwoAuditCreatedByRegExp),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
           modifiedBy: zod
             .string()
-            .regex(putApiV1EntitiesResponseTwoAuditModifiedByRegExp),
+            .regex(createEntityResponseTwoAuditModifiedByRegExp),
         })
         .optional(),
     }),
   )
 
-export const GetApiV1EntitiesEntityIdParams = zod.object({
+export const GetEntityByIdParams = zod.object({
   entityId: zod.string(),
 })
 
-export const getApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp =
+export const getEntityByIdResponseOneOneDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp =
+export const getEntityByIdResponseOneOneFamilyNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp =
+export const getEntityByIdResponseOneOneGivenNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
+export const getEntityByIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
+export const getEntityByIdResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const getApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp =
+export const getEntityByIdResponseOneTwoAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneTwoDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
+export const getEntityByIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
+export const getEntityByIdResponseOneTwoLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const getApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp =
+export const getEntityByIdResponseOneThreeAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp =
+export const getEntityByIdResponseOneThreeDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
+export const getEntityByIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp =
+export const getEntityByIdResponseOneThreeLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp =
+export const getEntityByIdResponseOneThreeNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneFourDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp =
+export const getEntityByIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+export const getEntityByIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
+export const getEntityByIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp =
+export const getEntityByIdResponseOneFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
+export const getEntityByIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
+export const getEntityByIdResponseOneFourStudiedPlacesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp =
+export const getEntityByIdResponseOneFiveDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneFiveDoiRegExp = new RegExp(
+export const getEntityByIdResponseOneFiveDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const getApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
+export const getEntityByIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp =
+export const getEntityByIdResponseOneFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneSixDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
+export const getEntityByIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp =
+export const getEntityByIdResponseOneSixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneSevenDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
+export const getEntityByIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const getApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
+export const getEntityByIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp =
+export const getEntityByIdResponseOneSevenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneSevenPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp =
+export const getEntityByIdResponseOneEightAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp =
+export const getEntityByIdResponseOneEightDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
+export const getEntityByIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp =
+export const getEntityByIdResponseOneEightLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp =
+export const getEntityByIdResponseOneEightNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneNineDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneNineDoiRegExp = new RegExp(
+export const getEntityByIdResponseOneNineDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const getApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
+export const getEntityByIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp =
+export const getEntityByIdResponseOneNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneNineThemesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneOnezeroDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp = new RegExp(
+export const getEntityByIdResponseOneOnezeroDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const getApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+export const getEntityByIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
+export const getEntityByIdResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
-export const getApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp =
+export const getEntityByIdResponseOneOnezeroInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+export const getEntityByIdResponseOneOnezeroNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const getEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp =
+export const getEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
-  new RegExp('^idhi:user:.+$')
-export const getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
-  new RegExp('^idhi:user:.+$')
+export const getEntityByIdResponseTwoAuditCreatedByRegExp = new RegExp(
+  '^idhi:user:.+$',
+)
+export const getEntityByIdResponseTwoAuditModifiedByRegExp = new RegExp(
+  '^idhi:user:.+$',
+)
 
-export const GetApiV1EntitiesEntityIdResponse = zod
+export const GetEntityByIdResponse = zod
   .union([
     zod
       .object({
@@ -9971,69 +10064,25 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                member: zod
-                  .string()
-                  .describe(
-                    'The person affiliated with the organization (by IDHI URN).',
-                  ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-          ),
-        authorships: zod
-          .array(
-            zod
-              .object({
-                author: zod
-                  .string()
-                  .describe('The contributing person (by IDHI URN).'),
-                author_order: zod
-                  .int()
-                  .nullish()
-                  .describe('Position in the byline; 1 = first author.'),
-                authorship_role: zod
-                  .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                  .optional()
-                  .describe('The kind of contribution to a publication.'),
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -10042,7 +10091,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneOneDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10074,7 +10123,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp,
+                    getEntityByIdResponseOneOneFamilyNameItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10099,9 +10148,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneOneGivenNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10125,7 +10172,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneOneIdRegExp)
+          .regex(getEntityByIdResponseOneOneIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -10137,62 +10184,10 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
         orcid: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
+          .regex(getEntityByIdResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
             "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-          ),
-        project_participations: zod
-          .array(
-            zod
-              .object({
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                participant: zod
-                  .string()
-                  .describe(
-                    'The person taking part in the project (by IDHI URN).',
-                  ),
-                participation_role: zod
-                  .enum([
-                    'PRINCIPAL_INVESTIGATOR',
-                    'CO_PI',
-                    'RESEARCHER',
-                    'DH_LEAD',
-                    'TECHNICAL_LEAD',
-                    'DEVELOPER',
-                    'STUDENT',
-                    'ADVISOR',
-                    'CONSULTANT',
-                    'CONTRIBUTOR',
-                  ])
-                  .optional()
-                  .describe(
-                    "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
           ),
         same_as: zod
           .array(zod.url())
@@ -10229,9 +10224,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneTwoAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10260,7 +10253,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneTwoDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10285,7 +10278,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
+          .regex(getEntityByIdResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -10301,9 +10294,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneTwoLocationItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10333,9 +10324,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneTwoNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10352,6 +10341,36 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
+        organization_hierarchy: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                parent_organization: zod
+                  .string()
+                  .describe(
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+          ),
         organization_type: zod
           .enum([
             'ACADEMIC_INSTITUTION',
@@ -10366,15 +10385,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
           ),
-        parent_organization: zod
-          .string()
-          .nullish()
-          .describe(
-            "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-          ),
         ror: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneTwoRorRegExp)
+          .regex(getEntityByIdResponseOneTwoRorRegExp)
           .nullish()
           .describe(
             "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -10414,9 +10427,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneThreeAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10445,7 +10456,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneThreeDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10474,30 +10485,30 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                facility: zod
-                  .string()
+                facility_affiliation_role: zod
+                  .enum(['HOST', 'OWNER'])
                   .describe(
-                    'The facility side of the relationship (by IDHI URN).',
+                    'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                   ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+                "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
               ),
           )
           .nullish()
           .describe(
-            'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+            'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
           ),
         homepage: zod
           .url()
@@ -10505,7 +10516,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
+          .regex(getEntityByIdResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -10522,7 +10533,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp,
+                    getEntityByIdResponseOneThreeLocationItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10547,9 +10558,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneThreeNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -10620,7 +10629,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneFourDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10854,7 +10863,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            getApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                            getEntityByIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10886,7 +10895,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            getApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                            getEntityByIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -10915,7 +10924,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
@@ -10944,7 +10953,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneFourIdRegExp)
+          .regex(getEntityByIdResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -10960,9 +10969,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneFourNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -11004,27 +11011,22 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -11057,7 +11059,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 participant: zod
                   .string()
                   .describe(
-                    'The person taking part in the project (by IDHI URN).',
+                    'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                   ),
                 participation_role: zod
                   .enum([
@@ -11076,25 +11078,20 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                   ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+                "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
               ),
           )
           .nullish()
           .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+            'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
           ),
         research_disciplines: zod
           .array(
@@ -11103,7 +11100,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                    getEntityByIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11132,7 +11129,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         studied_periods: zod
           .array(
@@ -11141,7 +11138,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                    getEntityByIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11167,7 +11164,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp,
+                    getEntityByIdResponseOneFourStudiedPlacesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11196,6 +11193,24 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .enum(['idhi:Project'])
           .describe(
             "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+        uses_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+          ),
+        uses_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+          ),
+        uses_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
           ),
       })
       .describe(
@@ -11226,7 +11241,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneFiveDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11434,7 +11449,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneFiveDoiRegExp)
+          .regex(getEntityByIdResponseOneFiveDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -11445,7 +11460,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneFiveIdRegExp)
+          .regex(getEntityByIdResponseOneFiveIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -11474,9 +11489,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneFiveNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -11498,6 +11511,47 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+          ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
           ),
         same_as: zod
           .array(zod.url())
@@ -11556,7 +11610,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneSixDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11768,7 +11822,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneSixIdRegExp)
+          .regex(getEntityByIdResponseOneSixIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -11784,9 +11838,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneSixNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -11853,7 +11905,9 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 author: zod
                   .string()
-                  .describe('The contributing person (by IDHI URN).'),
+                  .describe(
+                    'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                  ),
                 author_order: zod
                   .int()
                   .nullish()
@@ -11868,23 +11922,20 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+                "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
               ),
           )
           .nullish()
           .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
           ),
         date_issued: zod.iso
           .date()
@@ -11899,7 +11950,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneSevenDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -11920,7 +11971,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
+          .regex(getEntityByIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -11931,7 +11982,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
+          .regex(getEntityByIdResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -11947,9 +11998,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneSevenNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12102,7 +12151,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp,
+                    getEntityByIdResponseOneSevenPublishedInItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12162,9 +12211,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneEightAddressItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12193,7 +12240,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneEightDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12218,6 +12265,48 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        event_agent_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                event_agent: zod
+                  .string()
+                  .describe(
+                    'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                  ),
+                event_agent_role: zod
+                  .enum([
+                    'ORGANIZER',
+                    'HOST',
+                    'SPEAKER',
+                    'PANELIST',
+                    'PARTICIPANT',
+                    'SPONSOR',
+                  ])
+                  .describe(
+                    'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+          ),
         event_type: zod
           .enum([
             'CONFERENCE',
@@ -12235,7 +12324,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneEightIdRegExp)
+          .regex(getEntityByIdResponseOneEightIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -12252,7 +12341,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp,
+                    getEntityByIdResponseOneEightLocationItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12277,9 +12366,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneEightNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12306,7 +12393,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         tags: zod
           .array(zod.string())
@@ -12371,7 +12458,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneNineDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12396,7 +12483,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Direct download or access URL for the dataset.'),
         doi: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneNineDoiRegExp)
+          .regex(getEntityByIdResponseOneNineDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -12413,7 +12500,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneNineIdRegExp)
+          .regex(getEntityByIdResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -12427,9 +12514,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .string()
-              .regex(
-                getApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp,
-              ),
+              .regex(getEntityByIdResponseOneNineInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -12460,9 +12545,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneNineNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12491,6 +12574,47 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -12509,9 +12633,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneNineThemesItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12569,7 +12691,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp,
+                    getEntityByIdResponseOneOnezeroDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12771,7 +12893,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(getApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp)
+          .regex(getEntityByIdResponseOneOnezeroDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -12783,7 +12905,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                    getEntityByIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12808,7 +12930,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
+          .regex(getEntityByIdResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -12822,9 +12944,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .string()
-              .regex(
-                getApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp,
-              ),
+              .regex(getEntityByIdResponseOneOnezeroInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -12837,7 +12957,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                    getEntityByIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12887,9 +13007,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp,
-                  )
+                  .regex(getEntityByIdResponseOneOnezeroNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -12919,7 +13037,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                    getEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -12981,7 +13099,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    getApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                    getEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -13032,152 +13150,178 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             .describe('UTC date and time'),
           createdBy: zod
             .string()
-            .regex(getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp),
+            .regex(getEntityByIdResponseTwoAuditCreatedByRegExp),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
           modifiedBy: zod
             .string()
-            .regex(getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp),
+            .regex(getEntityByIdResponseTwoAuditModifiedByRegExp),
         })
         .optional(),
     }),
   )
 
-export const PostApiV1EntitiesEntityIdParams = zod.object({
+export const UpdateEntityByIdParams = zod.object({
   entityId: zod.string(),
 })
 
-export const postApiV1EntitiesEntityIdBodyOneDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOneFamilyNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOneGivenNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOneIdRegExp = new RegExp(
+export const updateEntityByIdBodyOneDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOneFamilyNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOneGivenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOneIdOneRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyOneOrcidRegExp = new RegExp(
+export const updateEntityByIdBodyOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const postApiV1EntitiesEntityIdBodyTwoAddressItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyTwoDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyTwoIdRegExp = new RegExp(
+export const updateEntityByIdBodyTwoAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyTwoDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyTwoIdOneRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyTwoLocationItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyTwoNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyTwoRorRegExp = new RegExp(
+export const updateEntityByIdBodyTwoLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const postApiV1EntitiesEntityIdBodyThreeAddressItemLanguageRegExp =
+export const updateEntityByIdBodyThreeAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyThreeDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyThreeDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyThreeIdRegExp = new RegExp(
+export const updateEntityByIdBodyThreeIdOneRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyThreeLocationItemLanguageRegExp =
+export const updateEntityByIdBodyThreeLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyThreeNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyFourDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyThreeNameItemLanguageRegExp =
+export const updateEntityByIdBodyFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourFundingItemFundingProgramItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourFundingItemGrantNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourIdRegExp = new RegExp(
+export const updateEntityByIdBodyFourIdOneRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyFourNameItemLanguageRegExp =
+export const updateEntityByIdBodyFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourResearchDisciplinesItemLanguageRegExp =
+export const updateEntityByIdBodyFourStudiedPeriodsItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourStudiedPeriodsItemLanguageRegExp =
+export const updateEntityByIdBodyFourStudiedPlacesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFourStudiedPlacesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFiveDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyFiveDoiRegExp = new RegExp(
+export const updateEntityByIdBodyFiveDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyFiveDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdBodyFiveIdRegExp = new RegExp(
+export const updateEntityByIdBodyFiveIdOneRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyFiveNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodySixDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodySixIdRegExp = new RegExp(
+export const updateEntityByIdBodyFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodySixDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodySixIdOneRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodySixNameItemLanguageRegExp =
+export const updateEntityByIdBodySixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodySevenDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodySevenDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodySevenDoiRegExp = new RegExp(
+export const updateEntityByIdBodySevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdBodySevenIdRegExp = new RegExp(
+export const updateEntityByIdBodySevenIdOneRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodySevenNameItemLanguageRegExp =
+export const updateEntityByIdBodySevenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodySevenPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodySevenPublishedInItemLanguageRegExp =
+export const updateEntityByIdBodyEightAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyEightDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyEightAddressItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyEightDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyEightIdRegExp = new RegExp(
+export const updateEntityByIdBodyEightIdOneRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyEightLocationItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyEightNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyNineDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyNineDoiRegExp = new RegExp(
+export const updateEntityByIdBodyEightLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyEightNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyNineDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyNineDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdBodyNineIdRegExp = new RegExp(
+export const updateEntityByIdBodyNineIdOneRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyNineInLanguagesItemRegExp =
+export const updateEntityByIdBodyNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyNineThemesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOnezeroDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyNineNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyNineThemesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroDoiRegExp = new RegExp(
+export const updateEntityByIdBodyOnezeroDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdBodyOnezeroEducationalLevelItemLanguageRegExp =
+export const updateEntityByIdBodyOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroIdRegExp = new RegExp(
+export const updateEntityByIdBodyOnezeroIdOneRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdBodyOnezeroInLanguagesItemRegExp =
+export const updateEntityByIdBodyOnezeroInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroLearningOutcomesItemLanguageRegExp =
+export const updateEntityByIdBodyOnezeroNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdBodyOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroPrerequisitesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdBodyOnezeroTargetAudiencesItemLanguageRegExp =
+export const updateEntityByIdBodyOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 
-export const PostApiV1EntitiesEntityIdBody = zod.union([
+export const UpdateEntityByIdBody = zod.union([
   zod
     .object({
       affiliations: zod
@@ -13203,69 +13347,25 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              member: zod
-                .string()
-                .describe(
-                  'The person affiliated with the organization (by IDHI URN).',
-                ),
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
             ),
         )
         .nullish()
         .describe(
-          "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-        ),
-      authorships: zod
-        .array(
-          zod
-            .object({
-              author: zod
-                .string()
-                .describe('The contributing person (by IDHI URN).'),
-              author_order: zod
-                .int()
-                .nullish()
-                .describe('Position in the byline; 1 = first author.'),
-              authorship_role: zod
-                .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                .optional()
-                .describe('The kind of contribution to a publication.'),
-              end_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                ),
-              publication: zod
-                .string()
-                .describe('The publication contributed to (by IDHI URN).'),
-              start_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                ),
-            })
-            .describe(
-              "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-            ),
-        )
-        .nullish()
-        .describe(
-          "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
         ),
       description: zod
         .array(
@@ -13273,9 +13373,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyOneDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyOneDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13305,9 +13403,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyOneFamilyNameItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyOneFamilyNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13331,9 +13427,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyOneGivenNameItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyOneGivenNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13356,11 +13450,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyOneIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyOneIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -13369,62 +13469,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       orcid: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodyOneOrcidRegExp)
+        .regex(updateEntityByIdBodyOneOrcidRegExp)
         .nullish()
         .describe(
           "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-        ),
-      project_participations: zod
-        .array(
-          zod
-            .object({
-              end_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                ),
-              participant: zod
-                .string()
-                .describe(
-                  'The person taking part in the project (by IDHI URN).',
-                ),
-              participation_role: zod
-                .enum([
-                  'PRINCIPAL_INVESTIGATOR',
-                  'CO_PI',
-                  'RESEARCHER',
-                  'DH_LEAD',
-                  'TECHNICAL_LEAD',
-                  'DEVELOPER',
-                  'STUDENT',
-                  'ADVISOR',
-                  'CONSULTANT',
-                  'CONTRIBUTOR',
-                ])
-                .optional()
-                .describe(
-                  "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
-                ),
-              start_date: zod.iso
-                .date()
-                .nullish()
-                .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                ),
-            })
-            .describe(
-              "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-            ),
-        )
-        .nullish()
-        .describe(
-          "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
         ),
       same_as: zod
         .array(zod.url())
@@ -13439,7 +13487,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Person'])
+        .literal('idhi:Person')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -13461,9 +13509,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyTwoAddressItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyTwoAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13491,9 +13537,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyTwoDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyTwoDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13516,11 +13560,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyTwoIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyTwoIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -13533,9 +13583,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyTwoLocationItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyTwoLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13565,7 +13613,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyTwoNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyTwoNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13582,6 +13630,36 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
+      organization_hierarchy: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              parent_organization: zod
+                .string()
+                .describe(
+                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+        ),
       organization_type: zod
         .enum([
           'ACADEMIC_INSTITUTION',
@@ -13596,15 +13674,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
         ),
-      parent_organization: zod
-        .string()
-        .nullish()
-        .describe(
-          "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-        ),
       ror: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodyTwoRorRegExp)
+        .regex(updateEntityByIdBodyTwoRorRegExp)
         .nullish()
         .describe(
           "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -13622,7 +13694,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Organization'])
+        .literal('idhi:Organization')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -13644,9 +13716,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyThreeAddressItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyThreeAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13674,9 +13744,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyThreeDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyThreeDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13704,41 +13772,47 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              facility: zod
-                .string()
+              facility_affiliation_role: zod
+                .enum(['HOST', 'OWNER'])
                 .describe(
-                  'The facility side of the relationship (by IDHI URN).',
+                  'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                 ),
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+              "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
             ),
         )
         .nullish()
         .describe(
-          'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+          'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
         ),
       homepage: zod
         .url()
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyThreeIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyThreeIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -13751,9 +13825,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyThreeLocationItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyThreeLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13777,7 +13849,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyThreeNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyThreeNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -13819,7 +13891,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Tools this facility maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
         ),
       type: zod
-        .enum(['idhi:Facility'])
+        .literal('idhi:Facility')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -13847,9 +13919,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyFourDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyFourDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14082,7 +14152,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                       language: zod
                         .string()
                         .regex(
-                          postApiV1EntitiesEntityIdBodyFourFundingItemFundingProgramItemLanguageRegExp,
+                          updateEntityByIdBodyFourFundingItemFundingProgramItemLanguageRegExp,
                         )
                         .describe(
                           'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -14114,7 +14184,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                       language: zod
                         .string()
                         .regex(
-                          postApiV1EntitiesEntityIdBodyFourFundingItemGrantNameItemLanguageRegExp,
+                          updateEntityByIdBodyFourFundingItemGrantNameItemLanguageRegExp,
                         )
                         .describe(
                           'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -14143,7 +14213,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
@@ -14171,11 +14241,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyFourIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyFourIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -14188,7 +14264,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyFourNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyFourNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14230,27 +14306,22 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization side of the relationship (by IDHI URN).',
-                ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                 ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -14283,7 +14354,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               participant: zod
                 .string()
                 .describe(
-                  'The person taking part in the project (by IDHI URN).',
+                  'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                 ),
               participation_role: zod
                 .enum([
@@ -14302,25 +14373,20 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .describe(
                   "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                 ),
-              project: zod
-                .string()
-                .describe(
-                  'The project side of the relationship (by IDHI URN).',
-                ),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+              "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
             ),
         )
         .nullish()
         .describe(
-          "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+          'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
         ),
       research_disciplines: zod
         .array(
@@ -14329,7 +14395,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesEntityIdBodyFourResearchDisciplinesItemLanguageRegExp,
+                  updateEntityByIdBodyFourResearchDisciplinesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -14358,7 +14424,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
         ),
       studied_periods: zod
         .array(
@@ -14366,9 +14432,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyFourStudiedPeriodsItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyFourStudiedPeriodsItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14392,9 +14456,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyFourStudiedPlacesItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyFourStudiedPlacesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14419,9 +14481,27 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Project'])
+        .literal('idhi:Project')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+      uses_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+        ),
+      uses_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+        ),
+      uses_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
         ),
     })
     .describe(
@@ -14451,9 +14531,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyFiveDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyFiveDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14660,7 +14738,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodyFiveDoiRegExp)
+        .regex(updateEntityByIdBodyFiveDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -14670,11 +14748,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyFiveIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyFiveIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -14700,7 +14784,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyFiveNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyFiveNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14722,6 +14806,47 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe(
           'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+        ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
         ),
       same_as: zod
         .array(zod.url())
@@ -14751,7 +14876,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
         ),
       type: zod
-        .enum(['idhi:Tool'])
+        .literal('idhi:Tool')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -14779,9 +14904,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodySixDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodySixDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -14991,11 +15114,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodySixIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodySixIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -15008,7 +15137,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodySixNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodySixNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15059,7 +15188,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Service'])
+        .literal('idhi:Service')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -15075,7 +15204,9 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               author: zod
                 .string()
-                .describe('The contributing person (by IDHI URN).'),
+                .describe(
+                  'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                ),
               author_order: zod
                 .int()
                 .nullish()
@@ -15090,23 +15221,20 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .describe(
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
-              publication: zod
-                .string()
-                .describe('The publication contributed to (by IDHI URN).'),
               start_date: zod.iso
                 .date()
                 .nullish()
                 .describe(
-                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                 ),
             })
             .describe(
-              "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+              "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
             ),
         )
         .nullish()
         .describe(
-          "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+          'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
         ),
       date_issued: zod.iso
         .date()
@@ -15120,9 +15248,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodySevenDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodySevenDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15142,7 +15268,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodySevenDoiRegExp)
+        .regex(updateEntityByIdBodySevenDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -15152,11 +15278,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodySevenIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodySevenIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -15169,7 +15301,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodySevenNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodySevenNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15321,9 +15453,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodySevenPublishedInItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodySevenPublishedInItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15360,7 +15490,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Publication'])
+        .literal('idhi:Publication')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -15382,9 +15512,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyEightAddressItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyEightAddressItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15412,9 +15540,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyEightDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyEightDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15438,6 +15564,48 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
+      event_agent_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              event_agent: zod
+                .string()
+                .describe(
+                  'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                ),
+              event_agent_role: zod
+                .enum([
+                  'ORGANIZER',
+                  'HOST',
+                  'SPEAKER',
+                  'PANELIST',
+                  'PARTICIPANT',
+                  'SPONSOR',
+                ])
+                .describe(
+                  'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+        ),
       event_type: zod
         .enum([
           'CONFERENCE',
@@ -15454,11 +15622,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyEightIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyEightIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -15471,9 +15645,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyEightLocationItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyEightLocationItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15497,7 +15669,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyEightNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyEightNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15524,7 +15696,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .date()
         .nullish()
         .describe(
-          "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
         ),
       tags: zod
         .array(zod.string())
@@ -15533,7 +15705,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
         ),
       type: zod
-        .enum(['idhi:Event'])
+        .literal('idhi:Event')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -15588,9 +15760,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyNineDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyNineDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15614,7 +15784,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe('Direct download or access URL for the dataset.'),
       doi: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodyNineDoiRegExp)
+        .regex(updateEntityByIdBodyNineDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -15630,11 +15800,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyNineIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyNineIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -15643,9 +15819,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       in_languages: zod
         .array(
-          zod
-            .string()
-            .regex(postApiV1EntitiesEntityIdBodyNineInLanguagesItemRegExp),
+          zod.string().regex(updateEntityByIdBodyNineInLanguagesItemRegExp),
         )
         .nullish()
         .describe(
@@ -15676,7 +15850,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(postApiV1EntitiesEntityIdBodyNineNameItemLanguageRegExp)
+                .regex(updateEntityByIdBodyNineNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15705,6 +15879,47 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
         ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+        ),
       same_as: zod
         .array(zod.url())
         .nullish()
@@ -15723,9 +15938,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyNineThemesItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyNineThemesItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15742,7 +15955,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Thematic keywords for the dataset, multilingual.'),
       type: zod
-        .enum(['idhi:Dataset'])
+        .literal('idhi:Dataset')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -15782,9 +15995,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroDescriptionItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyOnezeroDescriptionItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -15985,7 +16196,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       doi: zod
         .url()
-        .regex(postApiV1EntitiesEntityIdBodyOnezeroDoiRegExp)
+        .regex(updateEntityByIdBodyOnezeroDoiRegExp)
         .nullish()
         .describe(
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -15997,7 +16208,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroEducationalLevelItemLanguageRegExp,
+                  updateEntityByIdBodyOnezeroEducationalLevelItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16021,11 +16232,17 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe('Public landing page of the entity, if one exists.'),
       id: zod
-        .string()
-        .regex(postApiV1EntitiesEntityIdBodyOnezeroIdRegExp)
-        .describe(
-          "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
-        ),
+        .union([
+          zod
+            .string()
+            .regex(updateEntityByIdBodyOnezeroIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
       image: zod
         .string()
         .nullish()
@@ -16034,9 +16251,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
       in_languages: zod
         .array(
-          zod
-            .string()
-            .regex(postApiV1EntitiesEntityIdBodyOnezeroInLanguagesItemRegExp),
+          zod.string().regex(updateEntityByIdBodyOnezeroInLanguagesItemRegExp),
         )
         .nullish()
         .describe(
@@ -16049,7 +16264,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroLearningOutcomesItemLanguageRegExp,
+                  updateEntityByIdBodyOnezeroLearningOutcomesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16099,9 +16314,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
             .object({
               language: zod
                 .string()
-                .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroNameItemLanguageRegExp,
-                )
+                .regex(updateEntityByIdBodyOnezeroNameItemLanguageRegExp)
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
@@ -16131,7 +16344,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroPrerequisitesItemLanguageRegExp,
+                  updateEntityByIdBodyOnezeroPrerequisitesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16193,7 +16406,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
               language: zod
                 .string()
                 .regex(
-                  postApiV1EntitiesEntityIdBodyOnezeroTargetAudiencesItemLanguageRegExp,
+                  updateEntityByIdBodyOnezeroTargetAudiencesItemLanguageRegExp,
                 )
                 .describe(
                   'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16226,7 +16439,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
         ),
       type: zod
-        .enum(['idhi:TrainingMaterial'])
+        .literal('idhi:TrainingMaterial')
         .describe(
           "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
         ),
@@ -16236,140 +16449,148 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
     ),
 ])
 
-export const postApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneOneDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneOneFamilyNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneOneGivenNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
+export const updateEntityByIdResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
-export const postApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp =
+export const updateEntityByIdResponseOneTwoAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneTwoDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp =
+export const updateEntityByIdResponseOneTwoLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
+export const updateEntityByIdResponseOneTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
-export const postApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp =
+export const updateEntityByIdResponseOneThreeAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneThreeDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp =
+export const updateEntityByIdResponseOneThreeLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneThreeNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
+export const updateEntityByIdResponseOneFourStudiedPlacesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp =
+export const updateEntityByIdResponseOneFiveDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneFiveDoiRegExp = new RegExp(
+export const updateEntityByIdResponseOneFiveDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneSixDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneSixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneSevenDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
+export const updateEntityByIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneSevenNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp =
+export const updateEntityByIdResponseOneSevenPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp =
+export const updateEntityByIdResponseOneEightAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneEightDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp =
+export const updateEntityByIdResponseOneEightLocationItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneEightNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp =
+export const updateEntityByIdResponseOneNineDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneNineDoiRegExp = new RegExp(
+export const updateEntityByIdResponseOneNineDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp =
+export const updateEntityByIdResponseOneNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const updateEntityByIdResponseOneNineThemesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroDescriptionItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp =
-  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp = new RegExp(
+export const updateEntityByIdResponseOneOnezeroDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
-export const postApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
+export const updateEntityByIdResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
-export const postApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp =
+export const updateEntityByIdResponseOneOnezeroInLanguagesItemRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
+export const updateEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
-  new RegExp('^idhi:user:.+$')
-export const postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
-  new RegExp('^idhi:user:.+$')
+export const updateEntityByIdResponseTwoAuditCreatedByRegExp = new RegExp(
+  '^idhi:user:.+$',
+)
+export const updateEntityByIdResponseTwoAuditModifiedByRegExp = new RegExp(
+  '^idhi:user:.+$',
+)
 
-export const PostApiV1EntitiesEntityIdResponse = zod
+export const UpdateEntityByIdResponse = zod
   .union([
     zod
       .object({
@@ -16396,69 +16617,25 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                member: zod
-                  .string()
-                  .describe(
-                    'The person affiliated with the organization (by IDHI URN).',
-                  ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.",
+                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.",
-          ),
-        authorships: zod
-          .array(
-            zod
-              .object({
-                author: zod
-                  .string()
-                  .describe('The contributing person (by IDHI URN).'),
-                author_order: zod
-                  .int()
-                  .nullish()
-                  .describe('Position in the byline; 1 = first author.'),
-                authorship_role: zod
-                  .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
-                  .optional()
-                  .describe('The kind of contribution to a publication.'),
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -16467,7 +16644,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneOneDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16499,7 +16676,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp,
+                    updateEntityByIdResponseOneOneFamilyNameItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16525,7 +16702,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp,
+                    updateEntityByIdResponseOneOneGivenNameItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16550,7 +16727,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneOneIdRegExp)
+          .regex(updateEntityByIdResponseOneOneIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -16562,62 +16739,10 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
         orcid: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp)
+          .regex(updateEntityByIdResponseOneOneOrcidRegExp)
           .nullish()
           .describe(
             "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
-          ),
-        project_participations: zod
-          .array(
-            zod
-              .object({
-                end_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
-                  ),
-                participant: zod
-                  .string()
-                  .describe(
-                    'The person taking part in the project (by IDHI URN).',
-                  ),
-                participation_role: zod
-                  .enum([
-                    'PRINCIPAL_INVESTIGATOR',
-                    'CO_PI',
-                    'RESEARCHER',
-                    'DH_LEAD',
-                    'TECHNICAL_LEAD',
-                    'DEVELOPER',
-                    'STUDENT',
-                    'ADVISOR',
-                    'CONSULTANT',
-                    'CONTRIBUTOR',
-                  ])
-                  .optional()
-                  .describe(
-                    "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
-                start_date: zod.iso
-                  .date()
-                  .nullish()
-                  .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
-                  ),
-              })
-              .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
-              ),
-          )
-          .nullish()
-          .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
           ),
         same_as: zod
           .array(zod.url())
@@ -16655,7 +16780,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp,
+                    updateEntityByIdResponseOneTwoAddressItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16685,7 +16810,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneTwoDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16710,7 +16835,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneTwoIdRegExp)
+          .regex(updateEntityByIdResponseOneTwoIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -16727,7 +16852,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp,
+                    updateEntityByIdResponseOneTwoLocationItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16758,9 +16883,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneTwoNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -16777,6 +16900,36 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
+        organization_hierarchy: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                parent_organization: zod
+                  .string()
+                  .describe(
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+          ),
         organization_type: zod
           .enum([
             'ACADEMIC_INSTITUTION',
@@ -16791,15 +16944,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
           ),
-        parent_organization: zod
-          .string()
-          .nullish()
-          .describe(
-            "The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.",
-          ),
         ror: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneTwoRorRegExp)
+          .regex(updateEntityByIdResponseOneTwoRorRegExp)
           .nullish()
           .describe(
             "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
@@ -16840,7 +16987,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp,
+                    updateEntityByIdResponseOneThreeAddressItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16870,7 +17017,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneThreeDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16899,30 +17046,30 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                facility: zod
-                  .string()
+                facility_affiliation_role: zod
+                  .enum(['HOST', 'OWNER'])
                   .describe(
-                    'The facility side of the relationship (by IDHI URN).',
+                    'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
                   ),
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A facility's affiliation with an organization. Use one instance per hosting\/owning organization; joint labs get several.",
+                "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
               ),
           )
           .nullish()
           .describe(
-            'The organization(s) hosting or owning this facility, as reified FacilityAffiliation objects with dates.',
+            'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
           ),
         homepage: zod
           .url()
@@ -16930,7 +17077,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneThreeIdRegExp)
+          .regex(updateEntityByIdResponseOneThreeIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -16947,7 +17094,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp,
+                    updateEntityByIdResponseOneThreeLocationItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -16972,9 +17119,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneThreeNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -17045,7 +17190,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneFourDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17279,7 +17424,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            postApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                            updateEntityByIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17311,7 +17456,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                         language: zod
                           .string()
                           .regex(
-                            postApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                            updateEntityByIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
                           )
                           .describe(
                             'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17340,7 +17485,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
@@ -17369,7 +17514,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneFourIdRegExp)
+          .regex(updateEntityByIdResponseOneFourIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -17385,9 +17530,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneFourNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -17429,27 +17572,22 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization side of the relationship (by IDHI URN).',
-                  ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
+                    'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
                   ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -17482,7 +17620,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 participant: zod
                   .string()
                   .describe(
-                    'The person taking part in the project (by IDHI URN).',
+                    'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
                   ),
                 participation_role: zod
                   .enum([
@@ -17501,25 +17639,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
                   ),
-                project: zod
-                  .string()
-                  .describe(
-                    'The project side of the relationship (by IDHI URN).',
-                  ),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start\/end dates.",
+                "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
               ),
           )
           .nullish()
           .describe(
-            "The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.",
+            'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
           ),
         research_disciplines: zod
           .array(
@@ -17528,7 +17661,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                    updateEntityByIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17557,7 +17690,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         studied_periods: zod
           .array(
@@ -17566,7 +17699,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                    updateEntityByIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17592,7 +17725,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp,
+                    updateEntityByIdResponseOneFourStudiedPlacesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17621,6 +17754,24 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .enum(['idhi:Project'])
           .describe(
             "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+          ),
+        uses_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+          ),
+        uses_services: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+          ),
+        uses_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
           ),
       })
       .describe(
@@ -17651,7 +17802,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneFiveDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -17859,7 +18010,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneFiveDoiRegExp)
+          .regex(updateEntityByIdResponseOneFiveDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -17870,7 +18021,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneFiveIdRegExp)
+          .regex(updateEntityByIdResponseOneFiveIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -17899,9 +18050,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneFiveNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -17923,6 +18072,47 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+          ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
           ),
         same_as: zod
           .array(zod.url())
@@ -17981,7 +18171,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneSixDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18193,7 +18383,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneSixIdRegExp)
+          .regex(updateEntityByIdResponseOneSixIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -18209,9 +18399,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneSixNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -18278,7 +18466,9 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 author: zod
                   .string()
-                  .describe('The contributing person (by IDHI URN).'),
+                  .describe(
+                    'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                  ),
                 author_order: zod
                   .int()
                   .nullish()
@@ -18293,23 +18483,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
-                publication: zod
-                  .string()
-                  .describe('The publication contributed to (by IDHI URN).'),
                 start_date: zod.iso
                   .date()
                   .nullish()
                   .describe(
-                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
                   ),
               })
               .describe(
-                "A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).",
+                "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
               ),
           )
           .nullish()
           .describe(
-            "The person's publication contributions, as reified Authorship objects carrying byline order and role.",
+            'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
           ),
         date_issued: zod.iso
           .date()
@@ -18324,7 +18511,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneSevenDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18345,7 +18532,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
+          .regex(updateEntityByIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -18356,7 +18543,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneSevenIdRegExp)
+          .regex(updateEntityByIdResponseOneSevenIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -18372,9 +18559,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneSevenNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -18527,7 +18712,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp,
+                    updateEntityByIdResponseOneSevenPublishedInItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18588,7 +18773,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp,
+                    updateEntityByIdResponseOneEightAddressItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18618,7 +18803,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneEightDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18643,6 +18828,48 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        event_agent_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                event_agent: zod
+                  .string()
+                  .describe(
+                    'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                  ),
+                event_agent_role: zod
+                  .enum([
+                    'ORGANIZER',
+                    'HOST',
+                    'SPEAKER',
+                    'PANELIST',
+                    'PARTICIPANT',
+                    'SPONSOR',
+                  ])
+                  .describe(
+                    'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+          ),
         event_type: zod
           .enum([
             'CONFERENCE',
@@ -18660,7 +18887,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneEightIdRegExp)
+          .regex(updateEntityByIdResponseOneEightIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -18677,7 +18904,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp,
+                    updateEntityByIdResponseOneEightLocationItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18702,9 +18929,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneEightNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -18731,7 +18956,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .date()
           .nullish()
           .describe(
-            "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+            "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
           ),
         tags: zod
           .array(zod.string())
@@ -18796,7 +19021,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneNineDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18821,7 +19046,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Direct download or access URL for the dataset.'),
         doi: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneNineDoiRegExp)
+          .regex(updateEntityByIdResponseOneNineDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -18838,7 +19063,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneNineIdRegExp)
+          .regex(updateEntityByIdResponseOneNineIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -18852,9 +19077,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .string()
-              .regex(
-                postApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp,
-              ),
+              .regex(updateEntityByIdResponseOneNineInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -18885,9 +19108,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
               .object({
                 language: zod
                   .string()
-                  .regex(
-                    postApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp,
-                  )
+                  .regex(updateEntityByIdResponseOneNineNameItemLanguageRegExp)
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
@@ -18916,6 +19137,47 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
+        resource_contributions: zod
+          .array(
+            zod
+              .object({
+                contributor: zod
+                  .string()
+                  .describe(
+                    'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                  ),
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                resource_contribution_role: zod
+                  .enum([
+                    'CREATOR',
+                    'DEVELOPER',
+                    'MAINTAINER',
+                    'DATA_CURATOR',
+                    'CONTRIBUTOR',
+                  ])
+                  .describe(
+                    'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              ),
+          )
+          .nullish()
+          .describe(
+            'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -18935,7 +19197,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp,
+                    updateEntityByIdResponseOneNineThemesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -18994,7 +19256,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroDescriptionItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19196,7 +19458,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
         doi: zod
           .url()
-          .regex(postApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp)
+          .regex(updateEntityByIdResponseOneOnezeroDoiRegExp)
           .nullish()
           .describe(
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
@@ -19208,7 +19470,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19233,7 +19495,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe('Public landing page of the entity, if one exists.'),
         id: zod
           .string()
-          .regex(postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp)
+          .regex(updateEntityByIdResponseOneOnezeroIdRegExp)
           .describe(
             "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
           ),
@@ -19247,9 +19509,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .string()
-              .regex(
-                postApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp,
-              ),
+              .regex(updateEntityByIdResponseOneOnezeroInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
@@ -19262,7 +19522,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19313,7 +19573,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroNameItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19344,7 +19604,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19406,7 +19666,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                 language: zod
                   .string()
                   .regex(
-                    postApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                    updateEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
                   )
                   .describe(
                     'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
@@ -19457,20 +19717,20 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             .describe('UTC date and time'),
           createdBy: zod
             .string()
-            .regex(postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp),
+            .regex(updateEntityByIdResponseTwoAuditCreatedByRegExp),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
           modifiedBy: zod
             .string()
-            .regex(postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp),
+            .regex(updateEntityByIdResponseTwoAuditModifiedByRegExp),
         })
         .optional(),
     }),
   )
 
-export const DeleteApiV1EntitiesEntityIdParams = zod.object({
+export const DeleteEntityByIdParams = zod.object({
   entityId: zod.string(),
 })
 
-export const DeleteApiV1EntitiesEntityIdResponse = zod.void()
+export const DeleteEntityByIdResponse = zod.void()

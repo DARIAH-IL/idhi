@@ -41,55 +41,55 @@ const withQueryKey = <T extends object, K>(
 /**
  * @summary Health check
  */
-export const getApiV1Health = (signal?: AbortSignal) => {
+export const getHealth = (signal?: AbortSignal) => {
   return customInstance<void>({ url: `/api/v1/health`, method: 'GET', signal })
 }
 
-export const getGetApiV1HealthQueryKey = () => {
+export const getGetHealthQueryKey = () => {
   return [`/api/v1/health`] as const
 }
 
-export const getGetApiV1HealthQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiV1Health>>,
+export const getGetHealthQueryOptions = <
+  TData = Awaited<ReturnType<typeof getHealth>>,
   TError = ErrorType<unknown>,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getHealth>>, TError, TData>
   >
 }) => {
   const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiV1HealthQueryKey()
+  const queryKey = queryOptions?.queryKey ?? getGetHealthQueryKey()
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiV1Health>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getHealth>>> = ({
     signal,
-  }) => getApiV1Health(signal)
+  }) => getHealth(signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiV1Health>>,
+    Awaited<ReturnType<typeof getHealth>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetApiV1HealthQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiV1Health>>
+export type GetHealthQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getHealth>>
 >
-export type GetApiV1HealthQueryError = ErrorType<unknown>
+export type GetHealthQueryError = ErrorType<unknown>
 
-export function useGetApiV1Health<
-  TData = Awaited<ReturnType<typeof getApiV1Health>>,
+export function useGetHealth<
+  TData = Awaited<ReturnType<typeof getHealth>>,
   TError = ErrorType<unknown>,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getHealth>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1Health>>,
+          Awaited<ReturnType<typeof getHealth>>,
           TError,
-          Awaited<ReturnType<typeof getApiV1Health>>
+          Awaited<ReturnType<typeof getHealth>>
         >,
         'initialData'
       >
@@ -98,19 +98,19 @@ export function useGetApiV1Health<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 }
-export function useGetApiV1Health<
-  TData = Awaited<ReturnType<typeof getApiV1Health>>,
+export function useGetHealth<
+  TData = Awaited<ReturnType<typeof getHealth>>,
   TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getHealth>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1Health>>,
+          Awaited<ReturnType<typeof getHealth>>,
           TError,
-          Awaited<ReturnType<typeof getApiV1Health>>
+          Awaited<ReturnType<typeof getHealth>>
         >,
         'initialData'
       >
@@ -119,13 +119,13 @@ export function useGetApiV1Health<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 }
-export function useGetApiV1Health<
-  TData = Awaited<ReturnType<typeof getApiV1Health>>,
+export function useGetHealth<
+  TData = Awaited<ReturnType<typeof getHealth>>,
   TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getHealth>>, TError, TData>
     >
   },
   queryClient?: QueryClient,
@@ -136,20 +136,20 @@ export function useGetApiV1Health<
  * @summary Health check
  */
 
-export function useGetApiV1Health<
-  TData = Awaited<ReturnType<typeof getApiV1Health>>,
+export function useGetHealth<
+  TData = Awaited<ReturnType<typeof getHealth>>,
   TError = ErrorType<unknown>,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiV1Health>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getHealth>>, TError, TData>
     >
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 } {
-  const queryOptions = getGetApiV1HealthQueryOptions(options)
+  const queryOptions = getGetHealthQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

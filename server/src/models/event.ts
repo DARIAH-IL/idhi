@@ -6,6 +6,7 @@
  */
 import type { EventAddressItem } from './eventAddressItem'
 import type { EventDescriptionItem } from './eventDescriptionItem'
+import type { EventEventAgentRolesItem } from './eventEventAgentRolesItem'
 import type { EventEventType } from './eventEventType'
 import type { EventLocationItem } from './eventLocationItem'
 import type { EventNameItem } from './eventNameItem'
@@ -40,6 +41,11 @@ export interface Event {
    * @nullable
    */
   end_date?: string | null
+  /**
+   * People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.
+   * @nullable
+   */
+  event_agent_roles?: EventEventAgentRolesItem[] | null
   /** Kinds of scholarly events. */
   event_type?: EventEventType
   /**
@@ -53,7 +59,7 @@ export interface Event {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:event:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable
@@ -72,7 +78,7 @@ export interface Event {
    */
   same_as?: string[] | null
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

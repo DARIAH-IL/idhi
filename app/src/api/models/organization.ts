@@ -8,6 +8,7 @@ import type { OrganizationAddressItem } from './organizationAddressItem.ts'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
 import type { OrganizationLocationItem } from './organizationLocationItem.ts'
 import type { OrganizationNameItem } from './organizationNameItem.ts'
+import type { OrganizationOrganizationHierarchyItem } from './organizationOrganizationHierarchyItem.ts'
 import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
 import type { OrganizationType } from './organizationType.ts'
 
@@ -64,13 +65,13 @@ export interface Organization {
   marketplace_sync?: boolean | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: OrganizationNameItem[]
-  /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
-  organization_type?: OrganizationOrganizationType
   /**
-   * The larger organization this one is part of (e.g. a department's university). Use for formal containment only; looser partnerships belong in relationship classes.
+   * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
    * @nullable
    */
-  parent_organization?: string | null
+  organization_hierarchy?: OrganizationOrganizationHierarchyItem[] | null
+  /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
+  organization_type?: OrganizationOrganizationType
   /**
    * The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.
    * @nullable

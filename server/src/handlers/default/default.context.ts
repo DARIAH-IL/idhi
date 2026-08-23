@@ -6,7 +6,4 @@
  */
 import type { Context, Env } from 'hono'
 
-export type GetApiV1HealthContext<E extends Env = any> = Context<
-  E,
-  '/api/v1/health'
->
+export type GetHealthContext<E extends Env = any> = Context<E, '/api/v1/health'>

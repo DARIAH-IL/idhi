@@ -4,9 +4,10 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { FacilityFacilityAffiliationsItemFacilityAffiliationRole } from './facilityFacilityAffiliationsItemFacilityAffiliationRole'
 
 /**
- * A facility's affiliation with an organization. Use one instance per hosting/owning organization; joint labs get several.
+ * A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.
  */
 export type FacilityFacilityAffiliationsItem = {
   /**
@@ -14,12 +15,12 @@ export type FacilityFacilityAffiliationsItem = {
    * @nullable
    */
   end_date?: string | null
-  /** The facility side of the relationship (by IDHI URN). */
-  facility: string
-  /** The organization side of the relationship (by IDHI URN). */
+  /** IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated. */
+  facility_affiliation_role: FacilityFacilityAffiliationsItemFacilityAffiliationRole
+  /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
   organization: string
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

@@ -8,6 +8,7 @@ import type { ToolDescriptionItem } from './toolDescriptionItem.ts'
 import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem.ts'
 import type { ToolLicense } from './toolLicense.ts'
 import type { ToolNameItem } from './toolNameItem.ts'
+import type { ToolResourceContributionsItem } from './toolResourceContributionsItem.ts'
 import type { ToolToolType } from './toolToolType.ts'
 import type { ToolType } from './toolType.ts'
 
@@ -77,6 +78,11 @@ export interface Tool {
    * @nullable
    */
   programming_language?: string | null
+  /**
+   * Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.
+   * @nullable
+   */
+  resource_contributions?: ToolResourceContributionsItem[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

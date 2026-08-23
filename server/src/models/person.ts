@@ -5,11 +5,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { PersonAffiliationsItem } from './personAffiliationsItem'
-import type { PersonAuthorshipsItem } from './personAuthorshipsItem'
 import type { PersonDescriptionItem } from './personDescriptionItem'
 import type { PersonFamilyNameItem } from './personFamilyNameItem'
 import type { PersonGivenNameItem } from './personGivenNameItem'
-import type { PersonProjectParticipationsItem } from './personProjectParticipationsItem'
 import type { PersonType } from './personType'
 
 /**
@@ -17,15 +15,10 @@ import type { PersonType } from './personType'
  */
 export interface Person {
   /**
-   * The person's institutional affiliations, as reified Affiliation objects (organization + position + dates). Use for employment or formal membership, NOT for project involvement — that goes in project_participations.
+   * The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.
    * @nullable
    */
   affiliations?: PersonAffiliationsItem[] | null
-  /**
-   * The person's publication contributions, as reified Authorship objects carrying byline order and role.
-   * @nullable
-   */
-  authorships?: PersonAuthorshipsItem[] | null
   /**
    * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
    * @nullable
@@ -57,7 +50,7 @@ export interface Person {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:person:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable
@@ -69,11 +62,6 @@ export interface Person {
    * @pattern https://orcid.org/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]
    */
   orcid?: string | null
-  /**
-   * The person's project involvements, as reified ProjectParticipation objects carrying the role (PI, developer...) and dates.
-   * @nullable
-   */
-  project_participations?: PersonProjectParticipationsItem[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

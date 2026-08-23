@@ -8,6 +8,7 @@ import type { ToolDescriptionItem } from './toolDescriptionItem'
 import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem'
 import type { ToolLicense } from './toolLicense'
 import type { ToolNameItem } from './toolNameItem'
+import type { ToolResourceContributionsItem } from './toolResourceContributionsItem'
 import type { ToolToolType } from './toolToolType'
 import type { ToolType } from './toolType'
 
@@ -62,7 +63,7 @@ export interface Tool {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:tool:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable
@@ -77,6 +78,11 @@ export interface Tool {
    * @nullable
    */
   programming_language?: string | null
+  /**
+   * Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.
+   * @nullable
+   */
+  resource_contributions?: ToolResourceContributionsItem[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

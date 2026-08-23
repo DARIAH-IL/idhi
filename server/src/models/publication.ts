@@ -16,7 +16,7 @@ import type { PublicationType } from './publicationType'
  */
 export interface Publication {
   /**
-   * The person's publication contributions, as reified Authorship objects carrying byline order and role.
+   * People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.
    * @nullable
    */
   authorships?: PublicationAuthorshipsItem[] | null
@@ -47,7 +47,7 @@ export interface Publication {
    * e.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.
    * @pattern ^idhi:publication:[0-9a-z]{4,12}$
    */
-  id: string
+  readonly id: string
   /**
    * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
    * @nullable

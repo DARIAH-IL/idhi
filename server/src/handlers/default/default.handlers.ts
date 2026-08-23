@@ -7,11 +7,11 @@
 import { createFactory } from 'hono/factory'
 import { ApiError } from '../../errors/ApiError'
 import { ErrorCode } from '../../models/errorCode'
-import { GetApiV1HealthContext } from './default.context'
+import { GetHealthContext } from './default.context'
 
 const factory = createFactory()
-export const getApiV1HealthHandlers = factory.createHandlers(
-  async (c: GetApiV1HealthContext) => {
+export const getHealthHandlers = factory.createHandlers(
+  async (c: GetHealthContext) => {
     if (!(await c.var.db.isLive())) {
       throw new ApiError(ErrorCode.InvalidInput, 'Database is unavailable', 503)
     }

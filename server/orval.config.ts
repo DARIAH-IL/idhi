@@ -3,6 +3,9 @@ export default defineConfig({
   idhi: {
     input: {
       target: '../openapi.yaml',
+      override: {
+        transformer: './orval.transformer.ts',
+      },
       parserOptions: {
         externalRefs: {
           allow: ['*'],

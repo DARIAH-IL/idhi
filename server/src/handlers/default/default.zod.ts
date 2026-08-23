@@ -6,4 +6,4 @@
  */
 import { z as zod } from 'zod'
 
-export const GetApiV1HealthResponse = zod.unknown()
+export const GetHealthResponse = zod.unknown()

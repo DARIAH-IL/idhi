@@ -8,6 +8,7 @@ import type { DatasetDatasetType } from './datasetDatasetType.ts'
 import type { DatasetDescriptionItem } from './datasetDescriptionItem.ts'
 import type { DatasetLicense } from './datasetLicense.ts'
 import type { DatasetNameItem } from './datasetNameItem.ts'
+import type { DatasetResourceContributionsItem } from './datasetResourceContributionsItem.ts'
 import type { DatasetThemesItem } from './datasetThemesItem.ts'
 import type { DatasetType } from './datasetType.ts'
 
@@ -100,6 +101,11 @@ export interface Dataset {
    * @nullable
    */
   related_publications?: string[] | null
+  /**
+   * Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.
+   * @nullable
+   */
+  resource_contributions?: DatasetResourceContributionsItem[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

@@ -20,6 +20,7 @@ tags:
 paths:
   /api/v1/health:
     get:
+      operationId: getHealth
       summary: Health check
       security: [ ]
       responses:
@@ -28,6 +29,7 @@ paths:
 
   /api/v1/auth/otp:
     post:
+      operationId: startOtpChallenge
       tags:
         - UserAuth
       summary: Start an OTP challenge
@@ -52,6 +54,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/ChallengeId"
     post:
+      operationId: completeOtpChallenge
       tags:
         - UserAuth
       summary: Complete an OTP challenge
@@ -74,6 +77,7 @@ paths:
 
   /api/v1/auth/passkey/create:
     post:
+      operationId: startPasskeyRegistration
       tags:
         - UserAuth
       summary: Start passkey registration
@@ -97,6 +101,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/ChallengeId"
     post:
+      operationId: completePasskeyRegistration
       tags:
         - UserAuth
       summary: Complete passkey registration
@@ -114,6 +119,7 @@ paths:
 
   /api/v1/auth/passkey/login:
     post:
+      operationId: startPasskeyAuthentication
       tags:
         - UserAuth
       summary: Start passkey authentication
@@ -138,6 +144,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/ChallengeId"
     post:
+      operationId: completePasskeyAuthentication
       tags:
         - UserAuth
       summary: Complete passkey authentication
@@ -160,7 +167,7 @@ paths:
 
   /api/v1/entities:
     post:
-      operationId: postApiV1Entities
+      operationId: searchEntities
       tags:
         - Entities
       summary: Search entities
@@ -206,9 +213,11 @@ paths:
                     type: integer
                     description: Total number of matching entities across all pages.
     put:
+      operationId: createEntity
       tags:
         - Entities
       summary: Create a new entity
+      description: Creates an entity with an ID minted by the server. The request ID may be omitted, null, or empty; a non-empty ID is rejected.
       requestBody:
         required: true
         content:
@@ -229,6 +238,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/EntityId"
     get:
+      operationId: getEntityById
       tags:
         - Entities
       summary: Get an entity
@@ -244,9 +254,11 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     post:
+      operationId: updateEntityById
       tags:
         - Entities
       summary: Update an entity
+      description: Replaces an entity while preserving the server-managed ID from the URL. The request ID may be omitted, null, or empty; a non-empty ID must match the URL.
       requestBody:
         required: true
         content:
@@ -263,6 +275,7 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     delete:
+      operationId: deleteEntityById
       tags:
         - Entities
       summary: Delete an entity
@@ -274,6 +287,7 @@ paths:
 
   /api/v1/users:
     get:
+      operationId: listUsers
       tags:
         - UserManagement
       summary: List users
@@ -311,6 +325,7 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     post:
+      operationId: createUser
       tags:
         - UserManagement
       summary: Create a new user
@@ -332,6 +347,7 @@ paths:
 
   /api/v1/users/invite:
     post:
+      operationId: inviteUser
       tags:
         - UserInvites
       summary: Invite a user
@@ -353,6 +369,7 @@ paths:
 
   /api/v1/users/invites:
     get:
+      operationId: listUserInvites
       tags:
         - UserInvites
       summary: List pending users invites
@@ -372,6 +389,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/InviteId"
     delete:
+      operationId: revokeUserInviteById
       tags:
         - UserInvites
       summary: Revoke a user invite
@@ -385,6 +403,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/UserId"
     get:
+      operationId: getUserById
       tags:
         - UserManagement
       summary: Get a user
@@ -398,6 +417,7 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     put:
+      operationId: replaceUserById
       tags:
         - UserManagement
       summary: Replace a user
@@ -417,6 +437,7 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     post:
+      operationId: updateUserById
       tags:
         - UserManagement
       summary: Update a user
@@ -436,6 +457,7 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
     delete:
+      operationId: deleteUserById
       tags:
         - UserManagement
       summary: Delete a user
@@ -736,33 +758,83 @@ components:
 
     Person:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Person"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:person:[0-9a-z]{4,12}$
+          readOnly: true
 
     Organization:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Organization"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:organization:[0-9a-z]{4,12}$
+          readOnly: true
 
     Facility:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Facility"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:facility:[0-9a-z]{4,12}$
+          readOnly: true
 
     Project:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Project"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:project:[0-9a-z]{4,12}$
+          readOnly: true
 
     Tool:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Tool"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:tool:[0-9a-z]{4,12}$
+          readOnly: true
 
     Service:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Service"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:service:[0-9a-z]{4,12}$
+          readOnly: true
 
     Publication:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Publication"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:publication:[0-9a-z]{4,12}$
+          readOnly: true
 
     Event:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Event"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:event:[0-9a-z]{4,12}$
+          readOnly: true
 
     Dataset:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Dataset"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:dataset:[0-9a-z]{4,12}$
+          readOnly: true
 
     TrainingMaterial:
       $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/TrainingMaterial"
+      properties:
+        id:
+          type: string
+          pattern: ^idhi:training_material:[0-9a-z]{4,12}$
+          readOnly: true
 
     Audited:
       type: object

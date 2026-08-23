@@ -13,6 +13,7 @@ import type {
   FilterableField,
   SortCriterion,
 } from '../../models'
+import { createEntityId } from '../../utils/entityId'
 import { createId } from '../../utils/id'
 import { searchDump } from '../../utils/searchDump'
 import { COLLECTIONS } from '../collections'
@@ -21,6 +22,12 @@ type StoredEntity = Omit<AuditedEntity, 'id'> & {
   _id: string
   _s: string
 }
+
+export type EntityWrite = Entity extends infer EntityVariant
+  ? EntityVariant extends { id: string }
+    ? Omit<EntityVariant, 'id'> & { id?: string | null }
+    : never
+  : never
 
 const ENTITY_AUDIT_OPERATIONS = ['create', 'update', 'delete'] as const
 type EntityAuditOperation = (typeof ENTITY_AUDIT_OPERATIONS)[number]
@@ -51,10 +58,10 @@ export interface EntityDatabaseService {
     pageSize: number,
   ): Promise<EntitySearchResult>
   get(entityId: string): Promise<AuditedEntity | null>
-  insert(entity: Entity, userId: string): Promise<AuditedEntity>
+  insert(entity: EntityWrite, userId: string): Promise<AuditedEntity>
   replace(
     entityId: string,
-    entity: Entity,
+    entity: EntityWrite,
     userId: string,
   ): Promise<AuditedEntity | null>
   delete(entityId: string, userId: string): Promise<boolean>
@@ -268,13 +275,14 @@ export async function createEntityDatabaseService(
 
     async insert(entity, userId) {
       const now = new Date().toISOString()
+      const id = createEntityId(entity.type)
       const audit = {
         createdAt: now,
         createdBy: userId,
         modifiedAt: now,
         modifiedBy: userId,
       }
-      const { id, ...values } = entity
+      const { id: _ignoredId, ...values } = entity
       const storedEntity = { id, ...values, audit }
       const createdEntity = new entities()
       createdEntity.set({
@@ -311,8 +319,8 @@ export async function createEntityDatabaseService(
         modifiedAt: now,
         modifiedBy: userId,
       }
-      const { id: entityIdFromBody, ...values } = entity
-      const storedEntity = { id: entityIdFromBody, ...values, audit }
+      const { id: _ignoredId, ...values } = entity
+      const storedEntity = { id: entityId, ...values, audit }
       const updatedEntity = await entities
         .findOneAndReplace(
           { _id: entityId },

@@ -7,7 +7,7 @@
 import type { PersonAffiliationsItemAffiliationRole } from './personAffiliationsItemAffiliationRole.ts'
 
 /**
- * A person's employment or membership at an organization, with a position and dates. Use for the person's institutional home(s), independent of any project.
+ * A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.
  */
 export type PersonAffiliationsItem = {
   /** A person's position within an organization (job/status). */
@@ -17,12 +17,10 @@ export type PersonAffiliationsItem = {
    * @nullable
    */
   end_date?: string | null
-  /** The person affiliated with the organization (by IDHI URN). */
-  member: string
-  /** The organization side of the relationship (by IDHI URN). */
+  /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
   organization: string
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

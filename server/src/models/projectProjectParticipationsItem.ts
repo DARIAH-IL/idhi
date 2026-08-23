@@ -7,7 +7,7 @@
 import type { ProjectProjectParticipationsItemParticipationRole } from './projectProjectParticipationsItemParticipationRole'
 
 /**
- * A person's participation in a project. Create one instance per (person, project, role) combination; if a person changed roles over time, create one instance per role with start/end dates.
+ * A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.
  */
 export type ProjectProjectParticipationsItem = {
   /**
@@ -15,14 +15,12 @@ export type ProjectProjectParticipationsItem = {
    * @nullable
    */
   end_date?: string | null
-  /** The person taking part in the project (by IDHI URN). */
+  /** The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person. */
   participant: string
   /** A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it. */
   participation_role?: ProjectProjectParticipationsItemParticipationRole
-  /** The project side of the relationship (by IDHI URN). */
-  project: string
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

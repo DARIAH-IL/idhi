@@ -5,66 +5,63 @@
  * OpenAPI spec version: 1.0.0
  */
 import { Hono } from 'hono'
-import { getApiV1HealthHandlers } from './handlers/default/default.handlers'
+import { getHealthHandlers } from './handlers/default/default.handlers'
 import {
-  postApiV1AuthOtpHandlers,
-  postApiV1AuthOtpChallengeIdHandlers,
-  postApiV1AuthPasskeyCreateHandlers,
-  postApiV1AuthPasskeyCreateChallengeIdHandlers,
-  postApiV1AuthPasskeyLoginHandlers,
-  postApiV1AuthPasskeyLoginChallengeIdHandlers,
+  startOtpChallengeHandlers,
+  completeOtpChallengeHandlers,
+  startPasskeyRegistrationHandlers,
+  completePasskeyRegistrationHandlers,
+  startPasskeyAuthenticationHandlers,
+  completePasskeyAuthenticationHandlers,
 } from './handlers/user-auth/user-auth.handlers'
 import {
-  postApiV1EntitiesHandlers,
-  putApiV1EntitiesHandlers,
-  getApiV1EntitiesEntityIdHandlers,
-  postApiV1EntitiesEntityIdHandlers,
-  deleteApiV1EntitiesEntityIdHandlers,
+  searchEntitiesHandlers,
+  createEntityHandlers,
+  getEntityByIdHandlers,
+  updateEntityByIdHandlers,
+  deleteEntityByIdHandlers,
 } from './handlers/entities/entities.handlers'
 import {
-  getApiV1UsersHandlers,
-  postApiV1UsersHandlers,
-  getApiV1UsersUserIdHandlers,
-  putApiV1UsersUserIdHandlers,
-  postApiV1UsersUserIdHandlers,
-  deleteApiV1UsersUserIdHandlers,
+  listUsersHandlers,
+  createUserHandlers,
+  getUserByIdHandlers,
+  replaceUserByIdHandlers,
+  updateUserByIdHandlers,
+  deleteUserByIdHandlers,
 } from './handlers/user-management/user-management.handlers'
 import {
-  postApiV1UsersInviteHandlers,
-  getApiV1UsersInvitesHandlers,
-  deleteApiV1UsersInvitesInviteIdHandlers,
+  inviteUserHandlers,
+  listUserInvitesHandlers,
+  revokeUserInviteByIdHandlers,
 } from './handlers/user-invites/user-invites.handlers'
 
 const app = new Hono()
-  .get('/api/v1/health', ...getApiV1HealthHandlers)
-  .post('/api/v1/auth/otp', ...postApiV1AuthOtpHandlers)
-  .post('/api/v1/auth/otp/:challengeId', ...postApiV1AuthOtpChallengeIdHandlers)
-  .post('/api/v1/auth/passkey/create', ...postApiV1AuthPasskeyCreateHandlers)
+  .get('/api/v1/health', ...getHealthHandlers)
+  .post('/api/v1/auth/otp', ...startOtpChallengeHandlers)
+  .post('/api/v1/auth/otp/:challengeId', ...completeOtpChallengeHandlers)
+  .post('/api/v1/auth/passkey/create', ...startPasskeyRegistrationHandlers)
   .post(
     '/api/v1/auth/passkey/create/:challengeId',
-    ...postApiV1AuthPasskeyCreateChallengeIdHandlers,
+    ...completePasskeyRegistrationHandlers,
   )
-  .post('/api/v1/auth/passkey/login', ...postApiV1AuthPasskeyLoginHandlers)
+  .post('/api/v1/auth/passkey/login', ...startPasskeyAuthenticationHandlers)
   .post(
     '/api/v1/auth/passkey/login/:challengeId',
-    ...postApiV1AuthPasskeyLoginChallengeIdHandlers,
+    ...completePasskeyAuthenticationHandlers,
   )
-  .post('/api/v1/entities', ...postApiV1EntitiesHandlers)
-  .put('/api/v1/entities', ...putApiV1EntitiesHandlers)
-  .get('/api/v1/entities/:entityId', ...getApiV1EntitiesEntityIdHandlers)
-  .post('/api/v1/entities/:entityId', ...postApiV1EntitiesEntityIdHandlers)
-  .delete('/api/v1/entities/:entityId', ...deleteApiV1EntitiesEntityIdHandlers)
-  .get('/api/v1/users', ...getApiV1UsersHandlers)
-  .post('/api/v1/users', ...postApiV1UsersHandlers)
-  .post('/api/v1/users/invite', ...postApiV1UsersInviteHandlers)
-  .get('/api/v1/users/invites', ...getApiV1UsersInvitesHandlers)
-  .delete(
-    '/api/v1/users/invites/:inviteId',
-    ...deleteApiV1UsersInvitesInviteIdHandlers,
-  )
-  .get('/api/v1/users/:userId', ...getApiV1UsersUserIdHandlers)
-  .put('/api/v1/users/:userId', ...putApiV1UsersUserIdHandlers)
-  .post('/api/v1/users/:userId', ...postApiV1UsersUserIdHandlers)
-  .delete('/api/v1/users/:userId', ...deleteApiV1UsersUserIdHandlers)
+  .post('/api/v1/entities', ...searchEntitiesHandlers)
+  .put('/api/v1/entities', ...createEntityHandlers)
+  .get('/api/v1/entities/:entityId', ...getEntityByIdHandlers)
+  .post('/api/v1/entities/:entityId', ...updateEntityByIdHandlers)
+  .delete('/api/v1/entities/:entityId', ...deleteEntityByIdHandlers)
+  .get('/api/v1/users', ...listUsersHandlers)
+  .post('/api/v1/users', ...createUserHandlers)
+  .post('/api/v1/users/invite', ...inviteUserHandlers)
+  .get('/api/v1/users/invites', ...listUserInvitesHandlers)
+  .delete('/api/v1/users/invites/:inviteId', ...revokeUserInviteByIdHandlers)
+  .get('/api/v1/users/:userId', ...getUserByIdHandlers)
+  .put('/api/v1/users/:userId', ...replaceUserByIdHandlers)
+  .post('/api/v1/users/:userId', ...updateUserByIdHandlers)
+  .delete('/api/v1/users/:userId', ...deleteUserByIdHandlers)
 
 export default app

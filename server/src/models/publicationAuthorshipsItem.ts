@@ -7,10 +7,10 @@
 import type { PublicationAuthorshipsItemAuthorshipRole } from './publicationAuthorshipsItemAuthorshipRole'
 
 /**
- * A person's contribution to a publication, with author order and role. Create one instance per (person, publication); author_order preserves the byline sequence (1 = first author).
+ * A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.
  */
 export type PublicationAuthorshipsItem = {
-  /** The contributing person (by IDHI URN). */
+  /** The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person. */
   author: string
   /**
    * Position in the byline; 1 = first author.
@@ -24,10 +24,8 @@ export type PublicationAuthorshipsItem = {
    * @nullable
    */
   end_date?: string | null
-  /** The publication contributed to (by IDHI URN). */
-  publication: string
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

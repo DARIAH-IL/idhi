@@ -6,34 +6,32 @@
  */
 import { z as zod } from 'zod'
 
-export const getApiV1UsersQueryPageDefault = 0
-export const getApiV1UsersQueryPageMin = 0
+export const listUsersQueryPageDefault = 0
+export const listUsersQueryPageMin = 0
 
-export const getApiV1UsersQueryPageSizeDefault = 20
-export const getApiV1UsersQueryPageSizeMax = 100
+export const listUsersQueryPageSizeDefault = 20
+export const listUsersQueryPageSizeMax = 100
 
-export const GetApiV1UsersQueryParams = zod.object({
+export const ListUsersQueryParams = zod.object({
   page: zod.coerce
     .number()
     .int()
-    .min(getApiV1UsersQueryPageMin)
-    .default(getApiV1UsersQueryPageDefault),
+    .min(listUsersQueryPageMin)
+    .default(listUsersQueryPageDefault),
   pageSize: zod.coerce
     .number()
     .int()
     .min(1)
-    .max(getApiV1UsersQueryPageSizeMax)
-    .default(getApiV1UsersQueryPageSizeDefault),
+    .max(listUsersQueryPageSizeMax)
+    .default(listUsersQueryPageSizeDefault),
 })
 
-export const getApiV1UsersResponseResultsItemIdRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
+export const listUsersResponseResultsItemIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const GetApiV1UsersResponse = zod.object({
+export const ListUsersResponse = zod.object({
   results: zod.array(
     zod.object({
-      id: zod.string().regex(getApiV1UsersResponseResultsItemIdRegExp),
+      id: zod.string().regex(listUsersResponseResultsItemIdRegExp),
       name: zod.string().optional(),
       email: zod.email(),
       isAdmin: zod.boolean(),
@@ -42,74 +40,74 @@ export const GetApiV1UsersResponse = zod.object({
   total: zod.int(),
 })
 
-export const PostApiV1UsersBody = zod.object({
+export const CreateUserBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const postApiV1UsersResponseIdRegExp = new RegExp('^idhi:user:.+$')
+export const createUserResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PostApiV1UsersResponse = zod.object({
-  id: zod.string().regex(postApiV1UsersResponseIdRegExp),
+export const CreateUserResponse = zod.object({
+  id: zod.string().regex(createUserResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const GetApiV1UsersUserIdParams = zod.object({
+export const GetUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
-export const getApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
+export const getUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const GetApiV1UsersUserIdResponse = zod.object({
-  id: zod.string().regex(getApiV1UsersUserIdResponseIdRegExp),
+export const GetUserByIdResponse = zod.object({
+  id: zod.string().regex(getUserByIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const PutApiV1UsersUserIdParams = zod.object({
+export const ReplaceUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
-export const PutApiV1UsersUserIdBody = zod.object({
+export const ReplaceUserByIdBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const putApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
+export const replaceUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PutApiV1UsersUserIdResponse = zod.object({
-  id: zod.string().regex(putApiV1UsersUserIdResponseIdRegExp),
+export const ReplaceUserByIdResponse = zod.object({
+  id: zod.string().regex(replaceUserByIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const PostApiV1UsersUserIdParams = zod.object({
+export const UpdateUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
-export const PostApiV1UsersUserIdBody = zod.object({
+export const UpdateUserByIdBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const postApiV1UsersUserIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
+export const updateUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
 
-export const PostApiV1UsersUserIdResponse = zod.object({
-  id: zod.string().regex(postApiV1UsersUserIdResponseIdRegExp),
+export const UpdateUserByIdResponse = zod.object({
+  id: zod.string().regex(updateUserByIdResponseIdRegExp),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
 })
 
-export const DeleteApiV1UsersUserIdParams = zod.object({
+export const DeleteUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
-export const DeleteApiV1UsersUserIdResponse = zod.void()
+export const DeleteUserByIdResponse = zod.void()

@@ -6,6 +6,7 @@
  */
 import type { EventAddressItem } from './eventAddressItem.ts'
 import type { EventDescriptionItem } from './eventDescriptionItem.ts'
+import type { EventEventAgentRolesItem } from './eventEventAgentRolesItem.ts'
 import type { EventEventType } from './eventEventType.ts'
 import type { EventLocationItem } from './eventLocationItem.ts'
 import type { EventNameItem } from './eventNameItem.ts'
@@ -40,6 +41,11 @@ export interface Event {
    * @nullable
    */
   end_date?: string | null
+  /**
+   * People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.
+   * @nullable
+   */
+  event_agent_roles?: EventEventAgentRolesItem[] | null
   /** Kinds of scholarly events. */
   event_type?: EventEventType
   /**
@@ -72,7 +78,7 @@ export interface Event {
    */
   same_as?: string[] | null
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

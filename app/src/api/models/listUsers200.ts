@@ -4,9 +4,9 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { User } from './user'
+import type { User } from './user.ts'
 
-export type GetApiV1Users200 = {
+export type ListUsers200 = {
   results: User[]
   total: number
 }

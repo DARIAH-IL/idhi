@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type PostApiV1Entities200FacetsItem = {
+export type SearchEntities200FacetsItem = {
   value: string
   count: number
 }

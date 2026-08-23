@@ -6,7 +6,7 @@
  */
 import { z as zod } from 'zod'
 
-export const PostApiV1AuthOtpBody = zod
+export const StartOtpChallengeBody = zod
   .object({
     email: zod.email(),
   })
@@ -16,9 +16,9 @@ export const PostApiV1AuthOtpBody = zod
     }),
   )
 
-export const postApiV1AuthOtpResponseTwoDigitsMax = 32
+export const startOtpChallengeResponseTwoDigitsMax = 32
 
-export const PostApiV1AuthOtpResponse = zod
+export const StartOtpChallengeResponse = zod
   .object({
     challengeId: zod.string(),
     expiration: zod.iso
@@ -30,36 +30,36 @@ export const PostApiV1AuthOtpResponse = zod
       digits: zod
         .int()
         .min(1)
-        .max(postApiV1AuthOtpResponseTwoDigitsMax)
+        .max(startOtpChallengeResponseTwoDigitsMax)
         .describe('Number of digits required to complete the OTP challenge.'),
     }),
   )
 
-export const PostApiV1AuthOtpChallengeIdParams = zod.object({
+export const CompleteOtpChallengeParams = zod.object({
   challengeId: zod.string(),
 })
 
-export const PostApiV1AuthOtpChallengeIdBody = zod.object({
+export const CompleteOtpChallengeBody = zod.object({
   otp: zod.string(),
 })
 
-export const PostApiV1AuthOtpChallengeIdResponse = zod.object({
+export const CompleteOtpChallengeResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
 
-export const postApiV1AuthPasskeyCreateBodyReplacingCredentialIdRegExp =
+export const startPasskeyRegistrationBodyReplacingCredentialIdRegExp =
   new RegExp('^[A-Za-z0-9_-]+$')
 
-export const PostApiV1AuthPasskeyCreateBody = zod.object({
+export const StartPasskeyRegistrationBody = zod.object({
   replacingCredentialId: zod
     .string()
     .min(1)
-    .regex(postApiV1AuthPasskeyCreateBodyReplacingCredentialIdRegExp)
+    .regex(startPasskeyRegistrationBodyReplacingCredentialIdRegExp)
     .optional()
     .describe('Existing credential to replace after successful registration.'),
 })
 
-export const PostApiV1AuthPasskeyCreateResponse = zod
+export const StartPasskeyRegistrationResponse = zod
   .object({
     challengeId: zod.string(),
     expiration: zod.iso
@@ -76,21 +76,21 @@ export const PostApiV1AuthPasskeyCreateResponse = zod
     }),
   )
 
-export const PostApiV1AuthPasskeyCreateChallengeIdParams = zod.object({
+export const CompletePasskeyRegistrationParams = zod.object({
   challengeId: zod.string(),
 })
 
-export const PostApiV1AuthPasskeyCreateChallengeIdBody = zod
+export const CompletePasskeyRegistrationBody = zod
   .record(zod.string(), zod.unknown())
   .describe('Matches @simplewebauthn\/RegistrationResponseJSON.')
 
-export const PostApiV1AuthPasskeyCreateChallengeIdResponse = zod.void()
+export const CompletePasskeyRegistrationResponse = zod.void()
 
-export const PostApiV1AuthPasskeyLoginBody = zod.object({
+export const StartPasskeyAuthenticationBody = zod.object({
   email: zod.email(),
 })
 
-export const PostApiV1AuthPasskeyLoginResponse = zod
+export const StartPasskeyAuthenticationResponse = zod
   .object({
     challengeId: zod.string(),
     expiration: zod.iso
@@ -107,14 +107,14 @@ export const PostApiV1AuthPasskeyLoginResponse = zod
     }),
   )
 
-export const PostApiV1AuthPasskeyLoginChallengeIdParams = zod.object({
+export const CompletePasskeyAuthenticationParams = zod.object({
   challengeId: zod.string(),
 })
 
-export const PostApiV1AuthPasskeyLoginChallengeIdBody = zod
+export const CompletePasskeyAuthenticationBody = zod
   .record(zod.string(), zod.unknown())
   .describe('Matches @simplewebauthn\/AuthenticationResponseJSON.')
 
-export const PostApiV1AuthPasskeyLoginChallengeIdResponse = zod.object({
+export const CompletePasskeyAuthenticationResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })

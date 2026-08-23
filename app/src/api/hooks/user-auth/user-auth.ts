@@ -32,7 +32,7 @@ import type { ErrorType, BodyType } from '../../client.ts'
 /**
  * @summary Start an OTP challenge
  */
-export const postApiV1AuthOtp = (
+export const startOtpChallenge = (
   authOtpStartWrite: BodyType<AuthOtpStartWrite>,
   signal?: AbortSignal,
 ) => {
@@ -45,23 +45,23 @@ export const postApiV1AuthOtp = (
   })
 }
 
-export const getPostApiV1AuthOtpMutationOptions = <
+export const getStartOtpChallengeMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthOtp>>,
+    Awaited<ReturnType<typeof startOtpChallenge>>,
     TError,
     { data: BodyType<AuthOtpStartWrite> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthOtp>>,
+  Awaited<ReturnType<typeof startOtpChallenge>>,
   TError,
   { data: BodyType<AuthOtpStartWrite> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthOtp']
+  const mutationKey = ['startOtpChallenge']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -71,33 +71,33 @@ export const getPostApiV1AuthOtpMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthOtp>>,
+    Awaited<ReturnType<typeof startOtpChallenge>>,
     { data: BodyType<AuthOtpStartWrite> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return postApiV1AuthOtp(data)
+    return startOtpChallenge(data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthOtpMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthOtp>>
+export type StartOtpChallengeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof startOtpChallenge>>
 >
-export type PostApiV1AuthOtpMutationBody = BodyType<AuthOtpStartWrite>
-export type PostApiV1AuthOtpMutationError = ErrorType<ErrorResponse>
+export type StartOtpChallengeMutationBody = BodyType<AuthOtpStartWrite>
+export type StartOtpChallengeMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Start an OTP challenge
  */
-export const usePostApiV1AuthOtp = <
+export const useStartOtpChallenge = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthOtp>>,
+      Awaited<ReturnType<typeof startOtpChallenge>>,
       TError,
       { data: BodyType<AuthOtpStartWrite> },
       TContext
@@ -105,17 +105,17 @@ export const usePostApiV1AuthOtp = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthOtp>>,
+  Awaited<ReturnType<typeof startOtpChallenge>>,
   TError,
   { data: BodyType<AuthOtpStartWrite> },
   TContext
 > => {
-  return useMutation(getPostApiV1AuthOtpMutationOptions(options), queryClient)
+  return useMutation(getStartOtpChallengeMutationOptions(options), queryClient)
 }
 /**
  * @summary Complete an OTP challenge
  */
-export const postApiV1AuthOtpChallengeId = (
+export const completeOtpChallenge = (
   challengeId: string,
   otpChallengeCompletion: BodyType<OtpChallengeCompletion>,
   signal?: AbortSignal,
@@ -129,23 +129,23 @@ export const postApiV1AuthOtpChallengeId = (
   })
 }
 
-export const getPostApiV1AuthOtpChallengeIdMutationOptions = <
+export const getCompleteOtpChallengeMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>,
+    Awaited<ReturnType<typeof completeOtpChallenge>>,
     TError,
     { challengeId: string; data: BodyType<OtpChallengeCompletion> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>,
+  Awaited<ReturnType<typeof completeOtpChallenge>>,
   TError,
   { challengeId: string; data: BodyType<OtpChallengeCompletion> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthOtpChallengeId']
+  const mutationKey = ['completeOtpChallenge']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -155,34 +155,33 @@ export const getPostApiV1AuthOtpChallengeIdMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>,
+    Awaited<ReturnType<typeof completeOtpChallenge>>,
     { challengeId: string; data: BodyType<OtpChallengeCompletion> }
   > = (props) => {
     const { challengeId, data } = props ?? {}
 
-    return postApiV1AuthOtpChallengeId(challengeId, data)
+    return completeOtpChallenge(challengeId, data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthOtpChallengeIdMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>
+export type CompleteOtpChallengeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof completeOtpChallenge>>
 >
-export type PostApiV1AuthOtpChallengeIdMutationBody =
-  BodyType<OtpChallengeCompletion>
-export type PostApiV1AuthOtpChallengeIdMutationError = ErrorType<ErrorResponse>
+export type CompleteOtpChallengeMutationBody = BodyType<OtpChallengeCompletion>
+export type CompleteOtpChallengeMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Complete an OTP challenge
  */
-export const usePostApiV1AuthOtpChallengeId = <
+export const useCompleteOtpChallenge = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>,
+      Awaited<ReturnType<typeof completeOtpChallenge>>,
       TError,
       { challengeId: string; data: BodyType<OtpChallengeCompletion> },
       TContext
@@ -190,20 +189,20 @@ export const usePostApiV1AuthOtpChallengeId = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthOtpChallengeId>>,
+  Awaited<ReturnType<typeof completeOtpChallenge>>,
   TError,
   { challengeId: string; data: BodyType<OtpChallengeCompletion> },
   TContext
 > => {
   return useMutation(
-    getPostApiV1AuthOtpChallengeIdMutationOptions(options),
+    getCompleteOtpChallengeMutationOptions(options),
     queryClient,
   )
 }
 /**
  * @summary Start passkey registration
  */
-export const postApiV1AuthPasskeyCreate = (
+export const startPasskeyRegistration = (
   passkeyRegistrationWrite: BodyType<PasskeyRegistrationWrite>,
   signal?: AbortSignal,
 ) => {
@@ -216,23 +215,23 @@ export const postApiV1AuthPasskeyCreate = (
   })
 }
 
-export const getPostApiV1AuthPasskeyCreateMutationOptions = <
+export const getStartPasskeyRegistrationMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
+    Awaited<ReturnType<typeof startPasskeyRegistration>>,
     TError,
     { data: BodyType<PasskeyRegistrationWrite> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
+  Awaited<ReturnType<typeof startPasskeyRegistration>>,
   TError,
   { data: BodyType<PasskeyRegistrationWrite> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthPasskeyCreate']
+  const mutationKey = ['startPasskeyRegistration']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -242,34 +241,34 @@ export const getPostApiV1AuthPasskeyCreateMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
+    Awaited<ReturnType<typeof startPasskeyRegistration>>,
     { data: BodyType<PasskeyRegistrationWrite> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return postApiV1AuthPasskeyCreate(data)
+    return startPasskeyRegistration(data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthPasskeyCreateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>
+export type StartPasskeyRegistrationMutationResult = NonNullable<
+  Awaited<ReturnType<typeof startPasskeyRegistration>>
 >
-export type PostApiV1AuthPasskeyCreateMutationBody =
+export type StartPasskeyRegistrationMutationBody =
   BodyType<PasskeyRegistrationWrite>
-export type PostApiV1AuthPasskeyCreateMutationError = ErrorType<ErrorResponse>
+export type StartPasskeyRegistrationMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Start passkey registration
  */
-export const usePostApiV1AuthPasskeyCreate = <
+export const useStartPasskeyRegistration = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
+      Awaited<ReturnType<typeof startPasskeyRegistration>>,
       TError,
       { data: BodyType<PasskeyRegistrationWrite> },
       TContext
@@ -277,20 +276,20 @@ export const usePostApiV1AuthPasskeyCreate = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreate>>,
+  Awaited<ReturnType<typeof startPasskeyRegistration>>,
   TError,
   { data: BodyType<PasskeyRegistrationWrite> },
   TContext
 > => {
   return useMutation(
-    getPostApiV1AuthPasskeyCreateMutationOptions(options),
+    getStartPasskeyRegistrationMutationOptions(options),
     queryClient,
   )
 }
 /**
  * @summary Complete passkey registration
  */
-export const postApiV1AuthPasskeyCreateChallengeId = (
+export const completePasskeyRegistration = (
   challengeId: string,
   passkeyRegistrationResponse: BodyType<PasskeyRegistrationResponse>,
   signal?: AbortSignal,
@@ -304,23 +303,23 @@ export const postApiV1AuthPasskeyCreateChallengeId = (
   })
 }
 
-export const getPostApiV1AuthPasskeyCreateChallengeIdMutationOptions = <
+export const getCompletePasskeyRegistrationMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>,
+    Awaited<ReturnType<typeof completePasskeyRegistration>>,
     TError,
     { challengeId: string; data: BodyType<PasskeyRegistrationResponse> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>,
+  Awaited<ReturnType<typeof completePasskeyRegistration>>,
   TError,
   { challengeId: string; data: BodyType<PasskeyRegistrationResponse> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthPasskeyCreateChallengeId']
+  const mutationKey = ['completePasskeyRegistration']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -330,35 +329,34 @@ export const getPostApiV1AuthPasskeyCreateChallengeIdMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>,
+    Awaited<ReturnType<typeof completePasskeyRegistration>>,
     { challengeId: string; data: BodyType<PasskeyRegistrationResponse> }
   > = (props) => {
     const { challengeId, data } = props ?? {}
 
-    return postApiV1AuthPasskeyCreateChallengeId(challengeId, data)
+    return completePasskeyRegistration(challengeId, data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthPasskeyCreateChallengeIdMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>
+export type CompletePasskeyRegistrationMutationResult = NonNullable<
+  Awaited<ReturnType<typeof completePasskeyRegistration>>
 >
-export type PostApiV1AuthPasskeyCreateChallengeIdMutationBody =
+export type CompletePasskeyRegistrationMutationBody =
   BodyType<PasskeyRegistrationResponse>
-export type PostApiV1AuthPasskeyCreateChallengeIdMutationError =
-  ErrorType<ErrorResponse>
+export type CompletePasskeyRegistrationMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Complete passkey registration
  */
-export const usePostApiV1AuthPasskeyCreateChallengeId = <
+export const useCompletePasskeyRegistration = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>,
+      Awaited<ReturnType<typeof completePasskeyRegistration>>,
       TError,
       { challengeId: string; data: BodyType<PasskeyRegistrationResponse> },
       TContext
@@ -366,20 +364,20 @@ export const usePostApiV1AuthPasskeyCreateChallengeId = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyCreateChallengeId>>,
+  Awaited<ReturnType<typeof completePasskeyRegistration>>,
   TError,
   { challengeId: string; data: BodyType<PasskeyRegistrationResponse> },
   TContext
 > => {
   return useMutation(
-    getPostApiV1AuthPasskeyCreateChallengeIdMutationOptions(options),
+    getCompletePasskeyRegistrationMutationOptions(options),
     queryClient,
   )
 }
 /**
  * @summary Start passkey authentication
  */
-export const postApiV1AuthPasskeyLogin = (
+export const startPasskeyAuthentication = (
   authEmailWrite: BodyType<AuthEmailWrite>,
   signal?: AbortSignal,
 ) => {
@@ -392,23 +390,23 @@ export const postApiV1AuthPasskeyLogin = (
   })
 }
 
-export const getPostApiV1AuthPasskeyLoginMutationOptions = <
+export const getStartPasskeyAuthenticationMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>,
+    Awaited<ReturnType<typeof startPasskeyAuthentication>>,
     TError,
     { data: BodyType<AuthEmailWrite> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>,
+  Awaited<ReturnType<typeof startPasskeyAuthentication>>,
   TError,
   { data: BodyType<AuthEmailWrite> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthPasskeyLogin']
+  const mutationKey = ['startPasskeyAuthentication']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -418,33 +416,33 @@ export const getPostApiV1AuthPasskeyLoginMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>,
+    Awaited<ReturnType<typeof startPasskeyAuthentication>>,
     { data: BodyType<AuthEmailWrite> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return postApiV1AuthPasskeyLogin(data)
+    return startPasskeyAuthentication(data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthPasskeyLoginMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>
+export type StartPasskeyAuthenticationMutationResult = NonNullable<
+  Awaited<ReturnType<typeof startPasskeyAuthentication>>
 >
-export type PostApiV1AuthPasskeyLoginMutationBody = BodyType<AuthEmailWrite>
-export type PostApiV1AuthPasskeyLoginMutationError = ErrorType<ErrorResponse>
+export type StartPasskeyAuthenticationMutationBody = BodyType<AuthEmailWrite>
+export type StartPasskeyAuthenticationMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Start passkey authentication
  */
-export const usePostApiV1AuthPasskeyLogin = <
+export const useStartPasskeyAuthentication = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>,
+      Awaited<ReturnType<typeof startPasskeyAuthentication>>,
       TError,
       { data: BodyType<AuthEmailWrite> },
       TContext
@@ -452,20 +450,20 @@ export const usePostApiV1AuthPasskeyLogin = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLogin>>,
+  Awaited<ReturnType<typeof startPasskeyAuthentication>>,
   TError,
   { data: BodyType<AuthEmailWrite> },
   TContext
 > => {
   return useMutation(
-    getPostApiV1AuthPasskeyLoginMutationOptions(options),
+    getStartPasskeyAuthenticationMutationOptions(options),
     queryClient,
   )
 }
 /**
  * @summary Complete passkey authentication
  */
-export const postApiV1AuthPasskeyLoginChallengeId = (
+export const completePasskeyAuthentication = (
   challengeId: string,
   passkeyAuthenticationResponse: BodyType<PasskeyAuthenticationResponse>,
   signal?: AbortSignal,
@@ -479,23 +477,23 @@ export const postApiV1AuthPasskeyLoginChallengeId = (
   })
 }
 
-export const getPostApiV1AuthPasskeyLoginChallengeIdMutationOptions = <
+export const getCompletePasskeyAuthenticationMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>,
+    Awaited<ReturnType<typeof completePasskeyAuthentication>>,
     TError,
     { challengeId: string; data: BodyType<PasskeyAuthenticationResponse> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>,
+  Awaited<ReturnType<typeof completePasskeyAuthentication>>,
   TError,
   { challengeId: string; data: BodyType<PasskeyAuthenticationResponse> },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthPasskeyLoginChallengeId']
+  const mutationKey = ['completePasskeyAuthentication']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -505,35 +503,35 @@ export const getPostApiV1AuthPasskeyLoginChallengeIdMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>,
+    Awaited<ReturnType<typeof completePasskeyAuthentication>>,
     { challengeId: string; data: BodyType<PasskeyAuthenticationResponse> }
   > = (props) => {
     const { challengeId, data } = props ?? {}
 
-    return postApiV1AuthPasskeyLoginChallengeId(challengeId, data)
+    return completePasskeyAuthentication(challengeId, data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1AuthPasskeyLoginChallengeIdMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>
+export type CompletePasskeyAuthenticationMutationResult = NonNullable<
+  Awaited<ReturnType<typeof completePasskeyAuthentication>>
 >
-export type PostApiV1AuthPasskeyLoginChallengeIdMutationBody =
+export type CompletePasskeyAuthenticationMutationBody =
   BodyType<PasskeyAuthenticationResponse>
-export type PostApiV1AuthPasskeyLoginChallengeIdMutationError =
+export type CompletePasskeyAuthenticationMutationError =
   ErrorType<ErrorResponse>
 
 /**
  * @summary Complete passkey authentication
  */
-export const usePostApiV1AuthPasskeyLoginChallengeId = <
+export const useCompletePasskeyAuthentication = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>,
+      Awaited<ReturnType<typeof completePasskeyAuthentication>>,
       TError,
       { challengeId: string; data: BodyType<PasskeyAuthenticationResponse> },
       TContext
@@ -541,13 +539,13 @@ export const usePostApiV1AuthPasskeyLoginChallengeId = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthPasskeyLoginChallengeId>>,
+  Awaited<ReturnType<typeof completePasskeyAuthentication>>,
   TError,
   { challengeId: string; data: BodyType<PasskeyAuthenticationResponse> },
   TContext
 > => {
   return useMutation(
-    getPostApiV1AuthPasskeyLoginChallengeIdMutationOptions(options),
+    getCompletePasskeyAuthenticationMutationOptions(options),
     queryClient,
   )
 }

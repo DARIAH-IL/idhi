@@ -7,7 +7,7 @@
 import type { ProjectOrganizationRolesItemOrgProjectRole } from './projectOrganizationRolesItemOrgProjectRole'
 
 /**
- * An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.
+ * An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.
  */
 export type ProjectOrganizationRolesItem = {
   /**
@@ -17,12 +17,10 @@ export type ProjectOrganizationRolesItem = {
   end_date?: string | null
   /** An organization's role in a project (one instance per role). */
   org_project_role?: ProjectOrganizationRolesItemOrgProjectRole
-  /** The organization side of the relationship (by IDHI URN). */
+  /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
   organization: string
-  /** The project side of the relationship (by IDHI URN). */
-  project: string
   /**
-   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
    * @nullable
    */
   start_date?: string | null

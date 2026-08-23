@@ -16,29 +16,29 @@ import { isDuplicateKeyError } from '../../utils/mongo'
 import { createId } from '../../utils/id'
 import { zValidator } from '../api.validator'
 import {
-  GetApiV1UsersContext,
-  PostApiV1UsersContext,
-  GetApiV1UsersUserIdContext,
-  PutApiV1UsersUserIdContext,
-  PostApiV1UsersUserIdContext,
-  DeleteApiV1UsersUserIdContext,
+  ListUsersContext,
+  CreateUserContext,
+  GetUserByIdContext,
+  ReplaceUserByIdContext,
+  UpdateUserByIdContext,
+  DeleteUserByIdContext,
 } from './user-management.context'
 import {
-  GetApiV1UsersQueryParams,
-  GetApiV1UsersResponse,
-  getApiV1UsersQueryPageDefault,
-  getApiV1UsersQueryPageSizeDefault,
-  PostApiV1UsersBody,
-  PostApiV1UsersResponse,
-  GetApiV1UsersUserIdParams,
-  GetApiV1UsersUserIdResponse,
-  PutApiV1UsersUserIdParams,
-  PutApiV1UsersUserIdBody,
-  PutApiV1UsersUserIdResponse,
-  PostApiV1UsersUserIdParams,
-  PostApiV1UsersUserIdBody,
-  PostApiV1UsersUserIdResponse,
-  DeleteApiV1UsersUserIdParams,
+  ListUsersQueryParams,
+  ListUsersResponse,
+  listUsersQueryPageDefault,
+  listUsersQueryPageSizeDefault,
+  CreateUserBody,
+  CreateUserResponse,
+  GetUserByIdParams,
+  GetUserByIdResponse,
+  ReplaceUserByIdParams,
+  ReplaceUserByIdBody,
+  ReplaceUserByIdResponse,
+  UpdateUserByIdParams,
+  UpdateUserByIdBody,
+  UpdateUserByIdResponse,
+  DeleteUserByIdParams,
 } from './user-management.zod'
 
 const factory = createFactory()
@@ -84,16 +84,16 @@ async function replaceUser(
   }
 }
 
-export const getApiV1UsersHandlers = factory.createHandlers(
-  zValidator('query', GetApiV1UsersQueryParams),
-  zValidator('response', GetApiV1UsersResponse),
-  async (c: GetApiV1UsersContext) => {
+export const listUsersHandlers = factory.createHandlers(
+  zValidator('query', ListUsersQueryParams),
+  zValidator('response', ListUsersResponse),
+  async (c: ListUsersContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { page, pageSize } = c.req.valid('query')
     const users = await c.var.db.users.list(
-      page ?? getApiV1UsersQueryPageDefault,
-      pageSize ?? getApiV1UsersQueryPageSizeDefault,
+      page ?? listUsersQueryPageDefault,
+      pageSize ?? listUsersQueryPageSizeDefault,
     )
 
     return c.json({
@@ -102,9 +102,9 @@ export const getApiV1UsersHandlers = factory.createHandlers(
     })
   },
 )
-export const postApiV1UsersHandlers = factory.createHandlers(
-  zValidator('json', PostApiV1UsersBody),
-  async (c: PostApiV1UsersContext) => {
+export const createUserHandlers = factory.createHandlers(
+  zValidator('json', CreateUserBody),
+  async (c: CreateUserContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const values = c.req.valid('json')
@@ -129,10 +129,10 @@ export const postApiV1UsersHandlers = factory.createHandlers(
     }
   },
 )
-export const getApiV1UsersUserIdHandlers = factory.createHandlers(
-  zValidator('param', GetApiV1UsersUserIdParams),
-  zValidator('response', GetApiV1UsersUserIdResponse),
-  async (c: GetApiV1UsersUserIdContext) => {
+export const getUserByIdHandlers = factory.createHandlers(
+  zValidator('param', GetUserByIdParams),
+  zValidator('response', GetUserByIdResponse),
+  async (c: GetUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { userId } = c.req.valid('param')
@@ -145,31 +145,31 @@ export const getApiV1UsersUserIdHandlers = factory.createHandlers(
     return c.json(publicUser(requestedUser))
   },
 )
-export const putApiV1UsersUserIdHandlers = factory.createHandlers(
-  zValidator('param', PutApiV1UsersUserIdParams),
-  zValidator('json', PutApiV1UsersUserIdBody),
-  zValidator('response', PutApiV1UsersUserIdResponse),
-  async (c: PutApiV1UsersUserIdContext) => {
+export const replaceUserByIdHandlers = factory.createHandlers(
+  zValidator('param', ReplaceUserByIdParams),
+  zValidator('json', ReplaceUserByIdBody),
+  zValidator('response', ReplaceUserByIdResponse),
+  async (c: ReplaceUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { userId } = c.req.valid('param')
     return c.json(await replaceUser(c.var.db, userId, c.req.valid('json')))
   },
 )
-export const postApiV1UsersUserIdHandlers = factory.createHandlers(
-  zValidator('param', PostApiV1UsersUserIdParams),
-  zValidator('json', PostApiV1UsersUserIdBody),
-  zValidator('response', PostApiV1UsersUserIdResponse),
-  async (c: PostApiV1UsersUserIdContext) => {
+export const updateUserByIdHandlers = factory.createHandlers(
+  zValidator('param', UpdateUserByIdParams),
+  zValidator('json', UpdateUserByIdBody),
+  zValidator('response', UpdateUserByIdResponse),
+  async (c: UpdateUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { userId } = c.req.valid('param')
     return c.json(await replaceUser(c.var.db, userId, c.req.valid('json')))
   },
 )
-export const deleteApiV1UsersUserIdHandlers = factory.createHandlers(
-  zValidator('param', DeleteApiV1UsersUserIdParams),
-  async (c: DeleteApiV1UsersUserIdContext) => {
+export const deleteUserByIdHandlers = factory.createHandlers(
+  zValidator('param', DeleteUserByIdParams),
+  async (c: DeleteUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { userId } = c.req.valid('param')

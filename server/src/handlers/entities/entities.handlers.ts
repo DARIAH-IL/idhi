@@ -5,31 +5,33 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import type { EntityWrite } from '../../db/services/entities'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import { ApiError } from '../../errors/ApiError'
 import { ErrorCode } from '../../models/errorCode'
+import { entityIdMatchesType } from '../../utils/entityId'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
 import {
-  PostApiV1EntitiesContext,
-  PutApiV1EntitiesContext,
-  GetApiV1EntitiesEntityIdContext,
-  PostApiV1EntitiesEntityIdContext,
-  DeleteApiV1EntitiesEntityIdContext,
+  SearchEntitiesContext,
+  CreateEntityContext,
+  GetEntityByIdContext,
+  UpdateEntityByIdContext,
+  DeleteEntityByIdContext,
 } from './entities.context'
 import {
-  PostApiV1EntitiesBody,
-  PostApiV1EntitiesResponse,
-  postApiV1EntitiesBodyPageDefault,
-  postApiV1EntitiesBodyPageSizeDefault,
-  PutApiV1EntitiesBody,
-  PutApiV1EntitiesResponse,
-  GetApiV1EntitiesEntityIdParams,
-  GetApiV1EntitiesEntityIdResponse,
-  PostApiV1EntitiesEntityIdParams,
-  PostApiV1EntitiesEntityIdBody,
-  PostApiV1EntitiesEntityIdResponse,
-  DeleteApiV1EntitiesEntityIdParams,
+  SearchEntitiesBody,
+  SearchEntitiesResponse,
+  searchEntitiesBodyPageDefault,
+  searchEntitiesBodyPageSizeDefault,
+  CreateEntityBody,
+  CreateEntityResponse,
+  GetEntityByIdParams,
+  GetEntityByIdResponse,
+  UpdateEntityByIdParams,
+  UpdateEntityByIdBody,
+  UpdateEntityByIdResponse,
+  DeleteEntityByIdParams,
 } from './entities.zod'
 
 const factory = createFactory()
@@ -41,10 +43,10 @@ function entityNotFound(entityId: string): ApiError {
   )
 }
 
-export const postApiV1EntitiesHandlers = factory.createHandlers(
-  zValidator('json', PostApiV1EntitiesBody),
-  zValidator('response', PostApiV1EntitiesResponse),
-  async (c: PostApiV1EntitiesContext) => {
+export const searchEntitiesHandlers = factory.createHandlers(
+  zValidator('json', SearchEntitiesBody),
+  zValidator('response', SearchEntitiesResponse),
+  async (c: SearchEntitiesContext) => {
     const { q, facets, filter, sort, page, pageSize } = c.req.valid('json')
     return c.json(
       await c.var.db.entities.search(
@@ -52,20 +54,20 @@ export const postApiV1EntitiesHandlers = factory.createHandlers(
         facets,
         filter,
         sort,
-        page ?? postApiV1EntitiesBodyPageDefault,
-        pageSize ?? postApiV1EntitiesBodyPageSizeDefault,
+        page ?? searchEntitiesBodyPageDefault,
+        pageSize ?? searchEntitiesBodyPageSizeDefault,
       ),
     )
   },
 )
-export const putApiV1EntitiesHandlers = factory.createHandlers(
-  zValidator('json', PutApiV1EntitiesBody),
-  async (c: PutApiV1EntitiesContext) => {
+export const createEntityHandlers = factory.createHandlers(
+  zValidator('json', CreateEntityBody),
+  async (c: CreateEntityContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     try {
       const entity = await c.var.db.entities.insert(
-        c.req.valid('json'),
+        c.req.valid('json') as unknown as EntityWrite,
         user.id,
       )
 
@@ -81,10 +83,10 @@ export const putApiV1EntitiesHandlers = factory.createHandlers(
     }
   },
 )
-export const getApiV1EntitiesEntityIdHandlers = factory.createHandlers(
-  zValidator('param', GetApiV1EntitiesEntityIdParams),
-  zValidator('response', GetApiV1EntitiesEntityIdResponse),
-  async (c: GetApiV1EntitiesEntityIdContext) => {
+export const getEntityByIdHandlers = factory.createHandlers(
+  zValidator('param', GetEntityByIdParams),
+  zValidator('response', GetEntityByIdResponse),
+  async (c: GetEntityByIdContext) => {
     const { entityId } = c.req.valid('param')
     const entity = await c.var.db.entities.get(entityId)
 
@@ -95,20 +97,33 @@ export const getApiV1EntitiesEntityIdHandlers = factory.createHandlers(
     return c.json(entity)
   },
 )
-export const postApiV1EntitiesEntityIdHandlers = factory.createHandlers(
-  zValidator('param', PostApiV1EntitiesEntityIdParams),
-  zValidator('json', PostApiV1EntitiesEntityIdBody),
-  zValidator('response', PostApiV1EntitiesEntityIdResponse),
-  async (c: PostApiV1EntitiesEntityIdContext) => {
+export const updateEntityByIdHandlers = factory.createHandlers(
+  zValidator('param', UpdateEntityByIdParams),
+  zValidator('json', UpdateEntityByIdBody),
+  zValidator('response', UpdateEntityByIdResponse),
+  async (c: UpdateEntityByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-    const entity = c.req.valid('json')
+    const entity = c.req.valid('json') as unknown as EntityWrite
+    const requestEntityId = (entity as { id?: unknown }).id
 
-    if (entity.id !== entityId) {
+    if (
+      requestEntityId !== undefined &&
+      requestEntityId !== null &&
+      requestEntityId !== '' &&
+      requestEntityId !== entityId
+    ) {
       throw new ApiError(
         ErrorCode.InvalidInput,
         'The entity ID in the request body must match the URL',
+      )
+    }
+
+    if (!entityIdMatchesType(entityId, entity.type)) {
+      throw new ApiError(
+        ErrorCode.InvalidInput,
+        'The entity type in the request body must match the URL ID',
       )
     }
 
@@ -125,9 +140,9 @@ export const postApiV1EntitiesEntityIdHandlers = factory.createHandlers(
     return c.json(updatedEntity)
   },
 )
-export const deleteApiV1EntitiesEntityIdHandlers = factory.createHandlers(
-  zValidator('param', DeleteApiV1EntitiesEntityIdParams),
-  async (c: DeleteApiV1EntitiesEntityIdContext) => {
+export const deleteEntityByIdHandlers = factory.createHandlers(
+  zValidator('param', DeleteEntityByIdParams),
+  async (c: DeleteEntityByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')

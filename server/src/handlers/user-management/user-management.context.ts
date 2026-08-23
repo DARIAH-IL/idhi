@@ -6,19 +6,19 @@
  */
 import type { Context, Env } from 'hono'
 
-import type { GetApiV1UsersParams, UserWrite } from '../../models'
+import type { ListUsersParams, UserWrite } from '../../models'
 
-export type GetApiV1UsersContext<E extends Env = any> = Context<
+export type ListUsersContext<E extends Env = any> = Context<
   E,
   '/api/v1/users',
-  { in: { query: GetApiV1UsersParams }; out: { query: GetApiV1UsersParams } }
+  { in: { query: ListUsersParams }; out: { query: ListUsersParams } }
 >
-export type PostApiV1UsersContext<E extends Env = any> = Context<
+export type CreateUserContext<E extends Env = any> = Context<
   E,
   '/api/v1/users',
   { in: { json: UserWrite }; out: { json: UserWrite } }
 >
-export type GetApiV1UsersUserIdContext<E extends Env = any> = Context<
+export type GetUserByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/:userId',
   {
@@ -34,25 +34,7 @@ export type GetApiV1UsersUserIdContext<E extends Env = any> = Context<
     }
   }
 >
-export type PutApiV1UsersUserIdContext<E extends Env = any> = Context<
-  E,
-  '/api/v1/users/:userId',
-  {
-    in: {
-      param: {
-        userId: string
-      }
-      json: UserWrite
-    }
-    out: {
-      param: {
-        userId: string
-      }
-      json: UserWrite
-    }
-  }
->
-export type PostApiV1UsersUserIdContext<E extends Env = any> = Context<
+export type ReplaceUserByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/:userId',
   {
@@ -70,7 +52,25 @@ export type PostApiV1UsersUserIdContext<E extends Env = any> = Context<
     }
   }
 >
-export type DeleteApiV1UsersUserIdContext<E extends Env = any> = Context<
+export type UpdateUserByIdContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/users/:userId',
+  {
+    in: {
+      param: {
+        userId: string
+      }
+      json: UserWrite
+    }
+    out: {
+      param: {
+        userId: string
+      }
+      json: UserWrite
+    }
+  }
+>
+export type DeleteUserByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/:userId',
   {

@@ -8,29 +8,28 @@ import type { Context, Env } from 'hono'
 
 import type { UserInviteWrite } from '../../models'
 
-export type PostApiV1UsersInviteContext<E extends Env = any> = Context<
+export type InviteUserContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/invite',
   { in: { json: UserInviteWrite }; out: { json: UserInviteWrite } }
 >
-export type GetApiV1UsersInvitesContext<E extends Env = any> = Context<
+export type ListUserInvitesContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/invites'
 >
-export type DeleteApiV1UsersInvitesInviteIdContext<E extends Env = any> =
-  Context<
-    E,
-    '/api/v1/users/invites/:inviteId',
-    {
-      in: {
-        param: {
-          inviteId: string
-        }
-      }
-      out: {
-        param: {
-          inviteId: string
-        }
+export type RevokeUserInviteByIdContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/users/invites/:inviteId',
+  {
+    in: {
+      param: {
+        inviteId: string
       }
     }
-  >
+    out: {
+      param: {
+        inviteId: string
+      }
+    }
+  }
+>

@@ -35,28 +35,28 @@ import {
 import { splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
-  PostApiV1AuthOtpContext,
-  PostApiV1AuthOtpChallengeIdContext,
-  PostApiV1AuthPasskeyCreateContext,
-  PostApiV1AuthPasskeyCreateChallengeIdContext,
-  PostApiV1AuthPasskeyLoginContext,
-  PostApiV1AuthPasskeyLoginChallengeIdContext,
+  StartOtpChallengeContext,
+  CompleteOtpChallengeContext,
+  StartPasskeyRegistrationContext,
+  CompletePasskeyRegistrationContext,
+  StartPasskeyAuthenticationContext,
+  CompletePasskeyAuthenticationContext,
 } from './user-auth.context'
 import {
-  PostApiV1AuthOtpBody,
-  PostApiV1AuthOtpResponse,
-  PostApiV1AuthOtpChallengeIdParams,
-  PostApiV1AuthOtpChallengeIdBody,
-  PostApiV1AuthOtpChallengeIdResponse,
-  PostApiV1AuthPasskeyCreateBody,
-  PostApiV1AuthPasskeyCreateResponse,
-  PostApiV1AuthPasskeyCreateChallengeIdParams,
-  PostApiV1AuthPasskeyCreateChallengeIdBody,
-  PostApiV1AuthPasskeyLoginBody,
-  PostApiV1AuthPasskeyLoginResponse,
-  PostApiV1AuthPasskeyLoginChallengeIdParams,
-  PostApiV1AuthPasskeyLoginChallengeIdBody,
-  PostApiV1AuthPasskeyLoginChallengeIdResponse,
+  StartOtpChallengeBody,
+  StartOtpChallengeResponse,
+  CompleteOtpChallengeParams,
+  CompleteOtpChallengeBody,
+  CompleteOtpChallengeResponse,
+  StartPasskeyRegistrationBody,
+  StartPasskeyRegistrationResponse,
+  CompletePasskeyRegistrationParams,
+  CompletePasskeyRegistrationBody,
+  StartPasskeyAuthenticationBody,
+  StartPasskeyAuthenticationResponse,
+  CompletePasskeyAuthenticationParams,
+  CompletePasskeyAuthenticationBody,
+  CompletePasskeyAuthenticationResponse,
 } from './user-auth.zod'
 
 const factory = createFactory()
@@ -180,10 +180,10 @@ async function getOtpChallenge(
   return challenge
 }
 
-export const postApiV1AuthOtpHandlers = factory.createHandlers(
-  zValidator('json', PostApiV1AuthOtpBody),
-  zValidator('response', PostApiV1AuthOtpResponse),
-  async (c: PostApiV1AuthOtpContext) => {
+export const startOtpChallengeHandlers = factory.createHandlers(
+  zValidator('json', StartOtpChallengeBody),
+  zValidator('response', StartOtpChallengeResponse),
+  async (c: StartOtpChallengeContext) => {
     const { email, lang } = c.req.valid('json')
     await enforceAuthRateLimits(c, [
       authRateLimits.otpStartEmail(email),
@@ -251,11 +251,11 @@ export const postApiV1AuthOtpHandlers = factory.createHandlers(
     })
   },
 )
-export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
-  zValidator('param', PostApiV1AuthOtpChallengeIdParams),
-  zValidator('json', PostApiV1AuthOtpChallengeIdBody),
-  zValidator('response', PostApiV1AuthOtpChallengeIdResponse),
-  async (c: PostApiV1AuthOtpChallengeIdContext) => {
+export const completeOtpChallengeHandlers = factory.createHandlers(
+  zValidator('param', CompleteOtpChallengeParams),
+  zValidator('json', CompleteOtpChallengeBody),
+  zValidator('response', CompleteOtpChallengeResponse),
+  async (c: CompleteOtpChallengeContext) => {
     const { challengeId } = c.req.valid('param')
     const { otp } = c.req.valid('json')
     await enforceAuthRateLimits(c, [
@@ -371,10 +371,10 @@ export const postApiV1AuthOtpChallengeIdHandlers = factory.createHandlers(
     }
   },
 )
-export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
-  zValidator('response', PostApiV1AuthPasskeyCreateResponse),
-  zValidator('json', PostApiV1AuthPasskeyCreateBody),
-  async (c: PostApiV1AuthPasskeyCreateContext) => {
+export const startPasskeyRegistrationHandlers = factory.createHandlers(
+  zValidator('response', StartPasskeyRegistrationResponse),
+  zValidator('json', StartPasskeyRegistrationBody),
+  async (c: StartPasskeyRegistrationContext) => {
     const { replacingCredentialId } = c.req.valid('json')
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -451,118 +451,115 @@ export const postApiV1AuthPasskeyCreateHandlers = factory.createHandlers(
     })
   },
 )
-export const postApiV1AuthPasskeyCreateChallengeIdHandlers =
-  factory.createHandlers(
-    zValidator('param', PostApiV1AuthPasskeyCreateChallengeIdParams),
-    zValidator('json', PostApiV1AuthPasskeyCreateChallengeIdBody),
-    async (c: PostApiV1AuthPasskeyCreateChallengeIdContext) => {
-      const authenticatedUser = c.get('user')
-      assertAuthenticatedUser(authenticatedUser)
-      const { challengeId } = c.req.valid('param')
-      await enforceAuthRateLimits(c, [
-        authRateLimits.passkeyCreateCompletionUser(authenticatedUser.id),
-      ])
-      const response = c.req.valid(
-        'json',
-      ) as unknown as RegistrationResponseJSON
-      const challenge = await takeCreateChallenge(
-        c.var.db,
-        c.var.logger,
+export const completePasskeyRegistrationHandlers = factory.createHandlers(
+  zValidator('param', CompletePasskeyRegistrationParams),
+  zValidator('json', CompletePasskeyRegistrationBody),
+  async (c: CompletePasskeyRegistrationContext) => {
+    const authenticatedUser = c.get('user')
+    assertAuthenticatedUser(authenticatedUser)
+    const { challengeId } = c.req.valid('param')
+    await enforceAuthRateLimits(c, [
+      authRateLimits.passkeyCreateCompletionUser(authenticatedUser.id),
+    ])
+    const response = c.req.valid('json') as unknown as RegistrationResponseJSON
+    const challenge = await takeCreateChallenge(
+      c.var.db,
+      c.var.logger,
+      challengeId,
+    )
+
+    if (challenge.userId !== authenticatedUser.id) {
+      c.var.logger.warn('Passkey registration challenge user mismatch', {
         challengeId,
-      )
+        challengeUserId: challenge.userId,
+        authenticatedUserId: authenticatedUser.id,
+      })
+      throw challengeNotFound()
+    }
 
-      if (challenge.userId !== authenticatedUser.id) {
-        c.var.logger.warn('Passkey registration challenge user mismatch', {
-          challengeId,
-          challengeUserId: challenge.userId,
-          authenticatedUserId: authenticatedUser.id,
-        })
-        throw challengeNotFound()
-      }
+    let verification
 
-      let verification
+    try {
+      verification = await verifyRegistrationResponse({
+        response,
+        expectedChallenge: challenge.options.challenge,
+        expectedOrigin: challenge.expectedOrigin,
+        expectedRPID: challenge.expectedRPID,
+      })
+    } catch (error) {
+      c.var.logger.warn('Passkey registration verification threw', {
+        challengeId,
+        error: serializeError(error),
+      })
+      throw invalidPasskey('Passkey registration could not be verified')
+    }
 
-      try {
-        verification = await verifyRegistrationResponse({
-          response,
-          expectedChallenge: challenge.options.challenge,
-          expectedOrigin: challenge.expectedOrigin,
-          expectedRPID: challenge.expectedRPID,
-        })
-      } catch (error) {
-        c.var.logger.warn('Passkey registration verification threw', {
-          challengeId,
-          error: serializeError(error),
-        })
-        throw invalidPasskey('Passkey registration could not be verified')
-      }
+    if (!verification.verified) {
+      c.var.logger.warn('Passkey registration verification failed', {
+        challengeId,
+      })
+      throw invalidPasskey('Passkey registration could not be verified')
+    }
 
-      if (!verification.verified) {
-        c.var.logger.warn('Passkey registration verification failed', {
-          challengeId,
-        })
-        throw invalidPasskey('Passkey registration could not be verified')
-      }
+    const { credential, credentialDeviceType, credentialBackedUp } =
+      verification.registrationInfo
+    const passkeyCredential = {
+      id: credential.id,
+      publicKey: credential.publicKey,
+      webauthnUserID: challenge.options.user.id,
+      counter: credential.counter,
+      deviceType: credentialDeviceType,
+      backedUp: credentialBackedUp,
+      transports: credential.transports,
+    }
+    const enrollment = challenge.replacingCredentialId
+      ? await c.var.db.users.replacePasskeyCredential(
+          challenge.userId,
+          challenge.replacingCredentialId,
+          passkeyCredential,
+        )
+      : await c.var.db.users.enrollPasskeyCredential(
+          challenge.userId,
+          passkeyCredential,
+        )
 
-      const { credential, credentialDeviceType, credentialBackedUp } =
-        verification.registrationInfo
-      const passkeyCredential = {
-        id: credential.id,
-        publicKey: credential.publicKey,
-        webauthnUserID: challenge.options.user.id,
-        counter: credential.counter,
-        deviceType: credentialDeviceType,
-        backedUp: credentialBackedUp,
-        transports: credential.transports,
-      }
-      const enrollment = challenge.replacingCredentialId
-        ? await c.var.db.users.replacePasskeyCredential(
-            challenge.userId,
-            challenge.replacingCredentialId,
-            passkeyCredential,
-          )
-        : await c.var.db.users.enrollPasskeyCredential(
-            challenge.userId,
-            passkeyCredential,
-          )
-
-      if (enrollment === 'duplicate') {
-        c.var.logger.warn('Passkey is already registered for user', {
-          challengeId,
-          userId: challenge.userId,
-        })
-        throw invalidPasskey('Passkey is already registered')
-      }
-
-      if (enrollment === 'userNotFound') {
-        c.var.logger.warn('Passkey registration user update missed', {
-          challengeId,
-          userId: challenge.userId,
-        })
-        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
-      }
-
-      if (enrollment === 'credentialNotFound') {
-        c.var.logger.warn('Passkey replacement target no longer exists', {
-          challengeId,
-          userId: challenge.userId,
-        })
-        throw invalidPasskey('Passkey to replace is no longer registered')
-      }
-
-      c.var.logger.debug('Passkey registration completed', {
+    if (enrollment === 'duplicate') {
+      c.var.logger.warn('Passkey is already registered for user', {
         challengeId,
         userId: challenge.userId,
-        replacedCredential: enrollment === 'replaced',
       })
+      throw invalidPasskey('Passkey is already registered')
+    }
 
-      return c.body(null, 204)
-    },
-  )
-export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
-  zValidator('response', PostApiV1AuthPasskeyLoginResponse),
-  zValidator('json', PostApiV1AuthPasskeyLoginBody),
-  async (c: PostApiV1AuthPasskeyLoginContext) => {
+    if (enrollment === 'userNotFound') {
+      c.var.logger.warn('Passkey registration user update missed', {
+        challengeId,
+        userId: challenge.userId,
+      })
+      throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+    }
+
+    if (enrollment === 'credentialNotFound') {
+      c.var.logger.warn('Passkey replacement target no longer exists', {
+        challengeId,
+        userId: challenge.userId,
+      })
+      throw invalidPasskey('Passkey to replace is no longer registered')
+    }
+
+    c.var.logger.debug('Passkey registration completed', {
+      challengeId,
+      userId: challenge.userId,
+      replacedCredential: enrollment === 'replaced',
+    })
+
+    return c.body(null, 204)
+  },
+)
+export const startPasskeyAuthenticationHandlers = factory.createHandlers(
+  zValidator('response', StartPasskeyAuthenticationResponse),
+  zValidator('json', StartPasskeyAuthenticationBody),
+  async (c: StartPasskeyAuthenticationContext) => {
     const { email } = c.req.valid('json')
     await enforceAuthRateLimits(c, [
       authRateLimits.passkeyLoginStartEmail(email),
@@ -615,95 +612,94 @@ export const postApiV1AuthPasskeyLoginHandlers = factory.createHandlers(
     })
   },
 )
-export const postApiV1AuthPasskeyLoginChallengeIdHandlers =
-  factory.createHandlers(
-    zValidator('param', PostApiV1AuthPasskeyLoginChallengeIdParams),
-    zValidator('json', PostApiV1AuthPasskeyLoginChallengeIdBody),
-    zValidator('response', PostApiV1AuthPasskeyLoginChallengeIdResponse),
-    async (c: PostApiV1AuthPasskeyLoginChallengeIdContext) => {
-      const { challengeId } = c.req.valid('param')
-      await enforceAuthRateLimits(c, [
-        authRateLimits.passkeyLoginCompletionChallenge(challengeId),
-      ])
-      const response = c.req.valid(
-        'json',
-      ) as unknown as AuthenticationResponseJSON
-      const challenge = await takeLoginChallenge(
-        c.var.db,
-        c.var.logger,
+export const completePasskeyAuthenticationHandlers = factory.createHandlers(
+  zValidator('param', CompletePasskeyAuthenticationParams),
+  zValidator('json', CompletePasskeyAuthenticationBody),
+  zValidator('response', CompletePasskeyAuthenticationResponse),
+  async (c: CompletePasskeyAuthenticationContext) => {
+    const { challengeId } = c.req.valid('param')
+    await enforceAuthRateLimits(c, [
+      authRateLimits.passkeyLoginCompletionChallenge(challengeId),
+    ])
+    const response = c.req.valid(
+      'json',
+    ) as unknown as AuthenticationResponseJSON
+    const challenge = await takeLoginChallenge(
+      c.var.db,
+      c.var.logger,
+      challengeId,
+    )
+    const user = await c.var.db.users.getByEmail(challenge.email)
+
+    if (!user) {
+      c.var.logger.warn('Passkey authentication user no longer exists', {
         challengeId,
-      )
-      const user = await c.var.db.users.getByEmail(challenge.email)
+      })
+      throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+    }
 
-      if (!user) {
-        c.var.logger.warn('Passkey authentication user no longer exists', {
-          challengeId,
-        })
-        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
-      }
+    const credential = user.passkeyCredentials.find(
+      (candidate) => candidate.id === response.id,
+    )
 
-      const credential = user.passkeyCredentials.find(
-        (candidate) => candidate.id === response.id,
-      )
-
-      if (!credential) {
-        c.var.logger.warn('Passkey is not registered for user', {
-          challengeId,
-          userId: user.id,
-        })
-        throw invalidPasskey('Passkey is not registered for this user')
-      }
-
-      let verification
-
-      try {
-        verification = await verifyAuthenticationResponse({
-          response,
-          expectedChallenge: challenge.options.challenge,
-          expectedOrigin: challenge.expectedOrigin,
-          expectedRPID: challenge.expectedRPID,
-          credential: {
-            id: credential.id,
-            publicKey: new Uint8Array(credential.publicKey),
-            counter: credential.counter,
-            transports: credential.transports,
-          },
-        })
-      } catch (error) {
-        c.var.logger.warn('Passkey authentication verification threw', {
-          challengeId,
-          userId: user.id,
-          error: serializeError(error),
-        })
-        throw invalidPasskey('Passkey authentication could not be verified')
-      }
-
-      if (!verification.verified) {
-        c.var.logger.warn('Passkey authentication verification failed', {
-          challengeId,
-          userId: user.id,
-        })
-        throw invalidPasskey('Passkey authentication could not be verified')
-      }
-
-      credential.counter = verification.authenticationInfo.newCounter
-      const updatedUser = await c.var.db.users.update(user)
-
-      if (!updatedUser) {
-        c.var.logger.warn('Passkey authentication user update missed', {
-          challengeId,
-          userId: user.id,
-        })
-        throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
-      }
-
-      c.var.logger.debug('Passkey authentication completed', {
+    if (!credential) {
+      c.var.logger.warn('Passkey is not registered for user', {
         challengeId,
-        userId: updatedUser.id,
+        userId: user.id,
       })
+      throw invalidPasskey('Passkey is not registered for this user')
+    }
 
-      return c.json({
-        jwt: await createJwtForUser(updatedUser, c.env),
+    let verification
+
+    try {
+      verification = await verifyAuthenticationResponse({
+        response,
+        expectedChallenge: challenge.options.challenge,
+        expectedOrigin: challenge.expectedOrigin,
+        expectedRPID: challenge.expectedRPID,
+        credential: {
+          id: credential.id,
+          publicKey: new Uint8Array(credential.publicKey),
+          counter: credential.counter,
+          transports: credential.transports,
+        },
       })
-    },
-  )
+    } catch (error) {
+      c.var.logger.warn('Passkey authentication verification threw', {
+        challengeId,
+        userId: user.id,
+        error: serializeError(error),
+      })
+      throw invalidPasskey('Passkey authentication could not be verified')
+    }
+
+    if (!verification.verified) {
+      c.var.logger.warn('Passkey authentication verification failed', {
+        challengeId,
+        userId: user.id,
+      })
+      throw invalidPasskey('Passkey authentication could not be verified')
+    }
+
+    credential.counter = verification.authenticationInfo.newCounter
+    const updatedUser = await c.var.db.users.update(user)
+
+    if (!updatedUser) {
+      c.var.logger.warn('Passkey authentication user update missed', {
+        challengeId,
+        userId: user.id,
+      })
+      throw new ApiError(ErrorCode.UserNotFound, 'User no longer exists')
+    }
+
+    c.var.logger.debug('Passkey authentication completed', {
+      challengeId,
+      userId: updatedUser.id,
+    })
+
+    return c.json({
+      jwt: await createJwtForUser(updatedUser, c.env),
+    })
+  },
+)

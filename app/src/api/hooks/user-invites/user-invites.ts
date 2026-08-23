@@ -46,7 +46,7 @@ const withQueryKey = <T extends object, K>(
 /**
  * @summary Invite a user
  */
-export const postApiV1UsersInvite = (
+export const inviteUser = (
   userInviteWrite: BodyType<UserInviteWrite>,
   signal?: AbortSignal,
 ) => {
@@ -59,23 +59,23 @@ export const postApiV1UsersInvite = (
   })
 }
 
-export const getPostApiV1UsersInviteMutationOptions = <
+export const getInviteUserMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1UsersInvite>>,
+    Awaited<ReturnType<typeof inviteUser>>,
     TError,
     { data: BodyType<UserInviteWrite> },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1UsersInvite>>,
+  Awaited<ReturnType<typeof inviteUser>>,
   TError,
   { data: BodyType<UserInviteWrite> },
   TContext
 > => {
-  const mutationKey = ['postApiV1UsersInvite']
+  const mutationKey = ['inviteUser']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -85,33 +85,33 @@ export const getPostApiV1UsersInviteMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1UsersInvite>>,
+    Awaited<ReturnType<typeof inviteUser>>,
     { data: BodyType<UserInviteWrite> }
   > = (props) => {
     const { data } = props ?? {}
 
-    return postApiV1UsersInvite(data)
+    return inviteUser(data)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type PostApiV1UsersInviteMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1UsersInvite>>
+export type InviteUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof inviteUser>>
 >
-export type PostApiV1UsersInviteMutationBody = BodyType<UserInviteWrite>
-export type PostApiV1UsersInviteMutationError = ErrorType<ErrorResponse>
+export type InviteUserMutationBody = BodyType<UserInviteWrite>
+export type InviteUserMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Invite a user
  */
-export const usePostApiV1UsersInvite = <
+export const useInviteUser = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiV1UsersInvite>>,
+      Awaited<ReturnType<typeof inviteUser>>,
       TError,
       { data: BodyType<UserInviteWrite> },
       TContext
@@ -119,20 +119,17 @@ export const usePostApiV1UsersInvite = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1UsersInvite>>,
+  Awaited<ReturnType<typeof inviteUser>>,
   TError,
   { data: BodyType<UserInviteWrite> },
   TContext
 > => {
-  return useMutation(
-    getPostApiV1UsersInviteMutationOptions(options),
-    queryClient,
-  )
+  return useMutation(getInviteUserMutationOptions(options), queryClient)
 }
 /**
  * @summary List pending users invites
  */
-export const getApiV1UsersInvites = (signal?: AbortSignal) => {
+export const listUserInvites = (signal?: AbortSignal) => {
   return customInstance<UserInvite[]>({
     url: `/api/v1/users/invites`,
     method: 'GET',
@@ -140,59 +137,55 @@ export const getApiV1UsersInvites = (signal?: AbortSignal) => {
   })
 }
 
-export const getGetApiV1UsersInvitesQueryKey = () => {
+export const getListUserInvitesQueryKey = () => {
   return [`/api/v1/users/invites`] as const
 }
 
-export const getGetApiV1UsersInvitesQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+export const getListUserInvitesQueryOptions = <
+  TData = Awaited<ReturnType<typeof listUserInvites>>,
   TError = ErrorType<ErrorResponse>,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiV1UsersInvites>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof listUserInvites>>, TError, TData>
   >
 }) => {
   const { query: queryOptions } = options ?? {}
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiV1UsersInvitesQueryKey()
+  const queryKey = queryOptions?.queryKey ?? getListUserInvitesQueryKey()
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiV1UsersInvites>>
-  > = ({ signal }) => getApiV1UsersInvites(signal)
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listUserInvites>>> = ({
+    signal,
+  }) => listUserInvites(signal)
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+    Awaited<ReturnType<typeof listUserInvites>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetApiV1UsersInvitesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiV1UsersInvites>>
+export type ListUserInvitesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listUserInvites>>
 >
-export type GetApiV1UsersInvitesQueryError = ErrorType<ErrorResponse>
+export type ListUserInvitesQueryError = ErrorType<ErrorResponse>
 
-export function useGetApiV1UsersInvites<
-  TData = Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+export function useListUserInvites<
+  TData = Awaited<ReturnType<typeof listUserInvites>>,
   TError = ErrorType<ErrorResponse>,
 >(
   options: {
     query: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+        Awaited<ReturnType<typeof listUserInvites>>,
         TError,
         TData
       >
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+          Awaited<ReturnType<typeof listUserInvites>>,
           TError,
-          Awaited<ReturnType<typeof getApiV1UsersInvites>>
+          Awaited<ReturnType<typeof listUserInvites>>
         >,
         'initialData'
       >
@@ -201,23 +194,23 @@ export function useGetApiV1UsersInvites<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 }
-export function useGetApiV1UsersInvites<
-  TData = Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+export function useListUserInvites<
+  TData = Awaited<ReturnType<typeof listUserInvites>>,
   TError = ErrorType<ErrorResponse>,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+        Awaited<ReturnType<typeof listUserInvites>>,
         TError,
         TData
       >
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+          Awaited<ReturnType<typeof listUserInvites>>,
           TError,
-          Awaited<ReturnType<typeof getApiV1UsersInvites>>
+          Awaited<ReturnType<typeof listUserInvites>>
         >,
         'initialData'
       >
@@ -226,14 +219,14 @@ export function useGetApiV1UsersInvites<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 }
-export function useGetApiV1UsersInvites<
-  TData = Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+export function useListUserInvites<
+  TData = Awaited<ReturnType<typeof listUserInvites>>,
   TError = ErrorType<ErrorResponse>,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+        Awaited<ReturnType<typeof listUserInvites>>,
         TError,
         TData
       >
@@ -247,14 +240,14 @@ export function useGetApiV1UsersInvites<
  * @summary List pending users invites
  */
 
-export function useGetApiV1UsersInvites<
-  TData = Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+export function useListUserInvites<
+  TData = Awaited<ReturnType<typeof listUserInvites>>,
   TError = ErrorType<ErrorResponse>,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiV1UsersInvites>>,
+        Awaited<ReturnType<typeof listUserInvites>>,
         TError,
         TData
       >
@@ -264,7 +257,7 @@ export function useGetApiV1UsersInvites<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 } {
-  const queryOptions = getGetApiV1UsersInvitesQueryOptions(options)
+  const queryOptions = getListUserInvitesQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,
@@ -277,7 +270,7 @@ export function useGetApiV1UsersInvites<
 /**
  * @summary Revoke a user invite
  */
-export const deleteApiV1UsersInvitesInviteId = (
+export const revokeUserInviteById = (
   inviteId: string,
   signal?: AbortSignal,
 ) => {
@@ -288,23 +281,23 @@ export const deleteApiV1UsersInvitesInviteId = (
   })
 }
 
-export const getDeleteApiV1UsersInvitesInviteIdMutationOptions = <
+export const getRevokeUserInviteByIdMutationOptions = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>,
+    Awaited<ReturnType<typeof revokeUserInviteById>>,
     TError,
     { inviteId: string },
     TContext
   >
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>,
+  Awaited<ReturnType<typeof revokeUserInviteById>>,
   TError,
   { inviteId: string },
   TContext
 > => {
-  const mutationKey = ['deleteApiV1UsersInvitesInviteId']
+  const mutationKey = ['revokeUserInviteById']
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -314,34 +307,33 @@ export const getDeleteApiV1UsersInvitesInviteIdMutationOptions = <
     : { mutation: { mutationKey } }
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>,
+    Awaited<ReturnType<typeof revokeUserInviteById>>,
     { inviteId: string }
   > = (props) => {
     const { inviteId } = props ?? {}
 
-    return deleteApiV1UsersInvitesInviteId(inviteId)
+    return revokeUserInviteById(inviteId)
   }
 
   return { mutationFn, ...mutationOptions }
 }
 
-export type DeleteApiV1UsersInvitesInviteIdMutationResult = NonNullable<
-  Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>
+export type RevokeUserInviteByIdMutationResult = NonNullable<
+  Awaited<ReturnType<typeof revokeUserInviteById>>
 >
 
-export type DeleteApiV1UsersInvitesInviteIdMutationError =
-  ErrorType<ErrorResponse>
+export type RevokeUserInviteByIdMutationError = ErrorType<ErrorResponse>
 
 /**
  * @summary Revoke a user invite
  */
-export const useDeleteApiV1UsersInvitesInviteId = <
+export const useRevokeUserInviteById = <
   TError = ErrorType<ErrorResponse>,
   TContext = unknown,
 >(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>,
+      Awaited<ReturnType<typeof revokeUserInviteById>>,
       TError,
       { inviteId: string },
       TContext
@@ -349,13 +341,13 @@ export const useDeleteApiV1UsersInvitesInviteId = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof deleteApiV1UsersInvitesInviteId>>,
+  Awaited<ReturnType<typeof revokeUserInviteById>>,
   TError,
   { inviteId: string },
   TContext
 > => {
   return useMutation(
-    getDeleteApiV1UsersInvitesInviteIdMutationOptions(options),
+    getRevokeUserInviteByIdMutationOptions(options),
     queryClient,
   )
 }

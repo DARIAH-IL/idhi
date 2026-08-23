@@ -6,19 +6,50 @@
  */
 import type { Context, Env } from 'hono'
 
-import type { Entity, EntitySearch } from '../../models'
+// https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir/49579497#49579497
+type IfEquals<X, Y, A = X, B = never> =
+  (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2 ? A : B
 
-export type PostApiV1EntitiesContext<E extends Env = any> = Context<
+type WritableKeys<T> = {
+  [P in keyof T]-?: IfEquals<
+    { [Q in P]: T[P] },
+    { -readonly [Q in P]: T[P] },
+    P
+  >
+}[keyof T]
+
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I,
+) => void
+  ? I
+  : never
+type DistributeReadOnlyOverUnions<T> = T extends any ? NonReadonly<T> : never
+
+type Writable<T> = Pick<T, WritableKeys<T>>
+type NonReadonly<T> = [T] extends [UnionToIntersection<T>]
+  ? {
+      [P in keyof Writable<T>]: T[P] extends object
+        ? NonReadonly<NonNullable<T[P]>>
+        : T[P]
+    }
+  : DistributeReadOnlyOverUnions<T>
+
+import type { EntityCreate, EntitySearch, EntityUpdate } from '../../models'
+
+export type SearchEntitiesContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities',
   { in: { json: EntitySearch }; out: { json: EntitySearch } }
 >
-export type PutApiV1EntitiesContext<E extends Env = any> = Context<
+export type CreateEntityContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities',
-  { in: { json: Entity }; out: { json: Entity } }
+  {
+    in: { json: NonReadonly<EntityCreate> }
+    out: { json: NonReadonly<EntityCreate> }
+  }
 >
-export type GetApiV1EntitiesEntityIdContext<E extends Env = any> = Context<
+export type GetEntityByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities/:entityId',
   {
@@ -34,7 +65,7 @@ export type GetApiV1EntitiesEntityIdContext<E extends Env = any> = Context<
     }
   }
 >
-export type PostApiV1EntitiesEntityIdContext<E extends Env = any> = Context<
+export type UpdateEntityByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities/:entityId',
   {
@@ -42,17 +73,17 @@ export type PostApiV1EntitiesEntityIdContext<E extends Env = any> = Context<
       param: {
         entityId: string
       }
-      json: Entity
+      json: NonReadonly<EntityUpdate>
     }
     out: {
       param: {
         entityId: string
       }
-      json: Entity
+      json: NonReadonly<EntityUpdate>
     }
   }
 >
-export type DeleteApiV1EntitiesEntityIdContext<E extends Env = any> = Context<
+export type DeleteEntityByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities/:entityId',
   {
