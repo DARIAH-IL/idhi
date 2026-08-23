@@ -4,6 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { DatasetDatasetType } from './datasetDatasetType'
 import type { DatasetDescriptionItem } from './datasetDescriptionItem'
 import type { DatasetLicense } from './datasetLicense'
 import type { DatasetNameItem } from './datasetNameItem'
@@ -11,9 +12,16 @@ import type { DatasetThemesItem } from './datasetThemesItem'
 import type { DatasetType } from './datasetType'
 
 /**
- * A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.
+ * A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.
  */
 export interface Dataset {
+  /**
+   * Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.
+   * @nullable
+   */
+  byte_size?: number | null
+  /** IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics. */
+  dataset_type?: DatasetDatasetType
   /**
    * Datasets aggregated by a Dataset that functions as a catalog (by id).
    * @nullable
@@ -25,6 +33,11 @@ export interface Dataset {
    */
   date_issued?: string | null
   /**
+   * Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.
+   * @nullable
+   */
+  derived_from?: string[] | null
+  /**
    * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
    * @nullable
    */
@@ -34,6 +47,17 @@ export interface Dataset {
    * @nullable
    */
   distribution_url?: string | null
+  /**
+   * The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.
+   * @nullable
+   * @pattern https://doi.org/.+
+   */
+  doi?: string | null
+  /**
+   * Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.
+   * @nullable
+   */
+  extent?: string[] | null
   /**
    * Public landing page of the entity, if one exists.
    * @nullable
@@ -51,8 +75,19 @@ export interface Dataset {
    * @nullable
    */
   image?: string | null
+  /**
+   * Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.
+   * @nullable
+   * @items.pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+   */
+  in_languages?: string[] | null
   /** Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings. */
   license?: DatasetLicense
+  /**
+   * Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.
+   * @nullable
+   */
+  media_type?: string[] | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: DatasetNameItem[]
   /**
@@ -60,6 +95,11 @@ export interface Dataset {
    * @nullable
    */
   publisher?: string | null
+  /**
+   * Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.
+   * @nullable
+   */
+  related_publications?: string[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

@@ -46,6 +46,12 @@ export interface Tool {
    */
   documentation_url?: string | null
   /**
+   * The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.
+   * @nullable
+   * @pattern https://doi.org/.+
+   */
+  doi?: string | null
+  /**
    * Public landing page of the entity, if one exists.
    * @nullable
    */

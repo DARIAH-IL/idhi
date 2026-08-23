@@ -7,6 +7,7 @@
 import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
 import type { ProjectFundingItem } from './projectFundingItem.ts'
+import type { ProjectFundingStatus } from './projectFundingStatus.ts'
 import type { ProjectNameItem } from './projectNameItem.ts'
 import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem.ts'
 import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem.ts'
@@ -46,10 +47,12 @@ export interface Project {
    */
   end_date?: string | null
   /**
-   * Funding awards received by the project. Use one entry for each funding organization and award.
+   * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.
    * @nullable
    */
   funding?: ProjectFundingItem[] | null
+  /** IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances. */
+  funding_status?: ProjectFundingStatus
   /**
    * Public landing page of the entity, if one exists.
    * @nullable
@@ -70,7 +73,7 @@ export interface Project {
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: ProjectNameItem[]
   /**
-   * Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).
+   * Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.
    * @nullable
    */
   organization_roles?: ProjectOrganizationRolesItem[] | null

@@ -7,7 +7,6 @@
 import type { TrainingMaterialDescriptionItem } from './trainingMaterialDescriptionItem.ts'
 import type { TrainingMaterialDigitalHumanitiesActivitiesItem } from './trainingMaterialDigitalHumanitiesActivitiesItem.ts'
 import type { TrainingMaterialEducationalLevelItem } from './trainingMaterialEducationalLevelItem.ts'
-import type { TrainingMaterialInLanguagesItem } from './trainingMaterialInLanguagesItem.ts'
 import type { TrainingMaterialLearningOutcomesItem } from './trainingMaterialLearningOutcomesItem.ts'
 import type { TrainingMaterialLicense } from './trainingMaterialLicense.ts'
 import type { TrainingMaterialNameItem } from './trainingMaterialNameItem.ts'
@@ -52,6 +51,12 @@ export interface TrainingMaterial {
   digital_humanities_activities?:
     TrainingMaterialDigitalHumanitiesActivitiesItem[] | null
   /**
+   * The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.
+   * @nullable
+   * @pattern https://doi.org/.+
+   */
+  doi?: string | null
+  /**
    * Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.
    * @nullable
    */
@@ -74,10 +79,11 @@ export interface TrainingMaterial {
    */
   image?: string | null
   /**
-   * Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.
+   * Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.
    * @nullable
+   * @items.pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
    */
-  in_languages?: TrainingMaterialInLanguagesItem[] | null
+  in_languages?: string[] | null
   /**
    * Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.
    * @nullable
@@ -91,7 +97,7 @@ export interface TrainingMaterial {
    */
   material_url?: string | null
   /**
-   * Technical media type of the primary resource, preferably an IANA media type such as text/html, application/pdf or video/mp4. Do not use this for the didactic form; use training_material_type instead.
+   * Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.
    * @nullable
    */
   media_type?: string | null

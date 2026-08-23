@@ -4,14 +4,14 @@ import arabicStrings from 'react-timeago/language-strings/ar'
 import englishStrings from 'react-timeago/language-strings/en'
 import hebrewStrings from 'react-timeago/language-strings/he'
 import type { Formatter } from 'react-timeago'
-import type { Language } from '@/api/models'
+import type { UiLanguage } from '@/api/models'
 import { useUIStore } from '@/stores/ui'
 
 const formatters = {
   en: buildFormatter(englishStrings),
   he: buildFormatter(hebrewStrings),
   ar: buildFormatter(arabicStrings),
-} satisfies Record<Language, Formatter>
+} satisfies Record<UiLanguage, Formatter>
 
 interface TimeAgoProps {
   date: string | null | undefined

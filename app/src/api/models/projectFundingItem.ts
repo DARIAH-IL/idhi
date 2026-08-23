@@ -4,11 +4,18 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { ProjectFundingItemFundingProgramItem } from './projectFundingItemFundingProgramItem.ts'
+import type { ProjectFundingItemGrantNameItem } from './projectFundingItemGrantNameItem.ts'
 
 /**
- * A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.
+ * A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.
  */
 export type ProjectFundingItem = {
+  /**
+   * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
+   * @nullable
+   */
+  end_date?: string | null
   /**
    * Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.
    * @nullable
@@ -16,4 +23,29 @@ export type ProjectFundingItem = {
   funding_amount?: number | null
   /** The organization that provides this funding award (by IDHI URN). */
   funding_organization: string
+  /**
+   * Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.
+   * @nullable
+   */
+  funding_program?: ProjectFundingItemFundingProgramItem[] | null
+  /**
+   * Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.
+   * @nullable
+   */
+  funding_url?: string | null
+  /**
+   * Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.
+   * @nullable
+   */
+  grant_name?: ProjectFundingItemGrantNameItem[] | null
+  /**
+   * Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.
+   * @nullable
+   */
+  grant_number?: string | null
+  /**
+   * Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).
+   * @nullable
+   */
+  start_date?: string | null
 }

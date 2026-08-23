@@ -7,7 +7,7 @@
 import type { ProjectOrganizationRolesItemOrgProjectRole } from './projectOrganizationRolesItemOrgProjectRole'
 
 /**
- * An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.
+ * An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.
  */
 export type ProjectOrganizationRolesItem = {
   /**

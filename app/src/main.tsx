@@ -8,7 +8,7 @@ import {
   useQueryParam,
 } from 'use-query-params'
 import type { QueryParamAdapterComponent } from 'use-query-params'
-import { Language } from '@/api/models'
+import { UiLanguage } from '@/api/models'
 import { useUIStore } from '@/stores/ui'
 import { useInviteStore } from '@/stores/invite'
 import { getRouter } from './router'
@@ -42,8 +42,8 @@ const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
   })
 }
 
-function isLanguage(value: string): value is Language {
-  return Object.values(Language).includes(value as Language)
+function isLanguage(value: string): value is UiLanguage {
+  return Object.values(UiLanguage).includes(value as UiLanguage)
 }
 
 function App() {

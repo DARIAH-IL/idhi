@@ -163,44 +163,132 @@ export const PostApiV1EntitiesBody = zod.object({
     .default(postApiV1EntitiesBodyPageSizeDefault),
 })
 
+export const postApiV1EntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const postApiV1EntitiesResponseResultsItemOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const postApiV1EntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneTwoNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const postApiV1EntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesResponseResultsItemOneFourNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesResponseResultsItemOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneFiveNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneSixNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesResponseResultsItemOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneSevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesResponseResultsItemOneEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesResponseResultsItemOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesResponseResultsItemOneNineInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneNineNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroDoiRegExp =
+  new RegExp('https://doi.org/.+')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemOneOnezeroIdRegExp =
   new RegExp('^idhi:training_material:[0-9a-z]{4,12}$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesResponseResultsItemTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const postApiV1EntitiesResponseResultsItemTwoAuditModifiedByRegExp =
@@ -306,9 +394,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOneDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -317,7 +408,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -335,9 +426,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOneFamilyNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -346,7 +440,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -358,9 +452,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOneGivenNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -369,7 +466,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -419,9 +516,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                         'PRINCIPAL_INVESTIGATOR',
                         'CO_PI',
                         'RESEARCHER',
+                        'DH_LEAD',
+                        'TECHNICAL_LEAD',
                         'DEVELOPER',
                         'STUDENT',
                         'ADVISOR',
+                        'CONSULTANT',
                         'CONTRIBUTOR',
                       ])
                       .optional()
@@ -482,9 +582,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneTwoAddressItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -493,7 +596,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -509,9 +612,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneTwoDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -520,7 +626,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -548,9 +654,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneTwoLocationItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -559,7 +668,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -577,9 +686,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneTwoNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -588,7 +700,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -602,6 +714,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                 'FUNDER',
                 'COMPANY',
                 'NON_PROFIT',
+                'INFORMAL_GROUP',
               ])
               .optional()
               .describe(
@@ -639,7 +752,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
           })
           .describe(
-            'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+            'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
           ),
         zod
           .object({
@@ -654,9 +767,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneThreeAddressItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -665,7 +781,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -681,9 +797,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneThreeDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -692,7 +811,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -755,9 +874,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneThreeLocationItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -766,7 +888,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -778,9 +900,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneThreeNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -789,7 +914,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -847,9 +972,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFourDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -858,7 +986,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1056,6 +1184,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .array(
                 zod
                   .object({
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
                     funding_amount: zod
                       .number()
                       .nullish()
@@ -1067,14 +1201,96 @@ export const PostApiV1EntitiesResponse = zod.object({
                       .describe(
                         'The organization that provides this funding award (by IDHI URN).',
                       ),
+                    funding_program: zod
+                      .array(
+                        zod
+                          .object({
+                            language: zod
+                              .string()
+                              .regex(
+                                postApiV1EntitiesResponseResultsItemOneFourFundingItemFundingProgramItemLanguageRegExp,
+                              )
+                              .describe(
+                                'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                              ),
+                            value: zod
+                              .string()
+                              .describe(
+                                "A localized text, in the language given by 'language'.",
+                              ),
+                          })
+                          .describe(
+                            'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                          ),
+                      )
+                      .nullish()
+                      .describe(
+                        'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                      ),
+                    funding_url: zod
+                      .url()
+                      .nullish()
+                      .describe(
+                        "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                      ),
+                    grant_name: zod
+                      .array(
+                        zod
+                          .object({
+                            language: zod
+                              .string()
+                              .regex(
+                                postApiV1EntitiesResponseResultsItemOneFourFundingItemGrantNameItemLanguageRegExp,
+                              )
+                              .describe(
+                                'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                              ),
+                            value: zod
+                              .string()
+                              .describe(
+                                "A localized text, in the language given by 'language'.",
+                              ),
+                          })
+                          .describe(
+                            'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                          ),
+                      )
+                      .nullish()
+                      .describe(
+                        "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                      ),
+                    grant_number: zod
+                      .string()
+                      .nullish()
+                      .describe(
+                        "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                      ),
                   })
                   .describe(
-                    'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+                    "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
                   ),
               )
               .nullish()
               .describe(
-                'Funding awards received by the project. Use one entry for each funding organization and award.',
+                'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+              ),
+            funding_status: zod
+              .enum([
+                'ACTIVE_GRANT_FUNDING',
+                'INSTITUTIONALLY_SUSTAINED',
+                'IN_KIND_ONLY',
+                'VOLUNTEER_RUN',
+                'UNFUNDED',
+              ])
+              .optional()
+              .describe(
+                "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
               ),
             homepage: zod
               .url()
@@ -1097,9 +1313,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFourNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1108,7 +1327,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -1125,7 +1344,13 @@ export const PostApiV1EntitiesResponse = zod.object({
                         'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     org_project_role: zod
-                      .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                      .enum([
+                        'COORDINATOR',
+                        'PARTNER',
+                        'DATA_PROVIDER',
+                        'FUNDER',
+                        'HOST',
+                      ])
                       .optional()
                       .describe(
                         "An organization's role in a project (one instance per role).",
@@ -1148,12 +1373,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                    "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
                   ),
               )
               .nullish()
               .describe(
-                'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+                'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
               ),
             outputs_datasets: zod
               .array(zod.string())
@@ -1195,9 +1420,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                         'PRINCIPAL_INVESTIGATOR',
                         'CO_PI',
                         'RESEARCHER',
+                        'DH_LEAD',
+                        'TECHNICAL_LEAD',
                         'DEVELOPER',
                         'STUDENT',
                         'ADVISOR',
+                        'CONSULTANT',
                         'CONTRIBUTOR',
                       ])
                       .optional()
@@ -1229,9 +1457,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFourResearchDisciplinesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1240,7 +1471,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1264,9 +1495,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFourStudiedPeriodsItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1275,7 +1509,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1287,9 +1521,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFourStudiedPlacesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1298,7 +1535,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1345,9 +1582,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFiveDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1356,7 +1596,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1550,6 +1790,13 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'User or developer documentation for the tool or service (manual, wiki, API reference).',
               ),
+            doi: zod
+              .url()
+              .regex(postApiV1EntitiesResponseResultsItemOneFiveDoiRegExp)
+              .nullish()
+              .describe(
+                "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+              ),
             homepage: zod
               .url()
               .nullish()
@@ -1584,9 +1831,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneFiveNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1595,7 +1845,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -1662,9 +1912,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneSixDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1673,7 +1926,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -1888,9 +2141,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneSixNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -1899,7 +2155,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -2001,9 +2257,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2012,7 +2271,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2024,7 +2283,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               .regex(postApiV1EntitiesResponseResultsItemOneSevenDoiRegExp)
               .nullish()
               .describe(
-                "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+                "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
               ),
             homepage: zod
               .url()
@@ -2047,9 +2306,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneSevenNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2058,7 +2320,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -2198,9 +2460,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneSevenPublishedInItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2209,7 +2474,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2256,9 +2521,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneEightAddressItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2267,7 +2535,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2283,9 +2551,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneEightDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2294,7 +2565,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2339,9 +2610,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneEightLocationItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2350,7 +2624,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2362,9 +2636,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneEightNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2373,7 +2650,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -2408,6 +2685,27 @@ export const PostApiV1EntitiesResponse = zod.object({
           ),
         zod
           .object({
+            byte_size: zod
+              .int()
+              .nullish()
+              .describe(
+                'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+              ),
+            dataset_type: zod
+              .enum([
+                'DIGITAL_EDITION',
+                'CORPUS',
+                'DATABASE',
+                'GAZETTEER',
+                'IMAGE_COLLECTION',
+                'ANNOTATION_SET',
+                'METADATA_CATALOG',
+                'OTHER_RESEARCH_DATA',
+              ])
+              .optional()
+              .describe(
+                'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+              ),
             datasets: zod
               .array(zod.string())
               .nullish()
@@ -2420,14 +2718,23 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'Formal publication date (or year-01-01 if only the year is known).',
               ),
+            derived_from: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+              ),
             description: zod
               .array(
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneNineDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2436,7 +2743,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2447,6 +2754,19 @@ export const PostApiV1EntitiesResponse = zod.object({
               .url()
               .nullish()
               .describe('Direct download or access URL for the dataset.'),
+            doi: zod
+              .url()
+              .regex(postApiV1EntitiesResponseResultsItemOneNineDoiRegExp)
+              .nullish()
+              .describe(
+                "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+              ),
+            extent: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+              ),
             homepage: zod
               .url()
               .nullish()
@@ -2463,6 +2783,18 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
               ),
+            in_languages: zod
+              .array(
+                zod
+                  .string()
+                  .regex(
+                    postApiV1EntitiesResponseResultsItemOneNineInLanguagesItemRegExp,
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+              ),
             license: zod
               .enum([
                 'CC_BY_4_0',
@@ -2476,14 +2808,23 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
               ),
+            media_type: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+              ),
             name: zod
               .array(
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneNineNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2492,7 +2833,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -2503,6 +2844,12 @@ export const PostApiV1EntitiesResponse = zod.object({
               .nullish()
               .describe(
                 'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+              ),
+            related_publications: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2521,9 +2868,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneNineThemesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2532,7 +2882,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2544,7 +2894,7 @@ export const PostApiV1EntitiesResponse = zod.object({
               ),
           })
           .describe(
-            'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+            'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
           ),
         zod
           .object({
@@ -2577,9 +2927,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroDescriptionItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2588,7 +2941,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2776,14 +3129,24 @@ export const PostApiV1EntitiesResponse = zod.object({
               .describe(
                 'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
               ),
+            doi: zod
+              .url()
+              .regex(postApiV1EntitiesResponseResultsItemOneOnezeroDoiRegExp)
+              .nullish()
+              .describe(
+                "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+              ),
             educational_level: zod
               .array(
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroEducationalLevelItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2792,7 +3155,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2818,23 +3181,26 @@ export const PostApiV1EntitiesResponse = zod.object({
             in_languages: zod
               .array(
                 zod
-                  .enum(['en', 'he', 'ar'])
-                  .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                  .string()
+                  .regex(
+                    postApiV1EntitiesResponseResultsItemOneOnezeroInLanguagesItemRegExp,
                   ),
               )
               .nullish()
               .describe(
-                'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+                'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
               ),
             learning_outcomes: zod
               .array(
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroLearningOutcomesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2843,7 +3209,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2873,16 +3239,19 @@ export const PostApiV1EntitiesResponse = zod.object({
               .string()
               .nullish()
               .describe(
-                'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
               ),
             name: zod
               .array(
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroNameItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2891,7 +3260,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .describe(
@@ -2908,9 +3277,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2919,7 +3291,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -2967,9 +3339,12 @@ export const PostApiV1EntitiesResponse = zod.object({
                 zod
                   .object({
                     language: zod
-                      .enum(['en', 'he', 'ar'])
+                      .string()
+                      .regex(
+                        postApiV1EntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp,
+                      )
                       .describe(
-                        'Languages supported for free-text fields (BCP-47 tags).',
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                       ),
                     value: zod
                       .string()
@@ -2978,7 +3353,7 @@ export const PostApiV1EntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
                   ),
               )
               .nullish()
@@ -3047,45 +3422,160 @@ export const PostApiV1EntitiesResponse = zod.object({
     .describe('Total number of matching entities across all pages.'),
 })
 
+export const putApiV1EntitiesBodyOneDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyOneFamilyNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyOneGivenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
 export const putApiV1EntitiesBodyOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const putApiV1EntitiesBodyOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const putApiV1EntitiesBodyTwoAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyTwoDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
 export const putApiV1EntitiesBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesBodyTwoLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const putApiV1EntitiesBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const putApiV1EntitiesBodyThreeAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodyThreeLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyThreeNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyFourDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesBodyFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyFiveDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodyFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodySixDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
 export const putApiV1EntitiesBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodySixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodySevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesBodySevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const putApiV1EntitiesBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodySevenNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodySevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyEightAddressItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesBodyEightLocationItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyEightNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyNineDescriptionItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesBodyNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodyNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyNineThemesItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const putApiV1EntitiesBodyOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesBodyOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesBodyOnezeroInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyOnezeroNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesBodyOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesBodyOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 
 export const PutApiV1EntitiesBody = zod.union([
   zod
@@ -3182,9 +3672,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyOneDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3193,7 +3684,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3211,9 +3702,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyOneFamilyNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3222,7 +3714,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3234,9 +3726,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyOneGivenNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3245,7 +3738,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3295,9 +3788,12 @@ export const PutApiV1EntitiesBody = zod.union([
                   'PRINCIPAL_INVESTIGATOR',
                   'CO_PI',
                   'RESEARCHER',
+                  'DH_LEAD',
+                  'TECHNICAL_LEAD',
                   'DEVELOPER',
                   'STUDENT',
                   'ADVISOR',
+                  'CONSULTANT',
                   'CONTRIBUTOR',
                 ])
                 .optional()
@@ -3358,9 +3854,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyTwoAddressItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3369,7 +3866,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3385,9 +3882,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyTwoDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3396,7 +3894,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3424,9 +3922,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyTwoLocationItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3435,7 +3934,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3453,9 +3952,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyTwoNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3464,7 +3964,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -3478,6 +3978,7 @@ export const PutApiV1EntitiesBody = zod.union([
           'FUNDER',
           'COMPANY',
           'NON_PROFIT',
+          'INFORMAL_GROUP',
         ])
         .optional()
         .describe(
@@ -3515,7 +4016,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
     })
     .describe(
-      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
     ),
   zod
     .object({
@@ -3530,9 +4031,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyThreeAddressItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3541,7 +4043,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3557,9 +4059,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyThreeDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3568,7 +4071,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3631,9 +4134,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyThreeLocationItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3642,7 +4146,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3654,9 +4158,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyThreeNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3665,7 +4170,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -3723,9 +4228,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFourDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3734,7 +4240,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -3932,6 +4438,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .array(
           zod
             .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
               funding_amount: zod
                 .number()
                 .nullish()
@@ -3943,14 +4455,96 @@ export const PutApiV1EntitiesBody = zod.union([
                 .describe(
                   'The organization that provides this funding award (by IDHI URN).',
                 ),
+              funding_program: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          putApiV1EntitiesBodyFourFundingItemFundingProgramItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                ),
+              funding_url: zod
+                .url()
+                .nullish()
+                .describe(
+                  "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                ),
+              grant_name: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          putApiV1EntitiesBodyFourFundingItemGrantNameItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                ),
+              grant_number: zod
+                .string()
+                .nullish()
+                .describe(
+                  "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                ),
             })
             .describe(
-              'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
             ),
         )
         .nullish()
         .describe(
-          'Funding awards received by the project. Use one entry for each funding organization and award.',
+          'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+        ),
+      funding_status: zod
+        .enum([
+          'ACTIVE_GRANT_FUNDING',
+          'INSTITUTIONALLY_SUSTAINED',
+          'IN_KIND_ONLY',
+          'VOLUNTEER_RUN',
+          'UNFUNDED',
+        ])
+        .optional()
+        .describe(
+          "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
         ),
       homepage: zod
         .url()
@@ -3973,9 +4567,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFourNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -3984,7 +4579,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -4001,7 +4596,13 @@ export const PutApiV1EntitiesBody = zod.union([
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
-                .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                .enum([
+                  'COORDINATOR',
+                  'PARTNER',
+                  'DATA_PROVIDER',
+                  'FUNDER',
+                  'HOST',
+                ])
                 .optional()
                 .describe(
                   "An organization's role in a project (one instance per role).",
@@ -4024,12 +4625,12 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+              "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -4069,9 +4670,12 @@ export const PutApiV1EntitiesBody = zod.union([
                   'PRINCIPAL_INVESTIGATOR',
                   'CO_PI',
                   'RESEARCHER',
+                  'DH_LEAD',
+                  'TECHNICAL_LEAD',
                   'DEVELOPER',
                   'STUDENT',
                   'ADVISOR',
+                  'CONSULTANT',
                   'CONTRIBUTOR',
                 ])
                 .optional()
@@ -4103,9 +4707,12 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  putApiV1EntitiesBodyFourResearchDisciplinesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4114,7 +4721,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4138,9 +4745,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFourStudiedPeriodsItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4149,7 +4757,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4161,9 +4769,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFourStudiedPlacesItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4172,7 +4781,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4217,9 +4826,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFiveDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4228,7 +4838,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4422,6 +5032,13 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'User or developer documentation for the tool or service (manual, wiki, API reference).',
         ),
+      doi: zod
+        .url()
+        .regex(putApiV1EntitiesBodyFiveDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
       homepage: zod
         .url()
         .nullish()
@@ -4456,9 +5073,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyFiveNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4467,7 +5085,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -4534,9 +5152,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodySixDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4545,7 +5164,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4760,9 +5379,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodySixNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4771,7 +5391,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -4871,9 +5491,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodySevenDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4882,7 +5503,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -4894,7 +5515,7 @@ export const PutApiV1EntitiesBody = zod.union([
         .regex(putApiV1EntitiesBodySevenDoiRegExp)
         .nullish()
         .describe(
-          "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
         ),
       homepage: zod
         .url()
@@ -4917,9 +5538,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodySevenNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -4928,7 +5550,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -5068,9 +5690,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodySevenPublishedInItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5079,7 +5702,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5126,9 +5749,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyEightAddressItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5137,7 +5761,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5153,9 +5777,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyEightDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5164,7 +5789,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5209,9 +5834,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyEightLocationItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5220,7 +5846,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5232,9 +5858,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyEightNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5243,7 +5870,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -5278,6 +5905,27 @@ export const PutApiV1EntitiesBody = zod.union([
     ),
   zod
     .object({
+      byte_size: zod
+        .int()
+        .nullish()
+        .describe(
+          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+        ),
+      dataset_type: zod
+        .enum([
+          'DIGITAL_EDITION',
+          'CORPUS',
+          'DATABASE',
+          'GAZETTEER',
+          'IMAGE_COLLECTION',
+          'ANNOTATION_SET',
+          'METADATA_CATALOG',
+          'OTHER_RESEARCH_DATA',
+        ])
+        .optional()
+        .describe(
+          'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+        ),
       datasets: zod
         .array(zod.string())
         .nullish()
@@ -5290,14 +5938,21 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Formal publication date (or year-01-01 if only the year is known).',
         ),
+      derived_from: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+        ),
       description: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyNineDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5306,7 +5961,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5317,6 +5972,19 @@ export const PutApiV1EntitiesBody = zod.union([
         .url()
         .nullish()
         .describe('Direct download or access URL for the dataset.'),
+      doi: zod
+        .url()
+        .regex(putApiV1EntitiesBodyNineDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      extent: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+        ),
       homepage: zod
         .url()
         .nullish()
@@ -5333,6 +6001,14 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
+      in_languages: zod
+        .array(
+          zod.string().regex(putApiV1EntitiesBodyNineInLanguagesItemRegExp),
+        )
+        .nullish()
+        .describe(
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+        ),
       license: zod
         .enum([
           'CC_BY_4_0',
@@ -5346,14 +6022,21 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
+      media_type: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+        ),
       name: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyNineNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5362,7 +6045,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -5373,6 +6056,12 @@ export const PutApiV1EntitiesBody = zod.union([
         .nullish()
         .describe(
           'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_publications: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
         ),
       same_as: zod
         .array(zod.url())
@@ -5391,9 +6080,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyNineThemesItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5402,7 +6092,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5414,7 +6104,7 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
     })
     .describe(
-      'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+      'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
   zod
     .object({
@@ -5447,9 +6137,10 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyOnezeroDescriptionItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5458,7 +6149,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5646,14 +6337,24 @@ export const PutApiV1EntitiesBody = zod.union([
         .describe(
           'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
+      doi: zod
+        .url()
+        .regex(putApiV1EntitiesBodyOnezeroDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
       educational_level: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  putApiV1EntitiesBodyOnezeroEducationalLevelItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5662,7 +6363,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5687,24 +6388,23 @@ export const PutApiV1EntitiesBody = zod.union([
         ),
       in_languages: zod
         .array(
-          zod
-            .enum(['en', 'he', 'ar'])
-            .describe(
-              'Languages supported for free-text fields (BCP-47 tags).',
-            ),
+          zod.string().regex(putApiV1EntitiesBodyOnezeroInLanguagesItemRegExp),
         )
         .nullish()
         .describe(
-          'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
         ),
       learning_outcomes: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  putApiV1EntitiesBodyOnezeroLearningOutcomesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5713,7 +6413,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5743,16 +6443,17 @@ export const PutApiV1EntitiesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(putApiV1EntitiesBodyOnezeroNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5761,7 +6462,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -5778,9 +6479,12 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  putApiV1EntitiesBodyOnezeroPrerequisitesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5789,7 +6493,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5837,9 +6541,12 @@ export const PutApiV1EntitiesBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  putApiV1EntitiesBodyOnezeroTargetAudiencesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -5848,7 +6555,7 @@ export const PutApiV1EntitiesBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -5879,45 +6586,140 @@ export const PutApiV1EntitiesBody = zod.union([
     ),
 ])
 
+export const putApiV1EntitiesResponseOneOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const putApiV1EntitiesResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const putApiV1EntitiesResponseOneTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesResponseOneTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const putApiV1EntitiesResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const putApiV1EntitiesResponseOneThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesResponseOneFourNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesResponseOneFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneFiveNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesResponseOneSixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneSixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesResponseOneSevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const putApiV1EntitiesResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneSevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneSevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const putApiV1EntitiesResponseOneEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const putApiV1EntitiesResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesResponseOneNineNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const putApiV1EntitiesResponseOneNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const putApiV1EntitiesResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
+export const putApiV1EntitiesResponseOneOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const putApiV1EntitiesResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const putApiV1EntitiesResponseTwoAuditCreatedByRegExp = new RegExp(
   '^idhi:user:.+$',
 )
@@ -6021,9 +6823,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOneDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6032,7 +6837,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6050,9 +6855,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOneFamilyNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6061,7 +6869,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6073,9 +6881,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOneGivenNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6084,7 +6895,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6134,9 +6945,12 @@ export const PutApiV1EntitiesResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -6197,9 +7011,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneTwoAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6208,7 +7025,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6224,9 +7041,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneTwoDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6235,7 +7055,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6263,9 +7083,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneTwoLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6274,7 +7097,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6292,9 +7115,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneTwoNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6303,7 +7127,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -6317,6 +7141,7 @@ export const PutApiV1EntitiesResponse = zod
             'FUNDER',
             'COMPANY',
             'NON_PROFIT',
+            'INFORMAL_GROUP',
           ])
           .optional()
           .describe(
@@ -6354,7 +7179,7 @@ export const PutApiV1EntitiesResponse = zod
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .object({
@@ -6369,9 +7194,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneThreeAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6380,7 +7208,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6396,9 +7224,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneThreeDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6407,7 +7238,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6470,9 +7301,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneThreeLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6481,7 +7315,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6493,9 +7327,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneThreeNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6504,7 +7339,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -6562,9 +7397,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneFourDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6573,7 +7411,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6771,6 +7609,12 @@ export const PutApiV1EntitiesResponse = zod
           .array(
             zod
               .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -6782,14 +7626,96 @@ export const PutApiV1EntitiesResponse = zod
                   .describe(
                     'The organization that provides this funding award (by IDHI URN).',
                   ),
+                funding_program: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            putApiV1EntitiesResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                  ),
+                funding_url: zod
+                  .url()
+                  .nullish()
+                  .describe(
+                    "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                  ),
+                grant_name: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            putApiV1EntitiesResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                  ),
+                grant_number: zod
+                  .string()
+                  .nullish()
+                  .describe(
+                    "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  ),
               })
               .describe(
-                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry for each funding organization and award.',
+            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+          ),
+        funding_status: zod
+          .enum([
+            'ACTIVE_GRANT_FUNDING',
+            'INSTITUTIONALLY_SUSTAINED',
+            'IN_KIND_ONLY',
+            'VOLUNTEER_RUN',
+            'UNFUNDED',
+          ])
+          .optional()
+          .describe(
+            "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
           ),
         homepage: zod
           .url()
@@ -6812,9 +7738,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneFourNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6823,7 +7750,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -6840,7 +7767,13 @@ export const PutApiV1EntitiesResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                  .enum([
+                    'COORDINATOR',
+                    'PARTNER',
+                    'DATA_PROVIDER',
+                    'FUNDER',
+                    'HOST',
+                  ])
                   .optional()
                   .describe(
                     "An organization's role in a project (one instance per role).",
@@ -6863,12 +7796,12 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -6908,9 +7841,12 @@ export const PutApiV1EntitiesResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -6942,9 +7878,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6953,7 +7892,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -6977,9 +7916,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -6988,7 +7930,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7000,9 +7942,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneFourStudiedPlacesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7011,7 +7956,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7056,9 +8001,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneFiveDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7067,7 +8015,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7261,6 +8209,13 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'User or developer documentation for the tool or service (manual, wiki, API reference).',
           ),
+        doi: zod
+          .url()
+          .regex(putApiV1EntitiesResponseOneFiveDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -7295,9 +8250,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneFiveNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7306,7 +8262,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -7373,9 +8329,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneSixDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7384,7 +8343,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7599,9 +8558,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneSixNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7610,7 +8570,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -7710,9 +8670,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneSevenDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7721,7 +8684,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7733,7 +8696,7 @@ export const PutApiV1EntitiesResponse = zod
           .regex(putApiV1EntitiesResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         homepage: zod
           .url()
@@ -7756,9 +8719,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneSevenNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7767,7 +8731,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -7907,9 +8871,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneSevenPublishedInItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7918,7 +8885,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7965,9 +8932,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneEightAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -7976,7 +8946,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -7992,9 +8962,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneEightDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8003,7 +8976,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8048,9 +9021,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneEightLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8059,7 +9035,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8071,9 +9047,10 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneEightNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8082,7 +9059,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -8117,6 +9094,27 @@ export const PutApiV1EntitiesResponse = zod
       ),
     zod
       .object({
+        byte_size: zod
+          .int()
+          .nullish()
+          .describe(
+            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+          ),
+        dataset_type: zod
+          .enum([
+            'DIGITAL_EDITION',
+            'CORPUS',
+            'DATABASE',
+            'GAZETTEER',
+            'IMAGE_COLLECTION',
+            'ANNOTATION_SET',
+            'METADATA_CATALOG',
+            'OTHER_RESEARCH_DATA',
+          ])
+          .optional()
+          .describe(
+            'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+          ),
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -8129,14 +9127,23 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Formal publication date (or year-01-01 if only the year is known).',
           ),
+        derived_from: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+          ),
         description: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneNineDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8145,7 +9152,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8156,6 +9163,19 @@ export const PutApiV1EntitiesResponse = zod
           .url()
           .nullish()
           .describe('Direct download or access URL for the dataset.'),
+        doi: zod
+          .url()
+          .regex(putApiV1EntitiesResponseOneNineDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
+        extent: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -8172,6 +9192,16 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
+        in_languages: zod
+          .array(
+            zod
+              .string()
+              .regex(putApiV1EntitiesResponseOneNineInLanguagesItemRegExp),
+          )
+          .nullish()
+          .describe(
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -8185,14 +9215,21 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
+        media_type: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(putApiV1EntitiesResponseOneNineNameItemLanguageRegExp)
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8201,7 +9238,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -8212,6 +9249,12 @@ export const PutApiV1EntitiesResponse = zod
           .nullish()
           .describe(
             'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_publications: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
         same_as: zod
           .array(zod.url())
@@ -8230,9 +9273,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneNineThemesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8241,7 +9287,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8253,7 +9299,7 @@ export const PutApiV1EntitiesResponse = zod
           ),
       })
       .describe(
-        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+        'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
       .object({
@@ -8286,9 +9332,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8297,7 +9346,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8485,14 +9534,24 @@ export const PutApiV1EntitiesResponse = zod
           .describe(
             'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
+        doi: zod
+          .url()
+          .regex(putApiV1EntitiesResponseOneOnezeroDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         educational_level: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8501,7 +9560,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8527,23 +9586,24 @@ export const PutApiV1EntitiesResponse = zod
         in_languages: zod
           .array(
             zod
-              .enum(['en', 'he', 'ar'])
-              .describe(
-                'Languages supported for free-text fields (BCP-47 tags).',
-              ),
+              .string()
+              .regex(putApiV1EntitiesResponseOneOnezeroInLanguagesItemRegExp),
           )
           .nullish()
           .describe(
-            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
           ),
         learning_outcomes: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8552,7 +9612,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8582,16 +9642,19 @@ export const PutApiV1EntitiesResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8600,7 +9663,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -8617,9 +9680,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8628,7 +9694,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8676,9 +9742,12 @@ export const PutApiV1EntitiesResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    putApiV1EntitiesResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8687,7 +9756,7 @@ export const PutApiV1EntitiesResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8742,45 +9811,134 @@ export const GetApiV1EntitiesEntityIdParams = zod.object({
   entityId: zod.string(),
 })
 
+export const getApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const getApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const getApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const getApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const getApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const getApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const getApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const getApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const getApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const getApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
+export const getApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const getApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -8882,9 +10040,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8893,7 +10054,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8911,9 +10072,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8922,7 +10086,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8934,9 +10098,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -8945,7 +10112,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -8995,9 +10162,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -9058,9 +10228,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9069,7 +10242,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9085,9 +10258,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9096,7 +10272,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9124,9 +10300,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9135,7 +10314,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9153,9 +10332,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9164,7 +10346,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -9178,6 +10360,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             'FUNDER',
             'COMPANY',
             'NON_PROFIT',
+            'INFORMAL_GROUP',
           ])
           .optional()
           .describe(
@@ -9215,7 +10398,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .object({
@@ -9230,9 +10413,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9241,7 +10427,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9257,9 +10443,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9268,7 +10457,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9331,9 +10520,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9342,7 +10534,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9354,9 +10546,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9365,7 +10560,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -9423,9 +10618,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9434,7 +10632,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9632,6 +10830,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -9643,14 +10847,96 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'The organization that provides this funding award (by IDHI URN).',
                   ),
+                funding_program: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            getApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                  ),
+                funding_url: zod
+                  .url()
+                  .nullish()
+                  .describe(
+                    "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                  ),
+                grant_name: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            getApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                  ),
+                grant_number: zod
+                  .string()
+                  .nullish()
+                  .describe(
+                    "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  ),
               })
               .describe(
-                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry for each funding organization and award.',
+            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+          ),
+        funding_status: zod
+          .enum([
+            'ACTIVE_GRANT_FUNDING',
+            'INSTITUTIONALLY_SUSTAINED',
+            'IN_KIND_ONLY',
+            'VOLUNTEER_RUN',
+            'UNFUNDED',
+          ])
+          .optional()
+          .describe(
+            "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
           ),
         homepage: zod
           .url()
@@ -9673,9 +10959,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9684,7 +10973,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -9701,7 +10990,13 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                  .enum([
+                    'COORDINATOR',
+                    'PARTNER',
+                    'DATA_PROVIDER',
+                    'FUNDER',
+                    'HOST',
+                  ])
                   .optional()
                   .describe(
                     "An organization's role in a project (one instance per role).",
@@ -9724,12 +11019,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -9769,9 +11064,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -9803,9 +11101,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9814,7 +11115,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9838,9 +11139,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9849,7 +11153,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9861,9 +11165,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9872,7 +11179,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -9917,9 +11224,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -9928,7 +11238,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10122,6 +11432,13 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'User or developer documentation for the tool or service (manual, wiki, API reference).',
           ),
+        doi: zod
+          .url()
+          .regex(getApiV1EntitiesEntityIdResponseOneFiveDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -10156,9 +11473,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10167,7 +11487,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -10234,9 +11554,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10245,7 +11568,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10460,9 +11783,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10471,7 +11797,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -10571,9 +11897,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10582,7 +11911,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10594,7 +11923,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .regex(getApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         homepage: zod
           .url()
@@ -10617,9 +11946,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10628,7 +11960,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -10768,9 +12100,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10779,7 +12114,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10826,9 +12161,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10837,7 +12175,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10853,9 +12191,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10864,7 +12205,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10909,9 +12250,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10920,7 +12264,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -10932,9 +12276,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -10943,7 +12290,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -10978,6 +12325,27 @@ export const GetApiV1EntitiesEntityIdResponse = zod
       ),
     zod
       .object({
+        byte_size: zod
+          .int()
+          .nullish()
+          .describe(
+            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+          ),
+        dataset_type: zod
+          .enum([
+            'DIGITAL_EDITION',
+            'CORPUS',
+            'DATABASE',
+            'GAZETTEER',
+            'IMAGE_COLLECTION',
+            'ANNOTATION_SET',
+            'METADATA_CATALOG',
+            'OTHER_RESEARCH_DATA',
+          ])
+          .optional()
+          .describe(
+            'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+          ),
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -10990,14 +12358,23 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Formal publication date (or year-01-01 if only the year is known).',
           ),
+        derived_from: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+          ),
         description: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11006,7 +12383,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11017,6 +12394,19 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .url()
           .nullish()
           .describe('Direct download or access URL for the dataset.'),
+        doi: zod
+          .url()
+          .regex(getApiV1EntitiesEntityIdResponseOneNineDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
+        extent: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -11033,6 +12423,18 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
+        in_languages: zod
+          .array(
+            zod
+              .string()
+              .regex(
+                getApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp,
+              ),
+          )
+          .nullish()
+          .describe(
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -11046,14 +12448,23 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
+        media_type: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11062,7 +12473,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -11073,6 +12484,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_publications: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
         same_as: zod
           .array(zod.url())
@@ -11091,9 +12508,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11102,7 +12522,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11114,7 +12534,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           ),
       })
       .describe(
-        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+        'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
       .object({
@@ -11147,9 +12567,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11158,7 +12581,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11346,14 +12769,24 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
+        doi: zod
+          .url()
+          .regex(getApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         educational_level: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11362,7 +12795,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11388,23 +12821,26 @@ export const GetApiV1EntitiesEntityIdResponse = zod
         in_languages: zod
           .array(
             zod
-              .enum(['en', 'he', 'ar'])
-              .describe(
-                'Languages supported for free-text fields (BCP-47 tags).',
+              .string()
+              .regex(
+                getApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp,
               ),
           )
           .nullish()
           .describe(
-            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
           ),
         learning_outcomes: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11413,7 +12849,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11443,16 +12879,19 @@ export const GetApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11461,7 +12900,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -11478,9 +12917,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11489,7 +12931,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11537,9 +12979,12 @@ export const GetApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    getApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -11548,7 +12993,7 @@ export const GetApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -11603,45 +13048,134 @@ export const PostApiV1EntitiesEntityIdParams = zod.object({
   entityId: zod.string(),
 })
 
+export const postApiV1EntitiesEntityIdBodyOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const postApiV1EntitiesEntityIdBodyOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const postApiV1EntitiesEntityIdBodyTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodyTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyTwoNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const postApiV1EntitiesEntityIdBodyThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodyThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesEntityIdBodyFourNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdBodyFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodyFiveNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodySixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodySixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodySixNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodySevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodySevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdBodySevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodySevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodySevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesEntityIdBodyEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdBodyNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodyNineInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyNineNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const postApiV1EntitiesEntityIdBodyOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdBodyOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdBodyOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdBodyOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 
 export const PostApiV1EntitiesEntityIdBody = zod.union([
   zod
@@ -11738,9 +13272,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOneDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11749,7 +13286,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11767,9 +13304,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOneFamilyNameItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11778,7 +13318,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11790,9 +13330,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOneGivenNameItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11801,7 +13344,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11851,9 +13394,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                   'PRINCIPAL_INVESTIGATOR',
                   'CO_PI',
                   'RESEARCHER',
+                  'DH_LEAD',
+                  'TECHNICAL_LEAD',
                   'DEVELOPER',
                   'STUDENT',
                   'ADVISOR',
+                  'CONSULTANT',
                   'CONTRIBUTOR',
                 ])
                 .optional()
@@ -11914,9 +13460,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyTwoAddressItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11925,7 +13474,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11941,9 +13490,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyTwoDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11952,7 +13504,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -11980,9 +13532,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyTwoLocationItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -11991,7 +13546,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12009,9 +13564,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyTwoNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12020,7 +13576,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -12034,6 +13590,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           'FUNDER',
           'COMPANY',
           'NON_PROFIT',
+          'INFORMAL_GROUP',
         ])
         .optional()
         .describe(
@@ -12071,7 +13628,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
     })
     .describe(
-      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
     ),
   zod
     .object({
@@ -12086,9 +13643,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyThreeAddressItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12097,7 +13657,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12113,9 +13673,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyThreeDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12124,7 +13687,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12187,9 +13750,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyThreeLocationItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12198,7 +13764,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12210,9 +13776,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyThreeNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12221,7 +13788,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -12279,9 +13846,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyFourDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12290,7 +13860,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12488,6 +14058,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .array(
           zod
             .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
               funding_amount: zod
                 .number()
                 .nullish()
@@ -12499,14 +14075,96 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 .describe(
                   'The organization that provides this funding award (by IDHI URN).',
                 ),
+              funding_program: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          postApiV1EntitiesEntityIdBodyFourFundingItemFundingProgramItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                ),
+              funding_url: zod
+                .url()
+                .nullish()
+                .describe(
+                  "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                ),
+              grant_name: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          postApiV1EntitiesEntityIdBodyFourFundingItemGrantNameItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                ),
+              grant_number: zod
+                .string()
+                .nullish()
+                .describe(
+                  "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                ),
             })
             .describe(
-              'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
             ),
         )
         .nullish()
         .describe(
-          'Funding awards received by the project. Use one entry for each funding organization and award.',
+          'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+        ),
+      funding_status: zod
+        .enum([
+          'ACTIVE_GRANT_FUNDING',
+          'INSTITUTIONALLY_SUSTAINED',
+          'IN_KIND_ONLY',
+          'VOLUNTEER_RUN',
+          'UNFUNDED',
+        ])
+        .optional()
+        .describe(
+          "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
         ),
       homepage: zod
         .url()
@@ -12529,9 +14187,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyFourNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12540,7 +14199,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -12557,7 +14216,13 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
-                .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                .enum([
+                  'COORDINATOR',
+                  'PARTNER',
+                  'DATA_PROVIDER',
+                  'FUNDER',
+                  'HOST',
+                ])
                 .optional()
                 .describe(
                   "An organization's role in a project (one instance per role).",
@@ -12580,12 +14245,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+              "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+          'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -12625,9 +14290,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                   'PRINCIPAL_INVESTIGATOR',
                   'CO_PI',
                   'RESEARCHER',
+                  'DH_LEAD',
+                  'TECHNICAL_LEAD',
                   'DEVELOPER',
                   'STUDENT',
                   'ADVISOR',
+                  'CONSULTANT',
                   'CONTRIBUTOR',
                 ])
                 .optional()
@@ -12659,9 +14327,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyFourResearchDisciplinesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12670,7 +14341,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12694,9 +14365,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyFourStudiedPeriodsItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12705,7 +14379,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12717,9 +14391,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyFourStudiedPlacesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12728,7 +14405,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12773,9 +14450,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyFiveDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -12784,7 +14464,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -12978,6 +14658,13 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'User or developer documentation for the tool or service (manual, wiki, API reference).',
         ),
+      doi: zod
+        .url()
+        .regex(postApiV1EntitiesEntityIdBodyFiveDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
       homepage: zod
         .url()
         .nullish()
@@ -13012,9 +14699,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyFiveNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13023,7 +14711,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -13090,9 +14778,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodySixDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13101,7 +14792,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13316,9 +15007,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodySixNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13327,7 +15019,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -13427,9 +15119,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodySevenDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13438,7 +15133,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13450,7 +15145,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .regex(postApiV1EntitiesEntityIdBodySevenDoiRegExp)
         .nullish()
         .describe(
-          "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
         ),
       homepage: zod
         .url()
@@ -13473,9 +15168,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodySevenNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13484,7 +15180,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -13624,9 +15320,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodySevenPublishedInItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13635,7 +15334,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13682,9 +15381,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyEightAddressItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13693,7 +15395,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13709,9 +15411,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyEightDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13720,7 +15425,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13765,9 +15470,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyEightLocationItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13776,7 +15484,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13788,9 +15496,10 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyEightNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13799,7 +15508,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -13834,6 +15543,27 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
     ),
   zod
     .object({
+      byte_size: zod
+        .int()
+        .nullish()
+        .describe(
+          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+        ),
+      dataset_type: zod
+        .enum([
+          'DIGITAL_EDITION',
+          'CORPUS',
+          'DATABASE',
+          'GAZETTEER',
+          'IMAGE_COLLECTION',
+          'ANNOTATION_SET',
+          'METADATA_CATALOG',
+          'OTHER_RESEARCH_DATA',
+        ])
+        .optional()
+        .describe(
+          'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+        ),
       datasets: zod
         .array(zod.string())
         .nullish()
@@ -13846,14 +15576,23 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Formal publication date (or year-01-01 if only the year is known).',
         ),
+      derived_from: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+        ),
       description: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyNineDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13862,7 +15601,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13873,6 +15612,19 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .url()
         .nullish()
         .describe('Direct download or access URL for the dataset.'),
+      doi: zod
+        .url()
+        .regex(postApiV1EntitiesEntityIdBodyNineDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      extent: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+        ),
       homepage: zod
         .url()
         .nullish()
@@ -13889,6 +15641,16 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
         ),
+      in_languages: zod
+        .array(
+          zod
+            .string()
+            .regex(postApiV1EntitiesEntityIdBodyNineInLanguagesItemRegExp),
+        )
+        .nullish()
+        .describe(
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+        ),
       license: zod
         .enum([
           'CC_BY_4_0',
@@ -13902,14 +15664,21 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
         ),
+      media_type: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+        ),
       name: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(postApiV1EntitiesEntityIdBodyNineNameItemLanguageRegExp)
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13918,7 +15687,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -13929,6 +15698,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .nullish()
         .describe(
           'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_publications: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
         ),
       same_as: zod
         .array(zod.url())
@@ -13947,9 +15722,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyNineThemesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -13958,7 +15736,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -13970,7 +15748,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         ),
     })
     .describe(
-      'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+      'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
     ),
   zod
     .object({
@@ -14003,9 +15781,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroDescriptionItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14014,7 +15795,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -14202,14 +15983,24 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .describe(
           'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
         ),
+      doi: zod
+        .url()
+        .regex(postApiV1EntitiesEntityIdBodyOnezeroDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
       educational_level: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroEducationalLevelItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14218,7 +16009,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -14244,23 +16035,24 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
       in_languages: zod
         .array(
           zod
-            .enum(['en', 'he', 'ar'])
-            .describe(
-              'Languages supported for free-text fields (BCP-47 tags).',
-            ),
+            .string()
+            .regex(postApiV1EntitiesEntityIdBodyOnezeroInLanguagesItemRegExp),
         )
         .nullish()
         .describe(
-          'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
         ),
       learning_outcomes: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroLearningOutcomesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14269,7 +16061,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -14299,16 +16091,19 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroNameItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14317,7 +16112,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .describe(
@@ -14334,9 +16129,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroPrerequisitesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14345,7 +16143,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -14393,9 +16191,12 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
           zod
             .object({
               language: zod
-                .enum(['en', 'he', 'ar'])
+                .string()
+                .regex(
+                  postApiV1EntitiesEntityIdBodyOnezeroTargetAudiencesItemLanguageRegExp,
+                )
                 .describe(
-                  'Languages supported for free-text fields (BCP-47 tags).',
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                 ),
               value: zod
                 .string()
@@ -14404,7 +16205,7 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
                 ),
             })
             .describe(
-              'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
             ),
         )
         .nullish()
@@ -14435,45 +16236,134 @@ export const PostApiV1EntitiesEntityIdBody = zod.union([
     ),
 ])
 
+export const postApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneOneIdRegExp = new RegExp(
   '^idhi:person:[0-9a-z]{4,12}$',
 )
 export const postApiV1EntitiesEntityIdResponseOneOneOrcidRegExp = new RegExp(
   'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
 )
+export const postApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneTwoIdRegExp = new RegExp(
   '^idhi:organization:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneTwoRorRegExp = new RegExp(
   'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
 )
+export const postApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneThreeIdRegExp = new RegExp(
   '^idhi:facility:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneFourIdRegExp = new RegExp(
   '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdResponseOneFiveIdRegExp = new RegExp(
   '^idhi:tool:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneSixIdRegExp = new RegExp(
   '^idhi:service:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdResponseOneSevenIdRegExp = new RegExp(
   '^idhi:publication:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const postApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
 )
 export const postApiV1EntitiesEntityIdResponseOneNineIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const postApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseOneOnezeroIdRegExp = new RegExp(
   '^idhi:training_material:[0-9a-z]{4,12}$',
 )
+export const postApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const postApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const postApiV1EntitiesEntityIdResponseTwoAuditCreatedByRegExp =
   new RegExp('^idhi:user:.+$')
 export const postApiV1EntitiesEntityIdResponseTwoAuditModifiedByRegExp =
@@ -14575,9 +16465,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOneDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14586,7 +16479,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14604,9 +16497,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOneFamilyNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14615,7 +16511,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14627,9 +16523,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOneGivenNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14638,7 +16537,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14688,9 +16587,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -14751,9 +16653,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneTwoAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14762,7 +16667,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14778,9 +16683,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneTwoDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14789,7 +16697,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14817,9 +16725,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneTwoLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14828,7 +16739,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14846,9 +16757,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneTwoNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14857,7 +16771,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -14871,6 +16785,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             'FUNDER',
             'COMPANY',
             'NON_PROFIT',
+            'INFORMAL_GROUP',
           ])
           .optional()
           .describe(
@@ -14908,7 +16823,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
       })
       .describe(
-        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+        'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
       ),
     zod
       .object({
@@ -14923,9 +16838,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneThreeAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14934,7 +16852,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -14950,9 +16868,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneThreeDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -14961,7 +16882,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15024,9 +16945,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneThreeLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15035,7 +16959,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15047,9 +16971,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneThreeNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15058,7 +16985,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -15116,9 +17043,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFourDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15127,7 +17057,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15325,6 +17255,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .array(
             zod
               .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
                 funding_amount: zod
                   .number()
                   .nullish()
@@ -15336,14 +17272,96 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   .describe(
                     'The organization that provides this funding award (by IDHI URN).',
                   ),
+                funding_program: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            postApiV1EntitiesEntityIdResponseOneFourFundingItemFundingProgramItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                  ),
+                funding_url: zod
+                  .url()
+                  .nullish()
+                  .describe(
+                    "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                  ),
+                grant_name: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            postApiV1EntitiesEntityIdResponseOneFourFundingItemGrantNameItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .nullish()
+                  .describe(
+                    "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                  ),
+                grant_number: zod
+                  .string()
+                  .nullish()
+                  .describe(
+                    "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity (e.g. when a person joined a project or organization).",
+                  ),
               })
               .describe(
-                'A funding award for a project, identifying the organization that provides it and its amount when public. It is inlined within the funded Project and has no independent ID.',
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry for each funding organization and award.',
+            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+          ),
+        funding_status: zod
+          .enum([
+            'ACTIVE_GRANT_FUNDING',
+            'INSTITUTIONALLY_SUSTAINED',
+            'IN_KIND_ONLY',
+            'VOLUNTEER_RUN',
+            'UNFUNDED',
+          ])
+          .optional()
+          .describe(
+            "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
           ),
         homepage: zod
           .url()
@@ -15366,9 +17384,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFourNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15377,7 +17398,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -15394,7 +17415,13 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum(['COORDINATOR', 'PARTNER', 'FUNDER', 'HOST'])
+                  .enum([
+                    'COORDINATOR',
+                    'PARTNER',
+                    'DATA_PROVIDER',
+                    'FUNDER',
+                    'HOST',
+                  ])
                   .optional()
                   .describe(
                     "An organization's role in a project (one instance per role).",
@@ -15417,12 +17444,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement in a project. Use one instance per role: an organization that both hosts and funds a project gets two instances.",
+                "An organization's engagement in a project. Use one instance per role. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, funder, host).',
+            'Organizations engaged in the project, as reified OrganizationProjectRole objects (coordinator, partner, data provider, funder or host). Use FUNDER only when no distinct award can be represented in funding.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -15462,9 +17489,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                     'PRINCIPAL_INVESTIGATOR',
                     'CO_PI',
                     'RESEARCHER',
+                    'DH_LEAD',
+                    'TECHNICAL_LEAD',
                     'DEVELOPER',
                     'STUDENT',
                     'ADVISOR',
+                    'CONSULTANT',
                     'CONTRIBUTOR',
                   ])
                   .optional()
@@ -15496,9 +17526,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFourResearchDisciplinesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15507,7 +17540,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15531,9 +17564,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFourStudiedPeriodsItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15542,7 +17578,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15554,9 +17590,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFourStudiedPlacesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15565,7 +17604,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15610,9 +17649,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFiveDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15621,7 +17663,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -15815,6 +17857,13 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'User or developer documentation for the tool or service (manual, wiki, API reference).',
           ),
+        doi: zod
+          .url()
+          .regex(postApiV1EntitiesEntityIdResponseOneFiveDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -15849,9 +17898,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneFiveNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15860,7 +17912,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -15927,9 +17979,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneSixDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -15938,7 +17993,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16153,9 +18208,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneSixNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16164,7 +18222,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -16264,9 +18322,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneSevenDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16275,7 +18336,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16287,7 +18348,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .regex(postApiV1EntitiesEntityIdResponseOneSevenDoiRegExp)
           .nullish()
           .describe(
-            "The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.",
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         homepage: zod
           .url()
@@ -16310,9 +18371,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneSevenNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16321,7 +18385,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -16461,9 +18525,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneSevenPublishedInItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16472,7 +18539,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16519,9 +18586,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneEightAddressItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16530,7 +18600,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16546,9 +18616,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneEightDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16557,7 +18630,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16602,9 +18675,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneEightLocationItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16613,7 +18689,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16625,9 +18701,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneEightNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16636,7 +18715,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -16671,6 +18750,27 @@ export const PostApiV1EntitiesEntityIdResponse = zod
       ),
     zod
       .object({
+        byte_size: zod
+          .int()
+          .nullish()
+          .describe(
+            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+          ),
+        dataset_type: zod
+          .enum([
+            'DIGITAL_EDITION',
+            'CORPUS',
+            'DATABASE',
+            'GAZETTEER',
+            'IMAGE_COLLECTION',
+            'ANNOTATION_SET',
+            'METADATA_CATALOG',
+            'OTHER_RESEARCH_DATA',
+          ])
+          .optional()
+          .describe(
+            'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+          ),
         datasets: zod
           .array(zod.string())
           .nullish()
@@ -16683,14 +18783,23 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Formal publication date (or year-01-01 if only the year is known).',
           ),
+        derived_from: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+          ),
         description: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneNineDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16699,7 +18808,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16710,6 +18819,19 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .url()
           .nullish()
           .describe('Direct download or access URL for the dataset.'),
+        doi: zod
+          .url()
+          .regex(postApiV1EntitiesEntityIdResponseOneNineDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
+        extent: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          ),
         homepage: zod
           .url()
           .nullish()
@@ -16726,6 +18848,18 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
           ),
+        in_languages: zod
+          .array(
+            zod
+              .string()
+              .regex(
+                postApiV1EntitiesEntityIdResponseOneNineInLanguagesItemRegExp,
+              ),
+          )
+          .nullish()
+          .describe(
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+          ),
         license: zod
           .enum([
             'CC_BY_4_0',
@@ -16739,14 +18873,23 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
           ),
+        media_type: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneNineNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16755,7 +18898,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -16766,6 +18909,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .nullish()
           .describe(
             'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          ),
+        related_publications: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
           ),
         same_as: zod
           .array(zod.url())
@@ -16784,9 +18933,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneNineThemesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16795,7 +18947,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -16807,7 +18959,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           ),
       })
       .describe(
-        'A dataset, digital archive or catalog produced or curated by a project: corpora, databases, image collections, annotation sets and collections of metadata records. Use Dataset for both research data and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+        'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
       ),
     zod
       .object({
@@ -16840,9 +18992,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroDescriptionItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -16851,7 +19006,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -17039,14 +19194,24 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .describe(
             'Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
           ),
+        doi: zod
+          .url()
+          .regex(postApiV1EntitiesEntityIdResponseOneOnezeroDoiRegExp)
+          .nullish()
+          .describe(
+            "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+          ),
         educational_level: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroEducationalLevelItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -17055,7 +19220,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -17081,23 +19246,26 @@ export const PostApiV1EntitiesEntityIdResponse = zod
         in_languages: zod
           .array(
             zod
-              .enum(['en', 'he', 'ar'])
-              .describe(
-                'Languages supported for free-text fields (BCP-47 tags).',
+              .string()
+              .regex(
+                postApiV1EntitiesEntityIdResponseOneOnezeroInLanguagesItemRegExp,
               ),
           )
           .nullish()
           .describe(
-            'Languages in which the instructional content is available. Record every complete language version; do not include a language used only in captions or examples.',
+            'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
           ),
         learning_outcomes: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroLearningOutcomesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -17106,7 +19274,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -17136,16 +19304,19 @@ export const PostApiV1EntitiesEntityIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary resource, preferably an IANA media type such as text\/html, application\/pdf or video\/mp4. Do not use this for the didactic form; use training_material_type instead.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroNameItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -17154,7 +19325,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .describe(
@@ -17171,9 +19342,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroPrerequisitesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -17182,7 +19356,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()
@@ -17230,9 +19404,12 @@ export const PostApiV1EntitiesEntityIdResponse = zod
             zod
               .object({
                 language: zod
-                  .enum(['en', 'he', 'ar'])
+                  .string()
+                  .regex(
+                    postApiV1EntitiesEntityIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp,
+                  )
                   .describe(
-                    'Languages supported for free-text fields (BCP-47 tags).',
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
                   ),
                 value: zod
                   .string()
@@ -17241,7 +19418,7 @@ export const PostApiV1EntitiesEntityIdResponse = zod
                   ),
               })
               .describe(
-                'A single language-tagged text value. Instances are combined in a multivalued slot to give English\/Hebrew\/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.',
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
               ),
           )
           .nullish()

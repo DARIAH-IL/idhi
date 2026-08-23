@@ -3,7 +3,6 @@ import {
   TrainingMaterialLicense,
   TrainingMaterialTrainingMaterialType,
   TrainingMaterialDigitalHumanitiesActivitiesItem,
-  TrainingMaterialInLanguagesItem,
 } from '@/api/models'
 import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
 import { LangStringField } from '@/components/form-fields/LangStringField'
@@ -53,12 +52,6 @@ export function TrainingMaterialFields() {
       <LangStringField
         name="educational_level"
         label={t('entity.form.fields.educational_level')}
-      />
-      <StringArrayField
-        name="in_languages"
-        label={t('entity.form.fields.in_languages')}
-        placeholder="en"
-        options={TrainingMaterialInLanguagesItem}
       />
       <TextField
         name="material_url"

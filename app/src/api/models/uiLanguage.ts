@@ -5,12 +5,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Languages supported for free-text fields (BCP-47 tags).
- */
-export type Language = (typeof Language)[keyof typeof Language]
+export type UiLanguage = (typeof UiLanguage)[keyof typeof UiLanguage]
 
-export const Language = {
+export const UiLanguage = {
   en: 'en',
   he: 'he',
   ar: 'ar',

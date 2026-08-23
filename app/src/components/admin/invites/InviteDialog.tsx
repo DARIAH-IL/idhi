@@ -7,7 +7,7 @@ import {
   getGetApiV1UsersInvitesQueryKey,
   usePostApiV1UsersInvite,
 } from '@/api/hooks/user-invites/user-invites'
-import { Language } from '@/api/models'
+import { UiLanguage } from '@/api/models'
 import type { UserInviteWrite } from '@/api/models'
 import { Button } from '@/components/ui/button'
 import {
@@ -35,7 +35,7 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [expiryDays, setExpiryDays] = useState('7')
-  const [lang, setLang] = useState<Language>(Language.en)
+  const [lang, setLang] = useState<UiLanguage>(UiLanguage.en)
   const invite = usePostApiV1UsersInvite({
     mutation: {
       onSuccess: () => {
@@ -115,19 +115,19 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
               <Select
                 aria-labelledby="invite-language-label"
                 selectedKey={lang}
-                onSelectionChange={(key) => setLang(key as Language)}
+                onSelectionChange={(key) => setLang(key as UiLanguage)}
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem id={Language.en}>
+                  <SelectItem id={UiLanguage.en}>
                     {t('admin.languages.en')}
                   </SelectItem>
-                  <SelectItem id={Language.he}>
+                  <SelectItem id={UiLanguage.he}>
                     {t('admin.languages.he')}
                   </SelectItem>
-                  <SelectItem id={Language.ar}>
+                  <SelectItem id={UiLanguage.ar}>
                     {t('admin.languages.ar')}
                   </SelectItem>
                 </SelectContent>

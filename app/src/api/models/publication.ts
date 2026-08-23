@@ -31,7 +31,7 @@ export interface Publication {
    */
   description?: PublicationDescriptionItem[] | null
   /**
-   * The publication's persistent identifier. Record it whenever one exists; it is the preferred deduplication key.
+   * The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.
    * @nullable
    * @pattern https://doi.org/.+
    */

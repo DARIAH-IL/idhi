@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import type { Language } from '@/api/models'
+import type { UiLanguage } from '@/api/models'
 
 interface UIState {
-  language: Language
-  setLanguage: (lang: Language) => void
+  language: UiLanguage
+  setLanguage: (lang: UiLanguage) => void
 }
 
 export const useUIStore = create<UIState>()(

@@ -12,7 +12,7 @@ import type { OrganizationOrganizationType } from './organizationOrganizationTyp
 import type { OrganizationType } from './organizationType'
 
 /**
- * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.
+ * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.
  */
 export interface Organization {
   /**

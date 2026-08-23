@@ -12,10 +12,7 @@ export const PostApiV1AuthOtpBody = zod
   })
   .and(
     zod.object({
-      lang: zod
-        .enum(['en', 'he', 'ar'])
-        .optional()
-        .describe('Languages supported for free-text fields (BCP-47 tags).'),
+      lang: zod.enum(['en', 'he', 'ar']).optional(),
     }),
   )
 

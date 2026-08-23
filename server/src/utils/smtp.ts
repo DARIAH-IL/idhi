@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer'
 import type { Bindings } from '../bindings'
 import { inviteEmailContent, otpEmailContent } from '../emails/localization'
-import type { Language } from '../models/language'
 import { requiredValue } from './values'
 import { formatDate } from './date'
+import { UiLanguage } from '../models'
 
 const DEFAULT_SMTP_PORT = 465
 
@@ -74,7 +74,7 @@ export async function sendOtpEmail(
   recipient: string,
   otp: string,
   expiresAtEpoch: number,
-  lang: Language,
+  lang: UiLanguage,
   bindings: Bindings,
 ): Promise<void> {
   const expiration = formatDate(expiresAtEpoch)
@@ -86,7 +86,7 @@ export async function sendOtpEmail(
 export async function sendInviteEmail(
   recipient: string,
   inviteUrl: string,
-  lang: Language,
+  lang: UiLanguage,
   bindings: Bindings,
 ): Promise<void> {
   const { subject, html } = inviteEmailContent(lang, inviteUrl)

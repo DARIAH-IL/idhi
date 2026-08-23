@@ -4,14 +4,16 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ProjectResearchDisciplinesItemLanguage } from './projectResearchDisciplinesItemLanguage'
 
 /**
- * A single language-tagged text value. Instances are combined in a multivalued slot to give English/Hebrew/Arabic variants of one field. Use one LangString per language; do not repeat a language within the same field.
+ * A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.
  */
 export type ProjectResearchDisciplinesItem = {
-  /** Languages supported for free-text fields (BCP-47 tags). */
-  language: ProjectResearchDisciplinesItemLanguage
+  /**
+   * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+   * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+   */
+  language: string
   /** A localized text, in the language given by 'language'. */
   value: string
 }

@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Language } from './language'
+import type { UiLanguage } from './uiLanguage'
 
 export interface UserInviteWrite {
   email: string
@@ -14,5 +14,5 @@ export interface UserInviteWrite {
    * @maximum 30
    */
   expiryDays?: number
-  lang?: Language
+  lang?: UiLanguage
 }

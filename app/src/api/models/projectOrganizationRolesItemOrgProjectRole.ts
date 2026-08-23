@@ -14,6 +14,7 @@ export type ProjectOrganizationRolesItemOrgProjectRole =
 export const ProjectOrganizationRolesItemOrgProjectRole = {
   COORDINATOR: 'COORDINATOR',
   PARTNER: 'PARTNER',
+  DATA_PROVIDER: 'DATA_PROVIDER',
   FUNDER: 'FUNDER',
   HOST: 'HOST',
 } as const

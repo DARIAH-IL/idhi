@@ -628,8 +628,12 @@ components:
           type: string
           format: email
 
-    Language:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/LanguageEnum"
+    UiLanguage:
+      type: string
+      enum:
+        - en
+        - he
+        - ar
 
     AuthOtpStartWrite:
       allOf:
@@ -637,7 +641,7 @@ components:
         - type: object
           properties:
             lang:
-              $ref: "#/components/schemas/Language"
+              $ref: "#/components/schemas/UiLanguage"
 
     AuthOtpChallenge:
       allOf:
@@ -851,7 +855,7 @@ components:
           maximum: 30
           default: 7
         lang:
-          $ref: "#/components/schemas/Language"
+          $ref: "#/components/schemas/UiLanguage"
 
     ErrorCode:
       type: string

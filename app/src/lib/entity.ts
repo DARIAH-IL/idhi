@@ -1,4 +1,4 @@
-import type { AuditedEntity, Entity, Language } from '@/api/models'
+import type { AuditedEntity, Entity, UiLanguage } from '@/api/models'
 import i18n from '@/i18n'
 import { useUIStore } from '@/stores/ui'
 
@@ -31,11 +31,11 @@ const ENTITY_TYPE_METADATA = {
 } as const satisfies Record<EntityType, { idSegment: string }>
 
 interface LocalizedValue {
-  language: Language
+  language: string
   value: string
 }
 
-function getCurrentLanguage(): Language {
+function getCurrentLanguage(): UiLanguage {
   return useUIStore.getState().language
 }
 

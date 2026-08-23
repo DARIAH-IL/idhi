@@ -18,4 +18,5 @@ export const OrganizationOrganizationType = {
   FUNDER: 'FUNDER',
   COMPANY: 'COMPANY',
   NON_PROFIT: 'NON_PROFIT',
+  INFORMAL_GROUP: 'INFORMAL_GROUP',
 } as const

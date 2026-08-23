@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { AuthEmailWrite } from './authEmailWrite'
-import type { Language } from './language'
+import type { UiLanguage } from './uiLanguage'
 
 export type AuthOtpStartWrite = AuthEmailWrite & {
-  lang?: Language
+  lang?: UiLanguage
 }
