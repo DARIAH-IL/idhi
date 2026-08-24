@@ -1,4 +1,5 @@
-import { createConnection, type Connection } from 'mongoose'
+import { createConnection } from 'mongoose'
+import type { Connection } from 'mongoose'
 
 export function connectToDatabase(
   connectionString: string,

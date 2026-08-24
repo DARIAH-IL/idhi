@@ -21,8 +21,12 @@ function isObject(value: unknown): value is JsonObject {
 
 function entityType(properties: JsonObject): unknown {
   const type = properties.type
-  if (!isObject(type)) return undefined
-  if (typeof type.const === 'string') return type.const
+  if (!isObject(type)) {
+    return undefined
+  }
+  if (typeof type.const === 'string') {
+    return type.const
+  }
 
   const values = type.enum
   return Array.isArray(values) && values.length === 1 ? values[0] : undefined
@@ -41,11 +45,15 @@ function entityWriteSchema(
   allowNonEmptyId: boolean,
 ): JsonObject {
   const entity = documentSchemas.Entity
-  if (!isObject(entity)) throw new Error('Entity schema is required')
+  if (!isObject(entity)) {
+    throw new Error('Entity schema is required')
+  }
 
   const oneOf = Object.keys(ENTITY_SCHEMAS).map((name) => {
     const source = documentSchemas[name]
-    if (!isObject(source)) throw new Error(`${name} schema is required`)
+    if (!isObject(source)) {
+      throw new Error(`${name} schema is required`)
+    }
 
     const schema = structuredClone(source)
     if (!isObject(schema.properties)) {
@@ -53,7 +61,9 @@ function entityWriteSchema(
     }
 
     const sourceId = schema.properties.id
-    if (!isObject(sourceId)) throw new Error(`${name}.id is required`)
+    if (!isObject(sourceId)) {
+      throw new Error(`${name}.id is required`)
+    }
 
     schema.required = Array.isArray(schema.required)
       ? schema.required.filter((property) => property !== 'id')
@@ -108,7 +118,9 @@ export default function markEntityIdsReadOnly<T extends JsonObject>(
   const visited = new WeakSet<object>()
 
   function visit(value: unknown): void {
-    if (!value || typeof value !== 'object' || visited.has(value)) return
+    if (!value || typeof value !== 'object' || visited.has(value)) {
+      return
+    }
     visited.add(value)
 
     if (Array.isArray(value)) {
@@ -116,14 +128,19 @@ export default function markEntityIdsReadOnly<T extends JsonObject>(
       return
     }
 
-    const schema = value as JsonObject
+    if (!isObject(value)) {
+      return
+    }
+    const schema = value
     const properties = schema.properties
     if (
       isObject(properties) &&
       ENTITY_TYPES.has(String(entityType(properties)))
     ) {
       const id = properties.id
-      if (isObject(id)) id.readOnly = true
+      if (isObject(id)) {
+        id.readOnly = true
+      }
     }
 
     Object.values(schema).forEach(visit)

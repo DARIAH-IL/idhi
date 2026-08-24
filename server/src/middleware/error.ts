@@ -6,6 +6,10 @@ import { serializeError } from './logger'
 
 const errorCodes = new Set<string>(Object.values(ErrorCode))
 
+function isErrorCode(value: string): value is ErrorResponse['errorCode'] {
+  return errorCodes.has(value)
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
@@ -25,7 +29,7 @@ function readableOriginalError(value: unknown): unknown {
   try {
     return {
       ...nestedError,
-      message: JSON.parse(message) as unknown,
+      message: JSON.parse(message),
     }
   } catch {
     return nestedError
@@ -36,7 +40,7 @@ function declaredErrorResponse(value: unknown): ErrorResponse | undefined {
   if (
     !isRecord(value) ||
     typeof value.errorCode !== 'string' ||
-    !errorCodes.has(value.errorCode) ||
+    !isErrorCode(value.errorCode) ||
     typeof value.message !== 'string' ||
     (value.entityId !== undefined && typeof value.entityId !== 'string')
   ) {
@@ -44,7 +48,7 @@ function declaredErrorResponse(value: unknown): ErrorResponse | undefined {
   }
 
   return {
-    errorCode: value.errorCode as ErrorResponse['errorCode'],
+    errorCode: value.errorCode,
     message: value.message,
     ...(value.entityId === undefined ? {} : { entityId: value.entityId }),
   }

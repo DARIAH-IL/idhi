@@ -1,7 +1,8 @@
 import type { DatabaseService } from '../db/service'
 import type { UserWithCredentials } from '../db/models/UserWithCredentials'
 import { ApiError } from '../errors/ApiError'
-import { serializeError, type RequestLogger } from '../middleware/logger'
+import { serializeError } from '../middleware/logger'
+import type { RequestLogger } from '../middleware/logger'
 import { ErrorCode } from '../models/errorCode'
 import { createId } from './id'
 

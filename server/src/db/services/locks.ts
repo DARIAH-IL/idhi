@@ -1,4 +1,5 @@
-import { mongo, Schema, type Connection } from 'mongoose'
+import { Schema } from 'mongoose'
+import type { Connection } from 'mongoose'
 import { COLLECTIONS } from '../collections'
 import { isDuplicateKeyError } from '../../utils/mongo'
 
@@ -11,14 +12,14 @@ type StoredLock = {
 export interface DistributedLock {
   lockId: string
   expiresAt: Date
-  release(): Promise<boolean>
+  release: () => Promise<boolean>
 }
 
 export interface DistributedLockDatabaseService {
-  tryLock(
+  tryLock: (
     lockId: string,
     ttlMilliseconds: number,
-  ): Promise<DistributedLock | null>
+  ) => Promise<DistributedLock | null>
 }
 
 const lockSchema = new Schema<StoredLock>(
@@ -77,6 +78,7 @@ export async function createDistributedLockDatabaseService(
           )
           .exec()
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!lock) {
           return null
         }

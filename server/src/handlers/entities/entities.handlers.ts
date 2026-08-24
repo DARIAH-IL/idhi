@@ -12,7 +12,7 @@ import { ErrorCode } from '../../models/errorCode'
 import { entityIdMatchesType } from '../../utils/entityId'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
-import {
+import type {
   SearchEntitiesContext,
   CreateEntityContext,
   GetEntityByIdContext,

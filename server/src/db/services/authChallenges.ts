@@ -1,9 +1,5 @@
-import {
-  Schema,
-  type Connection,
-  type HydratedDocument,
-  type ToObjectOptions,
-} from 'mongoose'
+import { Schema } from 'mongoose'
+import type { Connection, HydratedDocument, ToObjectOptions } from 'mongoose'
 import type { AuthChallenge } from '../models/AuthChallenge'
 import { COLLECTIONS } from '../collections'
 
@@ -38,11 +34,11 @@ const authChallengeSchema = new Schema<StoredAuthChallenge>(
 )
 
 export interface AuthChallengeDatabaseService {
-  getById(challengeId: string): Promise<AuthChallenge | null>
-  takeById(challengeId: string): Promise<AuthChallenge | null>
-  insert(challenge: AuthChallenge): Promise<AuthChallenge>
-  update(challenge: AuthChallenge): Promise<AuthChallenge | null>
-  delete(challengeId: string): Promise<boolean>
+  getById: (challengeId: string) => Promise<AuthChallenge | null>
+  takeById: (challengeId: string) => Promise<AuthChallenge | null>
+  insert: (challenge: AuthChallenge) => Promise<AuthChallenge>
+  update: (challenge: AuthChallenge) => Promise<AuthChallenge | null>
+  delete: (challengeId: string) => Promise<boolean>
 }
 
 function exposeAuthChallenge(

@@ -15,7 +15,7 @@ import type { UserWrite } from '../../models/userWrite'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { createId } from '../../utils/id'
 import { zValidator } from '../api.validator'
-import {
+import type {
   ListUsersContext,
   CreateUserContext,
   GetUserByIdContext,

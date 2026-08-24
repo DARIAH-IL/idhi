@@ -61,7 +61,9 @@ export default defineConfig(({ command, mode }) => {
         name: 'patch-bson-objectid-global-scope-crypto',
         renderChunk(code) {
           const target = 'this.PROCESS_UNIQUE = ByteUtils.randomBytes(5);'
-          if (!code.includes(target)) return null
+          if (!code.includes(target)) {
+            return null
+          }
           return {
             code: code.replace(
               target,

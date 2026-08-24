@@ -1,34 +1,22 @@
 import type { Connection } from 'mongoose'
-import {
-  createAuthRateLimitDatabaseService,
-  type AuthRateLimitDatabaseService,
-} from './services/authRateLimits'
-import {
-  createAuthChallengeDatabaseService,
-  type AuthChallengeDatabaseService,
-} from './services/authChallenges'
-import {
-  createDistributedLockDatabaseService,
-  type DistributedLockDatabaseService,
-} from './services/locks'
-import {
-  createEntityDatabaseService,
-  type EntityDatabaseService,
-} from './services/entities'
-import {
-  createUserDatabaseService,
-  type UserDatabaseService,
-} from './services/users'
-import {
-  createUserInviteDatabaseService,
-  type UserInviteDatabaseService,
-} from './services/userInvites'
+import { createAuthRateLimitDatabaseService } from './services/authRateLimits'
+import type { AuthRateLimitDatabaseService } from './services/authRateLimits'
+import { createAuthChallengeDatabaseService } from './services/authChallenges'
+import type { AuthChallengeDatabaseService } from './services/authChallenges'
+import { createDistributedLockDatabaseService } from './services/locks'
+import type { DistributedLockDatabaseService } from './services/locks'
+import { createEntityDatabaseService } from './services/entities'
+import type { EntityDatabaseService } from './services/entities'
+import { createUserDatabaseService } from './services/users'
+import type { UserDatabaseService } from './services/users'
+import { createUserInviteDatabaseService } from './services/userInvites'
+import type { UserInviteDatabaseService } from './services/userInvites'
 
 export interface DatabaseService {
   authChallenges: AuthChallengeDatabaseService
   authRateLimits: AuthRateLimitDatabaseService
   entities: EntityDatabaseService
-  isLive(): Promise<boolean>
+  isLive: () => Promise<boolean>
   locks: DistributedLockDatabaseService
   userInvites: UserInviteDatabaseService
   users: UserDatabaseService

@@ -9,10 +9,10 @@ import {
 } from './middleware/error'
 import generatedRoutes from './routes'
 import { requestLoggerMiddleware } from './middleware/logger'
-import { Bindings } from './bindings'
+import type { Bindings } from './bindings'
 import { requiredValue, splitValues } from './utils/values'
 
-const app = new Hono<{ Bindings: Bindings; Variables: {} }>()
+const app = new Hono<{ Bindings: Bindings }>()
 
 function normalizeOrigin(value: string): string {
   const trimmed = value.trim()

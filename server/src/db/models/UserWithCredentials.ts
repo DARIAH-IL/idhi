@@ -3,7 +3,7 @@ import type {
   Base64URLString,
   CredentialDeviceType,
 } from '@simplewebauthn/server'
-import { User } from '../../models'
+import type { User } from '../../models'
 
 export interface PasskeyCredential {
   id: Base64URLString

@@ -1,9 +1,5 @@
-import {
-  Schema,
-  type Connection,
-  type HydratedDocument,
-  type ToObjectOptions,
-} from 'mongoose'
+import { Schema } from 'mongoose'
+import type { Connection, HydratedDocument, ToObjectOptions } from 'mongoose'
 import type { UserInvite } from '../../models/userInvite'
 import { COLLECTIONS } from '../collections'
 
@@ -38,12 +34,12 @@ const userInviteSchema = new Schema<StoredUserInvite>(
 const emailCollation = { locale: 'en', strength: 2 } as const
 
 export interface UserInviteDatabaseService {
-  listPending(): Promise<UserInvite[]>
-  get(inviteId: string): Promise<UserInvite | null>
-  getByEmail(email: string): Promise<UserInvite | null>
-  add(invite: UserInvite): Promise<UserInvite>
-  delete(inviteId: string): Promise<boolean>
-  takePendingByEmail(email: string): Promise<UserInvite | null>
+  listPending: () => Promise<UserInvite[]>
+  get: (inviteId: string) => Promise<UserInvite | null>
+  getByEmail: (email: string) => Promise<UserInvite | null>
+  add: (invite: UserInvite) => Promise<UserInvite>
+  delete: (inviteId: string) => Promise<boolean>
+  takePendingByEmail: (email: string) => Promise<UserInvite | null>
 }
 
 function normalizeEmail(email: string): string {

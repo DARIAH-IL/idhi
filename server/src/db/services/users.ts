@@ -1,10 +1,6 @@
 import { Buffer } from 'node:buffer'
-import {
-  Schema,
-  type Connection,
-  type HydratedDocument,
-  type ToObjectOptions,
-} from 'mongoose'
+import { Schema } from 'mongoose'
+import type { Connection, HydratedDocument, ToObjectOptions } from 'mongoose'
 import type {
   PasskeyCredential,
   UserWithCredentials,
@@ -65,23 +61,26 @@ const userSchema = new Schema<StoredUser>(
 const emailCollation = { locale: 'en', strength: 2 } as const
 
 export interface UserDatabaseService {
-  list(page: number, pageSize: number): Promise<UserListResult>
-  get(userId: string): Promise<UserWithCredentials | null>
-  getPasskeyCredentials(userId: string): Promise<PasskeyCredential[]>
-  getByEmail(email: string): Promise<UserWithCredentials | null>
-  insert(user: UserWithCredentials): Promise<UserWithCredentials>
-  update(user: UserWithCredentials): Promise<UserWithCredentials | null>
-  enrollPasskeyCredential(
+  list: (page: number, pageSize: number) => Promise<UserListResult>
+  get: (userId: string) => Promise<UserWithCredentials | null>
+  getPasskeyCredentials: (userId: string) => Promise<PasskeyCredential[]>
+  getByEmail: (email: string) => Promise<UserWithCredentials | null>
+  insert: (user: UserWithCredentials) => Promise<UserWithCredentials>
+  update: (user: UserWithCredentials) => Promise<UserWithCredentials | null>
+  enrollPasskeyCredential: (
     userId: string,
     credential: PasskeyCredential,
-  ): Promise<'enrolled' | 'duplicate' | 'userNotFound'>
-  replacePasskeyCredential(
+  ) => Promise<'enrolled' | 'duplicate' | 'userNotFound'>
+  replacePasskeyCredential: (
     userId: string,
     replacingCredentialId: string,
     credential: PasskeyCredential,
-  ): Promise<'replaced' | 'duplicate' | 'credentialNotFound' | 'userNotFound'>
-  replace(userId: string, user: UserWrite): Promise<UserWithCredentials | null>
-  delete(userId: string): Promise<boolean>
+  ) => Promise<'replaced' | 'duplicate' | 'credentialNotFound' | 'userNotFound'>
+  replace: (
+    userId: string,
+    user: UserWrite,
+  ) => Promise<UserWithCredentials | null>
+  delete: (userId: string) => Promise<boolean>
 }
 
 function normalizeEmail(email: string): string {

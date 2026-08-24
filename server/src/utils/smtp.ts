@@ -3,7 +3,7 @@ import type { Bindings } from '../bindings'
 import { inviteEmailContent, otpEmailContent } from '../emails/localization'
 import { requiredValue } from './values'
 import { formatDate } from './date'
-import { UiLanguage } from '../models'
+import type { UiLanguage } from '../models'
 
 const DEFAULT_SMTP_PORT = 465
 

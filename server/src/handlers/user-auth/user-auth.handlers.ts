@@ -10,14 +10,17 @@ import {
   generateRegistrationOptions,
   verifyAuthenticationResponse,
   verifyRegistrationResponse,
-  type AuthenticationResponseJSON,
-  type RegistrationResponseJSON,
+} from '@simplewebauthn/server'
+import type {
+  AuthenticationResponseJSON,
+  RegistrationResponseJSON,
 } from '@simplewebauthn/server'
 import type { DatabaseService } from '../../db/service'
 import type { AuthChallenge } from '../../db/models/AuthChallenge'
 import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
-import { serializeError, type RequestLogger } from '../../middleware/logger'
+import { serializeError } from '../../middleware/logger'
+import type { RequestLogger } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
 import { createAuthLink } from '../../utils/authLink'
 import { createId } from '../../utils/id'
@@ -35,7 +38,7 @@ import {
 } from '../../utils/authRateLimit'
 import { requiredValue, splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator'
-import {
+import type {
   StartOtpChallengeContext,
   CompleteOtpChallengeContext,
   StartPasskeyRegistrationContext,

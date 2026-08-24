@@ -1,9 +1,9 @@
 import type { MiddlewareHandler } from 'hono'
 
 export type RequestLogger = {
-  debug(message: string, attributes: Record<string, unknown>): void
-  warn(message: string, attributes: Record<string, unknown>): void
-  error(message: string, attributes: Record<string, unknown>): void
+  debug: (message: string, attributes: Record<string, unknown>) => void
+  warn: (message: string, attributes: Record<string, unknown>) => void
+  error: (message: string, attributes: Record<string, unknown>) => void
 }
 
 export function serializeError(error: unknown): Record<string, unknown> {
@@ -27,6 +27,7 @@ function log(
   requestId: string,
   attributes: Record<string, unknown>,
 ): void {
+  // eslint-disable-next-line no-console
   console[level](
     JSON.stringify({
       level,

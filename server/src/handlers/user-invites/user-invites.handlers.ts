@@ -17,7 +17,7 @@ import { createOtp, otpDigits } from '../../utils/otp'
 import { sendInviteEmail } from '../../utils/smtp'
 import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator'
-import {
+import type {
   InviteUserContext,
   ListUserInvitesContext,
   RevokeUserInviteByIdContext,

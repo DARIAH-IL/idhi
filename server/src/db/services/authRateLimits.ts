@@ -1,4 +1,5 @@
-import { Schema, type Connection } from 'mongoose'
+import { Schema } from 'mongoose'
+import type { Connection } from 'mongoose'
 import { COLLECTIONS } from '../collections'
 
 type StoredAuthRateLimit = {
@@ -13,12 +14,12 @@ export type AuthRateLimitResult = {
 }
 
 export interface AuthRateLimitDatabaseService {
-  consume(
+  consume: (
     scope: string,
     identity: string,
     limit: number,
     windowMilliseconds: number,
-  ): Promise<AuthRateLimitResult>
+  ) => Promise<AuthRateLimitResult>
 }
 
 const authRateLimitSchema = new Schema<StoredAuthRateLimit>(
@@ -68,6 +69,7 @@ export async function createAuthRateLimitDatabaseService(
         )
         .exec()
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!counter) {
         throw new Error('Authentication rate limit counter was not created')
       }

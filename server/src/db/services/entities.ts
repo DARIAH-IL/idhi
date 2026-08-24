@@ -1,9 +1,9 @@
-import {
-  type Connection,
-  type HydratedDocument,
-  type QueryFilter,
-  Schema,
-  type ToObjectOptions,
+import { Schema } from 'mongoose'
+import type {
+  Connection,
+  HydratedDocument,
+  QueryFilter,
+  ToObjectOptions,
 } from 'mongoose'
 import type {
   AuditedEntity,
@@ -49,22 +49,22 @@ export interface EntitySearchResult {
 }
 
 export interface EntityDatabaseService {
-  search(
+  search: (
     query: string | undefined,
     facets: FilterableField[] | undefined,
     filter: EntityFilter | undefined,
     sort: SortCriterion[] | undefined,
     page: number,
     pageSize: number,
-  ): Promise<EntitySearchResult>
-  get(entityId: string): Promise<AuditedEntity | null>
-  insert(entity: EntityWrite, userId: string): Promise<AuditedEntity>
-  replace(
+  ) => Promise<EntitySearchResult>
+  get: (entityId: string) => Promise<AuditedEntity | null>
+  insert: (entity: EntityWrite, userId: string) => Promise<AuditedEntity>
+  replace: (
     entityId: string,
     entity: EntityWrite,
     userId: string,
-  ): Promise<AuditedEntity | null>
-  delete(entityId: string, userId: string): Promise<boolean>
+  ) => Promise<AuditedEntity | null>
+  delete: (entityId: string, userId: string) => Promise<boolean>
 }
 
 const serializationOptions: ToObjectOptions<StoredEntity> = {
@@ -174,7 +174,9 @@ function toMongoSort(
       criterion.direction === 'asc' ? 1 : -1,
     )
   }
-  if (!fields.has('_id')) fields.set('_id', 1)
+  if (!fields.has('_id')) {
+    fields.set('_id', 1)
+  }
 
   return Object.fromEntries(fields)
 }

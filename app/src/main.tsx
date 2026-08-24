@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { QueryParamProvider } from 'use-query-params'
 import type { QueryParamAdapterComponent } from 'use-query-params'
-import { subscribeToAuthStorage } from '@/stores/auth'
-import { useEffect } from 'react'
+import { useAuthStorageSync } from '@/stores/auth'
+import { useUIStorageSync } from '@/stores/ui'
 import { useLanguageQueryParam } from '@/hooks/useLanguageQueryParam'
 import { useAuthLinkQueryParams } from '@/hooks/useAuthLinkQueryParams'
 import { getRouter } from './router'
@@ -28,7 +28,8 @@ const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
 }
 
 function App() {
-  useEffect(() => subscribeToAuthStorage(), [])
+  useAuthStorageSync()
+  useUIStorageSync()
   useLanguageQueryParam()
   useAuthLinkQueryParams()
 

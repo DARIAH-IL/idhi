@@ -8,6 +8,8 @@ interface PasskeyState {
   clearCredential: () => void
 }
 
+const PASSKEY_STORAGE_KEY = 'idhi-passkey'
+
 export const usePasskeyStore = create<PasskeyState>()(
   persist(
     (set) => ({
@@ -16,6 +18,6 @@ export const usePasskeyStore = create<PasskeyState>()(
       setCredential: (credentialId, email) => set({ credentialId, email }),
       clearCredential: () => set({ credentialId: null, email: null }),
     }),
-    { name: 'idhi-passkey' },
+    { name: PASSKEY_STORAGE_KEY },
   ),
 )

@@ -1,4 +1,4 @@
-import { UiLanguage } from '../models'
+import type { UiLanguage } from '../models'
 
 export type AuthLinkFlow = 'invite' | 'otp'
 

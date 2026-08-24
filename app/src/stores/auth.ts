@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import type { User } from '@/api/models'
+import { useStorageSync } from '@/hooks/useStorageSync'
+import { userFromToken } from '#/lib/token.ts'
 
 interface AuthState {
   token: string | null
@@ -14,53 +16,8 @@ type PersistedAuthState = Pick<AuthState, 'token' | 'user'>
 
 const AUTH_STORAGE_KEY = 'idhi-auth'
 
-function userFromToken(token: string): User | null {
-  try {
-    const encodedPayload = token.split('.')[1]
-    if (!encodedPayload) {
-      return null
-    }
-
-    const base64 = encodedPayload.replace(/-/g, '+').replace(/_/g, '/')
-    const paddedBase64 = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')
-    const bytes = Uint8Array.from(atob(paddedBase64), (character) =>
-      character.charCodeAt(0),
-    )
-    const payload: unknown = JSON.parse(new TextDecoder().decode(bytes))
-
-    if (
-      typeof payload !== 'object' ||
-      payload === null ||
-      !('id' in payload) ||
-      typeof payload.id !== 'string' ||
-      !payload.id.startsWith('idhi:user:') ||
-      !('email' in payload) ||
-      typeof payload.email !== 'string' ||
-      !('isAdmin' in payload) ||
-      typeof payload.isAdmin !== 'boolean' ||
-      ('name' in payload &&
-        payload.name !== undefined &&
-        typeof payload.name !== 'string')
-    ) {
-      return null
-    }
-
-    return {
-      id: payload.id,
-      email: payload.email,
-      isAdmin: payload.isAdmin,
-      ...('name' in payload && typeof payload.name === 'string'
-        ? { name: payload.name }
-        : {}),
-    }
-  } catch {
-    return null
-  }
-}
-
 function sessionFromToken(token: string): PersistedAuthState {
   const user = userFromToken(token)
-
   return user ? { token, user } : { token: null, user: null }
 }
 
@@ -74,40 +31,11 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: AUTH_STORAGE_KEY,
-      version: 1,
       partialize: ({ token, user }) => ({ token, user }),
-      migrate: (persistedState) => {
-        const token =
-          typeof persistedState === 'object' &&
-          persistedState !== null &&
-          'token' in persistedState &&
-          typeof persistedState.token === 'string'
-            ? persistedState.token
-            : null
-
-        return token ? sessionFromToken(token) : { token: null, user: null }
-      },
     },
   ),
 )
 
-export function subscribeToAuthStorage(): () => void {
-  const handleStorage = (event: StorageEvent) => {
-    if (
-      event.key !== AUTH_STORAGE_KEY ||
-      event.storageArea !== window.localStorage
-    ) {
-      return
-    }
-
-    if (event.newValue === null) {
-      useAuthStore.getState().logout()
-      return
-    }
-
-    void useAuthStore.persist.rehydrate()
-  }
-
-  window.addEventListener('storage', handleStorage)
-  return () => window.removeEventListener('storage', handleStorage)
+export function useAuthStorageSync() {
+  useStorageSync(useAuthStore, () => useAuthStore.getState().logout())
 }
