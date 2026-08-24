@@ -20,7 +20,9 @@ interface TimeAgoProps {
 export function TimeAgo({ date }: TimeAgoProps) {
   const language = useUIStore((state) => state.language)
 
-  if (!date) return '—'
+  if (!date) {
+    return '—'
+  }
 
   const d = new Date(date)
   const title = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`

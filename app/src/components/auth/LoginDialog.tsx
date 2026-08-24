@@ -71,7 +71,9 @@ export function LoginDialog({
   }
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) reset()
+    if (!open) {
+      reset()
+    }
     onOpenChange(open)
   }
 
@@ -143,7 +145,9 @@ export function LoginDialog({
   })
 
   useEffect(() => {
-    if (!authLinkParams) return
+    if (!authLinkParams) {
+      return
+    }
     isAuthLinkMode.current = true
     setIsInviteFlow(authLinkParams.flow === 'invite')
     setStep('loading')
@@ -155,7 +159,9 @@ export function LoginDialog({
 
   const startEmailLogin = (loginEmail: string) => {
     const normalizedEmail = loginEmail.trim()
-    if (!normalizedEmail) return
+    if (!normalizedEmail) {
+      return
+    }
 
     setEmail(normalizedEmail)
     setError(null)

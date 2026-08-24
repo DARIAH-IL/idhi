@@ -26,10 +26,15 @@ export function InvitesTable({
 }) {
   const { t, i18n } = useTranslation()
 
-  if (isPending) return <AdminTableState message={t('admin.invites.loading')} />
-  if (isError) return <AdminTableError onRetry={onRetry} />
-  if (invites.length === 0)
+  if (isPending) {
+    return <AdminTableState message={t('admin.invites.loading')} />
+  }
+  if (isError) {
+    return <AdminTableError onRetry={onRetry} />
+  }
+  if (invites.length === 0) {
     return <AdminTableState message={t('admin.invites.empty')} />
+  }
 
   const formatDate = (value: string) =>
     new Intl.DateTimeFormat(i18n.resolvedLanguage, {

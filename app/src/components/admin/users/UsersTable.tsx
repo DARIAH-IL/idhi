@@ -31,10 +31,15 @@ export function UsersTable({
 }) {
   const { t } = useTranslation()
 
-  if (isPending) return <AdminTableState message={t('admin.users.loading')} />
-  if (isError) return <AdminTableError onRetry={onRetry} />
-  if (users.length === 0)
+  if (isPending) {
+    return <AdminTableState message={t('admin.users.loading')} />
+  }
+  if (isError) {
+    return <AdminTableError onRetry={onRetry} />
+  }
+  if (users.length === 0) {
     return <AdminTableState message={t('admin.users.empty')} />
+  }
 
   return (
     <Table aria-label={t('admin.users.table_label')}>

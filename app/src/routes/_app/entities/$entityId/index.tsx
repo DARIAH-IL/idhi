@@ -59,11 +59,13 @@ function EntityDetailPage() {
   const { audit, ...raw } = entity
 
   const renderValue = (v: unknown): React.ReactNode => {
-    if (v === null || v === undefined)
+    if (v === null || v === undefined) {
       return <span className="text-muted-foreground">—</span>
+    }
     if (Array.isArray(v)) {
-      if (v.length === 0)
+      if (v.length === 0) {
         return <span className="text-muted-foreground">—</span>
+      }
       return (
         <div className="flex flex-col gap-0.5">
           {v.map((item, i) => (

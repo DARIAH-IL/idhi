@@ -14,7 +14,9 @@ export const Route = createFileRoute('/_app/admin')({
 function AdminPage() {
   const isAdmin = useAuthStore((state) => state.user?.isAdmin === true)
 
-  if (!isAdmin) return <Navigate to="/entities" replace />
+  if (!isAdmin) {
+    return <Navigate to="/entities" replace />
+  }
 
   return <AdminManagementPage />
 }

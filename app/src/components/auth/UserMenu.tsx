@@ -17,7 +17,9 @@ export function UserMenu() {
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
 
-  if (!user) return null
+  if (!user) {
+    return null
+  }
 
   return (
     <MenuTrigger>

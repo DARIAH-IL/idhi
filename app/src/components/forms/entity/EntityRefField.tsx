@@ -92,7 +92,9 @@ export function EntityRefArrayField({
       ))}
       <EntityPicker
         onChange={(id) => {
-          if (!values.includes(id)) field.pushValue(id)
+          if (!values.includes(id)) {
+            field.pushValue(id)
+          }
         }}
         entityTypes={entityTypes}
       />

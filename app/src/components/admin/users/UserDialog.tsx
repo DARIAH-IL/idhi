@@ -59,8 +59,11 @@ export function UserDialog({
       ...(name.trim() ? { name: name.trim() } : {}),
     }
 
-    if (user) update.mutate({ userId: user.id, data })
-    else create.mutate({ data })
+    if (user) {
+      update.mutate({ userId: user.id, data })
+    } else {
+      create.mutate({ data })
+    }
   }
 
   return (

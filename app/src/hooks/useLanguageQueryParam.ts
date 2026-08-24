@@ -16,9 +16,13 @@ export function useLanguageQueryParam() {
   const setLanguage = useUIStore((state) => state.setLanguage)
 
   useEffect(() => {
-    if (language == null) return
+    if (language == null) {
+      return
+    }
 
-    if (isLanguage(language)) setLanguage(language)
+    if (isLanguage(language)) {
+      setLanguage(language)
+    }
     setLanguageQueryParam(undefined, 'replaceIn')
   }, [language, setLanguage, setLanguageQueryParam])
 }

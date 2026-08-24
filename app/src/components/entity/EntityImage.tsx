@@ -13,20 +13,33 @@ function inferImageMimeType(base64: string): string | undefined {
     const prefix = atob(base64.slice(0, 256))
     const trimmedPrefix = prefix.trimStart()
 
-    if (prefix.startsWith('\x89PNG\r\n\x1a\n')) return 'image/png'
-    if (prefix.startsWith('\xff\xd8\xff')) return 'image/jpeg'
-    if (prefix.startsWith('GIF87a') || prefix.startsWith('GIF89a'))
+    if (prefix.startsWith('\x89PNG\r\n\x1a\n')) {
+      return 'image/png'
+    }
+    if (prefix.startsWith('\xff\xd8\xff')) {
+      return 'image/jpeg'
+    }
+    if (prefix.startsWith('GIF87a') || prefix.startsWith('GIF89a')) {
       return 'image/gif'
-    if (prefix.startsWith('RIFF') && prefix.slice(8, 12) === 'WEBP')
+    }
+    if (prefix.startsWith('RIFF') && prefix.slice(8, 12) === 'WEBP') {
       return 'image/webp'
-    if (prefix.startsWith('BM')) return 'image/bmp'
-    if (prefix.startsWith('\x00\x00\x01\x00')) return 'image/x-icon'
+    }
+    if (prefix.startsWith('BM')) {
+      return 'image/bmp'
+    }
+    if (prefix.startsWith('\x00\x00\x01\x00')) {
+      return 'image/x-icon'
+    }
     if (
       trimmedPrefix.startsWith('<svg') ||
       (trimmedPrefix.startsWith('<?xml') && trimmedPrefix.includes('<svg'))
-    )
+    ) {
       return 'image/svg+xml'
-    if (prefix.slice(4, 12).includes('ftypavif')) return 'image/avif'
+    }
+    if (prefix.slice(4, 12).includes('ftypavif')) {
+      return 'image/avif'
+    }
   } catch {
     return undefined
   }
@@ -35,7 +48,9 @@ function inferImageMimeType(base64: string): string | undefined {
 }
 
 function imageSource(image: string): string {
-  if (image.startsWith('data:image/')) return image
+  if (image.startsWith('data:image/')) {
+    return image
+  }
 
   const base64 = image.replace(/\s/g, '')
   const mimeType = inferImageMimeType(base64) ?? 'application/octet-stream'

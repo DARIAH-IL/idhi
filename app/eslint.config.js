@@ -24,6 +24,7 @@ export default [
       'no-console': 'error',
       'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }],
       '@typescript-eslint/no-unnecessary-condition': 'warn',
+      curly: ['error', 'all'],
     },
   },
   {

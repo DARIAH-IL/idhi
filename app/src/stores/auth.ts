@@ -17,7 +17,9 @@ const AUTH_STORAGE_KEY = 'idhi-auth'
 function userFromToken(token: string): User | null {
   try {
     const encodedPayload = token.split('.')[1]
-    if (!encodedPayload) return null
+    if (!encodedPayload) {
+      return null
+    }
 
     const base64 = encodedPayload.replace(/-/g, '+').replace(/_/g, '/')
     const paddedBase64 = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')

@@ -26,12 +26,18 @@ function isErrorCode(value: unknown): value is ErrorCode {
 }
 
 export function getApiErrorResponse(error: unknown): ErrorResponse | undefined {
-  if (!axios.isAxiosError(error)) return undefined
+  if (!axios.isAxiosError(error)) {
+    return undefined
+  }
 
   const data: unknown = error.response?.data
-  if (!data || typeof data !== 'object') return undefined
+  if (!data || typeof data !== 'object') {
+    return undefined
+  }
 
-  if (!('errorCode' in data) || !('message' in data)) return undefined
+  if (!('errorCode' in data) || !('message' in data)) {
+    return undefined
+  }
   const { errorCode, message } = data
   if (typeof message !== 'string' || !isErrorCode(errorCode)) {
     return undefined
@@ -48,7 +54,9 @@ export function getApiErrorResponse(error: unknown): ErrorResponse | undefined {
 
 export function getApiErrorMessage(error: unknown): string {
   const response = getApiErrorResponse(error)
-  if (response) return i18n.t(errorTranslationKeys[response.errorCode])
+  if (response) {
+    return i18n.t(errorTranslationKeys[response.errorCode])
+  }
 
   return i18n.t(
     axios.isAxiosError(error) && !error.response

@@ -17,7 +17,9 @@ import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/new')({
   beforeLoad: () => {
-    if (!useAuthStore.getState().token) throw redirect({ to: '/entities' })
+    if (!useAuthStore.getState().token) {
+      throw redirect({ to: '/entities' })
+    }
   },
   component: NewEntityPage,
 })
@@ -42,7 +44,9 @@ function NewEntityPage() {
     },
   })
 
-  if (!token) return <Navigate to="/entities" replace />
+  if (!token) {
+    return <Navigate to="/entities" replace />
+  }
 
   if (!selectedType) {
     return (

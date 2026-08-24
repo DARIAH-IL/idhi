@@ -48,7 +48,9 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
             aria-label={t('entity.form.fields.image')}
             onChange={(event) => {
               const file = event.target.files?.[0]
-              if (!file) return
+              if (!file) {
+                return
+              }
               if (!file.type.startsWith('image/')) {
                 setError(t('entity.form.image_error'))
                 return
@@ -69,7 +71,9 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
               className="self-start"
               onPress={() => {
                 field.handleChange(undefined)
-                if (inputRef.current) inputRef.current.value = ''
+                if (inputRef.current) {
+                  inputRef.current.value = ''
+                }
               }}
             >
               {t('entity.form.remove_image')}

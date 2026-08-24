@@ -93,8 +93,12 @@ function buildFacetFilter(facetFilters: FacetFilters | undefined) {
     }
   }
 
-  if (clauses.length === 0) return undefined
-  if (clauses.length === 1) return clauses[0]
+  if (clauses.length === 0) {
+    return undefined
+  }
+  if (clauses.length === 1) {
+    return clauses[0]
+  }
   return { and: clauses } satisfies Filter
 }
 
@@ -199,7 +203,9 @@ function EntityBoard() {
 
   const handleSortChange = (descriptor: SortDescriptor) => {
     const property = sortPropertySchema.safeParse(descriptor.column)
-    if (!property.success) return
+    if (!property.success) {
+      return
+    }
 
     updateSearch({
       sort: {
@@ -211,7 +217,9 @@ function EntityBoard() {
 
   const clearSearch = () => {
     setSearchInput('')
-    if (q) updateSearch({ q: undefined })
+    if (q) {
+      updateSearch({ q: undefined })
+    }
     searchInputRef.current?.focus()
   }
 
@@ -494,7 +502,9 @@ function EntityBoard() {
                     <TableLoadMoreItem
                       isLoading={isFetchingNextPage}
                       onLoadMore={() => {
-                        if (!isFetchingNextPage) void fetchNextPage()
+                        if (!isFetchingNextPage) {
+                          void fetchNextPage()
+                        }
                       }}
                     >
                       {t('common.loading')}

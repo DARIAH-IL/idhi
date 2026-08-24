@@ -36,7 +36,9 @@ function AppLayout() {
   }, [t])
 
   useEffect(() => {
-    if (authLinkConsumedRef.current) return
+    if (authLinkConsumedRef.current) {
+      return
+    }
     authLinkConsumedRef.current = true
     const { challengeId, otp, flow, clear } = useAuthLinkStore.getState()
     if (challengeId && otp && flow) {
@@ -79,7 +81,9 @@ function AppLayout() {
         isOpen={loginOpen}
         onOpenChange={(open) => {
           setLoginOpen(open)
-          if (!open) setAuthLinkParams(null)
+          if (!open) {
+            setAuthLinkParams(null)
+          }
         }}
         authLinkParams={authLinkParams}
       />

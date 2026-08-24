@@ -97,7 +97,9 @@ export function usePasskeyLogin({
   const [busy, setBusy] = useState(false)
 
   const login = async () => {
-    if (!credentialId || !email || busy) return
+    if (!credentialId || !email || busy) {
+      return
+    }
     setBusy(true)
 
     try {
@@ -161,7 +163,9 @@ export function usePasskeyEnroll({
     accountEmail: string,
     replacingCredentialId?: string,
   ) => {
-    if (busy) return
+    if (busy) {
+      return
+    }
     setBusy(true)
 
     try {

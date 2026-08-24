@@ -28,8 +28,9 @@ export function isEmpty(value: unknown) {
 }
 
 export function validateValue(value: unknown, options: ValidationOptions = {}) {
-  if (isEmpty(value))
+  if (isEmpty(value)) {
     return options.required ? 'This field is required.' : undefined
+  }
 
   const text = String(value)
   switch (options.kind) {
@@ -53,10 +54,14 @@ export function validateValue(value: unknown, options: ValidationOptions = {}) {
         ? undefined
         : 'Enter a full DOI URL.'
     case 'integer':
-      if (!Number.isInteger(Number(value))) return 'Enter a whole number.'
+      if (!Number.isInteger(Number(value))) {
+        return 'Enter a whole number.'
+      }
       break
     case 'number':
-      if (!Number.isFinite(Number(value))) return 'Enter a number.'
+      if (!Number.isFinite(Number(value))) {
+        return 'Enter a number.'
+      }
       break
     case 'entityId': {
       const segments =
@@ -98,7 +103,9 @@ export function enumValidators(
   return {
     onSubmit: ({ value }: ValueContext) => {
       const requiredError = validateValue(value, { required })
-      if (requiredError) return requiredError
+      if (requiredError) {
+        return requiredError
+      }
       return value && !Object.hasOwn(options, String(value))
         ? 'Choose a supported value.'
         : undefined
@@ -113,15 +120,21 @@ export function stringArrayValidators(
 ) {
   return {
     onSubmit: ({ value }: ValueContext) => {
-      if (value == null) return undefined
-      if (!Array.isArray(value)) return 'Enter a valid list.'
+      if (value == null) {
+        return undefined
+      }
+      if (!Array.isArray(value)) {
+        return 'Enter a valid list.'
+      }
 
       for (const item of value) {
         const formatError = validateValue(item, {
           required: true,
           kind: options.kind,
         })
-        if (formatError) return formatError
+        if (formatError) {
+          return formatError
+        }
         if (
           options.allowedValues &&
           !Object.hasOwn(options.allowedValues, String(item))
@@ -137,9 +150,15 @@ export function stringArrayValidators(
 export function localizedValueValidators(required = false) {
   return {
     onSubmit: ({ value }: ValueContext) => {
-      if (value == null) return required ? 'Add at least one value.' : undefined
-      if (!Array.isArray(value)) return 'Enter a valid multilingual value.'
-      if (required && value.length === 0) return 'Add at least one value.'
+      if (value == null) {
+        return required ? 'Add at least one value.' : undefined
+      }
+      if (!Array.isArray(value)) {
+        return 'Enter a valid multilingual value.'
+      }
+      if (required && value.length === 0) {
+        return 'Add at least one value.'
+      }
 
       const languages: unknown[] = []
       for (const item of value) {
@@ -188,8 +207,12 @@ export function entityRefValidators(
 export function entityRefArrayValidators(entityTypes: EntityType[]) {
   return {
     onSubmit: ({ value }: ValueContext) => {
-      if (value == null) return undefined
-      if (!Array.isArray(value)) return 'Choose valid entities.'
+      if (value == null) {
+        return undefined
+      }
+      if (!Array.isArray(value)) {
+        return 'Choose valid entities.'
+      }
       if (new Set(value).size !== value.length) {
         return 'Choose each entity only once.'
       }

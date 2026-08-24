@@ -479,71 +479,81 @@ function TrainingMaterialForm(props: TypedFormProps<TrainingMaterial>) {
 export function EntityForm({ entityType, defaultValues, ...props }: Props) {
   switch (entityType) {
     case 'idhi:Person': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <PersonForm {...props} defaultValues={personDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <PersonForm {...props} defaultValues={values} />
     }
     case 'idhi:Organization': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return (
           <OrganizationForm {...props} defaultValues={organizationDefaults} />
         )
+      }
       const { audit: _audit, ...values } = defaultValues
       return <OrganizationForm {...props} defaultValues={values} />
     }
     case 'idhi:Facility': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <FacilityForm {...props} defaultValues={facilityDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <FacilityForm {...props} defaultValues={values} />
     }
     case 'idhi:Project': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <ProjectForm {...props} defaultValues={projectDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <ProjectForm {...props} defaultValues={values} />
     }
     case 'idhi:Tool': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <ToolForm {...props} defaultValues={toolDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <ToolForm {...props} defaultValues={values} />
     }
     case 'idhi:Service': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <ServiceForm {...props} defaultValues={serviceDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <ServiceForm {...props} defaultValues={values} />
     }
     case 'idhi:Publication': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return (
           <PublicationForm {...props} defaultValues={publicationDefaults} />
         )
+      }
       const { audit: _audit, ...values } = defaultValues
       return <PublicationForm {...props} defaultValues={values} />
     }
     case 'idhi:Event': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <EventForm {...props} defaultValues={eventDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <EventForm {...props} defaultValues={values} />
     }
     case 'idhi:Dataset': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return <DatasetForm {...props} defaultValues={datasetDefaults} />
+      }
       const { audit: _audit, ...values } = defaultValues
       return <DatasetForm {...props} defaultValues={values} />
     }
     case 'idhi:TrainingMaterial': {
-      if (defaultValues?.type !== entityType)
+      if (defaultValues?.type !== entityType) {
         return (
           <TrainingMaterialForm
             {...props}
             defaultValues={trainingMaterialDefaults}
           />
         )
+      }
       const { audit: _audit, ...values } = defaultValues
       return <TrainingMaterialForm {...props} defaultValues={values} />
     }

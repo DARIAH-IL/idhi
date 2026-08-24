@@ -5,7 +5,9 @@ import type { AuthLinkFlow } from '@/stores/auth-link'
 import { QUERY_PARAMS } from '@/lib/queryParams'
 
 function authLinkFlow(value: string | null): AuthLinkFlow | null {
-  if (value === 'invite' || value === 'otp') return value
+  if (value === 'invite' || value === 'otp') {
+    return value
+  }
   return value === null ? 'invite' : null
 }
 

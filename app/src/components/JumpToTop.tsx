@@ -24,7 +24,9 @@ export function JumpToTop() {
     }
   }, [])
 
-  if (!isVisible) return null
+  if (!isVisible) {
+    return null
+  }
 
   const scrollToTop = () => {
     const reduceMotion = window.matchMedia(
