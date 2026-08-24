@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import { PersonAffiliationsItemAffiliationRole } from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+import { PersonAffiliationsItemAffiliationRole } from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { personFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { personFormOptions } from '../entity-form-options.ts'
 
 export const PersonFields = withForm({
   ...personFormOptions,

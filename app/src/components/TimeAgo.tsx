@@ -6,6 +6,7 @@ import hebrewStrings from 'react-timeago/language-strings/he'
 import type { Formatter } from 'react-timeago'
 import type { UiLanguage } from '@/api/models'
 import { useUIStore } from '@/stores/ui'
+import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
 const formatters = {
   en: buildFormatter(englishStrings),
@@ -25,9 +26,14 @@ export function TimeAgo({ date }: TimeAgoProps) {
   }
 
   const d = new Date(date)
-  const title = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+  const label = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
 
   return (
-    <ReactTimeAgo date={date} formatter={formatters[language]} title={title} />
+    <TooltipTrigger>
+      <span aria-label={label}>
+        <ReactTimeAgo date={date} formatter={formatters[language]} title="" />
+      </span>
+      <Tooltip>{label}</Tooltip>
+    </TooltipTrigger>
   )
 }

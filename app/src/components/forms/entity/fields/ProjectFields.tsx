@@ -4,8 +4,8 @@ import {
   ProjectFundingStatus,
   ProjectOrganizationRolesItemOrgProjectRole,
   ProjectProjectParticipationsItemParticipationRole,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -13,8 +13,8 @@ import {
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { projectFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { projectFormOptions } from '../entity-form-options.ts'
 
 export const ProjectFields = withForm({
   ...projectFormOptions,

@@ -4,16 +4,16 @@ import {
   ToolLicense,
   ToolResourceContributionsItemResourceContributionRole,
   ToolToolType,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { toolFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { toolFormOptions } from '../entity-form-options.ts'
 
 export const ToolFields = withForm({
   ...toolFormOptions,

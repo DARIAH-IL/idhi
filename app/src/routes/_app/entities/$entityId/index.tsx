@@ -19,10 +19,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
+import { renderEntityValue } from './renderEntityValue'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
@@ -57,44 +57,6 @@ function EntityDetailPage() {
   }
 
   const { audit, ...raw } = entity
-
-  const renderValue = (v: unknown): React.ReactNode => {
-    if (v === null || v === undefined) {
-      return <span className="text-muted-foreground">—</span>
-    }
-    if (Array.isArray(v)) {
-      if (v.length === 0) {
-        return <span className="text-muted-foreground">—</span>
-      }
-      return (
-        <div className="flex flex-col gap-0.5">
-          {v.map((item, i) => (
-            <div key={i}>{renderValue(item)}</div>
-          ))}
-        </div>
-      )
-    }
-    if (typeof v === 'object') {
-      return (
-        <div className="flex flex-col gap-0.5 rounded border p-1.5 text-xs">
-          {Object.entries(v)
-            .filter(([, val]) => val !== null && val !== undefined)
-            .map(([key, val]) => (
-              <div key={key} className="flex gap-2">
-                <span className="font-medium text-muted-foreground min-w-24">
-                  {key}
-                </span>
-                <span className="min-w-0 flex-1">{renderValue(val)}</span>
-              </div>
-            ))}
-        </div>
-      )
-    }
-    if (typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)) {
-      return <EntityReferenceCard entityId={v} />
-    }
-    return String(v)
-  }
 
   const skipKeys = new Set(['type', 'id', 'image'])
   const entityFields = Object.entries(raw).filter(
@@ -192,7 +154,7 @@ function EntityDetailPage() {
                 <dt className="text-muted-foreground font-medium">
                   {key.replaceAll('_', ' ')}
                 </dt>
-                <dd>{renderValue(value)}</dd>
+                <dd>{renderEntityValue(value)}</dd>
               </div>
             ))}
           </dl>

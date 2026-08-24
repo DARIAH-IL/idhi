@@ -2,16 +2,16 @@ import { useTranslation } from 'react-i18next'
 import {
   PublicationAuthorshipsItemAuthorshipRole,
   PublicationPublicationType,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { publicationFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { publicationFormOptions } from '../entity-form-options.ts'
 
 export const PublicationFields = withForm({
   ...publicationFormOptions,

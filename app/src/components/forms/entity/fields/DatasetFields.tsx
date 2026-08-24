@@ -3,16 +3,16 @@ import {
   DatasetDatasetType,
   DatasetLicense,
   DatasetResourceContributionsItemResourceContributionRole,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { datasetFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { datasetFormOptions } from '../entity-form-options.ts'
 
 export const DatasetFields = withForm({
   ...datasetFormOptions,

@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import type { EntityType } from '@/lib/entity'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { EntityPicker } from '@/components/entity/EntityPicker'
-import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
-import { FieldError } from '@/components/form-fields/FieldError'
-import { firstError } from '@/components/form-fields/validation'
-import { useFieldContext } from '@/components/forms/form-context'
+import type { EntityType } from '#/lib/entity.ts'
+import { Button } from '#/components/ui/button.tsx'
+import { Input } from '#/components/ui/input.tsx'
+import { Label } from '#/components/ui/label.tsx'
+import { EntityPicker } from '#/components/entity/EntityPicker.tsx'
+import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
+import { FieldError } from '#/components/form-fields/FieldError.tsx'
+import { firstError } from '#/components/form-fields/validation.ts'
+import { useFieldContext } from '#/components/forms/form-context.ts'
 
 interface EntityRefProps {
   label: string

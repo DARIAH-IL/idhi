@@ -9,8 +9,8 @@ import { ArraySection } from '@/components/form-fields/ArraySection'
 import {
   EntityRefArrayField,
   EntityRefField,
-} from '@/components/forms/entity/EntityRefField'
-import { ImageField } from '@/components/forms/entity/ImageField'
+} from '#/components/forms/entity/fields/EntityRefField.tsx'
+import { ImageField } from '#/components/forms/entity/fields/ImageField.tsx'
 
 export const { useAppForm, withFieldGroup, withForm } = createFormHook({
   fieldContext,

@@ -1,20 +1,18 @@
 import { useTranslation } from 'react-i18next'
+import { FacilityFacilityAffiliationsItemFacilityAffiliationRole } from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
-  EventEventAgentRolesItemEventAgentRole,
-  EventEventType,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
-import {
+  entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { eventFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { facilityFormOptions } from '../entity-form-options.ts'
 
-export const EventFields = withForm({
-  ...eventFormOptions,
+export const FacilityFields = withForm({
+  ...facilityFormOptions,
   render: function Render({ form }) {
     const { t } = useTranslation()
 
@@ -23,39 +21,6 @@ export const EventFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField label={t('entity.form.fields.name')} />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="event_type"
-          validators={enumValidators(EventEventType)}
-        >
-          {(field) => (
-            <field.EnumSelectField
-              label={t('entity.form.fields.event_type')}
-              options={EventEventType}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="start_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={t('entity.form.fields.start_date')}
-              type="date"
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="end_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={t('entity.form.fields.end_date')}
-              type="date"
-            />
           )}
         </form.AppField>
         <form.AppField
@@ -80,6 +45,28 @@ export const EventFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="services_offered"
+          validators={entityRefArrayValidators(['idhi:Service'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={t('entity.form.fields.services_offered')}
+              entityTypes={['idhi:Service']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="tools_provided"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={t('entity.form.fields.tools_provided')}
+              entityTypes={['idhi:Tool']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="additional_urls"
           validators={stringArrayValidators({ kind: 'url' })}
         >
@@ -91,45 +78,49 @@ export const EventFields = withForm({
           )}
         </form.AppField>
 
-        <form.AppField name="event_agent_roles" mode="array">
+        <form.AppField name="facility_affiliations" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.event_agent_roles')}
-              defaultItem={{ event_agent: '', event_agent_role: '' }}
+              label={t('entity.form.fields.facility_affiliations')}
+              defaultItem={{
+                organization: '',
+                facility_affiliation_role: '',
+              }}
             >
               {(index) => (
                 <>
                   <form.AppField
-                    name={`event_agent_roles[${index}].event_agent`}
-                    validators={entityRefValidators(
-                      ['idhi:Person', 'idhi:Organization'],
-                      { required: true },
-                    )}
+                    name={`facility_affiliations[${index}].organization`}
+                    validators={entityRefValidators(['idhi:Organization'], {
+                      required: true,
+                    })}
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.event_agent_ref')}
-                        entityTypes={['idhi:Person', 'idhi:Organization']}
+                        label={t('entity.form.organization_ref')}
+                        entityTypes={['idhi:Organization']}
                       />
                     )}
                   </form.AppField>
                   <form.AppField
-                    name={`event_agent_roles[${index}].event_agent_role`}
+                    name={`facility_affiliations[${index}].facility_affiliation_role`}
                     validators={enumValidators(
-                      EventEventAgentRolesItemEventAgentRole,
+                      FacilityFacilityAffiliationsItemFacilityAffiliationRole,
                       true,
                     )}
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.event_agent_role')}
-                        options={EventEventAgentRolesItemEventAgentRole}
+                        label={t('entity.form.facility_affiliation_role')}
+                        options={
+                          FacilityFacilityAffiliationsItemFacilityAffiliationRole
+                        }
                         required
                       />
                     )}
                   </form.AppField>
                   <form.AppField
-                    name={`event_agent_roles[${index}].start_date`}
+                    name={`facility_affiliations[${index}].start_date`}
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
@@ -140,7 +131,7 @@ export const EventFields = withForm({
                     )}
                   </form.AppField>
                   <form.AppField
-                    name={`event_agent_roles[${index}].end_date`}
+                    name={`facility_affiliations[${index}].end_date`}
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (

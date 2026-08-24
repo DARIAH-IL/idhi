@@ -3,8 +3,8 @@ import {
   TrainingMaterialDigitalHumanitiesActivitiesItem,
   TrainingMaterialLicense,
   TrainingMaterialTrainingMaterialType,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -12,8 +12,8 @@ import {
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { trainingMaterialFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { trainingMaterialFormOptions } from '../entity-form-options.ts'
 
 export const TrainingMaterialFields = withForm({
   ...trainingMaterialFormOptions,

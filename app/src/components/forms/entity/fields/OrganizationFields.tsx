@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import { OrganizationOrganizationType } from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+import { OrganizationOrganizationType } from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { organizationFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { organizationFormOptions } from '../entity-form-options.ts'
 
 export const OrganizationFields = withForm({
   ...organizationFormOptions,

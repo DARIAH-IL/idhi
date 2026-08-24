@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { EntityImage } from '@/components/entity/EntityImage'
-import { FieldRow } from '@/components/form-fields/FieldRow'
-import { FieldError } from '@/components/form-fields/FieldError'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { useFieldContext } from '@/components/forms/form-context'
-import type { EntityType } from '@/lib/entity'
+import { EntityImage } from '#/components/entity/EntityImage.tsx'
+import { FieldRow } from '#/components/form-fields/FieldRow.tsx'
+import { FieldError } from '#/components/form-fields/FieldError.tsx'
+import { Button } from '#/components/ui/button.tsx'
+import { Input } from '#/components/ui/input.tsx'
+import { useFieldContext } from '#/components/forms/form-context.ts'
+import type { EntityType } from '#/lib/entity.ts'
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {

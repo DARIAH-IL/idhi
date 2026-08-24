@@ -2,16 +2,16 @@ import { useTranslation } from 'react-i18next'
 import {
   ServiceDigitalHumanitiesActivitiesItem,
   ServiceServiceType,
-} from '@/api/models'
-import { withForm } from '@/components/forms/app-form'
+} from '#/api/models'
+import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
   stringArrayValidators,
   valueValidators,
-} from '@/components/form-fields/validation'
-import { serviceFormOptions } from './entity-form-options'
+} from '#/components/form-fields/validation.ts'
+import { serviceFormOptions } from '../entity-form-options.ts'
 
 export const ServiceFields = withForm({
   ...serviceFormOptions,
