@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useFormContext } from '@/components/forms/form-context'
+import { useFieldContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -12,143 +12,93 @@ import {
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { FieldError } from './FieldError'
-import { firstError, validateValue } from './validation'
+import { firstError } from './validation'
 
-const LANGUAGES = ['en', 'he', 'ar'] as const
+const LANGUAGES = ['en', 'he', 'ar'] satisfies ReadonlyArray<'en' | 'he' | 'ar'>
 
-export function LangStringField({
-  name,
-  label,
-  multiline = false,
-  required = false,
-}: {
-  name: string
+interface LocalizedValue {
+  language: string
+  value: string
+}
+
+interface Props {
   label: string
   multiline?: boolean
-  required?: boolean
-}) {
+}
+
+export function LangStringField({ label, multiline = false }: Props) {
   const { t } = useTranslation()
-  const form = useFormContext()
+  const field = useFieldContext<LocalizedValue[] | null | undefined>()
+  const items = field.state.value ?? []
+
+  function updateItem(index: number, next: Partial<LocalizedValue>) {
+    field.handleChange(
+      items.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, ...next } : item,
+      ),
+    )
+  }
 
   return (
     <div className="flex flex-col gap-2">
       <Label>{label}</Label>
-      <form.Field
-        name={name as never}
-        mode="array"
-        validators={{
-          onSubmit: ({ value }) => {
-            const items = value as unknown as Array<{
-              language?: string
-              value?: string
-            }>
-            if (required && (!Array.isArray(items) || items.length === 0))
-              return 'Add at least one language value.'
-            if (!Array.isArray(items)) return undefined
-            const languages = items.map((item) => item.language)
-            if (
-              languages.some(
-                (language) => !LANGUAGES.includes(language as never),
-              )
-            )
-              return 'Choose a supported language.'
-            if (new Set(languages).size !== languages.length)
-              return 'Use each language only once.'
-            return items.some((item) =>
-              validateValue(item.value, { required: true }),
-            )
-              ? 'Every language value must have text.'
-              : undefined
-          },
-        }}
-      >
-        {(field) => (
-          <div className="flex flex-col gap-2">
-            <FieldError error={firstError(field.state.meta.errors)} />
-            {(Array.isArray(field.state.value) ? field.state.value : []).map(
-              (_, i) => (
-                <div key={i} className="flex gap-2 items-start">
-                  <form.Field name={`${name}[${i}].language` as never}>
-                    {(langField) => (
-                      <Select
-                        aria-label={t('entity.form.language')}
-                        placeholder="lang"
-                        selectedKey={
-                          typeof langField.state.value === 'string'
-                            ? langField.state.value
-                            : null
-                        }
-                        onSelectionChange={(k) =>
-                          langField.handleChange(k as never)
-                        }
-                      >
-                        <SelectTrigger className="w-24 shrink-0">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {LANGUAGES.map((lang) => (
-                            <SelectItem key={lang} id={lang}>
-                              {t(`entity.form.languages.${lang}`)}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </form.Field>
-                  <form.Field name={`${name}[${i}].value` as never}>
-                    {(valField) =>
-                      multiline ? (
-                        <Textarea
-                          value={
-                            typeof valField.state.value === 'string'
-                              ? valField.state.value
-                              : ''
-                          }
-                          onChange={(event) =>
-                            valField.handleChange(event.target.value as never)
-                          }
-                          className="flex-1"
-                          rows={3}
-                        />
-                      ) : (
-                        <Input
-                          value={
-                            typeof valField.state.value === 'string'
-                              ? valField.state.value
-                              : ''
-                          }
-                          onChange={(event) =>
-                            valField.handleChange(event.target.value as never)
-                          }
-                          className="flex-1"
-                        />
-                      )
-                    }
-                  </form.Field>
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    onPress={() => field.removeValue(i)}
-                    aria-label={t('common.remove')}
-                  >
-                    ×
-                  </Button>
-                </div>
-              ),
-            )}
-            <Button
-              variant="outline"
-              size="sm"
-              onPress={() =>
-                field.pushValue({ language: 'en', value: '' } as never)
+      <FieldError error={firstError(field.state.meta.errors)} />
+      {items.map((item, index) => (
+        <div key={index} className="flex gap-2 items-start">
+          <Select
+            aria-label={t('entity.form.language')}
+            selectedKey={item.language || null}
+            onSelectionChange={(key) =>
+              updateItem(index, { language: String(key) })
+            }
+          >
+            <SelectTrigger className="w-24 shrink-0">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGES.map((language) => (
+                <SelectItem key={language} id={language}>
+                  {t(`entity.form.languages.${language}`)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {multiline ? (
+            <Textarea
+              value={item.value}
+              onChange={(event) =>
+                updateItem(index, { value: event.target.value })
               }
-              className="w-fit"
-            >
-              + {t('entity.form.add_lang_string')}
-            </Button>
-          </div>
-        )}
-      </form.Field>
+              className="flex-1"
+              rows={3}
+            />
+          ) : (
+            <Input
+              value={item.value}
+              onChange={(event) =>
+                updateItem(index, { value: event.target.value })
+              }
+              className="flex-1"
+            />
+          )}
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onPress={() => field.removeValue(index)}
+            aria-label={t('common.remove')}
+          >
+            ×
+          </Button>
+        </div>
+      ))}
+      <Button
+        variant="outline"
+        size="sm"
+        onPress={() => field.pushValue({ language: 'en', value: '' })}
+        className="w-fit"
+      >
+        + {t('entity.form.add_lang_string')}
+      </Button>
     </div>
   )
 }

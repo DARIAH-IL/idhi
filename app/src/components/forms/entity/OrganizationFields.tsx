@@ -1,56 +1,135 @@
 import { useTranslation } from 'react-i18next'
 import { OrganizationOrganizationType } from '@/api/models'
-import { TextField } from '@/components/form-fields/TextField'
-import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
-import { LangStringField } from '@/components/form-fields/LangStringField'
-import { StringArrayField } from '@/components/form-fields/StringArrayField'
-import { EntityRefField } from './EntityRefField'
-import { BooleanField } from '@/components/form-fields/BooleanField'
+import { withForm } from '@/components/forms/app-form'
+import {
+  entityRefValidators,
+  enumValidators,
+  localizedValueValidators,
+  stringArrayValidators,
+  valueValidators,
+} from '@/components/form-fields/validation'
+import { organizationFormOptions } from './entity-form-options'
 
-export function OrganizationFields() {
-  const { t } = useTranslation()
-  return (
-    <>
-      <LangStringField
-        name="name"
-        label={t('entity.form.fields.name')}
-        required
-      />
-      <EnumSelectField
-        name="organization_type"
-        label={t('entity.form.fields.organization_type')}
-        options={OrganizationOrganizationType}
-      />
-      <TextField
-        name="contact_email"
-        label={t('entity.form.fields.contact_email')}
-        type="email"
-      />
-      <TextField
-        name="ror"
-        label={t('entity.form.fields.ror')}
-        validationKind="ror"
-        placeholder="https://ror.org/…"
-      />
-      <EntityRefField
-        name="parent_organization"
-        label={t('entity.form.fields.parent_organization')}
-        entityTypes={['idhi:Organization']}
-      />
-      <LangStringField
-        name="location"
-        label={t('entity.form.fields.location')}
-      />
-      <LangStringField name="address" label={t('entity.form.fields.address')} />
-      <StringArrayField
-        name="additional_urls"
-        label={t('entity.form.fields.additional_urls')}
-        validationKind="url"
-      />
-      <BooleanField
-        name="marketplace_sync"
-        label={t('entity.form.fields.marketplace_sync')}
-      />
-    </>
-  )
-}
+export const OrganizationFields = withForm({
+  ...organizationFormOptions,
+  render: function Render({ form }) {
+    const { t } = useTranslation()
+
+    return (
+      <>
+        <form.AppField name="name" validators={localizedValueValidators(true)}>
+          {(field) => (
+            <field.LangStringField label={t('entity.form.fields.name')} />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="organization_type"
+          validators={enumValidators(OrganizationOrganizationType)}
+        >
+          {(field) => (
+            <field.EnumSelectField
+              label={t('entity.form.fields.organization_type')}
+              options={OrganizationOrganizationType}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={t('entity.form.fields.contact_email')}
+              type="email"
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
+          {(field) => (
+            <field.TextField
+              label={t('entity.form.fields.ror')}
+              placeholder="https://ror.org/…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="location" validators={localizedValueValidators()}>
+          {(field) => (
+            <field.LangStringField label={t('entity.form.fields.location')} />
+          )}
+        </form.AppField>
+        <form.AppField name="address" validators={localizedValueValidators()}>
+          {(field) => (
+            <field.LangStringField label={t('entity.form.fields.address')} />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="additional_urls"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={t('entity.form.fields.additional_urls')}
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="marketplace_sync">
+          {(field) => (
+            <field.BooleanField
+              label={t('entity.form.fields.marketplace_sync')}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="organization_hierarchy" mode="array">
+          {(field) => (
+            <field.ArraySection
+              label={t('entity.form.fields.organization_hierarchy')}
+              defaultItem={{ parent_organization: '' }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`organization_hierarchy[${index}].parent_organization`}
+                    validators={entityRefValidators(['idhi:Organization'], {
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EntityRefField
+                        label={t('entity.form.fields.parent_organization')}
+                        entityTypes={['idhi:Organization']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_hierarchy[${index}].start_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={t('entity.form.fields.start_date')}
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_hierarchy[${index}].end_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={t('entity.form.fields.end_date')}
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                </>
+              )}
+            </field.ArraySection>
+          )}
+        </form.AppField>
+      </>
+    )
+  },
+})

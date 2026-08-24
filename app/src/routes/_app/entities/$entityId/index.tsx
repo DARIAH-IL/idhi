@@ -4,8 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1EntitiesEntityIdQueryOptions,
-  useDeleteApiV1EntitiesEntityId,
+  getGetEntityByIdQueryOptions,
+  useDeleteEntityById,
 } from '@/api/hooks/entities/entities'
 import { getEntityDisplayName, getEntityTypeLabel } from '@/lib/entity'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -27,9 +27,7 @@ import { useAuthStore } from '@/stores/auth'
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(
-      getGetApiV1EntitiesEntityIdQueryOptions(
-        decodeURIComponent(params.entityId),
-      ),
+      getGetEntityByIdQueryOptions(decodeURIComponent(params.entityId)),
     ),
   component: EntityDetailPage,
 })
@@ -43,11 +41,9 @@ function EntityDetailPage() {
 
   const decodedId = decodeURIComponent(entityId)
 
-  const { data: entity } = useQuery(
-    getGetApiV1EntitiesEntityIdQueryOptions(decodedId),
-  )
+  const { data: entity } = useQuery(getGetEntityByIdQueryOptions(decodedId))
 
-  const deleteMutation = useDeleteApiV1EntitiesEntityId({
+  const deleteMutation = useDeleteEntityById({
     mutation: {
       onSuccess: () => {
         toast.success(t('entity.notifications.deleted'))
@@ -60,8 +56,7 @@ function EntityDetailPage() {
     return <p className="text-muted-foreground">{t('common.loading')}</p>
   }
 
-  const raw = entity as unknown as Record<string, unknown>
-  const audit = raw['audit'] as Record<string, string> | undefined
+  const { audit, ...raw } = entity
 
   const renderValue = (v: unknown): React.ReactNode => {
     if (v === null || v === undefined)
@@ -80,7 +75,7 @@ function EntityDetailPage() {
     if (typeof v === 'object') {
       return (
         <div className="flex flex-col gap-0.5 rounded border p-1.5 text-xs">
-          {Object.entries(v as Record<string, unknown>)
+          {Object.entries(v)
             .filter(([, val]) => val !== null && val !== undefined)
             .map(([key, val]) => (
               <div key={key} className="flex gap-2">
@@ -99,9 +94,9 @@ function EntityDetailPage() {
     return String(v)
   }
 
-  const skipKeys = new Set(['type', 'id', 'image', 'audit'])
+  const skipKeys = new Set(['type', 'id', 'image'])
   const entityFields = Object.entries(raw).filter(
-    ([k, v]) => !skipKeys.has(k) && v !== null && v !== undefined,
+    ([key, value]) => !skipKeys.has(key) && value !== null,
   )
 
   return (
@@ -154,14 +149,14 @@ function EntityDetailPage() {
               <span className="text-muted-foreground">
                 {t('entity.detail.created')}:{' '}
               </span>
-              <TimeAgo date={audit['createdAt']} />
-              {audit['createdBy'] && (
+              <TimeAgo date={audit.createdAt} />
+              {audit.createdBy && (
                 <>
                   {' '}
                   <span className="text-muted-foreground">
                     {t('entity.detail.by')}
                   </span>{' '}
-                  <span className="font-mono">{audit['createdBy']}</span>
+                  <span className="font-mono">{audit.createdBy}</span>
                 </>
               )}
             </div>
@@ -169,14 +164,14 @@ function EntityDetailPage() {
               <span className="text-muted-foreground">
                 {t('entity.detail.modified')}:{' '}
               </span>
-              <TimeAgo date={audit['modifiedAt']} />
-              {audit['modifiedBy'] && (
+              <TimeAgo date={audit.modifiedAt} />
+              {audit.modifiedBy && (
                 <>
                   {' '}
                   <span className="text-muted-foreground">
                     {t('entity.detail.by')}
                   </span>{' '}
-                  <span className="font-mono">{audit['modifiedBy']}</span>
+                  <span className="font-mono">{audit.modifiedBy}</span>
                 </>
               )}
             </div>

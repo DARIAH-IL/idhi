@@ -19,6 +19,7 @@ import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import { serializeError, type RequestLogger } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
+import { createAuthLink } from '../../utils/authLink'
 import { createId } from '../../utils/id'
 import { createJwtForUser } from '../../utils/jwt'
 import { defaultLang } from '../../emails/localization'
@@ -32,7 +33,7 @@ import {
   authRateLimits,
   enforceAuthRateLimits,
 } from '../../utils/authRateLimit'
-import { splitValues } from '../../utils/values'
+import { requiredValue, splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator'
 import {
   StartOtpChallengeContext,
@@ -209,11 +210,21 @@ export const startOtpChallengeHandlers = factory.createHandlers(
     })
 
     try {
+      const resolvedLang = lang ?? defaultLang(c.env.DEFAULT_LANG)
+      const loginUrl = createAuthLink(
+        requiredValue(c.env, 'FRONTEND_URL'),
+        challengeId,
+        code,
+        resolvedLang,
+        'otp',
+      )
+
       await sendOtpEmail(
         target.email,
         code,
         expiresAtEpoch,
-        lang ?? defaultLang(c.env.DEFAULT_LANG),
+        loginUrl,
+        resolvedLang,
         c.env,
       )
     } catch (error) {

@@ -9,8 +9,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1EntitiesEntityIdQueryOptions,
-  usePostApiV1EntitiesEntityId,
+  getGetEntityByIdQueryOptions,
+  useUpdateEntityById,
 } from '@/api/hooks/entities/entities'
 import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityImage } from '@/components/entity/EntityImage'
@@ -28,9 +28,7 @@ export const Route = createFileRoute('/_app/entities/$entityId/edit')({
   },
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(
-      getGetApiV1EntitiesEntityIdQueryOptions(
-        decodeURIComponent(params.entityId),
-      ),
+      getGetEntityByIdQueryOptions(decodeURIComponent(params.entityId)),
     ),
   component: EditEntityPage,
 })
@@ -44,11 +42,9 @@ function EditEntityPage() {
 
   const decodedId = decodeURIComponent(entityId)
 
-  const { data: entity } = useQuery(
-    getGetApiV1EntitiesEntityIdQueryOptions(decodedId),
-  )
+  const { data: entity } = useQuery(getGetEntityByIdQueryOptions(decodedId))
 
-  const updateMutation = usePostApiV1EntitiesEntityId({
+  const updateMutation = useUpdateEntityById({
     mutation: {
       onSuccess: () => {
         toast.success(t('entity.notifications.updated'))

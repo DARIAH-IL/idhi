@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { getGetApiV1EntitiesEntityIdQueryOptions } from '@/api/hooks/entities/entities'
+import { getGetEntityByIdQueryOptions } from '@/api/hooks/entities/entities'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -12,7 +12,7 @@ import { EntityImage } from './EntityImage'
 
 export function EntityReferenceCard({ entityId }: { entityId: string }) {
   const { data, isLoading, isError } = useQuery(
-    getGetApiV1EntitiesEntityIdQueryOptions(entityId, {
+    getGetEntityByIdQueryOptions(entityId, {
       query: { retry: false },
     }),
   )
@@ -24,7 +24,7 @@ export function EntityReferenceCard({ entityId }: { entityId: string }) {
           <span className="text-xs text-muted-foreground">
             Loading {entityId}…
           </span>
-        ) : isError || !data ? (
+        ) : isError || data === undefined ? (
           <span className="text-xs text-destructive">
             Entity unavailable: {entityId}
           </span>

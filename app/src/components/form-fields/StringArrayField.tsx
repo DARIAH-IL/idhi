@@ -1,122 +1,68 @@
 import { useTranslation } from 'react-i18next'
-import { useFormContext } from '@/components/forms/form-context'
+import { useFieldContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { FieldError } from './FieldError'
-import { firstError, validateValue } from './validation'
-import type { ValidationKind } from './validation'
+import { firstError } from './validation'
 
-export function StringArrayField({
-  name,
-  label,
-  placeholder,
-  validationKind,
-  options,
-}: {
-  name: string
+interface Props {
   label: string
   placeholder?: string
-  validationKind?: ValidationKind
   options?: Record<string, string>
-}) {
+}
+
+export function StringArrayField({ label, placeholder, options }: Props) {
   const { t } = useTranslation()
-  const form = useFormContext()
+  const field = useFieldContext<string[] | null | undefined>()
+  const items = field.state.value ?? []
 
   return (
     <div className="flex flex-col gap-2">
       <Label>{label}</Label>
-      <form.Field name={name as never} mode="array">
-        {(field) => (
-          <>
-            <div className="flex flex-col gap-1.5">
-              {(Array.isArray(field.state.value) ? field.state.value : []).map(
-                (_, i) => (
-                  <div key={i} className="flex gap-2 items-center">
-                    <form.Field
-                      name={`${name}[${i}]` as never}
-                      validators={{
-                        onBlur: ({ value }) => {
-                          const formatError = validateValue(value, {
-                            required: true,
-                            kind: validationKind,
-                          })
-                          if (formatError) return formatError
-                          return options &&
-                            !Object.hasOwn(options, String(value))
-                            ? 'Choose a supported value.'
-                            : undefined
-                        },
-                        onSubmit: ({ value }) => {
-                          const formatError = validateValue(value, {
-                            required: true,
-                            kind: validationKind,
-                          })
-                          if (formatError) return formatError
-                          return options &&
-                            !Object.hasOwn(options, String(value))
-                            ? 'Choose a supported value.'
-                            : undefined
-                        },
-                      }}
-                    >
-                      {(itemField) => (
-                        <div className="flex-1">
-                          <Input
-                            value={
-                              typeof itemField.state.value === 'string'
-                                ? itemField.state.value
-                                : ''
-                            }
-                            onChange={(event) =>
-                              itemField.handleChange(
-                                event.target.value as never,
-                              )
-                            }
-                            placeholder={placeholder}
-                            className="flex-1"
-                            onBlur={itemField.handleBlur}
-                            aria-invalid={Boolean(
-                              firstError(itemField.state.meta.errors),
-                            )}
-                            list={options ? `${name}-options` : undefined}
-                          />
-                          <FieldError
-                            error={firstError(itemField.state.meta.errors)}
-                          />
-                        </div>
-                      )}
-                    </form.Field>
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      onPress={() => field.removeValue(i)}
-                      aria-label={t('common.remove')}
-                    >
-                      ×
-                    </Button>
-                  </div>
-                ),
-              )}
-            </div>
-            {options && (
-              <datalist id={`${name}-options`}>
-                {Object.keys(options).map((option) => (
-                  <option key={option} value={option} />
-                ))}
-              </datalist>
-            )}
+      <FieldError error={firstError(field.state.meta.errors)} />
+      <div className="flex flex-col gap-1.5">
+        {items.map((item, index) => (
+          <div key={index} className="flex gap-2 items-center">
+            <Input
+              value={item}
+              onChange={(event) =>
+                field.handleChange(
+                  items.map((value, itemIndex) =>
+                    itemIndex === index ? event.target.value : value,
+                  ),
+                )
+              }
+              placeholder={placeholder}
+              className="flex-1"
+              list={options ? `${field.name}-options` : undefined}
+            />
             <Button
-              variant="outline"
-              size="sm"
-              onPress={() => field.pushValue('' as never)}
-              className="w-fit"
+              variant="ghost"
+              size="icon-sm"
+              onPress={() => field.removeValue(index)}
+              aria-label={t('common.remove')}
             >
-              + {t('entity.form.add_item')}
+              ×
             </Button>
-          </>
-        )}
-      </form.Field>
+          </div>
+        ))}
+      </div>
+      {options && (
+        <datalist id={`${field.name}-options`}>
+          {Object.keys(options).map((option) => (
+            <option key={option} value={option} />
+          ))}
+        </datalist>
+      )}
+      <Button
+        variant="outline"
+        size="sm"
+        onPress={() => field.pushValue('')}
+        className="w-fit"
+      >
+        + {t('entity.form.add_item')}
+      </Button>
     </div>
   )
 }

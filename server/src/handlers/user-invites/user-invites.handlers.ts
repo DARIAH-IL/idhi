@@ -9,6 +9,7 @@ import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import { serializeError } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
+import { createAuthLink } from '../../utils/authLink'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { createId } from '../../utils/id'
 import { defaultLang } from '../../emails/localization'
@@ -92,7 +93,13 @@ export const inviteUserHandlers = factory.createHandlers(
       try {
         const resolvedLang = lang ?? defaultLang(c.env.DEFAULT_LANG)
         const frontendUrl = requiredValue(c.env, 'FRONTEND_URL')
-        const inviteUrl = `${frontendUrl}?challengeId=${challengeId}&otp=${otp}&lang=${resolvedLang}`
+        const inviteUrl = createAuthLink(
+          frontendUrl,
+          challengeId,
+          otp,
+          resolvedLang,
+          'invite',
+        )
 
         await sendInviteEmail(email, inviteUrl, resolvedLang, c.env)
       } catch (error) {

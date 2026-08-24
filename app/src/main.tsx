@@ -9,21 +9,29 @@ import {
 } from 'use-query-params'
 import type { QueryParamAdapterComponent } from 'use-query-params'
 import { UiLanguage } from '@/api/models'
+import { useAuthLinkStore } from '@/stores/auth-link'
+import type { AuthLinkFlow } from '@/stores/auth-link'
+import { subscribeToAuthStorage } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
-import { useInviteStore } from '@/stores/invite'
 import { getRouter } from './router'
 
 const LANGUAGE_QUERY_PARAM = 'lang'
 const CHALLENGE_ID_QUERY_PARAM = 'challengeId'
 const OTP_QUERY_PARAM = 'otp'
+const AUTH_FLOW_QUERY_PARAM = 'authFlow'
 
 const router = getRouter()
 
 const _initialUrl = new URL(window.location.href)
 const _challengeId = _initialUrl.searchParams.get(CHALLENGE_ID_QUERY_PARAM)
 const _otp = _initialUrl.searchParams.get(OTP_QUERY_PARAM)
-if (_challengeId && _otp) {
-  useInviteStore.getState().set({ challengeId: _challengeId, otp: _otp })
+const _authFlow = authLinkFlow(
+  _initialUrl.searchParams.get(AUTH_FLOW_QUERY_PARAM),
+)
+if (_challengeId && _otp && _authFlow) {
+  useAuthLinkStore
+    .getState()
+    .set({ challengeId: _challengeId, otp: _otp, flow: _authFlow })
 }
 
 const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
@@ -43,7 +51,18 @@ const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
 }
 
 function isLanguage(value: string): value is UiLanguage {
-  return Object.values(UiLanguage).includes(value as UiLanguage)
+  return (
+    value === UiLanguage.en ||
+    value === UiLanguage.he ||
+    value === UiLanguage.ar
+  )
+}
+
+function authLinkFlow(value: string | null): AuthLinkFlow | null {
+  if (value === 'invite' || value === 'otp') return value
+
+  // Invite links issued before authFlow was introduced have no flow marker.
+  return value === null ? 'invite' : null
 }
 
 function App() {
@@ -56,7 +75,13 @@ function App() {
     StringParam,
   )
   const [otp, setOtpQueryParam] = useQueryParam(OTP_QUERY_PARAM, StringParam)
+  const [authFlow, setAuthFlowQueryParam] = useQueryParam(
+    AUTH_FLOW_QUERY_PARAM,
+    StringParam,
+  )
   const setLanguage = useUIStore((state) => state.setLanguage)
+
+  useEffect(() => subscribeToAuthStorage(), [])
 
   useEffect(() => {
     if (language == null) return
@@ -69,7 +94,15 @@ function App() {
     if (!challengeId || !otp) return
     setChallengeIdQueryParam(undefined, 'replaceIn')
     setOtpQueryParam(undefined, 'replaceIn')
-  }, [challengeId, otp, setChallengeIdQueryParam, setOtpQueryParam])
+    if (authFlow != null) setAuthFlowQueryParam(undefined, 'replaceIn')
+  }, [
+    authFlow,
+    challengeId,
+    otp,
+    setAuthFlowQueryParam,
+    setChallengeIdQueryParam,
+    setOtpQueryParam,
+  ])
 
   return <RouterProvider router={router} />
 }

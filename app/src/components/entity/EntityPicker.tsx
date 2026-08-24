@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getPostApiV1EntitiesQueryOptions } from '@/api/hooks/entities/entities'
+import { useTranslation } from 'react-i18next'
+import { getSearchEntitiesQueryOptions } from '@/api/hooks/entities/entities'
 import type { EntitySearch, Filter } from '@/api/models'
 import type { EntityType } from '@/lib/entity'
 import {
@@ -25,9 +26,11 @@ export function EntityPicker({
   value,
   onChange,
   entityTypes,
-  placeholder = 'Search entities…',
+  placeholder,
   invalid,
 }: Props) {
+  const { t } = useTranslation()
+  const searchPlaceholder = placeholder ?? t('entity.picker.search')
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -42,7 +45,7 @@ export function EntityPicker({
     [filter, query],
   )
   const { data, isFetching } = useQuery({
-    ...getPostApiV1EntitiesQueryOptions(search),
+    ...getSearchEntitiesQueryOptions(search),
     enabled: open,
   })
 
@@ -53,7 +56,9 @@ export function EntityPicker({
         <Input
           type="search"
           value={query}
-          placeholder={value ? 'Choose another entity…' : placeholder}
+          placeholder={
+            value ? t('entity.picker.choose_another') : searchPlaceholder
+          }
           onFocus={() => setOpen(true)}
           onBlur={() => window.setTimeout(() => setOpen(false), 150)}
           onChange={(event) => {
@@ -61,18 +66,18 @@ export function EntityPicker({
             setOpen(true)
           }}
           aria-invalid={invalid}
-          aria-label={placeholder}
+          aria-label={searchPlaceholder}
         />
         {open && (
           <div className="absolute z-30 mt-1 max-h-64 w-full overflow-y-auto rounded-md border bg-popover p-1 shadow-md">
             {isFetching && (
               <p className="px-2 py-1.5 text-xs text-muted-foreground">
-                Searching…
+                {t('entity.picker.searching')}
               </p>
             )}
             {!isFetching && data?.results.length === 0 && (
               <p className="px-2 py-1.5 text-xs text-muted-foreground">
-                No matching entities.
+                {t('entity.picker.no_results')}
               </p>
             )}
             {data?.results.map((entity) => {

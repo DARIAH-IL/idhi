@@ -38,10 +38,11 @@ export function otpEmailContent(
   lang: UiLanguage,
   otp: string,
   expiration: string,
+  loginUrl: string,
 ): { subject: string; html: string } {
   return {
     subject: OTP_SUBJECTS[lang],
-    html: render(OTP_TEMPLATES[lang], { otp, expiration }),
+    html: render(OTP_TEMPLATES[lang], { otp, expiration, loginUrl }),
   }
 }
 

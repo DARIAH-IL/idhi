@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { browserSupportsWebAuthn } from '@simplewebauthn/browser'
 import { useTranslation } from 'react-i18next'
 import {
-  usePostApiV1AuthOtp,
-  usePostApiV1AuthOtpChallengeId,
+  useCompleteOtpChallenge,
+  useStartOtpChallenge,
 } from '@/api/hooks/user-auth/user-auth'
 import { ErrorCode } from '@/api/models'
 import { getApiErrorMessage, getApiErrorResponse } from '@/lib/api-error'
 import { toast } from 'sonner'
+import type { AuthLinkFlow } from '@/stores/auth-link'
 import { useAuthStore } from '@/stores/auth'
 import { usePasskeyStore } from '@/stores/passkey'
 import {
@@ -28,7 +29,11 @@ import {
 interface LoginDialogProps {
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
-  inviteParams?: { challengeId: string; otp: string } | null
+  authLinkParams?: {
+    challengeId: string
+    otp: string
+    flow: AuthLinkFlow
+  } | null
 }
 
 type LoginStep = 'start' | 'email' | 'otp' | 'enroll' | 'loading'
@@ -36,7 +41,7 @@ type LoginStep = 'start' | 'email' | 'otp' | 'enroll' | 'loading'
 export function LoginDialog({
   isOpen,
   onOpenChange,
-  inviteParams,
+  authLinkParams,
 }: LoginDialogProps) {
   const { t } = useTranslation()
   const setToken = useAuthStore((state) => state.setToken)
@@ -52,7 +57,7 @@ export function LoginDialog({
   const [error, setError] = useState<string | null>(null)
   const [replacePasskey, setReplacePasskey] = useState(false)
   const [isInviteFlow, setIsInviteFlow] = useState(false)
-  const isInviteMode = useRef(false)
+  const isAuthLinkMode = useRef(false)
 
   const reset = () => {
     setStep('start')
@@ -96,7 +101,7 @@ export function LoginDialog({
     onError: setError,
   })
 
-  const startOtp = usePostApiV1AuthOtp({
+  const startOtp = useStartOtpChallenge({
     mutation: {
       onSuccess: (data) => {
         setChallengeId(data.challengeId)
@@ -108,10 +113,10 @@ export function LoginDialog({
     },
   })
 
-  const completeOtp = usePostApiV1AuthOtpChallengeId({
+  const completeOtp = useCompleteOtpChallenge({
     mutation: {
       onSuccess: (data) => {
-        isInviteMode.current = false
+        isAuthLinkMode.current = false
         setToken(data.jwt)
         if (supportsPasskeys && (!credentialId || replacePasskey)) {
           setError(null)
@@ -123,8 +128,8 @@ export function LoginDialog({
       },
       onError: (err) => {
         setError(getApiErrorMessage(err))
-        if (isInviteMode.current) {
-          isInviteMode.current = false
+        if (isAuthLinkMode.current) {
+          isAuthLinkMode.current = false
           resetChallenge()
           setStep('email')
         } else if (
@@ -138,15 +143,15 @@ export function LoginDialog({
   })
 
   useEffect(() => {
-    if (!inviteParams) return
-    isInviteMode.current = true
-    setIsInviteFlow(true)
+    if (!authLinkParams) return
+    isAuthLinkMode.current = true
+    setIsInviteFlow(authLinkParams.flow === 'invite')
     setStep('loading')
     completeOtp.mutate({
-      challengeId: inviteParams.challengeId,
-      data: { otp: inviteParams.otp },
+      challengeId: authLinkParams.challengeId,
+      data: { otp: authLinkParams.otp },
     })
-  }, [inviteParams])
+  }, [authLinkParams])
 
   const startEmailLogin = (loginEmail: string) => {
     const normalizedEmail = loginEmail.trim()

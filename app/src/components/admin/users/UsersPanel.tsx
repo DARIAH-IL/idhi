@@ -5,9 +5,9 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1UsersQueryKey,
-  useDeleteApiV1UsersUserId,
-  useGetApiV1Users,
+  getListUsersQueryKey,
+  useDeleteUserById,
+  useListUsers,
 } from '@/api/hooks/user-management/user-management'
 import type { User } from '@/api/models'
 import { Badge } from '@/components/ui/badge'
@@ -31,7 +31,7 @@ export function UsersPanel() {
   const [page, setPage] = useState(0)
   const [userDialog, setUserDialog] = useState<User | 'new' | null>(null)
   const [deleteUser, setDeleteUser] = useState<User | null>(null)
-  const users = useGetApiV1Users({
+  const users = useListUsers({
     page,
     pageSize: ADMIN_USERS_PAGE_SIZE,
   })
@@ -102,11 +102,11 @@ function DeleteUserDialog({
 }) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const mutation = useDeleteApiV1UsersUserId({
+  const mutation = useDeleteUserById({
     mutation: {
       onSuccess: () => {
         void queryClient.invalidateQueries({
-          queryKey: getGetApiV1UsersQueryKey(),
+          queryKey: getListUsersQueryKey(),
         })
         toast.success(t('admin.notifications.user_deleted'))
         onClose()

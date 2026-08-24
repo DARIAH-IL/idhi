@@ -9,6 +9,18 @@ import {
   Loading03Icon,
 } from '@hugeicons/core-free-icons'
 
+const toasterStyle: React.CSSProperties & {
+  '--normal-bg': string
+  '--normal-text': string
+  '--normal-border': string
+  '--border-radius': string
+} = {
+  '--normal-bg': 'var(--popover)',
+  '--normal-text': 'var(--popover-foreground)',
+  '--normal-border': 'var(--border)',
+  '--border-radius': 'var(--radius)',
+}
+
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
@@ -51,14 +63,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           />
         ),
       }}
-      style={
-        {
-          '--normal-bg': 'var(--popover)',
-          '--normal-text': 'var(--popover-foreground)',
-          '--normal-border': 'var(--border)',
-          '--border-radius': 'var(--radius)',
-        } as React.CSSProperties
-      }
+      style={toasterStyle}
       toastOptions={{
         classNames: {
           toast: 'cn-toast',

@@ -12,6 +12,8 @@ interface AuthState {
 
 type PersistedAuthState = Pick<AuthState, 'token' | 'user'>
 
+const AUTH_STORAGE_KEY = 'idhi-auth'
+
 function userFromToken(token: string): User | null {
   try {
     const encodedPayload = token.split('.')[1]
@@ -69,7 +71,7 @@ export const useAuthStore = create<AuthState>()(
       logout: () => set({ token: null, user: null }),
     }),
     {
-      name: 'idhi-auth',
+      name: AUTH_STORAGE_KEY,
       version: 1,
       partialize: ({ token, user }) => ({ token, user }),
       migrate: (persistedState) => {
@@ -86,3 +88,24 @@ export const useAuthStore = create<AuthState>()(
     },
   ),
 )
+
+export function subscribeToAuthStorage(): () => void {
+  const handleStorage = (event: StorageEvent) => {
+    if (
+      event.key !== AUTH_STORAGE_KEY ||
+      event.storageArea !== window.localStorage
+    ) {
+      return
+    }
+
+    if (event.newValue === null) {
+      useAuthStore.getState().logout()
+      return
+    }
+
+    void useAuthStore.persist.rehydrate()
+  }
+
+  window.addEventListener('storage', handleStorage)
+  return () => window.removeEventListener('storage', handleStorage)
+}

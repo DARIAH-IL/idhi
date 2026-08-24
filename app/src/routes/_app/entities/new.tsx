@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { usePutApiV1Entities } from '@/api/hooks/entities/entities'
+import { useCreateEntity } from '@/api/hooks/entities/entities'
 import { ENTITY_TYPES, getEntityTypeLabel } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/forms/entity/EntityForm'
@@ -29,14 +29,13 @@ function NewEntityPage() {
   const [selectedType, setSelectedType] = useState<EntityType | null>(null)
   const [serverError, setServerError] = useState<string | null>(null)
 
-  const createMutation = usePutApiV1Entities({
+  const createMutation = useCreateEntity({
     mutation: {
       onSuccess: (entity) => {
         toast.success(t('entity.notifications.created'))
-        const id = (entity as unknown as Record<string, string>)['id'] ?? ''
         void navigate({
           to: '/entities/$entityId',
-          params: { entityId: encodeURIComponent(id) },
+          params: { entityId: encodeURIComponent(entity.id) },
         })
       },
       onError: () => setServerError(t('common.error')),

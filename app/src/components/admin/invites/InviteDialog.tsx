@@ -4,8 +4,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1UsersInvitesQueryKey,
-  usePostApiV1UsersInvite,
+  getListUserInvitesQueryKey,
+  useInviteUser,
 } from '@/api/hooks/user-invites/user-invites'
 import { UiLanguage } from '@/api/models'
 import type { UserInviteWrite } from '@/api/models'
@@ -36,11 +36,11 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
   const [message, setMessage] = useState('')
   const [expiryDays, setExpiryDays] = useState('7')
   const [lang, setLang] = useState<UiLanguage>(UiLanguage.en)
-  const invite = usePostApiV1UsersInvite({
+  const invite = useInviteUser({
     mutation: {
       onSuccess: () => {
         void queryClient.invalidateQueries({
-          queryKey: getGetApiV1UsersInvitesQueryKey(),
+          queryKey: getListUserInvitesQueryKey(),
         })
         toast.success(t('admin.notifications.invite_sent'))
         onClose()
@@ -115,7 +115,15 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
               <Select
                 aria-labelledby="invite-language-label"
                 selectedKey={lang}
-                onSelectionChange={(key) => setLang(key as UiLanguage)}
+                onSelectionChange={(key) => {
+                  if (
+                    key === UiLanguage.en ||
+                    key === UiLanguage.he ||
+                    key === UiLanguage.ar
+                  ) {
+                    setLang(key)
+                  }
+                }}
               >
                 <SelectTrigger>
                   <SelectValue />

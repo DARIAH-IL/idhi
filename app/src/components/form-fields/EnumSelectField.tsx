@@ -1,4 +1,4 @@
-import { useFormContext } from '@/components/forms/form-context'
+import { useFieldContext } from '@/components/forms/form-context'
 import { FieldRow } from './FieldRow'
 import {
   Select,
@@ -8,65 +8,42 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { FieldError } from './FieldError'
-import { firstError, validateValue } from './validation'
+import { firstError } from './validation'
 
-export function EnumSelectField({
-  name,
-  label,
-  options,
-  required = false,
-}: {
-  name: string
+interface Props {
   label: string
   options: Record<string, string>
   required?: boolean
-}) {
-  const form = useFormContext()
+}
+
+export function EnumSelectField({ label, options, required = false }: Props) {
+  const field = useFieldContext<string | null | undefined>()
+  const error = firstError(field.state.meta.errors)
+
   return (
     <FieldRow label={label}>
       {(labelId) => (
-        <form.Field
-          name={name as never}
-          validators={{
-            onSubmit: ({ value }) => {
-              const rawValue = value as unknown
-              const requiredError = validateValue(rawValue, { required })
-              if (requiredError) return requiredError
-              return rawValue && !Object.hasOwn(options, String(rawValue))
-                ? 'Choose a supported value.'
-                : undefined
-            },
-          }}
-        >
-          {(field) => {
-            const rawValue = field.state.value as unknown
-            const error = firstError(field.state.meta.errors)
-            return (
-              <>
-                <Select
-                  aria-labelledby={labelId}
-                  placeholder="Select…"
-                  selectedKey={typeof rawValue === 'string' ? rawValue : null}
-                  onSelectionChange={(k) => field.handleChange(k as never)}
-                  isInvalid={Boolean(error)}
-                  isRequired={required}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(options).map(([key]) => (
-                      <SelectItem key={key} id={key}>
-                        {key}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FieldError error={error} />
-              </>
-            )
-          }}
-        </form.Field>
+        <>
+          <Select
+            aria-labelledby={labelId}
+            selectedKey={field.state.value ?? null}
+            onSelectionChange={(key) => field.handleChange(String(key))}
+            isInvalid={Boolean(error)}
+            isRequired={required}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(options).map((key) => (
+                <SelectItem key={key} id={key}>
+                  {key}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <FieldError error={error} />
+        </>
       )}
     </FieldRow>
   )

@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n'
+import { useAuthLinkStore } from '@/stores/auth-link'
+import type { AuthLinkFlow } from '@/stores/auth-link'
 import { useAuthStore } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
-import { useInviteStore } from '@/stores/invite'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { LoginDialog } from '@/components/auth/LoginDialog'
@@ -17,13 +18,14 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { t } = useTranslation()
   const [loginOpen, setLoginOpen] = useState(false)
-  const [inviteParams, setInviteParams] = useState<{
+  const [authLinkParams, setAuthLinkParams] = useState<{
     challengeId: string
     otp: string
+    flow: AuthLinkFlow
   } | null>(null)
   const user = useAuthStore((s) => s.user)
   const language = useUIStore((s) => s.language)
-  const inviteConsumedRef = useRef(false)
+  const authLinkConsumedRef = useRef(false)
 
   useEffect(() => {
     void i18n.changeLanguage(language)
@@ -34,12 +36,12 @@ function AppLayout() {
   }, [t])
 
   useEffect(() => {
-    if (inviteConsumedRef.current) return
-    inviteConsumedRef.current = true
-    const { challengeId, otp, clear } = useInviteStore.getState()
-    if (challengeId && otp) {
+    if (authLinkConsumedRef.current) return
+    authLinkConsumedRef.current = true
+    const { challengeId, otp, flow, clear } = useAuthLinkStore.getState()
+    if (challengeId && otp && flow) {
       clear()
-      setInviteParams({ challengeId, otp })
+      setAuthLinkParams({ challengeId, otp, flow })
       setLoginOpen(true)
     }
   }, [])
@@ -77,9 +79,9 @@ function AppLayout() {
         isOpen={loginOpen}
         onOpenChange={(open) => {
           setLoginOpen(open)
-          if (!open) setInviteParams(null)
+          if (!open) setAuthLinkParams(null)
         }}
-        inviteParams={inviteParams}
+        authLinkParams={authLinkParams}
       />
     </div>
   )

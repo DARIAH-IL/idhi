@@ -11,20 +11,50 @@ import type {
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  postApiV1AuthPasskeyCreate,
-  postApiV1AuthPasskeyCreateChallengeId,
-  postApiV1AuthPasskeyLogin,
-  postApiV1AuthPasskeyLoginChallengeId,
+  completePasskeyAuthentication,
+  completePasskeyRegistration,
+  startPasskeyAuthentication,
+  startPasskeyRegistration,
 } from '@/api/hooks/user-auth/user-auth'
-import type {
-  PasskeyAuthenticationResponse,
-  PasskeyRegistrationResponse,
-} from '@/api/models'
 import { getApiErrorMessage } from '@/lib/api-error'
 import { usePasskeyStore } from '@/stores/passkey'
 
 function isCeremonyCancellation(err: unknown): boolean {
   return err instanceof WebAuthnError && err.code === 'ERROR_CEREMONY_ABORTED'
+}
+
+function isRequestOptions(
+  value: unknown,
+): value is PublicKeyCredentialRequestOptionsJSON {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'challenge' in value &&
+    typeof value.challenge === 'string'
+  )
+}
+
+function isCreationOptions(
+  value: unknown,
+): value is PublicKeyCredentialCreationOptionsJSON {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'challenge' in value &&
+    typeof value.challenge === 'string' &&
+    'rp' in value &&
+    typeof value.rp === 'object' &&
+    value.rp !== null &&
+    'user' in value &&
+    typeof value.user === 'object' &&
+    value.user !== null &&
+    'pubKeyCredParams' in value &&
+    Array.isArray(value.pubKeyCredParams)
+  )
+}
+
+function toJsonRecord(value: object): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(value))
 }
 
 function logCeremonyError(
@@ -71,9 +101,11 @@ export function usePasskeyLogin({
     setBusy(true)
 
     try {
-      const challenge = await postApiV1AuthPasskeyLogin({ email })
-      const options =
-        challenge.options as unknown as PublicKeyCredentialRequestOptionsJSON
+      const challenge = await startPasskeyAuthentication({ email })
+      if (!isRequestOptions(challenge.options)) {
+        throw new Error('Invalid passkey authentication options')
+      }
+      const options = challenge.options
 
       if (
         !options.allowCredentials?.some(
@@ -97,9 +129,9 @@ export function usePasskeyLogin({
         return
       }
 
-      const { jwt } = await postApiV1AuthPasskeyLoginChallengeId(
+      const { jwt } = await completePasskeyAuthentication(
         challenge.challengeId,
-        authResponse,
+        toJsonRecord(authResponse),
       )
       onToken(jwt)
     } catch (err) {
@@ -133,11 +165,13 @@ export function usePasskeyEnroll({
     setBusy(true)
 
     try {
-      const challenge = await postApiV1AuthPasskeyCreate({
+      const challenge = await startPasskeyRegistration({
         ...(replacingCredentialId ? { replacingCredentialId } : {}),
       })
-      const options =
-        challenge.options as unknown as PublicKeyCredentialCreationOptionsJSON
+      if (!isCreationOptions(challenge.options)) {
+        throw new Error('Invalid passkey registration options')
+      }
+      const options = challenge.options
 
       let registrationResponse
       try {
@@ -152,9 +186,9 @@ export function usePasskeyEnroll({
         return
       }
 
-      await postApiV1AuthPasskeyCreateChallengeId(
+      await completePasskeyRegistration(
         challenge.challengeId,
-        registrationResponse,
+        toJsonRecord(registrationResponse),
       )
       setCredential(registrationResponse.id, accountEmail)
       toast.success(t('auth.passkey_created'))

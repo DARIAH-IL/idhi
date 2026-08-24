@@ -47,6 +47,10 @@ const SIZES = {
   lg: { wrapper: 'size-11 rounded-xl', icon: 'size-6' },
 } as const
 
+function isEntityType(type: string): type is EntityType {
+  return type in ICONS
+}
+
 export function EntityTypeIcon({
   type,
   size = 'md',
@@ -56,7 +60,7 @@ export function EntityTypeIcon({
   size?: keyof typeof SIZES
   className?: string
 }) {
-  const knownType = type in ICONS ? (type as EntityType) : undefined
+  const knownType = isEntityType(type) ? type : undefined
   const dimensions = SIZES[size]
 
   return (

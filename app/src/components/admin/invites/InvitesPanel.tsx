@@ -5,9 +5,9 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1UsersInvitesQueryKey,
-  useDeleteApiV1UsersInvitesInviteId,
-  useGetApiV1UsersInvites,
+  getListUserInvitesQueryKey,
+  useListUserInvites,
+  useRevokeUserInviteById,
 } from '@/api/hooks/user-invites/user-invites'
 import type { UserInvite } from '@/api/models'
 import { Badge } from '@/components/ui/badge'
@@ -28,7 +28,7 @@ export function InvitesPanel() {
   const { t } = useTranslation()
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false)
   const [revokeInvite, setRevokeInvite] = useState<UserInvite | null>(null)
-  const invites = useGetApiV1UsersInvites()
+  const invites = useListUserInvites()
 
   return (
     <>
@@ -82,11 +82,11 @@ function RevokeInviteDialog({
 }) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const mutation = useDeleteApiV1UsersInvitesInviteId({
+  const mutation = useRevokeUserInviteById({
     mutation: {
       onSuccess: () => {
         void queryClient.invalidateQueries({
-          queryKey: getGetApiV1UsersInvitesQueryKey(),
+          queryKey: getListUserInvitesQueryKey(),
         })
         toast.success(t('admin.notifications.invite_revoked'))
         onClose()

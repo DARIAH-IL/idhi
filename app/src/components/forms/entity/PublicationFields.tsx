@@ -3,96 +3,179 @@ import {
   PublicationAuthorshipsItemAuthorshipRole,
   PublicationPublicationType,
 } from '@/api/models'
-import { TextField } from '@/components/form-fields/TextField'
-import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
-import { LangStringField } from '@/components/form-fields/LangStringField'
-import { ArraySection } from '@/components/form-fields/ArraySection'
-import { EntityRefArrayField, EntityRefField } from './EntityRefField'
+import { withForm } from '@/components/forms/app-form'
+import {
+  entityRefArrayValidators,
+  entityRefValidators,
+  enumValidators,
+  localizedValueValidators,
+  valueValidators,
+} from '@/components/form-fields/validation'
+import { publicationFormOptions } from './entity-form-options'
 
-export function PublicationFields() {
-  const { t } = useTranslation()
-  return (
-    <>
-      <LangStringField
-        name="name"
-        label={t('entity.form.fields.name')}
-        required
-      />
-      <EnumSelectField
-        name="publication_type"
-        label={t('entity.form.fields.publication_type')}
-        options={PublicationPublicationType}
-      />
-      <TextField
-        name="doi"
-        label={t('entity.form.fields.doi')}
-        placeholder="https://doi.org/…"
-        validationKind="doi"
-      />
-      <TextField
-        name="date_issued"
-        label={t('entity.form.fields.date_issued')}
-        type="date"
-      />
-      <EntityRefField
-        name="publisher"
-        label={t('entity.form.fields.publisher')}
-        entityTypes={['idhi:Organization']}
-      />
-      <EntityRefField
-        name="part_of"
-        label={t('entity.form.fields.part_of')}
-        entityTypes={['idhi:Publication']}
-        allowExternalUrl
-      />
-      <LangStringField
-        name="published_in"
-        label={t('entity.form.fields.published_in')}
-      />
-      <EntityRefArrayField
-        name="presented_at"
-        label={t('entity.form.fields.presented_at')}
-        entityTypes={['idhi:Event']}
-      />
+export const PublicationFields = withForm({
+  ...publicationFormOptions,
+  render: function Render({ form }) {
+    const { t } = useTranslation()
 
-      <ArraySection
-        name="authorships"
-        label={t('entity.form.fields.authorships')}
-        defaultItem={{ author: '', publication: '' }}
-      >
-        {(i) => (
-          <>
-            <EntityRefField
-              name={`authorships[${i}].author`}
-              label={t('entity.form.member_ref')}
-              entityTypes={['idhi:Person']}
-              required
+    return (
+      <>
+        <form.AppField name="name" validators={localizedValueValidators(true)}>
+          {(field) => (
+            <field.LangStringField label={t('entity.form.fields.name')} />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="publication_type"
+          validators={enumValidators(PublicationPublicationType)}
+        >
+          {(field) => (
+            <field.EnumSelectField
+              label={t('entity.form.fields.publication_type')}
+              options={PublicationPublicationType}
             />
-            <TextField
-              name={`authorships[${i}].author_order`}
-              label={t('entity.form.author_order')}
-              type="number"
-              validationKind="integer"
-              min={1}
+          )}
+        </form.AppField>
+        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
+          {(field) => (
+            <field.TextField
+              label={t('entity.form.fields.doi')}
+              placeholder="https://doi.org/…"
             />
-            <EnumSelectField
-              name={`authorships[${i}].authorship_role`}
-              label={t('entity.form.authorship_role')}
-              options={PublicationAuthorshipsItemAuthorshipRole}
-            />
-            <TextField
-              name={`authorships[${i}].start_date`}
-              label={t('entity.form.fields.start_date')}
+          )}
+        </form.AppField>
+        <form.AppField
+          name="date_issued"
+          validators={valueValidators({ kind: 'date' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={t('entity.form.fields.date_issued')}
               type="date"
             />
-            <TextField
-              name={`authorships[${i}].end_date`}
-              label={t('entity.form.fields.end_date')}
-              type="date"
+          )}
+        </form.AppField>
+        <form.AppField
+          name="publisher"
+          validators={entityRefValidators(['idhi:Organization'])}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={t('entity.form.fields.publisher')}
+              entityTypes={['idhi:Organization']}
             />
-          </>
-        )}
-      </ArraySection>
-    </>
-  )
-}
+          )}
+        </form.AppField>
+        <form.AppField
+          name="part_of"
+          validators={entityRefValidators(['idhi:Publication'], {
+            allowExternalUrl: true,
+          })}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={t('entity.form.fields.part_of')}
+              entityTypes={['idhi:Publication']}
+              allowExternalUrl
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="published_in"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={t('entity.form.fields.published_in')}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="presented_at"
+          validators={entityRefArrayValidators(['idhi:Event'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={t('entity.form.fields.presented_at')}
+              entityTypes={['idhi:Event']}
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="authorships" mode="array">
+          {(field) => (
+            <field.ArraySection
+              label={t('entity.form.fields.authorships')}
+              defaultItem={{ author: '' }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`authorships[${index}].author`}
+                    validators={entityRefValidators(['idhi:Person'], {
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EntityRefField
+                        label={t('entity.form.member_ref')}
+                        entityTypes={['idhi:Person']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`authorships[${index}].author_order`}
+                    validators={valueValidators({ kind: 'integer', min: 1 })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={t('entity.form.author_order')}
+                        type="number"
+                        min={1}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`authorships[${index}].authorship_role`}
+                    validators={enumValidators(
+                      PublicationAuthorshipsItemAuthorshipRole,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={t('entity.form.authorship_role')}
+                        options={PublicationAuthorshipsItemAuthorshipRole}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`authorships[${index}].start_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={t('entity.form.fields.start_date')}
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`authorships[${index}].end_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={t('entity.form.fields.end_date')}
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                </>
+              )}
+            </field.ArraySection>
+          )}
+        </form.AppField>
+      </>
+    )
+  },
+})

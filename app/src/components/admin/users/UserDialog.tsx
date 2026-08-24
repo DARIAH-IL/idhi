@@ -7,9 +7,9 @@ import { Checkbox } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
-  getGetApiV1UsersQueryKey,
-  usePostApiV1Users,
-  usePutApiV1UsersUserId,
+  getListUsersQueryKey,
+  useCreateUser,
+  useReplaceUserById,
 } from '@/api/hooks/user-management/user-management'
 import type { User, UserWrite } from '@/api/models'
 import { Button } from '@/components/ui/button'
@@ -37,7 +37,7 @@ export function UserDialog({
   const [email, setEmail] = useState(user?.email ?? '')
   const [isAdmin, setIsAdmin] = useState(user?.isAdmin ?? false)
   const finish = () => {
-    void queryClient.invalidateQueries({ queryKey: getGetApiV1UsersQueryKey() })
+    void queryClient.invalidateQueries({ queryKey: getListUsersQueryKey() })
     toast.success(
       t(
         user
@@ -47,8 +47,8 @@ export function UserDialog({
     )
     onClose()
   }
-  const create = usePostApiV1Users({ mutation: { onSuccess: finish } })
-  const update = usePutApiV1UsersUserId({ mutation: { onSuccess: finish } })
+  const create = useCreateUser({ mutation: { onSuccess: finish } })
+  const update = useReplaceUserById({ mutation: { onSuccess: finish } })
   const isPending = create.isPending || update.isPending
 
   const submit = (event: FormEvent<HTMLFormElement>) => {

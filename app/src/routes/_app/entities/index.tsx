@@ -18,14 +18,14 @@ import {
 } from '@hugeicons/core-free-icons'
 import { z } from 'zod'
 import {
-  getPostApiV1EntitiesQueryKey,
-  postApiV1Entities,
+  getSearchEntitiesQueryKey,
+  searchEntities,
 } from '@/api/hooks/entities/entities'
 import type {
   EntitySearch,
   Filter,
   FilterableField,
-  PostApiV1Entities200Facets,
+  SearchEntities200Facets,
 } from '@/api/models'
 import {
   ENTITY_TYPES,
@@ -120,9 +120,9 @@ function getInfiniteEntityQueryOptions(
   const search = createEntitySearch(q, facetFilters, sort)
 
   return infiniteQueryOptions({
-    queryKey: [...getPostApiV1EntitiesQueryKey(search), 'infinite'] as const,
+    queryKey: [...getSearchEntitiesQueryKey(search), 'infinite'] as const,
     queryFn: ({ pageParam, signal }) =>
-      postApiV1Entities({ ...search, page: pageParam }, signal),
+      searchEntities({ ...search, page: pageParam }, signal),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _pages, lastPageParam) => {
       const nextPage = lastPageParam + 1
@@ -537,7 +537,7 @@ function SortableColumnLabel({
 }
 
 interface FacetPanelProps {
-  facets: PostApiV1Entities200Facets
+  facets: SearchEntities200Facets
   initialFilters: FacetFilters
   isLoading: boolean
   isRefetching: boolean

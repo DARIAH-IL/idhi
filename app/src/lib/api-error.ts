@@ -18,21 +18,32 @@ const errorTranslationKeys = {
     'api.errors.AuthChallengeNotFoundOrExpired',
 } as const satisfies Record<ErrorCode, ParseKeys>
 
+function isErrorCode(value: unknown): value is ErrorCode {
+  return (
+    typeof value === 'string' &&
+    Object.values(ErrorCodes).some((code) => code === value)
+  )
+}
+
 export function getApiErrorResponse(error: unknown): ErrorResponse | undefined {
   if (!axios.isAxiosError(error)) return undefined
 
   const data: unknown = error.response?.data
   if (!data || typeof data !== 'object') return undefined
 
-  const { errorCode, message } = data as Record<string, unknown>
-  if (
-    typeof message !== 'string' ||
-    !Object.values(ErrorCodes).includes(errorCode as ErrorCode)
-  ) {
+  if (!('errorCode' in data) || !('message' in data)) return undefined
+  const { errorCode, message } = data
+  if (typeof message !== 'string' || !isErrorCode(errorCode)) {
     return undefined
   }
 
-  return data as ErrorResponse
+  return {
+    errorCode,
+    message,
+    ...('entityId' in data && typeof data.entityId === 'string'
+      ? { entityId: data.entityId }
+      : {}),
+  }
 }
 
 export function getApiErrorMessage(error: unknown): string {
