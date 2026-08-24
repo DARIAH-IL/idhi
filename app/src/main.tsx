@@ -1,38 +1,15 @@
 import './i18n/index.ts'
-import { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
-import {
-  QueryParamProvider,
-  StringParam,
-  useQueryParam,
-} from 'use-query-params'
+import { QueryParamProvider } from 'use-query-params'
 import type { QueryParamAdapterComponent } from 'use-query-params'
-import { UiLanguage } from '@/api/models'
-import { useAuthLinkStore } from '@/stores/auth-link'
-import type { AuthLinkFlow } from '@/stores/auth-link'
 import { subscribeToAuthStorage } from '@/stores/auth'
-import { useUIStore } from '@/stores/ui'
+import { useEffect } from 'react'
+import { useLanguageQueryParam } from '@/hooks/useLanguageQueryParam'
+import { useAuthLinkQueryParams } from '@/hooks/useAuthLinkQueryParams'
 import { getRouter } from './router'
 
-const LANGUAGE_QUERY_PARAM = 'lang'
-const CHALLENGE_ID_QUERY_PARAM = 'challengeId'
-const OTP_QUERY_PARAM = 'otp'
-const AUTH_FLOW_QUERY_PARAM = 'authFlow'
-
 const router = getRouter()
-
-const _initialUrl = new URL(window.location.href)
-const _challengeId = _initialUrl.searchParams.get(CHALLENGE_ID_QUERY_PARAM)
-const _otp = _initialUrl.searchParams.get(OTP_QUERY_PARAM)
-const _authFlow = authLinkFlow(
-  _initialUrl.searchParams.get(AUTH_FLOW_QUERY_PARAM),
-)
-if (_challengeId && _otp && _authFlow) {
-  useAuthLinkStore
-    .getState()
-    .set({ challengeId: _challengeId, otp: _otp, flow: _authFlow })
-}
 
 const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
   const getPath = (search: string) => {
@@ -50,59 +27,10 @@ const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
   })
 }
 
-function isLanguage(value: string): value is UiLanguage {
-  return (
-    value === UiLanguage.en ||
-    value === UiLanguage.he ||
-    value === UiLanguage.ar
-  )
-}
-
-function authLinkFlow(value: string | null): AuthLinkFlow | null {
-  if (value === 'invite' || value === 'otp') return value
-
-  // Invite links issued before authFlow was introduced have no flow marker.
-  return value === null ? 'invite' : null
-}
-
 function App() {
-  const [language, setLanguageQueryParam] = useQueryParam(
-    LANGUAGE_QUERY_PARAM,
-    StringParam,
-  )
-  const [challengeId, setChallengeIdQueryParam] = useQueryParam(
-    CHALLENGE_ID_QUERY_PARAM,
-    StringParam,
-  )
-  const [otp, setOtpQueryParam] = useQueryParam(OTP_QUERY_PARAM, StringParam)
-  const [authFlow, setAuthFlowQueryParam] = useQueryParam(
-    AUTH_FLOW_QUERY_PARAM,
-    StringParam,
-  )
-  const setLanguage = useUIStore((state) => state.setLanguage)
-
   useEffect(() => subscribeToAuthStorage(), [])
-
-  useEffect(() => {
-    if (language == null) return
-
-    if (isLanguage(language)) setLanguage(language)
-    setLanguageQueryParam(undefined, 'replaceIn')
-  }, [language, setLanguage, setLanguageQueryParam])
-
-  useEffect(() => {
-    if (!challengeId || !otp) return
-    setChallengeIdQueryParam(undefined, 'replaceIn')
-    setOtpQueryParam(undefined, 'replaceIn')
-    if (authFlow != null) setAuthFlowQueryParam(undefined, 'replaceIn')
-  }, [
-    authFlow,
-    challengeId,
-    otp,
-    setAuthFlowQueryParam,
-    setChallengeIdQueryParam,
-    setOtpQueryParam,
-  ])
+  useLanguageQueryParam()
+  useAuthLinkQueryParams()
 
   return <RouterProvider router={router} />
 }
