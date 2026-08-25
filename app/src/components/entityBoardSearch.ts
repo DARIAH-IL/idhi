@@ -1,17 +1,19 @@
 import { infiniteQueryOptions, keepPreviousData } from '@tanstack/react-query'
 import { z } from 'zod'
 import {
-  getSearchEntitiesQueryKey,
-  searchEntities,
-} from '#/api/hooks/entities/entities.ts'
-import type { EntitySearch, Filter, FilterableField } from '#/api/models'
+  getSearchEntitiesTypedQueryKey,
+  searchEntitiesTyped,
+} from '#/api/typedEntitySearch.ts'
+import type {
+  EntityField,
+  EntityFilter,
+  TypedEntitySearch,
+} from '#/api/typedEntitySearch.ts'
 import { ENTITY_TYPES } from '#/lib/entity.ts'
 
 export const PAGE_SIZE = 20
 export const FACET_VISIBLE_LIMIT = 5
-export const DEFAULT_FACETS = [
-  'type',
-] as const satisfies readonly FilterableField[]
+export const DEFAULT_FACETS = ['type'] as const satisfies readonly EntityField[]
 
 const facetSelectionSchema = z.object({
   include: z.array(z.enum(ENTITY_TYPES)).optional(),
@@ -19,11 +21,12 @@ const facetSelectionSchema = z.object({
 export const facetFiltersSchema = z.object({
   type: facetSelectionSchema.optional(),
 })
-export const sortPropertySchema = z.enum([
+const SORT_PROPERTIES = [
   'name.value',
   'type',
   'audit.modifiedAt',
-])
+] as const satisfies readonly EntityField[]
+export const sortPropertySchema = z.enum(SORT_PROPERTIES)
 export const sortSchema = z.object({
   property: sortPropertySchema,
   direction: z.enum(['asc', 'desc']),
@@ -43,7 +46,7 @@ export const entityBoardSearchSchema = z.object({
 })
 
 export function buildFacetFilter(facetFilters: FacetFilters | undefined) {
-  const clauses: Filter[] = []
+  const clauses: EntityFilter[] = []
 
   for (const field of DEFAULT_FACETS) {
     const selection = facetFilters?.[field]
@@ -58,14 +61,14 @@ export function buildFacetFilter(facetFilters: FacetFilters | undefined) {
   if (clauses.length === 1) {
     return clauses[0]
   }
-  return { and: clauses } satisfies Filter
+  return { and: clauses } satisfies EntityFilter
 }
 
 export function createEntitySearch(
   q: string | undefined,
   facetFilters: FacetFilters | undefined,
   sort: EntitySort | undefined,
-): EntitySearch {
+): TypedEntitySearch {
   return {
     q,
     facets: [...DEFAULT_FACETS],
@@ -83,9 +86,9 @@ export function getInfiniteEntityQueryOptions(
   const search = createEntitySearch(q, facetFilters, sort)
 
   return infiniteQueryOptions({
-    queryKey: [...getSearchEntitiesQueryKey(search), 'infinite'] as const,
+    queryKey: [...getSearchEntitiesTypedQueryKey(search), 'infinite'] as const,
     queryFn: ({ pageParam, signal }) =>
-      searchEntities({ ...search, page: pageParam }, signal),
+      searchEntitiesTyped({ ...search, page: pageParam }, signal),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _pages, lastPageParam) => {
       const nextPage = lastPageParam + 1

@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { getSearchEntitiesQueryOptions } from '@/api/hooks/entities/entities'
-import type { EntitySearch, Filter } from '@/api/models'
+import { getSearchEntitiesTypedQueryOptions } from '@/api/typedEntitySearch'
+import type { EntityFilter, TypedEntitySearch } from '@/api/typedEntitySearch'
 import type { EntityType } from '@/lib/entity'
 import {
   auditedEntityId,
@@ -34,18 +34,18 @@ export function EntityPicker({
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
 
-  const filter = useMemo<Filter>(() => {
+  const filter = useMemo<EntityFilter>(() => {
     if (entityTypes.length === 1) {
       return { field: 'type', op: 'eq', value: entityTypes[0] }
     }
     return { field: 'type', op: 'in', value: entityTypes }
   }, [entityTypes])
-  const search = useMemo<EntitySearch>(
+  const search = useMemo<TypedEntitySearch>(
     () => ({ q: query || undefined, filter, page: 0, pageSize: 10 }),
     [filter, query],
   )
   const { data, isFetching } = useQuery({
-    ...getSearchEntitiesQueryOptions(search),
+    ...getSearchEntitiesTypedQueryOptions(search),
     enabled: open,
   })
 
