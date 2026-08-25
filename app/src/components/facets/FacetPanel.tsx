@@ -1,15 +1,24 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Cancel01Icon } from '@hugeicons/core-free-icons'
 import type { SearchEntities200Facets } from '#/api/models'
-import { ENTITY_TYPES, getEntityTypeLabel } from '#/lib/entity.ts'
+import { ENTITY_TYPES, normalizeEntityType } from '#/lib/entity.ts'
 import { Button } from '#/components/ui/button.tsx'
-import { InputGroup, InputGroupInput } from '#/components/ui/input-group.tsx'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from '#/components/ui/input-group.tsx'
 import { FacetCheckbox } from './FacetCheckbox.tsx'
 import {
   DEFAULT_FACETS,
   FACET_VISIBLE_LIMIT,
+  getFacetFieldLabel,
+  getFacetValueLabel,
 } from '../../api/entityBoardSearch.ts'
-import type { FacetFilters } from '../../api/entityBoardSearch.ts'
+import type { FacetField, FacetFilters } from '../../api/entityBoardSearch.ts'
 
 interface FacetPanelProps {
   facets: SearchEntities200Facets
@@ -29,20 +38,18 @@ export function FacetPanel({
   const { t } = useTranslation()
   const [draftFilters, setDraftFilters] = useState(initialFilters)
   const [expandedFacets, setExpandedFacets] = useState<
-    Record<(typeof DEFAULT_FACETS)[number], boolean>
-  >({ type: false })
-  const [facetSearches, setFacetSearches] = useState<
-    Record<(typeof DEFAULT_FACETS)[number], string>
-  >({ type: '' })
+    Record<FacetField, boolean>
+  >({ type: false, tags: false })
+  const [facetSearch, setFacetSearch] = useState('')
 
   const updateFacetValue = (
-    field: (typeof DEFAULT_FACETS)[number],
-    value: (typeof ENTITY_TYPES)[number],
+    field: FacetField,
+    value: string,
     isSelected: boolean,
   ) => {
     setDraftFilters((currentFilters) => {
       const currentSelection = currentFilters[field] ?? {}
-      const nextValues = new Set(currentSelection.include ?? [])
+      const nextValues = new Set<string>(currentSelection.include ?? [])
 
       if (isSelected) {
         nextValues.add(value)
@@ -78,24 +85,54 @@ export function FacetPanel({
           >
             {t('board.facets.apply')}
           </Button>
+
+          <InputGroup className="mt-2">
+            <InputGroupInput
+              type="search"
+              value={facetSearch}
+              placeholder={t('board.facets.filter_placeholder')}
+              aria-label={t('board.facets.filter_label')}
+              onChange={(event) => setFacetSearch(event.target.value)}
+              className="[&::-webkit-search-cancel-button]:hidden"
+            />
+            <InputGroupAddon align="inline-end">
+              <InputGroupButton
+                size="icon-xs"
+                aria-label={t('board.clear_search')}
+                isDisabled={!facetSearch}
+                onPress={() => setFacetSearch('')}
+              >
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+              </InputGroupButton>
+            </InputGroupAddon>
+          </InputGroup>
         </div>
 
         {DEFAULT_FACETS.map((field) => {
           const selection = draftFilters[field] ?? {}
           const countByValue = new Map(
-            (facets[field] ?? []).map(({ value, count }) => [value, count]),
+            (facets[field] ?? []).map(({ value, count }) => [
+              field === 'type' ? (normalizeEntityType(value) ?? value) : value,
+              count,
+            ]),
           )
-          const selectedValues = new Set(selection.include ?? [])
-          const values = ENTITY_TYPES.filter(
-            (entityType) =>
-              countByValue.has(entityType) || selectedValues.has(entityType),
-          )
-          const normalizedFacetSearch = facetSearches[field]
-            .trim()
-            .toLocaleLowerCase()
+          const selectedValues = new Set<string>(selection.include ?? [])
+          const values: string[] =
+            field === 'type'
+              ? ENTITY_TYPES.filter(
+                  (entityType) =>
+                    countByValue.has(entityType) ||
+                    selectedValues.has(entityType),
+                )
+              : [...new Set([...countByValue.keys(), ...selectedValues])]
+          const normalizedFacetSearch = facetSearch.trim().toLocaleLowerCase()
           const filteredValues = normalizedFacetSearch
-            ? values.filter((entityType) =>
-                getEntityTypeLabel(entityType)
+            ? values.filter((value) =>
+                getFacetValueLabel(field, value)
                   .toLocaleLowerCase()
                   .includes(normalizedFacetSearch),
               )
@@ -110,30 +147,17 @@ export function FacetPanel({
             filteredValues.every((value) => selectedValues.has(value))
 
           return (
-            <section key={field} aria-labelledby={`facet-${field}-heading`}>
+            <section
+              key={field}
+              aria-labelledby={`facet-${field}-heading`}
+              className="border-b pb-4 [&+&]:mt-4 last:border-b-0 last:pb-0"
+            >
               <h3
                 id={`facet-${field}-heading`}
                 className="text-xs font-semibold"
               >
-                {t('board.facets.fields.type')}
+                {getFacetFieldLabel(field)}
               </h3>
-
-              <InputGroup className="mt-2">
-                <InputGroupInput
-                  type="search"
-                  value={facetSearches[field]}
-                  placeholder={t('board.facets.filter_placeholder')}
-                  aria-label={t('board.facets.filter_label', {
-                    field: t(`board.facets.fields.${field}`),
-                  })}
-                  onChange={(event) =>
-                    setFacetSearches((current) => ({
-                      ...current,
-                      [field]: event.target.value,
-                    }))
-                  }
-                />
-              </InputGroup>
 
               <div
                 role="group"
@@ -146,7 +170,7 @@ export function FacetPanel({
                   isDisabled={isSelectAllDisabled}
                   onPress={() =>
                     setDraftFilters((currentFilters) => {
-                      const nextValues = new Set([
+                      const nextValues = new Set<string>([
                         ...(currentFilters[field]?.include ?? []),
                         ...filteredValues,
                       ])
@@ -191,20 +215,24 @@ export function FacetPanel({
                     {t('board.facets.no_matching_values')}
                   </p>
                 ) : (
-                  visibleValues.map((entityType) => {
-                    const label = getEntityTypeLabel(entityType)
+                  visibleValues.map((value) => {
+                    const label = getFacetValueLabel(field, value)
                     return (
                       <FacetCheckbox
-                        key={entityType}
+                        key={value}
                         label={label}
                         accessibleLabel={t('board.facets.select_value', {
                           value: label,
                         })}
-                        entityType={entityType}
-                        count={countByValue.get(entityType) ?? 0}
-                        isSelected={selection.include?.includes(entityType)}
+                        entityType={
+                          field === 'type'
+                            ? normalizeEntityType(value)
+                            : undefined
+                        }
+                        count={countByValue.get(value) ?? 0}
+                        isSelected={selectedValues.has(value)}
                         onChange={(selected) =>
-                          updateFacetValue(field, entityType, selected)
+                          updateFacetValue(field, value, selected)
                         }
                       />
                     )

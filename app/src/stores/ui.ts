@@ -7,6 +7,8 @@ import { useStorageSync } from '@/hooks/useStorageSync'
 interface UIState {
   language: UiLanguage
   setLanguage: (lang: UiLanguage) => void
+  auditCollapsed: boolean
+  setAuditCollapsed: (collapsed: boolean) => void
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
@@ -16,6 +18,8 @@ export const useUIStore = create<UIState>()(
     (set) => ({
       language: 'en',
       setLanguage: (language) => set({ language }),
+      auditCollapsed: false,
+      setAuditCollapsed: (auditCollapsed) => set({ auditCollapsed }),
     }),
     { name: UI_STORAGE_KEY },
   ),

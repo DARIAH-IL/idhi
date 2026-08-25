@@ -6,6 +6,7 @@ import { useUIStore } from '@/stores/ui'
 i18n.use(initReactI18next).init({
   lng: useUIStore.getState().language,
   fallbackLng: 'en',
+  nsSeparator: false,
   resources: {
     en: { translation: en },
   },

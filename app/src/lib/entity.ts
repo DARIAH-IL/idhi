@@ -260,11 +260,16 @@ export function getEntityDescription(entity: Entity): string | undefined {
   return pickLocalizedValue(entity.description)
 }
 
-export function getEntityTypeLabel(type: EntityType): string {
+export function normalizeEntityType(type: string): EntityType | undefined {
+  const candidate = type.startsWith('idhi:') ? type : `idhi:${type}`
+  return ENTITY_TYPES.find((entityType) => entityType === candidate)
+}
+
+export function getEntityTypeLabel(type: string): string {
   const labels: Record<string, string> = i18n.t('entity.types', {
     returnObjects: true,
   })
-  return labels[type] ?? type
+  return labels[normalizeEntityType(type) ?? type] ?? type
 }
 
 export function getEntityFieldLabelText(

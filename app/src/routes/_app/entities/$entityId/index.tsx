@@ -15,7 +15,6 @@ import {
 } from '@/lib/entity'
 import { getFieldRefClass, getFieldTermUri } from '@/api/termUris/termUri'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -26,13 +25,23 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Delete02Icon, Edit02Icon } from '@hugeicons/core-free-icons'
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  Delete02Icon,
+  Edit02Icon,
+} from '@hugeicons/core-free-icons'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { EntityFieldLabel } from '@/components/entity/EntityFieldLabel'
+import { EntityTags } from '@/components/entity/EntityTags'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
-import { renderEntityValue } from '../../../../components/renderEntityValue.tsx'
+import { useUIStore } from '@/stores/ui'
+import {
+  isEntityRefValue,
+  renderEntityValue,
+} from '../../../../components/renderEntityValue.tsx'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
@@ -45,6 +54,8 @@ export const Route = createFileRoute('/_app/entities/$entityId/')({
 function EntityDetailPage() {
   const { t } = useTranslation()
   const isAuthenticated = useAuthStore((state) => Boolean(state.token))
+  const auditCollapsed = useUIStore((state) => state.auditCollapsed)
+  const setAuditCollapsed = useUIStore((state) => state.setAuditCollapsed)
   const { entityId } = Route.useParams()
   const navigate = useNavigate()
   const [deleteOpen, setDeleteOpen] = useState(false)
@@ -78,9 +89,14 @@ function EntityDetailPage() {
   ]
     .filter((key) => !skipKeys.has(key))
     .sort((a, b) => orderOf(a) - orderOf(b))
+  const midpoint = Math.ceil(entityFields.length / 2)
+  const fieldColumns = [
+    entityFields.slice(0, midpoint),
+    entityFields.slice(midpoint),
+  ]
 
   return (
-    <div className="flex flex-col gap-4 max-w-3xl">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
       <div className="flex items-center gap-3">
         <EntityImage
           image={entity.image}
@@ -96,16 +112,7 @@ function EntityDetailPage() {
             <span>{getEntityTypeLabel(entity.type)}</span>
             <span aria-hidden>·</span>
             <span className="font-mono">{decodedId}</span>
-            {entity.tags && entity.tags.length > 0 && (
-              <>
-                <span aria-hidden>·</span>
-                {entity.tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </>
-            )}
+            <EntityTags tags={entity.tags} />
           </div>
         </div>
         {isAuthenticated && (
@@ -142,67 +149,97 @@ function EntityDetailPage() {
       <Separator />
 
       {isAuthenticated && audit && (
-        <Card size="sm">
+        <Card className="max-w-lg">
           <CardHeader>
-            <CardTitle>{t('entity.detail.audit')}</CardTitle>
+            <CardTitle>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="-ms-2 gap-1.5"
+                aria-expanded={!auditCollapsed}
+                onPress={() => setAuditCollapsed(!auditCollapsed)}
+              >
+                {t('entity.detail.audit')}
+                <HugeiconsIcon
+                  icon={auditCollapsed ? ArrowDown01Icon : ArrowUp01Icon}
+                  className="text-muted-foreground"
+                />
+              </Button>
+            </CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-2 text-xs">
-            <div className="flex flex-col gap-1">
-              <div>
-                <span className="text-muted-foreground">
-                  {t('entity.detail.created')}:{' '}
-                </span>
-                <TimeAgo date={audit.createdAt} />
-              </div>
-              {audit.createdBy && (
+          {!auditCollapsed && (
+            <CardContent className="grid grid-cols-2 gap-2 text-xs">
+              <div className="flex flex-col gap-1">
                 <div>
                   <span className="text-muted-foreground">
-                    {t('entity.detail.by')}
-                  </span>{' '}
-                  <span className="font-mono">{audit.createdBy}</span>
+                    {t('entity.detail.created')}:{' '}
+                  </span>
+                  <TimeAgo date={audit.createdAt} />
                 </div>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <div>
-                <span className="text-muted-foreground">
-                  {t('entity.detail.modified')}:{' '}
-                </span>
-                <TimeAgo date={audit.modifiedAt} />
+                {audit.createdBy && (
+                  <div>
+                    <span className="text-muted-foreground">
+                      {t('entity.detail.by')}
+                    </span>{' '}
+                    <span className="font-mono">{audit.createdBy}</span>
+                  </div>
+                )}
               </div>
-              {audit.modifiedBy && (
+              <div className="flex flex-col gap-1">
                 <div>
-                  {' '}
                   <span className="text-muted-foreground">
-                    {t('entity.detail.by')}
-                  </span>{' '}
-                  <span className="font-mono">{audit.modifiedBy}</span>
+                    {t('entity.detail.modified')}:{' '}
+                  </span>
+                  <TimeAgo date={audit.modifiedAt} />
                 </div>
-              )}
-            </div>
-          </CardContent>
+                {audit.modifiedBy && (
+                  <div>
+                    {' '}
+                    <span className="text-muted-foreground">
+                      {t('entity.detail.by')}
+                    </span>{' '}
+                    <span className="font-mono">{audit.modifiedBy}</span>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          )}
         </Card>
       )}
 
       <Card>
-        <CardContent className="pt-4">
-          <dl className="grid gap-3">
-            {entityFields.map((key) => (
-              <div
-                key={key}
-                className="grid grid-cols-[12rem_1fr] gap-2 text-xs"
-              >
-                <dt className="text-muted-foreground font-medium">
-                  <EntityFieldLabel entityClass={entityClass} field={key} />
-                </dt>
-                <dd>
-                  {renderEntityValue(
-                    values[key],
-                    getFieldRefClass(entityClass, key),
-                    key,
-                    getFieldTermUri(entityClass, key),
-                  )}
-                </dd>
+        <CardContent>
+          <dl className="grid items-start gap-1 lg:grid-cols-2">
+            {fieldColumns.map((column, columnIndex) => (
+              <div key={columnIndex} className="flex flex-col gap-2">
+                {column.map((key) => {
+                  const refValue = isEntityRefValue(values[key])
+                  return (
+                    <div
+                      key={key}
+                      className={
+                        refValue
+                          ? 'flex flex-col gap-1 text-xs p-1 rounded hover:bg-accent'
+                          : 'grid grid-cols-[8rem_minmax(0,1fr)] gap-1 text-xs p-1 rounded hover:bg-accent'
+                      }
+                    >
+                      <dt className="text-muted-foreground font-medium">
+                        <EntityFieldLabel
+                          entityClass={entityClass}
+                          field={key}
+                        />
+                      </dt>
+                      <dd className={refValue ? 'ms-4' : undefined}>
+                        {renderEntityValue(
+                          values[key],
+                          getFieldRefClass(entityClass, key),
+                          key,
+                          getFieldTermUri(entityClass, key),
+                        )}
+                      </dd>
+                    </div>
+                  )
+                })}
               </div>
             ))}
           </dl>

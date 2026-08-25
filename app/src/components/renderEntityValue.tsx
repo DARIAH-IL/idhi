@@ -17,6 +17,16 @@ function mapsUrl(location: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
 }
 
+function isEntityRef(v: unknown): boolean {
+  return typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)
+}
+
+export function isEntityRefValue(v: unknown): boolean {
+  return (
+    isEntityRef(v) || (Array.isArray(v) && v.length > 0 && v.every(isEntityRef))
+  )
+}
+
 export function renderEntityValue(
   v: unknown,
   entityClass?: string,
@@ -57,28 +67,36 @@ export function renderEntityValue(
   }
   if (typeof v === 'object') {
     return (
-      <div className="flex flex-col gap-0.5 rounded border p-1.5 text-xs">
+      <div className="flex flex-col gap-4 rounded border p-2 text-xs">
         {Object.entries(v)
           .filter(([, val]) => val !== null && val !== undefined)
-          .map(([key, val]) => (
-            <div key={key} className="flex gap-2">
-              <span className="font-medium text-muted-foreground min-w-24">
-                {entityClass ? (
-                  <EntityFieldLabel entityClass={entityClass} field={key} />
-                ) : (
-                  key
-                )}
-              </span>
-              <span className="min-w-0 flex-1">
-                {renderEntityValue(
-                  val,
-                  entityClass ? getFieldRefClass(entityClass, key) : undefined,
-                  key,
-                  entityClass ? getFieldTermUri(entityClass, key) : undefined,
-                )}
-              </span>
-            </div>
-          ))}
+          .map(([key, val]) => {
+            const refValue = isEntityRefValue(val)
+            return (
+              <div
+                key={key}
+                className={refValue ? 'flex flex-col gap-1' : 'flex gap-2'}
+              >
+                <span className="font-medium text-muted-foreground min-w-24">
+                  {entityClass ? (
+                    <EntityFieldLabel entityClass={entityClass} field={key} />
+                  ) : (
+                    key
+                  )}
+                </span>
+                <span className={refValue ? 'ms-4 m-2 ' : 'min-w-0 flex-1'}>
+                  {renderEntityValue(
+                    val,
+                    entityClass
+                      ? getFieldRefClass(entityClass, key)
+                      : undefined,
+                    key,
+                    entityClass ? getFieldTermUri(entityClass, key) : undefined,
+                  )}
+                </span>
+              </div>
+            )
+          })}
       </div>
     )
   }

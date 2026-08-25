@@ -162,9 +162,6 @@
     "loaded_count": "Loaded {{loaded}} of {{total}} entities",
     "facets": {
       "title": "Facets",
-      "fields": {
-        "type": "Type"
-      },
       "bulk_actions": "Facet selection actions",
       "select_all": "Select all",
       "clear_all": "Clear all",
@@ -172,7 +169,7 @@
       "show_more": "Show more",
       "show_less": "Show less",
       "filter_placeholder": "Filter values…",
-      "filter_label": "Filter {{field}} values",
+      "filter_label": "Filter facet values",
       "active_filters": "Active facet filters",
       "active_value": "{{field}}: {{value}}",
       "remove_filter": "Remove {{filter}} filter",
@@ -183,12 +180,6 @@
     },
     "no_results": "No entities found.",
     "no_matching_results": "No matching entities found.",
-    "columns": {
-      "image": "Image",
-      "name": "Name",
-      "type": "Type",
-      "modified": "Last modified"
-    },
     "new_entity": "New entity"
   },
   "entity": {
@@ -578,7 +569,7 @@
         },
         "description": {
           "label": "Description",
-          "description": "A short introduction to the person — their work and interests — aimed at index visitors, in one or more languages."
+          "description": "A short introduction to the person - their work and interests - aimed at index visitors, in one or more languages."
         },
         "emails": {
           "label": "Email addresses",
@@ -606,7 +597,7 @@
         },
         "orcid": {
           "label": "ORCID",
-          "description": "The person’s ORCID identifier. Strongly recommended for researchers — it helps link and deduplicate records."
+          "description": "The person’s ORCID identifier. Strongly recommended for researchers - it helps link and deduplicate records."
         },
         "same_as": {
           "label": "Same as (external URIs)",
@@ -624,7 +615,7 @@
       "Organization": {
         "$self": {
           "label": "Organization",
-          "description": "An organization of any kind — university, GLAM institution, research center, funder, company or non-profit."
+          "description": "An organization of any kind - university, GLAM institution, research center, funder, company or non-profit."
         },
         "additional_urls": {
           "label": "Additional URLs",
@@ -668,7 +659,7 @@
         },
         "organization_hierarchy": {
           "label": "Organization hierarchy",
-          "description": "The parent organizations this organization is formally part of, with optional dates. Only for formal containment, such as a department within a university — not for partnerships or informal association."
+          "description": "The parent organizations this organization is formally part of, with optional dates. Only for formal containment, such as a department within a university - not for partnerships or informal association."
         },
         "organization_type": {
           "label": "Organization type",
@@ -676,7 +667,7 @@
         },
         "ror": {
           "label": "ROR identifier",
-          "description": "The organization’s ROR registry identifier. Record it whenever the organization is registered in ROR — most universities and research institutes are."
+          "description": "The organization’s ROR registry identifier. Record it whenever the organization is registered in ROR - most universities and research institutes are."
         },
         "same_as": {
           "label": "Same as (external URIs)",
@@ -750,7 +741,7 @@
         },
         "tools_provided": {
           "label": "Tools provided (IDs)",
-          "description": "Tools this facility maintains or gives access to, such as hosted instances and lab-maintained software — not every tool staff members happen to use."
+          "description": "Tools this facility maintains or gives access to, such as hosted instances and lab-maintained software - not every tool staff members happen to use."
         },
         "type": {
           "label": "Type",
@@ -760,7 +751,7 @@
       "Project": {
         "$self": {
           "label": "Project",
-          "description": "A digital humanities research project — the central entity of the index, connecting people, organizations, outputs and the periods and places studied."
+          "description": "A digital humanities research project - the central entity of the index, connecting people, organizations, outputs and the periods and places studied."
         },
         "additional_urls": {
           "label": "Additional URLs",
@@ -772,7 +763,7 @@
         },
         "description": {
           "label": "Description",
-          "description": "A short overview of the project — its goals, methods and outcomes — aimed at index visitors, in one or more languages."
+          "description": "A short overview of the project - its goals, methods and outcomes - aimed at index visitors, in one or more languages."
         },
         "digital_humanities_activities": {
           "label": "DH activities",
@@ -808,7 +799,7 @@
         },
         "organization_roles": {
           "label": "Organization roles",
-          "description": "Organizations engaged in the project — as coordinator, partner, data provider, funder or host."
+          "description": "Organizations engaged in the project - as coordinator, partner, data provider, funder or host."
         },
         "outputs_datasets": {
           "label": "Output datasets (IDs)",
@@ -824,7 +815,7 @@
         },
         "outputs_training_materials": {
           "label": "Output training materials",
-          "description": "Training materials produced by the project — not materials it merely used."
+          "description": "Training materials produced by the project - not materials it merely used."
         },
         "project_participations": {
           "label": "Project participations",
@@ -844,11 +835,11 @@
         },
         "studied_periods": {
           "label": "Studied periods",
-          "description": "The historical periods the project studies, such as the Ottoman period — distinct from the project’s own start and end dates."
+          "description": "The historical periods the project studies, such as the Ottoman period - distinct from the project’s own start and end dates."
         },
         "studied_places": {
           "label": "Studied places",
-          "description": "The geographic focus of the research — the places studied, not where the team is based."
+          "description": "The geographic focus of the research - the places studied, not where the team is based."
         },
         "tags": {
           "label": "Tags",
@@ -902,11 +893,11 @@
         },
         "doi": {
           "label": "DOI",
-          "description": "The tool’s DOI, if one has been assigned — for example through a software deposit."
+          "description": "The tool’s DOI, if one has been assigned - for example through a software deposit."
         },
         "homepage": {
           "label": "Homepage URL",
-          "description": "The tool’s main public page — its website or landing page."
+          "description": "The tool’s main public page - its website or landing page."
         },
         "id": {
           "label": "ID",
@@ -992,7 +983,7 @@
         },
         "provider": {
           "label": "Provider (ID)",
-          "description": "The organization responsible for delivering the service — the one you would contact or contract with."
+          "description": "The organization responsible for delivering the service - the one you would contact or contract with."
         },
         "same_as": {
           "label": "Same as (external URIs)",
@@ -1100,7 +1091,7 @@
         },
         "description": {
           "label": "Description",
-          "description": "A short description of the event — its theme and programme — aimed at index visitors, in one or more languages."
+          "description": "A short description of the event - its theme and programme - aimed at index visitors, in one or more languages."
         },
         "end_date": {
           "label": "End date",
@@ -1108,7 +1099,7 @@
         },
         "event_agent_roles": {
           "label": "Event agents",
-          "description": "The people and organizations involved in the event — organizers, hosts, speakers, participants or sponsors."
+          "description": "The people and organizations involved in the event - organizers, hosts, speakers, participants or sponsors."
         },
         "event_type": {
           "label": "Event type",
@@ -1190,7 +1181,7 @@
         },
         "extent": {
           "label": "Extent statements",
-          "description": "Size statements such as record, item, image or file counts — one concise statement per measure, including its unit."
+          "description": "Size statements such as record, item, image or file counts - one concise statement per measure, including its unit."
         },
         "homepage": {
           "label": "Homepage URL",
@@ -1300,7 +1291,7 @@
         },
         "in_languages": {
           "label": "Content languages",
-          "description": "The languages in which the material is fully available — not languages used only in captions or examples."
+          "description": "The languages in which the material is fully available - not languages used only in captions or examples."
         },
         "learning_outcomes": {
           "label": "Learning outcomes",
@@ -1344,7 +1335,7 @@
         },
         "related_tools": {
           "label": "Related tools (IDs)",
-          "description": "Tools the material teaches or demonstrates — not software merely used to produce it."
+          "description": "Tools the material teaches or demonstrates - not software merely used to produce it."
         },
         "same_as": {
           "label": "Same as (external URIs)",
@@ -1374,7 +1365,7 @@
         },
         "affiliation_role": {
           "label": "Role",
-          "description": "The person’s position at the organization — their job or status, not their project role."
+          "description": "The person’s position at the organization - their job or status, not their project role."
         },
         "end_date": {
           "label": "End date",
@@ -1486,7 +1477,7 @@
         },
         "grant_name": {
           "label": "Grant name",
-          "description": "The official title of the grant or award — not the broader programme, which belongs in the funding programme field."
+          "description": "The official title of the grant or award - not the broader programme, which belongs in the funding programme field."
         },
         "grant_number": {
           "label": "Grant number",

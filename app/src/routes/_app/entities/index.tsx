@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import type { SortDescriptor } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Cancel01Icon, Loading03Icon } from '@hugeicons/core-free-icons'
-import type { ENTITY_TYPES } from '@/lib/entity'
 import {
   getEntityDisplayName,
+  getEntityFieldLabelText,
   getEntityTypeLabel,
   auditedEntityId,
 } from '@/lib/entity'
@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/input-group'
 import { Badge } from '@/components/ui/badge'
 import { EntityImage } from '@/components/entity/EntityImage'
+import { EntityTags } from '@/components/entity/EntityTags'
+import { getEntityTypeColorClass } from '@/components/entity/EntityTypeIcon'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
 import {
@@ -38,9 +40,12 @@ import {
   DEFAULT_SORT,
   DEFAULT_FACETS,
   getInfiniteEntityQueryOptions,
+  getFacetFieldLabel,
+  getFacetValueLabel,
 } from '../../../api/entityBoardSearch.ts'
 import { restoreOrPersistEntityBoardSearch } from '../../../lib/entityBoardSearchStorage.ts'
 import type {
+  FacetField,
   FacetFilters,
   EntitySort,
 } from '../../../api/entityBoardSearch.ts'
@@ -144,19 +149,27 @@ function EntityBoard() {
     searchInputRef.current?.focus()
   }
 
-  const removeFacetFilter = (
-    field: (typeof DEFAULT_FACETS)[number],
-    value: (typeof ENTITY_TYPES)[number],
-  ) => {
-    const nextValues = (facetFilters?.[field]?.include ?? []).filter(
-      (selectedValue) => selectedValue !== value,
-    )
+  const removeFacetFilter = (field: FacetField, value: string) => {
     const nextFacetFilters = { ...facetFilters }
 
-    if (nextValues.length > 0) {
-      nextFacetFilters[field] = { include: nextValues }
+    if (field === 'type') {
+      const nextValues = (facetFilters?.type?.include ?? []).filter(
+        (selectedValue) => selectedValue !== value,
+      )
+      if (nextValues.length > 0) {
+        nextFacetFilters.type = { include: nextValues }
+      } else {
+        delete nextFacetFilters.type
+      }
     } else {
-      delete nextFacetFilters[field]
+      const nextValues = (facetFilters?.[field]?.include ?? []).filter(
+        (selectedValue) => selectedValue !== value,
+      )
+      if (nextValues.length > 0) {
+        nextFacetFilters[field] = { include: nextValues }
+      } else {
+        delete nextFacetFilters[field]
+      }
     }
 
     updateSearch({
@@ -226,9 +239,9 @@ function EntityBoard() {
             </Button>
 
             {activeFacetFilters.map(({ field, value }) => {
-              const label = getEntityTypeLabel(value)
+              const label = getFacetValueLabel(field, value)
               const filterLabel = t('board.facets.active_value', {
-                field: t(`board.facets.fields.${field}`),
+                field: getFacetFieldLabel(field),
                 value: label,
               })
 
@@ -325,7 +338,10 @@ function EntityBoard() {
                 onSortChange={handleSortChange}
               >
                 <TableHeader>
-                  <TableHead id="image" aria-label={t('board.columns.image')} />
+                  <TableHead
+                    id="image"
+                    aria-label={getEntityFieldLabelText('Person', 'image')}
+                  />
                   <TableHead
                     id="name.value"
                     isRowHeader
@@ -333,25 +349,26 @@ function EntityBoard() {
                     className="cursor-pointer"
                   >
                     <SortableColumnLabel
-                      label={t('board.columns.name')}
+                      label={getEntityFieldLabelText('Organization', 'name')}
                       property="name.value"
                       sort={activeSort}
                     />
                   </TableHead>
                   <TableHead id="type" allowsSorting className="cursor-pointer">
                     <SortableColumnLabel
-                      label={t('board.columns.type')}
+                      label={getFacetFieldLabel('type')}
                       property="type"
                       sort={activeSort}
                     />
                   </TableHead>
+                  <TableHead id="tags">{getFacetFieldLabel('tags')}</TableHead>
                   <TableHead
                     id="audit.modifiedAt"
                     allowsSorting
                     className="cursor-pointer"
                   >
                     <SortableColumnLabel
-                      label={t('board.columns.modified')}
+                      label={t('entity.detail.modified')}
                       property="audit.modifiedAt"
                       sort={activeSort}
                     />
@@ -361,7 +378,7 @@ function EntityBoard() {
                   {results.length === 0 ? (
                     <TableRow id="empty-state" className="hover:bg-transparent">
                       <TableCell
-                        colSpan={4}
+                        colSpan={5}
                         className="h-24 text-center text-sm text-muted-foreground"
                       >
                         {t(
@@ -403,9 +420,20 @@ function EntityBoard() {
                             </Link>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="secondary">
+                            <Badge
+                              variant="secondary"
+                              className={getEntityTypeColorClass(entity.type)}
+                            >
                               {getEntityTypeLabel(entity.type)}
                             </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-wrap items-center gap-1">
+                              <EntityTags
+                                tags={entity.tags}
+                                separator={false}
+                              />
+                            </div>
                           </TableCell>
                           <TableCell className="text-muted-foreground">
                             <TimeAgo date={entity.audit?.modifiedAt} />

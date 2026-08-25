@@ -13,6 +13,7 @@ import {
   UserIcon,
 } from '@hugeicons/core-free-icons'
 import type { EntityType } from '@/lib/entity'
+import { normalizeEntityType } from '@/lib/entity'
 import { cn } from '@/lib/utils'
 
 const ICONS = {
@@ -47,8 +48,9 @@ const SIZES = {
   lg: { wrapper: 'size-11 rounded-xl', icon: 'size-6' },
 } as const
 
-function isEntityType(type: string): type is EntityType {
-  return type in ICONS
+export function getEntityTypeColorClass(type: string): string {
+  const knownType = normalizeEntityType(type)
+  return knownType ? COLORS[knownType] : 'bg-muted text-muted-foreground'
 }
 
 export function EntityTypeIcon({
@@ -60,7 +62,7 @@ export function EntityTypeIcon({
   size?: keyof typeof SIZES
   className?: string
 }) {
-  const knownType = isEntityType(type) ? type : undefined
+  const knownType = normalizeEntityType(type)
   const dimensions = SIZES[size]
 
   return (

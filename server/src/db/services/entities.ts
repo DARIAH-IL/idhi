@@ -29,6 +29,8 @@ export type EntityWrite = Entity extends infer EntityVariant
     : never
   : never
 
+const FACET_VALUES_LIMIT = 100
+
 const ENTITY_AUDIT_OPERATIONS = ['create', 'update', 'delete'] as const
 type EntityAuditOperation = (typeof ENTITY_AUDIT_OPERATIONS)[number]
 
@@ -252,6 +254,7 @@ export async function createEntityDatabaseService(
                 },
                 { $group: { _id: '$_id.value', count: { $sum: 1 } } },
                 { $sort: { count: -1, _id: 1 } },
+                { $limit: FACET_VALUES_LIMIT },
               ])
               .exec()
 

@@ -9,18 +9,41 @@ import type {
   EntityFilter,
   TypedEntitySearch,
 } from '#/api/typedEntitySearch.ts'
-import { ENTITY_TYPES } from '#/lib/entity.ts'
+import {
+  ENTITY_TYPES,
+  getEntityFieldLabelText,
+  getEntityTypeLabel,
+} from '#/lib/entity.ts'
 
 export const PAGE_SIZE = 20
 export const FACET_VISIBLE_LIMIT = 5
-export const DEFAULT_FACETS = ['type'] as const satisfies readonly EntityField[]
+export const DEFAULT_FACETS = [
+  'type',
+  'tags',
+] as const satisfies readonly EntityField[]
 
-const facetSelectionSchema = z.object({
-  include: z.array(z.enum(ENTITY_TYPES)).optional(),
-})
+export type FacetField = (typeof DEFAULT_FACETS)[number]
+
 export const facetFiltersSchema = z.object({
-  type: facetSelectionSchema.optional(),
+  type: z
+    .object({
+      include: z.array(z.enum(ENTITY_TYPES)).optional(),
+    })
+    .optional(),
+  tags: z
+    .object({
+      include: z.array(z.string()).optional(),
+    })
+    .optional(),
 })
+
+export function getFacetValueLabel(field: FacetField, value: string): string {
+  return field === 'type' ? getEntityTypeLabel(value) : value
+}
+
+export function getFacetFieldLabel(field: FacetField): string {
+  return getEntityFieldLabelText('Person', field)
+}
 const SORT_PROPERTIES = [
   'name.value',
   'type',

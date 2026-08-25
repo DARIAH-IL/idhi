@@ -7,7 +7,7 @@ import type { ENTITY_TYPES } from '#/lib/entity.ts'
 interface FacetCheckboxProps {
   label: string
   accessibleLabel: string
-  entityType: (typeof ENTITY_TYPES)[number]
+  entityType?: (typeof ENTITY_TYPES)[number]
   count: number
   isSelected?: boolean
   onChange: (isSelected: boolean) => void
@@ -46,11 +46,13 @@ export function FacetCheckbox({
               />
             )}
           </span>
-          <EntityTypeIcon
-            type={entityType}
-            size="sm"
-            className="size-5 shrink-0 bg-transparent"
-          />
+          {entityType && (
+            <EntityTypeIcon
+              type={entityType}
+              size="sm"
+              className="size-5 shrink-0 bg-transparent"
+            />
+          )}
           <span className="min-w-0 truncate text-xs">{label}</span>
           <span className="ms-auto text-xs tabular-nums text-muted-foreground">
             {count}
