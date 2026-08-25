@@ -605,7 +605,7 @@
           "description": "The person’s ORCID identifier. Strongly recommended for researchers - it helps link and deduplicate records."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this person in other systems, such as Wikidata or VIAF. The person’s own website belongs in the homepage field."
         },
         "tags": {
@@ -675,7 +675,7 @@
           "description": "The organization’s ROR registry identifier. Record it whenever the organization is registered in ROR - most universities and research institutes are."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this organization in other systems, such as Wikidata. The organization’s own website belongs in the homepage field."
         },
         "tags": {
@@ -733,7 +733,7 @@
           "description": "The facility’s name, in one or more languages."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this facility in other systems. The facility’s own web page belongs in the homepage field."
         },
         "services_offered": {
@@ -831,7 +831,7 @@
           "description": "The humanities disciplines of the project, such as history, linguistics or archaeology."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this project in other systems, such as a funder’s project registry. The project’s own website belongs in the homepage field."
         },
         "start_date": {
@@ -929,7 +929,7 @@
           "description": "The people and organizations that created, developed or maintain this tool, with role and optional dates."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this tool in other systems, such as Wikidata or the SSH Open Marketplace. The tool’s own pages belong in the homepage or documentation fields."
         },
         "tags": {
@@ -987,11 +987,11 @@
           "description": "The service’s name, in one or more languages. Use localized names supplied by its provider rather than translating a branded name."
         },
         "provider": {
-          "label": "Provider (ID)",
+          "label": "Provider",
           "description": "The organization responsible for delivering the service - the one you would contact or contract with."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this service in other systems, such as the SSH Open Marketplace. The service’s own page belongs in the homepage field."
         },
         "service_type": {
@@ -1045,11 +1045,11 @@
           "description": "The title of the publication, in one or more languages."
         },
         "part_of": {
-          "label": "Part of (ID)",
+          "label": "Part of",
           "description": "The containing work, such as the book for a chapter or the proceedings for a paper."
         },
         "presented_at": {
-          "label": "Presented at (event IDs)",
+          "label": "Presented at",
           "description": "Events where this publication was presented, such as the conference where the paper was given."
         },
         "publication_type": {
@@ -1061,11 +1061,11 @@
           "description": "The name of the journal, book or proceedings the publication appeared in."
         },
         "publisher": {
-          "label": "Publisher (ID)",
+          "label": "Publisher",
           "description": "The organization that formally published it."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this publication in other systems, such as a library catalog or Wikidata. Its landing page belongs in the homepage field."
         },
         "tags": {
@@ -1131,7 +1131,7 @@
           "description": "The name of the event, in one or more languages."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this event in other systems, such as a conference index. The event’s own page belongs in the homepage field."
         },
         "start_date": {
@@ -1217,7 +1217,7 @@
           "description": "The title of the dataset, in one or more languages."
         },
         "publisher": {
-          "label": "Publisher (ID)",
+          "label": "Publisher",
           "description": "The organization that formally published the dataset."
         },
         "related_publications": {
@@ -1229,7 +1229,7 @@
           "description": "The people and organizations that created, curated or maintain this dataset, with role and optional dates."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this dataset in other systems, such as a data repository or catalog. Its landing page belongs in the homepage field."
         },
         "tags": {
@@ -1319,7 +1319,7 @@
           "description": "The title of the material, in one or more languages."
         },
         "part_of_training_material": {
-          "label": "Part of training material (ID)",
+          "label": "Part of training material",
           "description": "The larger training material this resource is a module or lesson of."
         },
         "prerequisites": {
@@ -1327,7 +1327,7 @@
           "description": "Knowledge, skills, software or prior material learners should have before starting. Leave empty when none apply."
         },
         "publisher": {
-          "label": "Publisher (ID)",
+          "label": "Publisher",
           "description": "The organization that formally publishes the material, if different from its creators."
         },
         "related_datasets": {
@@ -1343,7 +1343,7 @@
           "description": "Tools the material teaches or demonstrates - not software merely used to produce it."
         },
         "same_as": {
-          "label": "Same as (external URIs)",
+          "label": "Same as",
           "description": "Links to records about this material in other systems, such as a training catalog. Its own pages belong in the homepage or material URL fields."
         },
         "tags": {
@@ -1377,7 +1377,7 @@
           "description": "When the affiliation ended. Leave empty if it is still ongoing."
         },
         "organization": {
-          "label": "Organization (ID)",
+          "label": "Organization",
           "description": "The organization the person is affiliated with."
         },
         "start_date": {
@@ -1391,7 +1391,7 @@
           "description": "A person’s contribution to the publication, one entry per author."
         },
         "author": {
-          "label": "Person (ID)",
+          "label": "Person",
           "description": "The person who contributed to the publication."
         },
         "author_order": {
@@ -1447,7 +1447,7 @@
           "description": "Whether the organization hosts the facility or owns it. Add separate entries when different organizations fill those roles."
         },
         "organization": {
-          "label": "Organization (ID)",
+          "label": "Organization",
           "description": "The organization that hosts or owns the facility."
         },
         "start_date": {
@@ -1465,11 +1465,11 @@
           "description": "When the funding period ended. Leave empty if it is still ongoing."
         },
         "funding_amount": {
-          "label": "Funding amount (ILS)",
+          "label": "Funding amount",
           "description": "The amount awarded, if public. Leave empty rather than guess."
         },
         "funding_organization": {
-          "label": "Funding organization (ID)",
+          "label": "Funding organization",
           "description": "The organization that provides the award."
         },
         "funding_program": {
@@ -1517,7 +1517,7 @@
           "description": "When the organization stopped being part of its parent. Leave empty if it still is."
         },
         "parent_organization": {
-          "label": "Parent organization (ID)",
+          "label": "Parent organization",
           "description": "The larger organization this organization is part of."
         },
         "start_date": {
@@ -1539,7 +1539,7 @@
           "description": "The organization’s function in the project: coordinator, partner, data provider, funder or host. Add one entry per role."
         },
         "organization": {
-          "label": "Organization (ID)",
+          "label": "Organization",
           "description": "The organization engaged in the project."
         },
         "start_date": {
@@ -1557,7 +1557,7 @@
           "description": "When the person’s participation in the project ended. Leave empty if it is still ongoing."
         },
         "participant": {
-          "label": "Person (ID)",
+          "label": "Person",
           "description": "The person taking part in the project."
         },
         "participation_role": {

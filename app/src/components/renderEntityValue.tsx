@@ -9,7 +9,12 @@ import {
 import { ExternalLink } from '#/components/ExternalLink.tsx'
 import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
 
-const URL_TERMS = new Set(['schema:sameAs', 'foaf:homepage'])
+const URL_TERMS = new Set([
+  'schema:sameAs',
+  'foaf:homepage',
+  'schema:url',
+  'bibo:doi',
+])
 const ADDRESS_TERM = 'schema:address'
 const EMAIL_TERMS = new Set(['schema:email', 'foaf:mbox'])
 
@@ -75,16 +80,20 @@ export function renderEntityValue(
             return (
               <div
                 key={key}
-                className={refValue ? 'flex flex-col gap-1' : 'flex gap-2'}
+                className={
+                  refValue
+                    ? 'flex flex-col gap-1 p-1 rounded hover:bg-foreground/5'
+                    : 'grid grid-cols-[6rem_1fr] gap-2 p-1 rounded hover:bg-foreground/5'
+                }
               >
-                <span className="font-medium text-muted-foreground min-w-24">
+                <span className="font-medium text-muted-foreground">
                   {entityClass ? (
                     <EntityFieldLabel entityClass={entityClass} field={key} />
                   ) : (
                     key
                   )}
                 </span>
-                <span className={refValue ? 'ms-4 m-2 ' : 'min-w-0 flex-1'}>
+                <span className={refValue ? 'ms-4 m-2 ' : 'min-w-0'}>
                   {renderEntityValue(
                     val,
                     entityClass
