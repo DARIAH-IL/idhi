@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { getGetEntityByIdQueryOptions } from '@/api/hooks/entities/entities'
 import { Card, CardContent } from '@/components/ui/card'
 import { EntityTags } from '@/components/entity/EntityTags'
@@ -13,6 +14,7 @@ import { getEntityTermUri } from '@/api/termUris/termUri'
 import { EntityImage } from './EntityImage'
 
 export function EntityReferenceCard({ entityId }: { entityId: string }) {
+  const { t } = useTranslation()
   const { data, isLoading, isError } = useQuery(
     getGetEntityByIdQueryOptions(entityId, {
       query: { retry: false },
@@ -25,11 +27,11 @@ export function EntityReferenceCard({ entityId }: { entityId: string }) {
         <CardContent className="p-2.5">
           {isLoading ? (
             <span className="text-xs text-muted-foreground">
-              Loading {entityId}…
+              {t('entity.reference.loading')}
             </span>
           ) : (
             <span className="text-xs text-destructive">
-              Entity unavailable: {entityId}
+              {t('entity.reference.unavailable')}
             </span>
           )}
         </CardContent>

@@ -180,9 +180,13 @@
     },
     "no_results": "No entities found.",
     "no_matching_results": "No matching entities found.",
-    "new_entity": "New entity"
+    "new_entity": "Create a new entity"
   },
   "entity": {
+    "reference": {
+      "loading": "Loading…",
+      "unavailable": "Entity unavailable"
+    },
     "notifications": {
       "created": "Entity created successfully.",
       "updated": "Entity updated successfully.",
@@ -732,7 +736,7 @@
           "description": "Links to records about this facility in other systems. The facility’s own web page belongs in the homepage field."
         },
         "services_offered": {
-          "label": "Services offered (IDs)",
+          "label": "Services offered",
           "description": "Services this facility offers to researchers."
         },
         "tags": {
@@ -740,7 +744,7 @@
           "description": "Keywords describing the facility’s equipment, expertise and focus, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "tools_provided": {
-          "label": "Tools provided (IDs)",
+          "label": "Tools provided",
           "description": "Tools this facility maintains or gives access to, such as hosted instances and lab-maintained software - not every tool staff members happen to use."
         },
         "type": {
@@ -802,15 +806,15 @@
           "description": "Organizations engaged in the project - as coordinator, partner, data provider, funder or host."
         },
         "outputs_datasets": {
-          "label": "Output datasets (IDs)",
+          "label": "Output datasets",
           "description": "Datasets produced or curated by the project."
         },
         "outputs_publications": {
-          "label": "Output publications (IDs)",
+          "label": "Output publications",
           "description": "Publications resulting from the project."
         },
         "outputs_tools": {
-          "label": "Output tools (IDs)",
+          "label": "Output tools",
           "description": "Tools produced by the project."
         },
         "outputs_training_materials": {
@@ -1156,7 +1160,7 @@
           "description": "The dataset’s primary form, such as digital edition, corpus or gazetteer. Its technical format belongs in media type."
         },
         "datasets": {
-          "label": "Aggregated datasets (IDs)",
+          "label": "Aggregated datasets",
           "description": "Datasets aggregated by this record when it functions as a catalog."
         },
         "date_issued": {
@@ -1254,7 +1258,7 @@
           "description": "A published contact address for the material’s maintainers."
         },
         "creators": {
-          "label": "Creators (IDs)",
+          "label": "Creators",
           "description": "The people or organizations that created the material. Use the publisher field for the organization that formally releases it, if different."
         },
         "date_issued": {
@@ -1326,15 +1330,15 @@
           "description": "The organization that formally publishes the material, if different from its creators."
         },
         "related_datasets": {
-          "label": "Related datasets (IDs)",
+          "label": "Related datasets",
           "description": "Datasets used as the subject or worked example of the material."
         },
         "related_services": {
-          "label": "Related services (IDs)",
+          "label": "Related services",
           "description": "Services the material explains how to access or use."
         },
         "related_tools": {
-          "label": "Related tools (IDs)",
+          "label": "Related tools",
           "description": "Tools the material teaches or demonstrates - not software merely used to produce it."
         },
         "same_as": {

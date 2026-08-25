@@ -229,7 +229,7 @@ function EntityDetailPage() {
                           field={key}
                         />
                       </dt>
-                      <dd className={refValue ? 'ms-4' : undefined}>
+                      <dd className={refValue ? 'ms-4 py-2' : undefined}>
                         {renderEntityValue(
                           values[key],
                           getFieldRefClass(entityClass, key),

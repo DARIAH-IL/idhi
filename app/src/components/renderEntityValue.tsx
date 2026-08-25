@@ -58,7 +58,7 @@ export function renderEntityValue(
       return null
     }
     return (
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-3">
         {v.map((item, i) => (
           <div key={i}>{renderEntityValue(item, entityClass, field, term)}</div>
         ))}

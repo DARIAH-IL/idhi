@@ -5,7 +5,11 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import type { SortDescriptor } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Cancel01Icon, Loading03Icon } from '@hugeicons/core-free-icons'
+import {
+  Add01Icon,
+  Cancel01Icon,
+  Loading03Icon,
+} from '@hugeicons/core-free-icons'
 import {
   getEntityDisplayName,
   getEntityFieldLabelText,
@@ -188,6 +192,7 @@ function EntityBoard() {
         <h1 className="text-lg font-semibold">{t('board.title')}</h1>
         {isAuthenticated && (
           <Link to="/entities/new" className={buttonVariants()}>
+            <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
             {t('board.new_entity')}
           </Link>
         )}
