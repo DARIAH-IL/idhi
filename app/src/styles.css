@@ -107,3 +107,9 @@ body {
     @apply font-sans;
   }
 }
+
+@layer components {
+  a.app-link {
+    @apply font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary;
+  }
+}

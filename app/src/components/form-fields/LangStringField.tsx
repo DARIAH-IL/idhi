@@ -22,7 +22,7 @@ interface LocalizedValue {
 }
 
 interface Props {
-  label: string
+  label: React.ReactNode
   multiline?: boolean
 }
 

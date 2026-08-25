@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
 import { FacilityFacilityAffiliationsItemFacilityAffiliationRole } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
@@ -14,13 +14,13 @@ import { facilityFormOptions } from '../entity-form-options.ts'
 export const FacilityFields = withForm({
   ...facilityFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Facility" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -29,19 +29,32 @@ export const FacilityFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="contact_email"
+                />
+              }
               type="email"
             />
           )}
         </form.AppField>
         <form.AppField name="location" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.location')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Facility" field="location" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField name="address" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.address')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Facility" field="address" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -50,7 +63,12 @@ export const FacilityFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.services_offered')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="services_offered"
+                />
+              }
               entityTypes={['idhi:Service']}
             />
           )}
@@ -61,7 +79,12 @@ export const FacilityFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.tools_provided')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="tools_provided"
+                />
+              }
               entityTypes={['idhi:Tool']}
             />
           )}
@@ -72,7 +95,12 @@ export const FacilityFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="additional_urls"
+                />
+              }
               placeholder="https://…"
             />
           )}
@@ -81,7 +109,12 @@ export const FacilityFields = withForm({
         <form.AppField name="facility_affiliations" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.facility_affiliations')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="facility_affiliations"
+                />
+              }
               defaultItem={{
                 organization: '',
                 facility_affiliation_role: '',
@@ -97,7 +130,12 @@ export const FacilityFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.organization_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="FacilityAffiliation"
+                            field="organization"
+                          />
+                        }
                         entityTypes={['idhi:Organization']}
                       />
                     )}
@@ -111,7 +149,12 @@ export const FacilityFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.facility_affiliation_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="FacilityAffiliation"
+                            field="facility_affiliation_role"
+                          />
+                        }
                         options={
                           FacilityFacilityAffiliationsItemFacilityAffiliationRole
                         }
@@ -125,7 +168,12 @@ export const FacilityFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="FacilityAffiliation"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -136,7 +184,12 @@ export const FacilityFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="FacilityAffiliation"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

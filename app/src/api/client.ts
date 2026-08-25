@@ -26,6 +26,10 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
   (res) => res,
   (err: AxiosError) => {
+    if (axios.isCancel(err)) {
+      return Promise.reject(err)
+    }
+
     const apiError = getApiErrorResponse(err)
 
     // API failures are intentionally surfaced in developer tools as well as UI.

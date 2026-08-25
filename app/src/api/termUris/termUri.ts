@@ -18,6 +18,20 @@ export function getEntityTermUri(type: EntityType): string | undefined {
   return uris[defNameOf(type)]?.$self
 }
 
+export function getFieldRefClass(
+  entityClass: string,
+  field: string,
+): string | undefined {
+  return refs[entityClass]?.[field]
+}
+
+export function getFieldTermUri(
+  entityClass: string,
+  field: string,
+): string | undefined {
+  return uris[entityClass]?.[field]
+}
+
 export function getTermUri<T extends EntityType>(
   type: T,
   field: EntityTermField<T> & string,

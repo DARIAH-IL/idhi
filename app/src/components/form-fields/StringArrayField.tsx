@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
+import { getEnumValueLabel } from '@/lib/entity'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -7,7 +8,7 @@ import { FieldError } from './FieldError'
 import { firstError } from './validation'
 
 interface Props {
-  label: string
+  label: React.ReactNode
   placeholder?: string
   options?: Record<string, string>
 }
@@ -51,7 +52,11 @@ export function StringArrayField({ label, placeholder, options }: Props) {
       {options && (
         <datalist id={`${field.name}-options`}>
           {Object.keys(options).map((option) => (
-            <option key={option} value={option} />
+            <option
+              key={option}
+              value={option}
+              label={getEnumValueLabel(option)}
+            />
           ))}
         </datalist>
       )}

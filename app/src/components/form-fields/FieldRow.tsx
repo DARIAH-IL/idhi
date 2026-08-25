@@ -5,7 +5,7 @@ export function FieldRow({
   label,
   children,
 }: {
-  label: string
+  label: React.ReactNode
   children: React.ReactNode | ((labelId: string) => React.ReactNode)
 }) {
   const labelId = useId()

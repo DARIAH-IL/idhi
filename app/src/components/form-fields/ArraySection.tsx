@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 interface Props {
-  label: string
+  label: React.ReactNode
   defaultItem: Record<string, unknown>
   children: (index: number) => React.ReactNode
 }

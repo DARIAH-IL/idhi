@@ -6,7 +6,7 @@ import { FieldError } from './FieldError'
 import { firstError } from './validation'
 
 interface Props {
-  label: string
+  label: React.ReactNode
   type?: HTMLInputTypeAttribute
   placeholder?: string
   required?: boolean

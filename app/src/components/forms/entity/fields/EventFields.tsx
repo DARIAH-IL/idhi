@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import {
   EventEventAgentRolesItemEventAgentRole,
   EventEventType,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
@@ -16,13 +16,13 @@ import { eventFormOptions } from '../entity-form-options.ts'
 export const EventFields = withForm({
   ...eventFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Event" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -31,7 +31,9 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.event_type')}
+              label={
+                <EntityFieldLabel entityClass="Event" field="event_type" />
+              }
               options={EventEventType}
             />
           )}
@@ -42,7 +44,9 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.start_date')}
+              label={
+                <EntityFieldLabel entityClass="Event" field="start_date" />
+              }
               type="date"
             />
           )}
@@ -53,7 +57,7 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.end_date')}
+              label={<EntityFieldLabel entityClass="Event" field="end_date" />}
               type="date"
             />
           )}
@@ -64,19 +68,25 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel entityClass="Event" field="contact_email" />
+              }
               type="email"
             />
           )}
         </form.AppField>
         <form.AppField name="location" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.location')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Event" field="location" />}
+            />
           )}
         </form.AppField>
         <form.AppField name="address" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.address')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Event" field="address" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -85,7 +95,9 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel entityClass="Event" field="additional_urls" />
+              }
               placeholder="https://…"
             />
           )}
@@ -94,7 +106,12 @@ export const EventFields = withForm({
         <form.AppField name="event_agent_roles" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.event_agent_roles')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Event"
+                  field="event_agent_roles"
+                />
+              }
               defaultItem={{ event_agent: '', event_agent_role: '' }}
             >
               {(index) => (
@@ -108,7 +125,12 @@ export const EventFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.event_agent_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="EventAgentRole"
+                            field="event_agent"
+                          />
+                        }
                         entityTypes={['idhi:Person', 'idhi:Organization']}
                       />
                     )}
@@ -122,7 +144,12 @@ export const EventFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.event_agent_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="EventAgentRole"
+                            field="event_agent_role"
+                          />
+                        }
                         options={EventEventAgentRolesItemEventAgentRole}
                         required
                       />
@@ -134,7 +161,12 @@ export const EventFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="EventAgentRole"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -145,7 +177,12 @@ export const EventFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="EventAgentRole"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

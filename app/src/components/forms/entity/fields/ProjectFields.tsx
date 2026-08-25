@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next'
 import {
   ProjectDigitalHumanitiesActivitiesItem,
   ProjectFundingStatus,
   ProjectOrganizationRolesItemOrgProjectRole,
   ProjectProjectParticipationsItemParticipationRole,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
@@ -19,13 +19,13 @@ import { projectFormOptions } from '../entity-form-options.ts'
 export const ProjectFields = withForm({
   ...projectFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Project" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -34,7 +34,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.start_date')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="start_date" />
+              }
               type="date"
             />
           )}
@@ -45,7 +47,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.end_date')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="end_date" />
+              }
               type="date"
             />
           )}
@@ -56,7 +60,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.funding_status')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="funding_status"
+                />
+              }
               options={ProjectFundingStatus}
             />
           )}
@@ -67,7 +76,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="contact_email" />
+              }
               type="email"
             />
           )}
@@ -78,7 +89,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.research_disciplines')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="research_disciplines"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -88,7 +104,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.studied_periods')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="studied_periods"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -98,7 +119,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.studied_places')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="studied_places"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -110,7 +136,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.digital_humanities_activities')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="digital_humanities_activities"
+                />
+              }
               placeholder="tadirah:…"
               options={ProjectDigitalHumanitiesActivitiesItem}
             />
@@ -122,7 +153,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="additional_urls"
+                />
+              }
               placeholder="https://…"
             />
           )}
@@ -134,7 +170,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.outputs_datasets')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_datasets"
+                />
+              }
               entityTypes={['idhi:Dataset']}
             />
           )}
@@ -145,7 +186,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.outputs_publications')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_publications"
+                />
+              }
               entityTypes={['idhi:Publication']}
             />
           )}
@@ -156,7 +202,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.outputs_tools')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="outputs_tools" />
+              }
               entityTypes={['idhi:Tool']}
             />
           )}
@@ -167,7 +215,12 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.outputs_training_materials')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_training_materials"
+                />
+              }
               entityTypes={['idhi:TrainingMaterial']}
             />
           )}
@@ -178,7 +231,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.uses_datasets')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_datasets" />
+              }
               entityTypes={['idhi:Dataset']}
             />
           )}
@@ -189,7 +244,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.uses_services')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_services" />
+              }
               entityTypes={['idhi:Service']}
             />
           )}
@@ -200,7 +257,9 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.uses_tools')}
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_tools" />
+              }
               entityTypes={['idhi:Tool']}
             />
           )}
@@ -209,7 +268,12 @@ export const ProjectFields = withForm({
         <form.AppField name="project_participations" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.project_participations')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="project_participations"
+                />
+              }
               defaultItem={{ participant: '' }}
             >
               {(index) => (
@@ -222,7 +286,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.member_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="participant"
+                          />
+                        }
                         entityTypes={['idhi:Person']}
                       />
                     )}
@@ -235,7 +304,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.participation_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="participation_role"
+                          />
+                        }
                         options={
                           ProjectProjectParticipationsItemParticipationRole
                         }
@@ -248,7 +322,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -259,7 +338,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -273,7 +357,12 @@ export const ProjectFields = withForm({
         <form.AppField name="organization_roles" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.organization_roles')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="organization_roles"
+                />
+              }
               defaultItem={{ organization: '' }}
             >
               {(index) => (
@@ -286,7 +375,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.organization_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="organization"
+                          />
+                        }
                         entityTypes={['idhi:Organization']}
                       />
                     )}
@@ -299,7 +393,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.org_project_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="org_project_role"
+                          />
+                        }
                         options={ProjectOrganizationRolesItemOrgProjectRole}
                       />
                     )}
@@ -310,7 +409,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -321,7 +425,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -335,7 +444,7 @@ export const ProjectFields = withForm({
         <form.AppField name="funding" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.funding')}
+              label={<EntityFieldLabel entityClass="Project" field="funding" />}
               defaultItem={{ funding_organization: '' }}
             >
               {(index) => (
@@ -348,7 +457,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.organization_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="funding_organization"
+                          />
+                        }
                         entityTypes={['idhi:Organization']}
                       />
                     )}
@@ -359,7 +473,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.funding_amount')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="funding_amount"
+                          />
+                        }
                         type="number"
                         min={0}
                       />
@@ -368,7 +487,12 @@ export const ProjectFields = withForm({
                   <form.AppField name={`funding[${index}].grant_number`}>
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.grant_number')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="grant_number"
+                          />
+                        }
                       />
                     )}
                   </form.AppField>
@@ -378,7 +502,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.LangStringField
-                        label={t('entity.form.fields.grant_name')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="grant_name"
+                          />
+                        }
                       />
                     )}
                   </form.AppField>
@@ -388,7 +517,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.LangStringField
-                        label={t('entity.form.fields.funding_program')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="funding_program"
+                          />
+                        }
                       />
                     )}
                   </form.AppField>
@@ -398,7 +532,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.funding_url')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="funding_url"
+                          />
+                        }
                         type="url"
                       />
                     )}
@@ -409,7 +548,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -420,7 +564,12 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

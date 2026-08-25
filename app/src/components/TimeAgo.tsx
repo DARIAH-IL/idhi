@@ -8,14 +8,42 @@ import type { UiLanguage } from '@/api/models'
 import { useUIStore } from '@/stores/ui'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
+const capitalized =
+  (formatter: Formatter): Formatter =>
+  (...args) => {
+    const result = formatter(...args)
+    return typeof result === 'string'
+      ? result.charAt(0).toUpperCase() + result.slice(1)
+      : result
+  }
+
 const formatters = {
-  en: buildFormatter(englishStrings),
+  en: capitalized(buildFormatter(englishStrings)),
   he: buildFormatter(hebrewStrings),
   ar: buildFormatter(arabicStrings),
 } satisfies Record<UiLanguage, Formatter>
 
 interface TimeAgoProps {
   date: string | null | undefined
+}
+
+export function TimeAgoReverse({ date }: TimeAgoProps) {
+  const language = useUIStore((state) => state.language)
+
+  if (!date) {
+    return '—'
+  }
+
+  const label = new Date(date).toLocaleDateString()
+
+  return (
+    <TooltipTrigger>
+      <span>{label}</span>
+      <Tooltip>
+        <ReactTimeAgo date={date} formatter={formatters[language]} title="" />
+      </Tooltip>
+    </TooltipTrigger>
+  )
 }
 
 export function TimeAgo({ date }: TimeAgoProps) {

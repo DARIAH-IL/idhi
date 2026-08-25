@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next'
 import {
   TrainingMaterialDigitalHumanitiesActivitiesItem,
   TrainingMaterialLicense,
   TrainingMaterialTrainingMaterialType,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
@@ -18,13 +18,15 @@ import { trainingMaterialFormOptions } from '../entity-form-options.ts'
 export const TrainingMaterialFields = withForm({
   ...trainingMaterialFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="TrainingMaterial" field="name" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -33,7 +35,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.training_material_type')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="training_material_type"
+                />
+              }
               options={TrainingMaterialTrainingMaterialType}
             />
           )}
@@ -47,7 +54,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.creators')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="creators"
+                />
+              }
               entityTypes={['idhi:Person', 'idhi:Organization']}
             />
           )}
@@ -58,7 +70,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.publisher')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="publisher"
+                />
+              }
               entityTypes={['idhi:Organization']}
             />
           )}
@@ -69,7 +86,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.learning_outcomes')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="learning_outcomes"
+                />
+              }
               multiline
             />
           )}
@@ -80,7 +102,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.target_audiences')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="target_audiences"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -90,7 +117,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.prerequisites')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="prerequisites"
+                />
+              }
               multiline
             />
           )}
@@ -101,14 +133,24 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.educational_level')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="educational_level"
+                />
+              }
             />
           )}
         </form.AppField>
         <form.AppField name="in_languages">
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.in_languages')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="in_languages"
+                />
+              }
               placeholder="en"
             />
           )}
@@ -119,7 +161,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.material_url')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="material_url"
+                />
+              }
               type="url"
             />
           )}
@@ -127,7 +174,12 @@ export const TrainingMaterialFields = withForm({
         <form.AppField name="media_type">
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.media_type')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="media_type"
+                />
+              }
               placeholder="text/html"
             />
           )}
@@ -138,7 +190,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.license')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="license"
+                />
+              }
               options={TrainingMaterialLicense}
             />
           )}
@@ -149,7 +206,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.date_issued')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="date_issued"
+                />
+              }
               type="date"
             />
           )}
@@ -157,7 +219,9 @@ export const TrainingMaterialFields = withForm({
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.doi')}
+              label={
+                <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
+              }
               placeholder="https://doi.org/…"
             />
           )}
@@ -170,7 +234,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.digital_humanities_activities')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="digital_humanities_activities"
+                />
+              }
               placeholder="tadirah:…"
               options={TrainingMaterialDigitalHumanitiesActivitiesItem}
             />
@@ -182,7 +251,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.related_tools')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="related_tools"
+                />
+              }
               entityTypes={['idhi:Tool']}
             />
           )}
@@ -193,7 +267,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.related_services')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="related_services"
+                />
+              }
               entityTypes={['idhi:Service']}
             />
           )}
@@ -204,7 +283,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.related_datasets')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="related_datasets"
+                />
+              }
               entityTypes={['idhi:Dataset']}
             />
           )}
@@ -215,7 +299,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.part_of_training_material')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="part_of_training_material"
+                />
+              }
               entityTypes={['idhi:TrainingMaterial']}
             />
           )}
@@ -226,7 +315,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="additional_urls"
+                />
+              }
               placeholder="https://…"
             />
           )}
@@ -237,7 +331,12 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="contact_email"
+                />
+              }
               type="email"
             />
           )}

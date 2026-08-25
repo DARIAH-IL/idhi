@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next'
 import {
   ToolDigitalHumanitiesActivitiesItem,
   ToolLicense,
   ToolResourceContributionsItemResourceContributionRole,
   ToolToolType,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
@@ -18,13 +18,13 @@ import { toolFormOptions } from '../entity-form-options.ts'
 export const ToolFields = withForm({
   ...toolFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Tool" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -33,7 +33,7 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.tool_type')}
+              label={<EntityFieldLabel entityClass="Tool" field="tool_type" />}
               options={ToolToolType}
             />
           )}
@@ -41,7 +41,7 @@ export const ToolFields = withForm({
         <form.AppField name="license" validators={enumValidators(ToolLicense)}>
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.license')}
+              label={<EntityFieldLabel entityClass="Tool" field="license" />}
               options={ToolLicense}
             />
           )}
@@ -52,7 +52,9 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.code_repository')}
+              label={
+                <EntityFieldLabel entityClass="Tool" field="code_repository" />
+              }
               type="url"
             />
           )}
@@ -63,7 +65,12 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.documentation_url')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Tool"
+                  field="documentation_url"
+                />
+              }
               type="url"
             />
           )}
@@ -71,7 +78,7 @@ export const ToolFields = withForm({
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.doi')}
+              label={<EntityFieldLabel entityClass="Tool" field="doi" />}
               placeholder="https://doi.org/…"
             />
           )}
@@ -79,7 +86,12 @@ export const ToolFields = withForm({
         <form.AppField name="programming_language">
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.programming_language')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Tool"
+                  field="programming_language"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -89,7 +101,9 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel entityClass="Tool" field="contact_email" />
+              }
               type="email"
             />
           )}
@@ -102,7 +116,12 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.digital_humanities_activities')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Tool"
+                  field="digital_humanities_activities"
+                />
+              }
               placeholder="tadirah:…"
               options={ToolDigitalHumanitiesActivitiesItem}
             />
@@ -114,7 +133,9 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel entityClass="Tool" field="additional_urls" />
+              }
               placeholder="https://…"
             />
           )}
@@ -123,7 +144,12 @@ export const ToolFields = withForm({
         <form.AppField name="resource_contributions" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.resource_contributions')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Tool"
+                  field="resource_contributions"
+                />
+              }
               defaultItem={{ contributor: '', resource_contribution_role: '' }}
             >
               {(index) => (
@@ -137,7 +163,12 @@ export const ToolFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.contributor_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="contributor"
+                          />
+                        }
                         entityTypes={['idhi:Person', 'idhi:Organization']}
                       />
                     )}
@@ -151,7 +182,12 @@ export const ToolFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.resource_contribution_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="resource_contribution_role"
+                          />
+                        }
                         options={
                           ToolResourceContributionsItemResourceContributionRole
                         }
@@ -165,7 +201,12 @@ export const ToolFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -176,7 +217,12 @@ export const ToolFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

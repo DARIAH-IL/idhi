@@ -1,4 +1,5 @@
 import { useFieldContext } from '@/components/forms/form-context'
+import { getEnumValueLabel } from '@/lib/entity'
 import { FieldRow } from './FieldRow'
 import {
   Select,
@@ -11,7 +12,7 @@ import { FieldError } from './FieldError'
 import { firstError } from './validation'
 
 interface Props {
-  label: string
+  label: React.ReactNode
   options: Record<string, string>
   required?: boolean
 }
@@ -36,8 +37,12 @@ export function EnumSelectField({ label, options, required = false }: Props) {
             </SelectTrigger>
             <SelectContent>
               {Object.keys(options).map((key) => (
-                <SelectItem key={key} id={key}>
-                  {key}
+                <SelectItem
+                  key={key}
+                  id={key}
+                  textValue={getEnumValueLabel(key)}
+                >
+                  {getEnumValueLabel(key)}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -1,8 +1,9 @@
 import { createFieldMap } from '@tanstack/react-form'
 import { useTranslation } from 'react-i18next'
 import type { Person } from '@/api/models'
-import { getEntityIdSegment } from '@/lib/entity'
+import { getEntityClassName, getEntityIdSegment } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
+import { EntityFieldLabel } from '@/components/entity/EntityFieldLabel'
 import { withFieldGroup } from '@/components/forms/app-form'
 import {
   localizedValueValidators,
@@ -36,6 +37,7 @@ export const CommonEntityFields = withFieldGroup({
   props: commonGroupProps,
   render: function Render({ group, entityType, isEditing }) {
     const { t } = useTranslation()
+    const entityClass = getEntityClassName(entityType)
 
     return (
       <div className="flex flex-col gap-4">
@@ -52,7 +54,7 @@ export const CommonEntityFields = withFieldGroup({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.id')}
+              label={<EntityFieldLabel entityClass={entityClass} field="id" />}
               placeholder={
                 isEditing
                   ? `idhi:${getEntityIdSegment(entityType)}:…`
@@ -70,7 +72,9 @@ export const CommonEntityFields = withFieldGroup({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.homepage')}
+              label={
+                <EntityFieldLabel entityClass={entityClass} field="homepage" />
+              }
               type="url"
               placeholder="https://…"
             />
@@ -85,14 +89,23 @@ export const CommonEntityFields = withFieldGroup({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.description')}
+              label={
+                <EntityFieldLabel
+                  entityClass={entityClass}
+                  field="description"
+                />
+              }
               multiline
             />
           )}
         </group.AppField>
         <group.AppField name="tags">
           {(field) => (
-            <field.StringArrayField label={t('entity.form.fields.tags')} />
+            <field.StringArrayField
+              label={
+                <EntityFieldLabel entityClass={entityClass} field="tags" />
+              }
+            />
           )}
         </group.AppField>
         <group.AppField
@@ -101,7 +114,9 @@ export const CommonEntityFields = withFieldGroup({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.same_as')}
+              label={
+                <EntityFieldLabel entityClass={entityClass} field="same_as" />
+              }
               placeholder="https://…"
             />
           )}

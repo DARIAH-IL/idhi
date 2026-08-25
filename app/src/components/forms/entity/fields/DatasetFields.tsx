@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next'
 import {
   DatasetDatasetType,
   DatasetLicense,
   DatasetResourceContributionsItemResourceContributionRole,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
@@ -17,13 +17,13 @@ import { datasetFormOptions } from '../entity-form-options.ts'
 export const DatasetFields = withForm({
   ...datasetFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Dataset" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -32,7 +32,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.dataset_type')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="dataset_type" />
+              }
               options={DatasetDatasetType}
             />
           )}
@@ -43,7 +45,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.date_issued')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="date_issued" />
+              }
               type="date"
             />
           )}
@@ -51,7 +55,7 @@ export const DatasetFields = withForm({
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.doi')}
+              label={<EntityFieldLabel entityClass="Dataset" field="doi" />}
               placeholder="https://doi.org/…"
             />
           )}
@@ -62,7 +66,12 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.distribution_url')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Dataset"
+                  field="distribution_url"
+                />
+              }
               type="url"
             />
           )}
@@ -73,7 +82,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.publisher')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="publisher" />
+              }
               entityTypes={['idhi:Organization']}
             />
           )}
@@ -84,25 +95,31 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.license')}
+              label={<EntityFieldLabel entityClass="Dataset" field="license" />}
               options={DatasetLicense}
             />
           )}
         </form.AppField>
         <form.AppField name="themes" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.themes')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Dataset" field="themes" />}
+            />
           )}
         </form.AppField>
         <form.AppField name="extent">
           {(field) => (
-            <field.StringArrayField label={t('entity.form.fields.extent')} />
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Dataset" field="extent" />}
+            />
           )}
         </form.AppField>
         <form.AppField name="in_languages">
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.in_languages')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="in_languages" />
+              }
               placeholder="en"
             />
           )}
@@ -110,7 +127,9 @@ export const DatasetFields = withForm({
         <form.AppField name="media_type">
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.media_type')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="media_type" />
+              }
               placeholder="application/json"
             />
           )}
@@ -121,7 +140,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.byte_size')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="byte_size" />
+              }
               type="number"
               min={0}
             />
@@ -133,7 +154,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.datasets')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="datasets" />
+              }
               entityTypes={['idhi:Dataset']}
             />
           )}
@@ -144,7 +167,9 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.derived_from')}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="derived_from" />
+              }
               entityTypes={['idhi:Dataset']}
             />
           )}
@@ -155,7 +180,12 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.related_publications')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Dataset"
+                  field="related_publications"
+                />
+              }
               entityTypes={['idhi:Publication']}
             />
           )}
@@ -164,7 +194,12 @@ export const DatasetFields = withForm({
         <form.AppField name="resource_contributions" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.resource_contributions')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Dataset"
+                  field="resource_contributions"
+                />
+              }
               defaultItem={{ contributor: '', resource_contribution_role: '' }}
             >
               {(index) => (
@@ -178,7 +213,12 @@ export const DatasetFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.contributor_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="contributor"
+                          />
+                        }
                         entityTypes={['idhi:Person', 'idhi:Organization']}
                       />
                     )}
@@ -192,7 +232,12 @@ export const DatasetFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.resource_contribution_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="resource_contribution_role"
+                          />
+                        }
                         options={
                           DatasetResourceContributionsItemResourceContributionRole
                         }
@@ -206,7 +251,12 @@ export const DatasetFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -217,7 +267,12 @@ export const DatasetFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ResourceContribution"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { EntityImage } from '#/components/entity/EntityImage.tsx'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { FieldRow } from '#/components/form-fields/FieldRow.tsx'
 import { FieldError } from '#/components/form-fields/FieldError.tsx'
 import { Button } from '#/components/ui/button.tsx'
 import { Input } from '#/components/ui/input.tsx'
 import { useFieldContext } from '#/components/forms/form-context.ts'
+import { getEntityClassName, getEntityFieldLabelText } from '#/lib/entity.ts'
 import type { EntityType } from '#/lib/entity.ts'
 
 function fileToBase64(file: File): Promise<string> {
@@ -32,7 +34,14 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
   const image = field.state.value ?? undefined
 
   return (
-    <FieldRow label={t('entity.form.fields.image')}>
+    <FieldRow
+      label={
+        <EntityFieldLabel
+          entityClass={getEntityClassName(entityType)}
+          field="image"
+        />
+      }
+    >
       <div className="flex items-center gap-3">
         <EntityImage
           image={image}
@@ -45,7 +54,10 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
             ref={inputRef}
             type="file"
             accept="image/*"
-            aria-label={t('entity.form.fields.image')}
+            aria-label={getEntityFieldLabelText(
+              getEntityClassName(entityType),
+              'image',
+            )}
             onChange={(event) => {
               const file = event.target.files?.[0]
               if (!file) {

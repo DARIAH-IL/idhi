@@ -10,7 +10,7 @@ import { firstError } from '#/components/form-fields/validation.ts'
 import { useFieldContext } from '#/components/forms/form-context.ts'
 
 interface EntityRefProps {
-  label: string
+  label: React.ReactNode
   entityTypes: EntityType[]
   allowExternalUrl?: boolean
 }
@@ -59,7 +59,7 @@ export function EntityRefField({
 }
 
 interface EntityRefArrayProps {
-  label: string
+  label: React.ReactNode
   entityTypes: EntityType[]
 }
 

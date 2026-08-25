@@ -1,4 +1,3 @@
-
 ## App architecture
 
 Routes live under `app/src/routes/` and TanStack Router generates `app/src/routeTree.gen.ts`; do not edit that generated route tree. Route-aware data loading should use generated TanStack Query options/hooks, with URL/search state represented through TanStack Router. Shared UI primitives live in `app/src/components/ui/`, shared browser helpers in `app/src/lib/`, and global styling in `app/src/styles.css`.
@@ -28,7 +27,7 @@ Entity field copy lives under `entity.fields`, keyed by schema class name then f
 }
 ```
 
-Covered classes are the user-facing ones from `termUris.ts`: the ten top-level entity types plus the nested relationship classes (Affiliation, Authorship, EventAgentRole, FacilityAffiliation, Funding, OrganizationHierarchy, OrganizationProjectRole, ProjectParticipation, ResourceContribution). Abstract or technical classes (Entity, Agent, Relationship, IndexContainer, LangString) are intentionally excluded.
+Covered classes are the user-facing ones from `termUris.ts`: the ten top-level entity types plus the nested relationship classes (Affiliation, Authorship, EventAgentRole, FacilityAffiliation, Funding, OrganizationHierarchy, OrganizationProjectRole, ProjectParticipation, ResourceContribution). LangString is covered too, since multilingual values render as language/value pairs. Abstract classes (Entity, Agent, Relationship, IndexContainer) are intentionally excluded.
 
 Descriptions are adapted from the property descriptions in the upstream IDHI manifest schema (`https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json`, the same source `scripts/generate-term-uris.mjs` reads). They are rewritten for editors, not copied: drop modeling jargon (reified objects, IDHI URNs, discriminators, slot_usage), keep the practical guidance about what belongs in the field, what belongs elsewhere, and when to leave it empty. Every description must be written for its specific class context — never reuse one generic text across classes, even for fields they share (`name`, `homepage`, `start_date` and the like each get a per-class text naming the concrete entity). When the upstream schema gains a class or field, add the matching `entity.fields` entries so coverage stays complete.
 

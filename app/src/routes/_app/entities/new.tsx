@@ -8,7 +8,12 @@ import {
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useCreateEntity } from '@/api/hooks/entities/entities'
-import { ENTITY_TYPES, getEntityTypeLabel } from '@/lib/entity'
+import {
+  ENTITY_TYPES,
+  getEntityClassName,
+  getEntityTypeLabel,
+} from '@/lib/entity'
+import { getEntityTermUri } from '@/api/termUris/termUri'
 import type { EntityType } from '@/lib/entity'
 import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
@@ -50,30 +55,45 @@ function NewEntityPage() {
 
   if (!selectedType) {
     return (
-      <div className="flex flex-col gap-4 max-w-2xl">
+      <div className="flex flex-col gap-4">
         <h1 className="text-lg font-semibold">
           {t('entity.form.select_type')}
         </h1>
         <p className="text-sm text-muted-foreground">
           {t('entity.form.select_type_description')}
         </p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {[...ENTITY_TYPES]
             .sort((a, b) =>
               getEntityTypeLabel(a).localeCompare(getEntityTypeLabel(b)),
             )
-            .map((et) => (
-              <Button
-                key={et}
-                variant="outline"
-                size="lg"
-                className="h-24 flex-col gap-2"
-                onPress={() => setSelectedType(et)}
-              >
-                <EntityTypeIcon type={et} size="lg" />
-                <span>{getEntityTypeLabel(et)}</span>
-              </Button>
-            ))}
+            .map((et) => {
+              const className = getEntityClassName(et)
+              return (
+                <Button
+                  key={et}
+                  variant="outline"
+                  size="lg"
+                  className="h-auto flex-col items-start gap-1.5 p-3 text-start whitespace-normal"
+                  onPress={() => setSelectedType(et)}
+                >
+                  <span className="flex items-center gap-2">
+                    <EntityTypeIcon type={et} />
+                    <span className="flex flex-col">
+                      <span className="font-semibold">
+                        {t(`entity.fields.${className}.$self.label`)}
+                      </span>
+                      <span className="font-mono text-[0.625rem] text-muted-foreground/70">
+                        {getEntityTermUri(et)}
+                      </span>
+                    </span>
+                  </span>
+                  <span className="text-muted-foreground">
+                    {t(`entity.fields.${className}.$self.description`)}
+                  </span>
+                </Button>
+              )
+            })}
         </div>
       </div>
     )

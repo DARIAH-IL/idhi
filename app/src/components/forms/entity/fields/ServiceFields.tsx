@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import {
   ServiceDigitalHumanitiesActivitiesItem,
   ServiceServiceType,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
@@ -16,13 +16,13 @@ import { serviceFormOptions } from '../entity-form-options.ts'
 export const ServiceFields = withForm({
   ...serviceFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={<EntityFieldLabel entityClass="Service" field="name" />}
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -31,7 +31,9 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.service_type')}
+              label={
+                <EntityFieldLabel entityClass="Service" field="service_type" />
+              }
               options={ServiceServiceType}
             />
           )}
@@ -42,7 +44,9 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.provider')}
+              label={
+                <EntityFieldLabel entityClass="Service" field="provider" />
+              }
               entityTypes={['idhi:Organization']}
             />
           )}
@@ -53,7 +57,12 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.documentation_url')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Service"
+                  field="documentation_url"
+                />
+              }
               type="url"
             />
           )}
@@ -64,7 +73,9 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel entityClass="Service" field="contact_email" />
+              }
               type="email"
             />
           )}
@@ -77,7 +88,12 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.digital_humanities_activities')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Service"
+                  field="digital_humanities_activities"
+                />
+              }
               placeholder="tadirah:…"
               options={ServiceDigitalHumanitiesActivitiesItem}
             />
@@ -89,7 +105,12 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Service"
+                  field="additional_urls"
+                />
+              }
               placeholder="https://…"
             />
           )}

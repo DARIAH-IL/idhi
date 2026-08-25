@@ -1,7 +1,7 @@
 import { Checkbox } from 'react-aria-components'
 import { useFieldContext } from '@/components/forms/form-context'
 
-export function BooleanField({ label }: { label: string }) {
+export function BooleanField({ label }: { label: React.ReactNode }) {
   const field = useFieldContext<boolean | null | undefined>()
 
   return (

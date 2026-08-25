@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
 import { PersonAffiliationsItemAffiliationRole } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
@@ -13,8 +13,6 @@ import { personFormOptions } from '../entity-form-options.ts'
 export const PersonFields = withForm({
   ...personFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField
@@ -22,7 +20,11 @@ export const PersonFields = withForm({
           validators={localizedValueValidators()}
         >
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.given_name')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="given_name" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -31,7 +33,9 @@ export const PersonFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.family_name')}
+              label={
+                <EntityFieldLabel entityClass="Person" field="family_name" />
+              }
             />
           )}
         </form.AppField>
@@ -41,7 +45,7 @@ export const PersonFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.orcid')}
+              label={<EntityFieldLabel entityClass="Person" field="orcid" />}
               placeholder="https://orcid.org/0000-0000-0000-0000"
             />
           )}
@@ -52,7 +56,7 @@ export const PersonFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.emails')}
+              label={<EntityFieldLabel entityClass="Person" field="emails" />}
               placeholder="email@example.com"
             />
           )}
@@ -61,7 +65,9 @@ export const PersonFields = withForm({
         <form.AppField name="affiliations" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.affiliations')}
+              label={
+                <EntityFieldLabel entityClass="Person" field="affiliations" />
+              }
               defaultItem={{ organization: '' }}
             >
               {(index) => (
@@ -74,7 +80,12 @@ export const PersonFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.organization_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Affiliation"
+                            field="organization"
+                          />
+                        }
                         entityTypes={['idhi:Organization']}
                       />
                     )}
@@ -87,7 +98,12 @@ export const PersonFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.affiliation_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Affiliation"
+                            field="affiliation_role"
+                          />
+                        }
                         options={PersonAffiliationsItemAffiliationRole}
                       />
                     )}
@@ -98,7 +114,12 @@ export const PersonFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Affiliation"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -109,7 +130,12 @@ export const PersonFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Affiliation"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

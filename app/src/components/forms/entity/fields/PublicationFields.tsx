@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import {
   PublicationAuthorshipsItemAuthorshipRole,
   PublicationPublicationType,
 } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefArrayValidators,
@@ -16,13 +16,15 @@ import { publicationFormOptions } from '../entity-form-options.ts'
 export const PublicationFields = withForm({
   ...publicationFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="name" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -31,7 +33,12 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.publication_type')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="publication_type"
+                />
+              }
               options={PublicationPublicationType}
             />
           )}
@@ -39,7 +46,7 @@ export const PublicationFields = withForm({
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.doi')}
+              label={<EntityFieldLabel entityClass="Publication" field="doi" />}
               placeholder="https://doi.org/…"
             />
           )}
@@ -50,7 +57,12 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.date_issued')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="date_issued"
+                />
+              }
               type="date"
             />
           )}
@@ -61,7 +73,9 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.publisher')}
+              label={
+                <EntityFieldLabel entityClass="Publication" field="publisher" />
+              }
               entityTypes={['idhi:Organization']}
             />
           )}
@@ -74,7 +88,9 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.EntityRefField
-              label={t('entity.form.fields.part_of')}
+              label={
+                <EntityFieldLabel entityClass="Publication" field="part_of" />
+              }
               entityTypes={['idhi:Publication']}
               allowExternalUrl
             />
@@ -86,7 +102,12 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.LangStringField
-              label={t('entity.form.fields.published_in')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="published_in"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -96,7 +117,12 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.EntityRefArrayField
-              label={t('entity.form.fields.presented_at')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="presented_at"
+                />
+              }
               entityTypes={['idhi:Event']}
             />
           )}
@@ -105,7 +131,12 @@ export const PublicationFields = withForm({
         <form.AppField name="authorships" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.authorships')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="authorships"
+                />
+              }
               defaultItem={{ author: '' }}
             >
               {(index) => (
@@ -118,7 +149,12 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.member_ref')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Authorship"
+                            field="author"
+                          />
+                        }
                         entityTypes={['idhi:Person']}
                       />
                     )}
@@ -129,7 +165,12 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.author_order')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Authorship"
+                            field="author_order"
+                          />
+                        }
                         type="number"
                         min={1}
                       />
@@ -143,7 +184,12 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EnumSelectField
-                        label={t('entity.form.authorship_role')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Authorship"
+                            field="authorship_role"
+                          />
+                        }
                         options={PublicationAuthorshipsItemAuthorshipRole}
                       />
                     )}
@@ -154,7 +200,12 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Authorship"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -165,7 +216,12 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Authorship"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

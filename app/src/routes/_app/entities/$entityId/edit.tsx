@@ -84,8 +84,7 @@ function EditEntityPage() {
 
       <EntityForm
         entityType={entity.type}
-        defaultValues={entity}
-        isEdit
+        entity={entity}
         onSubmit={(data) => {
           updateMutation.mutate({ entityId: decodedId, data })
         }}

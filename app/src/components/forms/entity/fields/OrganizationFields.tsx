@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
 import { OrganizationOrganizationType } from '#/api/models'
+import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import {
   entityRefValidators,
@@ -13,13 +13,15 @@ import { organizationFormOptions } from '../entity-form-options.ts'
 export const OrganizationFields = withForm({
   ...organizationFormOptions,
   render: function Render({ form }) {
-    const { t } = useTranslation()
-
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.name')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="name" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -28,7 +30,12 @@ export const OrganizationFields = withForm({
         >
           {(field) => (
             <field.EnumSelectField
-              label={t('entity.form.fields.organization_type')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="organization_type"
+                />
+              }
               options={OrganizationOrganizationType}
             />
           )}
@@ -39,7 +46,12 @@ export const OrganizationFields = withForm({
         >
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.contact_email')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="contact_email"
+                />
+              }
               type="email"
             />
           )}
@@ -47,19 +59,29 @@ export const OrganizationFields = withForm({
         <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
           {(field) => (
             <field.TextField
-              label={t('entity.form.fields.ror')}
+              label={
+                <EntityFieldLabel entityClass="Organization" field="ror" />
+              }
               placeholder="https://ror.org/…"
             />
           )}
         </form.AppField>
         <form.AppField name="location" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.location')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="location" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField name="address" validators={localizedValueValidators()}>
           {(field) => (
-            <field.LangStringField label={t('entity.form.fields.address')} />
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="address" />
+              }
+            />
           )}
         </form.AppField>
         <form.AppField
@@ -68,7 +90,12 @@ export const OrganizationFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
-              label={t('entity.form.fields.additional_urls')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="additional_urls"
+                />
+              }
               placeholder="https://…"
             />
           )}
@@ -76,7 +103,12 @@ export const OrganizationFields = withForm({
         <form.AppField name="marketplace_sync">
           {(field) => (
             <field.BooleanField
-              label={t('entity.form.fields.marketplace_sync')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="marketplace_sync"
+                />
+              }
             />
           )}
         </form.AppField>
@@ -84,7 +116,12 @@ export const OrganizationFields = withForm({
         <form.AppField name="organization_hierarchy" mode="array">
           {(field) => (
             <field.ArraySection
-              label={t('entity.form.fields.organization_hierarchy')}
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="organization_hierarchy"
+                />
+              }
               defaultItem={{ parent_organization: '' }}
             >
               {(index) => (
@@ -97,7 +134,12 @@ export const OrganizationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
-                        label={t('entity.form.fields.parent_organization')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationHierarchy"
+                            field="parent_organization"
+                          />
+                        }
                         entityTypes={['idhi:Organization']}
                       />
                     )}
@@ -108,7 +150,12 @@ export const OrganizationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.start_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationHierarchy"
+                            field="start_date"
+                          />
+                        }
                         type="date"
                       />
                     )}
@@ -119,7 +166,12 @@ export const OrganizationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.TextField
-                        label={t('entity.form.fields.end_date')}
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationHierarchy"
+                            field="end_date"
+                          />
+                        }
                         type="date"
                       />
                     )}

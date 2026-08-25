@@ -10,6 +10,7 @@ import { assertAuthenticatedUser } from '../../middleware/auth'
 import { ApiError } from '../../errors/ApiError'
 import { ErrorCode } from '../../models/errorCode'
 import { entityIdMatchesType } from '../../utils/entityId'
+import { refineUniqueLangStringLanguages } from '../../utils/langString'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
 import type {
@@ -61,7 +62,10 @@ export const searchEntitiesHandlers = factory.createHandlers(
   },
 )
 export const createEntityHandlers = factory.createHandlers(
-  zValidator('json', CreateEntityBody),
+  zValidator(
+    'json',
+    CreateEntityBody.superRefine(refineUniqueLangStringLanguages),
+  ),
   async (c: CreateEntityContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -99,7 +103,10 @@ export const getEntityByIdHandlers = factory.createHandlers(
 )
 export const updateEntityByIdHandlers = factory.createHandlers(
   zValidator('param', UpdateEntityByIdParams),
-  zValidator('json', UpdateEntityByIdBody),
+  zValidator(
+    'json',
+    UpdateEntityByIdBody.superRefine(refineUniqueLangStringLanguages),
+  ),
   zValidator('response', UpdateEntityByIdResponse),
   async (c: UpdateEntityByIdContext) => {
     const user = c.get('user')
