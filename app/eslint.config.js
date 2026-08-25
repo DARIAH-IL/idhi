@@ -25,6 +25,19 @@ export default [
       'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: true }],
       '@typescript-eslint/no-unnecessary-condition': 'warn',
       curly: ['error', 'all'],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Literal[value=/oklch\\(/]',
+          message:
+            'Do not use raw oklch() in class strings — it is not a valid Tailwind class. Use theme tokens (e.g. bg-foreground) instead.',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/oklch\\(/]',
+          message:
+            'Do not use raw oklch() in class strings — it is not a valid Tailwind class. Use theme tokens (e.g. bg-foreground) instead.',
+        },
+      ],
     },
   },
   {

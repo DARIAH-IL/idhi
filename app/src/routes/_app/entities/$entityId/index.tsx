@@ -22,7 +22,7 @@ import {
 import { EntityImage } from '@/components/entity/EntityImage'
 import { TimeAgo } from '@/components/TimeAgo'
 import { useAuthStore } from '@/stores/auth'
-import { renderEntityValue } from './renderEntityValue'
+import { renderEntityValue } from '../../../../components/renderEntityValue.tsx'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>

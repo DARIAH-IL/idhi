@@ -24,11 +24,18 @@ import { cn } from '@/lib/utils'
 
 type StyledTableProps = TableProps & {
   containerClassName?: string
+  containerRef?: React.Ref<HTMLDivElement>
 }
 
-function Table({ className, containerClassName, ...props }: StyledTableProps) {
+function Table({
+  className,
+  containerClassName,
+  containerRef,
+  ...props
+}: StyledTableProps) {
   return (
     <div
+      ref={containerRef}
       data-slot="table-container"
       className={cn('relative w-full overflow-x-auto', containerClassName)}
     >

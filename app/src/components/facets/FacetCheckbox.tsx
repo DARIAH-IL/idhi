@@ -1,8 +1,8 @@
 import { Checkbox } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Tick02Icon } from '@hugeicons/core-free-icons'
-import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
-import type { ENTITY_TYPES } from '@/lib/entity'
+import { EntityTypeIcon } from '#/components/entity/EntityTypeIcon.tsx'
+import type { ENTITY_TYPES } from '#/lib/entity.ts'
 
 interface FacetCheckboxProps {
   label: string

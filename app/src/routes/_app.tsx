@@ -8,6 +8,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { JumpToTop } from '@/components/JumpToTop'
 import { LoginDialog } from '@/components/auth/LoginDialog'
 import { UserMenu } from '@/components/auth/UserMenu'
 
@@ -26,6 +27,7 @@ function AppLayout() {
   const user = useAuthStore((s) => s.user)
   const language = useUIStore((s) => s.language)
   const authLinkConsumedRef = useRef(false)
+  const mainRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     void i18n.changeLanguage(language)
@@ -49,7 +51,7 @@ function AppLayout() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <header className="flex min-h-14 items-center justify-between gap-4 border-b px-6 py-2">
         <Link
           to="/entities"
@@ -70,9 +72,12 @@ function AppLayout() {
         )}
       </header>
       <Separator />
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <main ref={mainRef} className="flex-1 overflow-y-auto p-6">
+          <Outlet />
+        </main>
+        <JumpToTop scrollRef={mainRef} />
+      </div>
       <footer className="border-t px-4 py-4 text-center text-xs text-muted-foreground">
         <p>{t('common.copyright')}</p>
         <p className="mt-1">{t('common.work_in_progress')}</p>

@@ -3,9 +3,9 @@ import { z } from 'zod'
 import {
   getSearchEntitiesQueryKey,
   searchEntities,
-} from '@/api/hooks/entities/entities'
-import type { EntitySearch, Filter, FilterableField } from '@/api/models'
-import { ENTITY_TYPES } from '@/lib/entity'
+} from '#/api/hooks/entities/entities.ts'
+import type { EntitySearch, Filter, FilterableField } from '#/api/models'
+import { ENTITY_TYPES } from '#/lib/entity.ts'
 
 export const PAGE_SIZE = 20
 export const FACET_VISIBLE_LIMIT = 5

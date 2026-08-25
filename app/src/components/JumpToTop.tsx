@@ -1,39 +1,56 @@
 import { useEffect, useState } from 'react'
+import type { RefObject } from 'react'
 import { ArrowUp02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
-export function JumpToTop() {
+interface JumpToTopProps {
+  scrollRef: RefObject<HTMLElement | null>
+  className?: string
+}
+
+export function JumpToTop({ scrollRef, className }: JumpToTopProps) {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+    const element = scrollRef.current
+    if (!element) {
+      return
+    }
+
     const updateVisibility = () => {
-      setIsVisible(window.scrollY > window.innerHeight)
+      setIsVisible(element.scrollTop > element.clientHeight)
     }
 
     updateVisibility()
-    window.addEventListener('scroll', updateVisibility, { passive: true })
+    element.addEventListener('scroll', updateVisibility, { passive: true })
     window.addEventListener('resize', updateVisibility)
 
     return () => {
-      window.removeEventListener('scroll', updateVisibility)
+      element.removeEventListener('scroll', updateVisibility)
       window.removeEventListener('resize', updateVisibility)
     }
-  }, [])
+  }, [scrollRef])
 
   if (!isVisible) {
     return null
   }
 
   const scrollToTop = () => {
+    const element = scrollRef.current
+    if (!element) {
+      return
+    }
+
     const reduceMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
 
-    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+    element.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
   }
 
   return (
@@ -41,7 +58,10 @@ export function JumpToTop() {
       aria-label={t('common.jump_to_top')}
       variant="secondary"
       size="icon-lg"
-      className="fixed end-6 bottom-6 z-50 size-10 rounded-full shadow-lg"
+      className={cn(
+        'absolute end-6 bottom-6 z-50 size-10 rounded-full shadow-lg',
+        className,
+      )}
       onPress={scrollToTop}
     >
       <HugeiconsIcon icon={ArrowUp02Icon} strokeWidth={2} />

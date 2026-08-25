@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { JumpToTop } from '@/components/JumpToTop'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -37,10 +38,13 @@ import {
   DEFAULT_SORT,
   DEFAULT_FACETS,
   getInfiniteEntityQueryOptions,
-} from './entityBoardSearch'
-import type { FacetFilters, EntitySort } from './entityBoardSearch'
-import { SortableColumnLabel } from './SortableColumnLabel'
-import { FacetPanel } from './FacetPanel'
+} from '../../../components/entityBoardSearch.ts'
+import type {
+  FacetFilters,
+  EntitySort,
+} from '../../../components/entityBoardSearch.ts'
+import { SortableColumnLabel } from '../../../components/facets/SortableColumnLabel.tsx'
+import { FacetPanel } from '../../../components/facets/FacetPanel.tsx'
 
 export const Route = createFileRoute('/_app/entities/')({
   validateSearch: entityBoardSearchSchema,
@@ -65,6 +69,7 @@ function EntityBoard() {
 
   const [searchInput, setSearchInput] = useState(q ?? '')
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const tableContainerRef = useRef<HTMLDivElement>(null)
 
   const activeSort = sort ?? DEFAULT_SORT
   const sortDescriptor: SortDescriptor = {
@@ -161,7 +166,7 @@ function EntityBoard() {
   )
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 md:h-full">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{t('board.title')}</h1>
         {isAuthenticated && (
@@ -251,7 +256,7 @@ function EntityBoard() {
         )}
       </div>
 
-      <div className="grid items-start gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
+      <div className="grid items-start gap-6 md:min-h-0 md:flex-1 md:grid-cols-[16rem_minmax(0,1fr)]">
         <FacetPanel
           key={JSON.stringify(facetFilters ?? {})}
           facets={facets}
@@ -271,7 +276,7 @@ function EntityBoard() {
 
         <section
           aria-label={t('board.results_label')}
-          className="min-w-0 space-y-4"
+          className="min-w-0 space-y-4 md:flex md:h-full md:min-h-0 md:flex-col"
           aria-busy={isFetching}
         >
           {isError && (
@@ -287,7 +292,7 @@ function EntityBoard() {
             </p>
           )}
 
-          <div className="relative">
+          <div className="relative md:min-h-0 md:flex-1">
             {(isLoading || isRefetching) && (
               <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-background/80">
                 <div
@@ -310,7 +315,8 @@ function EntityBoard() {
             ) : (
               <Table
                 aria-label={t('board.results_label')}
-                containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto"
+                containerRef={tableContainerRef}
+                containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto md:max-h-full"
                 sortDescriptor={sortDescriptor}
                 onSortChange={handleSortChange}
               >
@@ -419,6 +425,7 @@ function EntityBoard() {
                 </TableBody>
               </Table>
             )}
+            {!isLoading && <JumpToTop scrollRef={tableContainerRef} />}
           </div>
         </section>
       </div>

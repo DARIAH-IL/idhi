@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { SearchEntities200Facets } from '@/api/models'
-import { ENTITY_TYPES, getEntityTypeLabel } from '@/lib/entity'
-import { Button } from '@/components/ui/button'
-import { InputGroup, InputGroupInput } from '@/components/ui/input-group'
-import { FacetCheckbox } from './FacetCheckbox'
-import { DEFAULT_FACETS, FACET_VISIBLE_LIMIT } from './entityBoardSearch'
-import type { FacetFilters } from './entityBoardSearch'
+import type { SearchEntities200Facets } from '#/api/models'
+import { ENTITY_TYPES, getEntityTypeLabel } from '#/lib/entity.ts'
+import { Button } from '#/components/ui/button.tsx'
+import { InputGroup, InputGroupInput } from '#/components/ui/input-group.tsx'
+import { FacetCheckbox } from './FacetCheckbox.tsx'
+import { DEFAULT_FACETS, FACET_VISIBLE_LIMIT } from '../entityBoardSearch.ts'
+import type { FacetFilters } from '../entityBoardSearch.ts'
 
 interface FacetPanelProps {
   facets: SearchEntities200Facets
@@ -61,7 +61,7 @@ export function FacetPanel({
   }
 
   return (
-    <aside className="self-start rounded-lg border bg-muted/20 md:sticky md:top-4">
+    <aside className="self-start rounded-lg border bg-muted/20 md:max-h-full md:overflow-y-auto">
       <div className="border-b p-4">
         <h2 className="text-sm font-semibold">{t('board.facets.title')}</h2>
       </div>

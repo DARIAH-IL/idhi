@@ -1,4 +1,4 @@
-import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
+import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
 
 export function renderEntityValue(v: unknown): React.ReactNode {
   if (v === null || v === undefined) {
