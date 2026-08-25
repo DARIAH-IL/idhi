@@ -11,6 +11,7 @@ import type {
   DialogTriggerProps as DialogTriggerPrimitiveProps,
   ModalOverlayProps as ModalOverlayPrimitiveProps,
 } from 'react-aria-components'
+import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -73,6 +74,7 @@ function Dialog({
     children: React.ReactNode
     showCloseButton?: boolean
   }) {
+  const { t } = useTranslation()
   return (
     <DialogOverlay isDismissable={isDismissable} {...props}>
       <ModalPrimitive
@@ -94,7 +96,7 @@ function Dialog({
               size="icon-sm"
             >
               <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{t('common.close')}</span>
             </DialogClose>
           )}
         </DialogPrimitive>
@@ -121,6 +123,7 @@ function DialogFooter({
 }: React.ComponentProps<'div'> & {
   showCloseButton?: boolean
 }) {
+  const { t } = useTranslation()
   return (
     <div
       data-slot="dialog-footer"
@@ -131,7 +134,9 @@ function DialogFooter({
       {...props}
     >
       {children}
-      {showCloseButton && <DialogClose variant="outline">Close</DialogClose>}
+      {showCloseButton && (
+        <DialogClose variant="outline">{t('common.close')}</DialogClose>
+      )}
     </div>
   )
 }

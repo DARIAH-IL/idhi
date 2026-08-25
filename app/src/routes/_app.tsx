@@ -58,7 +58,11 @@ function AppLayout() {
           aria-label={t('common.home')}
           className="flex items-center gap-3"
         >
-          <img src="/logo.png" alt="IDHI" className="h-7 w-auto" />
+          <img
+            src="/logo.png"
+            alt={t('common.site_name')}
+            className="h-7 w-auto"
+          />
           <span className="text-sm font-semibold sm:text-base">
             {t('common.site_name')}
           </span>

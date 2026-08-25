@@ -9,7 +9,7 @@
     "dev": "orval && node scripts/generate-term-uris.mjs && vite dev",
     "generate-routes": "tsr generate",
     "build": "orval && node scripts/generate-term-uris.mjs && tsc && vite build",
-    "lint": "eslint",
+    "lint": "eslint && i18next-cli lint",
     "format": "prettier --write .",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
@@ -56,6 +56,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "i18next-cli": "^1.71.0",
     "orval": "^8.23.0",
     "prettier": "^3.8.1",
     "typescript": "^6.0.2",
