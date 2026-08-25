@@ -1,3 +1,37 @@
+
+## App architecture
+
+Routes live under `app/src/routes/` and TanStack Router generates `app/src/routeTree.gen.ts`; do not edit that generated route tree. Route-aware data loading should use generated TanStack Query options/hooks, with URL/search state represented through TanStack Router. Shared UI primitives live in `app/src/components/ui/`, shared browser helpers in `app/src/lib/`, and global styling in `app/src/styles.css`.
+
+Use the `#/*` or `@/*` aliases for app source imports where appropriate. Maintain strict TypeScript behavior and the existing accessibility-oriented React Aria/component conventions. Keep server-only code and secrets out of the browser bundle.
+
+Always use css start/end and not left/right.
+
+## Localization
+
+All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.
+
+Locale resources live in `app/src/i18n/locales/` (currently `en.json` only), initialized in `app/src/i18n/index.ts`. Translation keys are fully typed: `app/src/i18n/i18next.d.ts` derives the key space from `en.json`, so adding a key there immediately makes it available (and type-checked) through `t(...)`.
+
+`en.json` is standard 2-space-indented JSON that round-trips byte-identically through `JSON.stringify(data, null, 2)`; scripted edits that parse, modify, and re-serialize the file are safe and preferred for bulk changes.
+
+Entity field copy lives under `entity.fields`, keyed by schema class name then field name, mirroring the key structure of `app/src/api/termUris/termUris.ts`. Each entry holds both a `label` and a `description`, and each class also has a `$self` entry describing the class itself:
+
+```json
+"entity": {
+  "fields": {
+    "Person": {
+      "$self": { "label": "Person", "description": "..." },
+      "given_name": { "label": "Given name", "description": "..." }
+    }
+  }
+}
+```
+
+Covered classes are the user-facing ones from `termUris.ts`: the ten top-level entity types plus the nested relationship classes (Affiliation, Authorship, EventAgentRole, FacilityAffiliation, Funding, OrganizationHierarchy, OrganizationProjectRole, ProjectParticipation, ResourceContribution). Abstract or technical classes (Entity, Agent, Relationship, IndexContainer, LangString) are intentionally excluded.
+
+Descriptions are adapted from the property descriptions in the upstream IDHI manifest schema (`https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json`, the same source `scripts/generate-term-uris.mjs` reads). They are rewritten for editors, not copied: drop modeling jargon (reified objects, IDHI URNs, discriminators, slot_usage), keep the practical guidance about what belongs in the field, what belongs elsewhere, and when to leave it empty. Every description must be written for its specific class context — never reuse one generic text across classes, even for fields they share (`name`, `homepage`, `start_date` and the like each get a per-class text naming the concrete entity). When the upstream schema gains a class or field, add the matching `entity.fields` entries so coverage stays complete.
+
 <!-- intent-skills:start -->
 
 # TanStack Intent - before editing files, run the matching guidance command.

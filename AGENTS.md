@@ -79,12 +79,3 @@ Authentication uses bearer JWTs, OTP challenges, passkeys through SimpleWebAuthn
 Mongo access is exposed through `DatabaseService`. Add collection names centrally in `server/src/db/collections.ts`, schemas under `server/src/db/models/`, and domain operations under `server/src/db/services/`. Reuse the cached connection/service construction. IDs use the `idhi:<type>:<random>` convention through `server/src/utils/id.ts`; keep public ID patterns reflected in OpenAPI schemas.
 
 Throw `ApiError` for expected API failures and use an `ErrorCode` declared by the contract. Let the global error handler log and serialize failures. Use the request-scoped structured logger rather than `console` in request/business code, and avoid sensitive values in log attributes.
-
-## App architecture
-
-Routes live under `app/src/routes/` and TanStack Router generates `app/src/routeTree.gen.ts`; do not edit that generated route tree. Route-aware data loading should use generated TanStack Query options/hooks, with URL/search state represented through TanStack Router. Shared UI primitives live in `app/src/components/ui/`, shared browser helpers in `app/src/lib/`, and global styling in `app/src/styles.css`.
-
-Use the `#/*` or `@/*` aliases for app source imports where appropriate. Maintain strict TypeScript behavior and the existing accessibility-oriented React Aria/component conventions. Keep server-only code and secrets out of the browser bundle.
-
-All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.
-Always use css start/end and not left/right.

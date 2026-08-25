@@ -209,6 +209,1022 @@
       "idhi:Dataset": "Dataset",
       "idhi:TrainingMaterial": "Training material"
     },
+    "fields": {
+      "Person": {
+        "$self": {
+          "label": "Person",
+          "description": "A person active in digital humanities: researcher, developer, librarian, student and so on."
+        },
+        "affiliations": {
+          "label": "Affiliations",
+          "description": "The organizations the person is employed by or a formal member of, with role and dates. Not for project involvement."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short introduction to the person — their work and interests — aimed at index visitors, in one or more languages."
+        },
+        "emails": {
+          "label": "Email addresses",
+          "description": "Contact email addresses. Only list addresses the person has agreed to publish."
+        },
+        "family_name": {
+          "label": "Family name",
+          "description": "The person’s last name, in one or more languages. Use together with the given name; not for a full name."
+        },
+        "given_name": {
+          "label": "Given name",
+          "description": "The person’s first name, in one or more languages. Use together with the family name; not for a full name."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The person’s own website or public profile page, if one exists."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the person record is created. The person’s ORCID goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A portrait or avatar of the person. Leave empty if none is available."
+        },
+        "orcid": {
+          "label": "ORCID",
+          "description": "The person’s ORCID identifier. Strongly recommended for researchers — it helps link and deduplicate records."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this person in other systems, such as Wikidata or VIAF. The person’s own website belongs in the homepage field."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the person’s expertise and interests, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a person."
+        }
+      },
+      "Organization": {
+        "$self": {
+          "label": "Organization",
+          "description": "An organization of any kind — university, GLAM institution, research center, funder, company or non-profit."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the organization beyond its website, such as a blog, social-media profile or registry entry."
+        },
+        "address": {
+          "label": "Address",
+          "description": "The organization’s postal address, in one or more languages."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the organization, such as an office or department mailbox."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of the organization and its activities, aimed at index visitors, in one or more languages."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The organization’s official website."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the organization record is created. The organization’s ROR identifier goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "The organization’s logo or a representative image. Leave empty if none is available."
+        },
+        "location": {
+          "label": "Location",
+          "description": "The place where the organization is based, such as a city."
+        },
+        "marketplace_sync": {
+          "label": "Allow Marketplace synchronization",
+          "description": "Allow this organization and its related services and tools to be synchronized with the DARIAH SSH Open Marketplace."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The organization’s name, in one or more languages. Prefer the official localized name."
+        },
+        "organization_hierarchy": {
+          "label": "Organization hierarchy",
+          "description": "The parent organizations this organization is formally part of, with optional dates. Only for formal containment, such as a department within a university — not for partnerships or informal association."
+        },
+        "organization_type": {
+          "label": "Organization type",
+          "description": "The kind of organization. Always set it."
+        },
+        "ror": {
+          "label": "ROR identifier",
+          "description": "The organization’s ROR registry identifier. Record it whenever the organization is registered in ROR — most universities and research institutes are."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this organization in other systems, such as Wikidata. The organization’s own website belongs in the homepage field."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the organization’s activities and focus, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as an organization."
+        }
+      },
+      "Facility": {
+        "$self": {
+          "label": "Facility",
+          "description": "A physical or virtual facility such as a DH lab, digitization studio or research infrastructure. Use a facility when it has its own identity distinct from its host organization."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the facility, such as a blog, social-media profile or press coverage."
+        },
+        "address": {
+          "label": "Address",
+          "description": "The facility’s postal address, in one or more languages."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the facility, such as a lab or service-desk mailbox."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of the facility and what it offers researchers, aimed at index visitors, in one or more languages."
+        },
+        "facility_affiliations": {
+          "label": "Facility affiliations",
+          "description": "The organizations that host or own this facility, with role and optional dates."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The facility’s own web page, if one exists."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the facility record is created."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A photo or logo of the facility. Leave empty if none is available."
+        },
+        "location": {
+          "label": "Location",
+          "description": "The place where the facility is situated, such as a city."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The facility’s name, in one or more languages."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this facility in other systems. The facility’s own web page belongs in the homepage field."
+        },
+        "services_offered": {
+          "label": "Services offered (IDs)",
+          "description": "Services this facility offers to researchers."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the facility’s equipment, expertise and focus, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "tools_provided": {
+          "label": "Tools provided (IDs)",
+          "description": "Tools this facility maintains or gives access to, such as hosted instances and lab-maintained software — not every tool staff members happen to use."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a facility."
+        }
+      },
+      "Project": {
+        "$self": {
+          "label": "Project",
+          "description": "A digital humanities research project — the central entity of the index, connecting people, organizations, outputs and the periods and places studied."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the project, such as a blog, social-media profile or press coverage."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the project team."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short overview of the project — its goals, methods and outcomes — aimed at index visitors, in one or more languages."
+        },
+        "digital_humanities_activities": {
+          "label": "DH activities",
+          "description": "The digital-humanities research activities practiced in the project. Pick the most specific options that apply; multiple values are expected."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the project ended. Leave empty for ongoing projects."
+        },
+        "funding": {
+          "label": "Funding",
+          "description": "Funding awards received by the project, one entry per distinct award."
+        },
+        "funding_status": {
+          "label": "Funding status",
+          "description": "The project’s current funding or sustainability status. Update it when circumstances change; past awards are kept in the funding entries."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The project’s website, if one exists."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the project record is created."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A logo or representative image for the project. Leave empty if none is available."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The project’s name, in one or more languages. Prefer names supplied by the project team over ad-hoc translations."
+        },
+        "organization_roles": {
+          "label": "Organization roles",
+          "description": "Organizations engaged in the project — as coordinator, partner, data provider, funder or host."
+        },
+        "outputs_datasets": {
+          "label": "Output datasets (IDs)",
+          "description": "Datasets produced or curated by the project."
+        },
+        "outputs_publications": {
+          "label": "Output publications (IDs)",
+          "description": "Publications resulting from the project."
+        },
+        "outputs_tools": {
+          "label": "Output tools (IDs)",
+          "description": "Tools produced by the project."
+        },
+        "outputs_training_materials": {
+          "label": "Output training materials",
+          "description": "Training materials produced by the project — not materials it merely used."
+        },
+        "project_participations": {
+          "label": "Project participations",
+          "description": "The people involved in the project, with their role and dates."
+        },
+        "research_disciplines": {
+          "label": "Research disciplines",
+          "description": "The humanities disciplines of the project, such as history, linguistics or archaeology."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this project in other systems, such as a funder’s project registry. The project’s own website belongs in the homepage field."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the project started."
+        },
+        "studied_periods": {
+          "label": "Studied periods",
+          "description": "The historical periods the project studies, such as the Ottoman period — distinct from the project’s own start and end dates."
+        },
+        "studied_places": {
+          "label": "Studied places",
+          "description": "The geographic focus of the research — the places studied, not where the team is based."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the project’s topics and methods, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a project."
+        },
+        "uses_datasets": {
+          "label": "Datasets used",
+          "description": "Existing datasets used as research inputs. Datasets the project produced belong in output datasets."
+        },
+        "uses_services": {
+          "label": "Services used",
+          "description": "Services that support the project’s work."
+        },
+        "uses_tools": {
+          "label": "Tools used",
+          "description": "Tools used to conduct the project. Tools the project produced belong in output tools."
+        }
+      },
+      "Tool": {
+        "$self": {
+          "label": "Tool",
+          "description": "A reusable software tool that others can install, run or call. For an offering delivered by people, use a service instead."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the tool, such as a blog post, tutorial or registry entry."
+        },
+        "code_repository": {
+          "label": "Code repository",
+          "description": "The source-code repository URL, such as GitHub or GitLab, if open."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the tool’s maintainers."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of what the tool does and who it is for, aimed at index visitors, in one or more languages."
+        },
+        "digital_humanities_activities": {
+          "label": "DH activities",
+          "description": "The digital-humanities research activities the tool supports. Pick the most specific options that apply; multiple values are expected."
+        },
+        "documentation_url": {
+          "label": "Documentation URL",
+          "description": "User or developer documentation for the tool, such as a manual, wiki or API reference."
+        },
+        "doi": {
+          "label": "DOI",
+          "description": "The tool’s DOI, if one has been assigned — for example through a software deposit."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The tool’s main public page — its website or landing page."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the tool record is created. The tool’s DOI goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A logo or screenshot of the tool. Leave empty if none is available."
+        },
+        "license": {
+          "label": "License",
+          "description": "The license under which the tool is released. Leave empty only if genuinely unknown."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The tool’s name, in one or more languages. Use localized names supplied by its team rather than translating a branded name."
+        },
+        "programming_language": {
+          "label": "Programming language",
+          "description": "The main implementation language, such as Python. Not for natural languages the tool supports."
+        },
+        "resource_contributions": {
+          "label": "Resource contributions",
+          "description": "The people and organizations that created, developed or maintain this tool, with role and optional dates."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this tool in other systems, such as Wikidata or the SSH Open Marketplace. The tool’s own pages belong in the homepage or documentation fields."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing what the tool does, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "tool_type": {
+          "label": "Tool type",
+          "description": "How users primarily consume the tool: web app, library, command line and so on."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a tool."
+        }
+      },
+      "Service": {
+        "$self": {
+          "label": "Service",
+          "description": "A service delivered by people at a facility or organization, such as digitization on demand or data curation support. For self-service software, use a tool instead."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the service, such as pricing, terms of use or a blog post."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for requesting or asking about the service."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of what the service provides and who can use it, aimed at index visitors, in one or more languages."
+        },
+        "digital_humanities_activities": {
+          "label": "DH activities",
+          "description": "The digital-humanities research activities the service supports. Pick the most specific options that apply; multiple values are expected."
+        },
+        "documentation_url": {
+          "label": "Documentation URL",
+          "description": "User documentation for the service, such as a manual or how-to guide."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The service’s public page, if one exists."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the service record is created."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A logo or representative image for the service. Leave empty if none is available."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The service’s name, in one or more languages. Use localized names supplied by its provider rather than translating a branded name."
+        },
+        "provider": {
+          "label": "Provider (ID)",
+          "description": "The organization responsible for delivering the service — the one you would contact or contract with."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this service in other systems, such as the SSH Open Marketplace. The service’s own page belongs in the homepage field."
+        },
+        "service_type": {
+          "label": "Service type",
+          "description": "The kind of service offered, such as digitization or consulting."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing what the service provides, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a service."
+        }
+      },
+      "Publication": {
+        "$self": {
+          "label": "Publication",
+          "description": "An academic publication: journal article, book, chapter, conference paper, thesis or report."
+        },
+        "authorships": {
+          "label": "Authorships",
+          "description": "The people who contributed to the publication, with their byline order and role."
+        },
+        "date_issued": {
+          "label": "Date issued",
+          "description": "The publication date. If only the year is known, use January 1 of that year."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short summary or abstract of the publication, aimed at index visitors, in one or more languages."
+        },
+        "doi": {
+          "label": "DOI",
+          "description": "The publication’s DOI. Record it whenever one exists."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The publication’s landing page, such as its page on the publisher’s site."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the publication record is created. The publication’s DOI goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A cover or representative image for the publication. Leave empty if none is available."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The title of the publication, in one or more languages."
+        },
+        "part_of": {
+          "label": "Part of (ID)",
+          "description": "The containing work, such as the book for a chapter or the proceedings for a paper."
+        },
+        "presented_at": {
+          "label": "Presented at (event IDs)",
+          "description": "Events where this publication was presented, such as the conference where the paper was given."
+        },
+        "publication_type": {
+          "label": "Publication type",
+          "description": "The kind of publication. Pick the most specific value that applies."
+        },
+        "published_in": {
+          "label": "Published in",
+          "description": "The name of the journal, book or proceedings the publication appeared in."
+        },
+        "publisher": {
+          "label": "Publisher (ID)",
+          "description": "The organization that formally published it."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this publication in other systems, such as a library catalog or Wikidata. Its landing page belongs in the homepage field."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the publication’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a publication."
+        }
+      },
+      "Event": {
+        "$self": {
+          "label": "Event",
+          "description": "A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. For a recurring series, create one record per occurrence."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the event, such as a programme, registration page or recordings."
+        },
+        "address": {
+          "label": "Address",
+          "description": "The postal address of the venue, in one or more languages."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the event’s organizers."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of the event — its theme and programme — aimed at index visitors, in one or more languages."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the event ends."
+        },
+        "event_agent_roles": {
+          "label": "Event agents",
+          "description": "The people and organizations involved in the event — organizers, hosts, speakers, participants or sponsors."
+        },
+        "event_type": {
+          "label": "Event type",
+          "description": "The kind of scholarly event."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The event’s website or announcement page, if one exists."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the event record is created."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A poster, banner or photo for the event. Leave empty if none is available."
+        },
+        "location": {
+          "label": "Location",
+          "description": "The place where the event takes place, such as a city."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The name of the event, in one or more languages."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this event in other systems, such as a conference index. The event’s own page belongs in the homepage field."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the event begins."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the event’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as an event."
+        }
+      },
+      "Dataset": {
+        "$self": {
+          "label": "Dataset",
+          "description": "A dataset or similar resource: digital edition, corpus, database, gazetteer, image collection, annotation set or metadata catalog."
+        },
+        "byte_size": {
+          "label": "Byte size",
+          "description": "Total size of the dataset in bytes. Leave empty if only a rough estimate is available."
+        },
+        "dataset_type": {
+          "label": "Dataset type",
+          "description": "The dataset’s primary form, such as digital edition, corpus or gazetteer. Its technical format belongs in media type."
+        },
+        "datasets": {
+          "label": "Aggregated datasets (IDs)",
+          "description": "Datasets aggregated by this record when it functions as a catalog."
+        },
+        "date_issued": {
+          "label": "Date issued",
+          "description": "The date the dataset was published. If only the year is known, use January 1 of that year."
+        },
+        "derived_from": {
+          "label": "Derived from datasets",
+          "description": "The source datasets this dataset was cleaned, transformed, subsetted or otherwise derived from."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of the dataset’s contents, scope and origin, aimed at index visitors, in one or more languages."
+        },
+        "distribution_url": {
+          "label": "Distribution URL",
+          "description": "A direct download or access URL for the dataset."
+        },
+        "doi": {
+          "label": "DOI",
+          "description": "The dataset’s DOI. Record it whenever one exists."
+        },
+        "extent": {
+          "label": "Extent statements",
+          "description": "Size statements such as record, item, image or file counts — one concise statement per measure, including its unit."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "The dataset’s landing page, such as its page in a repository. A direct download link belongs in the distribution URL field."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the dataset record is created. The dataset’s DOI goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A representative image for the dataset, such as a sample item or logo. Leave empty if none is available."
+        },
+        "in_languages": {
+          "label": "Content languages",
+          "description": "The languages substantially represented in the data itself, not in its documentation."
+        },
+        "license": {
+          "label": "License",
+          "description": "The license under which the dataset is released. Leave empty only if genuinely unknown."
+        },
+        "media_type": {
+          "label": "Media type",
+          "description": "The technical format of the dataset, preferably a standard media type such as text/html or application/pdf. Multiple formats may be listed."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The title of the dataset, in one or more languages."
+        },
+        "publisher": {
+          "label": "Publisher (ID)",
+          "description": "The organization that formally published the dataset."
+        },
+        "related_publications": {
+          "label": "Related publications",
+          "description": "Publications that are direct companions of the dataset, such as the print counterpart of a digital edition."
+        },
+        "resource_contributions": {
+          "label": "Resource contributions",
+          "description": "The people and organizations that created, curated or maintain this dataset, with role and optional dates."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this dataset in other systems, such as a data repository or catalog. Its landing page belongs in the homepage field."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the dataset’s contents, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "themes": {
+          "label": "Themes",
+          "description": "Thematic keywords for the dataset, in one or more languages."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as a dataset."
+        }
+      },
+      "TrainingMaterial": {
+        "$self": {
+          "label": "Training material",
+          "description": "A tutorial, lesson or other teaching resource that explains how to do something or states what learners will gain from it."
+        },
+        "additional_urls": {
+          "label": "Additional URLs",
+          "description": "Other relevant web pages about the material, such as a blog post or course listing."
+        },
+        "contact_email": {
+          "label": "Contact email",
+          "description": "A published contact address for the material’s maintainers."
+        },
+        "creators": {
+          "label": "Creators (IDs)",
+          "description": "The people or organizations that created the material. Use the publisher field for the organization that formally releases it, if different."
+        },
+        "date_issued": {
+          "label": "Date issued",
+          "description": "The date the material was published. If only the year is known, use January 1 of that year."
+        },
+        "description": {
+          "label": "Description",
+          "description": "A short description of what the material teaches and how, aimed at index visitors, in one or more languages."
+        },
+        "digital_humanities_activities": {
+          "label": "DH activities",
+          "description": "The digital-humanities research activities the material teaches. Pick the most specific options that apply; multiple values are expected."
+        },
+        "doi": {
+          "label": "DOI",
+          "description": "The material’s DOI, if one has been assigned."
+        },
+        "educational_level": {
+          "label": "Educational level",
+          "description": "The expected learner level, such as beginner, intermediate or graduate. Who the material serves belongs in target audiences."
+        },
+        "homepage": {
+          "label": "Homepage URL",
+          "description": "A broader site about the material, if one exists. The direct link learners open belongs in the material URL field."
+        },
+        "id": {
+          "label": "ID",
+          "description": "Unique identifier assigned automatically when the training material record is created. The material’s DOI goes in its own field."
+        },
+        "image": {
+          "label": "Image",
+          "description": "A cover or representative image for the material. Leave empty if none is available."
+        },
+        "in_languages": {
+          "label": "Content languages",
+          "description": "The languages in which the material is fully available — not languages used only in captions or examples."
+        },
+        "learning_outcomes": {
+          "label": "Learning outcomes",
+          "description": "The knowledge or skills a learner should gain by completing the material, one entry per outcome."
+        },
+        "license": {
+          "label": "License",
+          "description": "The license under which the material is released. Leave empty only if genuinely unknown."
+        },
+        "material_url": {
+          "label": "Material URL",
+          "description": "The direct link learners open to access the material. Use the homepage field for a broader site about it."
+        },
+        "media_type": {
+          "label": "Media type",
+          "description": "The technical format of the material, preferably a standard media type such as text/html, application/pdf or video/mp4."
+        },
+        "name": {
+          "label": "Name",
+          "description": "The title of the material, in one or more languages."
+        },
+        "part_of_training_material": {
+          "label": "Part of training material (ID)",
+          "description": "The larger training material this resource is a module or lesson of."
+        },
+        "prerequisites": {
+          "label": "Prerequisites",
+          "description": "Knowledge, skills, software or prior material learners should have before starting. Leave empty when none apply."
+        },
+        "publisher": {
+          "label": "Publisher (ID)",
+          "description": "The organization that formally publishes the material, if different from its creators."
+        },
+        "related_datasets": {
+          "label": "Related datasets (IDs)",
+          "description": "Datasets used as the subject or worked example of the material."
+        },
+        "related_services": {
+          "label": "Related services (IDs)",
+          "description": "Services the material explains how to access or use."
+        },
+        "related_tools": {
+          "label": "Related tools (IDs)",
+          "description": "Tools the material teaches or demonstrates — not software merely used to produce it."
+        },
+        "same_as": {
+          "label": "Same as (external URIs)",
+          "description": "Links to records about this material in other systems, such as a training catalog. Its own pages belong in the homepage or material URL fields."
+        },
+        "tags": {
+          "label": "Tags",
+          "description": "Keywords describing the material’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
+        },
+        "target_audiences": {
+          "label": "Target audiences",
+          "description": "The intended learner groups, such as researchers, librarians or students."
+        },
+        "training_material_type": {
+          "label": "Training material type",
+          "description": "How learners engage with the material, not its file format."
+        },
+        "type": {
+          "label": "Type",
+          "description": "Identifies this record as training material."
+        }
+      },
+      "Affiliation": {
+        "$self": {
+          "label": "Affiliation",
+          "description": "A person’s employment or membership at an organization, independent of any project."
+        },
+        "affiliation_role": {
+          "label": "Role",
+          "description": "The person’s position at the organization — their job or status, not their project role."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the affiliation ended. Leave empty if it is still ongoing."
+        },
+        "organization": {
+          "label": "Organization (ID)",
+          "description": "The organization the person is affiliated with."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the affiliation began."
+        }
+      },
+      "Authorship": {
+        "$self": {
+          "label": "Authorship",
+          "description": "A person’s contribution to the publication, one entry per author."
+        },
+        "author": {
+          "label": "Person (ID)",
+          "description": "The person who contributed to the publication."
+        },
+        "author_order": {
+          "label": "Author order",
+          "description": "Position in the byline; 1 is the first author."
+        },
+        "authorship_role": {
+          "label": "Authorship role",
+          "description": "The kind of contribution. Author is the default for byline authors; use editor or translator for edited volumes and translations."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the contribution to the publication ended, if relevant."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the contribution to the publication began, if relevant."
+        }
+      },
+      "EventAgentRole": {
+        "$self": {
+          "label": "Event agent",
+          "description": "A person or organization involved in the event in a specific capacity."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the involvement in the event ended. Only needed when it covers part of a multi-day event."
+        },
+        "event_agent": {
+          "label": "Person or organization",
+          "description": "The person or organization involved in the event."
+        },
+        "event_agent_role": {
+          "label": "Event role",
+          "description": "The capacity of the involvement, such as organizer, host, speaker or sponsor. Add a separate entry for each role."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the involvement in the event began. Only needed when it covers part of a multi-day event."
+        }
+      },
+      "FacilityAffiliation": {
+        "$self": {
+          "label": "Facility affiliation",
+          "description": "The facility’s relationship with a hosting or owning organization."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the organization’s relationship with the facility ended. Leave empty if it is still ongoing."
+        },
+        "facility_affiliation_role": {
+          "label": "Facility affiliation role",
+          "description": "Whether the organization hosts the facility or owns it. Add separate entries when different organizations fill those roles."
+        },
+        "organization": {
+          "label": "Organization (ID)",
+          "description": "The organization that hosts or owns the facility."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the organization’s relationship with the facility began."
+        }
+      },
+      "Funding": {
+        "$self": {
+          "label": "Funding",
+          "description": "A distinct funding award received by the project."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the funding period ended. Leave empty if it is still ongoing."
+        },
+        "funding_amount": {
+          "label": "Funding amount (ILS)",
+          "description": "The amount awarded, if public. Leave empty rather than guess."
+        },
+        "funding_organization": {
+          "label": "Funding organization (ID)",
+          "description": "The organization that provides the award."
+        },
+        "funding_program": {
+          "label": "Funding programme",
+          "description": "The broader funding programme or scheme under which the award was made."
+        },
+        "funding_url": {
+          "label": "Funding award URL",
+          "description": "A public page for this specific award, if one exists."
+        },
+        "grant_name": {
+          "label": "Grant name",
+          "description": "The official title of the grant or award — not the broader programme, which belongs in the funding programme field."
+        },
+        "grant_number": {
+          "label": "Grant number",
+          "description": "The identifier assigned by the funding organization, exactly as published."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the funding period began."
+        }
+      },
+      "OrganizationHierarchy": {
+        "$self": {
+          "label": "Organization hierarchy",
+          "description": "Formal containment of this organization within a larger parent organization."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the organization stopped being part of its parent. Leave empty if it still is."
+        },
+        "parent_organization": {
+          "label": "Parent organization (ID)",
+          "description": "The larger organization this organization is part of."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the organization became part of its parent."
+        }
+      },
+      "OrganizationProjectRole": {
+        "$self": {
+          "label": "Organization role",
+          "description": "An organization’s engagement in the project."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the organization’s involvement in the project ended. Leave empty if it is still ongoing."
+        },
+        "org_project_role": {
+          "label": "Organization role",
+          "description": "The organization’s function in the project: coordinator, partner, data provider, funder or host. Add one entry per role."
+        },
+        "organization": {
+          "label": "Organization (ID)",
+          "description": "The organization engaged in the project."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the organization’s involvement in the project began."
+        }
+      },
+      "ProjectParticipation": {
+        "$self": {
+          "label": "Project participation",
+          "description": "A person’s participation in the project."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the person’s participation in the project ended. Leave empty if it is still ongoing."
+        },
+        "participant": {
+          "label": "Person (ID)",
+          "description": "The person taking part in the project."
+        },
+        "participation_role": {
+          "label": "Participation role",
+          "description": "The person’s function in the project team, such as principal investigator, developer, researcher or student. If the role changed over time, add one entry per role with dates."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the person’s participation in the project began."
+        }
+      },
+      "ResourceContribution": {
+        "$self": {
+          "label": "Resource contribution",
+          "description": "A person or organization contributing to this resource in a defined capacity."
+        },
+        "contributor": {
+          "label": "Contributor",
+          "description": "The person or organization contributing to this resource."
+        },
+        "end_date": {
+          "label": "End date",
+          "description": "When the contributor’s responsibility for the resource ended. Leave empty if it is still ongoing."
+        },
+        "resource_contribution_role": {
+          "label": "Contribution role",
+          "description": "The contributor’s responsibility, such as creation, development, maintenance or data curation. Add separate entries for distinct responsibilities."
+        },
+        "start_date": {
+          "label": "Start date",
+          "description": "When the contributor’s responsibility for the resource began."
+        }
+      }
+    },
     "detail": {
       "id": "ID",
       "type": "Type",
