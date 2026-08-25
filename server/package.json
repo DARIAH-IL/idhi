@@ -8,7 +8,7 @@
     "deploy": "pnpm run build && wrangler deploy",
     "secrets:sync": "wrangler secret bulk .dev.vars",
     "lint": "eslint",
-    "format": "prettier --write . && eslint --fix",
+    "format": "prettier --write .",
     "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs"
   },
   "dependencies": {

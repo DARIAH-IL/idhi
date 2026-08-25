@@ -10,7 +10,7 @@
     "generate-routes": "tsr generate",
     "build": "orval && node scripts/generate-term-uris.mjs && tsc && vite build",
     "lint": "eslint",
-    "format": "prettier --write . && eslint --fix",
+    "format": "prettier --write .",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
   "dependencies": {
