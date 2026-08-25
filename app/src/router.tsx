@@ -1,7 +1,8 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { QueryClient } from '@tanstack/react-query'
 import { routeTree } from './routeTree.gen'
-import { RouteError, RoutePending } from './components/RouteFeedback'
+import { RouteError } from './components/router/RouteError.tsx'
+import { RoutePending } from '#/components/router/RoutePending.tsx'
 
 export function getRouter() {
   const queryClient = new QueryClient({

@@ -38,11 +38,11 @@ import {
   DEFAULT_SORT,
   DEFAULT_FACETS,
   getInfiniteEntityQueryOptions,
-} from '../../../components/entityBoardSearch.ts'
+} from '../../../api/entityBoardSearch.ts'
 import type {
   FacetFilters,
   EntitySort,
-} from '../../../components/entityBoardSearch.ts'
+} from '../../../api/entityBoardSearch.ts'
 import { SortableColumnLabel } from '../../../components/facets/SortableColumnLabel.tsx'
 import { FacetPanel } from '../../../components/facets/FacetPanel.tsx'
 

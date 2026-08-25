@@ -5,8 +5,11 @@ import { ENTITY_TYPES, getEntityTypeLabel } from '#/lib/entity.ts'
 import { Button } from '#/components/ui/button.tsx'
 import { InputGroup, InputGroupInput } from '#/components/ui/input-group.tsx'
 import { FacetCheckbox } from './FacetCheckbox.tsx'
-import { DEFAULT_FACETS, FACET_VISIBLE_LIMIT } from '../entityBoardSearch.ts'
-import type { FacetFilters } from '../entityBoardSearch.ts'
+import {
+  DEFAULT_FACETS,
+  FACET_VISIBLE_LIMIT,
+} from '../../api/entityBoardSearch.ts'
+import type { FacetFilters } from '../../api/entityBoardSearch.ts'
 
 interface FacetPanelProps {
   facets: SearchEntities200Facets

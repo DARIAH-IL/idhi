@@ -1,6 +1,6 @@
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowDown01Icon, ArrowUp01Icon } from '@hugeicons/core-free-icons'
-import type { EntitySort } from '../entityBoardSearch.ts'
+import type { EntitySort } from '../../api/entityBoardSearch.ts'
 
 export function SortableColumnLabel({
   label,
