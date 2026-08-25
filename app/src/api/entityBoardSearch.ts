@@ -45,6 +45,8 @@ export const entityBoardSearchSchema = z.object({
   sort: sortSchema.optional(),
 })
 
+export type EntityBoardSearch = z.infer<typeof entityBoardSearchSchema>
+
 export function buildFacetFilter(facetFilters: FacetFilters | undefined) {
   const clauses: EntityFilter[] = []
 
