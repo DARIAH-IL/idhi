@@ -39,6 +39,7 @@ import {
   DEFAULT_FACETS,
   getInfiniteEntityQueryOptions,
 } from '../../../api/entityBoardSearch.ts'
+import { restoreOrPersistEntityBoardSearch } from '../../../lib/entityBoardSearchStorage.ts'
 import type {
   FacetFilters,
   EntitySort,
@@ -48,6 +49,9 @@ import { FacetPanel } from '../../../components/facets/FacetPanel.tsx'
 
 export const Route = createFileRoute('/_app/entities/')({
   validateSearch: entityBoardSearchSchema,
+  beforeLoad: ({ search, cause }) => {
+    restoreOrPersistEntityBoardSearch({ search, cause })
+  },
   loaderDeps: ({ search: { q, facetFilters, sort } }) => ({
     q,
     facetFilters,
