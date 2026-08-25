@@ -357,7 +357,7 @@ function EntityBoard() {
                   {results.length === 0 ? (
                     <TableRow id="empty-state" className="hover:bg-transparent">
                       <TableCell
-                        colSpan={3}
+                        colSpan={4}
                         className="h-24 text-center text-sm text-muted-foreground"
                       >
                         {t(
