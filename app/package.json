@@ -6,9 +6,9 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "orval && vite dev",
+    "dev": "orval && node scripts/generate-term-uris.mjs && vite dev",
     "generate-routes": "tsr generate",
-    "build": "orval && tsc && vite build",
+    "build": "orval && node scripts/generate-term-uris.mjs && tsc && vite build",
     "lint": "eslint",
     "format": "prettier --write . && eslint --fix",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"

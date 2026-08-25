@@ -18,16 +18,7 @@ import type {
   SortDirection,
 } from '#/api/models'
 import type { ErrorType } from '#/api/client.ts'
-
-type Primitive = string | number | boolean | null | undefined
-
-type FieldPaths<T> = T extends Primitive
-  ? never
-  : T extends readonly (infer Item)[]
-    ? FieldPaths<Item>
-    : {
-        [K in keyof T & string]: K | `${K}.${FieldPaths<NonNullable<T[K]>>}`
-      }[keyof T & string]
+import type { FieldPaths } from '#/lib/fieldPaths.ts'
 
 export type EntityField = FieldPaths<AuditedEntity>
 

@@ -3,6 +3,28 @@
 import { tanstackConfig } from '@tanstack/eslint-config'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 
+const untypedEntitySearchPatterns = [
+  {
+    group: ['**/api/hooks/entities/entities*'],
+    importNames: [
+      'searchEntities',
+      'useSearchEntities',
+      'getSearchEntitiesQueryOptions',
+      'getSearchEntitiesQueryKey',
+    ],
+    message:
+      'Use the type-safe wrappers from #/api/typedEntitySearch.ts so search fields are validated against Entity.',
+  },
+  {
+    group: ['**/api/models', '**/api/models/**'],
+    importNames: ['EntitySearch', 'Filter', 'FilterableField', 'SortCriterion'],
+    message:
+      'Use TypedEntitySearch, EntityFilter, EntityField and EntitySortCriterion from #/api/typedEntitySearch.ts so search fields are validated against Entity.',
+  },
+]
+
+const restrictedImportPatterns = [...untypedEntitySearchPatterns]
+
 export default [
   ...tanstackConfig,
   {
@@ -10,6 +32,7 @@ export default [
     ...jsxA11y.flatConfigs.recommended,
   },
   {
+    files: ['**/*.{js,ts,tsx}'],
     rules: {
       'import/no-cycle': 'off',
       'import/order': 'off',
@@ -27,32 +50,7 @@ export default [
       curly: ['error', 'all'],
       'no-restricted-imports': [
         'error',
-        {
-          patterns: [
-            {
-              group: ['**/api/hooks/entities/entities*'],
-              importNames: [
-                'searchEntities',
-                'useSearchEntities',
-                'getSearchEntitiesQueryOptions',
-                'getSearchEntitiesQueryKey',
-              ],
-              message:
-                'Use the type-safe wrappers from #/api/typedEntitySearch.ts so search fields are validated against Entity.',
-            },
-            {
-              group: ['**/api/models', '**/api/models/**'],
-              importNames: [
-                'EntitySearch',
-                'Filter',
-                'FilterableField',
-                'SortCriterion',
-              ],
-              message:
-                'Use TypedEntitySearch, EntityFilter, EntityField and EntitySortCriterion from #/api/typedEntitySearch.ts so search fields are validated against Entity.',
-            },
-          ],
-        },
+        { patterns: restrictedImportPatterns },
       ],
       'no-restricted-syntax': [
         'error',
@@ -84,13 +82,16 @@ export default [
     },
   },
   {
-    files: [
-      'src/api/typedEntitySearch.ts',
-      'src/api/hooks/**',
-      'src/api/models/**',
-    ],
+    files: ['src/api/typedEntitySearch.ts'],
     rules: {
-      'no-restricted-imports': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: restrictedImportPatterns.filter(
+            (pattern) => !untypedEntitySearchPatterns.includes(pattern),
+          ),
+        },
+      ],
     },
   },
   {
