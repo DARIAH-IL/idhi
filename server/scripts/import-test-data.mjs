@@ -88,8 +88,18 @@ export const entities = [
       'FUNDER',
       'NON_PROFIT',
     ][index],
-    parent_organization: index === 0 ? null : organizationIds[0],
+    organization_hierarchy:
+      index === 0
+        ? null
+        : [
+            {
+              parent_organization: organizationIds[0],
+              start_date: `202${index}-01-01`,
+            },
+          ],
     location: localized('Jerusalem', index),
+    address: localized('1 Mock Street', index),
+    ror: `https://ror.org/0${String(index + 1).padStart(6, '0')}42`,
     contact_email: `organization${index + 1}@example.test`,
     homepage: `https://example.test/organizations/${index + 1}`,
     image: image(index),
@@ -103,29 +113,12 @@ export const entities = [
     family_name: localized('Researcher', index),
     description: localized('A researcher created for local testing', index),
     emails: [`researcher${index + 1}@example.test`],
+    orcid: `https://orcid.org/0000-000${(index % 9) + 1}-0000-000${index}`,
     affiliations: [
       {
-        member: id,
         organization: related(organizationIds, index),
         affiliation_role: index === 0 ? 'PROFESSOR' : 'MEMBER',
         start_date: `202${index}-01-01`,
-      },
-    ],
-    project_participations: [
-      {
-        participant: id,
-        project: related(projectIds, index),
-        participation_role:
-          index === 0 ? 'PRINCIPAL_INVESTIGATOR' : 'RESEARCHER',
-        start_date: `202${index}-02-01`,
-      },
-    ],
-    authorships: [
-      {
-        author: id,
-        publication: related(publicationIds, index),
-        author_order: 1,
-        authorship_role: 'AUTHOR',
       },
     ],
     homepage: `https://example.test/people/${index + 1}`,
@@ -144,6 +137,14 @@ export const entities = [
     ],
     license: index % 2 === 0 ? 'MIT' : 'GPL_3_0',
     programming_language: index % 2 === 0 ? 'TypeScript' : 'Python',
+    resource_contributions: [
+      {
+        contributor: related(personIds, index),
+        resource_contribution_role: index === 0 ? 'CREATOR' : 'DEVELOPER',
+        start_date: `202${index}-03-01`,
+      },
+    ],
+    doi: `https://doi.org/10.5555/mock.tool.${index + 1}`,
     code_repository: `https://example.test/tools/${index + 1}/source`,
     documentation_url: `https://example.test/tools/${index + 1}/docs`,
     homepage: `https://example.test/tools/${index + 1}`,
@@ -178,8 +179,8 @@ export const entities = [
     description: localized('A facility created for local testing', index),
     facility_affiliations: [
       {
-        facility: id,
         organization: related(organizationIds, index),
+        facility_affiliation_role: index % 2 === 0 ? 'HOST' : 'OWNER',
         start_date: `202${index}-01-01`,
       },
     ],
@@ -209,6 +210,16 @@ export const entities = [
     ][index],
     start_date: `2025-0${index + 1}-10`,
     end_date: `2025-0${index + 1}-11`,
+    event_agent_roles: [
+      {
+        event_agent: related(personIds, index),
+        event_agent_role: index === 0 ? 'ORGANIZER' : 'SPEAKER',
+      },
+      {
+        event_agent: related(organizationIds, index),
+        event_agent_role: 'HOST',
+      },
+    ],
     location: localized('Tel Aviv', index),
     address: localized('10 Example Avenue', index),
     homepage: `https://example.test/events/${index + 1}`,
@@ -224,12 +235,12 @@ export const entities = [
     authorships: [
       {
         author: related(personIds, index),
-        publication: id,
         author_order: 1,
         authorship_role: 'AUTHOR',
       },
     ],
     presented_at: [related(eventIds, index)],
+    published_in: localized('Mock DH Journal', index),
     publisher: related(organizationIds, index),
     date_issued: `202${index}-06-01`,
     doi: `https://doi.org/10.5555/mock.${index + 1}`,
@@ -242,14 +253,34 @@ export const entities = [
     type: 'idhi:Dataset',
     name: localized('Mock Research Dataset', index),
     description: localized('A dataset created for local testing', index),
+    dataset_type: [
+      'METADATA_CATALOG',
+      'CORPUS',
+      'DIGITAL_EDITION',
+      'IMAGE_COLLECTION',
+      'DATABASE',
+    ][index],
     themes: localized(
       index % 2 === 0 ? 'Cultural heritage' : 'Historical texts',
       index,
     ),
     datasets: index === 0 ? datasetIds.slice(1) : null,
+    derived_from: index === 0 ? null : [datasetIds[index - 1]],
+    related_publications: [related(publicationIds, index)],
+    resource_contributions: [
+      {
+        contributor: related(personIds, index),
+        resource_contribution_role: 'DATA_CURATOR',
+        start_date: `202${index}-04-01`,
+      },
+    ],
     publisher: related(organizationIds, index),
     license: index % 2 === 0 ? 'CC_BY_4_0' : 'CC0_1_0',
     date_issued: `202${index}-07-01`,
+    in_languages: ['en', 'he'],
+    media_type: index % 2 === 0 ? ['text/csv'] : ['application/json'],
+    byte_size: 1024 * (index + 1),
+    extent: [`${100 * (index + 1)} records`],
     distribution_url: `https://example.test/datasets/${index + 1}/download`,
     homepage: `https://example.test/datasets/${index + 1}`,
     image: image(index + 1),
@@ -298,7 +329,6 @@ export const entities = [
     organization_roles: [
       {
         organization: related(organizationIds, index),
-        project: id,
         org_project_role: 'COORDINATOR',
         start_date: `202${index}-01-01`,
       },
@@ -306,7 +336,6 @@ export const entities = [
     project_participations: [
       {
         participant: related(personIds, index),
-        project: id,
         participation_role:
           index === 0 ? 'PRINCIPAL_INVESTIGATOR' : 'RESEARCHER',
         start_date: `202${index}-02-01`,
@@ -316,12 +345,26 @@ export const entities = [
       {
         funding_organization: related(organizationIds, index + 1),
         funding_amount: 100000 + index * 25000,
+        grant_name: localized('Mock Grant', index),
+        funding_program: localized('Mock Funding Program', index),
+        grant_number: `GRANT-202${index}-${index + 1}`,
+        start_date: `202${index}-01-01`,
       },
     ],
+    funding_status: [
+      'ACTIVE_GRANT_FUNDING',
+      'INSTITUTIONALLY_SUSTAINED',
+      'IN_KIND_ONLY',
+      'VOLUNTEER_RUN',
+      'UNFUNDED',
+    ][index],
     outputs_tools: [related(toolIds, index)],
     outputs_datasets: [related(datasetIds, index)],
     outputs_publications: [related(publicationIds, index)],
     outputs_training_materials: [related(trainingMaterialIds, index)],
+    uses_tools: [related(toolIds, index + 1)],
+    uses_datasets: [related(datasetIds, index + 1)],
+    uses_services: [related(serviceIds, index)],
     digital_humanities_activities: [
       'tadirah:contextualizing',
       'tadirah:dataVisualization',
