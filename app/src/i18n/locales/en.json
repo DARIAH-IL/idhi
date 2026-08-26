@@ -21,7 +21,37 @@
     "work_in_progress": "This site is a work in progress and is subject to change as it is reviewed and refined.",
     "add": "Add",
     "remove": "Remove",
-    "new": "New"
+    "new": "New",
+    "labels": {
+      "additional_urls": "Additional URLs",
+      "address": "Address",
+      "contact_email": "Contact email",
+      "content_languages": "Content languages",
+      "date_issued": "Date issued",
+      "description": "Description",
+      "dh_activities": "DH activities",
+      "documentation_url": "Documentation URL",
+      "doi": "DOI",
+      "end_date": "End date",
+      "funding": "Funding",
+      "homepage_url": "Homepage URL",
+      "id": "ID",
+      "image": "Image",
+      "license": "License",
+      "location": "Location",
+      "media_type": "Media type",
+      "name": "Name",
+      "organization": "Organization",
+      "organization_hierarchy": "Organization hierarchy",
+      "organization_role": "Organization role",
+      "person": "Person",
+      "publisher": "Publisher",
+      "resource_contributions": "Resource contributions",
+      "same_as": "Same as",
+      "start_date": "Start date",
+      "tags": "Tags",
+      "type": "Type"
+    }
   },
   "api": {
     "errors": {
@@ -239,6 +269,7 @@
       "DIGITIZATION_SERVICE": "Digitization service",
       "EDITOR": "Editor",
       "EMPLOYEE": "Employee",
+      "EUR": "€ (EUR)",
       "EXHIBITION": "Exhibition",
       "FUNDER": "Funder",
       "GAZETTEER": "Gazetteer",
@@ -246,6 +277,7 @@
       "GPL_3_0": "GPL 3.0",
       "HACKATHON": "Hackathon",
       "HOST": "Host",
+      "ILS": "₪ (ILS)",
       "IMAGE_COLLECTION": "Image collection",
       "INFORMAL_GROUP": "Informal group",
       "INSTITUTIONALLY_SUSTAINED": "Institutionally sustained",
@@ -279,6 +311,7 @@
       "TRANSLATOR": "Translator",
       "TUTORIAL": "Tutorial",
       "UNFUNDED": "Unfunded",
+      "USD": "$ (USD)",
       "VOLUNTEER_RUN": "Volunteer-run",
       "WEB_APPLICATION": "Web application",
       "WORKSHOP": "Workshop",
@@ -565,7 +598,7 @@
     "fields": {
       "Person": {
         "$self": {
-          "label": "Person",
+          "label": "$t(common.labels.person)",
           "description": "A person active in digital humanities: researcher, developer, librarian, student and so on."
         },
         "affiliations": {
@@ -573,7 +606,7 @@
           "description": "The organizations the person is employed by or a formal member of, with role and dates. Not for project involvement."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short introduction to the person - their work and interests - aimed at index visitors, in one or more languages."
         },
         "emails": {
@@ -589,15 +622,15 @@
           "description": "The person’s first name, in one or more languages. Use together with the family name; not for a full name."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The person’s own website or public profile page, if one exists."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the person record is created. The person’s ORCID goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A portrait or avatar of the person. Leave empty if none is available."
         },
         "orcid": {
@@ -605,53 +638,53 @@
           "description": "The person’s ORCID identifier. Strongly recommended for researchers - it helps link and deduplicate records."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this person in other systems, such as Wikidata or VIAF. The person’s own website belongs in the homepage field."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the person’s expertise and interests, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a person."
         }
       },
       "Organization": {
         "$self": {
-          "label": "Organization",
+          "label": "$t(common.labels.organization)",
           "description": "An organization of any kind - university, GLAM institution, research center, funder, company or non-profit."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the organization beyond its website, such as a blog, social-media profile or registry entry."
         },
         "address": {
-          "label": "Address",
+          "label": "$t(common.labels.address)",
           "description": "The organization’s postal address, in one or more languages."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the organization, such as an office or department mailbox."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of the organization and its activities, aimed at index visitors, in one or more languages."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The organization’s official website."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the organization record is created. The organization’s ROR identifier goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "The organization’s logo or a representative image. Leave empty if none is available."
         },
         "location": {
-          "label": "Location",
+          "label": "$t(common.labels.location)",
           "description": "The place where the organization is based, such as a city."
         },
         "marketplace_sync": {
@@ -659,11 +692,11 @@
           "description": "Allow this organization and its related services and tools to be synchronized with the DARIAH SSH Open Marketplace."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The organization’s name, in one or more languages. Prefer the official localized name."
         },
         "organization_hierarchy": {
-          "label": "Organization hierarchy",
+          "label": "$t(common.labels.organization_hierarchy)",
           "description": "The parent organizations this organization is formally part of, with optional dates. Only for formal containment, such as a department within a university - not for partnerships or informal association."
         },
         "organization_type": {
@@ -675,15 +708,15 @@
           "description": "The organization’s ROR registry identifier. Record it whenever the organization is registered in ROR - most universities and research institutes are."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this organization in other systems, such as Wikidata. The organization’s own website belongs in the homepage field."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the organization’s activities and focus, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as an organization."
         }
       },
@@ -693,19 +726,19 @@
           "description": "A physical or virtual facility such as a DH lab, digitization studio or research infrastructure. Use a facility when it has its own identity distinct from its host organization."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the facility, such as a blog, social-media profile or press coverage."
         },
         "address": {
-          "label": "Address",
+          "label": "$t(common.labels.address)",
           "description": "The facility’s postal address, in one or more languages."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the facility, such as a lab or service-desk mailbox."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of the facility and what it offers researchers, aimed at index visitors, in one or more languages."
         },
         "facility_affiliations": {
@@ -713,27 +746,27 @@
           "description": "The organizations that host or own this facility, with role and optional dates."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The facility’s own web page, if one exists."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the facility record is created."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A photo or logo of the facility. Leave empty if none is available."
         },
         "location": {
-          "label": "Location",
+          "label": "$t(common.labels.location)",
           "description": "The place where the facility is situated, such as a city."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The facility’s name, in one or more languages."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this facility in other systems. The facility’s own web page belongs in the homepage field."
         },
         "services_offered": {
@@ -741,7 +774,7 @@
           "description": "Services this facility offers to researchers."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the facility’s equipment, expertise and focus, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "tools_provided": {
@@ -749,7 +782,7 @@
           "description": "Tools this facility maintains or gives access to, such as hosted instances and lab-maintained software - not every tool staff members happen to use."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a facility."
         }
       },
@@ -759,27 +792,27 @@
           "description": "A digital humanities research project - the central entity of the index, connecting people, organizations, outputs and the periods and places studied."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the project, such as a blog, social-media profile or press coverage."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the project team."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short overview of the project - its goals, methods and outcomes - aimed at index visitors, in one or more languages."
         },
         "digital_humanities_activities": {
-          "label": "DH activities",
+          "label": "$t(common.labels.dh_activities)",
           "description": "The digital-humanities research activities practiced in the project. Pick the most specific options that apply; multiple values are expected."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the project ended. Leave empty for ongoing projects."
         },
         "funding": {
-          "label": "Funding",
+          "label": "$t(common.labels.funding)",
           "description": "Funding awards received by the project, one entry per distinct award."
         },
         "funding_status": {
@@ -787,19 +820,19 @@
           "description": "The project’s current funding or sustainability status. Update it when circumstances change; past awards are kept in the funding entries."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The project’s website, if one exists."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the project record is created."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A logo or representative image for the project. Leave empty if none is available."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The project’s name, in one or more languages. Prefer names supplied by the project team over ad-hoc translations."
         },
         "organization_roles": {
@@ -831,11 +864,11 @@
           "description": "The humanities disciplines of the project, such as history, linguistics or archaeology."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this project in other systems, such as a funder’s project registry. The project’s own website belongs in the homepage field."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the project started."
         },
         "studied_periods": {
@@ -847,11 +880,11 @@
           "description": "The geographic focus of the research - the places studied, not where the team is based."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the project’s topics and methods, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a project."
         },
         "uses_datasets": {
@@ -873,7 +906,7 @@
           "description": "A reusable software tool that others can install, run or call. For an offering delivered by people, use a service instead."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the tool, such as a blog post, tutorial or registry entry."
         },
         "code_repository": {
@@ -881,43 +914,43 @@
           "description": "The source-code repository URL, such as GitHub or GitLab, if open."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the tool’s maintainers."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of what the tool does and who it is for, aimed at index visitors, in one or more languages."
         },
         "digital_humanities_activities": {
-          "label": "DH activities",
+          "label": "$t(common.labels.dh_activities)",
           "description": "The digital-humanities research activities the tool supports. Pick the most specific options that apply; multiple values are expected."
         },
         "documentation_url": {
-          "label": "Documentation URL",
+          "label": "$t(common.labels.documentation_url)",
           "description": "User or developer documentation for the tool, such as a manual, wiki or API reference."
         },
         "doi": {
-          "label": "DOI",
+          "label": "$t(common.labels.doi)",
           "description": "The tool’s DOI, if one has been assigned - for example through a software deposit."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The tool’s main public page - its website or landing page."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the tool record is created. The tool’s DOI goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A logo or screenshot of the tool. Leave empty if none is available."
         },
         "license": {
-          "label": "License",
+          "label": "$t(common.labels.license)",
           "description": "The license under which the tool is released. Leave empty only if genuinely unknown."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The tool’s name, in one or more languages. Use localized names supplied by its team rather than translating a branded name."
         },
         "programming_language": {
@@ -925,15 +958,15 @@
           "description": "The main implementation language, such as Python. Not for natural languages the tool supports."
         },
         "resource_contributions": {
-          "label": "Resource contributions",
+          "label": "$t(common.labels.resource_contributions)",
           "description": "The people and organizations that created, developed or maintain this tool, with role and optional dates."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this tool in other systems, such as Wikidata or the SSH Open Marketplace. The tool’s own pages belong in the homepage or documentation fields."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing what the tool does, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "tool_type": {
@@ -941,7 +974,7 @@
           "description": "How users primarily consume the tool: web app, library, command line and so on."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a tool."
         }
       },
@@ -951,39 +984,39 @@
           "description": "A service delivered by people at a facility or organization, such as digitization on demand or data curation support. For self-service software, use a tool instead."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the service, such as pricing, terms of use or a blog post."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for requesting or asking about the service."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of what the service provides and who can use it, aimed at index visitors, in one or more languages."
         },
         "digital_humanities_activities": {
-          "label": "DH activities",
+          "label": "$t(common.labels.dh_activities)",
           "description": "The digital-humanities research activities the service supports. Pick the most specific options that apply; multiple values are expected."
         },
         "documentation_url": {
-          "label": "Documentation URL",
+          "label": "$t(common.labels.documentation_url)",
           "description": "User documentation for the service, such as a manual or how-to guide."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The service’s public page, if one exists."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the service record is created."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A logo or representative image for the service. Leave empty if none is available."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The service’s name, in one or more languages. Use localized names supplied by its provider rather than translating a branded name."
         },
         "provider": {
@@ -991,7 +1024,7 @@
           "description": "The organization responsible for delivering the service - the one you would contact or contract with."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this service in other systems, such as the SSH Open Marketplace. The service’s own page belongs in the homepage field."
         },
         "service_type": {
@@ -999,11 +1032,11 @@
           "description": "The kind of service offered, such as digitization or consulting."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing what the service provides, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a service."
         }
       },
@@ -1017,31 +1050,31 @@
           "description": "The people who contributed to the publication, with their byline order and role."
         },
         "date_issued": {
-          "label": "Date issued",
+          "label": "$t(common.labels.date_issued)",
           "description": "The publication date. If only the year is known, use January 1 of that year."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short summary or abstract of the publication, aimed at index visitors, in one or more languages."
         },
         "doi": {
-          "label": "DOI",
+          "label": "$t(common.labels.doi)",
           "description": "The publication’s DOI. Record it whenever one exists."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The publication’s landing page, such as its page on the publisher’s site."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the publication record is created. The publication’s DOI goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A cover or representative image for the publication. Leave empty if none is available."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The title of the publication, in one or more languages."
         },
         "part_of": {
@@ -1061,19 +1094,19 @@
           "description": "The name of the journal, book or proceedings the publication appeared in."
         },
         "publisher": {
-          "label": "Publisher",
+          "label": "$t(common.labels.publisher)",
           "description": "The organization that formally published it."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this publication in other systems, such as a library catalog or Wikidata. Its landing page belongs in the homepage field."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the publication’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a publication."
         }
       },
@@ -1083,23 +1116,23 @@
           "description": "A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. For a recurring series, create one record per occurrence."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the event, such as a programme, registration page or recordings."
         },
         "address": {
-          "label": "Address",
+          "label": "$t(common.labels.address)",
           "description": "The postal address of the venue, in one or more languages."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the event’s organizers."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of the event - its theme and programme - aimed at index visitors, in one or more languages."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the event ends."
         },
         "event_agent_roles": {
@@ -1111,39 +1144,39 @@
           "description": "The kind of scholarly event."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The event’s website or announcement page, if one exists."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the event record is created."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A poster, banner or photo for the event. Leave empty if none is available."
         },
         "location": {
-          "label": "Location",
+          "label": "$t(common.labels.location)",
           "description": "The place where the event takes place, such as a city."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The name of the event, in one or more languages."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this event in other systems, such as a conference index. The event’s own page belongs in the homepage field."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the event begins."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the event’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as an event."
         }
       },
@@ -1165,7 +1198,7 @@
           "description": "Datasets aggregated by this record when it functions as a catalog."
         },
         "date_issued": {
-          "label": "Date issued",
+          "label": "$t(common.labels.date_issued)",
           "description": "The date the dataset was published. If only the year is known, use January 1 of that year."
         },
         "derived_from": {
@@ -1173,7 +1206,7 @@
           "description": "The source datasets this dataset was cleaned, transformed, subsetted or otherwise derived from."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of the dataset’s contents, scope and origin, aimed at index visitors, in one or more languages."
         },
         "distribution_url": {
@@ -1181,7 +1214,7 @@
           "description": "A direct download or access URL for the dataset."
         },
         "doi": {
-          "label": "DOI",
+          "label": "$t(common.labels.doi)",
           "description": "The dataset’s DOI. Record it whenever one exists."
         },
         "extent": {
@@ -1189,35 +1222,35 @@
           "description": "Size statements such as record, item, image or file counts - one concise statement per measure, including its unit."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "The dataset’s landing page, such as its page in a repository. A direct download link belongs in the distribution URL field."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the dataset record is created. The dataset’s DOI goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A representative image for the dataset, such as a sample item or logo. Leave empty if none is available."
         },
         "in_languages": {
-          "label": "Content languages",
+          "label": "$t(common.labels.content_languages)",
           "description": "The languages substantially represented in the data itself, not in its documentation."
         },
         "license": {
-          "label": "License",
+          "label": "$t(common.labels.license)",
           "description": "The license under which the dataset is released. Leave empty only if genuinely unknown."
         },
         "media_type": {
-          "label": "Media type",
+          "label": "$t(common.labels.media_type)",
           "description": "The technical format of the dataset, preferably a standard media type such as text/html or application/pdf. Multiple formats may be listed."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The title of the dataset, in one or more languages."
         },
         "publisher": {
-          "label": "Publisher",
+          "label": "$t(common.labels.publisher)",
           "description": "The organization that formally published the dataset."
         },
         "related_publications": {
@@ -1225,15 +1258,15 @@
           "description": "Publications that are direct companions of the dataset, such as the print counterpart of a digital edition."
         },
         "resource_contributions": {
-          "label": "Resource contributions",
+          "label": "$t(common.labels.resource_contributions)",
           "description": "The people and organizations that created, curated or maintain this dataset, with role and optional dates."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this dataset in other systems, such as a data repository or catalog. Its landing page belongs in the homepage field."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the dataset’s contents, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "themes": {
@@ -1241,7 +1274,7 @@
           "description": "Thematic keywords for the dataset, in one or more languages."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as a dataset."
         }
       },
@@ -1251,11 +1284,11 @@
           "description": "A tutorial, lesson or other teaching resource that explains how to do something or states what learners will gain from it."
         },
         "additional_urls": {
-          "label": "Additional URLs",
+          "label": "$t(common.labels.additional_urls)",
           "description": "Other relevant web pages about the material, such as a blog post or course listing."
         },
         "contact_email": {
-          "label": "Contact email",
+          "label": "$t(common.labels.contact_email)",
           "description": "A published contact address for the material’s maintainers."
         },
         "creators": {
@@ -1263,19 +1296,19 @@
           "description": "The people or organizations that created the material. Use the publisher field for the organization that formally releases it, if different."
         },
         "date_issued": {
-          "label": "Date issued",
+          "label": "$t(common.labels.date_issued)",
           "description": "The date the material was published. If only the year is known, use January 1 of that year."
         },
         "description": {
-          "label": "Description",
+          "label": "$t(common.labels.description)",
           "description": "A short description of what the material teaches and how, aimed at index visitors, in one or more languages."
         },
         "digital_humanities_activities": {
-          "label": "DH activities",
+          "label": "$t(common.labels.dh_activities)",
           "description": "The digital-humanities research activities the material teaches. Pick the most specific options that apply; multiple values are expected."
         },
         "doi": {
-          "label": "DOI",
+          "label": "$t(common.labels.doi)",
           "description": "The material’s DOI, if one has been assigned."
         },
         "educational_level": {
@@ -1283,19 +1316,19 @@
           "description": "The expected learner level, such as beginner, intermediate or graduate. Who the material serves belongs in target audiences."
         },
         "homepage": {
-          "label": "Homepage URL",
+          "label": "$t(common.labels.homepage_url)",
           "description": "A broader site about the material, if one exists. The direct link learners open belongs in the material URL field."
         },
         "id": {
-          "label": "ID",
+          "label": "$t(common.labels.id)",
           "description": "Unique identifier assigned automatically when the training material record is created. The material’s DOI goes in its own field."
         },
         "image": {
-          "label": "Image",
+          "label": "$t(common.labels.image)",
           "description": "A cover or representative image for the material. Leave empty if none is available."
         },
         "in_languages": {
-          "label": "Content languages",
+          "label": "$t(common.labels.content_languages)",
           "description": "The languages in which the material is fully available - not languages used only in captions or examples."
         },
         "learning_outcomes": {
@@ -1303,7 +1336,7 @@
           "description": "The knowledge or skills a learner should gain by completing the material, one entry per outcome."
         },
         "license": {
-          "label": "License",
+          "label": "$t(common.labels.license)",
           "description": "The license under which the material is released. Leave empty only if genuinely unknown."
         },
         "material_url": {
@@ -1311,11 +1344,11 @@
           "description": "The direct link learners open to access the material. Use the homepage field for a broader site about it."
         },
         "media_type": {
-          "label": "Media type",
+          "label": "$t(common.labels.media_type)",
           "description": "The technical format of the material, preferably a standard media type such as text/html, application/pdf or video/mp4."
         },
         "name": {
-          "label": "Name",
+          "label": "$t(common.labels.name)",
           "description": "The title of the material, in one or more languages."
         },
         "part_of_training_material": {
@@ -1327,7 +1360,7 @@
           "description": "Knowledge, skills, software or prior material learners should have before starting. Leave empty when none apply."
         },
         "publisher": {
-          "label": "Publisher",
+          "label": "$t(common.labels.publisher)",
           "description": "The organization that formally publishes the material, if different from its creators."
         },
         "related_datasets": {
@@ -1343,11 +1376,11 @@
           "description": "Tools the material teaches or demonstrates - not software merely used to produce it."
         },
         "same_as": {
-          "label": "Same as",
+          "label": "$t(common.labels.same_as)",
           "description": "Links to records about this material in other systems, such as a training catalog. Its own pages belong in the homepage or material URL fields."
         },
         "tags": {
-          "label": "Tags",
+          "label": "$t(common.labels.tags)",
           "description": "Keywords describing the material’s topics, used for search and filtering. Prefer terms from established vocabularies when possible."
         },
         "target_audiences": {
@@ -1359,7 +1392,7 @@
           "description": "How learners engage with the material, not its file format."
         },
         "type": {
-          "label": "Type",
+          "label": "$t(common.labels.type)",
           "description": "Identifies this record as training material."
         }
       },
@@ -1373,15 +1406,15 @@
           "description": "The person’s position at the organization - their job or status, not their project role."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the affiliation ended. Leave empty if it is still ongoing."
         },
         "organization": {
-          "label": "Organization",
+          "label": "$t(common.labels.organization)",
           "description": "The organization the person is affiliated with."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the affiliation began."
         }
       },
@@ -1391,7 +1424,7 @@
           "description": "A person’s contribution to the publication, one entry per author."
         },
         "author": {
-          "label": "Person",
+          "label": "$t(common.labels.person)",
           "description": "The person who contributed to the publication."
         },
         "author_order": {
@@ -1403,11 +1436,11 @@
           "description": "The kind of contribution. Author is the default for byline authors; use editor or translator for edited volumes and translations."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the contribution to the publication ended, if relevant."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the contribution to the publication began, if relevant."
         }
       },
@@ -1417,7 +1450,7 @@
           "description": "A person or organization involved in the event in a specific capacity."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the involvement in the event ended. Only needed when it covers part of a multi-day event."
         },
         "event_agent": {
@@ -1429,7 +1462,7 @@
           "description": "The capacity of the involvement, such as organizer, host, speaker or sponsor. Add a separate entry for each role."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the involvement in the event began. Only needed when it covers part of a multi-day event."
         }
       },
@@ -1439,7 +1472,7 @@
           "description": "The facility’s relationship with a hosting or owning organization."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the organization’s relationship with the facility ended. Leave empty if it is still ongoing."
         },
         "facility_affiliation_role": {
@@ -1447,26 +1480,30 @@
           "description": "Whether the organization hosts the facility or owns it. Add separate entries when different organizations fill those roles."
         },
         "organization": {
-          "label": "Organization",
+          "label": "$t(common.labels.organization)",
           "description": "The organization that hosts or owns the facility."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the organization’s relationship with the facility began."
         }
       },
       "Funding": {
         "$self": {
-          "label": "Funding",
+          "label": "$t(common.labels.funding)",
           "description": "A distinct funding award received by the project."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the funding period ended. Leave empty if it is still ongoing."
         },
         "funding_amount": {
           "label": "Funding amount",
           "description": "The amount awarded, if public. Leave empty rather than guess."
+        },
+        "funding_currency": {
+          "label": "Funding currency",
+          "description": "The currency of the funding amount, as an ISO 4217 code. Defaults to ILS when not recorded."
         },
         "funding_organization": {
           "label": "Funding organization",
@@ -1489,7 +1526,7 @@
           "description": "The identifier assigned by the funding organization, exactly as published."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the funding period began."
         }
       },
@@ -1509,11 +1546,11 @@
       },
       "OrganizationHierarchy": {
         "$self": {
-          "label": "Organization hierarchy",
+          "label": "$t(common.labels.organization_hierarchy)",
           "description": "Formal containment of this organization within a larger parent organization."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the organization stopped being part of its parent. Leave empty if it still is."
         },
         "parent_organization": {
@@ -1521,29 +1558,29 @@
           "description": "The larger organization this organization is part of."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the organization became part of its parent."
         }
       },
       "OrganizationProjectRole": {
         "$self": {
-          "label": "Organization role",
+          "label": "$t(common.labels.organization_role)",
           "description": "An organization’s engagement in the project."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the organization’s involvement in the project ended. Leave empty if it is still ongoing."
         },
         "org_project_role": {
-          "label": "Organization role",
+          "label": "$t(common.labels.organization_role)",
           "description": "The organization’s function in the project: coordinator, partner, data provider, funder or host. Add one entry per role."
         },
         "organization": {
-          "label": "Organization",
+          "label": "$t(common.labels.organization)",
           "description": "The organization engaged in the project."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the organization’s involvement in the project began."
         }
       },
@@ -1553,11 +1590,11 @@
           "description": "A person’s participation in the project."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the person’s participation in the project ended. Leave empty if it is still ongoing."
         },
         "participant": {
-          "label": "Person",
+          "label": "$t(common.labels.person)",
           "description": "The person taking part in the project."
         },
         "participation_role": {
@@ -1565,7 +1602,7 @@
           "description": "The person’s function in the project team, such as principal investigator, developer, researcher or student. If the role changed over time, add one entry per role with dates."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the person’s participation in the project began."
         }
       },
@@ -1579,7 +1616,7 @@
           "description": "The person or organization contributing to this resource."
         },
         "end_date": {
-          "label": "End date",
+          "label": "$t(common.labels.end_date)",
           "description": "When the contributor’s responsibility for the resource ended. Leave empty if it is still ongoing."
         },
         "resource_contribution_role": {
@@ -1587,7 +1624,7 @@
           "description": "The contributor’s responsibility, such as creation, development, maintenance or data curation. Add separate entries for distinct responsibilities."
         },
         "start_date": {
-          "label": "Start date",
+          "label": "$t(common.labels.start_date)",
           "description": "When the contributor’s responsibility for the resource began."
         }
       }

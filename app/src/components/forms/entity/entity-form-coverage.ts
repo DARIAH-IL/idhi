@@ -97,6 +97,7 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     end_date: 'rendered',
     'funding[].end_date': 'rendered',
     'funding[].funding_amount': 'rendered',
+    'funding[].funding_currency': 'rendered',
     'funding[].funding_organization': 'rendered',
     'funding[].funding_program[].language': 'rendered',
     'funding[].funding_program[].value': 'rendered',

@@ -120,6 +120,7 @@ export const termUris = {
     $self: 'schema:MonetaryGrant',
     end_date: 'schema:endDate',
     funding_amount: 'frapo:hasMonetaryValue',
+    funding_currency: 'schema:currency',
     funding_organization: 'schema:funder',
     funding_program: 'idhi:fundingProgram',
     funding_url: 'schema:url',
