@@ -6,7 +6,7 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "orval && node scripts/generate-term-uris.mjs && vite dev",
+    "dev": "vite dev",
     "generate-routes": "tsr generate",
     "build": "orval && node scripts/generate-term-uris.mjs && tsc && vite build",
     "lint": "eslint --fix && i18next-cli lint",
