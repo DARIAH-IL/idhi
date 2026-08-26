@@ -8,6 +8,8 @@ import {
 } from '#/components/LangStringValue.tsx'
 import { ExternalLink } from '#/components/ExternalLink.tsx'
 import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
+import { Badge } from '@/components/ui/badge'
+import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
 const URL_TERMS = new Set([
   'schema:sameAs',
@@ -17,6 +19,21 @@ const URL_TERMS = new Set([
 ])
 const ADDRESS_TERM = 'schema:address'
 const EMAIL_TERMS = new Set(['schema:email', 'foaf:mbox'])
+const PILL_FIELDS = new Set([
+  'publication_type',
+  'digital_humanities_activities',
+])
+
+function EnumPill({ field, value }: { field: string; value: string }) {
+  return (
+    <TooltipTrigger>
+      <Badge variant="secondary" className="border-gray-300">
+        {getEnumValueLabel(field, value)}
+      </Badge>
+      <Tooltip>{value}</Tooltip>
+    </TooltipTrigger>
+  )
+}
 
 function mapsUrl(location: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
@@ -55,6 +72,21 @@ export function renderEntityValue(
           items={items}
           hrefOf={term === ADDRESS_TERM ? mapsUrl : undefined}
         />
+      )
+    }
+  }
+  if (field && PILL_FIELDS.has(field)) {
+    const items = Array.isArray(v) ? v : [v]
+    const strings = items.filter(
+      (item): item is string => typeof item === 'string',
+    )
+    if (strings.length > 0) {
+      return (
+        <div className="flex flex-wrap gap-1.5">
+          {strings.map((item, i) => (
+            <EnumPill key={i} field={field} value={item} />
+          ))}
+        </div>
       )
     }
   }
@@ -126,7 +158,7 @@ export function renderEntityValue(
     )
   }
   if (typeof v === 'string') {
-    return getEnumValueLabel(v)
+    return field ? getEnumValueLabel(field, v) : v
   }
   return String(v)
 }

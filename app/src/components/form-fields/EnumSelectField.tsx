@@ -40,9 +40,9 @@ export function EnumSelectField({ label, options, required = false }: Props) {
                 <SelectItem
                   key={key}
                   id={key}
-                  textValue={getEnumValueLabel(key)}
+                  textValue={getEnumValueLabel(field.name, key)}
                 >
-                  {getEnumValueLabel(key)}
+                  {getEnumValueLabel(field.name, key)}
                 </SelectItem>
               ))}
             </SelectContent>

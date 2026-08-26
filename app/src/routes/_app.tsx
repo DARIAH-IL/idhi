@@ -1,5 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Outlet,
+  Link,
+  useNavigate,
+} from '@tanstack/react-router'
+import { TooltipTrigger } from 'react-aria-components'
+import {
+  InformationCircleIcon,
+  SparklesIcon,
+  UserIcon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/i18n'
 import { useAuthLinkStore } from '@/stores/auth-link'
@@ -8,6 +20,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Tooltip } from '@/components/ui/tooltip'
 import { JumpToTop } from '@/components/JumpToTop'
 import { LoginDialog } from '@/components/auth/LoginDialog'
 import { UserMenu } from '@/components/auth/UserMenu'
@@ -25,6 +38,7 @@ function AppLayout() {
     flow: AuthLinkFlow
   } | null>(null)
   const user = useAuthStore((s) => s.user)
+  const navigate = useNavigate()
   const language = useUIStore((s) => s.language)
   const authLinkConsumedRef = useRef(false)
   const mainRef = useRef<HTMLElement>(null)
@@ -67,13 +81,48 @@ function AppLayout() {
             {t('common.site_name')}
           </span>
         </Link>
-        {user ? (
-          <UserMenu />
-        ) : (
-          <Button variant="ghost" size="sm" onPress={() => setLoginOpen(true)}>
-            {t('common.login')}
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          <TooltipTrigger delay={0}>
+            <Button
+              variant="outline"
+              size="icon-lg"
+              className="rounded-full"
+              aria-label={t('about.title')}
+              onPress={() => void navigate({ to: '/about' })}
+            >
+              <HugeiconsIcon icon={InformationCircleIcon} strokeWidth={1.8} />
+            </Button>
+            <Tooltip>{t('about.title')}</Tooltip>
+          </TooltipTrigger>
+          <TooltipTrigger delay={0}>
+            <Button
+              variant="outline"
+              size="icon-lg"
+              className="rounded-full"
+              aria-label={t('about.ai.title')}
+              onPress={() => void navigate({ to: '/about/ai' })}
+            >
+              <HugeiconsIcon icon={SparklesIcon} strokeWidth={1.8} />
+            </Button>
+            <Tooltip>{t('about.ai.title')}</Tooltip>
+          </TooltipTrigger>
+          {user ? (
+            <UserMenu />
+          ) : (
+            <TooltipTrigger delay={0}>
+              <Button
+                variant="outline"
+                size="icon-lg"
+                className="rounded-full"
+                aria-label={t('common.login')}
+                onPress={() => setLoginOpen(true)}
+              >
+                <HugeiconsIcon icon={UserIcon} strokeWidth={1.8} />
+              </Button>
+              <Tooltip>{t('common.login')}</Tooltip>
+            </TooltipTrigger>
+          )}
+        </div>
       </header>
       <Separator />
       <div className="relative flex min-h-0 flex-1 flex-col">

@@ -55,7 +55,7 @@ export function StringArrayField({ label, placeholder, options }: Props) {
             <option
               key={option}
               value={option}
-              label={getEnumValueLabel(option)}
+              label={getEnumValueLabel(field.name, option)}
             />
           ))}
         </datalist>

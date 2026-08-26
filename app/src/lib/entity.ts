@@ -283,11 +283,17 @@ export function getEntityFieldLabelText(
   return allFields[entityClass]?.[field]?.label ?? field.replaceAll('_', ' ')
 }
 
-export function getEnumValueLabel(value: string): string {
-  const labels: Record<string, string> = i18n.t('entity.enums', {
-    returnObjects: true,
-  })
-  return labels[value] ?? value
+export function getEnumValueLabel(field: string, value: string): string {
+  const enumName =
+    field
+      .split('.')
+      .pop()
+      ?.replace(/\[\d+\]$/, '') ?? field
+  const enums: Record<string, Record<string, string> | undefined> = i18n.t(
+    'entity.enums',
+    { returnObjects: true },
+  )
+  return enums[enumName]?.[value] ?? value
 }
 
 export type EntityClassName =

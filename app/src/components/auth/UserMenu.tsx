@@ -1,8 +1,4 @@
-import {
-  Logout01Icon,
-  UserIcon,
-  UserShield01Icon,
-} from '@hugeicons/core-free-icons'
+import { Logout01Icon, UserShield01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useNavigate } from '@tanstack/react-router'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
@@ -29,8 +25,8 @@ export function UserMenu() {
         className="rounded-full"
         aria-label={t('auth.user_menu')}
       >
-        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <HugeiconsIcon icon={UserIcon} strokeWidth={1.8} />
+        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase">
+          {user.name?.charAt(0) || user.email.charAt(0)}
         </span>
       </Button>
       <Popover

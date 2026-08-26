@@ -15,7 +15,11 @@ export function EntityTags({
     <>
       {separator && <span aria-hidden>·</span>}
       {tags.sort().map((tag) => (
-        <Badge key={tag} variant="secondary" className="border-gray-300">
+        <Badge
+          key={tag}
+          variant="secondary"
+          className="bg-gray-200 border-gray-500"
+        >
           {tag}
         </Badge>
       ))}

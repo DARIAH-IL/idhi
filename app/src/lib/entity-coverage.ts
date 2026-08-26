@@ -58,20 +58,30 @@ type TermUriPairs = {
   [C in keyof Uris & string]: `${C}.${keyof Uris[C] & string}`
 }[keyof Uris & string]
 
-type EnumValues<T> =
-  Present<T> extends infer V
-    ? V extends readonly (infer Item)[]
-      ? EnumValues<Item>
-      : V extends string
-        ? string extends V
-          ? never
-          : V
-        : V extends object
-          ? { [K in keyof V]-?: EnumValues<V[K]> }[keyof V]
-          : never
+type EnumPairs<TModel> =
+  Present<TModel> extends infer Value
+    ? Value extends object
+      ? {
+          [K in keyof Value & string]-?: FieldEnumPairs<K, ElementOf<Value[K]>>
+        }[keyof Value & string]
+      : never
     : never
 
-type TranslatedEnumValues = keyof (typeof en)['entity']['enums']
+type FieldEnumPairs<TField extends string, TValue> = TValue extends string
+  ? string extends TValue
+    ? never
+    : `${TField}.${TValue}`
+  : TValue extends object
+    ? EnumPairs<TValue>
+    : never
+
+type EnumTranslations = (typeof en)['entity']['enums']
+
+type TranslatedEnumPairs = {
+  [
+    E in keyof EnumTranslations & string
+  ]: `${E}.${keyof EnumTranslations[E] & string}`
+}[keyof EnumTranslations & string]
 
 type NoMissing<T extends never> = T
 
@@ -84,5 +94,5 @@ export type EntityTermUriCoverage = NoMissing<
 >
 
 export type EntityEnumTranslationCoverage = NoMissing<
-  Exclude<EnumValues<Entity>, Entity['type'] | TranslatedEnumValues>
+  Exclude<EnumPairs<Entity>, `type.${string}` | TranslatedEnumPairs>
 >
