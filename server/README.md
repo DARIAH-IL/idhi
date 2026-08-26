@@ -28,6 +28,34 @@ load the deterministic mock entities and an invite for `reallyliri@gmail.com`
 that expires 30 days after the import. Do not point it at a database containing
 non-test data.
 
+## Testing MCP
+
+The server exposes an MCP endpoint at `/mcp` with entity tools: `get_entity`
+and `search_entities` are public, while `create_entity`, `update_entity`, and
+`delete_entity` require signing in through the OAuth flow (served by the
+frontend at `/oauth/authorize`).
+
+Start the server (and the frontend, if testing the authenticated tools), then
+launch the [MCP Inspector](https://github.com/modelcontextprotocol/inspector):
+
+```sh
+npx @modelcontextprotocol/inspector
+```
+
+In the inspector UI:
+
+1. Select the `Streamable HTTP` transport type.
+2. Set the URL to `http://localhost:8787/mcp` and connect.
+3. Use `List Tools` and call the public tools directly.
+4. To test the write tools, use the inspector's `Open Auth Settings` /
+   `Quick OAuth Flow`: it discovers the OAuth metadata from the server,
+   registers a client, and opens the frontend login page in the browser.
+   Sign in (OTP or passkey), approve the request, and the inspector completes
+   the token exchange and attaches the bearer token to subsequent calls.
+
+Calling a write tool without a token returns a `401` challenge, which is also
+how MCP clients discover that authentication is required.
+
 ## Gmail SMTP setup
 
 Gmail SMTP requires a Google app password. Do not use the normal password for

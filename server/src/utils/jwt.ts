@@ -1,9 +1,60 @@
-import { sign } from 'hono/jwt'
+import { sign, verify } from 'hono/jwt'
+import { z } from 'zod'
 import type { Bindings } from '../bindings'
 import type { User } from '../models/user'
 import { requiredValue } from './values'
 
 const DEFAULT_EXPIRATION_SECONDS = 7 * 24 * 60 * 60
+
+const userSchema = z.object({
+  id: z.string().regex(/^idhi:user:.+$/),
+  name: z.string().optional(),
+  email: z.email(),
+  isAdmin: z.boolean(),
+})
+
+const userClaimsSchema = userSchema.extend({
+  exp: z.number(),
+})
+
+export function parseUser(value: unknown): User | undefined {
+  const result = userSchema.safeParse(value)
+
+  return result.success ? result.data : undefined
+}
+
+export interface VerifiedUserJwt {
+  user: User
+  expiresAtEpochSeconds: number
+}
+
+export async function verifyUserJwt(
+  jwt: string,
+  bindings: Bindings,
+): Promise<VerifiedUserJwt | undefined> {
+  const jwtSecret = requiredValue(bindings, 'JWT_SECRET')
+  let payload
+
+  try {
+    payload = await verify(jwt, jwtSecret, 'HS256')
+  } catch {
+    return undefined
+  }
+
+  const result = userClaimsSchema.safeParse(payload)
+
+  if (!result.success) {
+    return undefined
+  }
+
+  const { exp, ...user } = result.data
+
+  return { user, expiresAtEpochSeconds: exp }
+}
+
+export function jwtExpirationSeconds(bindings: Bindings): number {
+  return expirationSeconds(bindings.JWT_EXPIRATION_SECONDS)
+}
 
 function expirationSeconds(value: string | undefined): number {
   if (value === undefined || value.trim() === '') {
@@ -32,7 +83,7 @@ export async function createJwtForUser(
       email: user.email,
       isAdmin: user.isAdmin,
       iat: issuedAt,
-      exp: issuedAt + expirationSeconds(bindings.JWT_EXPIRATION_SECONDS),
+      exp: issuedAt + jwtExpirationSeconds(bindings),
     },
     requiredValue(bindings, 'JWT_SECRET'),
     'HS256',

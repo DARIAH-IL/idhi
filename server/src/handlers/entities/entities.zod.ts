@@ -1122,7 +1122,13 @@ export const SearchEntitiesResponse = zod.object({
                       .number()
                       .nullish()
                       .describe(
-                        'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                        'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                      ),
+                    funding_currency: zod
+                      .enum(['ILS', 'USD', 'EUR'])
+                      .optional()
+                      .describe(
+                        'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                       ),
                     funding_organization: zod
                       .string()
@@ -4387,7 +4393,13 @@ export const CreateEntityBody = zod.union([
                 .number()
                 .nullish()
                 .describe(
-                  'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                  'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                ),
+              funding_currency: zod
+                .enum(['ILS', 'USD', 'EUR'])
+                .optional()
+                .describe(
+                  'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                 ),
               funding_organization: zod
                 .string()
@@ -7573,7 +7585,13 @@ export const CreateEntityResponse = zod
                   .number()
                   .nullish()
                   .describe(
-                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                    'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                  ),
+                funding_currency: zod
+                  .enum(['ILS', 'USD', 'EUR'])
+                  .optional()
+                  .describe(
+                    'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                   ),
                 funding_organization: zod
                   .string()
@@ -10849,7 +10867,13 @@ export const GetEntityByIdResponse = zod
                   .number()
                   .nullish()
                   .describe(
-                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                    'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                  ),
+                funding_currency: zod
+                  .enum(['ILS', 'USD', 'EUR'])
+                  .optional()
+                  .describe(
+                    'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                   ),
                 funding_organization: zod
                   .string()
@@ -14138,7 +14162,13 @@ export const UpdateEntityByIdBody = zod.union([
                 .number()
                 .nullish()
                 .describe(
-                  'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                  'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                ),
+              funding_currency: zod
+                .enum(['ILS', 'USD', 'EUR'])
+                .optional()
+                .describe(
+                  'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                 ),
               funding_organization: zod
                 .string()
@@ -17410,7 +17440,13 @@ export const UpdateEntityByIdResponse = zod
                   .number()
                   .nullish()
                   .describe(
-                    'Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.',
+                    'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                  ),
+                funding_currency: zod
+                  .enum(['ILS', 'USD', 'EUR'])
+                  .optional()
+                  .describe(
+                    'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
                   ),
                 funding_organization: zod
                   .string()

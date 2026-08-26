@@ -1,18 +1,9 @@
 import type { MiddlewareHandler } from 'hono'
-import { verify } from 'hono/jwt'
-import { z } from 'zod'
 import type { Bindings } from '../bindings'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
 import type { User } from '../models/user'
-import { requiredValue } from '../utils/values'
-
-const userClaimsSchema = z.object({
-  id: z.string().regex(/^idhi:user:.+$/),
-  name: z.string().optional(),
-  email: z.email(),
-  isAdmin: z.boolean(),
-})
+import { verifyUserJwt } from '../utils/jwt'
 
 function isPathWithin(path: string, basePath: string): boolean {
   return path === basePath || path.startsWith(`${basePath}/`)
@@ -39,26 +30,7 @@ function requireAdmin(user: User): Response | undefined {
   }
 }
 
-function userFromPayload(payload: Record<string, unknown>): User | undefined {
-  const result = userClaimsSchema.safeParse(payload)
-
-  return result.success ? result.data : undefined
-}
-
-async function getUserFromJwt(
-  jwt: string,
-  bindings: Bindings,
-): Promise<User | undefined> {
-  const jwtSecret = requiredValue(bindings, 'JWT_SECRET')
-
-  try {
-    return userFromPayload(await verify(jwt, jwtSecret, 'HS256'))
-  } catch {
-    return undefined
-  }
-}
-
-async function getUserFromAuthorizationHeader(
+export async function getUserFromAuthorizationHeader(
   authorizationHeader: string | undefined,
   bindings: Bindings,
 ): Promise<User | undefined> {
@@ -68,7 +40,7 @@ async function getUserFromAuthorizationHeader(
     return undefined
   }
 
-  return getUserFromJwt(jwt, bindings)
+  return (await verifyUserJwt(jwt, bindings))?.user
 }
 
 export function assertAuthenticatedUser(
@@ -161,6 +133,18 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
     }
 
     logResolution('auth_anonymous')
+    return next()
+  }
+
+  if (method === 'POST' && path === '/oauth/authorize') {
+    const response = requireAuthenticated(await getAuthenticatedUser())
+
+    if (response) {
+      logResolution('oauth_authorize_unauthenticated')
+      return response
+    }
+
+    logResolution('oauth_authorize_authenticated')
     return next()
   }
 

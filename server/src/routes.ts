@@ -34,6 +34,7 @@ import {
   listUserInvitesHandlers,
   revokeUserInviteByIdHandlers,
 } from './handlers/user-invites/user-invites.handlers'
+import { completeOauthAuthorizationHandlers } from './handlers/oauth/oauth.handlers'
 
 const app = new Hono()
   .get('/api/v1/health', ...getHealthHandlers)
@@ -63,5 +64,6 @@ const app = new Hono()
   .put('/api/v1/users/:userId', ...replaceUserByIdHandlers)
   .post('/api/v1/users/:userId', ...updateUserByIdHandlers)
   .delete('/api/v1/users/:userId', ...deleteUserByIdHandlers)
+  .post('/oauth/authorize', ...completeOauthAuthorizationHandlers)
 
 export default app

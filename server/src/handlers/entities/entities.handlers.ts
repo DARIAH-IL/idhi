@@ -7,11 +7,14 @@
 import { createFactory } from 'hono/factory'
 import type { EntityWrite } from '../../db/services/entities'
 import { assertAuthenticatedUser } from '../../middleware/auth'
-import { ApiError } from '../../errors/ApiError'
-import { ErrorCode } from '../../models/errorCode'
-import { entityIdMatchesType } from '../../utils/entityId'
+import {
+  createEntity,
+  deleteEntity,
+  getEntityOrThrow,
+  searchEntities,
+  updateEntity,
+} from '../../utils/entityOps'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
-import { isDuplicateKeyError } from '../../utils/mongo'
 import { zValidator } from '../api.validator'
 import type {
   SearchEntitiesContext,
@@ -23,8 +26,6 @@ import type {
 import {
   SearchEntitiesBody,
   SearchEntitiesResponse,
-  searchEntitiesBodyPageDefault,
-  searchEntitiesBodyPageSizeDefault,
   CreateEntityBody,
   CreateEntityResponse,
   GetEntityByIdParams,
@@ -37,28 +38,11 @@ import {
 
 const factory = createFactory()
 
-function entityNotFound(entityId: string): ApiError {
-  return new ApiError(
-    ErrorCode.EntityNotFound,
-    `Entity ${entityId} was not found`,
-  )
-}
-
 export const searchEntitiesHandlers = factory.createHandlers(
   zValidator('json', SearchEntitiesBody),
   zValidator('response', SearchEntitiesResponse),
   async (c: SearchEntitiesContext) => {
-    const { q, facets, filter, sort, page, pageSize } = c.req.valid('json')
-    return c.json(
-      await c.var.db.entities.search(
-        q,
-        facets,
-        filter,
-        sort,
-        page ?? searchEntitiesBodyPageDefault,
-        pageSize ?? searchEntitiesBodyPageSizeDefault,
-      ),
-    )
+    return c.json(await searchEntities(c.var.db.entities, c.req.valid('json')))
   },
 )
 export const createEntityHandlers = factory.createHandlers(
@@ -69,22 +53,13 @@ export const createEntityHandlers = factory.createHandlers(
   async (c: CreateEntityContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
-    try {
-      const entity = await c.var.db.entities.insert(
-        c.req.valid('json') as unknown as EntityWrite,
-        user.id,
-      )
+    const entity = await createEntity(
+      c.var.db.entities,
+      c.req.valid('json') as unknown as EntityWrite,
+      user.id,
+    )
 
-      return c.json(entity, 201)
-    } catch (error) {
-      if (isDuplicateKeyError(error)) {
-        throw new ApiError(
-          ErrorCode.InvalidInput,
-          'An entity with this ID already exists',
-        )
-      }
-      throw error
-    }
+    return c.json(entity, 201)
   },
 )
 export const getEntityByIdHandlers = factory.createHandlers(
@@ -92,13 +67,8 @@ export const getEntityByIdHandlers = factory.createHandlers(
   zValidator('response', GetEntityByIdResponse),
   async (c: GetEntityByIdContext) => {
     const { entityId } = c.req.valid('param')
-    const entity = await c.var.db.entities.get(entityId)
 
-    if (!entity) {
-      throw entityNotFound(entityId)
-    }
-
-    return c.json(entity)
+    return c.json(await getEntityOrThrow(c.var.db.entities, entityId))
   },
 )
 export const updateEntityByIdHandlers = factory.createHandlers(
@@ -112,37 +82,12 @@ export const updateEntityByIdHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-    const entity = c.req.valid('json') as unknown as EntityWrite
-    const requestEntityId = (entity as { id?: unknown }).id
-
-    if (
-      requestEntityId !== undefined &&
-      requestEntityId !== null &&
-      requestEntityId !== '' &&
-      requestEntityId !== entityId
-    ) {
-      throw new ApiError(
-        ErrorCode.InvalidInput,
-        'The entity ID in the request body must match the URL',
-      )
-    }
-
-    if (!entityIdMatchesType(entityId, entity.type)) {
-      throw new ApiError(
-        ErrorCode.InvalidInput,
-        'The entity type in the request body must match the URL ID',
-      )
-    }
-
-    const updatedEntity = await c.var.db.entities.replace(
+    const updatedEntity = await updateEntity(
+      c.var.db.entities,
       entityId,
-      entity,
+      c.req.valid('json') as unknown as EntityWrite,
       user.id,
     )
-
-    if (!updatedEntity) {
-      throw entityNotFound(entityId)
-    }
 
     return c.json(updatedEntity)
   },
@@ -153,10 +98,7 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-
-    if (!(await c.var.db.entities.delete(entityId, user.id))) {
-      throw entityNotFound(entityId)
-    }
+    await deleteEntity(c.var.db.entities, entityId, user.id)
 
     return c.body(null, 204)
   },

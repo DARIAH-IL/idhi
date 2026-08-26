@@ -2,6 +2,7 @@ import type {
   PublicKeyCredentialCreationOptionsJSON,
   PublicKeyCredentialRequestOptionsJSON,
 } from '@simplewebauthn/server'
+import type { User } from '../../models/user'
 
 interface PasskeyChallenge {
   expectedOrigin: string
@@ -25,6 +26,15 @@ interface OtpChallenge {
   email: string
 }
 
+interface OauthCodeChallenge {
+  user: User
+  clientId: string
+  redirectUri: string
+  codeChallenge: string
+  scope?: string
+  resource?: string
+}
+
 export type AuthChallenge = {
   challengeId: string
   expiresAtEpoch: number
@@ -38,4 +48,7 @@ export type AuthChallenge = {
   | ({
       type: 'otp'
     } & OtpChallenge)
+  | ({
+      type: 'oauthCode'
+    } & OauthCodeChallenge)
 )

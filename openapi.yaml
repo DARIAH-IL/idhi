@@ -16,6 +16,8 @@ tags:
     description: User invite management
   - name: UserAuth
     description: User authentication
+  - name: Oauth
+    description: OAuth authorization for MCP clients
 
 paths:
   /api/v1/health:
@@ -467,6 +469,28 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
 
+  /oauth/authorize:
+    post:
+      operationId: completeOauthAuthorization
+      tags:
+        - Oauth
+      summary: Issue an OAuth authorization code for the signed-in user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OauthAuthorizeWrite"
+      responses:
+        "200":
+          description: Authorization code issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OauthAuthorizeResult"
+        "400":
+          $ref: "#/components/responses/Error"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -640,6 +664,51 @@ components:
         jwt:
           type: string
           description: JSON Web Token used as a bearer token
+
+    OauthAuthorizeWrite:
+      type: object
+      required:
+        - response_type
+        - client_id
+        - redirect_uri
+        - code_challenge
+        - code_challenge_method
+      properties:
+        response_type:
+          type: string
+          enum:
+            - code
+        client_id:
+          type: string
+          minLength: 1
+        redirect_uri:
+          type: string
+          format: uri
+        code_challenge:
+          type: string
+          minLength: 43
+          maxLength: 128
+          pattern: "^[A-Za-z0-9\\-._~]+$"
+        code_challenge_method:
+          type: string
+          enum:
+            - S256
+        state:
+          type: string
+        scope:
+          type: string
+        resource:
+          type: string
+
+    OauthAuthorizeResult:
+      type: object
+      required:
+        - redirectUrl
+      properties:
+        redirectUrl:
+          type: string
+          format: uri
+          description: The client redirect URI with the authorization code and state attached
 
     AuthEmailWrite:
       type: object

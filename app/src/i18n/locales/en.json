@@ -108,6 +108,17 @@
       "generic": "Authentication failed. Please try again."
     }
   },
+  "oauth": {
+    "title": "Connect to IDHI",
+    "description": "An application is requesting access to your IDHI account.",
+    "invalid_request": "This authorization request is invalid or incomplete. Please start again from the application.",
+    "signed_in_as": "Signed in as {{email}}",
+    "redirect_notice": "Approving will send you back to the application to finish connecting.",
+    "login_required": "Sign in to continue connecting the application.",
+    "approve": "Approve",
+    "deny": "Deny",
+    "redirecting": "Redirecting…"
+  },
   "admin": {
     "title": "Administration",
     "description": "Manage access to IDHI, maintain user accounts, and send or revoke invitations.",

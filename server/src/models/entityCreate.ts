@@ -586,10 +586,12 @@ export type EntityCreate =
              */
             end_date?: string | null
             /**
-             * Amount awarded by the funding organization, if public, in ILS unless noted in the project description. Omit rather than guess.
+             * Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.
              * @nullable
              */
             funding_amount?: number | null
+            /** Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency. */
+            funding_currency?: 'ILS' | 'USD' | 'EUR'
             /** The organization that provides this funding award (by IDHI URN). */
             funding_organization: string
             /**

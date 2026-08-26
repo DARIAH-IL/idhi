@@ -8,6 +8,7 @@ import {
   unhandledErrorHandler,
 } from './middleware/error'
 import generatedRoutes from './routes'
+import mcpApp from './mcp/app'
 import { requestLoggerMiddleware } from './middleware/logger'
 import type { Bindings } from './bindings'
 import { requiredValue, splitValues } from './utils/values'
@@ -55,6 +56,9 @@ app.use('*', async (c, next) => {
 })
 
 app.use('*', logger())
+
+app.route('/', mcpApp)
+
 app.use('*', errorResponseMiddleware)
 app.use('*', databaseMiddleware)
 app.use('*', authMiddleware)

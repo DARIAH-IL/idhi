@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
+import { Route as OauthAuthorizeRouteImport } from './routes/oauth.authorize'
 import { Route as AppEntitiesIndexRouteImport } from './routes/_app/entities/index'
 import { Route as AppEntitiesNewRouteImport } from './routes/_app/entities/new'
 import { Route as AppEntitiesEntityIdIndexRouteImport } from './routes/_app/entities/$entityId/index'
@@ -30,6 +31,11 @@ const AppAdminRoute = AppAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AppRoute,
+} as any)
+const OauthAuthorizeRoute = OauthAuthorizeRouteImport.update({
+  id: '/oauth/authorize',
+  path: '/oauth/authorize',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppEntitiesIndexRoute = AppEntitiesIndexRouteImport.update({
   id: '/entities/',
@@ -56,6 +62,7 @@ const AppEntitiesEntityIdEditRoute = AppEntitiesEntityIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AppAdminRoute
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/entities/new': typeof AppEntitiesNewRoute
   '/entities/': typeof AppEntitiesIndexRoute
   '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AppAdminRoute
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/entities/new': typeof AppEntitiesNewRoute
   '/entities': typeof AppEntitiesIndexRoute
   '/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/admin': typeof AppAdminRoute
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/_app/entities/new': typeof AppEntitiesNewRoute
   '/_app/entities/': typeof AppEntitiesIndexRoute
   '/_app/entities/$entityId/edit': typeof AppEntitiesEntityIdEditRoute
@@ -84,6 +93,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/oauth/authorize'
     | '/entities/new'
     | '/entities/'
     | '/entities/$entityId/edit'
@@ -92,6 +102,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/oauth/authorize'
     | '/entities/new'
     | '/entities'
     | '/entities/$entityId/edit'
@@ -101,6 +112,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/_app/admin'
+    | '/oauth/authorize'
     | '/_app/entities/new'
     | '/_app/entities/'
     | '/_app/entities/$entityId/edit'
@@ -110,6 +122,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  OauthAuthorizeRoute: typeof OauthAuthorizeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -134,6 +147,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/oauth/authorize': {
+      id: '/oauth/authorize'
+      path: '/oauth/authorize'
+      fullPath: '/oauth/authorize'
+      preLoaderRoute: typeof OauthAuthorizeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/entities/': {
       id: '/_app/entities/'
@@ -187,6 +207,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  OauthAuthorizeRoute: OauthAuthorizeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
