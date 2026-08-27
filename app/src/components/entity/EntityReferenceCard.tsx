@@ -11,6 +11,7 @@ import {
   getEntityTypeLabel,
 } from '@/lib/entity'
 import { getEntityTermUri } from '@/api/termUris/termUri'
+import { EntityNameIdentifiers } from './EntityNameIdentifiers'
 import { EntityImage } from './EntityImage'
 
 export function EntityReferenceCard({ entityId }: { entityId: string }) {
@@ -44,7 +45,7 @@ export function EntityReferenceCard({ entityId }: { entityId: string }) {
 
   return (
     <TooltipTrigger>
-      <Card size="sm" className="bg-muted/20 hover:bg-gray-200">
+      <Card size="sm" className="bg-muted/20 hover:bg-accent-foreground/10">
         <CardContent className="p-2.5">
           <div className="flex items-center gap-3">
             <EntityImage
@@ -53,13 +54,15 @@ export function EntityReferenceCard({ entityId }: { entityId: string }) {
               alt={getEntityDisplayName(data)}
             />
             <div className="flex min-w-0 flex-col gap-0.5">
-              <Link
-                to="/entities/$entityId"
-                params={{ entityId: encodeURIComponent(entityId) }}
-                className="text-sm font-semibold hover:underline"
-              >
-                {getEntityDisplayName(data)}
-              </Link>
+              <EntityNameIdentifiers entity={data}>
+                <Link
+                  to="/entities/$entityId"
+                  params={{ entityId: encodeURIComponent(entityId) }}
+                  className="text-sm font-semibold hover:underline"
+                >
+                  {getEntityDisplayName(data)}
+                </Link>
+              </EntityNameIdentifiers>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                 <span>{getEntityTypeLabel(data.type)}</span>
                 <span aria-hidden>·</span>

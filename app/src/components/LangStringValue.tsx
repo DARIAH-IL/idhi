@@ -2,7 +2,6 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { TranslateIcon } from '@hugeicons/core-free-icons'
 import { useUIStore } from '@/stores/ui'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
-import { ExternalLink } from '@/components/ExternalLink'
 
 export interface LangStringItem {
   language: string
@@ -27,13 +26,7 @@ export function langStringsOf(v: unknown): LangStringItem[] {
   return result
 }
 
-export function LangStringValue({
-  items,
-  hrefOf,
-}: {
-  items: LangStringItem[]
-  hrefOf?: (value: string) => string
-}) {
+export function LangStringValue({ items }: { items: LangStringItem[] }) {
   const language = useUIStore((state) => state.language)
 
   const best =
@@ -47,11 +40,7 @@ export function LangStringValue({
 
   const others = items.filter((item) => item !== best)
 
-  const bestValue = hrefOf ? (
-    <ExternalLink href={hrefOf(best.value)}>{best.value}</ExternalLink>
-  ) : (
-    best.value
-  )
+  const bestValue = best.value
 
   if (others.length === 0) {
     return bestValue

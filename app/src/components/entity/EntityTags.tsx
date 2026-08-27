@@ -18,7 +18,7 @@ export function EntityTags({
         <Badge
           key={tag}
           variant="secondary"
-          className="bg-gray-200 border-gray-500"
+          className="bg-accent-foreground/10 border-accent-foreground/15"
         >
           {tag}
         </Badge>

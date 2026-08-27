@@ -32,6 +32,7 @@ import {
   Edit02Icon,
 } from '@hugeicons/core-free-icons'
 import { EntityImage } from '@/components/entity/EntityImage'
+import { EntityNameIdentifiers } from '@/components/entity/EntityNameIdentifiers'
 import { EntityFieldLabel } from '@/components/entity/EntityFieldLabel'
 import { EntityTags } from '@/components/entity/EntityTags'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
@@ -105,9 +106,11 @@ function EntityDetailPage() {
           size="lg"
         />
         <div className="flex flex-col gap-0.5">
-          <h1 className="text-lg font-semibold">
-            {getEntityDisplayName(entity)}
-          </h1>
+          <EntityNameIdentifiers entity={entity}>
+            <h1 className="text-lg font-semibold">
+              {getEntityDisplayName(entity)}
+            </h1>
+          </EntityNameIdentifiers>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span>{getEntityTypeLabel(entity.type)}</span>
             <span aria-hidden>·</span>

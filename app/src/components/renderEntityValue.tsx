@@ -11,10 +11,14 @@ import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
 import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
+const URL_FIELDS = new Set(['orcid'])
 const URL_TERMS = new Set([
   'schema:sameAs',
   'foaf:homepage',
   'schema:url',
+  'bibo:doi',
+  'schema:softwareHelp',
+  'schema:codeRepository',
   'bibo:doi',
 ])
 const ADDRESS_TERM = 'schema:address'
@@ -27,7 +31,7 @@ const PILL_FIELDS = new Set([
 function EnumPill({ field, value }: { field: string; value: string }) {
   return (
     <TooltipTrigger>
-      <Badge variant="secondary" className="border-gray-300">
+      <Badge variant="secondary" className="border-accent-foreground/25">
         {getEnumValueLabel(field, value)}
       </Badge>
       <Tooltip>{value}</Tooltip>
@@ -67,12 +71,7 @@ export function renderEntityValue(
   if (entityClass === 'LangString') {
     const items = langStringsOf(v)
     if (items.length > 0) {
-      return (
-        <LangStringValue
-          items={items}
-          hrefOf={term === ADDRESS_TERM ? mapsUrl : undefined}
-        />
-      )
+      return <LangStringValue items={items} />
     }
   }
   if (field && PILL_FIELDS.has(field)) {
@@ -144,11 +143,14 @@ export function renderEntityValue(
   if (typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)) {
     return <EntityReferenceCard entityId={v} />
   }
-  if (typeof v === 'string' && term && URL_TERMS.has(term)) {
-    return <ExternalLink href={v}>{v}</ExternalLink>
+  if (
+    typeof v === 'string' &&
+    ((term && URL_TERMS.has(term)) || (field && URL_FIELDS.has(field)))
+  ) {
+    return <ExternalLink href={v} />
   }
   if (typeof v === 'string' && term === ADDRESS_TERM) {
-    return <ExternalLink href={mapsUrl(v)}>{v}</ExternalLink>
+    return <ExternalLink href={mapsUrl(v)} refText={v} />
   }
   if (typeof v === 'string' && term && EMAIL_TERMS.has(term)) {
     return (
