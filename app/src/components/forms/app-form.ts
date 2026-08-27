@@ -11,6 +11,9 @@ import {
   EntityRefField,
 } from '#/components/forms/entity/fields/EntityRefField.tsx'
 import { ImageField } from '#/components/forms/entity/fields/ImageField.tsx'
+import { DoiField } from '#/components/forms/entity/fields/identifiers/DoiField.tsx'
+import { OrcidField } from '#/components/forms/entity/fields/identifiers/OrcidField.tsx'
+import { RorField } from '#/components/forms/entity/fields/identifiers/RorField.tsx'
 
 export const { useAppForm, withFieldGroup, withForm } = createFormHook({
   fieldContext,
@@ -18,11 +21,14 @@ export const { useAppForm, withFieldGroup, withForm } = createFormHook({
   fieldComponents: {
     ArraySection,
     BooleanField,
+    DoiField,
     EntityRefArrayField,
     EntityRefField,
     EnumSelectField,
     ImageField,
     LangStringField,
+    OrcidField,
+    RorField,
     StringArrayField,
     TextField,
   },

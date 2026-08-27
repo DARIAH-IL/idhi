@@ -8,6 +8,8 @@ import {
   stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
+import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
+import { rorLocation } from './identifiers/RorField.tsx'
 import { organizationFormOptions } from '../entity-form-options.ts'
 
 export const OrganizationFields = withForm({
@@ -58,11 +60,23 @@ export const OrganizationFields = withForm({
         </form.AppField>
         <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
           {(field) => (
-            <field.TextField
+            <field.RorField
               label={
                 <EntityFieldLabel entityClass="Organization" field="ror" />
               }
               placeholder="https://ror.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.name))
+                }
+                const locationText = rorLocation(suggestion)
+                if (
+                  locationText &&
+                  !hasLangStringValue(form.getFieldValue('location'))
+                ) {
+                  form.setFieldValue('location', langString(locationText))
+                }
+              }}
             />
           )}
         </form.AppField>

@@ -8,6 +8,7 @@ import {
   stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
+import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
 import { personFormOptions } from '../entity-form-options.ts'
 
 export const PersonFields = withForm({
@@ -44,9 +45,36 @@ export const PersonFields = withForm({
           validators={valueValidators({ kind: 'orcid' })}
         >
           {(field) => (
-            <field.TextField
+            <field.OrcidField
               label={<EntityFieldLabel entityClass="Person" field="orcid" />}
               placeholder="https://orcid.org/0000-0000-0000-0000"
+              onSelect={(suggestion) => {
+                if (
+                  suggestion.givenNames &&
+                  !hasLangStringValue(form.getFieldValue('given_name'))
+                ) {
+                  form.setFieldValue(
+                    'given_name',
+                    langString(suggestion.givenNames),
+                  )
+                }
+                if (
+                  suggestion.familyName &&
+                  !hasLangStringValue(form.getFieldValue('family_name'))
+                ) {
+                  form.setFieldValue(
+                    'family_name',
+                    langString(suggestion.familyName),
+                  )
+                }
+                const emails = form.getFieldValue('emails')
+                if (
+                  suggestion.email &&
+                  !emails?.some((email) => email.trim())
+                ) {
+                  form.setFieldValue('emails', [suggestion.email])
+                }
+              }}
             />
           )}
         </form.AppField>

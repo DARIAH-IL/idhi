@@ -24,6 +24,7 @@ export function PublicationForm({ publication, ...props }: Props) {
   return (
     <form.AppForm>
       <FormScaffold
+        form={form}
         isSubmitting={props.isSubmitting}
         onSubmit={() => void form.handleSubmit()}
       >

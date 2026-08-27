@@ -16,7 +16,6 @@ const URL_TERMS = new Set([
   'schema:sameAs',
   'foaf:homepage',
   'schema:url',
-  'bibo:doi',
   'schema:softwareHelp',
   'schema:codeRepository',
   'bibo:doi',

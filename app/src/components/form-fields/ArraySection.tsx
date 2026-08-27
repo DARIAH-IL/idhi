@@ -17,14 +17,17 @@ export function ArraySection({ label, defaultItem, children }: Props) {
   const items = field.state.value ?? []
 
   return (
-    <>
+    <div className="lg:col-span-2 flex flex-col gap-4">
       <Separator />
       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
         {label}
       </p>
       {items.map((_, index) => (
-        <div key={index} className="rounded border p-3 flex flex-col gap-2">
-          <div className="flex justify-between items-center">
+        <div
+          key={index}
+          className="rounded border p-3 grid items-start gap-2 lg:grid-cols-2"
+        >
+          <div className="lg:col-span-2 flex justify-between items-center">
             <span className="text-xs font-medium">#{index + 1}</span>
             <Button
               variant="ghost"
@@ -46,6 +49,6 @@ export function ArraySection({ label, defaultItem, children }: Props) {
       >
         + {label}
       </Button>
-    </>
+    </div>
   )
 }

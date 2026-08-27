@@ -40,8 +40,8 @@ export const CommonEntityFields = withFieldGroup({
     const entityClass = getEntityClassName(entityType)
 
     return (
-      <div className="flex flex-col gap-4">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+      <div className="grid items-start gap-4 lg:grid-cols-2">
+        <p className="lg:col-span-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
           {t('entity.form.sections.basic')}
         </p>
         <group.AppField

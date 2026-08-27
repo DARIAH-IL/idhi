@@ -13,6 +13,7 @@ import {
   stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
+import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
 import { toolFormOptions } from '../entity-form-options.ts'
 
 export const ToolFields = withForm({
@@ -77,9 +78,14 @@ export const ToolFields = withForm({
         </form.AppField>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
-            <field.TextField
+            <field.DoiField
               label={<EntityFieldLabel entityClass="Tool" field="doi" />}
               placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
             />
           )}
         </form.AppField>

@@ -12,6 +12,7 @@ import {
   localizedValueValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
+import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
 import { datasetFormOptions } from '../entity-form-options.ts'
 
 export const DatasetFields = withForm({
@@ -54,9 +55,14 @@ export const DatasetFields = withForm({
         </form.AppField>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
-            <field.TextField
+            <field.DoiField
               label={<EntityFieldLabel entityClass="Dataset" field="doi" />}
               placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
             />
           )}
         </form.AppField>

@@ -21,6 +21,7 @@ export function PersonForm({ person, ...props }: Props) {
   return (
     <form.AppForm>
       <FormScaffold
+        form={form}
         isSubmitting={props.isSubmitting}
         onSubmit={() => void form.handleSubmit()}
       >

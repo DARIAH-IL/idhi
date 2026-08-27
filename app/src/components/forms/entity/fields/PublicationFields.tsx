@@ -11,6 +11,7 @@ import {
   localizedValueValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
+import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
 import { publicationFormOptions } from '../entity-form-options.ts'
 
 export const PublicationFields = withForm({
@@ -45,9 +46,29 @@ export const PublicationFields = withForm({
         </form.AppField>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
-            <field.TextField
+            <field.DoiField
               label={<EntityFieldLabel entityClass="Publication" field="doi" />}
               placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+                if (
+                  suggestion.publishedDate &&
+                  !form.getFieldValue('date_issued')
+                ) {
+                  form.setFieldValue('date_issued', suggestion.publishedDate)
+                }
+                if (
+                  suggestion.containerTitle &&
+                  !hasLangStringValue(form.getFieldValue('published_in'))
+                ) {
+                  form.setFieldValue(
+                    'published_in',
+                    langString(suggestion.containerTitle),
+                  )
+                }
+              }}
             />
           )}
         </form.AppField>

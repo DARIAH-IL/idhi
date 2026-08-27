@@ -63,7 +63,7 @@ function EditEntityPage() {
   }
 
   return (
-    <div className="flex flex-col gap-4 max-w-2xl">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
       <div className="flex items-center gap-2.5">
         <EntityImage
           image={entity.image}
