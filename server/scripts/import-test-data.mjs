@@ -383,20 +383,6 @@ export const entities = [
   })),
 ]
 
-function appendSearchValues(value, values) {
-  if (value === null || value === undefined) return
-  if (Array.isArray(value)) {
-    for (const item of value) appendSearchValues(item, values)
-    return
-  }
-  if (typeof value === 'object') {
-    for (const nestedValue of Object.values(value))
-      appendSearchValues(nestedValue, values)
-    return
-  }
-  values.push(String(value))
-}
-
 function toStoredEntity(entity, index) {
   const { id, ...values } = entity
   const { createdAt, modifiedAt } = auditTimestamps(index)
@@ -406,10 +392,7 @@ function toStoredEntity(entity, index) {
     modifiedAt,
     modifiedBy: CREATED_BY,
   }
-  const searchableEntity = { id, ...values, audit }
-  const searchValues = []
-  appendSearchValues(searchableEntity, searchValues)
-  return { _id: id, ...values, audit, _s: searchValues.join(' ') }
+  return { _id: id, ...values, audit }
 }
 
 function importCollection(

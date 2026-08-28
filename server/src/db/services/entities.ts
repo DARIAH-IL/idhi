@@ -2,25 +2,32 @@ import { Schema } from 'mongoose'
 import type {
   Connection,
   HydratedDocument,
-  QueryFilter,
+  PipelineStage,
   ToObjectOptions,
 } from 'mongoose'
 import type {
   AuditedEntity,
   Entity,
   Filter as EntityFilter,
-  FilterOperator,
   FilterableField,
   SortCriterion,
 } from '../../models'
 import { createEntityId } from '../../utils/entityId'
 import { createId } from '../../utils/id'
-import { searchDump } from '../../utils/searchDump'
 import { COLLECTIONS } from '../collections'
+import {
+  ENTITY_SEARCH_INDEX_NAME,
+  initializeEntityIndexes,
+} from '../indexes/entities'
+import {
+  storedEntityField,
+  toMongoEntityFilter,
+  toMongoEntitySort,
+} from '../queries/entities'
+import { SEARCH_SCORE_FIELD } from '../queries/search'
 
 type StoredEntity = Omit<AuditedEntity, 'id'> & {
   _id: string
-  _s: string
 }
 
 export type EntityWrite = Entity extends infer EntityVariant
@@ -74,7 +81,6 @@ const serializationOptions: ToObjectOptions<StoredEntity> = {
   virtuals: true,
   transform(_document, entity) {
     Reflect.deleteProperty(entity, '_id')
-    Reflect.deleteProperty(entity, '_s')
     return entity
   },
 }
@@ -82,7 +88,6 @@ const serializationOptions: ToObjectOptions<StoredEntity> = {
 const entitySchema = new Schema<StoredEntity>(
   {
     _id: { type: String, alias: 'id' },
-    _s: { type: String, required: true },
   },
   {
     id: false,
@@ -115,74 +120,6 @@ function exposeEntity(entity: HydratedDocument<StoredEntity>): AuditedEntity {
   return entity.toObject<AuditedEntity>()
 }
 
-const MONGO_OPERATORS: Record<FilterOperator, string> = {
-  eq: '$eq',
-  ne: '$ne',
-  gt: '$gt',
-  gte: '$gte',
-  lt: '$lt',
-  lte: '$lte',
-  in: '$in',
-  nin: '$nin',
-  exists: '$exists',
-}
-
-function storedField(field: FilterableField): string {
-  return field === 'id' ? '_id' : field
-}
-
-function comparisonFilter(
-  field: FilterableField,
-  operator: FilterOperator,
-  value: unknown,
-): QueryFilter<StoredEntity> {
-  const mongoValue =
-    operator === 'in' || operator === 'nin'
-      ? Array.isArray(value)
-        ? value
-        : [value]
-      : operator === 'exists'
-        ? Boolean(value)
-        : value
-
-  return {
-    [storedField(field)]: { [MONGO_OPERATORS[operator]]: mongoValue },
-  }
-}
-
-function toMongoFilter(filter: EntityFilter): QueryFilter<StoredEntity> {
-  if ('and' in filter) {
-    return { $and: filter.and.map(toMongoFilter) }
-  }
-
-  if ('or' in filter) {
-    return { $or: filter.or.map(toMongoFilter) }
-  }
-
-  return comparisonFilter(filter.field, filter.op, filter.value)
-}
-
-function toMongoSort(
-  sort: SortCriterion[] | undefined,
-): Record<string, 1 | -1> {
-  if (!sort?.length) {
-    return { 'audit.modifiedAt': -1, _id: 1 }
-  }
-
-  const fields = new Map<string, 1 | -1>()
-  for (const criterion of sort) {
-    fields.set(
-      storedField(criterion.property),
-      criterion.direction === 'asc' ? 1 : -1,
-    )
-  }
-  if (!fields.has('_id')) {
-    fields.set('_id', 1)
-  }
-
-  return Object.fromEntries(fields)
-}
-
 export async function createEntityDatabaseService(
   connection: Connection,
   initializeIndexes: boolean,
@@ -204,16 +141,8 @@ export async function createEntityDatabaseService(
   )
 
   if (initializeIndexes) {
-    await Promise.all([
-      entities.collection.createIndex(
-        { _s: 'text' },
-        { name: 'entities_search' },
-      ),
-      entityAudit.collection.createIndex(
-        { entityId: 1, at: -1 },
-        { name: 'audit_entity_history' },
-      ),
-    ])
+    await entities.createCollection()
+    await initializeEntityIndexes(entities.collection, entityAudit.collection)
   }
 
   return {
@@ -226,50 +155,76 @@ export async function createEntityDatabaseService(
       pageSize,
     ) {
       const normalizedQuery = query?.trim()
-      const filter: QueryFilter<StoredEntity> = {
-        ...(normalizedQuery ? { $text: { $search: normalizedQuery } } : {}),
-        ...(structuredFilter ? toMongoFilter(structuredFilter) : {}),
-      }
       const facetFields = [...new Set(requestedFacets)]
-      const [documents, total, facetEntries] = await Promise.all([
-        entities
-          .find(filter)
-          .sort(toMongoSort(sort))
-          .skip(page * pageSize)
-          .limit(pageSize)
-          .exec(),
-        entities.countDocuments(filter).exec(),
-        Promise.all(
-          facetFields.map(async (field) => {
-            const fieldPath = storedField(field)
-            const values = await entities
-              .aggregate<{ _id: string; count: number }>([
-                { $match: filter },
-                { $unwind: `$${fieldPath}` },
-                { $match: { [fieldPath]: { $type: 'string' } } },
-                {
-                  $group: {
-                    _id: { entity: '$_id', value: `$${fieldPath}` },
-                  },
-                },
-                { $group: { _id: '$_id.value', count: { $sum: 1 } } },
-                { $sort: { count: -1, _id: 1 } },
-                { $limit: FACET_VALUES_LIMIT },
-              ])
-              .exec()
+      const pipeline: PipelineStage[] = []
+      if (normalizedQuery) {
+        pipeline.push({
+          $search: {
+            index: ENTITY_SEARCH_INDEX_NAME,
+            text: {
+              query: normalizedQuery,
+              path: { wildcard: '*' },
+            },
+          },
+        })
+        pipeline.push({
+          $set: {
+            [SEARCH_SCORE_FIELD]: { $meta: 'searchScore' },
+          },
+        })
+      }
+      if (structuredFilter) {
+        pipeline.push({ $match: toMongoEntityFilter(structuredFilter) })
+      }
 
-            return [
-              field,
-              values.map(({ _id: value, count }) => ({ value, count })),
-            ] as const
+      const documentStages: PipelineStage.FacetPipelineStage[] = [
+        { $sort: toMongoEntitySort(sort, Boolean(normalizedQuery)) },
+        { $skip: page * pageSize },
+        { $limit: pageSize },
+      ]
+      if (normalizedQuery) {
+        documentStages.push({ $unset: SEARCH_SCORE_FIELD })
+      }
+
+      const facets: Record<string, PipelineStage.FacetPipelineStage[]> = {
+        documents: documentStages,
+        total: [{ $count: 'count' }],
+      }
+      for (const [index, field] of facetFields.entries()) {
+        const fieldPath = storedEntityField(field)
+        facets[`facet${index}`] = [
+          { $unwind: `$${fieldPath}` },
+          { $match: { [fieldPath]: { $type: 'string' } } },
+          {
+            $group: {
+              _id: { entity: '$_id', value: `$${fieldPath}` },
+            },
+          },
+          { $group: { _id: '$_id.value', count: { $sum: 1 } } },
+          { $sort: { count: -1, _id: 1 } },
+          { $limit: FACET_VALUES_LIMIT },
+        ]
+      }
+
+      pipeline.push({ $facet: facets })
+      const [aggregation] = await entities.aggregate(pipeline).exec()
+      const documents = aggregation?.documents ?? []
+      const facetEntries = facetFields.map((field, index) => [
+        field,
+        (aggregation?.[`facet${index}`] ?? []).map(
+          ({ _id: value, count }: { _id: string; count: number }) => ({
+            value,
+            count,
           }),
         ),
       ])
 
       return {
-        results: documents.map(exposeEntity),
+        results: documents.map((document: StoredEntity) =>
+          exposeEntity(entities.hydrate(document)),
+        ),
         facets: Object.fromEntries(facetEntries),
-        total,
+        total: aggregation?.total[0]?.count ?? 0,
       }
     },
 
@@ -288,13 +243,11 @@ export async function createEntityDatabaseService(
         modifiedBy: userId,
       }
       const { id: _ignoredId, ...values } = entity
-      const storedEntity = { id, ...values, audit }
       const createdEntity = new entities()
       createdEntity.set({
         _id: id,
         ...values,
         audit,
-        _s: searchDump(storedEntity),
       })
       await createdEntity.save()
       await entityAudit.create({
@@ -325,7 +278,6 @@ export async function createEntityDatabaseService(
         modifiedBy: userId,
       }
       const { id: _ignoredId, ...values } = entity
-      const storedEntity = { id: entityId, ...values, audit }
       const updatedEntity = await entities
         .findOneAndReplace(
           { _id: entityId },
@@ -333,7 +285,6 @@ export async function createEntityDatabaseService(
             _id: entityId,
             ...values,
             audit,
-            _s: searchDump(storedEntity),
           },
           { new: true },
         )

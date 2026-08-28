@@ -11,7 +11,7 @@ import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
 import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
-const URL_FIELDS = new Set(['orcid'])
+const URL_FIELDS = new Set(['orcid', 'ror'])
 const URL_TERMS = new Set([
   'schema:sameAs',
   'foaf:homepage',
