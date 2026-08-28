@@ -12,7 +12,7 @@
     "build": "tsc && vite build",
     "lint": "eslint --fix && i18next-cli lint",
     "format": "prettier --write .",
-    "validate": "orval && pnpm generate-terms && pnpm format && pnpm lint && pnpm build",
+    "validate": "orval && pnpm generate-terms && pnpm lint && pnpm format && pnpm build",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
   "dependencies": {

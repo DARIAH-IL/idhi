@@ -9,7 +9,7 @@
     "secrets:sync": "wrangler secret bulk .dev.vars",
     "lint": "eslint",
     "format": "prettier --write .",
-    "validate": "orval && pnpm format && pnpm lint --fix && pnpm build",
+    "validate": "orval && pnpm lint --fix && pnpm format && pnpm build",
     "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs"
   },
   "dependencies": {
