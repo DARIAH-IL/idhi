@@ -34,7 +34,13 @@ type NonReadonly<T> = [T] extends [UnionToIntersection<T>]
     }
   : DistributeReadOnlyOverUnions<T>
 
-import type { EntityCreate, EntitySearch, EntityUpdate } from '../../models'
+import type {
+  CreateEntityParams,
+  EntityCreate,
+  EntitySearch,
+  EntityUpdate,
+  UpdateEntityByIdParams,
+} from '../../models'
 
 export type SearchEntitiesContext<E extends Env = any> = Context<
   E,
@@ -45,8 +51,8 @@ export type CreateEntityContext<E extends Env = any> = Context<
   E,
   '/api/v1/entities',
   {
-    in: { json: NonReadonly<EntityCreate> }
-    out: { json: NonReadonly<EntityCreate> }
+    in: { query: CreateEntityParams; json: NonReadonly<EntityCreate> }
+    out: { query: CreateEntityParams; json: NonReadonly<EntityCreate> }
   }
 >
 export type GetEntityByIdContext<E extends Env = any> = Context<
@@ -73,12 +79,14 @@ export type UpdateEntityByIdContext<E extends Env = any> = Context<
       param: {
         entityId: string
       }
+      query: UpdateEntityByIdParams
       json: NonReadonly<EntityUpdate>
     }
     out: {
       param: {
         entityId: string
       }
+      query: UpdateEntityByIdParams
       json: NonReadonly<EntityUpdate>
     }
   }

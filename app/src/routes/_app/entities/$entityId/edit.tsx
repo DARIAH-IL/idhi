@@ -85,8 +85,12 @@ function EditEntityPage() {
       <EntityForm
         entityType={entity.type}
         entity={entity}
-        onSubmit={(data) => {
-          updateMutation.mutate({ entityId: decodedId, data })
+        onSubmit={(data, isDraft) => {
+          updateMutation.mutate({
+            entityId: decodedId,
+            data,
+            params: { isDraft },
+          })
         }}
         isSubmitting={updateMutation.isPending}
       />

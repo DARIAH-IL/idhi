@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { EntityReferenceCard } from './EntityReferenceCard'
 import { EntityImage } from './EntityImage'
+import { DraftBadge } from './DraftBadge'
 
 interface Props {
   value?: string
@@ -101,8 +102,11 @@ export function EntityPicker({
                       alt={getEntityDisplayName(entity)}
                     />
                     <span className="min-w-0">
-                      <span className="block truncate text-sm font-medium">
-                        {getEntityDisplayName(entity)}
+                      <span className="flex items-center gap-1.5">
+                        <span className="block truncate text-sm font-medium">
+                          {getEntityDisplayName(entity)}
+                        </span>
+                        <DraftBadge isDraft={entity.isDraft} />
                       </span>
                       <span className="block truncate font-mono text-[10px] text-muted-foreground">
                         {id}

@@ -29,9 +29,7 @@ function RelationshipHeading({
   return (
     <h2 className="flex items-center gap-1.5 text-base font-semibold">
       <span>{t(`entity.relationships.labels.${relationship.label}`)}</span>
-      {count !== undefined && (
-        <span className="tabular-nums">({count})</span>
-      )}
+      {count !== undefined && <span className="tabular-nums">({count})</span>}
       {isLoading && (
         <span role="status" className="text-muted-foreground">
           <HugeiconsIcon
@@ -232,8 +230,7 @@ export function IncomingEntityRelationships({
     }),
   })
   const hasRelationshipSections = queryResults.some(
-    (result) =>
-      result.isPending || result.isError || (result.data?.total ?? 0) > 0,
+    (result) => result.isPending || result.isError || result.data.total > 0,
   )
 
   if (!hasRelationshipSections) {
@@ -263,7 +260,7 @@ export function IncomingEntityRelationships({
           )
         }
 
-        if (!result.data || result.data.total === 0) {
+        if (result.data.total === 0) {
           return null
         }
 

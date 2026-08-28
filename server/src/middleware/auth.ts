@@ -153,6 +153,7 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
       method === 'GET' || (method === 'POST' && path === '/api/v1/entities')
 
     if (isPublicEntityRead) {
+      await getAuthenticatedUser()
       logResolution('entity_read_allowed')
       return next()
     }

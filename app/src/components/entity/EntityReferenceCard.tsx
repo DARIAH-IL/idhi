@@ -13,6 +13,7 @@ import {
 import { getEntityTermUri } from '@/api/termUris/termUri'
 import { EntityNameIdentifiers } from './EntityNameIdentifiers'
 import { EntityImage } from './EntityImage'
+import { DraftBadge } from './DraftBadge'
 import { useEntityReferences } from './EntityReferencesProvider'
 import type { AuditedEntity } from '#/api/models/auditedEntity.ts'
 
@@ -81,13 +82,16 @@ export function EntityReferenceCard({
             />
             <div className="flex min-w-0 flex-col gap-0.5">
               <EntityNameIdentifiers entity={data}>
-                <Link
-                  to="/entities/$entityId"
-                  params={{ entityId: encodeURIComponent(entityId) }}
-                  className="text-sm font-semibold hover:underline"
-                >
-                  {getEntityDisplayName(data)}
-                </Link>
+                <span className="flex items-center gap-1.5">
+                  <Link
+                    to="/entities/$entityId"
+                    params={{ entityId: encodeURIComponent(entityId) }}
+                    className="text-sm font-semibold hover:underline"
+                  >
+                    {getEntityDisplayName(data)}
+                  </Link>
+                  <DraftBadge isDraft={data.isDraft} />
+                </span>
               </EntityNameIdentifiers>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                 <span>{getEntityTypeLabel(data.type)}</span>

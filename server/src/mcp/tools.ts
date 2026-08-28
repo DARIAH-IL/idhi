@@ -60,7 +60,7 @@ export function createEntityMcpServer(
       inputSchema: GetEntityByIdParams,
     },
     async ({ entityId }) =>
-      jsonResult(await getEntityOrThrow(db.entities, entityId)),
+      jsonResult(await getEntityOrThrow(db.entities, entityId, user)),
   )
 
   server.registerTool(
@@ -71,7 +71,7 @@ export function createEntityMcpServer(
         'Search IDHI entities with an optional free-text query, facets, filters, sorting, and pagination',
       inputSchema: SearchEntitiesBody,
     },
-    async (input) => jsonResult(await searchEntities(db.entities, input)),
+    async (input) => jsonResult(await searchEntities(db.entities, input, user)),
   )
 
   server.registerTool(
@@ -84,7 +84,9 @@ export function createEntityMcpServer(
       ),
     },
     async (input) =>
-      jsonResult(await createEntity(db.entities, input, requireUser(user).id)),
+      jsonResult(
+        await createEntity(db.entities, input, requireUser(user).id, false),
+      ),
   )
 
   server.registerTool(
@@ -97,7 +99,13 @@ export function createEntityMcpServer(
     },
     async ({ entityId, entity }) =>
       jsonResult(
-        await updateEntity(db.entities, entityId, entity, requireUser(user).id),
+        await updateEntity(
+          db.entities,
+          entityId,
+          entity,
+          requireUser(user).id,
+          false,
+        ),
       ),
   )
 
@@ -109,7 +117,7 @@ export function createEntityMcpServer(
       inputSchema: DeleteEntityByIdParams,
     },
     async ({ entityId }) => {
-      await deleteEntity(db.entities, entityId, requireUser(user).id)
+      await deleteEntity(db.entities, entityId, requireUser(user))
 
       return jsonResult({ deleted: true, entityId })
     },

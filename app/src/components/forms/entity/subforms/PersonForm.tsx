@@ -7,23 +7,26 @@ import { CommonEntityFields, commonFieldMap } from './common'
 import { FormScaffold, SpecificSection } from './FormScaffold'
 
 interface Props {
-  person?: Person
+  person?: Person & { isDraft?: boolean }
   isSubmitting?: boolean
-  onSubmit: (data: Entity) => void
+  onSubmit: (data: Entity, isDraft: boolean) => void
 }
 
 export function PersonForm({ person, ...props }: Props) {
   const form = useAppForm({
     ...personFormOptions,
     defaultValues: person ?? personDefaults,
-    onSubmit: ({ value }) => props.onSubmit(cleanValue(value)),
+    onSubmitMeta: { isDraft: false },
+    onSubmit: ({ value, meta }) =>
+      props.onSubmit(cleanValue(value), meta.isDraft),
   })
   return (
     <form.AppForm>
       <FormScaffold
         form={form}
         isSubmitting={props.isSubmitting}
-        onSubmit={() => void form.handleSubmit()}
+        canSaveAsDraft={!person || person.isDraft === true}
+        onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
       >
         <CommonEntityFields
           form={form}

@@ -14,7 +14,7 @@ import { TrainingMaterialForm } from './subforms/TrainingMaterialForm'
 interface Props {
   entityType: EntityType
   entity?: AuditedEntity
-  onSubmit: (data: Entity) => void
+  onSubmit: (data: Entity, isDraft: boolean) => void
   isSubmitting?: boolean
 }
 

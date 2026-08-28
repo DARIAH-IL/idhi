@@ -7,4 +7,8 @@
 import type { Audited } from './audited'
 import type { Entity } from './entity'
 
-export type AuditedEntity = Entity & Audited
+export type AuditedEntity = Entity &
+  Audited & {
+    /** Whether the entity is a draft, visible only to its creator and administrators. */
+    isDraft?: boolean
+  }

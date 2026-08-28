@@ -3469,6 +3469,16 @@ export const SearchEntitiesResponse = zod.object({
             })
             .optional(),
         }),
+      )
+      .and(
+        zod.object({
+          isDraft: zod
+            .boolean()
+            .optional()
+            .describe(
+              'Whether the entity is a draft, visible only to its creator and administrators.',
+            ),
+        }),
       ),
   ),
   facets: zod.record(
@@ -3483,6 +3493,17 @@ export const SearchEntitiesResponse = zod.object({
   total: zod
     .int()
     .describe('Total number of matching entities across all pages.'),
+})
+
+export const createEntityQueryIsDraftDefault = false
+
+export const CreateEntityQueryParams = zod.object({
+  isDraft: zod.coerce
+    .boolean()
+    .default(createEntityQueryIsDraftDefault)
+    .describe(
+      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n',
+    ),
 })
 
 export const createEntityBodyOneDescriptionItemLanguageRegExp = new RegExp(
@@ -9901,6 +9922,16 @@ export const CreateEntityResponse = zod
         .optional(),
     }),
   )
+  .and(
+    zod.object({
+      isDraft: zod
+        .boolean()
+        .optional()
+        .describe(
+          'Whether the entity is a draft, visible only to its creator and administrators.',
+        ),
+    }),
+  )
 
 export const GetEntityByIdParams = zod.object({
   entityId: zod.string(),
@@ -13185,9 +13216,30 @@ export const GetEntityByIdResponse = zod
         .optional(),
     }),
   )
+  .and(
+    zod.object({
+      isDraft: zod
+        .boolean()
+        .optional()
+        .describe(
+          'Whether the entity is a draft, visible only to its creator and administrators.',
+        ),
+    }),
+  )
 
 export const UpdateEntityByIdParams = zod.object({
   entityId: zod.string(),
+})
+
+export const updateEntityByIdQueryIsDraftDefault = false
+
+export const UpdateEntityByIdQueryParams = zod.object({
+  isDraft: zod.coerce
+    .boolean()
+    .default(updateEntityByIdQueryIsDraftDefault)
+    .describe(
+      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n',
+    ),
 })
 
 export const updateEntityByIdBodyOneDescriptionItemLanguageRegExp = new RegExp(
@@ -19762,6 +19814,16 @@ export const UpdateEntityByIdResponse = zod
             .regex(updateEntityByIdResponseTwoAuditModifiedByRegExp),
         })
         .optional(),
+    }),
+  )
+  .and(
+    zod.object({
+      isDraft: zod
+        .boolean()
+        .optional()
+        .describe(
+          'Whether the entity is a draft, visible only to its creator and administrators.',
+        ),
     }),
   )
 

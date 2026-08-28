@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+const VISIBILITY_THRESHOLD_VIEWPORT_FRACTION = 4
+
 interface JumpToTopProps {
   scrollRef: RefObject<HTMLElement | null>
   className?: string
@@ -23,7 +25,10 @@ export function JumpToTop({ scrollRef, className }: JumpToTopProps) {
     }
 
     const updateVisibility = () => {
-      setIsVisible(element.scrollTop > element.clientHeight)
+      setIsVisible(
+        element.scrollTop >
+          element.clientHeight / VISIBILITY_THRESHOLD_VIEWPORT_FRACTION,
+      )
     }
 
     updateVisibility()

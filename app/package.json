@@ -8,9 +8,11 @@
   "scripts": {
     "dev": "vite dev",
     "generate-routes": "tsr generate",
-    "build": "orval && node scripts/generate-term-uris.mjs && tsc && vite build",
+    "generate-terms": "node scripts/generate-term-uris.mjs",
+    "build": "tsc && vite build",
     "lint": "eslint --fix && i18next-cli lint",
     "format": "prettier --write .",
+    "validate": "orval && pnpm generate-terms && pnpm format && pnpm lint && pnpm build",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
   "dependencies": {

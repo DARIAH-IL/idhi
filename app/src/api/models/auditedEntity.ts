@@ -7,4 +7,8 @@
 import type { Audited } from './audited.ts'
 import type { Entity } from './entity.ts'
 
-export type AuditedEntity = Entity & Audited
+export type AuditedEntity = Entity &
+  Audited & {
+    /** Whether the entity is a draft, visible only to its creator and administrators. */
+    isDraft?: boolean
+  }

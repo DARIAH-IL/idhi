@@ -32,6 +32,7 @@ import {
   Delete02Icon,
   Edit02Icon,
 } from '@hugeicons/core-free-icons'
+import { DraftBadge } from '@/components/entity/DraftBadge'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { EntityNameIdentifiers } from '@/components/entity/EntityNameIdentifiers'
 import { EntityFieldLabel } from '@/components/entity/EntityFieldLabel'
@@ -113,9 +114,12 @@ function EntityDetailPage() {
         />
         <div className="flex flex-col gap-0.5">
           <EntityNameIdentifiers entity={entity}>
-            <h1 className="text-lg font-semibold">
-              {getEntityDisplayName(entity)}
-            </h1>
+            <span className="flex items-center gap-2">
+              <h1 className="text-lg font-semibold">
+                {getEntityDisplayName(entity)}
+              </h1>
+              <DraftBadge isDraft={entity.isDraft} />
+            </span>
           </EntityNameIdentifiers>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span>{getEntityTypeLabel(entity.type)}</span>

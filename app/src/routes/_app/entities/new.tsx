@@ -7,11 +7,13 @@ import {
 } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { z } from 'zod'
 import { useCreateEntity } from '@/api/hooks/entities/entities'
 import {
   ENTITY_TYPES,
   getEntityClassName,
   getEntityTypeLabel,
+  normalizeEntityType,
 } from '@/lib/entity'
 import { getEntityTermUri } from '@/api/termUris/termUri'
 import type { EntityType } from '@/lib/entity'
@@ -21,6 +23,9 @@ import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
 
 export const Route = createFileRoute('/_app/entities/new')({
+  validateSearch: z.object({
+    type: z.string().optional(),
+  }),
   beforeLoad: () => {
     if (!useAuthStore.getState().token) {
       throw redirect({ to: '/entities' })
@@ -33,7 +38,16 @@ function NewEntityPage() {
   const { t } = useTranslation()
   const token = useAuthStore((state) => state.token)
   const navigate = useNavigate()
-  const [selectedType, setSelectedType] = useState<EntityType | null>(null)
+  const { type } = Route.useSearch()
+  const selectedType: EntityType | null = type
+    ? (normalizeEntityType(type) ?? null)
+    : null
+  const setSelectedType = (et: EntityType | null) => {
+    void navigate({
+      to: '/entities/new',
+      search: et ? { type: et } : {},
+    })
+  }
   const [serverError, setServerError] = useState<string | null>(null)
 
   const createMutation = useCreateEntity({
@@ -119,8 +133,8 @@ function NewEntityPage() {
 
       <EntityForm
         entityType={selectedType}
-        onSubmit={(data) => {
-          createMutation.mutate({ data })
+        onSubmit={(data, isDraft) => {
+          createMutation.mutate({ data, params: { isDraft } })
         }}
         isSubmitting={createMutation.isPending}
       />

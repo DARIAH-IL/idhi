@@ -4,7 +4,7 @@
   "scripts": {
     "dev:app": "pnpm --filter @idhi/app dev",
     "dev:server": "pnpm --filter @idhi/server dev",
-    "validate": "pnpm --filter @idhi/app build && pnpm --filter @idhi/app format && pnpm --filter @idhi/app lint && pnpm --filter @idhi/server build && pnpm --filter @idhi/server format && pnpm --filter @idhi/server lint"
+    "validate": "pnpm --filter @idhi/app validate && pnpm --filter @idhi/server validate"
   },
   "packageManager": "pnpm@11.24.0"
 }

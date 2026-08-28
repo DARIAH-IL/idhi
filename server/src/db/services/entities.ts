@@ -11,6 +11,7 @@ import type {
   Filter as EntityFilter,
   FilterableField,
   SortCriterion,
+  User,
 } from '../../models'
 import { createEntityId } from '../../utils/entityId'
 import { createId } from '../../utils/id'
@@ -35,6 +36,23 @@ export type EntityWrite = Entity extends infer EntityVariant
     ? Omit<EntityVariant, 'id'> & { id?: string | null }
     : never
   : never
+
+export type EntityViewer = Pick<User, 'id' | 'isAdmin'>
+
+function draftVisibilityCondition(
+  viewer: EntityViewer | undefined,
+): Record<string, unknown> | undefined {
+  if (viewer?.isAdmin) {
+    return undefined
+  }
+
+  return {
+    $or: [
+      { isDraft: { $ne: true } },
+      ...(viewer ? [{ 'audit.createdBy': viewer.id }] : []),
+    ],
+  }
+}
 
 const FACET_VALUES_LIMIT = 100
 
@@ -65,15 +83,24 @@ export interface EntityDatabaseService {
     sort: SortCriterion[] | undefined,
     page: number,
     pageSize: number,
+    viewer: EntityViewer | undefined,
   ) => Promise<EntitySearchResult>
-  get: (entityId: string) => Promise<AuditedEntity | null>
-  insert: (entity: EntityWrite, userId: string) => Promise<AuditedEntity>
+  get: (
+    entityId: string,
+    viewer: EntityViewer | undefined,
+  ) => Promise<AuditedEntity | null>
+  insert: (
+    entity: EntityWrite,
+    userId: string,
+    isDraft: boolean,
+  ) => Promise<AuditedEntity>
   replace: (
     entityId: string,
     entity: EntityWrite,
     userId: string,
+    isDraft: boolean,
   ) => Promise<AuditedEntity | null>
-  delete: (entityId: string, userId: string) => Promise<boolean>
+  delete: (entityId: string, viewer: EntityViewer) => Promise<boolean>
 }
 
 const serializationOptions: ToObjectOptions<StoredEntity> = {
@@ -153,6 +180,7 @@ export async function createEntityDatabaseService(
       sort,
       page,
       pageSize,
+      viewer,
     ) {
       const normalizedQuery = query?.trim()
       const facetFields = [...new Set(requestedFacets)]
@@ -173,8 +201,17 @@ export async function createEntityDatabaseService(
           },
         })
       }
-      if (structuredFilter) {
-        pipeline.push({ $match: toMongoEntityFilter(structuredFilter) })
+
+      const structuredMatch = structuredFilter
+        ? toMongoEntityFilter(structuredFilter)
+        : undefined
+      const draftMatch = draftVisibilityCondition(viewer)
+      const combinedMatch =
+        structuredMatch && draftMatch
+          ? { $and: [structuredMatch, draftMatch] }
+          : (structuredMatch ?? draftMatch)
+      if (combinedMatch) {
+        pipeline.push({ $match: combinedMatch })
       }
 
       const documentStages: PipelineStage.FacetPipelineStage[] = [
@@ -228,12 +265,17 @@ export async function createEntityDatabaseService(
       }
     },
 
-    async get(entityId) {
-      const entity = await entities.findById(entityId).exec()
+    async get(entityId, viewer) {
+      const draftMatch = draftVisibilityCondition(viewer)
+      const entity = await entities
+        .findOne(
+          draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
+        )
+        .exec()
       return entity ? exposeEntity(entity) : null
     },
 
-    async insert(entity, userId) {
+    async insert(entity, userId, isDraft) {
       const now = new Date().toISOString()
       const id = createEntityId(entity.type)
       const audit = {
@@ -247,6 +289,7 @@ export async function createEntityDatabaseService(
       createdEntity.set({
         _id: id,
         ...values,
+        isDraft,
         audit,
       })
       await createdEntity.save()
@@ -262,7 +305,7 @@ export async function createEntityDatabaseService(
       return exposeEntity(createdEntity)
     },
 
-    async replace(entityId, entity, userId) {
+    async replace(entityId, entity, userId, isDraft) {
       const currentEntity = await entities.findById(entityId).exec()
 
       if (!currentEntity) {
@@ -277,6 +320,7 @@ export async function createEntityDatabaseService(
         modifiedAt: now,
         modifiedBy: userId,
       }
+      const nextIsDraft = Boolean(currentEntity.isDraft) && isDraft
       const { id: _ignoredId, ...values } = entity
       const updatedEntity = await entities
         .findOneAndReplace(
@@ -284,6 +328,7 @@ export async function createEntityDatabaseService(
           {
             _id: entityId,
             ...values,
+            isDraft: nextIsDraft,
             audit,
           },
           { new: true },
@@ -308,8 +353,11 @@ export async function createEntityDatabaseService(
       return exposedUpdatedEntity
     },
 
-    async delete(entityId, userId) {
-      const deletedEntity = await entities.findOneAndDelete({ _id: entityId })
+    async delete(entityId, viewer) {
+      const draftMatch = draftVisibilityCondition(viewer)
+      const deletedEntity = await entities.findOneAndDelete(
+        draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
+      )
 
       if (!deletedEntity) {
         return false
@@ -329,7 +377,7 @@ export async function createEntityDatabaseService(
         entityId,
         operation: 'delete',
         at,
-        by: userId,
+        by: viewer.id,
         before,
       })
 

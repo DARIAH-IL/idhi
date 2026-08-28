@@ -24,6 +24,7 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group'
 import { Badge } from '@/components/ui/badge'
+import { DraftBadge } from '@/components/entity/DraftBadge'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { EntityTags } from '@/components/entity/EntityTags'
 import { getEntityTypeColorClass } from '@/components/entity/EntityTypeIcon'
@@ -416,13 +417,16 @@ function EntityBoard() {
                             />
                           </TableCell>
                           <TableCell>
-                            <Link
-                              to="/entities/$entityId"
-                              params={{ entityId: encodeURIComponent(id) }}
-                              className="hover:underline font-medium"
-                            >
-                              {getEntityDisplayName(entity)}
-                            </Link>
+                            <div className="flex items-center gap-1.5">
+                              <Link
+                                to="/entities/$entityId"
+                                params={{ entityId: encodeURIComponent(id) }}
+                                className="hover:underline font-medium"
+                              >
+                                {getEntityDisplayName(entity)}
+                              </Link>
+                              <DraftBadge isDraft={entity.isDraft} />
+                            </div>
                           </TableCell>
                           <TableCell>
                             <Badge

@@ -9,13 +9,15 @@ interface ScaffoldProps {
   form: AnyFormApi
   children: React.ReactNode
   isSubmitting?: boolean
-  onSubmit: () => void
+  canSaveAsDraft: boolean
+  onSubmit: (isDraft: boolean) => void
 }
 
 export function FormScaffold({
   form,
   children,
   isSubmitting,
+  canSaveAsDraft,
   onSubmit,
 }: ScaffoldProps) {
   const { t } = useTranslation()
@@ -38,7 +40,7 @@ export function FormScaffold({
     <form
       onSubmit={(event) => {
         event.preventDefault()
-        onSubmit()
+        onSubmit(false)
       }}
       className="flex flex-col gap-4"
     >
@@ -46,8 +48,22 @@ export function FormScaffold({
       <Separator />
       <div className="flex gap-2">
         <Button type="submit" isDisabled={isSubmitting}>
-          {isSubmitting ? t('common.loading') : t('common.save')}
+          {isSubmitting
+            ? t('common.loading')
+            : canSaveAsDraft
+              ? t('entity.form.publish')
+              : t('common.save')}
         </Button>
+        {canSaveAsDraft && (
+          <Button
+            type="button"
+            variant="outline"
+            isDisabled={isSubmitting}
+            onPress={() => onSubmit(true)}
+          >
+            {t('entity.form.save_draft')}
+          </Button>
+        )}
         <Button variant="outline" onPress={() => window.history.back()}>
           {t('common.cancel')}
         </Button>

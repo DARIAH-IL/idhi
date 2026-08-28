@@ -2,6 +2,7 @@ import { z } from 'zod'
 import type {
   EntityDatabaseService,
   EntitySearchResult,
+  EntityViewer,
   EntityWrite,
 } from '../db/services/entities'
 import { ApiError } from '../errors/ApiError'
@@ -51,6 +52,7 @@ export interface EntitySearchInput {
 export async function searchEntities(
   entities: EntityDatabaseService,
   { q, facets, filter, sort, page, pageSize }: EntitySearchInput,
+  viewer: EntityViewer | undefined,
 ): Promise<EntitySearchResult> {
   return entities.search(
     q,
@@ -59,14 +61,16 @@ export async function searchEntities(
     sort,
     page ?? searchEntitiesBodyPageDefault,
     pageSize ?? searchEntitiesBodyPageSizeDefault,
+    viewer,
   )
 }
 
 export async function getEntityOrThrow(
   entities: EntityDatabaseService,
   entityId: string,
+  viewer: EntityViewer | undefined,
 ): Promise<AuditedEntity> {
-  const entity = await entities.get(entityId)
+  const entity = await entities.get(entityId, viewer)
 
   if (!entity) {
     throw entityNotFound(entityId)
@@ -79,9 +83,10 @@ export async function createEntity(
   entities: EntityDatabaseService,
   entity: EntityWrite,
   userId: string,
+  isDraft: boolean,
 ): Promise<AuditedEntity> {
   try {
-    return await entities.insert(entity, userId)
+    return await entities.insert(entity, userId, isDraft)
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       throw new ApiError(
@@ -98,6 +103,7 @@ export async function updateEntity(
   entityId: string,
   entity: EntityWrite,
   userId: string,
+  isDraft: boolean,
 ): Promise<AuditedEntity> {
   const requestEntityId = entity.id
 
@@ -120,7 +126,12 @@ export async function updateEntity(
     )
   }
 
-  const updatedEntity = await entities.replace(entityId, entity, userId)
+  const updatedEntity = await entities.replace(
+    entityId,
+    entity,
+    userId,
+    isDraft,
+  )
 
   if (!updatedEntity) {
     throw entityNotFound(entityId)
@@ -132,9 +143,9 @@ export async function updateEntity(
 export async function deleteEntity(
   entities: EntityDatabaseService,
   entityId: string,
-  userId: string,
+  viewer: EntityViewer,
 ): Promise<void> {
-  if (!(await entities.delete(entityId, userId))) {
+  if (!(await entities.delete(entityId, viewer))) {
     throw entityNotFound(entityId)
   }
 }

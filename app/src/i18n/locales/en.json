@@ -289,6 +289,7 @@
     "new_entity": "Create a new entity"
   },
   "entity": {
+    "draft_badge": "Draft",
     "reference": {
       "loading": "Loading…",
       "unavailable": "Entity unavailable"
@@ -1820,6 +1821,8 @@
       "select_type_description": "Choose the type of entity you want to create.",
       "unsaved_changes": "You have unsaved changes. Are you sure you want to leave?",
       "autocomplete_no_results": "No results.",
+      "publish": "Publish",
+      "save_draft": "Save as draft",
       "sections": {
         "identity": "Identity",
         "basic": "Basic information",

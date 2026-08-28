@@ -35,6 +35,10 @@ import {
   UpdateEntityByIdResponse,
   DeleteEntityByIdParams,
 } from './entities.zod'
+import {
+  CreateEntityQueryParams,
+  UpdateEntityByIdQueryParams,
+} from './entities.zod'
 
 const factory = createFactory()
 
@@ -42,7 +46,13 @@ export const searchEntitiesHandlers = factory.createHandlers(
   zValidator('json', SearchEntitiesBody),
   zValidator('response', SearchEntitiesResponse),
   async (c: SearchEntitiesContext) => {
-    return c.json(await searchEntities(c.var.db.entities, c.req.valid('json')))
+    return c.json(
+      await searchEntities(
+        c.var.db.entities,
+        c.req.valid('json'),
+        c.get('user'),
+      ),
+    )
   },
 )
 export const createEntityHandlers = factory.createHandlers(
@@ -50,13 +60,16 @@ export const createEntityHandlers = factory.createHandlers(
     'json',
     CreateEntityBody.superRefine(refineUniqueLangStringLanguages),
   ),
+  zValidator('query', CreateEntityQueryParams),
   async (c: CreateEntityContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
+    const { isDraft = false } = c.req.valid('query')
     const entity = await createEntity(
       c.var.db.entities,
       c.req.valid('json') as unknown as EntityWrite,
       user.id,
+      isDraft,
     )
 
     return c.json(entity, 201)
@@ -68,7 +81,9 @@ export const getEntityByIdHandlers = factory.createHandlers(
   async (c: GetEntityByIdContext) => {
     const { entityId } = c.req.valid('param')
 
-    return c.json(await getEntityOrThrow(c.var.db.entities, entityId))
+    return c.json(
+      await getEntityOrThrow(c.var.db.entities, entityId, c.get('user')),
+    )
   },
 )
 export const updateEntityByIdHandlers = factory.createHandlers(
@@ -78,15 +93,18 @@ export const updateEntityByIdHandlers = factory.createHandlers(
     UpdateEntityByIdBody.superRefine(refineUniqueLangStringLanguages),
   ),
   zValidator('response', UpdateEntityByIdResponse),
+  zValidator('query', UpdateEntityByIdQueryParams),
   async (c: UpdateEntityByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
+    const { isDraft = false } = c.req.valid('query')
     const updatedEntity = await updateEntity(
       c.var.db.entities,
       entityId,
       c.req.valid('json') as unknown as EntityWrite,
       user.id,
+      isDraft,
     )
 
     return c.json(updatedEntity)
@@ -98,7 +116,7 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-    await deleteEntity(c.var.db.entities, entityId, user.id)
+    await deleteEntity(c.var.db.entities, entityId, user)
 
     return c.body(null, 204)
   },

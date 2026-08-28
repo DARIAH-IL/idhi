@@ -22,10 +22,12 @@ import type {
 
 import type {
   AuditedEntity,
+  CreateEntityParams,
   Entity,
   EntitySearch,
   ErrorResponse,
   SearchEntities200,
+  UpdateEntityByIdParams,
 } from '../../models'
 
 import { customInstance } from '../../client.ts'
@@ -39,7 +41,7 @@ const withQueryKey = <T extends object, K>(
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
     // `{ ...query, queryKey }` spread where it was set last.
-    if (key === 'queryKey') {continue}
+    if (key === 'queryKey') continue
     Object.defineProperty(result, key, {
       enumerable: true,
       configurable: true,
@@ -196,6 +198,7 @@ export function useSearchEntities<
  */
 export const createEntity = (
   entity: BodyType<Entity>,
+  params?: CreateEntityParams,
   signal?: AbortSignal,
 ) => {
   return customInstance<AuditedEntity>({
@@ -203,6 +206,7 @@ export const createEntity = (
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     data: entity,
+    params,
     signal,
   })
 }
@@ -214,13 +218,13 @@ export const getCreateEntityMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof createEntity>>,
     TError,
-    { data: BodyType<Entity> },
+    { data: BodyType<Entity>; params?: CreateEntityParams },
     TContext
   >
 }): UseMutationOptions<
   Awaited<ReturnType<typeof createEntity>>,
   TError,
-  { data: BodyType<Entity> },
+  { data: BodyType<Entity>; params?: CreateEntityParams },
   TContext
 > => {
   const mutationKey = ['createEntity']
@@ -234,11 +238,11 @@ export const getCreateEntityMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof createEntity>>,
-    { data: BodyType<Entity> }
+    { data: BodyType<Entity>; params?: CreateEntityParams }
   > = (props) => {
-    const { data } = props ?? {}
+    const { data, params } = props ?? {}
 
-    return createEntity(data)
+    return createEntity(data, params)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -261,7 +265,7 @@ export const useCreateEntity = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof createEntity>>,
       TError,
-      { data: BodyType<Entity> },
+      { data: BodyType<Entity>; params?: CreateEntityParams },
       TContext
     >
   },
@@ -269,7 +273,7 @@ export const useCreateEntity = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof createEntity>>,
   TError,
-  { data: BodyType<Entity> },
+  { data: BodyType<Entity>; params?: CreateEntityParams },
   TContext
 > => {
   return useMutation(getCreateEntityMutationOptions(options), queryClient)
@@ -419,6 +423,7 @@ export function useGetEntityById<
 export const updateEntityById = (
   entityId: string,
   entity: BodyType<Entity>,
+  params?: UpdateEntityByIdParams,
   signal?: AbortSignal,
 ) => {
   return customInstance<AuditedEntity>({
@@ -426,6 +431,7 @@ export const updateEntityById = (
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: entity,
+    params,
     signal,
   })
 }
@@ -437,13 +443,17 @@ export const getUpdateEntityByIdMutationOptions = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof updateEntityById>>,
     TError,
-    { entityId: string; data: BodyType<Entity> },
+    {
+      entityId: string
+      data: BodyType<Entity>
+      params?: UpdateEntityByIdParams
+    },
     TContext
   >
 }): UseMutationOptions<
   Awaited<ReturnType<typeof updateEntityById>>,
   TError,
-  { entityId: string; data: BodyType<Entity> },
+  { entityId: string; data: BodyType<Entity>; params?: UpdateEntityByIdParams },
   TContext
 > => {
   const mutationKey = ['updateEntityById']
@@ -457,11 +467,15 @@ export const getUpdateEntityByIdMutationOptions = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof updateEntityById>>,
-    { entityId: string; data: BodyType<Entity> }
+    {
+      entityId: string
+      data: BodyType<Entity>
+      params?: UpdateEntityByIdParams
+    }
   > = (props) => {
-    const { entityId, data } = props ?? {}
+    const { entityId, data, params } = props ?? {}
 
-    return updateEntityById(entityId, data)
+    return updateEntityById(entityId, data, params)
   }
 
   return { mutationFn, ...mutationOptions }
@@ -484,7 +498,11 @@ export const useUpdateEntityById = <
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof updateEntityById>>,
       TError,
-      { entityId: string; data: BodyType<Entity> },
+      {
+        entityId: string
+        data: BodyType<Entity>
+        params?: UpdateEntityByIdParams
+      },
       TContext
     >
   },
@@ -492,7 +510,7 @@ export const useUpdateEntityById = <
 ): UseMutationResult<
   Awaited<ReturnType<typeof updateEntityById>>,
   TError,
-  { entityId: string; data: BodyType<Entity> },
+  { entityId: string; data: BodyType<Entity>; params?: UpdateEntityByIdParams },
   TContext
 > => {
   return useMutation(getUpdateEntityByIdMutationOptions(options), queryClient)

@@ -220,6 +220,8 @@ paths:
         - Entities
       summary: Create a new entity
       description: Creates an entity with an ID minted by the server. The request ID may be omitted, null, or empty; a non-empty ID is rejected.
+      parameters:
+        - $ref: "#/components/parameters/IsDraft"
       requestBody:
         required: true
         content:
@@ -261,6 +263,8 @@ paths:
         - Entities
       summary: Update an entity
       description: Replaces an entity while preserving the server-managed ID from the URL. The request ID may be omitted, null, or empty; a non-empty ID must match the URL.
+      parameters:
+        - $ref: "#/components/parameters/IsDraft"
       requestBody:
         required: true
         content:
@@ -505,6 +509,17 @@ components:
       required: true
       schema:
         type: string
+
+    IsDraft:
+      name: isDraft
+      in: query
+      required: false
+      description: |
+        Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).
+        An already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.
+      schema:
+        type: boolean
+        default: false
 
     UserId:
       name: userId
@@ -929,6 +944,11 @@ components:
       allOf:
         - $ref: "#/components/schemas/Entity"
         - $ref: "#/components/schemas/Audited"
+        - type: object
+          properties:
+            isDraft:
+              type: boolean
+              description: Whether the entity is a draft, visible only to its creator and administrators.
 
     User:
       type: object
