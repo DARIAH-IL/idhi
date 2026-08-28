@@ -64,27 +64,28 @@ function EditEntityPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
-      <div className="flex items-center gap-2.5">
-        <EntityImage
-          image={entity.image}
-          type={entity.type}
-          alt={getEntityDisplayName(entity)}
-        />
-        <div>
-          <h1 className="text-lg font-semibold">
-            {t('entity.form.edit_title')}
-          </h1>
-          <p className="text-xs text-muted-foreground">
-            {getEntityDisplayName(entity)}
-          </p>
-        </div>
-      </div>
-
       {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
       <EntityForm
         entityType={entity.type}
         entity={entity}
+        title={
+          <div className="flex items-center gap-2.5">
+            <EntityImage
+              image={entity.image}
+              type={entity.type}
+              alt={getEntityDisplayName(entity)}
+            />
+            <div>
+              <h1 className="text-lg font-semibold">
+                {t('entity.form.edit_title')}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                {getEntityDisplayName(entity)}
+              </p>
+            </div>
+          </div>
+        }
         onSubmit={(data, isDraft) => {
           updateMutation.mutate({
             entityId: decodedId,

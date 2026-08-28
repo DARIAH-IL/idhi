@@ -39,24 +39,41 @@ export const ToolFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="license" validators={enumValidators(ToolLicense)}>
+        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
-            <field.EnumSelectField
-              label={<EntityFieldLabel entityClass="Tool" field="license" />}
-              options={ToolLicense}
+            <field.DoiField
+              label={<EntityFieldLabel entityClass="Tool" field="doi" />}
+              placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
             />
           )}
         </form.AppField>
         <form.AppField
-          name="code_repository"
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Tool" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
           validators={valueValidators({ kind: 'url' })}
         >
           {(field) => (
             <field.TextField
-              label={
-                <EntityFieldLabel entityClass="Tool" field="code_repository" />
-              }
+              label={<EntityFieldLabel entityClass="Tool" field="homepage" />}
               type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -76,16 +93,16 @@ export const ToolFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
+        <form.AppField
+          name="code_repository"
+          validators={valueValidators({ kind: 'url' })}
+        >
           {(field) => (
-            <field.DoiField
-              label={<EntityFieldLabel entityClass="Tool" field="doi" />}
-              placeholder="https://doi.org/…"
-              onSelect={(suggestion) => {
-                if (!hasLangStringValue(form.getFieldValue('name'))) {
-                  form.setFieldValue('name', langString(suggestion.title))
-                }
-              }}
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Tool" field="code_repository" />
+              }
+              type="url"
             />
           )}
         </form.AppField>
@@ -101,16 +118,24 @@ export const ToolFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField name="license" validators={enumValidators(ToolLicense)}>
+          {(field) => (
+            <field.EnumSelectField
+              label={<EntityFieldLabel entityClass="Tool" field="license" />}
+              options={ToolLicense}
+            />
+          )}
+        </form.AppField>
         <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
+          name="additional_urls"
+          validators={stringArrayValidators({ kind: 'url' })}
         >
           {(field) => (
-            <field.TextField
+            <field.StringArrayField
               label={
-                <EntityFieldLabel entityClass="Tool" field="contact_email" />
+                <EntityFieldLabel entityClass="Tool" field="additional_urls" />
               }
-              type="email"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -134,15 +159,15 @@ export const ToolFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="additional_urls"
-          validators={stringArrayValidators({ kind: 'url' })}
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
         >
           {(field) => (
-            <field.StringArrayField
+            <field.TextField
               label={
-                <EntityFieldLabel entityClass="Tool" field="additional_urls" />
+                <EntityFieldLabel entityClass="Tool" field="contact_email" />
               }
-              placeholder="https://…"
+              type="email"
             />
           )}
         </form.AppField>
@@ -236,6 +261,17 @@ export const ToolFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Tool" field="same_as" />}
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

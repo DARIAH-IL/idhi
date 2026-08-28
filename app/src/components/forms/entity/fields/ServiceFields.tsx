@@ -39,15 +39,29 @@ export const ServiceFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="provider"
-          validators={entityRefValidators(['idhi:Organization'])}
+          name="description"
+          validators={localizedValueValidators()}
         >
           {(field) => (
-            <field.EntityRefField
+            <field.LangStringField
               label={
-                <EntityFieldLabel entityClass="Service" field="provider" />
+                <EntityFieldLabel entityClass="Service" field="description" />
               }
-              entityTypes={['idhi:Organization']}
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Service" field="homepage" />
+              }
+              type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -64,19 +78,6 @@ export const ServiceFields = withForm({
                 />
               }
               type="url"
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel entityClass="Service" field="contact_email" />
-              }
-              type="email"
             />
           )}
         </form.AppField>
@@ -100,6 +101,32 @@ export const ServiceFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Service" field="contact_email" />
+              }
+              type="email"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="provider"
+          validators={entityRefValidators(['idhi:Organization'])}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={
+                <EntityFieldLabel entityClass="Service" field="provider" />
+              }
+              entityTypes={['idhi:Organization']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="additional_urls"
           validators={stringArrayValidators({ kind: 'url' })}
         >
@@ -111,6 +138,17 @@ export const ServiceFields = withForm({
                   field="additional_urls"
                 />
               }
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Service" field="same_as" />}
               placeholder="https://…"
             />
           )}

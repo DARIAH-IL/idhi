@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { facilityDefaults, facilityFormOptions } from '../entity-form-options'
 import { FacilityFields } from '../fields/FacilityFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   facility?: Facility & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function FacilityForm({ facility, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!facility || facility.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function FacilityForm({ facility, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Facility"
-          isEditing={!!facility}
         />
-        <SpecificSection>
-          <FacilityFields form={form} />
-        </SpecificSection>
+        <FacilityFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

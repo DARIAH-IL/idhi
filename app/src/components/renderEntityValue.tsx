@@ -59,6 +59,12 @@ export function renderEntityValue(
   if (v === null || v === undefined || v === '') {
     return null
   }
+  if (typeof v === 'number') {
+    return new Intl.NumberFormat(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: Number.isInteger(v) ? 0 : 2,
+    }).format(v)
+  }
   if (
     (field === 'start_date' || field === 'end_date') &&
     typeof v === 'string'

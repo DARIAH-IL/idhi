@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { toolDefaults, toolFormOptions } from '../entity-form-options'
 import { ToolFields } from '../fields/ToolFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   tool?: Tool & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function ToolForm({ tool, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!tool || tool.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function ToolForm({ tool, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Tool"
-          isEditing={!!tool}
         />
-        <SpecificSection>
-          <ToolFields form={form} />
-        </SpecificSection>
+        <ToolFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

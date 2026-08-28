@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { eventDefaults, eventFormOptions } from '../entity-form-options'
 import { EventFields } from '../fields/EventFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   event?: Event & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function EventForm({ event, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!event || event.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function EventForm({ event, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Event"
-          isEditing={!!event}
         />
-        <SpecificSection>
-          <EventFields form={form} />
-        </SpecificSection>
+        <EventFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

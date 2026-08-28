@@ -46,6 +46,105 @@ export const TrainingMaterialFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
+          {(field) => (
+            <field.DoiField
+              label={
+                <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
+              }
+              placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="description"
+                />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="digital_humanities_activities"
+          validators={stringArrayValidators({
+            allowedValues: TrainingMaterialDigitalHumanitiesActivitiesItem,
+          })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="digital_humanities_activities"
+                />
+              }
+              placeholder="tadirah:…"
+              options={TrainingMaterialDigitalHumanitiesActivitiesItem}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="date_issued"
+          validators={valueValidators({ kind: 'date' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="date_issued"
+                />
+              }
+              type="date"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="homepage"
+                />
+              }
+              type="url"
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="contact_email"
+                />
+              }
+              type="email"
+            />
+          )}
+        </form.AppField>
         <form.AppField
           name="creators"
           validators={entityRefArrayValidators([
@@ -82,7 +181,7 @@ export const TrainingMaterialFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="learning_outcomes"
+          name="educational_level"
           validators={localizedValueValidators()}
         >
           {(field) => (
@@ -90,10 +189,9 @@ export const TrainingMaterialFields = withForm({
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
-                  field="learning_outcomes"
+                  field="educational_level"
                 />
               }
-              multiline
             />
           )}
         </form.AppField>
@@ -129,7 +227,7 @@ export const TrainingMaterialFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="educational_level"
+          name="learning_outcomes"
           validators={localizedValueValidators()}
         >
           {(field) => (
@@ -137,9 +235,10 @@ export const TrainingMaterialFields = withForm({
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
-                  field="educational_level"
+                  field="learning_outcomes"
                 />
               }
+              multiline
             />
           )}
         </form.AppField>
@@ -153,22 +252,6 @@ export const TrainingMaterialFields = withForm({
                 />
               }
               placeholder="en"
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="material_url"
-          validators={valueValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel
-                  entityClass="TrainingMaterial"
-                  field="material_url"
-                />
-              }
-              type="url"
             />
           )}
         </form.AppField>
@@ -202,52 +285,50 @@ export const TrainingMaterialFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="date_issued"
-          validators={valueValidators({ kind: 'date' })}
+          name="material_url"
+          validators={valueValidators({ kind: 'url' })}
         >
           {(field) => (
             <field.TextField
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
-                  field="date_issued"
+                  field="material_url"
                 />
               }
-              type="date"
-            />
-          )}
-        </form.AppField>
-        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
-          {(field) => (
-            <field.DoiField
-              label={
-                <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
-              }
-              placeholder="https://doi.org/…"
-              onSelect={(suggestion) => {
-                if (!hasLangStringValue(form.getFieldValue('name'))) {
-                  form.setFieldValue('name', langString(suggestion.title))
-                }
-              }}
+              type="url"
             />
           )}
         </form.AppField>
         <form.AppField
-          name="digital_humanities_activities"
-          validators={stringArrayValidators({
-            allowedValues: TrainingMaterialDigitalHumanitiesActivitiesItem,
-          })}
+          name="part_of_training_material"
+          validators={entityRefValidators(['idhi:TrainingMaterial'])}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={
+                <EntityFieldLabel
+                  entityClass="TrainingMaterial"
+                  field="part_of_training_material"
+                />
+              }
+              entityTypes={['idhi:TrainingMaterial']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="additional_urls"
+          validators={stringArrayValidators({ kind: 'url' })}
         >
           {(field) => (
             <field.StringArrayField
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
-                  field="digital_humanities_activities"
+                  field="additional_urls"
                 />
               }
-              placeholder="tadirah:…"
-              options={TrainingMaterialDigitalHumanitiesActivitiesItem}
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -300,23 +381,7 @@ export const TrainingMaterialFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="part_of_training_material"
-          validators={entityRefValidators(['idhi:TrainingMaterial'])}
-        >
-          {(field) => (
-            <field.EntityRefField
-              label={
-                <EntityFieldLabel
-                  entityClass="TrainingMaterial"
-                  field="part_of_training_material"
-                />
-              }
-              entityTypes={['idhi:TrainingMaterial']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="additional_urls"
+          name="same_as"
           validators={stringArrayValidators({ kind: 'url' })}
         >
           {(field) => (
@@ -324,26 +389,10 @@ export const TrainingMaterialFields = withForm({
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
-                  field="additional_urls"
+                  field="same_as"
                 />
               }
               placeholder="https://…"
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel
-                  entityClass="TrainingMaterial"
-                  field="contact_email"
-                />
-              }
-              type="email"
             />
           )}
         </form.AppField>

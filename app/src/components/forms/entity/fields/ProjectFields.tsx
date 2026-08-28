@@ -29,6 +29,19 @@ export const ProjectFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Project" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="start_date"
           validators={valueValidators({ kind: 'date' })}
         >
@@ -55,18 +68,50 @@ export const ProjectFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="funding_status"
-          validators={enumValidators(ProjectFundingStatus)}
+          name="digital_humanities_activities"
+          validators={stringArrayValidators({
+            allowedValues: ProjectDigitalHumanitiesActivitiesItem,
+          })}
         >
           {(field) => (
-            <field.EnumSelectField
+            <field.StringArrayField
               label={
                 <EntityFieldLabel
                   entityClass="Project"
-                  field="funding_status"
+                  field="digital_humanities_activities"
                 />
               }
-              options={ProjectFundingStatus}
+              placeholder="tadirah:…"
+              options={ProjectDigitalHumanitiesActivitiesItem}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="research_disciplines"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="research_disciplines"
+                />
+              }
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Project" field="homepage" />
+              }
+              type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -84,17 +129,18 @@ export const ProjectFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="research_disciplines"
-          validators={localizedValueValidators()}
+          name="additional_urls"
+          validators={stringArrayValidators({ kind: 'url' })}
         >
           {(field) => (
-            <field.LangStringField
+            <field.StringArrayField
               label={
                 <EntityFieldLabel
                   entityClass="Project"
-                  field="research_disciplines"
+                  field="additional_urls"
                 />
               }
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -128,140 +174,91 @@ export const ProjectFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField
-          name="digital_humanities_activities"
-          validators={stringArrayValidators({
-            allowedValues: ProjectDigitalHumanitiesActivitiesItem,
-          })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="digital_humanities_activities"
-                />
-              }
-              placeholder="tadirah:…"
-              options={ProjectDigitalHumanitiesActivitiesItem}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="additional_urls"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="additional_urls"
-                />
-              }
-              placeholder="https://…"
-            />
-          )}
-        </form.AppField>
 
-        <form.AppField
-          name="outputs_datasets"
-          validators={entityRefArrayValidators(['idhi:Dataset'])}
-        >
+        <form.AppField name="organization_roles" mode="array">
           {(field) => (
-            <field.EntityRefArrayField
+            <field.ArraySection
               label={
                 <EntityFieldLabel
                   entityClass="Project"
-                  field="outputs_datasets"
+                  field="organization_roles"
                 />
               }
-              entityTypes={['idhi:Dataset']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="outputs_publications"
-          validators={entityRefArrayValidators(['idhi:Publication'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="outputs_publications"
-                />
-              }
-              entityTypes={['idhi:Publication']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="outputs_tools"
-          validators={entityRefArrayValidators(['idhi:Tool'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel entityClass="Project" field="outputs_tools" />
-              }
-              entityTypes={['idhi:Tool']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="outputs_training_materials"
-          validators={entityRefArrayValidators(['idhi:TrainingMaterial'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="outputs_training_materials"
-                />
-              }
-              entityTypes={['idhi:TrainingMaterial']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="uses_datasets"
-          validators={entityRefArrayValidators(['idhi:Dataset'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel entityClass="Project" field="uses_datasets" />
-              }
-              entityTypes={['idhi:Dataset']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="uses_services"
-          validators={entityRefArrayValidators(['idhi:Service'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel entityClass="Project" field="uses_services" />
-              }
-              entityTypes={['idhi:Service']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="uses_tools"
-          validators={entityRefArrayValidators(['idhi:Tool'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel entityClass="Project" field="uses_tools" />
-              }
-              entityTypes={['idhi:Tool']}
-            />
+              defaultItem={{ organization: '' }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`organization_roles[${index}].organization`}
+                    validators={entityRefValidators(['idhi:Organization'], {
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EntityRefField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="organization"
+                          />
+                        }
+                        entityTypes={['idhi:Organization']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_roles[${index}].org_project_role`}
+                    validators={enumValidators(
+                      ProjectOrganizationRolesItemOrgProjectRole,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="org_project_role"
+                          />
+                        }
+                        options={ProjectOrganizationRolesItemOrgProjectRole}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_roles[${index}].start_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="start_date"
+                          />
+                        }
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_roles[${index}].end_date`}
+                    validators={valueValidators({ kind: 'date' })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="end_date"
+                          />
+                        }
+                        type="date"
+                      />
+                    )}
+                  </form.AppField>
+                </>
+              )}
+            </field.ArraySection>
           )}
         </form.AppField>
 
@@ -354,90 +351,120 @@ export const ProjectFields = withForm({
           )}
         </form.AppField>
 
-        <form.AppField name="organization_roles" mode="array">
+        <form.AppField
+          name="funding_status"
+          validators={enumValidators(ProjectFundingStatus)}
+        >
           {(field) => (
-            <field.ArraySection
+            <field.EnumSelectField
               label={
                 <EntityFieldLabel
                   entityClass="Project"
-                  field="organization_roles"
+                  field="funding_status"
                 />
               }
-              defaultItem={{ organization: '' }}
-            >
-              {(index) => (
-                <>
-                  <form.AppField
-                    name={`organization_roles[${index}].organization`}
-                    validators={entityRefValidators(['idhi:Organization'], {
-                      required: true,
-                    })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EntityRefField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="organization"
-                          />
-                        }
-                        entityTypes={['idhi:Organization']}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].org_project_role`}
-                    validators={enumValidators(
-                      ProjectOrganizationRolesItemOrgProjectRole,
-                    )}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EnumSelectField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="org_project_role"
-                          />
-                        }
-                        options={ProjectOrganizationRolesItemOrgProjectRole}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.TextField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="start_date"
-                          />
-                        }
-                        type="date"
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.TextField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="end_date"
-                          />
-                        }
-                        type="date"
-                      />
-                    )}
-                  </form.AppField>
-                </>
-              )}
-            </field.ArraySection>
+              options={ProjectFundingStatus}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="uses_datasets"
+          validators={entityRefArrayValidators(['idhi:Dataset'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_datasets" />
+              }
+              entityTypes={['idhi:Dataset']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="uses_services"
+          validators={entityRefArrayValidators(['idhi:Service'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_services" />
+              }
+              entityTypes={['idhi:Service']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="uses_tools"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Project" field="uses_tools" />
+              }
+              entityTypes={['idhi:Tool']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="outputs_publications"
+          validators={entityRefArrayValidators(['idhi:Publication'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_publications"
+                />
+              }
+              entityTypes={['idhi:Publication']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="outputs_datasets"
+          validators={entityRefArrayValidators(['idhi:Dataset'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_datasets"
+                />
+              }
+              entityTypes={['idhi:Dataset']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="outputs_tools"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Project" field="outputs_tools" />
+              }
+              entityTypes={['idhi:Tool']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="outputs_training_materials"
+          validators={entityRefArrayValidators(['idhi:TrainingMaterial'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="outputs_training_materials"
+                />
+              }
+              entityTypes={['idhi:TrainingMaterial']}
+            />
           )}
         </form.AppField>
 
@@ -577,6 +604,17 @@ export const ProjectFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Project" field="same_as" />}
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

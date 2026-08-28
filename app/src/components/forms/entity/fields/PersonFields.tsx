@@ -89,6 +89,31 @@ export const PersonFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={<EntityFieldLabel entityClass="Person" field="homepage" />}
+              type="url"
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
 
         <form.AppField name="affiliations" mode="array">
           {(field) => (
@@ -171,6 +196,17 @@ export const PersonFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Person" field="same_as" />}
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

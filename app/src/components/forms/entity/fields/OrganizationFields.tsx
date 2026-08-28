@@ -42,22 +42,6 @@ export const OrganizationFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel
-                  entityClass="Organization"
-                  field="contact_email"
-                />
-              }
-              type="email"
-            />
-          )}
-        </form.AppField>
         <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
           {(field) => (
             <field.RorField
@@ -80,6 +64,36 @@ export const OrganizationFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="description"
+                />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="homepage" />
+              }
+              type="url"
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
         <form.AppField name="location" validators={localizedValueValidators()}>
           {(field) => (
             <field.LangStringField
@@ -99,6 +113,22 @@ export const OrganizationFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="contact_email"
+                />
+              }
+              type="email"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="additional_urls"
           validators={stringArrayValidators({ kind: 'url' })}
         >
@@ -111,18 +141,6 @@ export const OrganizationFields = withForm({
                 />
               }
               placeholder="https://…"
-            />
-          )}
-        </form.AppField>
-        <form.AppField name="marketplace_sync">
-          {(field) => (
-            <field.BooleanField
-              label={
-                <EntityFieldLabel
-                  entityClass="Organization"
-                  field="marketplace_sync"
-                />
-              }
             />
           )}
         </form.AppField>
@@ -193,6 +211,19 @@ export const OrganizationFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="same_as" />
+              }
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

@@ -10,6 +10,7 @@ import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
+  stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
 import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
@@ -40,19 +41,6 @@ export const DatasetFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField
-          name="date_issued"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel entityClass="Dataset" field="date_issued" />
-              }
-              type="date"
-            />
-          )}
-        </form.AppField>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.DoiField
@@ -63,6 +51,33 @@ export const DatasetFields = withForm({
                   form.setFieldValue('name', langString(suggestion.title))
                 }
               }}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="homepage" />
+              }
+              type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -83,26 +98,15 @@ export const DatasetFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="publisher"
-          validators={entityRefValidators(['idhi:Organization'])}
+          name="date_issued"
+          validators={valueValidators({ kind: 'date' })}
         >
           {(field) => (
-            <field.EntityRefField
+            <field.TextField
               label={
-                <EntityFieldLabel entityClass="Dataset" field="publisher" />
+                <EntityFieldLabel entityClass="Dataset" field="date_issued" />
               }
-              entityTypes={['idhi:Organization']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="license"
-          validators={enumValidators(DatasetLicense)}
-        >
-          {(field) => (
-            <field.EnumSelectField
-              label={<EntityFieldLabel entityClass="Dataset" field="license" />}
-              options={DatasetLicense}
+              type="date"
             />
           )}
         </form.AppField>
@@ -113,10 +117,13 @@ export const DatasetFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="extent">
+        <form.AppField name="media_type">
           {(field) => (
             <field.StringArrayField
-              label={<EntityFieldLabel entityClass="Dataset" field="extent" />}
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="media_type" />
+              }
+              placeholder="application/json"
             />
           )}
         </form.AppField>
@@ -130,13 +137,23 @@ export const DatasetFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="media_type">
+        <form.AppField
+          name="publisher"
+          validators={entityRefValidators(['idhi:Organization'])}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="publisher" />
+              }
+              entityTypes={['idhi:Organization']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="extent">
           {(field) => (
             <field.StringArrayField
-              label={
-                <EntityFieldLabel entityClass="Dataset" field="media_type" />
-              }
-              placeholder="application/json"
+              label={<EntityFieldLabel entityClass="Dataset" field="extent" />}
             />
           )}
         </form.AppField>
@@ -155,15 +172,13 @@ export const DatasetFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="datasets"
-          validators={entityRefArrayValidators(['idhi:Dataset'])}
+          name="license"
+          validators={enumValidators(DatasetLicense)}
         >
           {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel entityClass="Dataset" field="datasets" />
-              }
-              entityTypes={['idhi:Dataset']}
+            <field.EnumSelectField
+              label={<EntityFieldLabel entityClass="Dataset" field="license" />}
+              options={DatasetLicense}
             />
           )}
         </form.AppField>
@@ -175,6 +190,19 @@ export const DatasetFields = withForm({
             <field.EntityRefArrayField
               label={
                 <EntityFieldLabel entityClass="Dataset" field="derived_from" />
+              }
+              entityTypes={['idhi:Dataset']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="datasets"
+          validators={entityRefArrayValidators(['idhi:Dataset'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Dataset" field="datasets" />
               }
               entityTypes={['idhi:Dataset']}
             />
@@ -286,6 +314,17 @@ export const DatasetFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Dataset" field="same_as" />}
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

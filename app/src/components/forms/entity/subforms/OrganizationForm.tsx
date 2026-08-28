@@ -7,10 +7,11 @@ import {
 } from '../entity-form-options'
 import { OrganizationFields } from '../fields/OrganizationFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   organization?: Organization & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -27,6 +28,7 @@ export function OrganizationForm({ organization, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!organization || organization.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -35,11 +37,8 @@ export function OrganizationForm({ organization, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Organization"
-          isEditing={!!organization}
         />
-        <SpecificSection>
-          <OrganizationFields form={form} />
-        </SpecificSection>
+        <OrganizationFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

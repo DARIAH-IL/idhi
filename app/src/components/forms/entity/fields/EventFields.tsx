@@ -39,6 +39,19 @@ export const EventFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Event" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="start_date"
           validators={valueValidators({ kind: 'date' })}
         >
@@ -63,15 +76,14 @@ export const EventFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
         >
           {(field) => (
             <field.TextField
-              label={
-                <EntityFieldLabel entityClass="Event" field="contact_email" />
-              }
-              type="email"
+              label={<EntityFieldLabel entityClass="Event" field="homepage" />}
+              type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -86,6 +98,19 @@ export const EventFields = withForm({
           {(field) => (
             <field.LangStringField
               label={<EntityFieldLabel entityClass="Event" field="address" />}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Event" field="contact_email" />
+              }
+              type="email"
             />
           )}
         </form.AppField>
@@ -190,6 +215,17 @@ export const EventFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={<EntityFieldLabel entityClass="Event" field="same_as" />}
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

@@ -7,10 +7,11 @@ import {
 } from '../entity-form-options'
 import { TrainingMaterialFields } from '../fields/TrainingMaterialFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   trainingMaterial?: TrainingMaterial & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -27,6 +28,7 @@ export function TrainingMaterialForm({ trainingMaterial, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!trainingMaterial || trainingMaterial.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -35,11 +37,8 @@ export function TrainingMaterialForm({ trainingMaterial, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:TrainingMaterial"
-          isEditing={!!trainingMaterial}
         />
-        <SpecificSection>
-          <TrainingMaterialFields form={form} />
-        </SpecificSection>
+        <TrainingMaterialFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

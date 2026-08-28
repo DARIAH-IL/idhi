@@ -9,6 +9,7 @@ import {
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
+  stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
 import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
@@ -73,6 +74,36 @@ export const PublicationFields = withForm({
           )}
         </form.AppField>
         <form.AppField
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="description"
+                />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.TextField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="homepage" />
+              }
+              type="url"
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
           name="date_issued"
           validators={valueValidators({ kind: 'date' })}
         >
@@ -102,22 +133,6 @@ export const PublicationFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="part_of"
-          validators={entityRefValidators(['idhi:Publication'], {
-            allowExternalUrl: true,
-          })}
-        >
-          {(field) => (
-            <field.EntityRefField
-              label={
-                <EntityFieldLabel entityClass="Publication" field="part_of" />
-              }
-              entityTypes={['idhi:Publication']}
-              allowExternalUrl
-            />
-          )}
-        </form.AppField>
-        <form.AppField
           name="published_in"
           validators={localizedValueValidators()}
         >
@@ -129,22 +144,6 @@ export const PublicationFields = withForm({
                   field="published_in"
                 />
               }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="presented_at"
-          validators={entityRefArrayValidators(['idhi:Event'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Publication"
-                  field="presented_at"
-                />
-              }
-              entityTypes={['idhi:Event']}
             />
           )}
         </form.AppField>
@@ -250,6 +249,51 @@ export const PublicationFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="part_of"
+          validators={entityRefValidators(['idhi:Publication'], {
+            allowExternalUrl: true,
+          })}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="part_of" />
+              }
+              entityTypes={['idhi:Publication']}
+              allowExternalUrl
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="presented_at"
+          validators={entityRefArrayValidators(['idhi:Event'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="presented_at"
+                />
+              }
+              entityTypes={['idhi:Event']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="same_as" />
+              }
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

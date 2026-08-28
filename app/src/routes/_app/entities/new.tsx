@@ -115,24 +115,20 @@ function NewEntityPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <EntityTypeIcon type={selectedType} />
-          <h1 className="text-lg font-semibold">
-            {t('entity.form.new_title', {
-              type: getEntityTypeLabel(selectedType),
-            })}
-          </h1>
-        </div>
-        <Button variant="ghost" size="sm" onPress={() => setSelectedType(null)}>
-          {t('common.back')}
-        </Button>
-      </div>
-
       {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
       <EntityForm
         entityType={selectedType}
+        title={
+          <div className="flex items-center gap-2.5">
+            <EntityTypeIcon type={selectedType} />
+            <h1 className="text-lg font-semibold">
+              {t('entity.form.new_title', {
+                type: getEntityTypeLabel(selectedType),
+              })}
+            </h1>
+          </div>
+        }
         onSubmit={(data, isDraft) => {
           createMutation.mutate({ data, params: { isDraft } })
         }}

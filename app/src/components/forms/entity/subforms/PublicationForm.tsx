@@ -7,10 +7,11 @@ import {
 } from '../entity-form-options'
 import { PublicationFields } from '../fields/PublicationFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   publication?: Publication & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -27,6 +28,7 @@ export function PublicationForm({ publication, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!publication || publication.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -35,11 +37,8 @@ export function PublicationForm({ publication, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Publication"
-          isEditing={!!publication}
         />
-        <SpecificSection>
-          <PublicationFields form={form} />
-        </SpecificSection>
+        <PublicationFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

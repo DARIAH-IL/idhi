@@ -24,18 +24,29 @@ export const FacilityFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="contact_email"
-          validators={valueValidators({ kind: 'email' })}
+          name="description"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Facility" field="description" />
+              }
+              multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="homepage"
+          validators={valueValidators({ kind: 'url' })}
         >
           {(field) => (
             <field.TextField
               label={
-                <EntityFieldLabel
-                  entityClass="Facility"
-                  field="contact_email"
-                />
+                <EntityFieldLabel entityClass="Facility" field="homepage" />
               }
-              type="email"
+              type="url"
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -58,34 +69,18 @@ export const FacilityFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="services_offered"
-          validators={entityRefArrayValidators(['idhi:Service'])}
+          name="contact_email"
+          validators={valueValidators({ kind: 'email' })}
         >
           {(field) => (
-            <field.EntityRefArrayField
+            <field.TextField
               label={
                 <EntityFieldLabel
                   entityClass="Facility"
-                  field="services_offered"
+                  field="contact_email"
                 />
               }
-              entityTypes={['idhi:Service']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="tools_provided"
-          validators={entityRefArrayValidators(['idhi:Tool'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Facility"
-                  field="tools_provided"
-                />
-              }
-              entityTypes={['idhi:Tool']}
+              type="email"
             />
           )}
         </form.AppField>
@@ -197,6 +192,51 @@ export const FacilityFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="services_offered"
+          validators={entityRefArrayValidators(['idhi:Service'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="services_offered"
+                />
+              }
+              entityTypes={['idhi:Service']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="tools_provided"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Facility"
+                  field="tools_provided"
+                />
+              }
+              entityTypes={['idhi:Tool']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              label={
+                <EntityFieldLabel entityClass="Facility" field="same_as" />
+              }
+              placeholder="https://…"
+            />
           )}
         </form.AppField>
       </>

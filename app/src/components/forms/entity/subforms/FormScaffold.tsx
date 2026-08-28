@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator'
 
 interface ScaffoldProps {
   form: AnyFormApi
+  title: React.ReactNode
   children: React.ReactNode
   isSubmitting?: boolean
   canSaveAsDraft: boolean
@@ -15,6 +16,7 @@ interface ScaffoldProps {
 
 export function FormScaffold({
   form,
+  title,
   children,
   isSubmitting,
   canSaveAsDraft,
@@ -44,43 +46,33 @@ export function FormScaffold({
       }}
       className="flex flex-col gap-4"
     >
-      {children}
-      <Separator />
-      <div className="flex gap-2">
-        <Button type="submit" isDisabled={isSubmitting}>
-          {isSubmitting
-            ? t('common.loading')
-            : canSaveAsDraft
-              ? t('entity.form.publish')
-              : t('common.save')}
-        </Button>
-        {canSaveAsDraft && (
-          <Button
-            type="button"
-            variant="outline"
-            isDisabled={isSubmitting}
-            onPress={() => onSubmit(true)}
-          >
-            {t('entity.form.save_draft')}
+      <div className="sticky top-0 z-10 -mx-6 flex items-center justify-between gap-4 bg-background px-6 py-2">
+        {title}
+        <div className="flex shrink-0 gap-2">
+          <Button type="submit" isDisabled={isSubmitting}>
+            {isSubmitting
+              ? t('common.loading')
+              : canSaveAsDraft
+                ? t('entity.form.publish')
+                : t('common.save')}
           </Button>
-        )}
-        <Button variant="outline" onPress={() => window.history.back()}>
-          {t('common.cancel')}
-        </Button>
+          {canSaveAsDraft && (
+            <Button
+              type="button"
+              variant="outline"
+              isDisabled={isSubmitting}
+              onPress={() => onSubmit(true)}
+            >
+              {t('entity.form.save_draft')}
+            </Button>
+          )}
+          <Button variant="outline" onPress={() => window.history.back()}>
+            {t('common.cancel')}
+          </Button>
+        </div>
       </div>
-    </form>
-  )
-}
-
-export function SpecificSection({ children }: { children: React.ReactNode }) {
-  const { t } = useTranslation()
-  return (
-    <>
       <Separator />
-      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-        {t('entity.form.sections.specific')}
-      </p>
       <div className="grid items-start gap-4 lg:grid-cols-2">{children}</div>
-    </>
+    </form>
   )
 }

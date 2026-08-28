@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { serviceDefaults, serviceFormOptions } from '../entity-form-options'
 import { ServiceFields } from '../fields/ServiceFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   service?: Service & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function ServiceForm({ service, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!service || service.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function ServiceForm({ service, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Service"
-          isEditing={!!service}
         />
-        <SpecificSection>
-          <ServiceFields form={form} />
-        </SpecificSection>
+        <ServiceFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

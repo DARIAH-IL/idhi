@@ -14,6 +14,7 @@ import { TrainingMaterialForm } from './subforms/TrainingMaterialForm'
 interface Props {
   entityType: EntityType
   entity?: AuditedEntity
+  title: React.ReactNode
   onSubmit: (data: Entity, isDraft: boolean) => void
   isSubmitting?: boolean
 }

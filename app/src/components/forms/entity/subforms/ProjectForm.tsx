@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { projectDefaults, projectFormOptions } from '../entity-form-options'
 import { ProjectFields } from '../fields/ProjectFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   project?: Project & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function ProjectForm({ project, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!project || project.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function ProjectForm({ project, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Project"
-          isEditing={!!project}
         />
-        <SpecificSection>
-          <ProjectFields form={form} />
-        </SpecificSection>
+        <ProjectFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )

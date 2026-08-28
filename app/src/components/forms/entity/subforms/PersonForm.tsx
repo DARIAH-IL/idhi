@@ -4,10 +4,11 @@ import { useAppForm } from '@/components/forms/app-form'
 import { personDefaults, personFormOptions } from '../entity-form-options'
 import { PersonFields } from '../fields/PersonFields'
 import { CommonEntityFields, commonFieldMap } from './common'
-import { FormScaffold, SpecificSection } from './FormScaffold'
+import { FormScaffold } from './FormScaffold'
 
 interface Props {
   person?: Person & { isDraft?: boolean }
+  title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
 }
@@ -24,6 +25,7 @@ export function PersonForm({ person, ...props }: Props) {
     <form.AppForm>
       <FormScaffold
         form={form}
+        title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!person || person.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
@@ -32,11 +34,8 @@ export function PersonForm({ person, ...props }: Props) {
           form={form}
           fields={commonFieldMap}
           entityType="idhi:Person"
-          isEditing={!!person}
         />
-        <SpecificSection>
-          <PersonFields form={form} />
-        </SpecificSection>
+        <PersonFields form={form} />
       </FormScaffold>
     </form.AppForm>
   )
