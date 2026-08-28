@@ -7,6 +7,6 @@
 
 /**
  * A dot-separated entity field path. Operators and array indexes are not allowed.
- * @pattern ^[A-Za-z][A-Za-z0-9]*(\.[A-Za-z][A-Za-z0-9]*)*$
+ * @pattern ^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z][A-Za-z0-9_]*)*$
  */
 export type FilterableField = string

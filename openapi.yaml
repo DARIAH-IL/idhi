@@ -545,7 +545,7 @@ components:
 
     FilterableField:
       type: string
-      pattern: "^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$"
+      pattern: "^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$"
       description: A dot-separated entity field path. Operators and array indexes are not allowed.
 
     FilterOperator:

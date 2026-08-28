@@ -13,16 +13,42 @@ import {
 import { getEntityTermUri } from '@/api/termUris/termUri'
 import { EntityNameIdentifiers } from './EntityNameIdentifiers'
 import { EntityImage } from './EntityImage'
+import { useEntityReferences } from './EntityReferencesProvider'
+import type { AuditedEntity } from '#/api/models/auditedEntity.ts'
 
-export function EntityReferenceCard({ entityId }: { entityId: string }) {
+export function EntityReferenceCard({
+  entityId,
+  entity: providedEntity,
+}: {
+  entityId: string
+  entity?: AuditedEntity
+}) {
   const { t } = useTranslation()
-  const { data, isLoading, isError } = useQuery(
+  const references = useEntityReferences()
+  const isBatchRequested =
+    providedEntity === undefined &&
+    (references?.entityIds.has(entityId) ?? false)
+  const entityQuery = useQuery(
     getGetEntityByIdQueryOptions(entityId, {
-      query: { retry: false },
+      query: {
+        enabled: providedEntity === undefined && !isBatchRequested,
+        retry: false,
+      },
     }),
   )
 
-  if (isLoading || isError || data === undefined) {
+  let data = providedEntity
+  let isLoading = false
+
+  if (isBatchRequested) {
+    data = references?.entitiesById.get(entityId)
+    isLoading = data === undefined && (references?.isLoading ?? false)
+  } else if (providedEntity === undefined) {
+    data = entityQuery.data
+    isLoading = entityQuery.isLoading
+  }
+
+  if (isLoading || data === undefined) {
     return (
       <Card size="sm" className="bg-muted/20">
         <CardContent className="p-2.5">

@@ -1,13 +1,14 @@
 import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { getFieldRefClass, getFieldTermUri } from '#/api/termUris/termUri.ts'
-import { getEnumValueLabel } from '#/lib/entity.ts'
+import { getEntityClassFieldOrder, getEnumValueLabel } from '#/lib/entity.ts'
 import {
   LangStringValue,
   langStringsOf,
 } from '#/components/LangStringValue.tsx'
 import { ExternalLink } from '#/components/ExternalLink.tsx'
 import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
+import { isEntityReference } from '#/lib/entityReferences.ts'
 import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
@@ -42,13 +43,10 @@ function mapsUrl(location: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
 }
 
-function isEntityRef(v: unknown): boolean {
-  return typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)
-}
-
 export function isEntityRefValue(v: unknown): boolean {
   return (
-    isEntityRef(v) || (Array.isArray(v) && v.length > 0 && v.every(isEntityRef))
+    isEntityReference(v) ||
+    (Array.isArray(v) && v.length > 0 && v.every(isEntityReference))
   )
 }
 
@@ -101,10 +99,17 @@ export function renderEntityValue(
     )
   }
   if (typeof v === 'object') {
+    const fieldOrder = entityClass
+      ? getEntityClassFieldOrder(entityClass)
+      : undefined
+    const orderOf = (key: string) =>
+      fieldOrder?.[key] ?? Number.MAX_SAFE_INTEGER
+
     return (
       <div className="flex flex-col gap-4 rounded border p-2 text-xs">
         {Object.entries(v)
           .filter(([, val]) => val !== null && val !== undefined)
+          .sort(([a], [b]) => orderOf(a) - orderOf(b))
           .map(([key, val]) => {
             const refValue = isEntityRefValue(val)
             return (
@@ -139,7 +144,7 @@ export function renderEntityValue(
       </div>
     )
   }
-  if (typeof v === 'string' && /^idhi:[^:]+:.+$/.test(v)) {
+  if (isEntityReference(v)) {
     return <EntityReferenceCard entityId={v} />
   }
   if (

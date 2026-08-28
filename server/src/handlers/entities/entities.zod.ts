@@ -7,21 +7,21 @@
 import { z as zod } from 'zod'
 
 export const searchEntitiesBodyFacetsItemRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+  '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
 export const searchEntitiesBodyFilterOneFieldRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+  '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
 export const searchEntitiesBodyFilterTwoAndItemOneFieldRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+  '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
 
 export const searchEntitiesBodyFilterThreeOrItemOneFieldRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+  '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
 
 export const searchEntitiesBodySortItemPropertyRegExp = new RegExp(
-  '^[A-Za-z][A-Za-z0-9]*(\\.[A-Za-z][A-Za-z0-9]*)*$',
+  '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
 
 export const searchEntitiesBodyPageDefault = 0

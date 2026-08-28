@@ -17,10 +17,20 @@ export function UserPagination({
 }) {
   const { t } = useTranslation()
 
+  if (totalPages === 1) {
+    return (
+      <div className="border-t px-4 pt-4">
+        <p className="text-xs text-muted-foreground">
+          {t('common.pagination.listed', { count: totalUsers })}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex items-center justify-between gap-3 border-t px-4 pt-4">
       <p className="text-xs text-muted-foreground">
-        {t('admin.pagination', {
+        {t('common.pagination.range', {
           start: page * ADMIN_USERS_PAGE_SIZE + 1,
           end: Math.min((page + 1) * ADMIN_USERS_PAGE_SIZE, totalUsers),
           total: totalUsers,
@@ -30,19 +40,22 @@ export function UserPagination({
         <Button
           variant="outline"
           size="icon"
-          aria-label={t('admin.previous_page')}
+          aria-label={t('common.pagination.previous_page')}
           isDisabled={page === 0}
           onPress={() => onPageChange(Math.max(0, page - 1))}
         >
           <HugeiconsIcon icon={ArrowLeft01Icon} strokeWidth={2} />
         </Button>
         <span className="flex min-w-16 items-center justify-center text-xs tabular-nums">
-          {t('admin.page_count', { page: page + 1, total: totalPages })}
+          {t('common.pagination.page_count', {
+            page: page + 1,
+            total: totalPages,
+          })}
         </span>
         <Button
           variant="outline"
           size="icon"
-          aria-label={t('admin.next_page')}
+          aria-label={t('common.pagination.next_page')}
           isDisabled={page + 1 >= totalPages}
           onPress={() => onPageChange(page + 1)}
         >

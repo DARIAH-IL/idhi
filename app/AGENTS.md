@@ -10,6 +10,8 @@ Always use css start/end and not left/right.
 
 All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.
 
+Scope translation keys by meaning and reuse, not by the first feature that needs them. Generic interface copy — including pagination ranges, previous/next-page labels, page counts, loading states, and common actions — belongs under `common` and must be reused across features. Do not duplicate or feature-scope generic text under namespaces such as `admin`, `entity`, or a specific component; reserve those namespaces for genuinely domain-specific copy.
+
 Locale resources live in `app/src/i18n/locales/` (currently `en.json` only), initialized in `app/src/i18n/index.ts`. Translation keys are fully typed: `app/src/i18n/i18next.d.ts` derives the key space from `en.json`, so adding a key there immediately makes it available (and type-checked) through `t(...)`.
 
 `en.json` is standard 2-space-indented JSON that round-trips byte-identically through `JSON.stringify(data, null, 2)`; scripted edits that parse, modify, and re-serialize the file are safe and preferred for bulk changes.
