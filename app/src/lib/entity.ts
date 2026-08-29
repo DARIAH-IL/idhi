@@ -186,10 +186,10 @@ const ENTITY_FIELD_ORDER = {
     address: true,
     contact_email: true,
     additional_urls: true,
-    organization_hierarchy: true,
+    organization_structure: true,
     same_as: true,
   },
-  OrganizationHierarchy: {
+  OrganizationStructure: {
     parent_organization: true,
     start_date: true,
     end_date: true,

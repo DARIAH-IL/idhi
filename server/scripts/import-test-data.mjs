@@ -88,7 +88,7 @@ export const entities = [
       'FUNDER',
       'NON_PROFIT',
     ][index],
-    organization_hierarchy:
+    organization_structure:
       index === 0
         ? null
         : [

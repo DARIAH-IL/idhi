@@ -145,13 +145,13 @@ export const OrganizationFields = withForm({
           )}
         </form.AppField>
 
-        <form.AppField name="organization_hierarchy" mode="array">
+        <form.AppField name="organization_structure" mode="array">
           {(field) => (
             <field.ArraySection
               label={
                 <EntityFieldLabel
                   entityClass="Organization"
-                  field="organization_hierarchy"
+                  field="organization_structure"
                 />
               }
               defaultItem={{ parent_organization: '' }}
@@ -159,7 +159,7 @@ export const OrganizationFields = withForm({
               {(index) => (
                 <>
                   <form.AppField
-                    name={`organization_hierarchy[${index}].parent_organization`}
+                    name={`organization_structure[${index}].parent_organization`}
                     validators={entityRefValidators(['idhi:Organization'], {
                       required: true,
                     })}
@@ -177,7 +177,7 @@ export const OrganizationFields = withForm({
                     )}
                   </form.AppField>
                   <form.AppField
-                    name={`organization_hierarchy[${index}].start_date`}
+                    name={`organization_structure[${index}].start_date`}
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
@@ -193,7 +193,7 @@ export const OrganizationFields = withForm({
                     )}
                   </form.AppField>
                   <form.AppField
-                    name={`organization_hierarchy[${index}].end_date`}
+                    name={`organization_structure[${index}].end_date`}
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (

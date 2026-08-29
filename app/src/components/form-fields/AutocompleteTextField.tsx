@@ -13,7 +13,7 @@ import {
 import { FieldError } from './FieldError'
 import { firstError } from './validation'
 
-interface Props<T> {
+interface Props<T extends object> {
   label: React.ReactNode
   placeholder?: string
   search: (query: string, signal: AbortSignal) => Promise<T[]>
@@ -24,7 +24,7 @@ interface Props<T> {
   normalizeValue?: (raw: string) => string
 }
 
-export function AutocompleteTextField<T>({
+export function AutocompleteTextField<T extends object>({
   label,
   placeholder,
   search,

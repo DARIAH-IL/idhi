@@ -54,7 +54,7 @@
       "media_type": "Media type",
       "name": "Name",
       "organization": "Organization",
-      "organization_hierarchy": "Organization hierarchy",
+      "organization_structure": "Organization structure",
       "organization_role": "Organization role",
       "person": "Person",
       "publisher": "Publisher",
@@ -824,8 +824,8 @@
           "label": "$t(common.labels.name)",
           "description": "The organization’s name, in one or more languages. Prefer the official localized name."
         },
-        "organization_hierarchy": {
-          "label": "$t(common.labels.organization_hierarchy)",
+        "organization_structure": {
+          "label": "$t(common.labels.organizatio_structurey)",
           "description": "The parent organizations this organization is formally part of, with optional dates. Only for formal containment, such as a department within a university - not for partnerships or informal association."
         },
         "organization_type": {
@@ -1673,9 +1673,9 @@
           "description": "The text in the selected language."
         }
       },
-      "OrganizationHierarchy": {
+      "OrganizationStructure": {
         "$self": {
-          "label": "$t(common.labels.organization_hierarchy)",
+          "label": "$t(common.labels.organization_structurey)",
           "description": "Formal containment of this organization within a larger parent organization."
         },
         "end_date": {

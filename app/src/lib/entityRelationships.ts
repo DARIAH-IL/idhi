@@ -34,7 +34,7 @@ const ENTITY_RELATIONSHIPS = {
   ],
   'idhi:Organization': [
     {
-      path: 'organization_hierarchy.parent_organization',
+      path: 'organization_structure.parent_organization',
       targetTypes: ['idhi:Organization'],
       label: 'organizations_within_organization',
     },
