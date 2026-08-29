@@ -1,6 +1,7 @@
 import type { Entity, Facility } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { facilityDefaults, facilityFormOptions } from '../entity-form-options'
 import { FacilityFields } from '../fields/FacilityFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function FacilityForm({ facility, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...facilityFormOptions,
-    defaultValues: facility ?? facilityDefaults,
+    defaultValues: facility ?? facilityDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

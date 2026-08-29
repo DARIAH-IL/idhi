@@ -1838,7 +1838,7 @@
         "dates": "Dates",
         "specific": "Type-specific fields"
       },
-      "add_lang_string": "Add language variant",
+      "add_lang_string": "Add value in another language",
       "add_item": "Add item",
       "language": "Language",
       "languages": {
@@ -1850,5 +1850,28 @@
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entity"
     }
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "url": "Enter a valid URL.",
+    "date": "Enter a valid date.",
+    "doi": "Enter a full DOI URL.",
+    "integer": "Enter a whole number.",
+    "number": "Enter a number.",
+    "entity": "Select a valid entity.",
+    "orcid": "Enter a full ORCID URL.",
+    "ror": "Enter a valid ROR URL.",
+    "min": "Must be at least {{min}}.",
+    "unsupported_value": "Choose a supported value.",
+    "invalid_list": "Enter a valid list.",
+    "add_at_least_one_value": "Add at least one value.",
+    "invalid_multilingual_value": "Enter a valid multilingual value.",
+    "choose_language": "Choose a language.",
+    "language_value_required": "Enter a value for each language you've added, or remove it.",
+    "duplicate_language": "Use each language only once.",
+    "invalid_entity_list": "Choose valid entities.",
+    "duplicate_entity": "Choose each entity only once.",
+    "invalid_selected_entities": "One or more selected entities are invalid."
   }
 }

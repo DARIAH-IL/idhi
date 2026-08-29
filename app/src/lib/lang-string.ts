@@ -7,6 +7,10 @@ export function langString(value: string): LangStringItem[] {
   return [{ language: 'en', value }]
 }
 
+export function emptyLangString(language: string): LangStringItem[] {
+  return [{ language, value: '' }]
+}
+
 export function hasLangStringValue(
   items: LangStringItem[] | null | undefined,
 ): boolean {

@@ -1,6 +1,7 @@
 import type { Entity, TrainingMaterial } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import {
   trainingMaterialDefaults,
   trainingMaterialFormOptions,
@@ -17,9 +18,10 @@ interface Props {
 }
 
 export function TrainingMaterialForm({ trainingMaterial, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...trainingMaterialFormOptions,
-    defaultValues: trainingMaterial ?? trainingMaterialDefaults,
+    defaultValues: trainingMaterial ?? trainingMaterialDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

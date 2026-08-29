@@ -1,6 +1,7 @@
 import type { Entity, Organization } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import {
   organizationDefaults,
   organizationFormOptions,
@@ -17,9 +18,10 @@ interface Props {
 }
 
 export function OrganizationForm({ organization, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...organizationFormOptions,
-    defaultValues: organization ?? organizationDefaults,
+    defaultValues: organization ?? organizationDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

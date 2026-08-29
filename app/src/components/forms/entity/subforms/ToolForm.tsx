@@ -1,6 +1,7 @@
 import type { Entity, Tool } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { toolDefaults, toolFormOptions } from '../entity-form-options'
 import { ToolFields } from '../fields/ToolFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function ToolForm({ tool, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...toolFormOptions,
-    defaultValues: tool ?? toolDefaults,
+    defaultValues: tool ?? toolDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

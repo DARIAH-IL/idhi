@@ -1,6 +1,7 @@
 import type { Entity, Publication } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import {
   publicationDefaults,
   publicationFormOptions,
@@ -17,9 +18,10 @@ interface Props {
 }
 
 export function PublicationForm({ publication, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...publicationFormOptions,
-    defaultValues: publication ?? publicationDefaults,
+    defaultValues: publication ?? publicationDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

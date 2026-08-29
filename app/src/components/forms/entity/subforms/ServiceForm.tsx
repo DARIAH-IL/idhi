@@ -1,6 +1,7 @@
 import type { Entity, Service } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { serviceDefaults, serviceFormOptions } from '../entity-form-options'
 import { ServiceFields } from '../fields/ServiceFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function ServiceForm({ service, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...serviceFormOptions,
-    defaultValues: service ?? serviceDefaults,
+    defaultValues: service ?? serviceDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

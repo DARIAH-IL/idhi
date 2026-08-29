@@ -1,3 +1,4 @@
+import i18next from 'i18next'
 import type { EntityType } from '@/lib/entity'
 import { getEntityIdSegment } from '@/lib/entity'
 
@@ -29,7 +30,7 @@ export function isEmpty(value: unknown) {
 
 export function validateValue(value: unknown, options: ValidationOptions = {}) {
   if (isEmpty(value)) {
-    return options.required ? 'This field is required.' : undefined
+    return options.required ? i18next.t('validation.required') : undefined
   }
 
   const text = String(value)
@@ -37,30 +38,30 @@ export function validateValue(value: unknown, options: ValidationOptions = {}) {
     case 'email':
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)
         ? undefined
-        : 'Enter a valid email address.'
+        : i18next.t('validation.email')
     case 'url':
       try {
         new URL(text)
         return undefined
       } catch {
-        return 'Enter a valid URL.'
+        return i18next.t('validation.url')
       }
     case 'date':
       return /^\d{4}-\d{2}-\d{2}$/.test(text) && !Number.isNaN(Date.parse(text))
         ? undefined
-        : 'Enter a valid date.'
+        : i18next.t('validation.date')
     case 'doi':
       return /^https:\/\/doi\.org\/.+/.test(text)
         ? undefined
-        : 'Enter a full DOI URL.'
+        : i18next.t('validation.doi')
     case 'integer':
       if (!Number.isInteger(Number(value))) {
-        return 'Enter a whole number.'
+        return i18next.t('validation.integer')
       }
       break
     case 'number':
       if (!Number.isFinite(Number(value))) {
-        return 'Enter a number.'
+        return i18next.t('validation.number')
       }
       break
     case 'entityId': {
@@ -68,20 +69,20 @@ export function validateValue(value: unknown, options: ValidationOptions = {}) {
         options.entityTypes?.map(getEntityIdSegment).join('|') ?? '[a-z_]+'
       return new RegExp(`^idhi:(${segments}):[0-9a-z]{4,12}$`).test(text)
         ? undefined
-        : 'Select a valid entity.'
+        : i18next.t('validation.entity')
     }
     case 'orcid':
       return /^https:\/\/orcid\.org\/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]$/.test(text)
         ? undefined
-        : 'Enter a full ORCID URL.'
+        : i18next.t('validation.orcid')
     case 'ror':
       return /^https:\/\/ror\.org\/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}$/.test(text)
         ? undefined
-        : 'Enter a valid ROR URL.'
+        : i18next.t('validation.ror')
   }
 
   if (options.min !== undefined && Number(value) < options.min) {
-    return `Must be at least ${options.min}.`
+    return i18next.t('validation.min', { min: options.min })
   }
   return undefined
 }
@@ -107,7 +108,7 @@ export function enumValidators(
         return requiredError
       }
       return value && !Object.hasOwn(options, String(value))
-        ? 'Choose a supported value.'
+        ? i18next.t('validation.unsupported_value')
         : undefined
     },
   }
@@ -124,7 +125,7 @@ export function stringArrayValidators(
         return undefined
       }
       if (!Array.isArray(value)) {
-        return 'Enter a valid list.'
+        return i18next.t('validation.invalid_list')
       }
 
       for (const item of value) {
@@ -139,7 +140,7 @@ export function stringArrayValidators(
           options.allowedValues &&
           !Object.hasOwn(options.allowedValues, String(item))
         ) {
-          return 'Choose a supported value.'
+          return i18next.t('validation.unsupported_value')
         }
       }
       return undefined
@@ -151,13 +152,15 @@ export function localizedValueValidators(required = false) {
   return {
     onSubmit: ({ value }: ValueContext) => {
       if (value == null) {
-        return required ? 'Add at least one value.' : undefined
+        return required
+          ? i18next.t('validation.add_at_least_one_value')
+          : undefined
       }
       if (!Array.isArray(value)) {
-        return 'Enter a valid multilingual value.'
+        return i18next.t('validation.invalid_multilingual_value')
       }
       if (required && value.length === 0) {
-        return 'Add at least one value.'
+        return i18next.t('validation.add_at_least_one_value')
       }
 
       const languages: unknown[] = []
@@ -168,20 +171,20 @@ export function localizedValueValidators(required = false) {
           !('language' in item) ||
           !('value' in item)
         ) {
-          return 'Enter a valid multilingual value.'
+          return i18next.t('validation.invalid_multilingual_value')
         }
         if (typeof item.language !== 'string' || !item.language) {
-          return 'Choose a language.'
+          return i18next.t('validation.choose_language')
         }
         if (validateValue(item.value, { required: true })) {
-          return 'Every language value must have text.'
+          return i18next.t('validation.language_value_required')
         }
         languages.push(item.language)
       }
 
       return new Set(languages).size === languages.length
         ? undefined
-        : 'Use each language only once.'
+        : i18next.t('validation.duplicate_language')
     },
   }
 }
@@ -211,10 +214,10 @@ export function entityRefArrayValidators(entityTypes: EntityType[]) {
         return undefined
       }
       if (!Array.isArray(value)) {
-        return 'Choose valid entities.'
+        return i18next.t('validation.invalid_entity_list')
       }
       if (new Set(value).size !== value.length) {
-        return 'Choose each entity only once.'
+        return i18next.t('validation.duplicate_entity')
       }
       return value.some((id) =>
         validateValue(id, {
@@ -223,7 +226,7 @@ export function entityRefArrayValidators(entityTypes: EntityType[]) {
           entityTypes,
         }),
       )
-        ? 'One or more selected entities are invalid.'
+        ? i18next.t('validation.invalid_selected_entities')
         : undefined
     },
   }

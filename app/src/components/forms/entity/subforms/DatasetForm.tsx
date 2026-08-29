@@ -1,6 +1,7 @@
 import type { Dataset, Entity } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { datasetDefaults, datasetFormOptions } from '../entity-form-options'
 import { DatasetFields } from '../fields/DatasetFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function DatasetForm({ dataset, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...datasetFormOptions,
-    defaultValues: dataset ?? datasetDefaults,
+    defaultValues: dataset ?? datasetDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

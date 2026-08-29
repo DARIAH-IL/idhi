@@ -9,7 +9,7 @@ const HOVER_CLASSES = [
   'hover:bg-foreground/22',
 ]
 
-const PADDING_CLASSES = ['p-1', 'p-2', 'p-3', 'p-4']
+const PADDING_CLASSES = ['p-2', 'p-2', 'p-3', 'p-4']
 
 function clampLevel(level: number, classes: string[]) {
   return classes[Math.min(level, classes.length - 1)]

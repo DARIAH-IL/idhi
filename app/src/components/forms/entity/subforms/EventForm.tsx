@@ -1,6 +1,7 @@
 import type { Entity, Event } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { eventDefaults, eventFormOptions } from '../entity-form-options'
 import { EventFields } from '../fields/EventFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function EventForm({ event, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...eventFormOptions,
-    defaultValues: event ?? eventDefaults,
+    defaultValues: event ?? eventDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),

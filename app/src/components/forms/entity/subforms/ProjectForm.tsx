@@ -1,6 +1,7 @@
 import type { Entity, Project } from '@/api/models'
 import { cleanValue } from '@/lib/clean-value'
 import { useAppForm } from '@/components/forms/app-form'
+import { useUIStore } from '@/stores/ui'
 import { projectDefaults, projectFormOptions } from '../entity-form-options'
 import { ProjectFields } from '../fields/ProjectFields'
 import { CommonEntityFields, commonFieldMap } from './common'
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export function ProjectForm({ project, ...props }: Props) {
+  const language = useUIStore((s) => s.language)
   const form = useAppForm({
     ...projectFormOptions,
-    defaultValues: project ?? projectDefaults,
+    defaultValues: project ?? projectDefaults(language),
     onSubmitMeta: { isDraft: false },
     onSubmit: ({ value, meta }) =>
       props.onSubmit(cleanValue(value), meta.isDraft),
