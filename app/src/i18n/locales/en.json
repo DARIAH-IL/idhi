@@ -3,6 +3,7 @@
     "save": "Save",
     "cancel": "Cancel",
     "close": "Close",
+    "clear": "Clear",
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back",
@@ -1841,11 +1842,7 @@
       "add_lang_string": "Add value in another language",
       "add_item": "Add item",
       "language": "Language",
-      "languages": {
-        "en": "English",
-        "he": "Hebrew",
-        "ar": "Arabic"
-      },
+      "language_search": "Search languages…",
       "external_url_placeholder": "Or enter an external URL…",
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entity"

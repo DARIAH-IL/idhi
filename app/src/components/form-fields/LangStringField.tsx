@@ -1,24 +1,29 @@
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+  Combobox,
+  ComboboxCollection,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxSeparator,
+} from '@/components/ui/combobox'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+import { getLanguageOptions, TOP_LANGUAGE_CODES } from '@/lib/languages'
+import type { LanguageOption } from '@/lib/languages'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
 import { useFieldRowClass } from './FieldNesting'
 import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
-
-const LANGUAGES = ['en', 'he', 'ar'] satisfies ReadonlyArray<'en' | 'he' | 'ar'>
 
 interface LocalizedValue {
   language: string
@@ -30,6 +35,75 @@ interface Props {
   multiline?: boolean
 }
 
+interface LanguageComboboxProps {
+  value: string
+  onChange: (language: string) => void
+  optionByCode: Map<string, LanguageOption>
+  topLanguages: LanguageOption[]
+  otherLanguages: LanguageOption[]
+  languageFilter: (textValue: string, inputValue: string) => boolean
+}
+
+function LanguageCombobox({
+  value,
+  onChange,
+  optionByCode,
+  topLanguages,
+  otherLanguages,
+  languageFilter,
+}: LanguageComboboxProps) {
+  const { t } = useTranslation()
+  const labelFor = (code: string) => optionByCode.get(code)?.label ?? code
+  const [inputValue, setInputValue] = useState(() => labelFor(value))
+
+  useEffect(() => {
+    setInputValue(labelFor(value))
+  }, [value])
+
+  return (
+    <Combobox
+      aria-label={t('entity.form.language')}
+      selectedKey={value || null}
+      inputValue={inputValue}
+      onInputChange={setInputValue}
+      onSelectionChange={(key) => {
+        if (key == null) {
+          return
+        }
+        const code = String(key)
+        onChange(code)
+        setInputValue(labelFor(code))
+      }}
+      defaultFilter={languageFilter}
+      className="w-32 shrink-0"
+    >
+      <ComboboxInput placeholder={t('entity.form.language_search')} />
+      <ComboboxContent>
+        <ComboboxList>
+          <ComboboxGroup>
+            <ComboboxCollection items={topLanguages}>
+              {(option) => (
+                <ComboboxItem id={option.code}>{option.label}</ComboboxItem>
+              )}
+            </ComboboxCollection>
+          </ComboboxGroup>
+          <ComboboxSeparator />
+          <ComboboxGroup>
+            <ComboboxCollection items={otherLanguages}>
+              {(option) => (
+                <ComboboxItem id={option.code}>{option.label}</ComboboxItem>
+              )}
+            </ComboboxCollection>
+          </ComboboxGroup>
+          <ComboboxEmpty>
+            {t('entity.form.autocomplete_no_results')}
+          </ComboboxEmpty>
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
 export function LangStringField({ label, multiline = false }: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<LocalizedValue[] | null | undefined>()
@@ -39,6 +113,44 @@ export function LangStringField({ label, multiline = false }: Props) {
     field.moveValue,
   )
   const rowClass = useFieldRowClass()
+
+  const { topLanguages, otherLanguages, optionByCode, languageFilter } =
+    useMemo(() => {
+      const options = getLanguageOptions()
+      const optionsByLabel = new Map(
+        options.map((option) => [option.label, option]),
+      )
+      return {
+        topLanguages: options.filter((option) =>
+          TOP_LANGUAGE_CODES.includes(option.code),
+        ),
+        otherLanguages: options.filter(
+          (option) => !TOP_LANGUAGE_CODES.includes(option.code),
+        ),
+        optionByCode: new Map(options.map((option) => [option.code, option])),
+        languageFilter: (textValue: string, inputValue: string) => {
+          try {
+            const query = inputValue.trim().toLowerCase()
+            if (!query) {
+              return true
+            }
+            return (
+              optionsByLabel.get(textValue)?.searchText ??
+              textValue.toLowerCase()
+            ).includes(query)
+          } catch (error) {
+            // A filter crash would otherwise silently break the combobox with no trace.
+            // eslint-disable-next-line no-console
+            console.error('[LangStringField] languageFilter threw', {
+              textValue,
+              inputValue,
+              error,
+            })
+            return false
+          }
+        },
+      }
+    }, [])
 
   function updateItem(index: number, next: Partial<LocalizedValue>) {
     field.handleChange(
@@ -59,24 +171,14 @@ export function LangStringField({ label, multiline = false }: Props) {
           {...getRowProps(index)}
         >
           <DragHandle {...getHandleProps(index)} className="mt-1.5" />
-          <Select
-            aria-label={t('entity.form.language')}
-            selectedKey={item.language || null}
-            onSelectionChange={(key) =>
-              updateItem(index, { language: String(key) })
-            }
-          >
-            <SelectTrigger className="w-24 shrink-0">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {LANGUAGES.map((language) => (
-                <SelectItem key={language} id={language}>
-                  {t(`entity.form.languages.${language}`)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <LanguageCombobox
+            value={item.language}
+            onChange={(language) => updateItem(index, { language })}
+            optionByCode={optionByCode}
+            topLanguages={topLanguages}
+            otherLanguages={otherLanguages}
+            languageFilter={languageFilter}
+          />
           {multiline ? (
             <Textarea
               value={item.value}

@@ -4,9 +4,12 @@ import { getEnumValueLabel } from '@/lib/entity'
 import { FieldRow } from './FieldRow'
 import {
   Combobox,
+  ComboboxChip,
+  ComboboxChipList,
+  ComboboxChips,
+  ComboboxChipsInput,
   ComboboxContent,
   ComboboxEmpty,
-  ComboboxInput,
   ComboboxItem,
   ComboboxList,
 } from '@/components/ui/combobox'
@@ -24,9 +27,13 @@ interface Option {
   label: string
 }
 
-export function EnumSelectField({ label, options, required = false }: Props) {
+export function EnumMultiSelectField({
+  label,
+  options,
+  required = false,
+}: Props) {
   const { t } = useTranslation()
-  const field = useFieldContext<string | null | undefined>()
+  const field = useFieldContext<string[] | null | undefined>()
   const error = firstError(field.state.meta.errors)
   const items: Option[] = Object.keys(options)
     .map((key) => ({
@@ -41,16 +48,20 @@ export function EnumSelectField({ label, options, required = false }: Props) {
         <>
           <Combobox
             aria-labelledby={labelId}
+            selectionMode="multiple"
             defaultItems={items}
-            value={field.state.value ?? null}
-            onChange={(key) =>
-              field.handleChange(key == null ? undefined : String(key))
-            }
+            value={field.state.value ?? []}
+            onChange={(keys) => field.handleChange(keys.map(String))}
             isInvalid={Boolean(error)}
             isRequired={required}
             menuTrigger="focus"
           >
-            <ComboboxInput />
+            <ComboboxChips>
+              <ComboboxChipList>
+                {(item: Option) => <ComboboxChip>{item.label}</ComboboxChip>}
+              </ComboboxChipList>
+              <ComboboxChipsInput />
+            </ComboboxChips>
             <ComboboxContent>
               <ComboboxList
                 items={items}

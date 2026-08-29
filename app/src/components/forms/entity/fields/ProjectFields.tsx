@@ -74,14 +74,13 @@ export const ProjectFields = withForm({
           })}
         >
           {(field) => (
-            <field.StringArrayField
+            <field.EnumMultiSelectField
               label={
                 <EntityFieldLabel
                   entityClass="Project"
                   field="digital_humanities_activities"
                 />
               }
-              placeholder="tadirah:…"
               options={ProjectDigitalHumanitiesActivitiesItem}
             />
           )}

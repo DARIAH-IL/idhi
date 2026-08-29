@@ -201,14 +201,14 @@ export type EntityCreate =
        * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
        * @nullable
        */
-      organization_hierarchy?:
+      organization_structure?:
         | {
             /**
              * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
              * @nullable
              */
             end_date?: string | null
-            /** The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent. */
+            /** The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent. */
             parent_organization: string
             /**
              * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.

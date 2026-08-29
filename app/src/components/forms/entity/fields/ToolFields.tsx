@@ -146,14 +146,13 @@ export const ToolFields = withForm({
           })}
         >
           {(field) => (
-            <field.StringArrayField
+            <field.EnumMultiSelectField
               label={
                 <EntityFieldLabel
                   entityClass="Tool"
                   field="digital_humanities_activities"
                 />
               }
-              placeholder="tadirah:…"
               options={ToolDigitalHumanitiesActivitiesItem}
             />
           )}

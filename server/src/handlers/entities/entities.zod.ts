@@ -610,7 +610,7 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
-            organization_hierarchy: zod
+            organization_structure: zod
               .array(
                 zod
                   .object({
@@ -623,7 +623,7 @@ export const SearchEntitiesResponse = zod.object({
                     parent_organization: zod
                       .string()
                       .describe(
-                        'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                        'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                       ),
                     start_date: zod.iso
                       .date()
@@ -633,7 +633,7 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+                    'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
                   ),
               )
               .nullish()
@@ -3917,7 +3917,7 @@ export const CreateEntityBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
-      organization_hierarchy: zod
+      organization_structure: zod
         .array(
           zod
             .object({
@@ -3930,7 +3930,7 @@ export const CreateEntityBody = zod.union([
               parent_organization: zod
                 .string()
                 .describe(
-                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                 ),
               start_date: zod.iso
                 .date()
@@ -3940,7 +3940,7 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
             ),
         )
         .nullish()
@@ -7100,7 +7100,7 @@ export const CreateEntityResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        organization_hierarchy: zod
+        organization_structure: zod
           .array(
             zod
               .object({
@@ -7113,7 +7113,7 @@ export const CreateEntityResponse = zod
                 parent_organization: zod
                   .string()
                   .describe(
-                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -7123,7 +7123,7 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
               ),
           )
           .nullish()
@@ -10390,7 +10390,7 @@ export const GetEntityByIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        organization_hierarchy: zod
+        organization_structure: zod
           .array(
             zod
               .object({
@@ -10403,7 +10403,7 @@ export const GetEntityByIdResponse = zod
                 parent_organization: zod
                   .string()
                   .describe(
-                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -10413,7 +10413,7 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
               ),
           )
           .nullish()
@@ -13706,7 +13706,7 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
-      organization_hierarchy: zod
+      organization_structure: zod
         .array(
           zod
             .object({
@@ -13719,7 +13719,7 @@ export const UpdateEntityByIdBody = zod.union([
               parent_organization: zod
                 .string()
                 .describe(
-                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                 ),
               start_date: zod.iso
                 .date()
@@ -13729,7 +13729,7 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
             ),
         )
         .nullish()
@@ -16982,7 +16982,7 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        organization_hierarchy: zod
+        organization_structure: zod
           .array(
             zod
               .object({
@@ -16995,7 +16995,7 @@ export const UpdateEntityByIdResponse = zod
                 parent_organization: zod
                   .string()
                   .describe(
-                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_hierarchy; define the relationship on the child rather than the parent.',
+                    'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -17005,7 +17005,7 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_hierarchy for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+                'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
               ),
           )
           .nullish()

@@ -8,7 +8,7 @@ import type { OrganizationAddressItem } from './organizationAddressItem.ts'
 import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
 import type { OrganizationLocationItem } from './organizationLocationItem.ts'
 import type { OrganizationNameItem } from './organizationNameItem.ts'
-import type { OrganizationOrganizationHierarchyItem } from './organizationOrganizationHierarchyItem.ts'
+import type { OrganizationOrganizationStructureItem } from './organizationOrganizationStructureItem.ts'
 import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
 import type { OrganizationType } from './organizationType.ts'
 
@@ -69,7 +69,7 @@ export interface Organization {
    * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
    * @nullable
    */
-  organization_hierarchy?: OrganizationOrganizationHierarchyItem[] | null
+  organization_structure?: OrganizationOrganizationStructureItem[] | null
   /** Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature. */
   organization_type?: OrganizationOrganizationType
   /**

@@ -88,14 +88,13 @@ export const ServiceFields = withForm({
           })}
         >
           {(field) => (
-            <field.StringArrayField
+            <field.EnumMultiSelectField
               label={
                 <EntityFieldLabel
                   entityClass="Service"
                   field="digital_humanities_activities"
                 />
               }
-              placeholder="tadirah:…"
               options={ServiceDigitalHumanitiesActivitiesItem}
             />
           )}

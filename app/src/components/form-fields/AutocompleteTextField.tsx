@@ -1,11 +1,17 @@
-import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { useAutocomplete } from '@/hooks/useAutocomplete'
 import { FieldRow } from './FieldRow'
-import { Input } from '@/components/ui/input'
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from '@/components/ui/combobox'
 import { FieldError } from './FieldError'
 import { firstError } from './validation'
-import { AutocompleteSuggestionList } from './AutocompleteSuggestionList'
 
 interface Props<T> {
   label: React.ReactNode
@@ -28,68 +34,80 @@ export function AutocompleteTextField<T>({
   shouldSearch,
   normalizeValue,
 }: Props<T>) {
+  const { t } = useTranslation()
   const field = useFieldContext<string | null | undefined>()
   const error = firstError(field.state.meta.errors)
   const value = field.state.value ?? ''
-  const inputRef = useRef<HTMLInputElement>(null)
 
-  const autocomplete = useAutocomplete<T>({
-    search,
-    shouldSearch,
-    onPick: (item) => {
-      field.handleChange(getSuggestionValue(item))
-      onSelect?.(item)
-    },
-  })
+  const autocomplete = useAutocomplete<T>({ search, shouldSearch })
+  const items = autocomplete.items ?? []
+  const itemsByKey = new Map(
+    items.map((item) => [getSuggestionValue(item), item]),
+  )
 
   const handleBlur = () => {
     if (normalizeValue) {
-      const normalized = normalizeValue(String(value))
+      const normalized = normalizeValue(value)
       if (normalized !== value) {
         field.handleChange(normalized)
       }
     }
     field.handleBlur()
-    window.setTimeout(() => autocomplete.close(), 150)
+    window.setTimeout(autocomplete.reset, 150)
   }
 
   return (
     <FieldRow label={label}>
-      <>
-        <Input
-          ref={inputRef}
-          type="text"
-          role="combobox"
-          aria-expanded={autocomplete.open}
-          autoComplete="off"
-          value={value}
-          onChange={(event) => {
-            field.handleChange(event.target.value)
-            autocomplete.handleQueryChange(event.target.value)
-          }}
-          onKeyDown={autocomplete.handleKeyDown}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          aria-invalid={Boolean(error)}
-        />
-        <AutocompleteSuggestionList
-          triggerRef={inputRef}
-          isOpen={autocomplete.open}
-          onOpenChange={(isOpen) => {
-            if (!isOpen) {
-              autocomplete.close()
-            }
-          }}
-          items={autocomplete.items}
-          loading={autocomplete.loading}
-          searched={autocomplete.searched}
-          activeIndex={autocomplete.activeIndex}
-          getItemKey={getSuggestionValue}
-          renderItem={renderSuggestion}
-          onPick={autocomplete.pick}
-        />
-        <FieldError error={error} />
-      </>
+      {(labelId) => (
+        <>
+          <Combobox
+            aria-labelledby={labelId}
+            allowsCustomValue
+            items={autocomplete.items}
+            inputValue={value}
+            onInputChange={(query) => {
+              field.handleChange(query)
+              autocomplete.handleQueryChange(query)
+            }}
+            onChange={(key) => {
+              if (key == null) {
+                return
+              }
+              const item = itemsByKey.get(String(key))
+              if (item) {
+                field.handleChange(getSuggestionValue(item))
+                onSelect?.(item)
+              }
+            }}
+            isInvalid={Boolean(error)}
+            onBlur={handleBlur}
+          >
+            <ComboboxInput placeholder={placeholder} showTrigger={false} />
+            <ComboboxContent>
+              <ComboboxList
+                items={items}
+                renderEmptyState={() => (
+                  <ComboboxEmpty>
+                    {autocomplete.loading
+                      ? t('entity.picker.searching')
+                      : t('entity.form.autocomplete_no_results')}
+                  </ComboboxEmpty>
+                )}
+              >
+                {(item) => (
+                  <ComboboxItem
+                    id={getSuggestionValue(item)}
+                    textValue={getSuggestionValue(item)}
+                  >
+                    {renderSuggestion(item)}
+                  </ComboboxItem>
+                )}
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
+          <FieldError error={error} />
+        </>
+      )}
     </FieldRow>
   )
 }
