@@ -4,7 +4,9 @@ import { getEnumValueLabel } from '@/lib/entity'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
+import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
 interface Props {
@@ -17,6 +19,10 @@ export function StringArrayField({ label, placeholder, options }: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
   const items = field.state.value ?? []
+  const { getHandleProps, getRowProps } = useReorderableList(
+    items.length,
+    field.moveValue,
+  )
 
   return (
     <div className="flex flex-col gap-2">
@@ -24,7 +30,12 @@ export function StringArrayField({ label, placeholder, options }: Props) {
       <FieldError error={firstError(field.state.meta.errors)} />
       <div className="flex flex-col gap-1.5">
         {items.map((item, index) => (
-          <div key={index} className="flex gap-2 items-center">
+          <div
+            key={index}
+            className="flex gap-2 items-center"
+            {...getRowProps(index)}
+          >
+            <DragHandle {...getHandleProps(index)} />
             <Input
               value={item}
               onChange={(event) =>

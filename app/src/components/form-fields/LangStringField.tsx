@@ -11,7 +11,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
+import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
+import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
 const LANGUAGES = ['en', 'he', 'ar'] satisfies ReadonlyArray<'en' | 'he' | 'ar'>
@@ -30,6 +32,10 @@ export function LangStringField({ label, multiline = false }: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<LocalizedValue[] | null | undefined>()
   const items = field.state.value ?? []
+  const { getHandleProps, getRowProps } = useReorderableList(
+    items.length,
+    field.moveValue,
+  )
 
   function updateItem(index: number, next: Partial<LocalizedValue>) {
     field.handleChange(
@@ -44,7 +50,12 @@ export function LangStringField({ label, multiline = false }: Props) {
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {items.map((item, index) => (
-        <div key={index} className="flex gap-2 items-start">
+        <div
+          key={index}
+          className="flex gap-2 items-start"
+          {...getRowProps(index)}
+        >
+          <DragHandle {...getHandleProps(index)} className="mt-1.5" />
           <Select
             aria-label={t('entity.form.language')}
             selectedKey={item.language || null}

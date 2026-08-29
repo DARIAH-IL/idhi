@@ -5,7 +5,9 @@ import { Input } from '#/components/ui/input.tsx'
 import { Label } from '#/components/ui/label.tsx'
 import { EntityPicker } from '#/components/entity/EntityPicker.tsx'
 import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
+import { DragHandle } from '#/components/form-fields/DragHandle.tsx'
 import { FieldError } from '#/components/form-fields/FieldError.tsx'
+import { useReorderableList } from '#/components/form-fields/useReorderableList.ts'
 import { firstError } from '#/components/form-fields/validation.ts'
 import { useFieldContext } from '#/components/forms/form-context.ts'
 
@@ -70,13 +72,22 @@ export function EntityRefArrayField({
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
   const values = field.state.value ?? []
+  const { getHandleProps, getRowProps } = useReorderableList(
+    values.length,
+    field.moveValue,
+  )
 
   return (
     <div className="flex flex-col gap-2">
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {values.map((id, index) => (
-        <div key={id} className="flex items-start gap-2">
+        <div
+          key={id}
+          className="flex items-start gap-2"
+          {...getRowProps(index)}
+        >
+          <DragHandle {...getHandleProps(index)} className="mt-1.5" />
           <div className="min-w-0 flex-1">
             <EntityReferenceCard entityId={id} />
           </div>
