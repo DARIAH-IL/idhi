@@ -3,6 +3,13 @@ import { useStore } from '@tanstack/react-form'
 import { useBlocker } from '@tanstack/react-router'
 import type { AnyFormApi } from '@tanstack/react-form'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 
 interface ScaffoldProps {
@@ -28,14 +35,10 @@ export function FormScaffold({
     (state) => state.isDirty && !state.isSubmitSuccessful,
   )
 
-  useBlocker({
-    shouldBlockFn: () => {
-      if (!isDirty) {
-        return false
-      }
-      return !window.confirm(t('entity.form.unsaved_changes'))
-    },
+  const { status, proceed, reset } = useBlocker({
+    shouldBlockFn: () => isDirty,
     enableBeforeUnload: () => isDirty,
+    withResolver: true,
   })
 
   return (
@@ -73,6 +76,29 @@ export function FormScaffold({
       </div>
       <Separator />
       <div className="grid items-start gap-4 lg:grid-cols-2">{children}</div>
+      <Dialog
+        isOpen={status === 'blocked'}
+        onOpenChange={(open) => {
+          if (!open) {
+            reset?.()
+          }
+        }}
+      >
+        <DialogHeader>
+          <DialogTitle>{t('entity.form.unsaved_changes_title')}</DialogTitle>
+          <DialogDescription>
+            {t('entity.form.unsaved_changes')}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onPress={() => reset?.()}>
+            {t('common.cancel')}
+          </Button>
+          <Button variant="destructive" onPress={() => proceed?.()}>
+            {t('entity.form.leave_page')}
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </form>
   )
 }

@@ -1,6 +1,11 @@
+import type { RefObject } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Popover } from 'react-aria-components'
 
 interface Props<T> {
+  triggerRef: RefObject<HTMLElement | null>
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
   items: T[]
   loading: boolean
   searched: boolean
@@ -11,6 +16,9 @@ interface Props<T> {
 }
 
 export function AutocompleteSuggestionList<T>({
+  triggerRef,
+  isOpen,
+  onOpenChange,
   items,
   loading,
   searched,
@@ -22,7 +30,15 @@ export function AutocompleteSuggestionList<T>({
   const { t } = useTranslation()
 
   return (
-    <div className="absolute z-30 mt-1 max-h-64 w-full overflow-y-auto rounded-md border bg-popover p-1 shadow-md">
+    <Popover
+      triggerRef={triggerRef}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      isNonModal
+      placement="bottom start"
+      style={{ width: 'var(--trigger-width)' }}
+      className="z-50 max-h-64 overflow-y-auto rounded-md border bg-popover p-1 shadow-md"
+    >
       {loading && (
         <p className="px-2 py-1.5 text-xs text-muted-foreground">
           {t('entity.picker.searching')}
@@ -46,6 +62,6 @@ export function AutocompleteSuggestionList<T>({
           {renderItem(item)}
         </button>
       ))}
-    </div>
+    </Popover>
   )
 }

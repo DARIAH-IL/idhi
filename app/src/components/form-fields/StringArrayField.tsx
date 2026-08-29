@@ -4,8 +4,10 @@ import { getEnumValueLabel } from '@/lib/entity'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
+import { useFieldRowClass } from './FieldNesting'
 import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
@@ -23,9 +25,10 @@ export function StringArrayField({ label, placeholder, options }: Props) {
     items.length,
     field.moveValue,
   )
+  const rowClass = useFieldRowClass()
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', rowClass)}>
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       <div className="flex flex-col gap-1.5">

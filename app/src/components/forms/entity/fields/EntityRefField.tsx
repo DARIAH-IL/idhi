@@ -7,9 +7,11 @@ import { EntityPicker } from '#/components/entity/EntityPicker.tsx'
 import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
 import { DragHandle } from '#/components/form-fields/DragHandle.tsx'
 import { FieldError } from '#/components/form-fields/FieldError.tsx'
+import { useFieldRowClass } from '#/components/form-fields/FieldNesting.tsx'
 import { useReorderableList } from '#/components/form-fields/useReorderableList.ts'
 import { firstError } from '#/components/form-fields/validation.ts'
 import { useFieldContext } from '#/components/forms/form-context.ts'
+import { cn } from '#/lib/utils.ts'
 
 interface EntityRefProps {
   label: React.ReactNode
@@ -26,9 +28,10 @@ export function EntityRefField({
   const field = useFieldContext<string | null | undefined>()
   const value = field.state.value ?? ''
   const error = firstError(field.state.meta.errors)
+  const rowClass = useFieldRowClass()
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className={cn('flex flex-col gap-1', rowClass)}>
       <Label>{label}</Label>
       <EntityPicker
         value={value.startsWith('idhi:') ? value : undefined}
@@ -76,9 +79,10 @@ export function EntityRefArrayField({
     values.length,
     field.moveValue,
   )
+  const rowClass = useFieldRowClass()
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', rowClass)}>
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {values.map((id, index) => (

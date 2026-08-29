@@ -11,8 +11,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
+import { useFieldRowClass } from './FieldNesting'
 import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
@@ -36,6 +38,7 @@ export function LangStringField({ label, multiline = false }: Props) {
     items.length,
     field.moveValue,
   )
+  const rowClass = useFieldRowClass()
 
   function updateItem(index: number, next: Partial<LocalizedValue>) {
     field.handleChange(
@@ -46,7 +49,7 @@ export function LangStringField({ label, multiline = false }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', rowClass)}>
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {items.map((item, index) => (

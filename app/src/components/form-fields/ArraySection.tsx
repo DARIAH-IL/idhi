@@ -2,7 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
+import { NestedFields, useFieldRowClass } from './FieldNesting'
 import { useReorderableList } from './useReorderableList'
 
 interface Props {
@@ -21,9 +23,10 @@ export function ArraySection({ label, defaultItem, children }: Props) {
     items.length,
     field.moveValue,
   )
+  const rowClass = useFieldRowClass()
 
   return (
-    <div className="lg:col-span-2 flex flex-col gap-2">
+    <div className={cn('lg:col-span-2 flex flex-col gap-2', rowClass)}>
       <Label>{label}</Label>
       <div className="ml-3 flex flex-col gap-3">
         {items.map((_, index) => (
@@ -46,7 +49,7 @@ export function ArraySection({ label, defaultItem, children }: Props) {
                 ×
               </Button>
             </div>
-            {children(index)}
+            <NestedFields>{children(index)}</NestedFields>
           </div>
         ))}
         <Button
