@@ -25,7 +25,7 @@ import {
   toMongoEntityFilter,
   toMongoEntitySort,
 } from '../queries/entities'
-import { SEARCH_SCORE_FIELD } from '../queries/search'
+import { SEARCH_SCORE_FIELD, escapeWildcardQuery } from '../queries/search'
 
 type StoredEntity = Omit<AuditedEntity, 'id'> & {
   _id: string
@@ -186,12 +186,19 @@ export async function createEntityDatabaseService(
       const facetFields = [...new Set(requestedFacets)]
       const pipeline: PipelineStage[] = []
       if (normalizedQuery) {
+        const words = normalizedQuery.split(/\s+/).filter(Boolean)
         pipeline.push({
           $search: {
             index: ENTITY_SEARCH_INDEX_NAME,
-            text: {
-              query: normalizedQuery,
-              path: { wildcard: '*' },
+            compound: {
+              should: words.map((word) => ({
+                wildcard: {
+                  query: `*${escapeWildcardQuery(word.toLowerCase())}*`,
+                  path: { wildcard: '*' },
+                  allowAnalyzedField: true,
+                },
+              })),
+              minimumShouldMatch: 1,
             },
           },
         })
