@@ -12,11 +12,22 @@ interface UIState {
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
+const SUPPORTED_LANGUAGES: UiLanguage[] = ['en', 'he', 'ar']
+
+function detectBrowserLanguage(): UiLanguage {
+  for (const locale of navigator.languages ?? [navigator.language]) {
+    const primary = locale.split('-')[0].toLowerCase() as UiLanguage
+    if (SUPPORTED_LANGUAGES.includes(primary)) {
+      return primary
+    }
+  }
+  return 'en'
+}
 
 export const useUIStore = create<UIState>()(
   persist(
     (set) => ({
-      language: 'en',
+      language: detectBrowserLanguage(),
       setLanguage: (language) => set({ language }),
       auditCollapsed: false,
       setAuditCollapsed: (auditCollapsed) => set({ auditCollapsed }),
@@ -26,5 +37,7 @@ export const useUIStore = create<UIState>()(
 )
 
 export function useUIStorageSync() {
-  useStorageSync(useUIStore, () => useUIStore.getState().setLanguage('en'))
+  useStorageSync(useUIStore, () =>
+    useUIStore.getState().setLanguage(detectBrowserLanguage()),
+  )
 }

@@ -1,4 +1,4 @@
-import { LanguageCircleIcon, Tick02Icon } from '@hugeicons/core-free-icons'
+import { Globe02Icon, Tick02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,7 @@ export function LanguagePicker() {
         className="rounded-full"
         aria-label={t('common.language_picker')}
       >
-        <HugeiconsIcon icon={LanguageCircleIcon} strokeWidth={1.8} />
+        <HugeiconsIcon icon={Globe02Icon} strokeWidth={1.8} />
       </Button>
       <Popover
         placement="bottom end"
