@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import { createFactory } from 'hono/factory'
+import { z } from 'zod'
 import type { EntityWrite } from '../../db/services/entities'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import {
@@ -42,6 +43,11 @@ import {
 
 const factory = createFactory()
 
+const IsDraftQueryParameter = z
+  .enum(['true', 'false'])
+  .transform((value) => value === 'true')
+  .default(false)
+
 export const searchEntitiesHandlers = factory.createHandlers(
   zValidator('json', SearchEntitiesBody),
   zValidator('response', SearchEntitiesResponse),
@@ -60,7 +66,10 @@ export const createEntityHandlers = factory.createHandlers(
     'json',
     CreateEntityBody.superRefine(refineUniqueLangStringLanguages),
   ),
-  zValidator('query', CreateEntityQueryParams),
+  zValidator(
+    'query',
+    CreateEntityQueryParams.extend({ isDraft: IsDraftQueryParameter }),
+  ),
   async (c: CreateEntityContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -93,7 +102,10 @@ export const updateEntityByIdHandlers = factory.createHandlers(
     UpdateEntityByIdBody.superRefine(refineUniqueLangStringLanguages),
   ),
   zValidator('response', UpdateEntityByIdResponse),
-  zValidator('query', UpdateEntityByIdQueryParams),
+  zValidator(
+    'query',
+    UpdateEntityByIdQueryParams.extend({ isDraft: IsDraftQueryParameter }),
+  ),
   async (c: UpdateEntityByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
