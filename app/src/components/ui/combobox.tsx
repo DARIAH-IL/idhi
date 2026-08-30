@@ -312,15 +312,21 @@ function ComboboxChips({ children, className, ...props }: GroupProps) {
 
 function ComboboxChipList<T extends object>({
   className,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   ...props
 }: Omit<TagListProps<T>, 'className' | 'items'> & {
   className?: string
+  'aria-label'?: string
+  'aria-labelledby'?: string
 }) {
   return (
     <ComboBoxValuePrimitive<T> className="contents">
       {({ selectedItems, state }) => (
         <TagGroupPrimitive
           data-slot="combobox-chip-list"
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledby}
           className={cn('contents', className)}
           onRemove={(keys) => {
             if (Array.isArray(state.value)) {

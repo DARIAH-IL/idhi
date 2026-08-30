@@ -57,7 +57,7 @@ export function EnumMultiSelectField({
             menuTrigger="focus"
           >
             <ComboboxChips>
-              <ComboboxChipList>
+              <ComboboxChipList aria-labelledby={labelId}>
                 {(item: Option) => <ComboboxChip>{item.label}</ComboboxChip>}
               </ComboboxChipList>
               <ComboboxChipsInput />
