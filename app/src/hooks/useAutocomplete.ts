@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { AUTOCOMPLETE_MAX_RESULTS } from '@/lib/autocomplete'
 
 interface UseAutocompleteOptions<T> {
   search: (query: string, signal: AbortSignal) => Promise<T[]>
@@ -13,7 +14,7 @@ export function useAutocomplete<T>({
   shouldSearch,
   minQueryLength = 3,
   debounceMs = 300,
-  maxResults = 5,
+  maxResults = AUTOCOMPLETE_MAX_RESULTS,
 }: UseAutocompleteOptions<T>) {
   const [items, setItems] = useState<T[] | undefined>(undefined)
   const [loading, setLoading] = useState(false)
@@ -42,12 +43,14 @@ export function useAutocomplete<T>({
       reset()
       return
     }
+
+    abortRef.current?.abort()
+    setItems([])
+    setLoading(true)
+
     debounceRef.current = window.setTimeout(() => {
-      abortRef.current?.abort()
       const controller = new AbortController()
       abortRef.current = controller
-      setLoading(true)
-      setItems((current) => current ?? [])
       search(query, controller.signal)
         .then((results) => {
           if (controller.signal.aborted) {

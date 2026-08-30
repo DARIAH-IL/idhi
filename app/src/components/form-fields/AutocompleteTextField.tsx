@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Loading03Icon } from '@hugeicons/core-free-icons'
 import { useFieldContext } from '@/components/forms/form-context'
 import { useAutocomplete } from '@/hooks/useAutocomplete'
 import { FieldRow } from './FieldRow'
@@ -62,7 +64,9 @@ export function AutocompleteTextField<T extends object>({
         <>
           <Combobox
             aria-labelledby={labelId}
+            aria-busy={autocomplete.loading}
             allowsCustomValue
+            allowsEmptyCollection={autocomplete.items !== undefined}
             items={autocomplete.items}
             inputValue={value}
             onInputChange={(query) => {
@@ -87,10 +91,26 @@ export function AutocompleteTextField<T extends object>({
               <ComboboxList
                 items={items}
                 renderEmptyState={() => (
-                  <ComboboxEmpty>
-                    {autocomplete.loading
-                      ? t('entity.picker.searching')
-                      : t('entity.form.autocomplete_no_results')}
+                  <ComboboxEmpty
+                    className={
+                      autocomplete.loading
+                        ? 'items-center gap-2 px-3 py-3'
+                        : undefined
+                    }
+                    role={autocomplete.loading ? 'status' : undefined}
+                  >
+                    {autocomplete.loading && (
+                      <HugeiconsIcon
+                        icon={Loading03Icon}
+                        strokeWidth={2}
+                        className="size-4 shrink-0 animate-spin"
+                      />
+                    )}
+                    <span>
+                      {autocomplete.loading
+                        ? t('entity.picker.searching')
+                        : t('entity.form.autocomplete_no_results')}
+                    </span>
                   </ComboboxEmpty>
                 )}
               >

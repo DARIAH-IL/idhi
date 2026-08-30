@@ -1,3 +1,5 @@
+import { AUTOCOMPLETE_MAX_RESULTS } from '@/lib/autocomplete'
+
 export type OrcidSuggestion = {
   id: string
   givenNames?: string
@@ -15,8 +17,6 @@ interface OrcidExpandedResult {
   email?: string[]
   'institution-name'?: string[]
 }
-
-const MAX_RESULTS = 5
 
 const ORCID_ID_PATTERN = /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/i
 
@@ -46,7 +46,7 @@ export async function searchOrcidPeople(
 ): Promise<OrcidSuggestion[]> {
   const url = new URL('https://pub.orcid.org/v3.0/expanded-search/')
   url.searchParams.set('q', query.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g, ' '))
-  url.searchParams.set('rows', String(MAX_RESULTS))
+  url.searchParams.set('rows', String(AUTOCOMPLETE_MAX_RESULTS))
 
   const response = await fetch(url, {
     signal,
@@ -62,7 +62,7 @@ export async function searchOrcidPeople(
     ? data['expanded-result']
     : []
 
-  return items.slice(0, MAX_RESULTS).flatMap((person) => {
+  return items.slice(0, AUTOCOMPLETE_MAX_RESULTS).flatMap((person) => {
     const id = person['orcid-id']
     if (!id || !ORCID_ID_PATTERN.test(id)) {
       return []

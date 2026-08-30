@@ -1,3 +1,5 @@
+import { AUTOCOMPLETE_MAX_RESULTS } from '@/lib/autocomplete'
+
 export type DoiSuggestion = {
   doi: string
   title: string
@@ -20,8 +22,6 @@ interface CrossrefWork {
   'published-online'?: CrossrefDate
   'container-title'?: string[]
 }
-
-const MAX_RESULTS = 5
 
 const DOI_PATTERN =
   /^(?:https?:\/\/(?:dx\.)?doi\.org\/|doi:)?(10\.\d{4,9}\/\S+)$/i
@@ -83,7 +83,7 @@ export async function searchCrossrefWorks(
 ): Promise<DoiSuggestion[]> {
   const url = new URL('https://api.crossref.org/works')
   url.searchParams.set('query.bibliographic', query)
-  url.searchParams.set('rows', String(MAX_RESULTS))
+  url.searchParams.set('rows', String(AUTOCOMPLETE_MAX_RESULTS))
   url.searchParams.set(
     'select',
     'DOI,title,author,published,published-print,published-online,container-title',
@@ -97,7 +97,7 @@ export async function searchCrossrefWorks(
   const data: { message?: { items?: CrossrefWork[] } } = await response.json()
   const items = Array.isArray(data.message?.items) ? data.message.items : []
 
-  return items.slice(0, MAX_RESULTS).flatMap((work) => {
+  return items.slice(0, AUTOCOMPLETE_MAX_RESULTS).flatMap((work) => {
     const doi = work.DOI
     const title = work.title?.[0]
     if (!doi || !title) {

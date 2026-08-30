@@ -1,3 +1,5 @@
+import { AUTOCOMPLETE_MAX_RESULTS } from '@/lib/autocomplete'
+
 export type RorSuggestion = {
   id: string
   name: string
@@ -23,8 +25,6 @@ interface RorOrganization {
   locations?: RorLocation[]
 }
 
-const MAX_RESULTS = 5
-
 export async function searchRorOrganizations(
   query: string,
   signal?: AbortSignal,
@@ -40,7 +40,7 @@ export async function searchRorOrganizations(
   const data: { items?: RorOrganization[] } = await response.json()
   const items = Array.isArray(data.items) ? data.items : []
 
-  return items.slice(0, MAX_RESULTS).flatMap((organization) => {
+  return items.slice(0, AUTOCOMPLETE_MAX_RESULTS).flatMap((organization) => {
     const names = organization.names ?? []
     const displayName =
       names.find((name) => name.types?.includes('ror_display')) ??
