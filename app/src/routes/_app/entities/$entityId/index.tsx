@@ -103,61 +103,64 @@ function EntityDetailPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
-      <div className="flex items-center gap-3">
-        <EntityImage
-          image={entity.image}
-          type={entity.type}
-          alt={getEntityDisplayName(entity)}
-          size="lg"
-        />
-        <div className="flex flex-col gap-0.5">
-          <EntityNameIdentifiers entity={entity}>
-            <span className="flex items-center gap-2">
-              <h1 className="text-lg font-semibold">
-                {getEntityDisplayName(entity)}
-              </h1>
-              <DraftBadge isDraft={entity.isDraft} />
-            </span>
-          </EntityNameIdentifiers>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-            <span>{getEntityTypeLabel(entity.type)}</span>
-            <span aria-hidden>·</span>
-            <span className="font-mono">{decodedId}</span>
-            <EntityTags tags={entity.tags} />
+      <div className="sticky top-0 z-10 -mx-6 bg-background before:absolute before:inset-x-0 before:bottom-full before:h-6 before:bg-background before:content-['']">
+        <div className="flex items-center gap-3 px-6">
+          <EntityImage
+            image={entity.image}
+            type={entity.type}
+            alt={getEntityDisplayName(entity)}
+            size="lg"
+          />
+          <div className="flex flex-col gap-0.5">
+            <EntityNameIdentifiers entity={entity}>
+              <span className="flex items-center gap-2">
+                <h1 className="text-lg font-semibold">
+                  {getEntityDisplayName(entity)}
+                </h1>
+                <DraftBadge isDraft={entity.isDraft} />
+              </span>
+            </EntityNameIdentifiers>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+              <span>{getEntityTypeLabel(entity.type)}</span>
+              <span aria-hidden>·</span>
+              <span className="font-mono">{decodedId}</span>
+              <EntityTags tags={entity.tags} />
+            </div>
           </div>
+          {isAuthenticated && (
+            <div className="ms-auto flex shrink-0 gap-2">
+              <TooltipTrigger>
+                <Link
+                  to="/entities/$entityId/edit"
+                  params={{ entityId }}
+                  aria-label={t('entity.detail.edit')}
+                  className={buttonVariants({
+                    variant: 'secondary',
+                    size: 'icon',
+                  })}
+                >
+                  <HugeiconsIcon icon={Edit02Icon} />
+                </Link>
+                <Tooltip>{t('entity.detail.edit')}</Tooltip>
+              </TooltipTrigger>
+              <TooltipTrigger>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  aria-label={t('entity.detail.delete')}
+                  onPress={() => setDeleteOpen(true)}
+                >
+                  <HugeiconsIcon icon={Delete02Icon} />
+                </Button>
+                <Tooltip>{t('entity.detail.delete')}</Tooltip>
+              </TooltipTrigger>
+            </div>
+          )}
         </div>
-        {isAuthenticated && (
-          <div className="ms-auto flex gap-2 shrink-0">
-            <TooltipTrigger>
-              <Link
-                to="/entities/$entityId/edit"
-                params={{ entityId }}
-                aria-label={t('entity.detail.edit')}
-                className={buttonVariants({
-                  variant: 'secondary',
-                  size: 'icon',
-                })}
-              >
-                <HugeiconsIcon icon={Edit02Icon} />
-              </Link>
-              <Tooltip>{t('entity.detail.edit')}</Tooltip>
-            </TooltipTrigger>
-            <TooltipTrigger>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={t('entity.detail.delete')}
-                onPress={() => setDeleteOpen(true)}
-              >
-                <HugeiconsIcon icon={Delete02Icon} />
-              </Button>
-              <Tooltip>{t('entity.detail.delete')}</Tooltip>
-            </TooltipTrigger>
-          </div>
-        )}
+        <div className="px-6 pt-4">
+          <Separator />
+        </div>
       </div>
-
-      <Separator />
 
       {isAuthenticated && audit && (
         <Card className="max-w-lg">

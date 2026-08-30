@@ -14,7 +14,7 @@ import {
 } from '@/api/hooks/entities/entities'
 import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityImage } from '@/components/entity/EntityImage'
-import { getEntityDisplayName } from '@/lib/entity'
+import { getEntityDisplayName, getEntityTypeLabel } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'
 import { cacheSavedEntity } from '@/api/entityCacheOps'
 
@@ -81,7 +81,9 @@ function EditEntityPage() {
             />
             <div>
               <h1 className="text-lg font-semibold">
-                {t('entity.form.edit_title')}
+                {t('entity.form.edit_title', {
+                  type: getEntityTypeLabel(entity.type),
+                })}
               </h1>
               <p className="text-xs text-muted-foreground">
                 {getEntityDisplayName(entity)}

@@ -49,32 +49,36 @@ export function FormScaffold({
       }}
       className="flex flex-col gap-4"
     >
-      <div className="sticky top-0 z-10 -mx-6 flex items-center justify-between gap-4 bg-background px-6 py-2">
-        {title}
-        <div className="flex shrink-0 gap-2">
-          <Button type="submit" isDisabled={isSubmitting}>
-            {isSubmitting
-              ? t('common.loading')
-              : canSaveAsDraft
-                ? t('entity.form.publish')
-                : t('common.save')}
-          </Button>
-          {canSaveAsDraft && (
-            <Button
-              type="button"
-              variant="outline"
-              isDisabled={isSubmitting}
-              onPress={() => onSubmit(true)}
-            >
-              {t('entity.form.save_draft')}
+      <div className="sticky top-0 z-10 -mx-6 bg-background before:absolute before:inset-x-0 before:bottom-full before:h-6 before:bg-background before:content-['']">
+        <div className="flex items-center justify-between gap-4 px-6 py-2">
+          {title}
+          <div className="flex shrink-0 gap-2">
+            <Button type="submit" isDisabled={isSubmitting}>
+              {isSubmitting
+                ? t('common.loading')
+                : canSaveAsDraft
+                  ? t('entity.form.publish')
+                  : t('common.save')}
             </Button>
-          )}
-          <Button variant="outline" onPress={() => window.history.back()}>
-            {t('common.cancel')}
-          </Button>
+            {canSaveAsDraft && (
+              <Button
+                type="button"
+                variant="outline"
+                isDisabled={isSubmitting}
+                onPress={() => onSubmit(true)}
+              >
+                {t('entity.form.save_draft')}
+              </Button>
+            )}
+            <Button variant="outline" onPress={() => window.history.back()}>
+              {t('common.cancel')}
+            </Button>
+          </div>
+        </div>
+        <div className="px-6 pt-4">
+          <Separator />
         </div>
       </div>
-      <Separator />
       <div className="columns-1 gap-4 lg:columns-2 [&>*]:mb-4 [&>*]:break-inside-avoid">
         {children}
       </div>

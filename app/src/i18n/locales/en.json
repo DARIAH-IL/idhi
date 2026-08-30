@@ -1818,7 +1818,7 @@
     },
     "form": {
       "new_title": "New {{type}}",
-      "edit_title": "Edit entity",
+      "edit_title": "Edit {{type}}",
       "image_error": "The selected file could not be read as an image.",
       "image_preview": "Entity image preview",
       "remove_image": "Remove image",
