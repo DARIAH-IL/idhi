@@ -9,11 +9,24 @@ import { auditedEntityId } from '#/lib/entity.ts'
 import type { EntityType } from '#/lib/entity.ts'
 import { getIncomingEntityRelationships } from '#/lib/entityRelationships.ts'
 import type { IncomingEntityRelationship } from '#/lib/entityRelationships.ts'
+import { useIdle } from '#/hooks/useIdle.ts'
 import { Button } from '#/components/ui/button.tsx'
 import { Card, CardContent, CardFooter } from '#/components/ui/card.tsx'
 import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx'
+import { useEntityReferences } from '#/components/entity/EntityReferencesProvider.tsx'
 
 const RELATIONSHIP_PAGE_SIZE = 6
+const RELATIONSHIP_IDLE_TIMEOUT = 1_000
+
+function useRelationshipsReady(): boolean {
+  const references = useEntityReferences()
+  const referencesLoaded = !(references?.isLoading ?? false)
+
+  return useIdle({
+    enabled: referencesLoaded,
+    timeout: RELATIONSHIP_IDLE_TIMEOUT,
+  })
+}
 
 function RelationshipHeading({
   relationship,
@@ -197,6 +210,7 @@ export function IncomingEntityRelationships({
 }) {
   const relationships = getIncomingEntityRelationships(entityType)
   const [pages, setPages] = useState<Record<string, number>>({})
+  const relationshipsReady = useRelationshipsReady()
   const queryResults = useQueries({
     queries: relationships.map((relationship) => {
       const page = pages[relationship.key] ?? 0
@@ -222,6 +236,7 @@ export function IncomingEntityRelationships({
         },
         {
           query: {
+            enabled: relationshipsReady,
             placeholderData: keepPreviousData,
             retry: false,
           },

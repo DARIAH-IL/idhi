@@ -94,11 +94,6 @@ function EntityDetailPage() {
   ]
     .filter((key) => !isNonDisplayField(key))
     .sort((a, b) => orderOf(a) - orderOf(b))
-  const midpoint = Math.ceil(entityFields.length / 2)
-  const fieldColumns = [
-    entityFields.slice(0, midpoint),
-    entityFields.slice(midpoint),
-  ]
   const referencedEntityIds = collectEntityReferenceIds(
     entityFields.map((key) => values[key]),
   )
@@ -223,49 +218,42 @@ function EntityDetailPage() {
       <EntityReferencesProvider entityIds={referencedEntityIds}>
         <Card>
           <CardContent>
-            <dl className="grid items-start gap-1 lg:grid-cols-2">
-              {fieldColumns.map((column, columnIndex) => (
-                <div key={columnIndex} className="flex flex-col gap-2">
-                  {column.map((key) => {
-                    const refValue = isEntityRefValue(values[key])
-                    return (
-                      <div
-                        key={key}
-                        className={
-                          refValue
-                            ? 'flex flex-col gap-1 text-xs p-1 rounded hover:bg-accent'
-                            : 'grid grid-cols-[8rem_minmax(0,1fr)] gap-1 text-xs p-1 rounded hover:bg-accent'
-                        }
-                      >
-                        <dt className="text-muted-foreground font-medium">
-                          <EntityFieldLabel
-                            entityClass={entityClass}
-                            field={key}
-                          />
-                        </dt>
-                        <dd className={refValue ? 'ms-4 py-2' : undefined}>
-                          {renderEntityValue(
-                            values[key],
-                            getFieldRefClass(entityClass, key),
-                            key,
-                            getFieldTermUri(entityClass, key),
-                          )}
-                        </dd>
-                      </div>
-                    )
-                  })}
-                </div>
-              ))}
+            <dl className="columns-1 gap-1 lg:columns-2">
+              {entityFields.map((key) => {
+                const refValue = isEntityRefValue(values[key])
+                return (
+                  <div
+                    key={key}
+                    className={
+                      refValue
+                        ? 'mb-2 flex break-inside-avoid flex-col gap-1 rounded p-1 text-xs hover:bg-accent'
+                        : 'mb-2 grid break-inside-avoid grid-cols-[8rem_minmax(0,1fr)] gap-1 rounded p-1 text-xs hover:bg-accent'
+                    }
+                  >
+                    <dt className="text-muted-foreground font-medium">
+                      <EntityFieldLabel entityClass={entityClass} field={key} />
+                    </dt>
+                    <dd className={refValue ? 'ms-4 py-2' : undefined}>
+                      {renderEntityValue(
+                        values[key],
+                        getFieldRefClass(entityClass, key),
+                        key,
+                        getFieldTermUri(entityClass, key),
+                      )}
+                    </dd>
+                  </div>
+                )
+              })}
             </dl>
           </CardContent>
         </Card>
-      </EntityReferencesProvider>
 
-      <IncomingEntityRelationships
-        key={decodedId}
-        entityId={decodedId}
-        entityType={entity.type}
-      />
+        <IncomingEntityRelationships
+          key={decodedId}
+          entityId={decodedId}
+          entityType={entity.type}
+        />
+      </EntityReferencesProvider>
 
       {isAuthenticated && (
         <Dialog isOpen={deleteOpen} onOpenChange={setDeleteOpen}>
