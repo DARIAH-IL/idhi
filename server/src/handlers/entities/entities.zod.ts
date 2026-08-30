@@ -1793,11 +1793,11 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
               ),
-            programming_language: zod
-              .string()
+            programming_languages: zod
+              .array(zod.string())
               .nullish()
               .describe(
-                'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+                'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
               ),
             resource_contributions: zod
               .array(
@@ -5061,11 +5061,11 @@ export const CreateEntityBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
-      programming_language: zod
-        .string()
+      programming_languages: zod
+        .array(zod.string())
         .nullish()
         .describe(
-          'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+          'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
         ),
       resource_contributions: zod
         .array(
@@ -8269,11 +8269,11 @@ export const CreateEntityResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        programming_language: zod
-          .string()
+        programming_languages: zod
+          .array(zod.string())
           .nullish()
           .describe(
-            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+            'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
           ),
         resource_contributions: zod
           .array(
@@ -11561,11 +11561,11 @@ export const GetEntityByIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        programming_language: zod
-          .string()
+        programming_languages: zod
+          .array(zod.string())
           .nullish()
           .describe(
-            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+            'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
           ),
         resource_contributions: zod
           .array(
@@ -14883,11 +14883,11 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
         ),
-      programming_language: zod
-        .string()
+      programming_languages: zod
+        .array(zod.string())
         .nullish()
         .describe(
-          'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+          'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
         ),
       resource_contributions: zod
         .array(
@@ -18155,11 +18155,11 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
           ),
-        programming_language: zod
-          .string()
+        programming_languages: zod
+          .array(zod.string())
           .nullish()
           .describe(
-            'Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.',
+            'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
           ),
         resource_contributions: zod
           .array(

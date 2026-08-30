@@ -285,7 +285,7 @@ const ENTITY_FIELD_ORDER = {
     homepage: true,
     documentation_url: true,
     code_repository: true,
-    programming_language: true,
+    programming_languages: true,
     license: true,
     additional_urls: true,
     digital_humanities_activities: true,

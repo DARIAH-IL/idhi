@@ -106,13 +106,13 @@ export const ToolFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="programming_language">
+        <form.AppField name="programming_languages">
           {(field) => (
-            <field.TextField
+            <field.ProgrammingLanguagesField
               label={
                 <EntityFieldLabel
                   entityClass="Tool"
-                  field="programming_language"
+                  field="programming_languages"
                 />
               }
             />

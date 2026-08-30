@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import {
-  getSearchEntitiesTypedQueryOptions,
-  type TypedEntitySearch,
-} from '@/api/typedEntitySearch'
+import { getSearchEntitiesTypedQueryOptions } from '@/api/typedEntitySearch'
+import type { TypedEntitySearch } from '@/api/typedEntitySearch'
 import { SuggestibleTagsField } from './SuggestibleTagsField'
 
 interface Props {

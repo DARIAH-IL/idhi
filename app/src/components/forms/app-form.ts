@@ -7,6 +7,7 @@ import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
 import { LangStringField } from '@/components/form-fields/LangStringField'
 import { LanguagesField } from '@/components/form-fields/LanguagesField'
 import { MediaTypeField } from '@/components/form-fields/MediaTypeField'
+import { ProgrammingLanguagesField } from '@/components/form-fields/ProgrammingLanguagesField'
 import { StringArrayField } from '@/components/form-fields/StringArrayField'
 import { TagsField } from '@/components/form-fields/TagsField'
 import { ArraySection } from '@/components/form-fields/ArraySection'
@@ -35,6 +36,7 @@ export const { useAppForm, withFieldGroup, withForm } = createFormHook({
     LanguagesField,
     MediaTypeField,
     OrcidField,
+    ProgrammingLanguagesField,
     RorField,
     StringArrayField,
     TagsField,

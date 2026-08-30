@@ -1082,9 +1082,9 @@
           "label": "$t(common.labels.name)",
           "description": "The tool’s name, in one or more languages. Use localized names supplied by its team rather than translating a branded name."
         },
-        "programming_language": {
-          "label": "Programming language",
-          "description": "The main implementation language, such as Python. Not for natural languages the tool supports."
+        "programming_languages": {
+          "label": "Programming languages",
+          "description": "Implementation languages, as technical labels such as Python or JavaScript. Add one value for each language the tool is implemented in. Not for natural languages the tool supports."
         },
         "resource_contributions": {
           "label": "$t(common.labels.resource_contributions)",

@@ -136,7 +136,8 @@ export const entities = [
       'tadirah:dataVisualization',
     ],
     license: index % 2 === 0 ? 'MIT' : 'GPL_3_0',
-    programming_language: index % 2 === 0 ? 'TypeScript' : 'Python',
+    programming_languages:
+      index % 2 === 0 ? ['TypeScript', 'JavaScript'] : ['Python'],
     resource_contributions: [
       {
         contributor: related(personIds, index),

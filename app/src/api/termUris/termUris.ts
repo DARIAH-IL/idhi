@@ -292,7 +292,7 @@ export const termUris = {
     image: 'schema:image',
     license: 'dcterms:license',
     name: 'skos:prefLabel',
-    programming_language: 'schema:programmingLanguage',
+    programming_languages: 'schema:programmingLanguage',
     resource_contributions: 'dcterms:contributor',
     same_as: 'schema:sameAs',
     tags: 'dcat:keyword',

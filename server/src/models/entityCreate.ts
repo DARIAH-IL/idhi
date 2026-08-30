@@ -1070,10 +1070,10 @@ export type EntityCreate =
         value: string
       }[]
       /**
-       * Main implementation language, as a single technical label such as Python. Do not use this slot for natural languages supported by the tool.
+       * Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.
        * @nullable
        */
-      programming_language?: string | null
+      programming_languages?: string[] | null
       /**
        * Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.
        * @nullable

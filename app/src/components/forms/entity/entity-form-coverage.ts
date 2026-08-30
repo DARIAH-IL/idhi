@@ -143,7 +143,7 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     license: 'rendered',
     'name[].language': 'rendered',
     'name[].value': 'rendered',
-    programming_language: 'rendered',
+    programming_languages: 'rendered',
     'resource_contributions[].contributor': 'rendered',
     'resource_contributions[].end_date': 'rendered',
     'resource_contributions[].resource_contribution_role': 'rendered',
