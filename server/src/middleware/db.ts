@@ -7,6 +7,62 @@ import { ApiError } from '../errors/ApiError'
 import { ErrorCode } from '../models/errorCode'
 import { requiredValue } from '../utils/values'
 import { serializeError } from './logger'
+import type { RequestLogger } from './logger'
+
+async function closeConnection(
+  connection: Connection,
+  logger: RequestLogger,
+): Promise<void> {
+  try {
+    await connection.close()
+  } catch (error) {
+    logger.warn('Database connection close failed', {
+      error: serializeError(error),
+    })
+  }
+}
+
+function deferConnectionClose(
+  response: Response,
+  onDone: () => void,
+): Response {
+  const source = response.body
+
+  if (!source) {
+    onDone()
+    return response
+  }
+
+  const reader = source.getReader()
+  const stream = new ReadableStream({
+    async pull(controller) {
+      try {
+        const { done, value } = await reader.read()
+
+        if (done) {
+          controller.close()
+          onDone()
+          return
+        }
+
+        controller.enqueue(value)
+      } catch (error) {
+        controller.error(error)
+        onDone()
+      }
+    },
+    cancel(reason) {
+      onDone()
+      return reader.cancel(reason).catch(() => {})
+    },
+  })
+
+  return new Response(stream, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+  })
+}
 
 export const databaseMiddleware: MiddlewareHandler<{
   Bindings: Bindings
@@ -15,6 +71,7 @@ export const databaseMiddleware: MiddlewareHandler<{
   const databaseName = requiredValue(c.env, 'MONGODB_DATABASE_NAME')
   const logger = c.get('logger')
   let connection: Connection | undefined
+  let closeDeferred = false
 
   try {
     try {
@@ -33,16 +90,22 @@ export const databaseMiddleware: MiddlewareHandler<{
       throw error
     }
 
-    return await next()
+    await next()
+
+    if (
+      connection &&
+      c.res.headers.get('content-type')?.includes('text/event-stream')
+    ) {
+      const activeConnection = connection
+
+      closeDeferred = true
+      c.res = deferConnectionClose(c.res, () => {
+        void closeConnection(activeConnection, logger)
+      })
+    }
   } finally {
-    if (connection) {
-      try {
-        await connection.close()
-      } catch (error) {
-        logger.warn('Database connection close failed', {
-          error: serializeError(error),
-        })
-      }
+    if (connection && !closeDeferred) {
+      await closeConnection(connection, logger)
     }
   }
 }
