@@ -166,14 +166,13 @@ export const PersonFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="Affiliation"
                             field="start_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>
@@ -182,14 +181,13 @@ export const PersonFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="Affiliation"
                             field="end_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>

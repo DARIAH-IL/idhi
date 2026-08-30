@@ -1,8 +1,8 @@
 import { infiniteQueryOptions, keepPreviousData } from '@tanstack/react-query'
 import { z } from 'zod'
 import {
+  fetchEntitiesTyped,
   getSearchEntitiesTypedQueryKey,
-  searchEntitiesTyped,
 } from '#/api/typedEntitySearch.ts'
 import type {
   EntityField,
@@ -112,8 +112,8 @@ export function getInfiniteEntityQueryOptions(
 
   return infiniteQueryOptions({
     queryKey: [...getSearchEntitiesTypedQueryKey(search), 'infinite'] as const,
-    queryFn: ({ pageParam, signal }) =>
-      searchEntitiesTyped({ ...search, page: pageParam }, signal),
+    queryFn: ({ client, pageParam, signal }) =>
+      fetchEntitiesTyped(client, { ...search, page: pageParam }, signal),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _pages, lastPageParam) => {
       const nextPage = lastPageParam + 1

@@ -26,6 +26,10 @@
     "new": "New",
     "copy": "Copy",
     "copied": "Copied",
+    "date_picker": {
+      "select": "Select date",
+      "clear": "Clear date"
+    },
     "pagination": {
       "range": "Showing {{start}}–{{end}} of {{total}}",
       "listed_one": "{{count}} item listed",

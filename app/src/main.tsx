@@ -1,15 +1,23 @@
 import './i18n/index.ts'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
+import { I18nProvider } from 'react-aria-components'
 import { QueryParamProvider } from 'use-query-params'
 import type { QueryParamAdapterComponent } from 'use-query-params'
+import type { UiLanguage } from '@/api/models'
 import { useAuthStorageSync } from '@/stores/auth'
-import { useUIStorageSync } from '@/stores/ui'
+import { useUIStorageSync, useUIStore } from '@/stores/ui'
 import { useLanguageQueryParam } from '@/hooks/useLanguageQueryParam'
 import { useAuthLinkQueryParams } from '@/hooks/useAuthLinkQueryParams'
 import { getRouter } from './router'
 
 const router = getRouter()
+
+const reactAriaLocales = {
+  en: 'en-GB',
+  he: 'he-IL',
+  ar: 'ar-IL',
+} satisfies Record<UiLanguage, string>
 
 const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
   const getPath = (search: string) => {
@@ -32,8 +40,13 @@ function App() {
   useUIStorageSync()
   useLanguageQueryParam()
   useAuthLinkQueryParams()
+  const language = useUIStore((state) => state.language)
 
-  return <RouterProvider router={router} />
+  return (
+    <I18nProvider locale={reactAriaLocales[language]}>
+      <RouterProvider router={router} />
+    </I18nProvider>
+  )
 }
 
 const rootElement = document.getElementById('app')!

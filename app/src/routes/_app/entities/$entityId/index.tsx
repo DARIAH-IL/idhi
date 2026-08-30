@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
@@ -48,6 +48,7 @@ import {
   renderEntityValue,
 } from '../../../../components/renderEntityValue.tsx'
 import { collectEntityReferenceIds } from '#/lib/entityReferences.ts'
+import { removeDeletedEntityFromCache } from '#/api/entityCacheOps.ts'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
   loader: ({ context, params }) =>
@@ -64,6 +65,7 @@ function EntityDetailPage() {
   const setAuditCollapsed = useUIStore((state) => state.setAuditCollapsed)
   const { entityId } = Route.useParams()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [deleteOpen, setDeleteOpen] = useState(false)
 
   const decodedId = decodeURIComponent(entityId)
@@ -73,6 +75,7 @@ function EntityDetailPage() {
   const deleteMutation = useDeleteEntityById({
     mutation: {
       onSuccess: () => {
+        void removeDeletedEntityFromCache(queryClient, decodedId)
         toast.success(t('entity.notifications.deleted'))
         void navigate({ to: '/entities' })
       },

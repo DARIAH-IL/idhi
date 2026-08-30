@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useCreateEntity } from '@/api/hooks/entities/entities'
@@ -21,6 +22,7 @@ import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
+import { cacheSavedEntity } from '@/api/entityCacheOps'
 
 export const Route = createFileRoute('/_app/entities/new')({
   validateSearch: z.object({
@@ -38,6 +40,7 @@ function NewEntityPage() {
   const { t } = useTranslation()
   const token = useAuthStore((state) => state.token)
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { type } = Route.useSearch()
   const selectedType: EntityType | null = type
     ? (normalizeEntityType(type) ?? null)
@@ -53,6 +56,7 @@ function NewEntityPage() {
   const createMutation = useCreateEntity({
     mutation: {
       onSuccess: (entity) => {
+        void cacheSavedEntity(queryClient, entity)
         toast.success(t('entity.notifications.created'))
         void navigate({
           to: '/entities/$entityId',

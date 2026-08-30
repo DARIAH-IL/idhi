@@ -4,7 +4,7 @@ import {
   redirect,
   useNavigate,
 } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -16,6 +16,7 @@ import { EntityForm } from '@/components/forms/entity/EntityForm'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { getEntityDisplayName } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'
+import { cacheSavedEntity } from '@/api/entityCacheOps'
 
 export const Route = createFileRoute('/_app/entities/$entityId/edit')({
   beforeLoad: ({ params }) => {
@@ -38,6 +39,7 @@ function EditEntityPage() {
   const token = useAuthStore((state) => state.token)
   const { entityId } = Route.useParams()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [serverError, setServerError] = useState<string | null>(null)
 
   const decodedId = decodeURIComponent(entityId)
@@ -46,7 +48,8 @@ function EditEntityPage() {
 
   const updateMutation = useUpdateEntityById({
     mutation: {
-      onSuccess: () => {
+      onSuccess: (updatedEntity) => {
+        void cacheSavedEntity(queryClient, updatedEntity)
         toast.success(t('entity.notifications.updated'))
         void navigate({ to: '/entities' })
       },

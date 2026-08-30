@@ -1,6 +1,7 @@
 import { createFormHook } from '@tanstack/react-form'
 import { fieldContext, formContext } from './form-context'
 import { TextField } from '@/components/form-fields/TextField'
+import { DatePickerField } from '@/components/form-fields/DatePickerField'
 import { BooleanField } from '@/components/form-fields/BooleanField'
 import { EnumMultiSelectField } from '@/components/form-fields/EnumMultiSelectField'
 import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
@@ -26,6 +27,7 @@ export const { useAppForm, withFieldGroup, withForm } = createFormHook({
   fieldComponents: {
     ArraySection,
     BooleanField,
+    DatePickerField,
     DoiField,
     EntityRefArrayField,
     EntityRefField,

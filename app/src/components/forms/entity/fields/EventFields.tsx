@@ -56,11 +56,10 @@ export const EventFields = withForm({
           validators={valueValidators({ kind: 'date' })}
         >
           {(field) => (
-            <field.TextField
+            <field.DatePickerField
               label={
                 <EntityFieldLabel entityClass="Event" field="start_date" />
               }
-              type="date"
             />
           )}
         </form.AppField>
@@ -69,9 +68,8 @@ export const EventFields = withForm({
           validators={valueValidators({ kind: 'date' })}
         >
           {(field) => (
-            <field.TextField
+            <field.DatePickerField
               label={<EntityFieldLabel entityClass="Event" field="end_date" />}
-              type="date"
             />
           )}
         </form.AppField>
@@ -185,14 +183,13 @@ export const EventFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="EventAgentRole"
                             field="start_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>
@@ -201,14 +198,13 @@ export const EventFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="EventAgentRole"
                             field="end_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>

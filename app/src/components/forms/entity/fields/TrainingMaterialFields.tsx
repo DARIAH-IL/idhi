@@ -100,14 +100,13 @@ export const TrainingMaterialFields = withForm({
           validators={valueValidators({ kind: 'date' })}
         >
           {(field) => (
-            <field.TextField
+            <field.DatePickerField
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
                   field="date_issued"
                 />
               }
-              type="date"
             />
           )}
         </form.AppField>

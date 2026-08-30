@@ -1,11 +1,13 @@
 import type {
   DataTag,
   QueryClient,
+  QueryFunction,
   QueryKey,
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query'
 import {
+  getGetEntityByIdQueryKey,
   getSearchEntitiesQueryKey,
   getSearchEntitiesQueryOptions,
   searchEntities,
@@ -18,6 +20,7 @@ import type {
   SortDirection,
 } from '#/api/models'
 import type { ErrorType } from '#/api/client.ts'
+import { auditedEntityId } from '#/lib/entity.ts'
 import type { FieldPaths } from '#/lib/fieldPaths.ts'
 
 export type EntityField = FieldPaths<AuditedEntity>
@@ -46,8 +49,33 @@ export const searchEntitiesTyped = (
   signal?: AbortSignal,
 ) => searchEntities(search, signal)
 
+export function populateEntityByIdCache(
+  queryClient: QueryClient,
+  entities: readonly AuditedEntity[],
+): void {
+  for (const entity of entities) {
+    queryClient.setQueryData(
+      getGetEntityByIdQueryKey(auditedEntityId(entity)),
+      entity,
+    )
+  }
+}
+
+export const fetchEntitiesTyped = async (
+  queryClient: QueryClient,
+  search: TypedEntitySearch,
+  signal?: AbortSignal,
+) => {
+  const result = await searchEntitiesTyped(search, signal)
+  populateEntityByIdCache(queryClient, result.results)
+  return result
+}
+
 export const getSearchEntitiesTypedQueryKey = (search?: TypedEntitySearch) =>
   getSearchEntitiesQueryKey(search)
+
+export const getSearchEntitiesTypedQueryKeyPrefix = () =>
+  getSearchEntitiesTypedQueryKey().slice(0, 2)
 
 export const getSearchEntitiesTypedQueryOptions = <
   TData = Awaited<ReturnType<typeof searchEntities>>,
@@ -59,7 +87,17 @@ export const getSearchEntitiesTypedQueryOptions = <
       UseQueryOptions<Awaited<ReturnType<typeof searchEntities>>, TError, TData>
     >
   },
-) => getSearchEntitiesQueryOptions<TData, TError>(search, options)
+) => {
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof searchEntities>>> = ({
+    client,
+    signal,
+  }) => fetchEntitiesTyped(client, search, signal)
+
+  return {
+    ...getSearchEntitiesQueryOptions<TData, TError>(search, options),
+    queryFn,
+  }
+}
 
 export function useSearchEntitiesTyped<
   TData = Awaited<ReturnType<typeof searchEntities>>,
@@ -75,5 +113,14 @@ export function useSearchEntitiesTyped<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>
 } {
-  return useSearchEntities<TData, TError>(search, options, queryClient)
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof searchEntities>>> = ({
+    client,
+    signal,
+  }) => fetchEntitiesTyped(client, search, signal)
+
+  return useSearchEntities<TData, TError>(
+    search,
+    { query: { ...options?.query, queryFn } },
+    queryClient,
+  )
 }

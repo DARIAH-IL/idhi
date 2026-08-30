@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { searchEntitiesTyped } from '#/api/typedEntitySearch.ts'
+import {
+  fetchEntitiesTyped,
+  getSearchEntitiesTypedQueryKey,
+} from '#/api/typedEntitySearch.ts'
+import type { TypedEntitySearch } from '#/api/typedEntitySearch.ts'
 import type { AuditedEntity } from '#/api/models/auditedEntity.ts'
 import { auditedEntityId } from '#/lib/entity.ts'
 
@@ -24,6 +28,12 @@ export function EntityReferencesProvider({
   entityIds: string[]
   children: ReactNode
 }) {
+  const search: TypedEntitySearch = {
+    facets: [],
+    filter: { field: 'id', op: 'in', value: entityIds },
+    pageSize: REFERENCE_PAGE_SIZE,
+  }
+
   const {
     data,
     fetchNextPage,
@@ -32,17 +42,9 @@ export function EntityReferencesProvider({
     isFetchingNextPage,
     isLoading,
   } = useInfiniteQuery({
-    queryKey: ['entity-references', entityIds],
-    queryFn: ({ pageParam, signal }) =>
-      searchEntitiesTyped(
-        {
-          facets: [],
-          filter: { field: 'id', op: 'in', value: entityIds },
-          page: pageParam,
-          pageSize: REFERENCE_PAGE_SIZE,
-        },
-        signal,
-      ),
+    queryKey: [...getSearchEntitiesTypedQueryKey(search), 'infinite'],
+    queryFn: ({ client, pageParam, signal }) =>
+      fetchEntitiesTyped(client, { ...search, page: pageParam }, signal),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
       const loaded = pages.reduce(

@@ -102,11 +102,10 @@ export const DatasetFields = withForm({
           validators={valueValidators({ kind: 'date' })}
         >
           {(field) => (
-            <field.TextField
+            <field.DatePickerField
               label={
                 <EntityFieldLabel entityClass="Dataset" field="date_issued" />
               }
-              type="date"
             />
           )}
         </form.AppField>
@@ -282,14 +281,13 @@ export const DatasetFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="ResourceContribution"
                             field="start_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>
@@ -298,14 +296,13 @@ export const DatasetFields = withForm({
                     validators={valueValidators({ kind: 'date' })}
                   >
                     {(nestedField) => (
-                      <nestedField.TextField
+                      <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
                             entityClass="ResourceContribution"
                             field="end_date"
                           />
                         }
-                        type="date"
                       />
                     )}
                   </form.AppField>
