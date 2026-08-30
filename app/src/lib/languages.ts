@@ -195,7 +195,7 @@ export interface LanguageOption {
 
 const englishDisplayNames = new Intl.DisplayNames(['en'], { type: 'language' })
 
-function languageName(code: string) {
+export function languageName(code: string) {
   try {
     return new Intl.DisplayNames([code], { type: 'language' }).of(code)
   } catch {

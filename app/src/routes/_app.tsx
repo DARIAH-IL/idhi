@@ -13,7 +13,7 @@ import {
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
-import i18n from '@/i18n'
+import i18n, { isRtlLanguage } from '@/i18n'
 import { useAuthLinkStore } from '@/stores/auth-link'
 import type { AuthLinkFlow } from '@/stores/auth-link'
 import { useAuthStore } from '@/stores/auth'
@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip } from '@/components/ui/tooltip'
 import { JumpToTop } from '@/components/JumpToTop'
+import { LanguagePicker } from '@/components/LanguagePicker'
 import { LoginDialog } from '@/components/auth/LoginDialog'
 import { UserMenu } from '@/components/auth/UserMenu'
 
@@ -45,6 +46,8 @@ function AppLayout() {
 
   useEffect(() => {
     void i18n.changeLanguage(language)
+    document.documentElement.lang = language
+    document.documentElement.dir = isRtlLanguage(language) ? 'rtl' : 'ltr'
   }, [language])
 
   useEffect(() => {
@@ -82,6 +85,7 @@ function AppLayout() {
           </span>
         </Link>
         <div className="flex items-center gap-2">
+          <LanguagePicker />
           <TooltipTrigger delay={0}>
             <Button
               variant="outline"

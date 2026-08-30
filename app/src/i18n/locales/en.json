@@ -26,6 +26,7 @@
     "new": "New",
     "copy": "Copy",
     "copied": "Copied",
+    "language_picker": "Change language",
     "date_picker": {
       "select": "Select date",
       "clear": "Clear date"
