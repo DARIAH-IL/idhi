@@ -112,4 +112,17 @@ body {
   a.app-link {
     @apply font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary;
   }
+
+  [data-slot='input'][type='date']::-webkit-calendar-picker-indicator {
+    margin-inline-start: 0.25rem;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in oklab, var(--muted) 50%, transparent);
+    padding: 0.125rem;
+  }
+
+  [data-slot='input'][type='date']::-webkit-calendar-picker-indicator:hover {
+    background-color: var(--accent);
+  }
 }

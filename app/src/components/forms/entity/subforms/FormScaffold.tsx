@@ -75,7 +75,9 @@ export function FormScaffold({
         </div>
       </div>
       <Separator />
-      <div className="grid items-start gap-4 lg:grid-cols-2">{children}</div>
+      <div className="columns-1 gap-4 lg:columns-2 [&>*]:mb-4 [&>*]:break-inside-avoid">
+        {children}
+      </div>
       <Dialog
         isOpen={status === 'blocked'}
         onOpenChange={(open) => {

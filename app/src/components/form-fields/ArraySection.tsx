@@ -26,16 +26,16 @@ export function ArraySection({ label, defaultItem, children }: Props) {
   const rowClass = useFieldRowClass()
 
   return (
-    <div className={cn('lg:col-span-2 flex flex-col gap-2', rowClass)}>
+    <div className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}>
       <Label>{label}</Label>
       <div className="ml-3 flex flex-col gap-3">
         {items.map((_, index) => (
           <div
             key={index}
-            className="rounded border p-3 grid items-start gap-2 lg:grid-cols-2"
+            className="columns-1 gap-2 rounded border p-3 lg:columns-2 [&>*]:mb-2 [&>*]:break-inside-avoid"
             {...getRowProps(index)}
           >
-            <div className="lg:col-span-2 flex justify-between items-center">
+            <div className="flex items-center justify-between [column-span:all]">
               <div className="flex items-center gap-2">
                 <DragHandle {...getHandleProps(index)} />
                 <span className="text-xs font-medium">#{index + 1}</span>
