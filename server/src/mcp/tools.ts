@@ -5,6 +5,7 @@ import type { User } from '../models/user'
 import {
   createEntity,
   deleteEntity,
+  entityFilterSchema,
   getEntityOrThrow,
   searchEntities,
   updateEntity,
@@ -27,6 +28,13 @@ export const WRITE_TOOL_NAMES: ReadonlySet<string> = new Set([
 const UpdateEntityInput = z.object({
   entityId: z.string().min(1),
   entity: UpdateEntityByIdBody.superRefine(refineUniqueLangStringLanguages),
+})
+
+// Orval flattens the recursive OpenAPI filter and emits z.unknown() at its
+// recursion boundary. Use the recursive runtime schema so MCP clients receive
+// explicit JSON value schemas and recursive references instead of bare `{}`.
+const SearchEntitiesInput = SearchEntitiesBody.omit({ filter: true }).extend({
+  filter: entityFilterSchema.optional(),
 })
 
 function jsonResult(value: unknown) {
@@ -69,7 +77,7 @@ export function createEntityMcpServer(
       title: 'Search entities',
       description:
         'Search IDHI entities with an optional free-text query, facets, filters, sorting, and pagination',
-      inputSchema: SearchEntitiesBody,
+      inputSchema: SearchEntitiesInput,
     },
     async (input) => jsonResult(await searchEntities(db.entities, input, user)),
   )

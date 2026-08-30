@@ -17,6 +17,7 @@ import { ErrorCode } from '../models/errorCode'
 import { entityIdMatchesType } from './entityId'
 import { isDuplicateKeyError } from './mongo'
 import {
+  searchEntitiesBodyFilterOneFieldRegExp,
   searchEntitiesBodyPageDefault,
   searchEntitiesBodyPageSizeDefault,
 } from '../handlers/entities/entities.zod'
@@ -28,12 +29,12 @@ export function entityNotFound(entityId: string): ApiError {
   )
 }
 
-const entityFilterSchema: z.ZodType<EntityFilter> = z.lazy(() =>
+export const entityFilterSchema: z.ZodType<EntityFilter> = z.lazy(() =>
   z.union([
     z.object({
-      field: z.string(),
+      field: z.string().regex(searchEntitiesBodyFilterOneFieldRegExp),
       op: z.enum(FilterOperator),
-      value: z.unknown().nonoptional(),
+      value: z.json(),
     }),
     z.object({ and: z.array(entityFilterSchema).min(1) }),
     z.object({ or: z.array(entityFilterSchema).min(1) }),
