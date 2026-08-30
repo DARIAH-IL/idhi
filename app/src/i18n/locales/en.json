@@ -1841,6 +1841,7 @@
       },
       "add_lang_string": "Add value in another language",
       "add_item": "Add item",
+      "add_value": "Add \"{{term}}\"",
       "language": "Language",
       "language_search": "Search languages…",
       "external_url_placeholder": "Or enter an external URL…",

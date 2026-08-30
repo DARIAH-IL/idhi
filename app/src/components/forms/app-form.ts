@@ -5,7 +5,10 @@ import { BooleanField } from '@/components/form-fields/BooleanField'
 import { EnumMultiSelectField } from '@/components/form-fields/EnumMultiSelectField'
 import { EnumSelectField } from '@/components/form-fields/EnumSelectField'
 import { LangStringField } from '@/components/form-fields/LangStringField'
+import { LanguagesField } from '@/components/form-fields/LanguagesField'
+import { MediaTypeField } from '@/components/form-fields/MediaTypeField'
 import { StringArrayField } from '@/components/form-fields/StringArrayField'
+import { TagsField } from '@/components/form-fields/TagsField'
 import { ArraySection } from '@/components/form-fields/ArraySection'
 import {
   EntityRefArrayField,
@@ -29,9 +32,12 @@ export const { useAppForm, withFieldGroup, withForm } = createFormHook({
     EnumSelectField,
     ImageField,
     LangStringField,
+    LanguagesField,
+    MediaTypeField,
     OrcidField,
     RorField,
     StringArrayField,
+    TagsField,
     TextField,
   },
   formComponents: {},

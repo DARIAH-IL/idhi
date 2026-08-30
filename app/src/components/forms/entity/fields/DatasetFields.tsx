@@ -119,21 +119,19 @@ export const DatasetFields = withForm({
         </form.AppField>
         <form.AppField name="media_type">
           {(field) => (
-            <field.StringArrayField
+            <field.MediaTypeField
               label={
                 <EntityFieldLabel entityClass="Dataset" field="media_type" />
               }
-              placeholder="application/json"
             />
           )}
         </form.AppField>
         <form.AppField name="in_languages">
           {(field) => (
-            <field.StringArrayField
+            <field.LanguagesField
               label={
                 <EntityFieldLabel entityClass="Dataset" field="in_languages" />
               }
-              placeholder="en"
             />
           )}
         </form.AppField>

@@ -243,14 +243,13 @@ export const TrainingMaterialFields = withForm({
         </form.AppField>
         <form.AppField name="in_languages">
           {(field) => (
-            <field.StringArrayField
+            <field.LanguagesField
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
                   field="in_languages"
                 />
               }
-              placeholder="en"
             />
           )}
         </form.AppField>

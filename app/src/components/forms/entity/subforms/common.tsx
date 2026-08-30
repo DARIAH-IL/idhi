@@ -31,7 +31,7 @@ export const CommonEntityFields = withFieldGroup({
         </group.AppField>
         <group.AppField name="tags">
           {(field) => (
-            <field.StringArrayField
+            <field.TagsField
               label={
                 <EntityFieldLabel entityClass={entityClass} field="tags" />
               }
