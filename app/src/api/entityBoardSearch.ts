@@ -12,8 +12,13 @@ import type {
 import {
   ENTITY_TYPES,
   getEntityFieldLabelText,
+  getEntityTypeFromId,
   getEntityTypeLabel,
 } from '#/lib/entity.ts'
+import {
+  getEntityRelationshipFacetDefinitions,
+  getEntityRelationshipFacetPaths,
+} from '#/lib/entityRelationships.ts'
 
 export const PAGE_SIZE = 20
 export const FACET_VISIBLE_LIMIT = 5
@@ -24,16 +29,19 @@ export const DEFAULT_FACETS = [
 
 export type FacetField = (typeof DEFAULT_FACETS)[number]
 
+const facetSelectionSchema = z.object({
+  include: z.array(z.string()).optional(),
+})
+
 export const facetFiltersSchema = z.object({
   type: z
     .object({
       include: z.array(z.enum(ENTITY_TYPES)).optional(),
     })
     .optional(),
-  tags: z
-    .object({
-      include: z.array(z.string()).optional(),
-    })
+  tags: facetSelectionSchema.optional(),
+  relationships: z
+    .partialRecord(z.enum(ENTITY_TYPES), facetSelectionSchema)
     .optional(),
 })
 
@@ -80,6 +88,33 @@ export function buildFacetFilter(facetFilters: FacetFilters | undefined) {
     }
   }
 
+  for (const { targetType, paths } of getEntityRelationshipFacetDefinitions()) {
+    const selectedIds = (
+      facetFilters?.relationships?.[targetType]?.include ?? []
+    ).filter((entityId) => getEntityTypeFromId(entityId) === targetType)
+    if (selectedIds.length === 0) {
+      continue
+    }
+
+    const relationshipClauses = paths.map((field): EntityFilter => ({
+      field,
+      op: 'in',
+      value: selectedIds,
+    }))
+    const [firstRelationshipClause, ...remainingRelationshipClauses] =
+      relationshipClauses
+    if (!firstRelationshipClause) {
+      continue
+    }
+    clauses.push(
+      remainingRelationshipClauses.length === 0
+        ? firstRelationshipClause
+        : {
+            or: [firstRelationshipClause, ...remainingRelationshipClauses],
+          },
+    )
+  }
+
   if (clauses.length === 0) {
     return undefined
   }
@@ -94,9 +129,16 @@ export function createEntitySearch(
   facetFilters: FacetFilters | undefined,
   sort: EntitySort | undefined,
 ): TypedEntitySearch {
+  const sourceTypes = facetFilters?.type?.include
+
   return {
     q,
-    facets: [...DEFAULT_FACETS],
+    facets: [
+      ...DEFAULT_FACETS,
+      ...getEntityRelationshipFacetPaths(
+        sourceTypes?.length ? sourceTypes : undefined,
+      ),
+    ],
     filter: buildFacetFilter(facetFilters),
     sort: [sort ?? DEFAULT_SORT],
     pageSize: PAGE_SIZE,
@@ -113,7 +155,15 @@ export function getInfiniteEntityQueryOptions(
   return infiniteQueryOptions({
     queryKey: [...getSearchEntitiesTypedQueryKey(search), 'infinite'] as const,
     queryFn: ({ client, pageParam, signal }) =>
-      fetchEntitiesTyped(client, { ...search, page: pageParam }, signal),
+      fetchEntitiesTyped(
+        client,
+        {
+          ...search,
+          facets: pageParam === 0 ? search.facets : [],
+          page: pageParam,
+        },
+        signal,
+      ),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _pages, lastPageParam) => {
       const nextPage = lastPageParam + 1

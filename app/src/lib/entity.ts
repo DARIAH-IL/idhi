@@ -400,6 +400,13 @@ export function getEntityTypeLabel(type: string): string {
   return labels[normalizeEntityType(type) ?? type] ?? type
 }
 
+export function getEntityTypePluralLabel(type: string): string {
+  const labels: Record<string, string> = i18n.t('entity.typesPlural', {
+    returnObjects: true,
+  })
+  return labels[normalizeEntityType(type) ?? type] ?? getEntityTypeLabel(type)
+}
+
 export function getEntityFieldLabelText(
   entityClass: string,
   field: string,
@@ -433,6 +440,12 @@ export function getEntityClassName(type: EntityType): EntityClassName {
 
 export function getEntityIdSegment(type: EntityType): string {
   return ENTITY_TYPE_METADATA[type].idSegment
+}
+
+export function getEntityTypeFromId(id: string): EntityType | undefined {
+  return ENTITY_TYPES.find((type) =>
+    id.startsWith(`idhi:${ENTITY_TYPE_METADATA[type].idSegment}:`),
+  )
 }
 
 export function auditedEntityId(entity: AuditedEntity): string {

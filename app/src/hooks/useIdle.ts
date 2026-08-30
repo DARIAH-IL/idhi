@@ -14,7 +14,7 @@ export function useIdle({
       return
     }
 
-    if ('requestIdleCallback' in window) {
+    if (typeof window.requestIdleCallback === 'function') {
       const idleCallback = window.requestIdleCallback(
         () => setIsIdle(true),
         timeout === undefined ? undefined : { timeout },

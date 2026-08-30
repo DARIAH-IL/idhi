@@ -24,6 +24,11 @@ export interface IncomingEntityRelationship {
   label: RelationshipLabel
 }
 
+export interface EntityRelationshipFacetDefinition {
+  targetType: EntityType
+  paths: readonly FieldPaths<Entity>[]
+}
+
 const ENTITY_RELATIONSHIPS = {
   'idhi:Person': [
     {
@@ -211,6 +216,44 @@ const ENTITY_RELATIONSHIPS = {
     },
   ],
 } as const satisfies EntityRelationshipRegistry
+
+export function getEntityRelationshipFacetDefinitions(
+  sourceTypes: readonly EntityType[] = ENTITY_TYPES,
+): EntityRelationshipFacetDefinition[] {
+  const includedSourceTypes = new Set<EntityType>(sourceTypes)
+
+  return ENTITY_TYPES.flatMap((targetType) => {
+    const paths = new Set<FieldPaths<Entity>>()
+
+    for (const sourceType of ENTITY_TYPES) {
+      if (!includedSourceTypes.has(sourceType)) {
+        continue
+      }
+
+      for (const relationship of ENTITY_RELATIONSHIPS[sourceType]) {
+        if (
+          relationship.targetTypes.some((candidate) => candidate === targetType)
+        ) {
+          paths.add(relationship.path)
+        }
+      }
+    }
+
+    return paths.size > 0 ? [{ targetType, paths: [...paths] }] : []
+  })
+}
+
+export function getEntityRelationshipFacetPaths(
+  sourceTypes: readonly EntityType[] = ENTITY_TYPES,
+): FieldPaths<Entity>[] {
+  return [
+    ...new Set(
+      getEntityRelationshipFacetDefinitions(sourceTypes).flatMap(
+        ({ paths }) => paths,
+      ),
+    ),
+  ]
+}
 
 export function getIncomingEntityRelationships(
   targetType: EntityType,

@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
-import type { SearchEntities200Facets } from '#/api/models'
-import { ENTITY_TYPES, normalizeEntityType } from '#/lib/entity.ts'
+import type { AuditedEntity, SearchEntities200Facets } from '#/api/models'
+import type { EntityRelationshipFacets } from '#/api/entityRelationshipFacets.ts'
+import { ENTITY_TYPES, getEntityTypePluralLabel } from '#/lib/entity.ts'
 import { Button } from '#/components/ui/button.tsx'
 import {
   InputGroup,
@@ -11,17 +12,25 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from '#/components/ui/input-group.tsx'
-import { FacetCheckbox } from './FacetCheckbox.tsx'
+import { useToggleMap } from '#/hooks/useToggleMap.ts'
+import { FacetSection } from './FacetSection.tsx'
+import {
+  buildRelationshipFacetValues,
+  buildStaticFacetValues,
+  getRelationshipFacetKey,
+} from './facetValues.ts'
+import { useDraftFacetFilters } from './useDraftFacetFilters.ts'
 import {
   DEFAULT_FACETS,
-  FACET_VISIBLE_LIMIT,
   getFacetFieldLabel,
-  getFacetValueLabel,
 } from '../../api/entityBoardSearch.ts'
-import type { FacetField, FacetFilters } from '../../api/entityBoardSearch.ts'
+import type { FacetFilters } from '../../api/entityBoardSearch.ts'
 
 interface FacetPanelProps {
   facets: SearchEntities200Facets
+  relationshipFacets: EntityRelationshipFacets
+  relationshipEntitiesById: ReadonlyMap<string, AuditedEntity>
+  areRelationshipNamesLoading: boolean
   initialFilters: FacetFilters
   isLoading: boolean
   isRefetching: boolean
@@ -30,45 +39,25 @@ interface FacetPanelProps {
 
 export function FacetPanel({
   facets,
+  relationshipFacets,
+  relationshipEntitiesById,
+  areRelationshipNamesLoading,
   initialFilters,
   isLoading,
   isRefetching,
   onApply,
 }: FacetPanelProps) {
   const { t } = useTranslation()
-  const [draftFilters, setDraftFilters] = useState(initialFilters)
-  const [expandedFacets, setExpandedFacets] = useState<
-    Record<FacetField, boolean>
-  >({ type: false, tags: false })
+  const {
+    draftFilters,
+    setFieldValues,
+    updateFieldValue,
+    setRelationshipValues,
+    updateRelationshipValue,
+  } = useDraftFacetFilters(initialFilters)
+  const [expandedValues, toggleValuesExpanded] = useToggleMap()
+  const [collapsedFacets, toggleCollapsed] = useToggleMap()
   const [facetSearch, setFacetSearch] = useState('')
-
-  const updateFacetValue = (
-    field: FacetField,
-    value: string,
-    isSelected: boolean,
-  ) => {
-    setDraftFilters((currentFilters) => {
-      const currentSelection = currentFilters[field] ?? {}
-      const nextValues = new Set<string>(currentSelection.include ?? [])
-
-      if (isSelected) {
-        nextValues.add(value)
-      } else {
-        nextValues.delete(value)
-      }
-
-      if (nextValues.size === 0) {
-        const remainingFilters = { ...currentFilters }
-        delete remainingFilters[field]
-        return remainingFilters
-      }
-
-      return {
-        ...currentFilters,
-        [field]: { include: [...nextValues] },
-      }
-    })
-  }
 
   return (
     <aside className="self-start rounded-lg border bg-muted/20 md:max-h-full md:overflow-y-auto">
@@ -113,154 +102,80 @@ export function FacetPanel({
         </div>
 
         {DEFAULT_FACETS.map((field) => {
-          const selection = draftFilters[field] ?? {}
-          const countByValue = new Map(
-            (facets[field] ?? []).map(({ value, count }) => [
-              field === 'type' ? (normalizeEntityType(value) ?? value) : value,
-              count,
-            ]),
+          const selectedValues = new Set<string>(
+            draftFilters[field]?.include ?? [],
           )
-          const selectedValues = new Set<string>(selection.include ?? [])
-          const values: string[] =
-            field === 'type'
-              ? ENTITY_TYPES.filter(
-                  (entityType) =>
-                    countByValue.has(entityType) ||
-                    selectedValues.has(entityType),
-                )
-              : [...new Set([...countByValue.keys(), ...selectedValues])]
-          const normalizedFacetSearch = facetSearch.trim().toLocaleLowerCase()
-          const filteredValues = normalizedFacetSearch
-            ? values.filter((value) =>
-                getFacetValueLabel(field, value)
-                  .toLocaleLowerCase()
-                  .includes(normalizedFacetSearch),
-              )
-            : values
-          const isExpanded = expandedFacets[field]
-          const visibleValues = isExpanded
-            ? filteredValues
-            : filteredValues.slice(0, FACET_VISIBLE_LIMIT)
-          const canToggleExpansion = filteredValues.length > FACET_VISIBLE_LIMIT
-          const isSelectAllDisabled =
-            filteredValues.length === 0 ||
-            filteredValues.every((value) => selectedValues.has(value))
+          const values = buildStaticFacetValues(field, facets, selectedValues)
 
           return (
-            <section
+            <FacetSection
               key={field}
-              aria-labelledby={`facet-${field}-heading`}
-              className="border-b pb-4 [&+&]:mt-4 last:border-b-0 last:pb-0"
-            >
-              <h3
-                id={`facet-${field}-heading`}
-                className="text-xs font-semibold"
-              >
-                {getFacetFieldLabel(field)}
-              </h3>
+              facetKey={field}
+              label={getFacetFieldLabel(field)}
+              values={values}
+              selectedValues={selectedValues}
+              facetSearch={facetSearch}
+              isValuesExpanded={Boolean(expandedValues[field])}
+              isCollapsed={Boolean(collapsedFacets[field])}
+              isLoading={isLoading}
+              isRefetching={isRefetching}
+              onChange={(value, selected) =>
+                updateFieldValue(field, value, selected)
+              }
+              onSelectAll={(visibleValues) =>
+                setFieldValues(field, [
+                  ...new Set([...selectedValues, ...visibleValues]),
+                ])
+              }
+              onClearAll={() => setFieldValues(field, [])}
+              onToggleValuesExpanded={() => toggleValuesExpanded(field)}
+              onToggleCollapsed={() => toggleCollapsed(field)}
+            />
+          )
+        })}
 
-              <div
-                role="group"
-                aria-label={t('board.facets.bulk_actions')}
-                className="mt-2 grid grid-cols-2 rounded-md bg-muted p-0.5"
-              >
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  isDisabled={isSelectAllDisabled}
-                  onPress={() =>
-                    setDraftFilters((currentFilters) => {
-                      const nextValues = new Set<string>([
-                        ...(currentFilters[field]?.include ?? []),
-                        ...filteredValues,
-                      ])
-                      return {
-                        ...currentFilters,
-                        [field]: { include: [...nextValues] },
-                      }
-                    })
-                  }
-                >
-                  {t('board.facets.select_all')}
-                </Button>
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  isDisabled={selectedValues.size === 0}
-                  onPress={() =>
-                    setDraftFilters((currentFilters) => {
-                      const remainingFilters = { ...currentFilters }
-                      delete remainingFilters[field]
-                      return remainingFilters
-                    })
-                  }
-                >
-                  {t('board.facets.clear_all')}
-                </Button>
-              </div>
+        {ENTITY_TYPES.map((targetType) => {
+          const values = buildRelationshipFacetValues(
+            targetType,
+            relationshipFacets,
+            relationshipEntitiesById,
+          )
+          if (values.length === 0) {
+            return null
+          }
 
-              <div
-                className={`mt-2 grid gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
-              >
-                {isLoading ? (
-                  <p className="px-1 py-3 text-xs text-muted-foreground">
-                    {t('board.facets.loading')}
-                  </p>
-                ) : values.length === 0 ? (
-                  <p className="px-1 py-3 text-xs text-muted-foreground">
-                    {t('board.facets.no_values')}
-                  </p>
-                ) : filteredValues.length === 0 ? (
-                  <p className="px-1 py-3 text-xs text-muted-foreground">
-                    {t('board.facets.no_matching_values')}
-                  </p>
-                ) : (
-                  visibleValues.map((value) => {
-                    const label = getFacetValueLabel(field, value)
-                    return (
-                      <FacetCheckbox
-                        key={value}
-                        label={label}
-                        accessibleLabel={t('board.facets.select_value', {
-                          value: label,
-                        })}
-                        entityType={
-                          field === 'type'
-                            ? normalizeEntityType(value)
-                            : undefined
-                        }
-                        count={countByValue.get(value) ?? 0}
-                        isSelected={selectedValues.has(value)}
-                        onChange={(selected) =>
-                          updateFacetValue(field, value, selected)
-                        }
-                      />
-                    )
-                  })
-                )}
-              </div>
+          const selectedValues = new Set(
+            draftFilters.relationships?.[targetType]?.include ?? [],
+          )
+          const facetKey = getRelationshipFacetKey(targetType)
 
-              {canToggleExpansion && (
-                <Button
-                  size="xs"
-                  variant="ghost"
-                  className="mt-1 w-full"
-                  aria-expanded={isExpanded}
-                  onPress={() =>
-                    setExpandedFacets((current) => ({
-                      ...current,
-                      [field]: !current[field],
-                    }))
-                  }
-                >
-                  {t(
-                    isExpanded
-                      ? 'board.facets.show_less'
-                      : 'board.facets.show_more',
-                  )}
-                </Button>
-              )}
-            </section>
+          return (
+            <FacetSection
+              key={facetKey}
+              facetKey={facetKey}
+              label={t('board.facets.referenced_type', {
+                type: getEntityTypePluralLabel(targetType),
+              })}
+              values={values}
+              selectedValues={selectedValues}
+              facetSearch={facetSearch}
+              isValuesExpanded={Boolean(expandedValues[facetKey])}
+              isCollapsed={Boolean(collapsedFacets[facetKey])}
+              isLoading={isLoading}
+              isRefetching={isRefetching}
+              areLabelsLoading={areRelationshipNamesLoading}
+              onChange={(value, selected) =>
+                updateRelationshipValue(targetType, value, selected)
+              }
+              onSelectAll={(visibleValues) =>
+                setRelationshipValues(targetType, [
+                  ...new Set([...selectedValues, ...visibleValues]),
+                ])
+              }
+              onClearAll={() => setRelationshipValues(targetType, [])}
+              onToggleValuesExpanded={() => toggleValuesExpanded(facetKey)}
+              onToggleCollapsed={() => toggleCollapsed(facetKey)}
+            />
           )
         })}
       </div>

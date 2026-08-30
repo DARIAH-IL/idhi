@@ -14,8 +14,10 @@ import {
   getEntityDisplayName,
   getEntityFieldLabelText,
   getEntityTypeLabel,
+  getEntityTypePluralLabel,
   auditedEntityId,
 } from '@/lib/entity'
+import type { EntityType } from '@/lib/entity'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   InputGroup,
@@ -43,7 +45,6 @@ import {
   entityBoardSearchSchema,
   sortPropertySchema,
   DEFAULT_SORT,
-  DEFAULT_FACETS,
   getInfiniteEntityQueryOptions,
   getFacetFieldLabel,
   getFacetValueLabel,
@@ -56,6 +57,14 @@ import type {
 } from '../../../api/entityBoardSearch.ts'
 import { SortableColumnLabel } from '../../../components/facets/SortableColumnLabel.tsx'
 import { FacetPanel } from '../../../components/facets/FacetPanel.tsx'
+import { ActiveFilterChip } from '../../../components/facets/ActiveFilterChip.tsx'
+import { useRelationshipFacetPanelData } from '../../../api/useRelationshipFacetPanelData.ts'
+import {
+  getActiveFacetFilters,
+  getActiveRelationshipFacetFilters,
+  removeFacetFilterValue,
+  removeRelationshipFacetFilterValue,
+} from '../../../lib/facetFilterMutations.ts'
 
 export const Route = createFileRoute('/_app/entities/')({
   validateSearch: entityBoardSearchSchema,
@@ -104,6 +113,8 @@ function EntityBoard() {
   const results = data?.pages.flatMap((resultPage) => resultPage.results) ?? []
   const total = data?.pages[0]?.total ?? 0
   const facets = data?.pages[0]?.facets ?? {}
+  const { relationshipFacets, relationshipReferences } =
+    useRelationshipFacetPanelData(facets, facetFilters?.relationships)
 
   const updateSearch = useCallback(
     (
@@ -155,37 +166,27 @@ function EntityBoard() {
   }
 
   const removeFacetFilter = (field: FacetField, value: string) => {
-    const nextFacetFilters = { ...facetFilters }
-
-    if (field === 'type') {
-      const nextValues = (facetFilters?.type?.include ?? []).filter(
-        (selectedValue) => selectedValue !== value,
-      )
-      if (nextValues.length > 0) {
-        nextFacetFilters.type = { include: nextValues }
-      } else {
-        delete nextFacetFilters.type
-      }
-    } else {
-      const nextValues = (facetFilters?.[field]?.include ?? []).filter(
-        (selectedValue) => selectedValue !== value,
-      )
-      if (nextValues.length > 0) {
-        nextFacetFilters[field] = { include: nextValues }
-      } else {
-        delete nextFacetFilters[field]
-      }
-    }
-
     updateSearch({
-      facetFilters:
-        Object.keys(nextFacetFilters).length > 0 ? nextFacetFilters : undefined,
+      facetFilters: removeFacetFilterValue(facetFilters, field, value),
     })
   }
 
-  const activeFacetFilters = DEFAULT_FACETS.flatMap((field) =>
-    (facetFilters?.[field]?.include ?? []).map((value) => ({ field, value })),
-  )
+  const removeRelationshipFacetFilter = (
+    targetType: EntityType,
+    value: string,
+  ) => {
+    updateSearch({
+      facetFilters: removeRelationshipFacetFilterValue(
+        facetFilters,
+        targetType,
+        value,
+      ),
+    })
+  }
+
+  const activeFacetFilters = getActiveFacetFilters(facetFilters)
+  const activeRelationshipFacetFilters =
+    getActiveRelationshipFacetFilters(facetFilters)
 
   return (
     <div className="flex flex-col gap-4 md:h-full">
@@ -230,7 +231,9 @@ function EntityBoard() {
           </Button>
         </form>
 
-        {(q || activeFacetFilters.length > 0) && (
+        {(q ||
+          activeFacetFilters.length > 0 ||
+          activeRelationshipFacetFilters.length > 0) && (
           <div
             className="flex flex-wrap gap-1.5"
             aria-label={t('board.facets.active_filters')}
@@ -245,34 +248,37 @@ function EntityBoard() {
             </Button>
 
             {activeFacetFilters.map(({ field, value }) => {
-              const label = getFacetValueLabel(field, value)
               const filterLabel = t('board.facets.active_value', {
                 field: getFacetFieldLabel(field),
-                value: label,
+                value: getFacetValueLabel(field, value),
               })
 
               return (
-                <span
+                <ActiveFilterChip
                   key={`${field}-${value}`}
-                  className="inline-flex items-center gap-1 rounded-full border bg-muted px-2 py-0.5 text-xs font-medium"
-                >
-                  {filterLabel}
-                  <Button
-                    size="icon-xs"
-                    variant="ghost"
-                    className="-me-1 size-4 rounded-full"
-                    aria-label={t('board.facets.remove_filter', {
-                      filter: filterLabel,
-                    })}
-                    onPress={() => removeFacetFilter(field, value)}
-                  >
-                    <HugeiconsIcon
-                      icon={Cancel01Icon}
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    />
-                  </Button>
-                </span>
+                  filterLabel={filterLabel}
+                  onRemove={() => removeFacetFilter(field, value)}
+                />
+              )
+            })}
+
+            {activeRelationshipFacetFilters.map(({ targetType, value }) => {
+              const entity = relationshipReferences.entitiesById.get(value)
+              const filterLabel = t('board.facets.active_value', {
+                field: t('board.facets.referenced_type', {
+                  type: getEntityTypePluralLabel(targetType),
+                }),
+                value: entity ? getEntityDisplayName(entity) : value,
+              })
+
+              return (
+                <ActiveFilterChip
+                  key={`${targetType}-${value}`}
+                  filterLabel={filterLabel}
+                  onRemove={() =>
+                    removeRelationshipFacetFilter(targetType, value)
+                  }
+                />
               )
             })}
           </div>
@@ -283,6 +289,9 @@ function EntityBoard() {
         <FacetPanel
           key={JSON.stringify(facetFilters ?? {})}
           facets={facets}
+          relationshipFacets={relationshipFacets}
+          relationshipEntitiesById={relationshipReferences.entitiesById}
+          areRelationshipNamesLoading={relationshipReferences.isLoading}
           initialFilters={facetFilters ?? {}}
           isLoading={isLoading}
           isRefetching={isRefetching}

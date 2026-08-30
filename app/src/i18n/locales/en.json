@@ -288,7 +288,8 @@
       "loading": "Loading facets…",
       "no_values": "No facet values are available.",
       "no_matching_values": "No matching facet values.",
-      "apply": "Refine search"
+      "apply": "Refine search",
+      "referenced_type": "Referenced {{type}}"
     },
     "no_results": "No entities found.",
     "no_matching_results": "No matching entities found.",
@@ -316,6 +317,18 @@
       "idhi:Event": "Event",
       "idhi:Dataset": "Dataset",
       "idhi:TrainingMaterial": "Training material"
+    },
+    "typesPlural": {
+      "idhi:Person": "People",
+      "idhi:Organization": "Organizations",
+      "idhi:Facility": "Facilities",
+      "idhi:Project": "Projects",
+      "idhi:Tool": "Tools",
+      "idhi:Service": "Services",
+      "idhi:Publication": "Publications",
+      "idhi:Event": "Events",
+      "idhi:Dataset": "Datasets",
+      "idhi:TrainingMaterial": "Training materials"
     },
     "enums": {
       "affiliation_role": {
