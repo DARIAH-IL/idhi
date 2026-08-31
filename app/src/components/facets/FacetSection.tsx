@@ -97,7 +97,7 @@ export function FacetSection({
                 onSelectAll(filteredValues.map(({ value }) => value))
               }
             >
-              {t('board.facets.select_all')}
+              {t('common.select_all')}
             </Button>
             <Button
               size="xs"
@@ -105,7 +105,7 @@ export function FacetSection({
               isDisabled={selectedValues.size === 0}
               onPress={onClearAll}
             >
-              {t('board.facets.clear_all')}
+              {t('common.clear_all')}
             </Button>
           </div>
 
@@ -114,7 +114,7 @@ export function FacetSection({
           >
             {isContentLoading ? (
               <p className="px-1 py-3 text-xs text-muted-foreground">
-                {t('board.facets.loading')}
+                {t('common.loading')}
               </p>
             ) : values.length === 0 ? (
               <p className="px-1 py-3 text-xs text-muted-foreground">
@@ -151,11 +151,7 @@ export function FacetSection({
               aria-expanded={isValuesExpanded}
               onPress={onToggleValuesExpanded}
             >
-              {t(
-                isValuesExpanded
-                  ? 'board.facets.show_less'
-                  : 'board.facets.show_more',
-              )}
+              {t(isValuesExpanded ? 'common.show_less' : 'common.show_more')}
             </Button>
           )}
         </div>

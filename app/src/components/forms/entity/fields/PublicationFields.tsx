@@ -20,31 +20,6 @@ export const PublicationFields = withForm({
   render: function Render({ form }) {
     return (
       <>
-        <form.AppField name="name" validators={localizedValueValidators(true)}>
-          {(field) => (
-            <field.LangStringField
-              label={
-                <EntityFieldLabel entityClass="Publication" field="name" />
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="publication_type"
-          validators={enumValidators(PublicationPublicationType)}
-        >
-          {(field) => (
-            <field.EnumSelectField
-              label={
-                <EntityFieldLabel
-                  entityClass="Publication"
-                  field="publication_type"
-                />
-              }
-              options={PublicationPublicationType}
-            />
-          )}
-        </form.AppField>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.DoiField
@@ -70,6 +45,31 @@ export const PublicationFields = withForm({
                   )
                 }
               }}
+            />
+          )}
+        </form.AppField>
+        <form.AppField name="name" validators={localizedValueValidators(true)}>
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="name" />
+              }
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="publication_type"
+          validators={enumValidators(PublicationPublicationType)}
+        >
+          {(field) => (
+            <field.EnumSelectField
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="publication_type"
+                />
+              }
+              options={PublicationPublicationType}
             />
           )}
         </form.AppField>

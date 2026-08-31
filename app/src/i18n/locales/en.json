@@ -5,18 +5,33 @@
     "close": "Close",
     "clear": "Clear",
     "delete": "Delete",
-    "loading": "Loading…",
+    "loading": "Loading...",
     "error": "Something went wrong",
     "route_error_description": "We couldn't load this page. Please try again.",
     "try_again": "Try again",
-    "confirm_delete": "Are you sure you want to delete this entry? This action cannot be undone.",
+    "confirm_delete": "Are you sure you want to delete this entry?",
     "delete_confirm_title": "Delete entry",
     "login": "Log in",
     "logout": "Log out",
-    "home": "Israeli Digital Humanities Index home",
+    "continue": "Continue",
+    "verify": "Verify",
+    "approve": "Approve",
+    "deny": "Deny",
+    "search": "Search",
+    "searching": "Searching...",
+    "search_placeholder": "Search the index...",
+    "no_results": "No results.",
+    "select_all": "Select all",
+    "clear_all": "Clear all",
+    "show_more": "Show more",
+    "show_less": "Show less",
+    "user_menu": "User menu",
+    "user_actions": "User actions",
+    "signed_in_as": "Signed in as",
+    "home": "Home page",
     "jump_to_top": "Jump to top",
     "site_name": "Israeli Digital Humanities Index",
-    "copyright": "© 2026 Israeli Digital Humanities Index",
+    "copyright": "© {{year}} $t(common.site_name)",
     "work_in_progress": "This site is a work in progress and is subject to change as it is reviewed and refined.",
     "remove": "Remove",
     "reorder": "Drag to reorder",
@@ -36,18 +51,19 @@
       "page_count": "{{page}} of {{total}}"
     },
     "labels": {
-      "additional_urls": "Additional URLs",
+      "additional_urls": "Additional links",
       "address": "Address",
       "contact_email": "Contact email",
       "content_languages": "Content languages",
       "date_issued": "Date issued",
       "description": "Description",
       "dh_activities": "DH activities",
-      "documentation_url": "Documentation URL",
+      "documentation_url": "Documentation link",
       "doi": "DOI",
+      "email": "Email address",
       "end_date": "End date",
       "funding": "Funding",
-      "homepage_url": "Homepage URL",
+      "homepage_url": "Homepage",
       "id": "ID",
       "image": "Image",
       "license": "License",
@@ -64,6 +80,11 @@
       "start_date": "Start date",
       "tags": "Tags",
       "type": "Type"
+    },
+    "field_descriptions": {
+      "id": "The entry’s unique identifier within IDHI.",
+      "tags": "Keywords that describe the entry and make it easier to discover.",
+      "type": "The kind of entry this is."
     }
   },
   "about": {
@@ -71,7 +92,7 @@
     "placeholder": "This page will describe the Israeli Digital Humanities Index. Content coming soon.",
     "ai": {
       "title": "Connect to AI",
-      "intro": "The Israeli Digital Humanities Index provides a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, look up entries, and — after signing in — create, update, or delete entries, all from within your chat or coding tool.",
+      "intro": "The Israeli Digital Humanities Index provides a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, look up entries, and - after signing in - create, update, or delete entries, all from within your chat or coding tool.",
       "endpoint": "MCP endpoint",
       "capabilities": {
         "title": "Capabilities",
@@ -118,7 +139,7 @@
         },
         "other": {
           "title": "Other tools",
-          "instructions": "Any MCP client that supports the Streamable HTTP transport can connect — point it at the MCP endpoint URL above. To explore the server interactively, you can use the MCP Inspector:"
+          "instructions": "Any MCP client that supports the Streamable HTTP transport can connect - point it at the MCP endpoint URL above. To explore the server interactively, you can use the MCP Inspector:"
         }
       },
       "nav": "On this page"
@@ -128,7 +149,7 @@
     "errors": {
       "Unauthorized": "Your session has expired. Please sign in again.",
       "InvalidInput": "The submitted information is invalid. Please review it and try again.",
-      "InternalServerError": "Something went wrong on our side. Please try again later.",
+      "InternalServerError": "Something went wrong on our side, we are looking into it.",
       "EntityNotFound": "The requested entry could not be found.",
       "UserNotFound": "The requested user could not be found.",
       "UserAlreadyInvitedOrRegistered": "This user is already invited or registered.",
@@ -136,23 +157,17 @@
       "TooManyAuthAttempts": "Too many authentication attempts. Please try again later.",
       "AuthChallengeNotFoundOrExpired": "The authentication request has expired. Please start again.",
       "network": "We couldn't reach the server. Please check your internet connection and try again.",
-      "generic": "Something went wrong while communicating with the server."
+      "generic": "Something went wrong while communicating with the server, we are looking into it."
     }
   },
   "auth": {
-    "user_menu": "User menu",
-    "signed_in_as": "Signed in as",
-    "user_actions": "User actions",
     "description": "You can log in if you have an account or a pending invitation.",
-    "email_label": "Email address",
     "email_placeholder": "you@example.com",
-    "use_different_account": "Use a different account",
-    "continue": "Continue",
+    "use_different_account": "Use a different email",
     "otp_label": "One-time code",
-    "verify": "Verify",
     "back_to_email": "Use a different email",
     "email_sent": "We've sent a one-time code to {{email}}",
-    "otp_check_spam": "If you didn't receive the email, check your spam folder.",
+    "otp_check_spam": "If you didn't receive the email, please check your spam folder.",
     "passkey_login": "Sign in with a passkey",
     "sign_in_with_otp": "Sign in with a one-time code sent by email",
     "passkey_use_passkey": "Sign in with a passkey instead",
@@ -160,7 +175,7 @@
     "passkey_failed": "Passkey sign-in failed. Please try again.",
     "invite_welcome_title": "Welcome aboard!",
     "invite_welcome_description": "We're setting up your account, just a moment.",
-    "passkey_offer_title": "Set up a passkey?",
+    "passkey_offer_title": "Set up a passkey for this device?",
     "passkey_offer_description": "Sign in faster next time with this device's screen lock, fingerprint, or security key.",
     "passkey_create": "Create a passkey",
     "passkey_create_failed": "The passkey could not be created. Please try again.",
@@ -176,9 +191,7 @@
     "signed_in_as": "Signed in as {{email}}",
     "redirect_notice": "Approving will send you back to the application to finish connecting.",
     "login_required": "Sign in to continue connecting the application.",
-    "approve": "Approve",
-    "deny": "Deny",
-    "redirecting": "Redirecting…"
+    "redirecting": "Redirecting..."
   },
   "admin": {
     "title": "Administration",
@@ -187,7 +200,7 @@
     "fields": {
       "user": "User",
       "name": "Name",
-      "email": "Email address",
+      "email": "$t(common.labels.email)",
       "role": "Role",
       "message": "Personal message",
       "expires": "Expires",
@@ -200,11 +213,6 @@
     "roles": {
       "admin": "Administrator",
       "user": "User"
-    },
-    "languages": {
-      "en": "English",
-      "he": "Hebrew",
-      "ar": "Arabic"
     },
     "users": {
       "title": "Users",
@@ -220,7 +228,6 @@
       "delete_action": "Delete user",
       "edit_label": "Edit {{email}}",
       "delete_label": "Delete {{email}}",
-      "loading": "Loading users…",
       "empty": "No users have been created yet.",
       "table_label": "Registered users"
     },
@@ -229,13 +236,12 @@
       "description": "Invite new users and review or revoke invitations that are still pending.",
       "invite": "Invite user",
       "invite_title": "Invite a user",
-      "invite_description": "The recipient will receive a secure link to complete registration.",
+      "invite_description": "The recipient will receive a link to complete the registration.",
       "message_placeholder": "Add an optional note to the invitation",
       "send": "Send invitation",
       "revoke": "Revoke",
       "revoke_title": "Revoke invitation",
-      "revoke_description": "Revoke the pending invitation for {{email}}? Its sign-up link will no longer be valid.",
-      "loading": "Loading invitations…",
+      "revoke_description": "Revoke the pending invitation for {{email}}? Their link will no longer be valid.",
       "empty": "There are no pending invitations.",
       "table_label": "Pending invitations"
     },
@@ -249,26 +255,19 @@
   },
   "board": {
     "title": "Browse the index",
-    "search_placeholder": "Search the index…",
     "clear_search": "Clear search",
     "clear_filters": "Clear filters",
-    "search_action": "Search",
     "results_label": "Search results",
     "loaded_count": "Showing {{loaded}} of {{total}} entries",
     "facets": {
       "title": "Filters",
       "bulk_actions": "Filter selection actions",
-      "select_all": "Select all",
-      "clear_all": "Clear all",
       "select_value": "Select {{value}}",
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "filter_placeholder": "Search options…",
+      "filter_placeholder": "Search options...",
       "filter_label": "Search filter options",
       "active_filters": "Active filters",
       "active_value": "{{field}}: {{value}}",
       "remove_filter": "Remove {{filter}} filter",
-      "loading": "Loading filters…",
       "no_values": "No filter options are available.",
       "no_matching_values": "No matching options.",
       "apply": "Refine search",
@@ -281,7 +280,6 @@
   "entity": {
     "draft_badge": "Draft",
     "reference": {
-      "loading": "Loading…",
       "unavailable": "Entry unavailable"
     },
     "notifications": {
@@ -559,7 +557,7 @@
         "ACADEMIC_INSTITUTION": "Academic institution",
         "COMPANY": "Company",
         "FUNDER": "Funder",
-        "GLAM_INSTITUTION": "Gallery, library, archive or museum",
+        "GLAM_INSTITUTION": "Gallery, library, archive or museum (GLAM)",
         "INFORMAL_GROUP": "Informal group",
         "NON_PROFIT": "Non-profit",
         "RESEARCH_CENTER": "Research center"
@@ -570,7 +568,7 @@
         "CONTRIBUTOR": "Contributor",
         "CO_PI": "Co-principal investigator",
         "DEVELOPER": "Developer",
-        "DH_LEAD": "DH lead",
+        "DH_LEAD": "Digital humanities lead",
         "PRINCIPAL_INVESTIGATOR": "Principal investigator",
         "RESEARCHER": "Researcher",
         "STUDENT": "Student",
@@ -748,7 +746,7 @@
         },
         "given_name": {
           "label": "Given name",
-          "description": "The person’s given name or first name."
+          "description": "The person’s given name or first name, including middle names."
         },
         "homepage": {
           "label": "$t(common.labels.homepage_url)",
@@ -756,7 +754,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The person’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -772,11 +770,11 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the person’s expertise and interests and make them easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a person."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Organization": {
@@ -806,7 +804,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The organization’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -838,17 +836,17 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the organization’s activities and areas of focus and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as an organization."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Facility": {
         "$self": {
           "label": "Facility",
-          "description": "A physical or virtual facility with its own identity, such as a digital humanities lab, digitization studio or research infrastructure."
+          "description": "A physical or virtual facility such as a digital humanities lab, digitization studio or research infrastructure. Use a facility when the unit offers services or tools and has an identity of its own, distinct from its host organization; otherwise use the organization itself."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -876,7 +874,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The facility’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -900,7 +898,7 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the facility’s equipment, expertise and areas of focus and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "tools_provided": {
           "label": "Tools provided",
@@ -908,7 +906,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a facility."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Project": {
@@ -950,7 +948,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The project’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1006,11 +1004,11 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the project’s topics and methods and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a project."
+          "description": "$t(common.field_descriptions.type)"
         },
         "uses_datasets": {
           "label": "Datasets used",
@@ -1064,7 +1062,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The tool’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1092,7 +1090,7 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the tool’s purpose and capabilities and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "tool_type": {
           "label": "Tool type",
@@ -1100,7 +1098,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a software tool."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Service": {
@@ -1134,7 +1132,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The service’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1158,11 +1156,11 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the service’s purpose and capabilities and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a service."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Publication": {
@@ -1192,7 +1190,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The publication’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1228,11 +1226,11 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the publication’s topics and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a publication."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Event": {
@@ -1274,7 +1272,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The event’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1298,17 +1296,17 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the event’s topics and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as an event."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Dataset": {
         "$self": {
           "label": "Dataset",
-          "description": "A dataset or similar resource: digital edition, corpus, database, gazetteer, image collection, annotation set or metadata catalog."
+          "description": "A dataset or similar resource: digital edition, corpus, database, gazetteer, image collection or annotation set. Catalogs that describe other resources, such as an archive or library index, are also a kind of dataset."
         },
         "byte_size": {
           "label": "Byte size",
@@ -1352,7 +1350,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The dataset’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1392,7 +1390,7 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the dataset’s contents and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "themes": {
           "label": "Themes",
@@ -1400,7 +1398,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as a dataset."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "TrainingMaterial": {
@@ -1446,7 +1444,7 @@
         },
         "id": {
           "label": "$t(common.labels.id)",
-          "description": "The training material’s unique identifier within IDHI."
+          "description": "$t(common.field_descriptions.id)"
         },
         "image": {
           "label": "$t(common.labels.image)",
@@ -1506,7 +1504,7 @@
         },
         "tags": {
           "label": "$t(common.labels.tags)",
-          "description": "Keywords that describe the training material’s topics and make it easier to discover."
+          "description": "$t(common.field_descriptions.tags)"
         },
         "target_audiences": {
           "label": "Target audiences",
@@ -1518,7 +1516,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "Identifies this entry as training material."
+          "description": "$t(common.field_descriptions.type)"
         }
       },
       "Affiliation": {
@@ -1801,15 +1799,14 @@
       "load_error": "This relationship could not be loaded."
     },
     "picker": {
-      "search": "Search the index…",
-      "choose_another": "Choose a different entry…",
-      "searching": "Searching…",
+      "choose_another": "Choose a different entry...",
       "no_results": "No matches found."
     },
     "form": {
       "new_title": "New {{type}}",
       "edit_title": "Edit {{type}}",
       "image_error": "The selected file could not be read as an image.",
+      "image_size_error": "Image size is limited to {{maxSizeMb}}MB.",
       "image_preview": "Entry image preview",
       "remove_image": "Remove image",
       "select_type": "Select entry type",
@@ -1817,15 +1814,14 @@
       "unsaved_changes_title": "Unsaved changes",
       "unsaved_changes": "You have unsaved changes. Are you sure you want to leave?",
       "leave_page": "Leave page",
-      "autocomplete_no_results": "No results.",
       "publish": "Publish",
       "save_draft": "Save as draft",
       "add_lang_string": "Add value in another language",
       "add_item": "Add item",
       "add_value": "Add \"{{term}}\"",
       "language": "Language",
-      "language_search": "Search languages…",
-      "external_url_placeholder": "Or enter an external URL…",
+      "language_search": "Search languages...",
+      "external_url_placeholder": "Or enter an external URL...",
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entry"
     }

@@ -27,7 +27,7 @@ export function InvitesTable({
   const { t, i18n } = useTranslation()
 
   if (isPending) {
-    return <AdminTableState message={t('admin.invites.loading')} />
+    return <AdminTableState message={t('common.loading')} />
   }
   if (isError) {
     return <AdminTableError onRetry={onRetry} />

@@ -136,7 +136,7 @@ function AppLayout() {
         <JumpToTop scrollRef={mainRef} />
       </div>
       <footer className="border-t px-4 py-4 text-center text-xs text-muted-foreground">
-        <p>{t('common.copyright')}</p>
+        <p>{t('common.copyright', { year: new Date().getFullYear() })}</p>
         <p className="mt-1">{t('common.work_in_progress')}</p>
       </footer>
       <LoginDialog

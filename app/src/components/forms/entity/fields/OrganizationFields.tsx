@@ -17,6 +17,28 @@ export const OrganizationFields = withForm({
   render: function Render({ form }) {
     return (
       <>
+        <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
+          {(field) => (
+            <field.RorField
+              label={
+                <EntityFieldLabel entityClass="Organization" field="ror" />
+              }
+              placeholder="https://ror.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.name))
+                }
+                const locationText = rorLocation(suggestion)
+                if (
+                  locationText &&
+                  !hasLangStringValue(form.getFieldValue('location'))
+                ) {
+                  form.setFieldValue('location', langString(locationText))
+                }
+              }}
+            />
+          )}
+        </form.AppField>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
@@ -39,28 +61,6 @@ export const OrganizationFields = withForm({
                 />
               }
               options={OrganizationOrganizationType}
-            />
-          )}
-        </form.AppField>
-        <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
-          {(field) => (
-            <field.RorField
-              label={
-                <EntityFieldLabel entityClass="Organization" field="ror" />
-              }
-              placeholder="https://ror.org/…"
-              onSelect={(suggestion) => {
-                if (!hasLangStringValue(form.getFieldValue('name'))) {
-                  form.setFieldValue('name', langString(suggestion.name))
-                }
-                const locationText = rorLocation(suggestion)
-                if (
-                  locationText &&
-                  !hasLangStringValue(form.getFieldValue('location'))
-                ) {
-                  form.setFieldValue('location', langString(locationText))
-                }
-              }}
             />
           )}
         </form.AppField>

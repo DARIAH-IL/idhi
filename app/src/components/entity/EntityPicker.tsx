@@ -32,7 +32,7 @@ export function EntityPicker({
   invalid,
 }: Props) {
   const { t } = useTranslation()
-  const searchPlaceholder = placeholder ?? t('entity.picker.search')
+  const searchPlaceholder = placeholder ?? t('common.search_placeholder')
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -82,7 +82,7 @@ export function EntityPicker({
       >
         {isFetching && (
           <p className="px-2 py-1.5 text-xs text-muted-foreground">
-            {t('entity.picker.searching')}
+            {t('common.searching')}
           </p>
         )}
         {!isFetching && data?.results.length === 0 && (

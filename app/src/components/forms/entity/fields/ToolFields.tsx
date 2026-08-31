@@ -21,6 +21,19 @@ export const ToolFields = withForm({
   render: function Render({ form }) {
     return (
       <>
+        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
+          {(field) => (
+            <field.DoiField
+              label={<EntityFieldLabel entityClass="Tool" field="doi" />}
+              placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
+            />
+          )}
+        </form.AppField>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
@@ -36,19 +49,6 @@ export const ToolFields = withForm({
             <field.EnumSelectField
               label={<EntityFieldLabel entityClass="Tool" field="tool_type" />}
               options={ToolToolType}
-            />
-          )}
-        </form.AppField>
-        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
-          {(field) => (
-            <field.DoiField
-              label={<EntityFieldLabel entityClass="Tool" field="doi" />}
-              placeholder="https://doi.org/…"
-              onSelect={(suggestion) => {
-                if (!hasLangStringValue(form.getFieldValue('name'))) {
-                  form.setFieldValue('name', langString(suggestion.title))
-                }
-              }}
             />
           )}
         </form.AppField>

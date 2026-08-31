@@ -55,7 +55,7 @@ export function EntityReferenceCard({
         <CardContent className="p-2.5">
           {isLoading ? (
             <span className="text-xs text-muted-foreground">
-              {t('entity.reference.loading')}
+              {t('common.loading')}
             </span>
           ) : (
             <span className="text-xs text-destructive">

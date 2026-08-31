@@ -82,7 +82,7 @@ export function LanguagesField({ label }: Props) {
                 items={items}
                 renderEmptyState={() => (
                   <ComboboxEmpty>
-                    {t('entity.form.autocomplete_no_results')}
+                    {t('common.no_results')}
                   </ComboboxEmpty>
                 )}
               >

@@ -128,14 +128,14 @@ function OauthAuthorizePage() {
                 onPress={approve}
                 isDisabled={authorize.isPending || isRedirecting}
               >
-                {isRedirecting ? t('oauth.redirecting') : t('oauth.approve')}
+                {isRedirecting ? t('oauth.redirecting') : t('common.approve')}
               </Button>
               <Button
                 variant="ghost"
                 onPress={deny}
                 isDisabled={authorize.isPending || isRedirecting}
               >
-                {t('oauth.deny')}
+                {t('common.deny')}
               </Button>
             </CardFooter>
           </>

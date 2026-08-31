@@ -206,7 +206,7 @@ function EntityBoard() {
             <InputGroupInput
               ref={searchInputRef}
               type="search"
-              placeholder={t('board.search_placeholder')}
+              placeholder={t('common.search_placeholder')}
               value={searchInput}
               onChange={(event) => setSearchInput(event.target.value)}
               className="[&::-webkit-search-cancel-button]:hidden"
@@ -227,7 +227,7 @@ function EntityBoard() {
             </InputGroupAddon>
           </InputGroup>
           <Button type="submit" variant="outline" size="default">
-            {t('board.search_action')}
+            {t('common.search')}
           </Button>
         </form>
 

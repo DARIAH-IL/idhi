@@ -21,6 +21,21 @@ export const TrainingMaterialFields = withForm({
   render: function Render({ form }) {
     return (
       <>
+        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
+          {(field) => (
+            <field.DoiField
+              label={
+                <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
+              }
+              placeholder="https://doi.org/…"
+              onSelect={(suggestion) => {
+                if (!hasLangStringValue(form.getFieldValue('name'))) {
+                  form.setFieldValue('name', langString(suggestion.title))
+                }
+              }}
+            />
+          )}
+        </form.AppField>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
@@ -43,21 +58,6 @@ export const TrainingMaterialFields = withForm({
                 />
               }
               options={TrainingMaterialTrainingMaterialType}
-            />
-          )}
-        </form.AppField>
-        <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
-          {(field) => (
-            <field.DoiField
-              label={
-                <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
-              }
-              placeholder="https://doi.org/…"
-              onSelect={(suggestion) => {
-                if (!hasLangStringValue(form.getFieldValue('name'))) {
-                  form.setFieldValue('name', langString(suggestion.title))
-                }
-              }}
             />
           )}
         </form.AppField>

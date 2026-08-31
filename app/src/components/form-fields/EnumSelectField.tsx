@@ -56,7 +56,7 @@ export function EnumSelectField({ label, options, required = false }: Props) {
                 items={items}
                 renderEmptyState={() => (
                   <ComboboxEmpty>
-                    {t('entity.form.autocomplete_no_results')}
+                    {t('common.no_results')}
                   </ComboboxEmpty>
                 )}
               >

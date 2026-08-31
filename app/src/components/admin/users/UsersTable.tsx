@@ -32,7 +32,7 @@ export function UsersTable({
   const { t } = useTranslation()
 
   if (isPending) {
-    return <AdminTableState message={t('admin.users.loading')} />
+    return <AdminTableState message={t('common.loading')} />
   }
   if (isError) {
     return <AdminTableError onRetry={onRetry} />

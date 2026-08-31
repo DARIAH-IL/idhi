@@ -67,7 +67,7 @@ export function LoginOtpStep({
         size="lg"
         isDisabled={isPending || otp.length !== digits}
       >
-        {isPending ? t('common.loading') : t('auth.verify')}
+        {isPending ? t('common.loading') : t('common.verify')}
       </Button>
       <Button variant="ghost" size="sm" onPress={onBack}>
         {t('auth.back_to_email')}

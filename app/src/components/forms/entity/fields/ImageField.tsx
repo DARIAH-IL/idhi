@@ -10,6 +10,8 @@ import { useFieldContext } from '#/components/forms/form-context.ts'
 import { getEntityClassName, getEntityFieldLabelText } from '#/lib/entity.ts'
 import type { EntityType } from '#/lib/entity.ts'
 
+const MAX_IMAGE_SIZE_BYTES = 3 * 1024 * 1024
+
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -65,6 +67,14 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
               }
               if (!file.type.startsWith('image/')) {
                 setError(t('entity.form.image_error'))
+                return
+              }
+              if (file.size > MAX_IMAGE_SIZE_BYTES) {
+                setError(
+                  t('entity.form.image_size_error', {
+                    maxSizeMb: MAX_IMAGE_SIZE_BYTES / (1024 * 1024),
+                  }),
+                )
                 return
               }
               void fileToBase64(file)

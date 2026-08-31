@@ -96,7 +96,7 @@ function LanguageCombobox({
             </ComboboxCollection>
           </ComboboxGroup>
           <ComboboxEmpty>
-            {t('entity.form.autocomplete_no_results')}
+            {t('common.no_results')}
           </ComboboxEmpty>
         </ComboboxList>
       </ComboboxContent>

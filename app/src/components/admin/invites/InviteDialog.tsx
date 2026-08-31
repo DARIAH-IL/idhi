@@ -9,6 +9,7 @@ import {
 } from '@/api/hooks/user-invites/user-invites'
 import { UiLanguage } from '@/api/models'
 import type { UserInviteWrite } from '@/api/models'
+import { languageName } from '@/lib/languages'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -129,15 +130,11 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem id={UiLanguage.en}>
-                    {t('admin.languages.en')}
-                  </SelectItem>
-                  <SelectItem id={UiLanguage.he}>
-                    {t('admin.languages.he')}
-                  </SelectItem>
-                  <SelectItem id={UiLanguage.ar}>
-                    {t('admin.languages.ar')}
-                  </SelectItem>
+                  {Object.values(UiLanguage).map((code) => (
+                    <SelectItem key={code} id={code}>
+                      {languageName(code) ?? code}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

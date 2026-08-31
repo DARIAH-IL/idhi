@@ -36,7 +36,7 @@ export function LoginEmailStep({
     >
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="login-email" className="justify-center">
-          {t('auth.email_label')}
+          {t('common.labels.email')}
         </Label>
         <Input
           id="login-email"
@@ -51,7 +51,7 @@ export function LoginEmailStep({
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}
       <Button type="submit" className="w-full" size="lg" isDisabled={isPending}>
-        {isPending ? t('common.loading') : t('auth.continue')}
+        {isPending ? t('common.loading') : t('common.continue')}
       </Button>
       {showPasskeyOption && (
         <Button variant="ghost" size="sm" onPress={onUsePasskey}>

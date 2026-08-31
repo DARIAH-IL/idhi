@@ -23,7 +23,7 @@ export function UserMenu() {
         variant="ghost"
         size="icon-lg"
         className="rounded-full"
-        aria-label={t('auth.user_menu')}
+        aria-label={t('common.user_menu')}
       >
         <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase">
           {user.name?.charAt(0) || user.email.charAt(0)}
@@ -36,7 +36,7 @@ export function UserMenu() {
       >
         <div className="px-2 py-1.5">
           <p className="text-xs text-muted-foreground">
-            {t('auth.signed_in_as')}
+            {t('common.signed_in_as')}
           </p>
           <p
             className="max-w-64 truncate text-xs font-medium"
@@ -46,7 +46,7 @@ export function UserMenu() {
           </p>
         </div>
         <div className="my-1 h-px bg-border" />
-        <Menu aria-label={t('auth.user_actions')} className="outline-none">
+        <Menu aria-label={t('common.user_actions')} className="outline-none">
           {user.isAdmin && (
             <MenuItem
               id="admin"

@@ -17,30 +17,6 @@ export const PersonFields = withForm({
     return (
       <>
         <form.AppField
-          name="given_name"
-          validators={localizedValueValidators()}
-        >
-          {(field) => (
-            <field.LangStringField
-              label={
-                <EntityFieldLabel entityClass="Person" field="given_name" />
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="family_name"
-          validators={localizedValueValidators()}
-        >
-          {(field) => (
-            <field.LangStringField
-              label={
-                <EntityFieldLabel entityClass="Person" field="family_name" />
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
           name="orcid"
           validators={valueValidators({ kind: 'orcid' })}
         >
@@ -75,6 +51,30 @@ export const PersonFields = withForm({
                   form.setFieldValue('emails', [suggestion.email])
                 }
               }}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="given_name"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="given_name" />
+              }
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="family_name"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="family_name" />
+              }
             />
           )}
         </form.AppField>

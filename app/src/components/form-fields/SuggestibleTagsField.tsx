@@ -102,8 +102,8 @@ export function SuggestibleTagsField({
                 renderEmptyState={() => (
                   <ComboboxEmpty>
                     {loading
-                      ? t('entity.picker.searching')
-                      : t('entity.form.autocomplete_no_results')}
+                      ? t('common.searching')
+                      : t('common.no_results')}
                   </ComboboxEmpty>
                 )}
               >

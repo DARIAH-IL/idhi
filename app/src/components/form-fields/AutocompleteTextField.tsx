@@ -108,8 +108,8 @@ export function AutocompleteTextField<T extends object>({
                     )}
                     <span>
                       {autocomplete.loading
-                        ? t('entity.picker.searching')
-                        : t('entity.form.autocomplete_no_results')}
+                        ? t('common.searching')
+                        : t('common.no_results')}
                     </span>
                   </ComboboxEmpty>
                 )}
