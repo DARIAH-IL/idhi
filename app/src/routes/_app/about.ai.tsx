@@ -303,7 +303,7 @@ function AboutAiPage() {
             {PUBLIC_TOOLS.map((tool) => (
               <li key={tool}>
                 <code className="font-mono text-xs">{tool}</code>
-                {' — '}
+                {' - '}
                 {t(`about.ai.capabilities.tools.${tool}`)}
               </li>
             ))}
@@ -315,7 +315,7 @@ function AboutAiPage() {
             {AUTHENTICATED_TOOLS.map((tool) => (
               <li key={tool}>
                 <code className="font-mono text-xs">{tool}</code>
-                {' — '}
+                {' - '}
                 {t(`about.ai.capabilities.tools.${tool}`)}
               </li>
             ))}

@@ -1,4 +1,4 @@
-import { Globe02Icon, Tick02Icon } from '@hugeicons/core-free-icons'
+import { AlphabetHebrewIcon, Tick02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +6,7 @@ import { UiLanguage } from '@/api/models'
 import { languageName } from '@/lib/languages'
 import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function UiLanguagePicker() {
   const { t } = useTranslation()
@@ -14,14 +15,17 @@ export function UiLanguagePicker() {
 
   return (
     <MenuTrigger>
-      <Button
-        variant="outline"
-        size="icon-lg"
-        className="rounded-full"
-        aria-label={t('common.language_picker')}
-      >
-        <HugeiconsIcon icon={Globe02Icon} strokeWidth={1.8} />
-      </Button>
+      <TooltipTrigger>
+        <Button
+          variant="outline"
+          size="icon-lg"
+          className="rounded-full"
+          aria-label={t('common.language_picker')}
+        >
+          <HugeiconsIcon icon={AlphabetHebrewIcon} strokeWidth={1.8} />
+        </Button>
+        <Tooltip>{t('common.language_picker')}</Tooltip>
+      </TooltipTrigger>
       <Popover
         placement="bottom end"
         offset={6}
