@@ -1798,7 +1798,7 @@
         "training_materials_related_to_service": "חומרי הדרכה קשורים",
         "training_materials_related_to_dataset": "חומרי הדרכה קשורים"
       },
-      "load_error": "לא ניתן היה לטעון קשר זה."
+      "load_error": "טעינת הקשר נכשלה."
     },
     "picker": {
       "choose_another": "בחירת רשומה אחרת...",
@@ -1814,7 +1814,7 @@
       "select_type": "בחירת סוג רשומה",
       "select_type_description": "נא לבחור איזה סוג רשומה ליצור.",
       "unsaved_changes_title": "שינויים שלא נשמרו",
-      "unsaved_changes": "יש שינויים שלא נשמרו. לצאת בכל זאת?",
+      "unsaved_changes": "קיימים שינויים שלא נשמרו. לצאת בכל זאת?",
       "leave_page": "יציאה מהדף",
       "publish": "פרסום",
       "save_draft": "שמירה כטיוטה",
@@ -1839,7 +1839,7 @@
     "entity": "יש לבחור רשומה תקינה.",
     "orcid": "יש להזין קישור ORCID מלא, שמתחיל ב־https://orcid.org/.",
     "ror": "יש להזין קישור ROR מלא, שמתחיל ב־https://ror.org/.",
-    "min": "הערך חייב להיות לפחות {{min}}.",
+    "min": "הערך חייב להיות לכל הפחות {{min}}.",
     "unsupported_value": "יש לבחור ערך נתמך.",
     "invalid_list": "יש להזין רשימה תקינה.",
     "add_at_least_one_value": "יש להוסיף ערך אחד לפחות.",
