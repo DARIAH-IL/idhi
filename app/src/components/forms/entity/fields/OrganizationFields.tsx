@@ -134,6 +134,7 @@ export const OrganizationFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel
                   entityClass="Organization"
@@ -217,6 +218,7 @@ export const OrganizationFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel entityClass="Organization" field="same_as" />
               }

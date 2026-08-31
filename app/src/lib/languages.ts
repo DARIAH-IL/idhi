@@ -187,6 +187,22 @@ export const ISO_639_1_CODES = [
 
 export const TOP_LANGUAGE_CODES = ['en', 'he', 'ar']
 
+const RTL_LANGUAGE_CODES = new Set([
+  'ar',
+  'dv',
+  'fa',
+  'he',
+  'ps',
+  'sd',
+  'ug',
+  'ur',
+  'yi',
+])
+
+export function isRtlLanguageCode(code: string) {
+  return RTL_LANGUAGE_CODES.has(code)
+}
+
 export interface LanguageOption {
   code: string
   label: string

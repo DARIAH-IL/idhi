@@ -86,7 +86,11 @@ export function AutocompleteTextField<T extends object>({
             isInvalid={Boolean(error)}
             onBlur={handleBlur}
           >
-            <ComboboxInput placeholder={placeholder} showTrigger={false} />
+            <ComboboxInput
+              placeholder={placeholder}
+              showTrigger={false}
+              dir="ltr"
+            />
             <ComboboxContent>
               <ComboboxList
                 items={items}

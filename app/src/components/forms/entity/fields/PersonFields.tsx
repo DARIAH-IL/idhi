@@ -84,6 +84,7 @@ export const PersonFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="email"
               label={<EntityFieldLabel entityClass="Person" field="emails" />}
               placeholder="email@example.com"
             />
@@ -202,6 +203,7 @@ export const PersonFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Person" field="same_as" />}
               placeholder="https://…"
             />

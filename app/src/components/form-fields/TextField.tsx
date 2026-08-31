@@ -32,6 +32,7 @@ export function TextField({
       <>
         <Input
           type={type}
+          dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
           value={field.state.value == null ? '' : String(field.state.value)}
           onBlur={field.handleBlur}
           onChange={(event) => {

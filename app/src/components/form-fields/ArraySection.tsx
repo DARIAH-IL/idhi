@@ -28,7 +28,7 @@ export function ArraySection({ label, defaultItem, children }: Props) {
   return (
     <div className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}>
       <Label>{label}</Label>
-      <div className="ml-3 flex flex-col gap-3">
+      <div className="ms-3 flex flex-col gap-3">
         {items.map((_, index) => (
           <div
             key={index}

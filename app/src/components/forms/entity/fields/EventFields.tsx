@@ -118,6 +118,7 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel entityClass="Event" field="additional_urls" />
               }
@@ -219,6 +220,7 @@ export const EventFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Event" field="same_as" />}
               placeholder="https://…"
             />

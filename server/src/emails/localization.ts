@@ -8,8 +8,8 @@ import { UiLanguage } from '../models'
 
 const OTP_SUBJECTS: Record<UiLanguage, string> = {
   en: 'Your IDHI login code',
-  he: 'קוד ההתחברות שלך ל-IDHI',
-  ar: 'رمز الدخول الخاص بك إلى IDHI',
+  he: 'קוד ההתחברות שלך לאינדקס מדעי הרוח הדיגיטליים',
+  ar: 'رمز تسجيل الدخول الخاص بك إلى فهرس العلوم الإنسانية الرقمية',
 }
 
 const OTP_TEMPLATES: Record<UiLanguage, string> = {
@@ -20,8 +20,8 @@ const OTP_TEMPLATES: Record<UiLanguage, string> = {
 
 const INVITE_SUBJECTS: Record<UiLanguage, string> = {
   en: "You've been invited to IDHI",
-  he: 'הוזמנת להצטרף ל-IDHI',
-  ar: 'تمت دعوتك للانضمام إلى IDHI',
+  he: 'הוזמנת להצטרף לאינדקס מדעי הרוח הדיגיטליים',
+  ar: 'لقد تمت دعوتك للانضمام إلى مؤشر العلوم الإنسانية الرقمية',
 }
 
 const INVITE_TEMPLATES: Record<UiLanguage, string> = {

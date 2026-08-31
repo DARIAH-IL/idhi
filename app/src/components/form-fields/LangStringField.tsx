@@ -17,7 +17,11 @@ import {
 } from '@/components/ui/combobox'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { getLanguageOptions, TOP_LANGUAGE_CODES } from '@/lib/languages'
+import {
+  getLanguageOptions,
+  isRtlLanguageCode,
+  TOP_LANGUAGE_CODES,
+} from '@/lib/languages'
 import type { LanguageOption } from '@/lib/languages'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
@@ -179,6 +183,7 @@ export function LangStringField({ label, multiline = false }: Props) {
           />
           {multiline ? (
             <Textarea
+              dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })
@@ -188,6 +193,7 @@ export function LangStringField({ label, multiline = false }: Props) {
             />
           ) : (
             <Input
+              dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })

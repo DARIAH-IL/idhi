@@ -224,7 +224,7 @@ function CodeBlock({ code }: { code: string }) {
 
   return (
     <div className="relative mt-2 rounded-md border bg-muted/50" dir="ltr">
-      <pre className="overflow-x-auto p-3 pr-12 font-mono text-xs leading-relaxed">
+      <pre className="overflow-x-auto p-3 pe-12 font-mono text-xs leading-relaxed">
         {code}
       </pre>
       <Button

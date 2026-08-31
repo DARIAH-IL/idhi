@@ -131,6 +131,7 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel
                   entityClass="Project"
@@ -603,6 +604,7 @@ export const ProjectFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Project" field="same_as" />}
               placeholder="https://…"
             />

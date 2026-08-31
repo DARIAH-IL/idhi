@@ -132,6 +132,7 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel entityClass="Tool" field="additional_urls" />
               }
@@ -266,6 +267,7 @@ export const ToolFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Tool" field="same_as" />}
               placeholder="https://…"
             />

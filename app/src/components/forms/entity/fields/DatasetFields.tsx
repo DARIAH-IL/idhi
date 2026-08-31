@@ -317,6 +317,7 @@ export const DatasetFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Dataset" field="same_as" />}
               placeholder="https://…"
             />

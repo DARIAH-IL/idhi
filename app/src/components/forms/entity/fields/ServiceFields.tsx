@@ -131,6 +131,7 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel
                   entityClass="Service"
@@ -147,6 +148,7 @@ export const ServiceFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={<EntityFieldLabel entityClass="Service" field="same_as" />}
               placeholder="https://…"
             />

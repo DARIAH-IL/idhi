@@ -319,6 +319,7 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"
@@ -383,6 +384,7 @@ export const TrainingMaterialFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel
                   entityClass="TrainingMaterial"

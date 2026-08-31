@@ -15,9 +15,15 @@ interface Props {
   label: React.ReactNode
   placeholder?: string
   options?: Record<string, string>
+  type?: 'text' | 'url' | 'email'
 }
 
-export function StringArrayField({ label, placeholder, options }: Props) {
+export function StringArrayField({
+  label,
+  placeholder,
+  options,
+  type = 'text',
+}: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
   const items = field.state.value ?? []
@@ -40,6 +46,8 @@ export function StringArrayField({ label, placeholder, options }: Props) {
           >
             <DragHandle {...getHandleProps(index)} />
             <Input
+              type={type}
+              dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
               value={item}
               onChange={(event) =>
                 field.handleChange(

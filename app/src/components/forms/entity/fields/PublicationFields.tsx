@@ -286,6 +286,7 @@ export const PublicationFields = withForm({
         >
           {(field) => (
             <field.StringArrayField
+              type="url"
               label={
                 <EntityFieldLabel entityClass="Publication" field="same_as" />
               }
