@@ -9,6 +9,8 @@
     "dev": "vite dev",
     "generate-routes": "tsr generate",
     "generate-terms": "node scripts/generate-term-uris.mjs",
+    "i18n-export": "node scripts/i18n-xlsx.mjs export",
+    "i18n-import": "node scripts/i18n-xlsx.mjs import",
     "build": "tsc && vite build",
     "lint": "eslint --fix && i18next-cli lint",
     "format": "prettier --write .",
@@ -64,6 +66,7 @@
     "prettier": "^3.8.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
-    "wrangler": "^4.118.0"
+    "wrangler": "^4.118.0",
+    "xlsx": "^0.18.5"
   }
 }
