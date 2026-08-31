@@ -78,7 +78,7 @@ export async function sendOtpEmail(
   lang: UiLanguage,
   bindings: Bindings,
 ): Promise<void> {
-  const expiration = formatDate(expiresAtEpoch)
+  const expiration = formatDate(expiresAtEpoch, lang)
   const { subject, html } = otpEmailContent(lang, otp, expiration, loginUrl)
 
   await sendEmail(bindings, recipient, subject, html)

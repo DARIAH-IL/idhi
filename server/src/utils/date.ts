@@ -1,5 +1,5 @@
-export const formatDate = (epoch: number) => {
-  return new Intl.DateTimeFormat('sv-SE', {
+export const formatDate = (epoch: number, lang: string) => {
+  return new Intl.DateTimeFormat(lang, {
     timeZone: 'Asia/Jerusalem',
     year: 'numeric',
     month: '2-digit',
