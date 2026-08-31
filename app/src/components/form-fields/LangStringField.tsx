@@ -95,9 +95,7 @@ function LanguageCombobox({
               )}
             </ComboboxCollection>
           </ComboboxGroup>
-          <ComboboxEmpty>
-            {t('common.no_results')}
-          </ComboboxEmpty>
+          <ComboboxEmpty>{t('common.no_results')}</ComboboxEmpty>
         </ComboboxList>
       </ComboboxContent>
     </Combobox>

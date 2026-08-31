@@ -27,6 +27,7 @@ const PILL_FIELDS = new Set([
   'publication_type',
   'digital_humanities_activities',
 ])
+const EMPTY_PLACEHOLDER = '—'
 
 function EnumPill({ field, value }: { field: string; value: string }) {
   return (
@@ -57,7 +58,7 @@ export function renderEntityValue(
   term?: string,
 ): React.ReactNode {
   if (v === null || v === undefined || v === '') {
-    return null
+    return EMPTY_PLACEHOLDER
   }
   if (typeof v === 'number') {
     return new Intl.NumberFormat(undefined, {
@@ -76,6 +77,7 @@ export function renderEntityValue(
     if (items.length > 0) {
       return <LangStringValue items={items} />
     }
+    return EMPTY_PLACEHOLDER
   }
   if (field && PILL_FIELDS.has(field)) {
     const items = Array.isArray(v) ? v : [v]
@@ -94,7 +96,7 @@ export function renderEntityValue(
   }
   if (Array.isArray(v)) {
     if (v.length === 0) {
-      return null
+      return EMPTY_PLACEHOLDER
     }
     return (
       <div className="flex flex-col gap-3">
@@ -111,10 +113,13 @@ export function renderEntityValue(
     const orderOf = (key: string) =>
       fieldOrder?.[key] ?? Number.MAX_SAFE_INTEGER
 
+    const entries = Object.entries(v)
+    if (entries.length === 0) {
+      return EMPTY_PLACEHOLDER
+    }
     return (
       <div className="flex flex-col gap-4 rounded border p-2 text-xs">
-        {Object.entries(v)
-          .filter(([, val]) => val !== null && val !== undefined)
+        {entries
           .sort(([a], [b]) => orderOf(a) - orderOf(b))
           .map(([key, val]) => {
             const refValue = isEntityRefValue(val)

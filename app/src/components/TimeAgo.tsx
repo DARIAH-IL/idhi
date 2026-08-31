@@ -34,7 +34,7 @@ export function TimeAgoReverse({ date }: TimeAgoProps) {
     return '—'
   }
 
-  const label = new Date(date).toLocaleDateString()
+  const label = new Date(date).toLocaleDateString(language)
 
   return (
     <TooltipTrigger>
@@ -54,7 +54,7 @@ export function TimeAgo({ date }: TimeAgoProps) {
   }
 
   const d = new Date(date)
-  const label = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+  const label = `${d.toLocaleDateString()} ${d.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit' })}`
 
   return (
     <TooltipTrigger>

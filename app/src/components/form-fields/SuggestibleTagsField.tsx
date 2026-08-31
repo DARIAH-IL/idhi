@@ -101,9 +101,7 @@ export function SuggestibleTagsField({
                 items={items}
                 renderEmptyState={() => (
                   <ComboboxEmpty>
-                    {loading
-                      ? t('common.searching')
-                      : t('common.no_results')}
+                    {loading ? t('common.searching') : t('common.no_results')}
                   </ComboboxEmpty>
                 )}
               >

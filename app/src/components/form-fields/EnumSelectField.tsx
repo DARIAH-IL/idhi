@@ -55,9 +55,7 @@ export function EnumSelectField({ label, options, required = false }: Props) {
               <ComboboxList
                 items={items}
                 renderEmptyState={() => (
-                  <ComboboxEmpty>
-                    {t('common.no_results')}
-                  </ComboboxEmpty>
+                  <ComboboxEmpty>{t('common.no_results')}</ComboboxEmpty>
                 )}
               >
                 {(item) => (

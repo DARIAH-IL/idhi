@@ -81,9 +81,7 @@ export function LanguagesField({ label }: Props) {
               <ComboboxList
                 items={items}
                 renderEmptyState={() => (
-                  <ComboboxEmpty>
-                    {t('common.no_results')}
-                  </ComboboxEmpty>
+                  <ComboboxEmpty>{t('common.no_results')}</ComboboxEmpty>
                 )}
               >
                 {(item) => (
