@@ -51,15 +51,11 @@ function requireUser(user: User | undefined): User {
   return user
 }
 
-export function createEntityMcpServer(
+export function registerEntityTools(
+  server: McpServer,
   db: DatabaseService,
   user: User | undefined,
-): McpServer {
-  const server = new McpServer({
-    name: 'idhi',
-    version: '1.0.0',
-  })
-
+): void {
   server.registerTool(
     'get_entity',
     {
@@ -130,6 +126,4 @@ export function createEntityMcpServer(
       return jsonResult({ deleted: true, entityId })
     },
   )
-
-  return server
 }

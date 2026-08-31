@@ -92,10 +92,7 @@ export const databaseMiddleware: MiddlewareHandler<{
 
     await next()
 
-    if (
-      connection &&
-      c.res.headers.get('content-type')?.includes('text/event-stream')
-    ) {
+    if (c.res.headers.get('content-type')?.includes('text/event-stream')) {
       const activeConnection = connection
 
       closeDeferred = true

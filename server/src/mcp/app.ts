@@ -24,7 +24,8 @@ import {
   authMetadataOptions,
   serverOrigin,
 } from '../oauth/metadata'
-import { WRITE_TOOL_NAMES, createEntityMcpServer } from './tools'
+import { createEntityMcpServer } from './server'
+import { WRITE_TOOL_NAMES } from './tools'
 import { authInfoUser, createTokenVerifier } from './verifier'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
