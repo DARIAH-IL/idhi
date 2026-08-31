@@ -5,14 +5,12 @@
     "close": "Close",
     "clear": "Clear",
     "delete": "Delete",
-    "edit": "Edit",
-    "back": "Back",
     "loading": "Loading…",
     "error": "Something went wrong",
     "route_error_description": "We couldn't load this page. Please try again.",
     "try_again": "Try again",
-    "confirm_delete": "Are you sure you want to delete this entity? This action cannot be undone.",
-    "delete_confirm_title": "Delete entity",
+    "confirm_delete": "Are you sure you want to delete this entry? This action cannot be undone.",
+    "delete_confirm_title": "Delete entry",
     "login": "Log in",
     "logout": "Log out",
     "home": "Israeli Digital Humanities Index home",
@@ -20,10 +18,8 @@
     "site_name": "Israeli Digital Humanities Index",
     "copyright": "© 2026 Israeli Digital Humanities Index",
     "work_in_progress": "This site is a work in progress and is subject to change as it is reviewed and refined.",
-    "add": "Add",
     "remove": "Remove",
     "reorder": "Drag to reorder",
-    "new": "New",
     "copy": "Copy",
     "copied": "Copied",
     "language_picker": "Change language",
@@ -75,7 +71,7 @@
     "placeholder": "This page will describe the Israeli Digital Humanities Index. Content coming soon.",
     "ai": {
       "title": "Connect to AI",
-      "intro": "The Israeli Digital Humanities Index exposes a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, inspect entities, and — after signing in — create, update, or delete entries, all from within your chat or coding tool.",
+      "intro": "The Israeli Digital Humanities Index provides a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, look up entries, and — after signing in — create, update, or delete entries, all from within your chat or coding tool.",
       "endpoint": "MCP endpoint",
       "capabilities": {
         "title": "Capabilities",
@@ -83,10 +79,10 @@
         "authenticated": "Available after signing in:",
         "tools": {
           "search_entities": "search the index with free-text queries, filters, facets, sorting, and pagination",
-          "get_entity": "fetch a single entity by its ID",
-          "create_entity": "create a new entity",
-          "update_entity": "replace an existing entity",
-          "delete_entity": "delete an entity"
+          "get_entity": "fetch a single entry by its ID",
+          "create_entity": "create a new entry",
+          "update_entity": "replace an existing entry",
+          "delete_entity": "delete an entry"
         },
         "auth_note": "Authentication uses the standard MCP OAuth flow: the first time your tool calls a write tool, it opens the IDHI sign-in page in your browser and continues automatically once you approve."
       },
@@ -132,19 +128,18 @@
     "errors": {
       "Unauthorized": "Your session has expired. Please sign in again.",
       "InvalidInput": "The submitted information is invalid. Please review it and try again.",
-      "InternalServerError": "The server encountered an unexpected error. Please try again later.",
-      "EntityNotFound": "The requested entity could not be found.",
+      "InternalServerError": "Something went wrong on our side. Please try again later.",
+      "EntityNotFound": "The requested entry could not be found.",
       "UserNotFound": "The requested user could not be found.",
       "UserAlreadyInvitedOrRegistered": "This user is already invited or registered.",
       "WrongOtpCode": "The one-time code is incorrect. Please try again.",
       "TooManyAuthAttempts": "Too many authentication attempts. Please try again later.",
       "AuthChallengeNotFoundOrExpired": "The authentication request has expired. Please start again.",
-      "network": "The server could not be reached. Check your connection and try again.",
+      "network": "We couldn't reach the server. Please check your internet connection and try again.",
       "generic": "Something went wrong while communicating with the server."
     }
   },
   "auth": {
-    "title": "IDHI",
     "user_menu": "User menu",
     "signed_in_as": "Signed in as",
     "user_actions": "User actions",
@@ -154,13 +149,12 @@
     "use_different_account": "Use a different account",
     "continue": "Continue",
     "otp_label": "One-time code",
-    "otp_placeholder": "Enter the code from your email",
     "verify": "Verify",
     "back_to_email": "Use a different email",
-    "email_sent": "A one-time code was sent to {{email}}",
+    "email_sent": "We've sent a one-time code to {{email}}",
+    "otp_check_spam": "If you didn't receive the email, check your spam folder.",
     "passkey_login": "Sign in with a passkey",
     "sign_in_with_otp": "Sign in with a one-time code sent by email",
-    "passkey_use_otp": "Use a one-time code instead",
     "passkey_use_passkey": "Sign in with a passkey instead",
     "passkey_not_recognized": "This device's passkey is no longer linked to your account. Please sign in with a one-time code.",
     "passkey_failed": "Passkey sign-in failed. Please try again.",
@@ -173,15 +167,7 @@
     "passkey_created": "Passkey created. You can now use it to sign in on this device.",
     "passkey_not_now": "Not now",
     "signed_in": "You've been signed in.",
-    "signed_out": "You've been signed out.",
-    "errors": {
-      "UserNotFound": "No account found for this email address.",
-      "WrongOtpCode": "Invalid code. Please try again.",
-      "TooManyAuthAttempts": "Too many failed attempts. Please try again later.",
-      "AuthChallengeNotFoundOrExpired": "The code has expired. Please request a new one.",
-      "InvalidInput": "Invalid input. Please check your details.",
-      "generic": "Authentication failed. Please try again."
-    }
+    "signed_out": "You've been signed out."
   },
   "oauth": {
     "title": "Connect to IDHI",
@@ -198,7 +184,6 @@
     "title": "Administration",
     "description": "Manage access to IDHI, maintain user accounts, and send or revoke invitations.",
     "menu_item": "Administration",
-    "sections_label": "Administration sections",
     "fields": {
       "user": "User",
       "name": "Name",
@@ -224,7 +209,6 @@
     "users": {
       "title": "Users",
       "description": "Create accounts and manage profile details and administrator access.",
-      "total": "Registered users",
       "add": "Add user",
       "create": "Create user",
       "add_title": "Create user",
@@ -236,7 +220,6 @@
       "delete_action": "Delete user",
       "edit_label": "Edit {{email}}",
       "delete_label": "Delete {{email}}",
-      "unnamed": "Unnamed user",
       "loading": "Loading users…",
       "empty": "No users have been created yet.",
       "table_label": "Registered users"
@@ -244,7 +227,6 @@
     "invites": {
       "title": "Invitations",
       "description": "Invite new users and review or revoke invitations that are still pending.",
-      "pending": "Pending invitations",
       "invite": "Invite user",
       "invite_title": "Invite a user",
       "invite_description": "The recipient will receive a secure link to complete registration.",
@@ -266,46 +248,46 @@
     }
   },
   "board": {
-    "title": "Entities",
-    "search_placeholder": "Search entities…",
+    "title": "Browse the index",
+    "search_placeholder": "Search the index…",
     "clear_search": "Clear search",
     "clear_filters": "Clear filters",
     "search_action": "Search",
-    "results_label": "Entity results",
-    "loaded_count": "Loaded {{loaded}} of {{total}} entities",
+    "results_label": "Search results",
+    "loaded_count": "Showing {{loaded}} of {{total}} entries",
     "facets": {
-      "title": "Facets",
-      "bulk_actions": "Facet selection actions",
+      "title": "Filters",
+      "bulk_actions": "Filter selection actions",
       "select_all": "Select all",
       "clear_all": "Clear all",
       "select_value": "Select {{value}}",
       "show_more": "Show more",
       "show_less": "Show less",
-      "filter_placeholder": "Filter values…",
-      "filter_label": "Filter facet values",
-      "active_filters": "Active facet filters",
+      "filter_placeholder": "Search options…",
+      "filter_label": "Search filter options",
+      "active_filters": "Active filters",
       "active_value": "{{field}}: {{value}}",
       "remove_filter": "Remove {{filter}} filter",
-      "loading": "Loading facets…",
-      "no_values": "No facet values are available.",
-      "no_matching_values": "No matching facet values.",
+      "loading": "Loading filters…",
+      "no_values": "No filter options are available.",
+      "no_matching_values": "No matching options.",
       "apply": "Refine search",
-      "referenced_type": "Referenced {{type}}"
+      "referenced_type": "Related {{type}}"
     },
-    "no_results": "No entities found.",
-    "no_matching_results": "No matching entities found.",
-    "new_entity": "Create a new entity"
+    "no_results": "No entries found.",
+    "no_matching_results": "No entries match your search.",
+    "new_entity": "Add a new entry"
   },
   "entity": {
     "draft_badge": "Draft",
     "reference": {
       "loading": "Loading…",
-      "unavailable": "Entity unavailable"
+      "unavailable": "Entry unavailable"
     },
     "notifications": {
-      "created": "Entity created successfully.",
-      "updated": "Entity updated successfully.",
-      "deleted": "Entity deleted successfully."
+      "created": "Entry created successfully.",
+      "updated": "Entry updated successfully.",
+      "deleted": "Entry deleted successfully."
     },
     "types": {
       "idhi:Person": "Person",
@@ -577,7 +559,7 @@
         "ACADEMIC_INSTITUTION": "Academic institution",
         "COMPANY": "Company",
         "FUNDER": "Funder",
-        "GLAM_INSTITUTION": "GLAM institution",
+        "GLAM_INSTITUTION": "Gallery, library, archive or museum",
         "INFORMAL_GROUP": "Informal group",
         "NON_PROFIT": "Non-profit",
         "RESEARCH_CENTER": "Research center"
@@ -794,13 +776,13 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a person."
+          "description": "Identifies this entry as a person."
         }
       },
       "Organization": {
         "$self": {
           "label": "$t(common.labels.organization)",
-          "description": "An organization of any kind - university, GLAM institution, research center, funder, company or non-profit."
+          "description": "An organization of any kind - university, gallery, library, archive, museum, research center, funder, company or non-profit."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -839,7 +821,7 @@
           "description": "The organization’s official name."
         },
         "organization_structure": {
-          "label": "$t(common.labels.organizatio_structurey)",
+          "label": "$t(common.labels.organization_structure)",
           "description": "The organization’s formal place within larger parent organizations, such as a department within a university, including the relevant dates."
         },
         "organization_type": {
@@ -860,7 +842,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for an organization."
+          "description": "Identifies this entry as an organization."
         }
       },
       "Facility": {
@@ -926,7 +908,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a facility."
+          "description": "Identifies this entry as a facility."
         }
       },
       "Project": {
@@ -1028,7 +1010,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a project."
+          "description": "Identifies this entry as a project."
         },
         "uses_datasets": {
           "label": "Datasets used",
@@ -1118,7 +1100,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a software tool."
+          "description": "Identifies this entry as a software tool."
         }
       },
       "Service": {
@@ -1180,7 +1162,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a service."
+          "description": "Identifies this entry as a service."
         }
       },
       "Publication": {
@@ -1250,7 +1232,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a publication."
+          "description": "Identifies this entry as a publication."
         }
       },
       "Event": {
@@ -1320,7 +1302,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for an event."
+          "description": "Identifies this entry as an event."
         }
       },
       "Dataset": {
@@ -1418,7 +1400,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for a dataset."
+          "description": "Identifies this entry as a dataset."
         }
       },
       "TrainingMaterial": {
@@ -1536,7 +1518,7 @@
         },
         "type": {
           "label": "$t(common.labels.type)",
-          "description": "The entity category for training material."
+          "description": "Identifies this entry as training material."
         }
       },
       "Affiliation": {
@@ -1689,7 +1671,7 @@
       },
       "OrganizationStructure": {
         "$self": {
-          "label": "$t(common.labels.organization_structurey)",
+          "label": "$t(common.labels.organization_structure)",
           "description": "Formal containment of this organization within a larger parent organization."
         },
         "end_date": {
@@ -1773,14 +1755,12 @@
       }
     },
     "detail": {
-      "id": "ID",
-      "type": "Type",
       "created": "Created",
       "modified": "Last modified",
       "by": "by",
-      "audit": "Audit trail",
-      "edit": "Edit entity",
-      "delete": "Delete entity"
+      "audit": "Change history",
+      "edit": "Edit entry",
+      "delete": "Delete entry"
     },
     "relationships": {
       "labels": {
@@ -1821,38 +1801,25 @@
       "load_error": "This relationship could not be loaded."
     },
     "picker": {
-      "search": "Search entities…",
-      "choose_another": "Choose another entity…",
+      "search": "Search the index…",
+      "choose_another": "Choose a different entry…",
       "searching": "Searching…",
-      "no_results": "No matching entities."
+      "no_results": "No matches found."
     },
     "form": {
       "new_title": "New {{type}}",
       "edit_title": "Edit {{type}}",
       "image_error": "The selected file could not be read as an image.",
-      "image_preview": "Entity image preview",
+      "image_preview": "Entry image preview",
       "remove_image": "Remove image",
-      "generated_id": "Generated by the server when saved",
-      "select_type": "Select entity type",
-      "select_type_description": "Choose the type of entity you want to create.",
+      "select_type": "Select entry type",
+      "select_type_description": "Choose what kind of entry you want to create.",
       "unsaved_changes_title": "Unsaved changes",
       "unsaved_changes": "You have unsaved changes. Are you sure you want to leave?",
       "leave_page": "Leave page",
       "autocomplete_no_results": "No results.",
       "publish": "Publish",
       "save_draft": "Save as draft",
-      "sections": {
-        "identity": "Identity",
-        "basic": "Basic information",
-        "names": "Names",
-        "description": "Description",
-        "contact": "Contact",
-        "links": "Links",
-        "tags": "Tags & identifiers",
-        "relations": "Relations",
-        "dates": "Dates",
-        "specific": "Type-specific fields"
-      },
       "add_lang_string": "Add value in another language",
       "add_item": "Add item",
       "add_value": "Add \"{{term}}\"",
@@ -1860,7 +1827,7 @@
       "language_search": "Search languages…",
       "external_url_placeholder": "Or enter an external URL…",
       "clear_selection": "Clear selection",
-      "remove_entity": "Remove entity"
+      "remove_entity": "Remove entry"
     }
   },
   "validation": {
@@ -1868,12 +1835,12 @@
     "email": "Enter a valid email address.",
     "url": "Enter a valid URL.",
     "date": "Enter a valid date.",
-    "doi": "Enter a full DOI URL.",
+    "doi": "Enter a full DOI URL, starting with https://doi.org/.",
     "integer": "Enter a whole number.",
     "number": "Enter a number.",
-    "entity": "Select a valid entity.",
-    "orcid": "Enter a full ORCID URL.",
-    "ror": "Enter a valid ROR URL.",
+    "entity": "Select a valid entry.",
+    "orcid": "Enter a full ORCID URL, starting with https://orcid.org/.",
+    "ror": "Enter a full ROR URL, starting with https://ror.org/.",
     "min": "Must be at least {{min}}.",
     "unsupported_value": "Choose a supported value.",
     "invalid_list": "Enter a valid list.",
@@ -1882,8 +1849,8 @@
     "choose_language": "Choose a language.",
     "language_value_required": "Enter a value for each language you've added, or remove it.",
     "duplicate_language": "Use each language only once.",
-    "invalid_entity_list": "Choose valid entities.",
-    "duplicate_entity": "Choose each entity only once.",
-    "invalid_selected_entities": "One or more selected entities are invalid."
+    "invalid_entity_list": "Choose valid entries.",
+    "duplicate_entity": "Choose each entry only once.",
+    "invalid_selected_entities": "One or more selected entries are invalid."
   }
 }

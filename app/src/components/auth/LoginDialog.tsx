@@ -216,6 +216,12 @@ export function LoginDialog({
         )}
       </DialogHeader>
 
+      {step === 'otp' && (
+        <p className="-mt-2 text-center text-xs text-muted-foreground">
+          {t('auth.otp_check_spam')}
+        </p>
+      )}
+
       {step === 'loading' ? (
         <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
       ) : step === 'start' && hasPasskey ? (
