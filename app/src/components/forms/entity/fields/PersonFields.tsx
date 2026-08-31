@@ -23,7 +23,6 @@ export const PersonFields = withForm({
           {(field) => (
             <field.OrcidField
               label={<EntityFieldLabel entityClass="Person" field="orcid" />}
-              placeholder="https://orcid.org/0000-0000-0000-0000"
               onSelect={(suggestion) => {
                 if (
                   suggestion.givenNames &&

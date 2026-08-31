@@ -1,4 +1,5 @@
 import type { RorSuggestion } from '#/api/external/ror.ts'
+import { useTranslation } from 'react-i18next'
 import { searchRorOrganizations } from '#/api/external/ror.ts'
 import { AutocompleteTextField } from '#/components/form-fields/AutocompleteTextField.tsx'
 import { AutocompleteSuggestionContent } from '#/components/form-fields/AutocompleteSuggestionContent.tsx'
@@ -14,10 +15,14 @@ export function rorLocation(suggestion: RorSuggestion): string {
 }
 
 export function RorField({ label, placeholder, onSelect }: Props) {
+  const { t } = useTranslation()
+
   return (
     <AutocompleteTextField<RorSuggestion>
       label={label}
-      placeholder={placeholder}
+      placeholder={
+        placeholder ?? t('entity.form.identifier_search_placeholder')
+      }
       search={searchRorOrganizations}
       shouldSearch={(query) => !/^https?:\/\//i.test(query)}
       getSuggestionValue={(suggestion) => suggestion.id}

@@ -27,7 +27,6 @@ export const TrainingMaterialFields = withForm({
               label={
                 <EntityFieldLabel entityClass="TrainingMaterial" field="doi" />
               }
-              placeholder="https://doi.org/…"
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.title))

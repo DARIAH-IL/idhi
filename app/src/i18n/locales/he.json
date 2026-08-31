@@ -2,6 +2,7 @@
   "common": {
     "save": "שמירה",
     "cancel": "ביטול",
+    "go_back": "חזרה",
     "close": "סגירה",
     "clear": "ניקוי",
     "delete": "מחיקה",
@@ -1824,6 +1825,7 @@
       "language": "שפה",
       "language_search": "חיפוש שפות...",
       "external_url_placeholder": "או הזנת קישור חיצוני...",
+      "identifier_search_placeholder": "הזינו קישור ישירות, או התחילו להקליד כדי לחפש לפי שם...",
       "clear_selection": "ניקוי בחירה",
       "remove_entity": "הסרת רשומה"
     }
@@ -1833,12 +1835,12 @@
     "email": "יש להזין כתובת אימייל תקינה.",
     "url": "יש להזין קישור (URL) תקין.",
     "date": "יש להזין תאריך תקין.",
-    "doi": "יש להזין קישור DOI מלא, שמתחיל ב־https://doi.org/.",
+    "doi": "יש להזין קישור DOI מלא, שמתחיל ב־https://doi.org.",
     "integer": "יש להזין מספר שלם.",
     "number": "יש להזין מספר.",
     "entity": "יש לבחור רשומה תקינה.",
-    "orcid": "יש להזין קישור ORCID מלא, שמתחיל ב־https://orcid.org/.",
-    "ror": "יש להזין קישור ROR מלא, שמתחיל ב־https://ror.org/.",
+    "orcid": "יש להזין קישור ORCID מלא, שמתחיל ב־https://orcid.org.",
+    "ror": "יש להזין קישור ROR מלא, שמתחיל ב־https://ror.org.",
     "min": "הערך חייב להיות לכל הפחות {{min}}.",
     "unsupported_value": "יש לבחור ערך נתמך.",
     "invalid_list": "יש להזין רשימה תקינה.",

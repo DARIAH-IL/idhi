@@ -120,6 +120,7 @@ export function AutocompleteTextField<T extends object>({
               >
                 {(item) => (
                   <ComboboxItem
+                    dir="ltr"
                     id={getSuggestionValue(item)}
                     textValue={getSuggestionValue(item)}
                   >

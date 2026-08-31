@@ -2,6 +2,7 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
+    "go_back": "Go back",
     "close": "Close",
     "clear": "Clear",
     "delete": "Delete",
@@ -1822,6 +1823,7 @@
       "language": "Language",
       "language_search": "Search languages...",
       "external_url_placeholder": "Or enter an external URL...",
+      "identifier_search_placeholder": "Enter a URL directly, or start typing to search by name...",
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entry"
     }

@@ -1,4 +1,5 @@
 import type { OrcidSuggestion } from '#/api/external/orcid.ts'
+import { useTranslation } from 'react-i18next'
 import {
   normalizeOrcid,
   orcidDisplayName,
@@ -14,10 +15,14 @@ interface Props {
 }
 
 export function OrcidField({ label, placeholder, onSelect }: Props) {
+  const { t } = useTranslation()
+
   return (
     <AutocompleteTextField<OrcidSuggestion>
       label={label}
-      placeholder={placeholder}
+      placeholder={
+        placeholder ?? t('entity.form.identifier_search_placeholder')
+      }
       search={searchOrcidPeople}
       shouldSearch={(query) => !/^(https?:\/\/|\d{4}-)/i.test(query)}
       getSuggestionValue={(suggestion) => suggestion.id}

@@ -92,7 +92,7 @@ function NewEntityPage() {
                   key={et}
                   variant="outline"
                   size="lg"
-                  className="h-auto flex-col items-start gap-1.5 p-3 text-start whitespace-normal"
+                  className="h-auto flex-col items-start justify-start gap-1.5 p-3 text-start whitespace-normal"
                   onPress={() => setSelectedType(et)}
                 >
                   <span className="flex items-center gap-2">

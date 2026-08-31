@@ -23,7 +23,6 @@ export const OrganizationFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Organization" field="ror" />
               }
-              placeholder="https://ror.org/…"
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.name))

@@ -98,7 +98,7 @@ export function FormScaffold({
         </DialogHeader>
         <DialogFooter>
           <Button variant="outline" onPress={() => reset?.()}>
-            {t('common.cancel')}
+            {t('common.go_back')}
           </Button>
           <Button variant="destructive" onPress={() => proceed?.()}>
             {t('entity.form.leave_page')}

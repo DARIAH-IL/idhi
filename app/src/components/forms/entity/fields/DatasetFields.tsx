@@ -25,7 +25,6 @@ export const DatasetFields = withForm({
           {(field) => (
             <field.DoiField
               label={<EntityFieldLabel entityClass="Dataset" field="doi" />}
-              placeholder="https://doi.org/…"
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.title))

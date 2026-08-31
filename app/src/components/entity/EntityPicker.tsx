@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { EntityReferenceCard } from './EntityReferenceCard'
 import { EntityImage } from './EntityImage'
 import { DraftBadge } from './DraftBadge'
+import { getEntityTypeColorClass } from './EntityTypeIcon'
 
 interface Props {
   value?: string
@@ -96,7 +97,7 @@ export function EntityPicker({
             <button
               key={id}
               type="button"
-              className="flex w-full items-center justify-between gap-2 rounded px-2 py-2 text-start hover:bg-accent"
+              className="flex w-full cursor-pointer items-center justify-between gap-2 rounded px-2 py-2 text-start hover:bg-accent"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
                 onChange(id)
@@ -122,7 +123,10 @@ export function EntityPicker({
                   </span>
                 </span>
               </span>
-              <Badge variant="secondary">
+              <Badge
+                variant="secondary"
+                className={getEntityTypeColorClass(entity.type)}
+              >
                 {getEntityTypeLabel(entity.type)}
               </Badge>
             </button>
