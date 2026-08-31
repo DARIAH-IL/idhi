@@ -22,7 +22,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip } from '@/components/ui/tooltip'
 import { JumpToTop } from '@/components/JumpToTop'
-import { LanguagePicker } from '@/components/LanguagePicker'
+import { UiLanguagePicker } from '#/components/UiLanguagePicker.tsx'
 import { LoginDialog } from '@/components/auth/LoginDialog'
 import { UserMenu } from '@/components/auth/UserMenu'
 
@@ -85,7 +85,7 @@ function AppLayout() {
           </span>
         </Link>
         <div className="flex items-center gap-2">
-          <LanguagePicker />
+          <UiLanguagePicker />
           <TooltipTrigger delay={0}>
             <Button
               variant="outline"

@@ -58,11 +58,6 @@ export interface Organization {
    * @nullable
    */
   location?: OrganizationLocationItem[] | null
-  /**
-   * Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.
-   * @nullable
-   */
-  marketplace_sync?: boolean | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: OrganizationNameItem[]
   /**

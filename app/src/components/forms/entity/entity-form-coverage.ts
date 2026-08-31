@@ -63,7 +63,6 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     contact_email: 'rendered',
     'location[].language': 'rendered',
     'location[].value': 'rendered',
-    marketplace_sync: 'omitted: internal flag, not user-editable',
     'name[].language': 'rendered',
     'name[].value': 'rendered',
     'organization_structure[].end_date': 'rendered',

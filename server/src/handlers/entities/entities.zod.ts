@@ -579,12 +579,6 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
               ),
-            marketplace_sync: zod
-              .boolean()
-              .nullish()
-              .describe(
-                "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
-              ),
             name: zod
               .array(
                 zod
@@ -3888,12 +3882,6 @@ export const CreateEntityBody = zod.union([
         .describe(
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
-      marketplace_sync: zod
-        .boolean()
-        .nullish()
-        .describe(
-          "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
-        ),
       name: zod
         .array(
           zod
@@ -7070,12 +7058,6 @@ export const CreateEntityResponse = zod
           .nullish()
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
-          ),
-        marketplace_sync: zod
-          .boolean()
-          .nullish()
-          .describe(
-            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
           .array(
@@ -10360,12 +10342,6 @@ export const GetEntityByIdResponse = zod
           .nullish()
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
-          ),
-        marketplace_sync: zod
-          .boolean()
-          .nullish()
-          .describe(
-            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
           .array(
@@ -13677,12 +13653,6 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
         ),
-      marketplace_sync: zod
-        .boolean()
-        .nullish()
-        .describe(
-          "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
-        ),
       name: zod
         .array(
           zod
@@ -16952,12 +16922,6 @@ export const UpdateEntityByIdResponse = zod
           .nullish()
           .describe(
             'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
-          ),
-        marketplace_sync: zod
-          .boolean()
-          .nullish()
-          .describe(
-            "Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.",
           ),
         name: zod
           .array(

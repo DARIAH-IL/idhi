@@ -156,7 +156,6 @@ export const termUris = {
     id: 'dcterms:identifier',
     image: 'schema:image',
     location: 'schema:location',
-    marketplace_sync: 'idhi:marketplaceSync',
     name: 'skos:prefLabel',
     organization_structure: 'idhi:organizationStructure',
     organization_type: 'dcterms:type',

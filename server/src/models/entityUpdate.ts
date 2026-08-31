@@ -182,11 +182,6 @@ export type EntityUpdate =
             value: string
           }[]
         | null
-      /**
-       * Opt-in flag for synchronization with the DARIAH SSH Open Marketplace. Set true to allow the organization and entities related to it through IDHI references, such as services and tools, to be synchronized; false or omission means they must not be synchronized on this organization's authority. This operational flag does not assert ownership of related entities. It uses an IDHI-specific property because established descriptive vocabularies do not provide a term for this synchronization policy.
-       * @nullable
-       */
-      marketplace_sync?: boolean | null
       /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
       name: {
         /**
@@ -1637,6 +1632,21 @@ export type EntityUpdate =
        */
       contact_email?: string | null
       /**
+       * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
+       * @nullable
+       */
+      description?:
+        | {
+            /**
+             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+             */
+            language: string
+            /** A localized text, in the language given by 'language'. */
+            value: string
+          }[]
+        | null
+      /**
        * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
        * @nullable
        */
@@ -1753,10 +1763,30 @@ export type EntityUpdate =
        */
       datasets?: string[] | null
       /**
+       * Formal publication date (or year-01-01 if only the year is known).
+       * @nullable
+       */
+      date_issued?: string | null
+      /**
        * Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.
        * @nullable
        */
       derived_from?: string[] | null
+      /**
+       * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
+       * @nullable
+       */
+      description?:
+        | {
+            /**
+             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+             */
+            language: string
+            /** A localized text, in the language given by 'language'. */
+            value: string
+          }[]
+        | null
       /**
        * Direct download or access URL for the dataset.
        * @nullable
@@ -1856,6 +1886,11 @@ export type EntityUpdate =
        */
       same_as?: string[] | null
       /**
+       * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+       * @nullable
+       */
+      tags?: string[] | null
+      /**
        * Thematic keywords for the dataset, multilingual.
        * @nullable
        */
@@ -1889,6 +1924,26 @@ export type EntityUpdate =
        * @nullable
        */
       creators?: string[] | null
+      /**
+       * Formal publication date (or year-01-01 if only the year is known).
+       * @nullable
+       */
+      date_issued?: string | null
+      /**
+       * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
+       * @nullable
+       */
+      description?:
+        | {
+            /**
+             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+             */
+            language: string
+            /** A localized text, in the language given by 'language'. */
+            value: string
+          }[]
+        | null
       /**
        * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
        * @nullable
@@ -2191,6 +2246,11 @@ export type EntityUpdate =
        * @nullable
        */
       same_as?: string[] | null
+      /**
+       * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
+       * @nullable
+       */
+      tags?: string[] | null
       /**
        * Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.
        * @nullable

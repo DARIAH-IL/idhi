@@ -834,10 +834,6 @@
           "label": "$t(common.labels.location)",
           "description": "The place where the organization is based, such as a city."
         },
-        "marketplace_sync": {
-          "label": "Allow Marketplace synchronization",
-          "description": "Whether the organization and its related services and tools are synchronized with the DARIAH SSH Open Marketplace."
-        },
         "name": {
           "label": "$t(common.labels.name)",
           "description": "The organization’s official name."

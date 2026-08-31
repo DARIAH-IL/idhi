@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import type { UiLanguage } from '@/api/models'
+import { UiLanguage } from '@/api/models'
 import { useStorageSync } from '@/hooks/useStorageSync'
 
 interface UIState {
@@ -12,16 +12,16 @@ interface UIState {
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
-const SUPPORTED_LANGUAGES: UiLanguage[] = ['en', 'he', 'ar']
 
 function detectBrowserLanguage(): UiLanguage {
-  for (const locale of navigator.languages ?? [navigator.language]) {
-    const primary = locale.split('-')[0].toLowerCase() as UiLanguage
-    if (SUPPORTED_LANGUAGES.includes(primary)) {
-      return primary
+  for (const locale of navigator.languages) {
+    const primary = (locale.split('-')[0] ?? locale).toLowerCase()
+    const match = Object.values(UiLanguage).find((lang) => lang === primary)
+    if (match) {
+      return match
     }
   }
-  return 'en'
+  return UiLanguage.en
 }
 
 export const useUIStore = create<UIState>()(

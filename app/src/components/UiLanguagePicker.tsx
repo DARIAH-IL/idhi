@@ -7,9 +7,7 @@ import { languageName } from '@/lib/languages'
 import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 
-const LANGUAGES = [UiLanguage.en, UiLanguage.he, UiLanguage.ar]
-
-export function LanguagePicker() {
+export function UiLanguagePicker() {
   const { t } = useTranslation()
   const language = useUIStore((s) => s.language)
   const setLanguage = useUIStore((s) => s.setLanguage)
@@ -30,7 +28,7 @@ export function LanguagePicker() {
         className="z-50 min-w-36 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95"
       >
         <Menu aria-label={t('common.language_picker')} className="outline-none">
-          {LANGUAGES.map((lang) => (
+          {Object.values(UiLanguage).map((lang) => (
             <MenuItem
               key={lang}
               id={lang}

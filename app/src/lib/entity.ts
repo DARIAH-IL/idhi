@@ -45,7 +45,6 @@ export const NON_DISPLAY_FIELDS = [
   'id',
   'image',
   'tags',
-  'marketplace_sync',
 ] as const
 
 type NonDisplayField = (typeof NON_DISPLAY_FIELDS)[number]
