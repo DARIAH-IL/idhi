@@ -37,7 +37,10 @@ const unflatten = (flat) => {
 
 const exportXlsx = (xlsxPath) => {
   const flattened = Object.fromEntries(
-    LANGS.map((lang) => [lang, flatten(JSON.parse(readFileSync(localePath(lang), 'utf8')))]),
+    LANGS.map((lang) => [
+      lang,
+      flatten(JSON.parse(readFileSync(localePath(lang), 'utf8'))),
+    ]),
   )
 
   const otherKeys = LANGS.filter((lang) => lang !== 'en').flatMap((lang) =>
@@ -53,7 +56,9 @@ const exportXlsx = (xlsxPath) => {
     return row
   })
 
-  const worksheet = XLSX.utils.json_to_sheet(rows, { header: ['key', ...LANGS] })
+  const worksheet = XLSX.utils.json_to_sheet(rows, {
+    header: ['key', ...LANGS],
+  })
   const workbook = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(workbook, worksheet, SHEET_NAME)
   XLSX.writeFile(workbook, xlsxPath)
@@ -63,7 +68,8 @@ const exportXlsx = (xlsxPath) => {
 
 const importXlsx = (xlsxPath) => {
   const workbook = XLSX.readFile(xlsxPath)
-  const worksheet = workbook.Sheets[SHEET_NAME] ?? workbook.Sheets[workbook.SheetNames[0]]
+  const worksheet =
+    workbook.Sheets[SHEET_NAME] ?? workbook.Sheets[workbook.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json(worksheet, { defval: '' })
 
   const flattened = Object.fromEntries(LANGS.map((lang) => [lang, {}]))
@@ -82,7 +88,9 @@ const importXlsx = (xlsxPath) => {
   for (const lang of LANGS) {
     const json = unflatten(flattened[lang])
     writeFileSync(localePath(lang), JSON.stringify(json, null, 2) + '\n')
-    console.log(`Imported ${Object.keys(flattened[lang]).length} keys into ${localePath(lang)}`)
+    console.log(
+      `Imported ${Object.keys(flattened[lang]).length} keys into ${localePath(lang)}`,
+    )
   }
 }
 
@@ -97,6 +105,8 @@ if (command === 'export') {
   }
   importXlsx(xlsxPath)
 } else {
-  console.error('Usage: node scripts/i18n-xlsx.mjs <export|import> [path-to-xlsx]')
+  console.error(
+    'Usage: node scripts/i18n-xlsx.mjs <export|import> [path-to-xlsx]',
+  )
   process.exit(1)
 }

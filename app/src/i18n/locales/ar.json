@@ -1,1 +1,1858 @@
-{}
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "go_back": "رجوع",
+    "close": "إغلاق",
+    "clear": "مسح",
+    "delete": "حذف",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ ما",
+    "route_error_description": "تعذّر تحميل هذه الصفحة. يُرجى المحاولة مرة أخرى.",
+    "try_again": "إعادة المحاولة",
+    "confirm_delete": "هل يتم حذف هذا السجل؟",
+    "delete_confirm_title": "حذف سجل",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "continue": "متابعة",
+    "verify": "تحقّق",
+    "approve": "موافقة",
+    "deny": "رفض",
+    "search": "بحث",
+    "searching": "جارٍ البحث...",
+    "search_placeholder": "البحث في الفهرس...",
+    "no_results": "لا توجد نتائج.",
+    "select_all": "تحديد الكل",
+    "clear_all": "مسح الكل",
+    "show_more": "عرض المزيد",
+    "show_less": "عرض أقل",
+    "user_menu": "قائمة المستخدم",
+    "user_actions": "إجراءات المستخدم",
+    "signed_in_as": "الحساب المتصل",
+    "home": "الصفحة الرئيسية",
+    "jump_to_top": "العودة إلى أعلى الصفحة",
+    "site_name": "الفهرس الإسرائيلي للعلوم الإنسانية الرقمية",
+    "copyright": "© {{year}} $t(common.site_name)",
+    "work_in_progress": "هذا الموقع قيد التطوير وقد يتغيّر أثناء مراجعته وتحسينه.",
+    "remove": "إزالة",
+    "reorder": "سحب لإعادة الترتيب",
+    "copy": "نسخ",
+    "copied": "تم النسخ",
+    "language_picker": "تغيير اللغة",
+    "date_picker": {
+      "select": "اختيار التاريخ",
+      "clear": "مسح التاريخ"
+    },
+    "pagination": {
+      "range": "عرض {{start}}–{{end}} من {{total}}",
+      "listed_zero": "لا توجد عناصر في القائمة",
+      "listed_one": "عنصر واحد في القائمة",
+      "listed_two": "عنصران في القائمة",
+      "listed_few": "{{count}} عناصر في القائمة",
+      "listed_many": "{{count}} عنصرًا في القائمة",
+      "listed_other": "{{count}} عنصر في القائمة",
+      "previous_page": "الصفحة السابقة",
+      "next_page": "الصفحة التالية",
+      "page_count": "{{page}} من {{total}}"
+    },
+    "labels": {
+      "additional_urls": "روابط إضافية",
+      "address": "العنوان",
+      "contact_email": "البريد الإلكتروني للتواصل",
+      "content_languages": "لغات المحتوى",
+      "date_issued": "تاريخ الإصدار",
+      "description": "الوصف",
+      "dh_activities": "أنشطة العلوم الإنسانية الرقمية",
+      "documentation_url": "رابط التوثيق",
+      "doi": "DOI",
+      "email": "عنوان البريد الإلكتروني",
+      "end_date": "تاريخ الانتهاء",
+      "funding": "التمويل",
+      "homepage_url": "الصفحة الرئيسية",
+      "id": "المعرّف",
+      "image": "صورة",
+      "license": "الرخصة",
+      "location": "الموقع",
+      "media_type": "نوع الوسائط",
+      "name": "الاسم",
+      "organization": "مؤسسة",
+      "organization_structure": "الهيكل التنظيمي",
+      "organization_role": "الدور في المؤسسة",
+      "person": "شخص",
+      "publisher": "الناشر",
+      "resource_contributions": "المساهمات في المورد",
+      "same_as": "معرّفات مطابقة",
+      "start_date": "تاريخ البدء",
+      "tags": "الوسوم",
+      "type": "النوع"
+    },
+    "field_descriptions": {
+      "id": "المعرّف الفريد للسجل داخل الفهرس.",
+      "tags": "كلمات مفتاحية تصف السجل وتسهّل العثور عليه.",
+      "type": "نوع السجل."
+    }
+  },
+  "about": {
+    "title": "حول",
+    "placeholder": "ستصف هذه الصفحة الفهرس الإسرائيلي للعلوم الإنسانية الرقمية. المحتوى سيُضاف قريبًا.",
+    "ai": {
+      "title": "الربط بالذكاء الاصطناعي (AI)",
+      "intro": "يوفّر الفهرس الإسرائيلي للعلوم الإنسانية الرقمية خادم Model Context Protocol‏ (MCP). ربطه بمساعد الذكاء الاصطناعي الخاص بك يتيح له البحث في الفهرس والاطلاع على السجلات، وبعد تسجيل الدخول أيضًا إنشاء سجلات أو تحديثها أو حذفها - كل ذلك من داخل أداة الدردشة أو أداة البرمجة الخاصة بك.",
+      "endpoint": "عنوان MCP",
+      "capabilities": {
+        "title": "الإمكانات (Tools)",
+        "public": "متاح للجميع، دون الحاجة إلى تسجيل الدخول:",
+        "authenticated": "متاح بعد تسجيل الدخول:",
+        "tools": {
+          "search_entities": "البحث في الفهرس باستعلامات نصية حرة، مع مرشّحات وتصنيفات وفرز وترقيم صفحات",
+          "get_entity": "جلب سجل واحد حسب معرّفه",
+          "create_entity": "إنشاء سجل جديد",
+          "update_entity": "استبدال سجل قائم",
+          "delete_entity": "حذف سجل"
+        },
+        "auth_note": "تتم المصادقة عبر تدفق OAuth القياسي في MCP: في المرة الأولى التي تستدعي فيها أداتك أداة تتطلب صلاحيات كتابة، تُفتح صفحة تسجيل الدخول إلى الفهرس في المتصفح، وتستمر العملية تلقائيًا بعد الموافقة."
+      },
+      "clients": {
+        "title": "ربط الأدوات الشائعة",
+        "claude_code": {
+          "title": "Claude Code",
+          "instructions": "يُنفَّذ الأمر في الطرفية (يعمل على macOS وLinux وWindows):"
+        },
+        "claude": {
+          "title": "Claude (الويب وسطح المكتب)",
+          "instructions": "الانتقال إلى Settings → Connectors → Add custom connector، وتسميته {name}، ولصق عنوان MCP."
+        },
+        "cursor": {
+          "title": "Cursor",
+          "instructions": "تُضاف الإعدادات إلى الملف {projectPath} في المشروع. ولجميع المشاريع، تُضاف بدلاً من ذلك إلى {globalPath} على macOS وLinux، أو إلى {globalPathWindows} على Windows:"
+        },
+        "chatgpt": {
+          "title": "ChatGPT",
+          "instructions": "تفعيل Developer mode ضمن Settings → Apps & Connectors → Advanced settings، ثم اختيار Create ولصق عنوان MCP."
+        },
+        "codex": {
+          "title": "Codex CLI",
+          "instructions": "تُضاف الإعدادات إلى الملف {path} على macOS وLinux، أو إلى {pathWindows} على Windows:"
+        },
+        "gemini": {
+          "title": "Gemini CLI",
+          "instructions": "تُضاف الإعدادات إلى الملف {path} على macOS وLinux، أو إلى {pathWindows} على Windows:"
+        },
+        "vscode": {
+          "title": "VS Code (GitHub Copilot)",
+          "instructions": "تُضاف الإعدادات إلى الملف {path} في مساحة العمل:"
+        },
+        "other": {
+          "title": "أدوات أخرى",
+          "instructions": "يمكن لأي عميل MCP يدعم نقل Streamable HTTP الاتصال - يكفي توجيهه إلى عنوان MCP أعلاه. ولاستكشاف الخادم تفاعليًا يمكن استخدام MCP Inspector:"
+        }
+      },
+      "nav": "في هذه الصفحة"
+    }
+  },
+  "api": {
+    "errors": {
+      "Unauthorized": "انتهت صلاحية الجلسة. يُرجى تسجيل الدخول مرة أخرى.",
+      "InvalidInput": "المعلومات المُرسلة غير صالحة. يُرجى مراجعتها والمحاولة مرة أخرى.",
+      "InternalServerError": "حدث خطأ ما من جهتنا، ونحن نعمل على معالجته.",
+      "EntityNotFound": "لم يُعثر على السجل المطلوب.",
+      "UserNotFound": "لم يُعثر على المستخدم المطلوب.",
+      "UserAlreadyInvitedOrRegistered": "هذا المستخدم مدعو أو مسجّل بالفعل.",
+      "WrongOtpCode": "الرمز المُدخل غير صحيح. يُرجى المحاولة مرة أخرى.",
+      "TooManyAuthAttempts": "عدد كبير جدًا من محاولات تسجيل الدخول. يُرجى المحاولة لاحقًا.",
+      "AuthChallengeNotFoundOrExpired": "انتهت صلاحية طلب تسجيل الدخول. يُرجى البدء من جديد.",
+      "network": "تعذّر الوصول إلى الخادم. يُرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+      "generic": "حدث خطأ ما أثناء الاتصال بالخادم، ونحن نعمل على معالجته."
+    }
+  },
+  "auth": {
+    "description": "يمكن تسجيل الدخول إذا كان لديك حساب أو دعوة معلّقة.",
+    "email_placeholder": "you@example.com",
+    "use_different_account": "استخدام بريد إلكتروني آخر",
+    "otp_label": "رمز لمرة واحدة",
+    "back_to_email": "استخدام بريد إلكتروني آخر",
+    "email_sent": "أرسلنا رمزًا لمرة واحدة إلى {{email}}",
+    "otp_check_spam": "إذا لم تصل الرسالة، يُرجى التحقق من مجلد الرسائل غير المرغوب فيها.",
+    "passkey_login": "تسجيل الدخول بمفتاح مرور (Passkey)",
+    "sign_in_with_otp": "تسجيل الدخول برمز لمرة واحدة يُرسل بالبريد الإلكتروني",
+    "passkey_use_passkey": "تسجيل الدخول بمفتاح مرور بدلاً من ذلك",
+    "passkey_not_recognized": "مفتاح المرور في هذا الجهاز لم يعد مرتبطًا بحسابك. يُرجى تسجيل الدخول برمز لمرة واحدة.",
+    "passkey_failed": "فشل تسجيل الدخول بمفتاح المرور. يُرجى المحاولة مرة أخرى.",
+    "invite_welcome_title": "أهلاً وسهلاً!",
+    "invite_welcome_description": "نُجهّز حسابك الآن، لحظة من فضلك.",
+    "passkey_offer_title": "إنشاء مفتاح مرور (Passkey) لهذا الجهاز؟",
+    "passkey_offer_description": "في المرة القادمة يمكن تسجيل الدخول بسرعة أكبر باستخدام قفل الشاشة أو بصمة الإصبع أو مفتاح الأمان في الجهاز.",
+    "passkey_create": "إنشاء مفتاح مرور",
+    "passkey_create_failed": "تعذّر إنشاء مفتاح المرور. يُرجى المحاولة مرة أخرى.",
+    "passkey_created": "تم إنشاء مفتاح المرور. يمكن الآن استخدامه لتسجيل الدخول على هذا الجهاز.",
+    "passkey_not_now": "ليس الآن",
+    "signed_in": "تم تسجيل دخولك بنجاح.",
+    "signed_out": "تم تسجيل خروجك بنجاح."
+  },
+  "oauth": {
+    "title": "الاتصال بالفهرس",
+    "description": "يطلب أحد التطبيقات الوصول إلى حسابك في الفهرس.",
+    "invalid_request": "طلب التفويض غير صالح أو غير مكتمل. يُرجى البدء من جديد من داخل التطبيق.",
+    "signed_in_as": "الحساب المتصل: {{email}}",
+    "redirect_notice": "بعد الموافقة ستتم إعادتك إلى التطبيق لإكمال الربط.",
+    "login_required": "يجب تسجيل الدخول لمتابعة ربط التطبيق.",
+    "redirecting": "جارٍ إعادة التوجيه..."
+  },
+  "admin": {
+    "title": "الإدارة",
+    "description": "إدارة الوصول إلى الفهرس، وصيانة حسابات المستخدمين، وإرسال الدعوات أو إلغاؤها.",
+    "menu_item": "الإدارة",
+    "fields": {
+      "user": "المستخدم",
+      "name": "الاسم",
+      "email": "$t(common.labels.email)",
+      "role": "الصلاحية",
+      "message": "رسالة شخصية",
+      "expires": "تنتهي الصلاحية في",
+      "expiry_days": "تنتهي الصلاحية بعد (أيام)",
+      "language": "لغة البريد الإلكتروني",
+      "actions": "إجراءات",
+      "admin_access": "صلاحية إدارية",
+      "admin_access_description": "تتيح إدارة جميع المستخدمين والدعوات."
+    },
+    "roles": {
+      "admin": "إدارة النظام",
+      "user": "مستخدم"
+    },
+    "users": {
+      "title": "المستخدمون",
+      "description": "إنشاء حسابات وإدارة بيانات الملفات الشخصية والصلاحيات الإدارية.",
+      "add": "إضافة مستخدم",
+      "create": "إنشاء مستخدم",
+      "add_title": "إنشاء مستخدم",
+      "add_description": "إضافة حساب مباشرة دون إرسال دعوة.",
+      "edit_title": "تعديل مستخدم",
+      "edit_description": "تحديث الملف الشخصي ومستوى وصول المستخدم.",
+      "delete_title": "حذف مستخدم",
+      "delete_description": "هل يتم حذف حساب {{email}}؟ لا يمكن التراجع عن هذا الإجراء.",
+      "delete_action": "حذف المستخدم",
+      "edit_label": "تعديل {{email}}",
+      "delete_label": "حذف {{email}}",
+      "empty": "لم يتم إنشاء مستخدمين بعد.",
+      "table_label": "المستخدمون المسجّلون"
+    },
+    "invites": {
+      "title": "الدعوات",
+      "description": "دعوة مستخدمين جدد ومراجعة الدعوات المعلّقة أو إلغاؤها.",
+      "invite": "دعوة مستخدم",
+      "invite_title": "دعوة مستخدم",
+      "invite_description": "سيُرسل رابط لإكمال التسجيل.",
+      "message_placeholder": "يمكن إضافة ملاحظة شخصية إلى الدعوة",
+      "send": "إرسال الدعوة",
+      "revoke": "إلغاء",
+      "revoke_title": "إلغاء الدعوة",
+      "revoke_description": "هل يتم إلغاء الدعوة المعلّقة لـ {{email}}؟ لن يعود الرابط المُرسل صالحًا.",
+      "empty": "لا توجد دعوات معلّقة.",
+      "table_label": "الدعوات المعلّقة"
+    },
+    "notifications": {
+      "user_created": "تم إنشاء المستخدم بنجاح.",
+      "user_updated": "تم تحديث المستخدم بنجاح.",
+      "user_deleted": "تم حذف المستخدم بنجاح.",
+      "invite_sent": "تم إرسال الدعوة بنجاح.",
+      "invite_revoked": "تم إلغاء الدعوة بنجاح."
+    }
+  },
+  "board": {
+    "title": "تصفّح الفهرس",
+    "clear_search": "مسح البحث",
+    "clear_filters": "مسح المرشّحات",
+    "results_label": "نتائج البحث",
+    "loaded_count": "عرض {{loaded}} من أصل {{total}} من السجلات",
+    "facets": {
+      "title": "المرشّحات",
+      "bulk_actions": "إجراءات تحديد المرشّحات",
+      "select_value": "تحديد {{value}}",
+      "filter_placeholder": "البحث في الخيارات...",
+      "filter_label": "البحث في خيارات الترشيح",
+      "active_filters": "المرشّحات النشطة",
+      "active_value": "{{field}}: {{value}}",
+      "remove_filter": "إزالة المرشّح {{filter}}",
+      "no_values": "لا توجد خيارات ترشيح متاحة.",
+      "no_matching_values": "لا توجد خيارات مطابقة.",
+      "apply": "تحديث البحث",
+      "referenced_type": "{{type}} ذات صلة"
+    },
+    "no_results": "لم يُعثر على سجلات.",
+    "no_matching_results": "لا توجد سجلات مطابقة للبحث.",
+    "new_entity": "إضافة سجل جديد"
+  },
+  "entity": {
+    "draft_badge": "مسودة",
+    "reference": {
+      "unavailable": "السجل غير متاح"
+    },
+    "notifications": {
+      "created": "تم إنشاء السجل بنجاح.",
+      "updated": "تم تحديث السجل بنجاح.",
+      "deleted": "تم حذف السجل بنجاح."
+    },
+    "types": {
+      "idhi:Person": "شخص",
+      "idhi:Organization": "مؤسسة",
+      "idhi:Facility": "مرفق",
+      "idhi:Project": "مشروع",
+      "idhi:Tool": "أداة",
+      "idhi:Service": "خدمة",
+      "idhi:Publication": "منشور",
+      "idhi:Event": "فعالية",
+      "idhi:Dataset": "مجموعة بيانات",
+      "idhi:TrainingMaterial": "مادة تدريبية"
+    },
+    "typesPlural": {
+      "idhi:Person": "أشخاص",
+      "idhi:Organization": "مؤسسات",
+      "idhi:Facility": "مرافق",
+      "idhi:Project": "مشاريع",
+      "idhi:Tool": "أدوات",
+      "idhi:Service": "خدمات",
+      "idhi:Publication": "منشورات",
+      "idhi:Event": "فعاليات",
+      "idhi:Dataset": "مجموعات بيانات",
+      "idhi:TrainingMaterial": "مواد تدريبية"
+    },
+    "enums": {
+      "affiliation_role": {
+        "AFFILIATE": "انتساب",
+        "ASSOCIATE": "زمالة",
+        "EMPLOYEE": "توظيف",
+        "MANAGER": "إدارة",
+        "MEMBER": "عضوية",
+        "PROFESSOR": "أستاذية"
+      },
+      "authorship_role": {
+        "AUTHOR": "تأليف",
+        "CONTRIBUTOR": "مساهمة",
+        "EDITOR": "تحرير",
+        "TRANSLATOR": "ترجمة"
+      },
+      "dataset_type": {
+        "ANNOTATION_SET": "مجموعة تعليقات توضيحية",
+        "CORPUS": "مدوّنة نصية (Corpus)",
+        "DATABASE": "قاعدة بيانات",
+        "DIGITAL_EDITION": "طبعة رقمية",
+        "GAZETTEER": "معجم جغرافي (Gazetteer)",
+        "IMAGE_COLLECTION": "مجموعة صور",
+        "METADATA_CATALOG": "فهرس بيانات وصفية",
+        "OTHER_RESEARCH_DATA": "بيانات بحثية أخرى"
+      },
+      "digital_humanities_activities": {
+        "tadirah:abstractThinking": "التفكير المجرّد (Abstract Thinking)",
+        "tadirah:academicPublishing": "النشر الأكاديمي (Academic Publishing)",
+        "tadirah:adding": "الإضافة (Adding)",
+        "tadirah:aggregating": "التجميع (Aggregating)",
+        "tadirah:analyzing": "التحليل (Analyzing)",
+        "tadirah:annotating": "التعليق التوضيحي (Annotating)",
+        "tadirah:archiving": "الأرشفة (Archiving)",
+        "tadirah:associate": "الإلحاق (Associate)",
+        "tadirah:associating": "الربط بين العناصر (Associating)",
+        "tadirah:audioAnnotation": "التعليق التوضيحي الصوتي (Audio Annotation)",
+        "tadirah:audioConferencing": "الاجتماع الصوتي (Audio Conferencing)",
+        "tadirah:audioRecording": "التسجيل الصوتي (Audio Recording)",
+        "tadirah:authorshipAttribution": "إسناد التأليف (Authorship Attribution)",
+        "tadirah:bitStreamPreservation": "حفظ تدفق البتات (Bit Stream Preservation)",
+        "tadirah:blogging": "التدوين (Blogging)",
+        "tadirah:browsing": "التصفّح (Browsing)",
+        "tadirah:capturing": "الالتقاط (Capturing)",
+        "tadirah:cataloging": "الفهرسة (Cataloging)",
+        "tadirah:clusterAnalysis": "التحليل العنقودي (Cluster Analysis)",
+        "tadirah:coOccurrence": "التواتر المشترك (Co-Occurrence)",
+        "tadirah:collaborating": "التعاون (Collaborating)",
+        "tadirah:collating": "مقابلة النصوص (Collating)",
+        "tadirah:collecting": "الجمع (Collecting)",
+        "tadirah:collocationAnalysis": "تحليل المتلازمات اللفظية (Collocation Analysis)",
+        "tadirah:commenting": "التعليق (Commenting)",
+        "tadirah:communicating": "التواصل (Communicating)",
+        "tadirah:comparing": "المقارنة (Comparing)",
+        "tadirah:compiling": "الانتقاء والتجميع (Compiling)",
+        "tadirah:conceptualizing": "وضع المفاهيم (Conceptualizing)",
+        "tadirah:concordance": "الكشّاف السياقي (Concordance)",
+        "tadirah:contentAnalysis": "تحليل المحتوى (Content Analysis)",
+        "tadirah:contextualizing": "وضع السياق (Contextualizing)",
+        "tadirah:contrastiveAnalysis": "التحليل التقابلي (Contrastive Analysis)",
+        "tadirah:converting": "التحويل (Converting)",
+        "tadirah:correcting": "التصحيح (Correcting)",
+        "tadirah:creating": "الإنشاء (Creating)",
+        "tadirah:cropping": "الاقتصاص (Cropping)",
+        "tadirah:crowdsourcing": "التعهيد الجماعي (Crowdsourcing)",
+        "tadirah:dataCleansing": "تنقية البيانات (Data Cleansing)",
+        "tadirah:dataIngestion": "استيعاب البيانات (Data Ingestion)",
+        "tadirah:dataMapping": "تخطيط البيانات (Data Mapping)",
+        "tadirah:dataMining": "التنقيب في البيانات (Data Mining)",
+        "tadirah:dataRecognition": "التعرّف على البيانات (Data Recognition)",
+        "tadirah:dataVisualization": "التمثيل المرئي للبيانات (Data Visualization)",
+        "tadirah:debugging": "تصحيح الأخطاء البرمجية (Debugging)",
+        "tadirah:defining": "التعريف (Defining)",
+        "tadirah:description": "الوصف (Description)",
+        "tadirah:designing": "التصميم (Designing)",
+        "tadirah:diagramming": "رسم المخططات (Diagramming)",
+        "tadirah:digitalObjectIdentifier": "معرّف الكائن الرقمي (Digital Object Identifier)",
+        "tadirah:digitalPublishing": "النشر الرقمي (Digital Publishing)",
+        "tadirah:discourseAnalysis": "تحليل الخطاب (Discourse Analysis)",
+        "tadirah:discovering": "الاكتشاف (Discovering)",
+        "tadirah:discussing": "النقاش (Discussing)",
+        "tadirah:disseminating": "النشر والتعميم (Disseminating)",
+        "tadirah:distanceMeasures": "مقاييس المسافة (Distance Measures)",
+        "tadirah:drawing": "الرسم (Drawing)",
+        "tadirah:eMailing": "المراسلة بالبريد الإلكتروني (E-mailing)",
+        "tadirah:editing": "التحرير (Editing)",
+        "tadirah:emulation": "المحاكاة (Emulation)",
+        "tadirah:encoding": "الترميز (Encoding)",
+        "tadirah:enriching": "الإثراء (Enriching)",
+        "tadirah:explanation": "الشرح (Explanation)",
+        "tadirah:exploration": "الاستكشاف (Exploration)",
+        "tadirah:expressingOpinion": "إبداء الرأي (Expressing Opinion)",
+        "tadirah:extracting": "الاستخلاص (Extracting)",
+        "tadirah:finding": "الإيجاد (Finding)",
+        "tadirah:formatting": "التنسيق (Formatting)",
+        "tadirah:gamification": "التلعيب (Gamification)",
+        "tadirah:gathering": "جمع المواد (Gathering)",
+        "tadirah:genreRecognition": "التعرّف على الأجناس الأدبية (Genre Recognition)",
+        "tadirah:georeferencing": "الإسناد الجغرافي (Georeferencing)",
+        "tadirah:graphicsProgramming": "البرمجة الرسومية (Graphics Programming)",
+        "tadirah:highlighting": "الإبراز (Highlighting)",
+        "tadirah:identifier": "المعرّف (Identifier)",
+        "tadirah:identifying": "التحديد (Identifying)",
+        "tadirah:imaging": "التصوير التقني (Imaging)",
+        "tadirah:improving": "التحسين (Improving)",
+        "tadirah:informationMining": "التنقيب في المعلومات (Information Mining)",
+        "tadirah:informationRetrieval": "استرجاع المعلومات (Information Retrieval)",
+        "tadirah:instantMessaging": "المراسلة الفورية (Instant Messaging)",
+        "tadirah:integrating": "التكامل (Integrating)",
+        "tadirah:interpreting": "التفسير (Interpreting)",
+        "tadirah:knowledgeDiscovery": "اكتشاف المعرفة (Knowledge Discovery)",
+        "tadirah:knowledgeExtraction": "استخلاص المعرفة (Knowledge Extraction)",
+        "tadirah:lemmatizing": "التجذير المعجمي (Lemmatizing)",
+        "tadirah:lettering": "تصميم الحروف (Lettering)",
+        "tadirah:linkedOpenData": "البيانات المفتوحة المترابطة (Linked Open Data)",
+        "tadirah:machineLearning": "تعلّم الآلة (Machine Learning)",
+        "tadirah:managing": "الإدارة (Managing)",
+        "tadirah:mapping": "رسم الخرائط (Mapping)",
+        "tadirah:merging": "الدمج (Merging)",
+        "tadirah:microblogging": "التدوين المصغّر (Microblogging)",
+        "tadirah:migration": "ترحيل البيانات (Migration)",
+        "tadirah:mindMapping": "الخرائط الذهنية (Mind Mapping)",
+        "tadirah:modeling": "النمذجة (Modeling)",
+        "tadirah:modifying": "التعديل (Modifying)",
+        "tadirah:namedEntityRecognition": "التعرّف على الكيانات المسمّاة (Named Entity Recognition)",
+        "tadirah:namingConvention": "اصطلاحات التسمية (Naming Convention)",
+        "tadirah:naturalLanguageProcessing": "معالجة اللغة الطبيعية (Natural Language Processing)",
+        "tadirah:networkAnalysis": "تحليل الشبكات (Network Analysis)",
+        "tadirah:opticalCharacterRecognition": "التعرّف الضوئي على الحروف (Optical Character Recognition)",
+        "tadirah:opticalMusicRecognition": "التعرّف الضوئي على النوتة الموسيقية (Optical Music Recognition)",
+        "tadirah:organizing": "التنظيم (Organizing)",
+        "tadirah:parsing": "التحليل النحوي (Parsing)",
+        "tadirah:patternRecognition": "التعرّف على الأنماط (Pattern Recognition)",
+        "tadirah:persistentIdentifier": "المعرّف الدائم (Persistent Identifier)",
+        "tadirah:photographing": "التصوير الفوتوغرافي (Photographing)",
+        "tadirah:plotting": "رسم المخططات البيانية (Plotting)",
+        "tadirah:posTagging": "وسم أقسام الكلام (POS-Tagging)",
+        "tadirah:posting": "نشر المنشورات (Posting)",
+        "tadirah:preprocessing": "المعالجة المسبقة (Preprocessing)",
+        "tadirah:preservationMetadata": "بيانات الحفظ الوصفية (Preservation Metadata)",
+        "tadirah:preserving": "الحفظ (Preserving)",
+        "tadirah:principalComponentAnalysis": "تحليل المكوّنات الرئيسية (Principal Component Analysis)",
+        "tadirah:programming": "البرمجة (Programming)",
+        "tadirah:pseudoCoding": "الترميز الزائف (Pseudo Coding)",
+        "tadirah:publishing": "النشر (Publishing)",
+        "tadirah:querying": "الاستعلام (Querying)",
+        "tadirah:reasoning": "الاستدلال (Reasoning)",
+        "tadirah:recording": "التسجيل (Recording)",
+        "tadirah:relationalAnalysis": "تحليل العلاقات (Relational Analysis)",
+        "tadirah:removing": "الإزالة (Removing)",
+        "tadirah:replication": "الاستنساخ (Replication)",
+        "tadirah:rhetoricalAnalysis": "التحليل البلاغي (Rhetorical Analysis)",
+        "tadirah:scanning": "المسح الضوئي (Scanning)",
+        "tadirah:screencast": "تسجيل الشاشة (Screencast)",
+        "tadirah:searching": "البحث (Searching)",
+        "tadirah:segmenting": "التقسيم (Segmenting)",
+        "tadirah:semantification": "إضفاء الدلالية (Semantification)",
+        "tadirah:sentimentAnalysis": "تحليل المشاعر (Sentiment Analysis)",
+        "tadirah:sequenceAlignment": "محاذاة المتواليات (Sequence Alignment)",
+        "tadirah:sharing": "المشاركة (Sharing)",
+        "tadirah:socialNetworking": "الشبكات الاجتماعية (Social Networking)",
+        "tadirah:spatialAnalysis": "التحليل المكاني (Spatial Analysis)",
+        "tadirah:speechRecognizing": "التعرّف على الكلام (Speech Recognizing)",
+        "tadirah:storing": "التخزين (Storing)",
+        "tadirah:structuralAnalysis": "التحليل البنيوي (Structural Analysis)",
+        "tadirah:stylisticAnalysis": "التحليل الأسلوبي (Stylistic Analysis)",
+        "tadirah:stylometry": "القياس الأسلوبي (Stylometry)",
+        "tadirah:subtracting": "الاستبعاد (Subtracting)",
+        "tadirah:supplementing": "الاستكمال (Supplementing)",
+        "tadirah:tagging": "الوسم (Tagging)",
+        "tadirah:teaching": "التدريس (Teaching)",
+        "tadirah:textCategorization": "تصنيف النصوص (Text Categorization)",
+        "tadirah:textMessaging": "الرسائل النصية (Text Messaging)",
+        "tadirah:theorizing": "التنظير (Theorizing)",
+        "tadirah:topicModeling": "نمذجة الموضوعات (Topic Modeling)",
+        "tadirah:transcoding": "تحويل الترميز (Transcoding)",
+        "tadirah:transcribing": "التفريغ النصي (Transcribing)",
+        "tadirah:transformation": "التحوير (Transformation)",
+        "tadirah:translating": "الترجمة (Translating)",
+        "tadirah:treeTagging": "وسم الأشجار النحوية (Tree-Tagging)",
+        "tadirah:tweet": "التغريد (Tweet)",
+        "tadirah:uniformResourceIdentifier": "معرّف الموارد الموحّد (Uniform Resource Identifier)",
+        "tadirah:upload": "الرفع (Upload)",
+        "tadirah:userGeneratedContent": "المحتوى من إنشاء المستخدمين (User Generated Content)",
+        "tadirah:versioning": "إدارة الإصدارات (Versioning)",
+        "tadirah:videoCapture": "التقاط الفيديو (Video Capture)",
+        "tadirah:videoConference": "مؤتمر الفيديو (Video Conference)",
+        "tadirah:videoEditing": "مونتاج الفيديو (Video Editing)",
+        "tadirah:visualAnalysis": "التحليل البصري (Visual Analysis)",
+        "tadirah:visualAnnotation": "التعليق التوضيحي البصري (Visual Annotation)",
+        "tadirah:webCrawling": "زحف الويب (Web Crawling)",
+        "tadirah:webDevelopment": "تطوير الويب (Web Development)",
+        "tadirah:webScraping": "استخلاص بيانات الويب (Web Scraping)",
+        "tadirah:wireframing": "التخطيط الهيكلي للواجهات (Wireframing)",
+        "tadirah:writing": "الكتابة (Writing)"
+      },
+      "event_agent_role": {
+        "HOST": "استضافة",
+        "ORGANIZER": "تنظيم الفعالية",
+        "PANELIST": "مشاركة في حلقة نقاش",
+        "PARTICIPANT": "مشاركة",
+        "SPEAKER": "إلقاء محاضرة",
+        "SPONSOR": "رعاية"
+      },
+      "event_type": {
+        "CONFERENCE": "مؤتمر",
+        "EXHIBITION": "معرض",
+        "HACKATHON": "هاكاثون",
+        "LECTURE": "محاضرة",
+        "SEMINAR": "ندوة",
+        "WORKSHOP": "ورشة عمل"
+      },
+      "facility_affiliation_role": {
+        "HOST": "استضافة",
+        "OWNER": "ملكية"
+      },
+      "funding_currency": {
+        "EUR": "€ (EUR)",
+        "ILS": "₪ (ILS)",
+        "USD": "$ (USD)"
+      },
+      "funding_status": {
+        "ACTIVE_GRANT_FUNDING": "تمويل منحة نشط",
+        "INSTITUTIONALLY_SUSTAINED": "مدعوم مؤسسيًا",
+        "IN_KIND_ONLY": "دعم عيني فقط",
+        "UNFUNDED": "بدون تمويل",
+        "VOLUNTEER_RUN": "يُدار تطوعًا"
+      },
+      "license": {
+        "APACHE_2_0": "Apache License 2.0",
+        "CC0_1_0": "Creative Commons CC0 1.0",
+        "CC_BY_4_0": "Creative Commons Attribution 4.0",
+        "CC_BY_SA_4_0": "Creative Commons Attribution-ShareAlike 4.0",
+        "GPL_3_0": "GNU General Public License 3.0",
+        "MIT": "MIT License"
+      },
+      "org_project_role": {
+        "COORDINATOR": "تنسيق",
+        "DATA_PROVIDER": "توفير البيانات",
+        "FUNDER": "تمويل",
+        "HOST": "استضافة",
+        "PARTNER": "شراكة"
+      },
+      "organization_type": {
+        "ACADEMIC_INSTITUTION": "مؤسسة أكاديمية",
+        "COMPANY": "شركة",
+        "FUNDER": "جهة ممولة",
+        "GLAM_INSTITUTION": "صالة عرض أو مكتبة أو أرشيف أو متحف (GLAM)",
+        "INFORMAL_GROUP": "مجموعة غير رسمية",
+        "NON_PROFIT": "منظمة غير ربحية",
+        "RESEARCH_CENTER": "مركز أبحاث"
+      },
+      "participation_role": {
+        "ADVISOR": "استشارة",
+        "CONSULTANT": "استشارة خارجية",
+        "CONTRIBUTOR": "مساهمة",
+        "CO_PI": "قيادة بحث مشتركة",
+        "DEVELOPER": "تطوير",
+        "DH_LEAD": "قيادة مجال العلوم الإنسانية الرقمية",
+        "PRINCIPAL_INVESTIGATOR": "قيادة البحث",
+        "RESEARCHER": "بحث",
+        "STUDENT": "دراسة",
+        "TECHNICAL_LEAD": "قيادة تقنية"
+      },
+      "publication_type": {
+        "coar:1YTN-RJZE": "وثائق محكمة",
+        "coar:2H0M-X761": "بيانات جغرافية مكانية",
+        "coar:43KC-T6DC": "مقالة في مجلة عامة",
+        "coar:542X-3S04": "تصميم",
+        "coar:63NG-B465": "بيانات تجريبية",
+        "coar:6NC7-GK9S": "تفريغ نصي",
+        "coar:8KJG-QS0Y": "أداة بحثية",
+        "coar:9DKX-KSAF": "نموذج منفعة",
+        "coar:A8F1-NPV9": "بيانات جينومية",
+        "coar:ACF7-8YT9": "بيانات مجمّعة",
+        "coar:AM6W-6QAW": "بيانات مرمّزة",
+        "coar:BW7T-YM2G": "تصميم تخطيطي",
+        "coar:C53B-JCY5": "براءة تصميم",
+        "coar:CQMR-7K63": "بيانات مسجّلة",
+        "coar:D97F-VB57": "شرح وتعليق",
+        "coar:DD58-GFSX": "بيانات قياس واختبار",
+        "coar:DX5J-TA9R": "بروتوكول توليف المعرفة",
+        "coar:EHVM-H119": "بيانات بحثية",
+        "coar:F8RT-TJK0": "عمل فني",
+        "coar:FF4C-28RK": "بيانات رصدية",
+        "coar:FXF3-D3G7": "بيانات منتقاة ومجمّعة",
+        "coar:GPQ7-G5VE": "حماية الأصناف النباتية",
+        "coar:GSZA-Y7V7": "نظام تنظيم المعرفة",
+        "coar:H41Y-FW7B": "دفتر مختبر",
+        "coar:H6QP-SC1X": "علامة تجارية",
+        "coar:H9BQ-739P": "مراجعة الأقران",
+        "coar:JBNF-DYAD": "تصميم صناعي",
+        "coar:MW8G-3CR8": "براءة اختراع برمجية",
+        "coar:NHD0-W6SY": "بيانات استبيان",
+        "coar:QH80-2R4E": "شفرة مصدرية",
+        "coar:QX5C-AR31": "دورية أخرى",
+        "coar:R60J-J5BD": "عرض تقديمي في مؤتمر",
+        "coar:RMP5-3GQ6": "مجموعة",
+        "coar:S7R1-K5P0": "عيّنة مادية",
+        "coar:SB3Y-W4EH": "طلب PCT",
+        "coar:W2XT-7017": "بيانات محاكاة",
+        "coar:YC9F-HGCF": "مجموعة أرشيفية",
+        "coar:YZ1N-ZFT9": "بروتوكول بحثي",
+        "coar:Z907-YMBB": "براءة اختراع نباتية",
+        "coar:c_0040": "مخطوطة",
+        "coar:c_0640": "دورية علمية",
+        "coar:c_0857": "رسالة",
+        "coar:c_1162": "تعليق توضيحي",
+        "coar:c_12cc": "مواد خرائطية",
+        "coar:c_12cd": "خريطة",
+        "coar:c_12ce": "فيديو",
+        "coar:c_15cd": "براءة اختراع",
+        "coar:c_1843": "أخرى",
+        "coar:c_186u": "تقرير سياسات",
+        "coar:c_18cc": "صوت",
+        "coar:c_18cd": "تأليف موسيقي",
+        "coar:c_18cf": "نص",
+        "coar:c_18co": "ملصق مؤتمر غير منشور في وقائع المؤتمر",
+        "coar:c_18cp": "ورقة مؤتمر غير منشورة في وقائع المؤتمر",
+        "coar:c_18cw": "نوتة موسيقية",
+        "coar:c_18gh": "تقرير تقني",
+        "coar:c_18hj": "تقرير إلى جهة ممولة",
+        "coar:c_18op": "مُخرَج مشروع",
+        "coar:c_18wq": "تقرير من نوع آخر",
+        "coar:c_18ws": "تقرير بحثي",
+        "coar:c_18ww": "تقرير داخلي",
+        "coar:c_18wz": "مذكّرة",
+        "coar:c_2659": "دورية",
+        "coar:c_26e4": "مقابلة",
+        "coar:c_2cd9": "مجلة",
+        "coar:c_2df8fbb1": "مقالة بحثية",
+        "coar:c_2f33": "كتاب",
+        "coar:c_2fe3": "صحيفة",
+        "coar:c_3248": "جزء من كتاب",
+        "coar:c_393c": "سير عمل",
+        "coar:c_3e5a": "مساهمة في دورية",
+        "coar:c_46ec": "أطروحة",
+        "coar:c_545b": "رسالة إلى هيئة التحرير",
+        "coar:c_5794": "ورقة مؤتمر",
+        "coar:c_5ce6": "برمجية",
+        "coar:c_6501": "مقالة في دورية علمية",
+        "coar:c_6670": "ملصق مؤتمر",
+        "coar:c_6947": "تدوينة",
+        "coar:c_71bd": "توثيق تقني",
+        "coar:c_7877": "دراسة سريرية",
+        "coar:c_7a1f": "أطروحة بكالوريوس",
+        "coar:c_7acd": "تصويب",
+        "coar:c_7ad9": "موقع إلكتروني",
+        "coar:c_7bab": "ورقة برمجيات",
+        "coar:c_8042": "ورقة عمل",
+        "coar:c_816b": "نسخة أولية (Preprint)",
+        "coar:c_8544": "محاضرة",
+        "coar:c_86bc": "ببليوغرافيا",
+        "coar:c_8a7e": "صورة متحركة",
+        "coar:c_93fc": "تقرير",
+        "coar:c_998f": "مقالة صحفية",
+        "coar:c_ab20": "خطة إدارة البيانات",
+        "coar:c_b239": "افتتاحية",
+        "coar:c_ba08": "مراجعة كتاب",
+        "coar:c_ba1f": "جزء من تقرير",
+        "coar:c_baaf": "مقترح بحثي",
+        "coar:c_bdcc": "أطروحة ماجستير",
+        "coar:c_beb9": "ورقة بيانات",
+        "coar:c_c513": "صورة",
+        "coar:c_c94f": "مُخرَج مؤتمر",
+        "coar:c_c950": "برمجيات بحثية",
+        "coar:c_cb28": "بيانات تجارب سريرية",
+        "coar:c_db06": "أطروحة دكتوراه",
+        "coar:c_dcae04bc": "مقالة مراجعة",
+        "coar:c_ddb1": "مجموعة بيانات",
+        "coar:c_e059": "وحدة تعليمية",
+        "coar:c_e9a0": "مورد تفاعلي",
+        "coar:c_ecc8": "صورة ثابتة",
+        "coar:c_efa0": "مراجعة",
+        "coar:c_f744": "وقائع مؤتمر"
+      },
+      "resource_contribution_role": {
+        "CONTRIBUTOR": "مساهمة",
+        "CREATOR": "إنشاء",
+        "DATA_CURATOR": "رعاية البيانات",
+        "DEVELOPER": "تطوير",
+        "MAINTAINER": "صيانة"
+      },
+      "service_type": {
+        "API_SERVICE": "خدمة API",
+        "COMMAND_LINE_TOOL": "أداة سطر أوامر",
+        "CONSULTING_SERVICE": "خدمة استشارية",
+        "DATABASE": "قاعدة بيانات",
+        "DESKTOP_APPLICATION": "تطبيق سطح مكتب",
+        "DIGITIZATION_SERVICE": "خدمة رقمنة",
+        "LIBRARY": "مكتبة برمجية",
+        "WEB_APPLICATION": "تطبيق ويب"
+      },
+      "tool_type": {
+        "API_SERVICE": "خدمة API",
+        "COMMAND_LINE_TOOL": "أداة سطر أوامر",
+        "CONSULTING_SERVICE": "خدمة استشارية",
+        "DATABASE": "قاعدة بيانات",
+        "DESKTOP_APPLICATION": "تطبيق سطح مكتب",
+        "DIGITIZATION_SERVICE": "خدمة رقمنة",
+        "LIBRARY": "مكتبة برمجية",
+        "WEB_APPLICATION": "تطبيق ويب"
+      },
+      "training_material_type": {
+        "COURSE_MATERIAL": "مواد مساق دراسي",
+        "LESSON": "درس",
+        "OTHER_DIDACTIC_RESOURCE": "مورد تعليمي آخر",
+        "SELF_PACED_EXERCISE": "تمرين ذاتي",
+        "TUTORIAL": "دليل تعليمي",
+        "WORKSHOP_MATERIAL": "مواد ورشة عمل"
+      }
+    },
+    "fields": {
+      "Person": {
+        "$self": {
+          "label": "$t(common.labels.person)",
+          "description": "شخص ناشط في العلوم الإنسانية الرقمية: في البحث أو التطوير أو المكتبات أو الدراسة وغير ذلك."
+        },
+        "affiliations": {
+          "label": "الانتماءات",
+          "description": "توظيف الشخص وعضوياته الرسمية في المؤسسات، بما في ذلك الدور وفترة كل انتماء."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "تعريف بالشخص وعمله واهتماماته."
+        },
+        "emails": {
+          "label": "عناوين البريد الإلكتروني",
+          "description": "عناوين بريد إلكتروني يمكن من خلالها التواصل مع الشخص بشكل علني."
+        },
+        "family_name": {
+          "label": "اسم العائلة",
+          "description": "اسم عائلة الشخص."
+        },
+        "given_name": {
+          "label": "الاسم الشخصي",
+          "description": "الاسم الشخصي (الأول) للشخص، بما في ذلك الأسماء الوسطى."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الموقع الإلكتروني للشخص أو صفحة ملفه الشخصي العلني الرئيسية."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "صورة شخصية أو رمزية تمثّل الشخص."
+        },
+        "orcid": {
+          "label": "ORCID",
+          "description": "معرّف ORCID الخاص بالشخص، الذي يربط هويته البحثية عبر الأنظمة."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد الشخص نفسه في أنظمة أخرى، مثل Wikidata أو VIAF."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Organization": {
+        "$self": {
+          "label": "$t(common.labels.organization)",
+          "description": "مؤسسة من أي نوع - جامعة أو صالة عرض أو مكتبة أو أرشيف أو متحف أو مركز أبحاث أو جهة ممولة أو شركة أو منظمة غير ربحية."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالمؤسسة إلى جانب موقعها، مثل مدونة أو ملف على شبكة اجتماعية أو قيد في سجل."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "العنوان البريدي للمؤسسة."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن للمؤسسة، مثل بريد مكتب أو قسم."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عن المؤسسة وأنشطتها."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الموقع الرسمي للمؤسسة."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "شعار المؤسسة أو صورة أخرى تمثّلها."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "المكان الذي تعمل فيه المؤسسة، مثل مدينة."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الرسمي للمؤسسة."
+        },
+        "organization_structure": {
+          "label": "$t(common.labels.organization_structure)",
+          "description": "الموقع الرسمي للمؤسسة داخل مؤسسات أم أكبر، مثل قسم داخل جامعة، بما في ذلك التواريخ ذات الصلة."
+        },
+        "organization_type": {
+          "label": "نوع المؤسسة",
+          "description": "الفئة التي تصف المؤسسة على أفضل نحو، مثل جامعة أو شركة أو مركز أبحاث."
+        },
+        "ror": {
+          "label": "معرّف ROR",
+          "description": "معرّف المؤسسة في سجل مؤسسات البحث (ROR)."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد المؤسسة نفسها في أنظمة أخرى، مثل Wikidata."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Facility": {
+        "$self": {
+          "label": "مرفق",
+          "description": "مرفق مادي أو افتراضي مثل مختبر علوم إنسانية رقمية أو استوديو رقمنة أو بنية تحتية بحثية. يُستخدم المرفق عندما تقدّم الوحدة خدمات أو أدوات ولها هوية مستقلة عن المؤسسة المضيفة؛ وإلا فتُستخدم المؤسسة نفسها."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالمرفق، مثل مدونة أو ملف على شبكة اجتماعية أو تغطية صحفية."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "العنوان البريدي للمرفق."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن للمرفق، مثل بريد مختبر أو مكتب خدمة."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عن المرفق وما يقدّمه لمجتمع البحث."
+        },
+        "facility_affiliations": {
+          "label": "انتماءات المرفق",
+          "description": "المؤسسات التي تستضيف المرفق أو تملكه، بما في ذلك أدوارها وفترات مشاركتها."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "صفحة الويب العلنية الرئيسية للمرفق."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "صورة فوتوغرافية أو شعار أو صورة أخرى تمثّل المرفق."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "المكان الذي يقع فيه المرفق، مثل مدينة."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الذي يُعرف به المرفق علنًا."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد المرفق نفسه في أنظمة أخرى."
+        },
+        "services_offered": {
+          "label": "الخدمات المقدَّمة",
+          "description": "الخدمات التي يقدّمها هذا المرفق لمجتمع البحث."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "tools_provided": {
+          "label": "الأدوات المتوفرة",
+          "description": "أدوات برمجية يصونها المرفق أو يتيحها، بما في ذلك الخدمات المستضافة والبرمجيات المدعومة من المختبر."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Project": {
+        "$self": {
+          "label": "مشروع",
+          "description": "مشروع بحثي في العلوم الإنسانية الرقمية - السجل المحوري في الفهرس، الذي يربط الأشخاص والمؤسسات والمخرجات والفترات والأماكن المدروسة."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالمشروع، مثل مدونة أو ملف على شبكة اجتماعية أو تغطية صحفية."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن لفريق المشروع."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عن أهداف المشروع وأساليبه ونتائجه."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "أنشطة البحث في العلوم الإنسانية الرقمية المنفَّذة في إطار المشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهى فيه المشروع."
+        },
+        "funding": {
+          "label": "$t(common.labels.funding)",
+          "description": "المنح ومصادر التمويل الأخرى التي حصل عليها المشروع."
+        },
+        "funding_status": {
+          "label": "حالة التمويل",
+          "description": "وضع التمويل أو الاستدامة الحالي للمشروع."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الموقع العلني الرئيسي للمشروع."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "شعار المشروع أو صورة أخرى تمثّله."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الذي يُعرف به المشروع علنًا."
+        },
+        "organization_roles": {
+          "label": "أدوار المؤسسات",
+          "description": "المؤسسات المشاركة في المشروع - في التنسيق أو الشراكة أو توفير البيانات أو التمويل أو الاستضافة."
+        },
+        "outputs_datasets": {
+          "label": "مجموعات البيانات الناتجة",
+          "description": "مجموعات بيانات أنتجها المشروع أو تولّى رعايتها."
+        },
+        "outputs_publications": {
+          "label": "المنشورات الناتجة",
+          "description": "منشورات نتجت عن المشروع."
+        },
+        "outputs_tools": {
+          "label": "الأدوات الناتجة",
+          "description": "أدوات أنتجها المشروع."
+        },
+        "outputs_training_materials": {
+          "label": "المواد التدريبية الناتجة",
+          "description": "مواد تدريبية أُنشئت كمخرجات للمشروع."
+        },
+        "project_participations": {
+          "label": "المشاركة في المشروع",
+          "description": "الأشخاص المشاركون في المشروع، مع أدوارهم والتواريخ."
+        },
+        "research_disciplines": {
+          "label": "التخصصات البحثية",
+          "description": "تخصصات العلوم الإنسانية للمشروع، مثل التاريخ أو اللسانيات أو علم الآثار."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد المشروع نفسه في أنظمة أخرى، مثل سجل مشاريع جهة ممولة."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء المشروع."
+        },
+        "studied_periods": {
+          "label": "الفترات المدروسة",
+          "description": "الفترات التاريخية التي يدرسها المشروع، مثل الفترة العثمانية."
+        },
+        "studied_places": {
+          "label": "الأماكن المدروسة",
+          "description": "الأماكن والمناطق الجغرافية التي يتناولها بحث المشروع."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        },
+        "uses_datasets": {
+          "label": "مجموعات البيانات المستخدمة",
+          "description": "مجموعات بيانات قائمة استُخدمت كمصادر أو كمدخلات بحثية للمشروع."
+        },
+        "uses_services": {
+          "label": "الخدمات المستخدمة",
+          "description": "خدمات تدعم عمل المشروع."
+        },
+        "uses_tools": {
+          "label": "الأدوات المستخدمة",
+          "description": "أدوات برمجية تُستخدم لتنفيذ بحث المشروع."
+        }
+      },
+      "Tool": {
+        "$self": {
+          "label": "أداة",
+          "description": "برمجية قابلة لإعادة الاستخدام يمكن تثبيتها أو تشغيلها أو الوصول إليها، مثل تطبيق ويب أو مكتبة برمجية أو برنامج سطر أوامر."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالأداة، مثل تدوينة أو دليل تعليمي أو قيد في سجل."
+        },
+        "code_repository": {
+          "label": "مستودع الشفرة",
+          "description": "رابط مستودع الشفرة المصدرية، مثل GitHub أو GitLab، إذا كان مفتوحًا."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن للقائمين على صيانة الأداة."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عمّا تفعله الأداة ولمن هي موجّهة."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "أنشطة البحث في العلوم الإنسانية الرقمية التي تدعمها الأداة."
+        },
+        "documentation_url": {
+          "label": "$t(common.labels.documentation_url)",
+          "description": "توثيق الأداة للمستخدمين أو المطوّرين، مثل دليل أو ويكي أو مرجع API."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "معرّف الكائن الرقمي (DOI) للأداة، ويُمنح غالبًا عبر إيداع برمجي."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الصفحة العلنية الرئيسية للأداة - موقعها أو صفحة الهبوط الخاصة بها."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "شعار أو لقطة شاشة أو صورة أخرى تمثّل الأداة."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "الشروط القانونية التي يجوز بموجبها استخدام الأداة أو تعديلها أو مشاركتها."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الذي تُعرف به الأداة علنًا."
+        },
+        "programming_languages": {
+          "label": "لغات البرمجة",
+          "description": "لغات البرمجة التي كُتبت بها الأداة، مثل Python أو JavaScript."
+        },
+        "resource_contributions": {
+          "label": "$t(common.labels.resource_contributions)",
+          "description": "الأشخاص والمؤسسات الذين أنشأوا الأداة أو طوّروها أو يصونونها، بما في ذلك مسؤولياتهم وفترات مشاركتهم."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد الأداة نفسها في أنظمة أخرى، مثل Wikidata أو SSH Open Marketplace."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "tool_type": {
+          "label": "نوع الأداة",
+          "description": "الطريقة الأساسية لاستخدام الأداة: تطبيق ويب أو مكتبة برمجية أو سطر أوامر وغير ذلك."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Service": {
+        "$self": {
+          "label": "خدمة",
+          "description": "خدمة يقدّمها أشخاص في مرفق أو مؤسسة، مثل الرقمنة عند الطلب أو دعم رعاية البيانات."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالخدمة، مثل الأسعار أو شروط الاستخدام أو تدوينة."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن لطلب الخدمة أو الاستفسار عنها."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عمّا توفّره الخدمة ولمن هي موجّهة."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "أنشطة البحث في العلوم الإنسانية الرقمية التي تدعمها الخدمة."
+        },
+        "documentation_url": {
+          "label": "$t(common.labels.documentation_url)",
+          "description": "توثيق الخدمة للمستخدمين، مثل دليل أو إرشادات استخدام."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "صفحة الويب العلنية الرئيسية للخدمة."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "شعار أو صورة أخرى تمثّل الخدمة."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الذي تُعرف به الخدمة علنًا."
+        },
+        "provider": {
+          "label": "الجهة المقدِّمة",
+          "description": "المؤسسة التي تقدّم الخدمة وتتحمّل مسؤوليتها."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد الخدمة نفسها في أنظمة أخرى، مثل SSH Open Marketplace."
+        },
+        "service_type": {
+          "label": "نوع الخدمة",
+          "description": "نوع الخدمة المقدَّمة، مثل الرقمنة أو الاستشارة."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Publication": {
+        "$self": {
+          "label": "منشور",
+          "description": "منشور أكاديمي: مقالة في دورية أو كتاب أو فصل أو ورقة مؤتمر أو أطروحة أو تقرير."
+        },
+        "authorships": {
+          "label": "المؤلفون",
+          "description": "الأشخاص الذين ساهموا في المنشور، مع ترتيب ظهورهم وأدوارهم."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "التاريخ الذي صدر فيه المنشور رسميًا."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "ملخّص أو مستخلص لمحتوى المنشور."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "معرّف الكائن الرقمي (DOI) للمنشور."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "صفحة الهبوط للمنشور، مثل صفحته على موقع الناشر."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "غلاف أو صورة أخرى تمثّل المنشور."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "العنوان الذي يُعرف به المنشور."
+        },
+        "part_of": {
+          "label": "جزء من",
+          "description": "العمل الحاوي، مثل الكتاب بالنسبة إلى فصل أو وقائع المؤتمر بالنسبة إلى ورقة."
+        },
+        "presented_at": {
+          "label": "قُدّم في",
+          "description": "فعاليات قُدّم فيها هذا المنشور، مثل المؤتمر الذي أُلقيت فيه الورقة."
+        },
+        "publication_type": {
+          "label": "نوع المنشور",
+          "description": "شكل المنشور، مثل مقالة في دورية أو كتاب أو فصل أو أطروحة أو تقرير."
+        },
+        "published_in": {
+          "label": "نُشر في",
+          "description": "اسم الدورية أو الكتاب أو وقائع المؤتمر التي ظهر فيها المنشور."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "المؤسسة التي نشرته رسميًا."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد المنشور نفسه في أنظمة أخرى، مثل فهرس مكتبة أو Wikidata."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Event": {
+        "$self": {
+          "label": "فعالية",
+          "description": "لقاء أكاديمي محدد، مثل مؤتمر أو ورشة عمل أو ندوة أو محاضرة أو هاكاثون أو معرض."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالفعالية، مثل برنامج أو صفحة تسجيل أو تسجيلات."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "العنوان البريدي لمكان الفعالية."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن للجهة المنظِّمة للفعالية."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عن موضوع الفعالية وغرضها وبرنامجها."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "موعد انتهاء الفعالية."
+        },
+        "event_agent_roles": {
+          "label": "الجهات المشاركة في الفعالية",
+          "description": "الأشخاص والمؤسسات المشاركون في الفعالية - في التنظيم أو الاستضافة أو المحاضرة أو المشاركة أو الرعاية."
+        },
+        "event_type": {
+          "label": "نوع الفعالية",
+          "description": "نوع الفعالية الأكاديمية."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "موقع الفعالية أو صفحة الإعلان الرئيسية عنها."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "ملصق أو لافتة أو صورة فوتوغرافية أو صورة أخرى تمثّل الفعالية."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "المكان الذي تُقام فيه الفعالية، مثل مدينة."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "الاسم الذي تُعرف به الفعالية علنًا."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد الفعالية نفسها في أنظمة أخرى، مثل فهرس مؤتمرات."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء الفعالية."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Dataset": {
+        "$self": {
+          "label": "مجموعة بيانات",
+          "description": "مجموعة بيانات أو مورد مماثل: طبعة رقمية أو مدوّنة نصية أو قاعدة بيانات أو معجم جغرافي أو مجموعة صور أو مجموعة تعليقات توضيحية. كذلك تُعدّ الفهارس التي تصف موارد أخرى، مثل فهرس أرشيف أو مكتبة، نوعًا من مجموعات البيانات."
+        },
+        "byte_size": {
+          "label": "الحجم بالبايت",
+          "description": "الحجم الإجمالي الدقيق لمجموعة البيانات، مقيسًا بالبايت."
+        },
+        "dataset_type": {
+          "label": "نوع مجموعة البيانات",
+          "description": "الشكل الأساسي لمجموعة البيانات، مثل طبعة رقمية أو مدوّنة نصية أو قاعدة بيانات أو معجم جغرافي."
+        },
+        "datasets": {
+          "label": "مجموعات البيانات المجمَّعة",
+          "description": "مجموعات بيانات يجمعها هذا السجل عندما يعمل كفهرس."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "التاريخ الذي نُشرت فيه مجموعة البيانات رسميًا."
+        },
+        "derived_from": {
+          "label": "مشتقة من مجموعات بيانات",
+          "description": "مجموعات البيانات المصدرية التي نُقّيت منها هذه المجموعة أو حُوّلت أو اقتُطعت أو اشتُقت بطريقة أخرى."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عن محتوى مجموعة البيانات ونطاقها وأصلها."
+        },
+        "distribution_url": {
+          "label": "رابط التنزيل",
+          "description": "رابط مباشر لتنزيل مجموعة البيانات أو الوصول إليها."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "معرّف الكائن الرقمي (DOI) لمجموعة البيانات."
+        },
+        "extent": {
+          "label": "بيانات النطاق",
+          "description": "قياسات تصف نطاق مجموعة البيانات، مثل عدد السجلات أو العناصر أو الصور أو الملفات فيها."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الصفحة العلنية الرئيسية لمجموعة البيانات، مثل صفحة الهبوط الخاصة بها في مستودع."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "عنصر نموذجي أو شعار أو صورة أخرى تمثّل مجموعة البيانات."
+        },
+        "in_languages": {
+          "label": "$t(common.labels.content_languages)",
+          "description": "اللغات البشرية الممثَّلة بشكل جوهري في محتوى مجموعة البيانات."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "الشروط القانونية التي يجوز بموجبها الوصول إلى مجموعة البيانات أو استخدامها أو مشاركتها."
+        },
+        "media_type": {
+          "label": "$t(common.labels.media_type)",
+          "description": "صيغ الملفات أو الوسائط التقنية لمجموعة البيانات، مثل text/html أو application/pdf."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "العنوان الذي تُعرف به مجموعة البيانات علنًا."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "المؤسسة التي نشرت مجموعة البيانات رسميًا."
+        },
+        "related_publications": {
+          "label": "منشورات ذات صلة",
+          "description": "منشورات مرافقة مباشرة لمجموعة البيانات، مثل النظير المطبوع لطبعة رقمية."
+        },
+        "resource_contributions": {
+          "label": "$t(common.labels.resource_contributions)",
+          "description": "الأشخاص والمؤسسات الذين أنشأوا مجموعة البيانات أو رعوها أو يصونونها، بما في ذلك مسؤولياتهم وفترات مشاركتهم."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد مجموعة البيانات نفسها في أنظمة أخرى، مثل مستودع بيانات أو فهرس."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "themes": {
+          "label": "المواضيع",
+          "description": "كلمات مفتاحية تعبّر عن المواضيع الرئيسية الممثَّلة في مجموعة البيانات."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "TrainingMaterial": {
+        "$self": {
+          "label": "مادة تدريبية",
+          "description": "دليل تعليمي أو درس أو مورد تعليمي آخر يشرح كيفية القيام بأمر ما أو يحدّد ما سيكتسبه المتعلّمون منه."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "صفحات ويب أخرى ذات صلة بالمادة، مثل تدوينة أو صفحة مساق."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "عنوان تواصل معلن للقائمين على صيانة المادة."
+        },
+        "creators": {
+          "label": "الجهات المنشئة",
+          "description": "الأشخاص أو المؤسسات المسؤولون عن إنشاء المادة."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "التاريخ الذي نُشرت فيه المادة التدريبية رسميًا."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "لمحة عامة عمّا تعلّمه المادة وكيفية التفاعل معها."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "أنشطة البحث في العلوم الإنسانية الرقمية التي تعلّمها المادة."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "معرّف الكائن الرقمي (DOI) للمادة التدريبية."
+        },
+        "educational_level": {
+          "label": "المستوى التعليمي",
+          "description": "مستوى الخبرة السابقة المتوقّع من المتعلّمين، مثل مستوى مبتدئ أو متوسط أو دراسات عليا."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "الموقع الرئيسي أو الصفحة العلنية الأوسع للمادة التدريبية."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "غلاف أو صورة أخرى تمثّل المادة التدريبية."
+        },
+        "in_languages": {
+          "label": "$t(common.labels.content_languages)",
+          "description": "اللغات البشرية التي تتوفر بها المادة التدريبية."
+        },
+        "learning_outcomes": {
+          "label": "مخرجات التعلّم",
+          "description": "المعارف أو المهارات التي يُتوقّع أن يكتسبها المتعلّمون من المادة."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "الشروط القانونية التي يجوز بموجبها الوصول إلى المادة التدريبية أو استخدامها أو مشاركتها."
+        },
+        "material_url": {
+          "label": "رابط المادة",
+          "description": "العنوان المباشر الذي يمكن من خلاله الوصول إلى المادة التدريبية."
+        },
+        "media_type": {
+          "label": "$t(common.labels.media_type)",
+          "description": "الصيغة التقنية للمادة التدريبية، مثل صفحة ويب أو مستند PDF أو فيديو."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "العنوان الذي تُعرف به المادة التدريبية علنًا."
+        },
+        "part_of_training_material": {
+          "label": "جزء من مادة تدريبية",
+          "description": "المادة التدريبية الأكبر التي يشكّل هذا المورد وحدة أو درسًا فيها."
+        },
+        "prerequisites": {
+          "label": "المتطلبات المسبقة",
+          "description": "المعارف أو المهارات أو البرمجيات أو التعلّم السابق المتوقّع قبل البدء بالمادة."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "المؤسسة التي تنشر المادة رسميًا، إذا كانت مختلفة عن الجهات المنشئة لها."
+        },
+        "related_datasets": {
+          "label": "مجموعات بيانات ذات صلة",
+          "description": "مجموعات بيانات تُستخدم كموضوع للمادة أو كمثال عملي فيها."
+        },
+        "related_services": {
+          "label": "خدمات ذات صلة",
+          "description": "خدمات تشرح المادة كيفية الوصول إليها أو استخدامها."
+        },
+        "related_tools": {
+          "label": "أدوات ذات صلة",
+          "description": "أدوات برمجية تعلّمها المادة التدريبية أو تعرضها."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "روابط تحدّد المادة التدريبية نفسها في أنظمة أخرى، مثل فهرس تدريب."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "target_audiences": {
+          "label": "الفئات المستهدفة",
+          "description": "فئات المتعلّمين التي تستهدفها المادة، مثل مجتمع البحث أو طواقم المكتبات أو الطلاب."
+        },
+        "training_material_type": {
+          "label": "نوع المادة التدريبية",
+          "description": "طريقة تفاعل المتعلّمين مع المادة، لا صيغة ملفها."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Affiliation": {
+        "$self": {
+          "label": "انتماء",
+          "description": "توظيف شخص أو عضويته في مؤسسة، بمعزل عن أي مشروع."
+        },
+        "affiliation_role": {
+          "label": "الدور",
+          "description": "موقع الشخص في المؤسسة - وظيفته أو صفته، لا دوره في مشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهى فيه الانتماء."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "المؤسسة التي ينتمي إليها الشخص."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء الانتماء."
+        }
+      },
+      "Authorship": {
+        "$self": {
+          "label": "تأليف",
+          "description": "تأليف شخص أو مساهمته المعتمدة الأخرى في منشور."
+        },
+        "author": {
+          "label": "$t(common.labels.person)",
+          "description": "الشخص الذي ساهم في المنشور."
+        },
+        "author_order": {
+          "label": "ترتيب المؤلفين",
+          "description": "الموقع في قائمة المؤلفين؛ 1 هو الموقع الأول."
+        },
+        "authorship_role": {
+          "label": "دور التأليف",
+          "description": "المساهمة المعتمدة للشخص في المنشور، مثل التأليف أو التحرير أو الترجمة."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "تاريخ انتهاء مساهمة الشخص في المنشور."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "تاريخ بدء مساهمة الشخص في المنشور."
+        }
+      },
+      "EventAgentRole": {
+        "$self": {
+          "label": "جهة مشاركة في الفعالية",
+          "description": "شخص أو مؤسسة يشارك في الفعالية بصفة محددة."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "تاريخ انتهاء مشاركة الشخص أو المؤسسة في الفعالية."
+        },
+        "event_agent": {
+          "label": "شخص أو مؤسسة",
+          "description": "الشخص أو المؤسسة المشاركة في الفعالية."
+        },
+        "event_agent_role": {
+          "label": "الدور في الفعالية",
+          "description": "صفة الشخص أو المؤسسة في الفعالية، مثل التنظيم أو الاستضافة أو المحاضرة أو الرعاية."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "تاريخ بدء مشاركة الشخص أو المؤسسة في الفعالية."
+        }
+      },
+      "FacilityAffiliation": {
+        "$self": {
+          "label": "انتماء المرفق",
+          "description": "علاقة المرفق بمؤسسة مضيفة أو مالكة."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه علاقة المؤسسة بالمرفق."
+        },
+        "facility_affiliation_role": {
+          "label": "دور انتماء المرفق",
+          "description": "علاقة المؤسسة بالمرفق، بصفتها مضيفة أو مالكة."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "المؤسسة التي تستضيف المرفق أو تملكه."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء علاقة المؤسسة بالمرفق."
+        }
+      },
+      "Funding": {
+        "$self": {
+          "label": "$t(common.labels.funding)",
+          "description": "منحة تمويل مستقلة حصل عليها المشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه فترة التمويل."
+        },
+        "funding_amount": {
+          "label": "مبلغ التمويل",
+          "description": "القيمة المالية المعلنة لمنحة التمويل."
+        },
+        "funding_currency": {
+          "label": "عملة التمويل",
+          "description": "العملة التي مُنح بها مبلغ التمويل."
+        },
+        "funding_organization": {
+          "label": "المؤسسة الممولة",
+          "description": "المؤسسة التي تقدّم المنحة."
+        },
+        "funding_program": {
+          "label": "برنامج التمويل",
+          "description": "برنامج أو مسار التمويل الأوسع الذي مُنحت المنحة في إطاره."
+        },
+        "funding_url": {
+          "label": "رابط المنحة",
+          "description": "صفحة الويب العلنية لمنحة التمويل المحددة."
+        },
+        "grant_name": {
+          "label": "اسم المنحة",
+          "description": "العنوان الرسمي للمنحة أو مصدر التمويل المحدد."
+        },
+        "grant_number": {
+          "label": "رقم المنحة",
+          "description": "المعرّف الذي خصّصته المؤسسة الممولة، كما نُشر تمامًا."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء فترة التمويل."
+        }
+      },
+      "LangString": {
+        "$self": {
+          "label": "نص حسب اللغة",
+          "description": "قطعة نص مع اللغة المكتوبة بها."
+        },
+        "language": {
+          "label": "اللغة",
+          "description": "اللغة التي كُتب بها هذا النص."
+        },
+        "value": {
+          "label": "القيمة",
+          "description": "النص باللغة المختارة."
+        }
+      },
+      "OrganizationStructure": {
+        "$self": {
+          "label": "$t(common.labels.organization_structure)",
+          "description": "احتواء رسمي لهذه المؤسسة داخل مؤسسة أم أكبر."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي توقفت فيه المؤسسة عن كونها جزءًا من المؤسسة الأم."
+        },
+        "parent_organization": {
+          "label": "المؤسسة الأم",
+          "description": "المؤسسة الأكبر التي تُعدّ هذه المؤسسة جزءًا منها."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "الموعد الذي أصبحت فيه المؤسسة جزءًا من المؤسسة الأم."
+        }
+      },
+      "OrganizationProjectRole": {
+        "$self": {
+          "label": "$t(common.labels.organization_role)",
+          "description": "مشاركة مؤسسة في المشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه مشاركة المؤسسة في المشروع."
+        },
+        "org_project_role": {
+          "label": "$t(common.labels.organization_role)",
+          "description": "دور المؤسسة في المشروع، مثل التنسيق أو الشراكة أو توفير البيانات أو التمويل أو الاستضافة."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "المؤسسة المشاركة في المشروع."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء مشاركة المؤسسة في المشروع."
+        }
+      },
+      "ProjectParticipation": {
+        "$self": {
+          "label": "المشاركة في المشروع",
+          "description": "مشاركة شخص في المشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه مشاركة الشخص في المشروع."
+        },
+        "participant": {
+          "label": "$t(common.labels.person)",
+          "description": "الشخص المشارك في المشروع."
+        },
+        "participation_role": {
+          "label": "الدور في المشروع",
+          "description": "دور الشخص في فريق المشروع، مثل قيادة البحث أو التطوير أو البحث أو الدراسة."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء مشاركة الشخص في المشروع."
+        }
+      },
+      "ResourceContribution": {
+        "$self": {
+          "label": "مساهمة في المورد",
+          "description": "شخص أو مؤسسة يساهم في هذا المورد بصفة محددة."
+        },
+        "contributor": {
+          "label": "الجهة المساهمة",
+          "description": "الشخص أو المؤسسة المساهمة في هذا المورد."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه مسؤولية الجهة المساهمة عن المورد."
+        },
+        "resource_contribution_role": {
+          "label": "دور المساهمة",
+          "description": "مسؤولية الجهة المساهمة عن المورد، مثل الإنشاء أو التطوير أو الصيانة أو رعاية البيانات."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء مسؤولية الجهة المساهمة عن المورد."
+        }
+      }
+    },
+    "detail": {
+      "created": "تاريخ الإنشاء",
+      "modified": "آخر تعديل",
+      "by": "بواسطة",
+      "audit": "سجلّ التغييرات",
+      "edit": "تعديل السجل",
+      "delete": "حذف السجل"
+    },
+    "relationships": {
+      "labels": {
+        "people_affiliated_with_organization": "أشخاص منتمون",
+        "organizations_within_organization": "مؤسسات فرعية",
+        "facilities_affiliated_with_organization": "مرافق منتمية",
+        "facilities_offering_service": "متاحة في مرافق",
+        "facilities_providing_tool": "متوفرة عبر مرافق",
+        "projects_involving_organization": "مشاريع ذات مشاركة",
+        "projects_involving_person": "مشاريع ذات مشاركة",
+        "projects_funded_by_organization": "مشاريع ممولة",
+        "projects_using_dataset": "مستخدمة في مشاريع",
+        "projects_using_service": "مستخدمة في مشاريع",
+        "projects_using_tool": "مستخدمة في مشاريع",
+        "projects_producing_publication": "من إنتاج مشاريع",
+        "projects_producing_dataset": "من إنتاج مشاريع",
+        "projects_producing_tool": "من إنتاج مشاريع",
+        "projects_producing_training_material": "من إنتاج مشاريع",
+        "tools_with_contributor": "أدوات بمساهمة",
+        "services_provided_by_organization": "خدمات مقدَّمة",
+        "publications_authored_by_person": "منشورات مؤلَّفة",
+        "publications_published_by_organization": "أعمال منشورة",
+        "publications_within_publication": "منشورات مضمّنة",
+        "publications_presented_at_event": "منشورات معروضة",
+        "events_involving_agent": "فعاليات ذات صلة",
+        "datasets_published_by_organization": "مجموعات بيانات منشورة",
+        "datasets_containing_dataset": "مجموعات بيانات حاوية",
+        "datasets_derived_from_dataset": "مجموعات بيانات مشتقة",
+        "datasets_related_to_publication": "مجموعات بيانات ذات صلة",
+        "datasets_with_contributor": "مجموعات بيانات بمساهمة",
+        "training_materials_created_by_agent": "مواد تدريبية منشأة",
+        "training_materials_published_by_organization": "مواد تدريبية منشورة",
+        "training_materials_within_training_material": "مواد تدريبية مضمّنة",
+        "training_materials_related_to_tool": "مواد تدريبية ذات صلة",
+        "training_materials_related_to_service": "مواد تدريبية ذات صلة",
+        "training_materials_related_to_dataset": "مواد تدريبية ذات صلة"
+      },
+      "load_error": "تعذّر تحميل هذه العلاقة."
+    },
+    "picker": {
+      "choose_another": "اختيار سجل آخر...",
+      "no_results": "لم يُعثر على نتائج مطابقة."
+    },
+    "form": {
+      "new_title": "إنشاء {{type}}",
+      "edit_title": "تعديل {{type}}",
+      "image_error": "تعذّرت قراءة الملف المحدد كصورة.",
+      "image_size_error": "حجم الصورة محدود بـ {{maxSizeMb}}MB.",
+      "image_preview": "معاينة صورة السجل",
+      "remove_image": "إزالة الصورة",
+      "select_type": "اختيار نوع السجل",
+      "select_type_description": "يُرجى اختيار نوع السجل المراد إنشاؤه.",
+      "unsaved_changes_title": "تغييرات غير محفوظة",
+      "unsaved_changes": "توجد تغييرات غير محفوظة. هل تتم المغادرة رغم ذلك؟",
+      "leave_page": "مغادرة الصفحة",
+      "publish": "نشر",
+      "save_draft": "حفظ كمسودة",
+      "add_lang_string": "إضافة قيمة بلغة أخرى",
+      "add_item": "إضافة عنصر",
+      "add_value": "إضافة \"{{term}}\"",
+      "language": "اللغة",
+      "language_search": "البحث في اللغات...",
+      "external_url_placeholder": "أو إدخال رابط خارجي...",
+      "identifier_search_placeholder": "إدخال رابط مباشرة، أو بدء الكتابة للبحث بالاسم...",
+      "clear_selection": "مسح التحديد",
+      "remove_entity": "إزالة السجل"
+    }
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب.",
+    "email": "يُرجى إدخال عنوان بريد إلكتروني صالح.",
+    "url": "يُرجى إدخال رابط (URL) صالح.",
+    "date": "يُرجى إدخال تاريخ صالح.",
+    "doi": "يُرجى إدخال رابط DOI كامل يبدأ بـ https://doi.org/.",
+    "integer": "يُرجى إدخال عدد صحيح.",
+    "number": "يُرجى إدخال رقم.",
+    "entity": "يُرجى اختيار سجل صالح.",
+    "orcid": "يُرجى إدخال رابط ORCID كامل يبدأ بـ https://orcid.org/.",
+    "ror": "يُرجى إدخال رابط ROR كامل يبدأ بـ https://ror.org/.",
+    "min": "يجب ألا تقل القيمة عن {{min}}.",
+    "unsupported_value": "يُرجى اختيار قيمة مدعومة.",
+    "invalid_list": "يُرجى إدخال قائمة صالحة.",
+    "add_at_least_one_value": "يُرجى إضافة قيمة واحدة على الأقل.",
+    "invalid_multilingual_value": "يُرجى إدخال قيمة متعددة اللغات صالحة.",
+    "choose_language": "يُرجى اختيار لغة.",
+    "language_value_required": "يُرجى إدخال قيمة لكل لغة مضافة، أو إزالتها.",
+    "duplicate_language": "يمكن استخدام كل لغة مرة واحدة فقط.",
+    "invalid_entity_list": "يُرجى اختيار سجلات صالحة.",
+    "duplicate_entity": "يمكن اختيار كل سجل مرة واحدة فقط.",
+    "invalid_selected_entities": "سجل واحد أو أكثر من السجلات المحددة غير صالح."
+  }
+}

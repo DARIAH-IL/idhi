@@ -7,6 +7,7 @@ import { useUIStore } from '@/stores/ui'
 import type { UiLanguage } from '@/api/models'
 
 he satisfies typeof en
+ar satisfies typeof en
 
 const RTL_LANGUAGES: UiLanguage[] = ['he', 'ar']
 
