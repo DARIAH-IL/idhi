@@ -1,1 +1,1854 @@
-{}
+{
+  "common": {
+    "save": "שמירה",
+    "cancel": "ביטול",
+    "close": "סגירה",
+    "clear": "ניקוי",
+    "delete": "מחיקה",
+    "loading": "טוען...",
+    "error": "משהו השתבש",
+    "route_error_description": "לא הצלחנו לטעון את הדף. נא לנסות שוב.",
+    "try_again": "ניסיון נוסף",
+    "confirm_delete": "האם למחוק את הרשומה?",
+    "delete_confirm_title": "מחיקת רשומה",
+    "login": "כניסה",
+    "logout": "יציאה",
+    "continue": "המשך",
+    "verify": "אימות",
+    "approve": "אישור",
+    "deny": "דחייה",
+    "search": "חיפוש",
+    "searching": "מחפש...",
+    "search_placeholder": "חיפוש באינדקס...",
+    "no_results": "אין תוצאות.",
+    "select_all": "בחירת הכול",
+    "clear_all": "ניקוי הכול",
+    "show_more": "הצג עוד",
+    "show_less": "הצג פחות",
+    "user_menu": "תפריט משתמש",
+    "user_actions": "פעולות משתמש",
+    "signed_in_as": "החשבון המחובר",
+    "home": "דף הבית",
+    "jump_to_top": "חזרה לראש הדף",
+    "site_name": "האינדקס הישראלי למדעי הרוח הדיגיטליים",
+    "copyright": "© {{year}} $t(common.site_name)",
+    "work_in_progress": "אתר זה נמצא בשלבי פיתוח ועשוי להשתנות במהלך הבדיקה והליטוש שלו.",
+    "remove": "הסרה",
+    "reorder": "גרירה לשינוי הסדר",
+    "copy": "העתקה",
+    "copied": "הועתק",
+    "language_picker": "החלפת שפה",
+    "date_picker": {
+      "select": "בחירת תאריך",
+      "clear": "ניקוי תאריך"
+    },
+    "pagination": {
+      "range": "מוצגים {{start}}–{{end}} מתוך {{total}}",
+      "listed_one": "פריט אחד ברשימה",
+      "listed_two": "{{count}} פריטים ברשימה",
+      "listed_many": "{{count}} פריטים ברשימה",
+      "listed_other": "{{count}} פריטים ברשימה",
+      "previous_page": "העמוד הקודם",
+      "next_page": "העמוד הבא",
+      "page_count": "{{page}} מתוך {{total}}"
+    },
+    "labels": {
+      "additional_urls": "קישורים נוספים",
+      "address": "כתובת",
+      "contact_email": "אימייל ליצירת קשר",
+      "content_languages": "שפות התוכן",
+      "date_issued": "תאריך פרסום",
+      "description": "תיאור",
+      "dh_activities": "פעילויות מדעי הרוח הדיגיטליים",
+      "documentation_url": "קישור לתיעוד",
+      "doi": "DOI",
+      "email": "כתובת אימייל",
+      "end_date": "תאריך סיום",
+      "funding": "מימון",
+      "homepage_url": "אתר בית",
+      "id": "מזהה",
+      "image": "תמונה",
+      "license": "רישיון",
+      "location": "מיקום",
+      "media_type": "סוג מדיה",
+      "name": "שם",
+      "organization": "ארגון",
+      "organization_structure": "מבנה ארגוני",
+      "organization_role": "תפקיד בארגון",
+      "person": "אדם",
+      "publisher": "מוציא לאור",
+      "resource_contributions": "תרומות למשאב",
+      "same_as": "זהויות נוספות",
+      "start_date": "תאריך התחלה",
+      "tags": "תגיות",
+      "type": "סוג"
+    },
+    "field_descriptions": {
+      "id": "המזהה הייחודי של הרשומה באינדקס.",
+      "tags": "מילות מפתח שמתארות את הרשומה ומקלות על מציאתה.",
+      "type": "סוג הרשומה."
+    }
+  },
+  "about": {
+    "title": "אודות",
+    "placeholder": "עמוד זה יתאר את האינדקס הישראלי למדעי הרוח הדיגיטליים. התוכן יתווסף בקרוב.",
+    "ai": {
+      "title": "חיבור ל־AI",
+      "intro": "האינדקס הישראלי למדעי הרוח הדיגיטליים מפעיל שרת Model Context Protocol‏ (MCP). חיבורו לכלי ה־AI שלך מאפשר לו לחפש באינדקס, לעיין ברשומות, ולאחר התחברות גם ליצור, לעדכן או למחוק רשומות - הכול מתוך כלי הצ'אט או כלי הפיתוח שלך.",
+      "endpoint": "כתובת ה־MCP",
+      "capabilities": {
+        "title": "יכולות (Tools)",
+        "public": "זמין לכולם, ללא צורך בכניסה:",
+        "authenticated": "זמין לאחר כניסה:",
+        "tools": {
+          "search_entities": "חיפוש באינדקס עם שאילתות טקסט חופשי, מסננים, פילוח, מיון ועימוד",
+          "get_entity": "אחזור רשומה בודדת לפי המזהה שלה",
+          "create_entity": "יצירת רשומה חדשה",
+          "update_entity": "החלפת רשומה קיימת",
+          "delete_entity": "מחיקת רשומה"
+        },
+        "auth_note": "התחברות נעשית באמצעות תהליך ה-OAuth הסטנדרטי של MCP: בפעם הראשונה שהכלי שלך קורא לכלי שדורש הרשאות התחברות, נפתח בדפדפן דף הכניסה של האינדקס, והתהליך ממשיך אוטומטית לאחר התחברותך."
+      },
+      "clients": {
+        "title": "חיבור כלים נפוצים",
+        "claude_code": {
+          "title": "Claude Code",
+          "instructions": "יש להריץ בטרמינל (עובד ב־macOS, ב־Linux וב־Windows):"
+        },
+        "claude": {
+          "title": "Claude (דפדפן ושולחן עבודה)",
+          "instructions": "יש לגשת אל Settings → Connectors → Add custom connector, לתת את השם {name} ולהדביק את כתובת ה־MCP."
+        },
+        "cursor": {
+          "title": "Cursor",
+          "instructions": "יש להוסיף לקובץ {projectPath} בפרויקט. עבור כל הפרויקטים, יש להוסיף במקום זאת אל {globalPath} ב־macOS וב־Linux, או אל {globalPathWindows} ב־Windows:"
+        },
+        "chatgpt": {
+          "title": "ChatGPT",
+          "instructions": "יש להפעיל Developer mode תחת Settings → Apps & Connectors → Advanced settings, לבחור Create ולהדביק את כתובת ה־MCP."
+        },
+        "codex": {
+          "title": "Codex CLI",
+          "instructions": "יש להוסיף לקובץ {path} ב־macOS וב־Linux, או אל {pathWindows} ב־Windows:"
+        },
+        "gemini": {
+          "title": "Gemini CLI",
+          "instructions": "יש להוסיף לקובץ {path} ב־macOS וב־Linux, או אל {pathWindows} ב־Windows:"
+        },
+        "vscode": {
+          "title": "VS Code (GitHub Copilot)",
+          "instructions": "יש להוסיף לקובץ {path} בסביבת העבודה:"
+        },
+        "other": {
+          "title": "כלים אחרים",
+          "instructions": "כל לקוח MCP שתומך בתעבורת Streamable HTTP יכול להתחבר - יש להפנות אותו לכתובת ה־MCP שלעיל. לצפייה אינטראקטיבית ביכולות השרת אפשר להשתמש ב־MCP Inspector:"
+        }
+      },
+      "nav": "בעמוד זה"
+    }
+  },
+  "api": {
+    "errors": {
+      "Unauthorized": "פג תוקף החיבור. נא להיכנס שוב.",
+      "InvalidInput": "המידע שנשלח אינו תקין. נא לבדוק אותו ולנסות שוב.",
+      "InternalServerError": "משהו השתבש אצלנו, אנחנו בודקים את זה.",
+      "EntityNotFound": "הרשומה המבוקשת לא נמצאה.",
+      "UserNotFound": "המשתמש המבוקש לא נמצא.",
+      "UserAlreadyInvitedOrRegistered": "המשתמש כבר הוזמן או נרשם.",
+      "WrongOtpCode": "הקוד שהוכנס שגוי. נא לנסות שוב.",
+      "TooManyAuthAttempts": "יותר מדי ניסיונות כניסה. נא לנסות שוב מאוחר יותר.",
+      "AuthChallengeNotFoundOrExpired": "פג תוקף בקשת הכניסה. יש להתחיל מחדש.",
+      "network": "לא הצלחנו להגיע לשרת. נא לבדוק את חיבור האינטרנט ולנסות שוב.",
+      "generic": "משהו השתבש בתקשורת עם השרת, אנחנו בודקים את זה."
+    }
+  },
+  "auth": {
+    "description": "אפשר להיכנס אם יש לך חשבון או הזמנה ממתינה.",
+    "email_placeholder": "you@example.com",
+    "use_different_account": "שימוש באימייל אחר",
+    "otp_label": "קוד חד־פעמי",
+    "back_to_email": "שימוש באימייל אחר",
+    "email_sent": "שלחנו קוד חד־פעמי אל {{email}}",
+    "otp_check_spam": "אם האימייל לא הגיע, כדאי לבדוק בתיקיית הספאם.",
+    "passkey_login": "כניסה עם מפתח גישה (Passkey)",
+    "sign_in_with_otp": "כניסה עם קוד חד־פעמי שנשלח באימייל",
+    "passkey_use_passkey": "כניסה עם מפתח גישה במקום",
+    "passkey_not_recognized": "מפתח הגישה של מכשיר זה כבר אינו מקושר לחשבון שלך. יש להיכנס עם קוד חד־פעמי.",
+    "passkey_failed": "הכניסה עם מפתח הגישה נכשלה. נא לנסות שוב.",
+    "invite_welcome_title": "ברוכים הבאים!",
+    "invite_welcome_description": "אנחנו מכינים את החשבון שלך, עוד רגע.",
+    "passkey_offer_title": "להגדיר מפתח גישה (Passkey) למכשיר זה?",
+    "passkey_offer_description": "בפעם הבאה אפשר להיכנס מהר יותר עם נעילת המסך, טביעת האצבע או מפתח האבטחה של המכשיר.",
+    "passkey_create": "יצירת מפתח גישה",
+    "passkey_create_failed": "לא ניתן היה ליצור את מפתח הגישה. נא לנסות שוב.",
+    "passkey_created": "מפתח הגישה נוצר. מעכשיו אפשר להשתמש בו לכניסה במכשיר זה.",
+    "passkey_not_now": "לא עכשיו",
+    "signed_in": "התחברת בהצלחה.",
+    "signed_out": "התנתקת בהצלחה."
+  },
+  "oauth": {
+    "title": "התחברות לאינדקס",
+    "description": "יישום מבקש גישה לחשבון האינדקס שלך.",
+    "invalid_request": "בקשת ההרשאה אינה תקינה או אינה שלמה. יש להתחיל מחדש מתוך היישום.",
+    "signed_in_as": "החשבון המחובר: {{email}}",
+    "redirect_notice": "לאחר האישור נחזיר אותך ליישום הקורא להשלמת החיבור.",
+    "login_required": "יש להיכנס כדי להמשיך בחיבור היישום.",
+    "redirecting": "מעביר..."
+  },
+  "admin": {
+    "title": "ניהול",
+    "description": "ניהול הגישה לאינדקס, תחזוקת חשבונות משתמשים ושליחה או ביטול של הזמנות.",
+    "menu_item": "ניהול",
+    "fields": {
+      "user": "משתמש",
+      "name": "שם",
+      "email": "$t(common.labels.email)",
+      "role": "הרשאה",
+      "message": "הודעה אישית",
+      "expires": "בתוקף עד",
+      "expiry_days": "תוקף בימים",
+      "language": "שפת האימייל",
+      "actions": "פעולות",
+      "admin_access": "הרשאת ניהול",
+      "admin_access_description": "מאפשרת ניהול של כל המשתמשים וההזמנות."
+    },
+    "roles": {
+      "admin": "ניהול מערכת",
+      "user": "משתמש"
+    },
+    "users": {
+      "title": "משתמשים",
+      "description": "יצירת חשבונות וניהול פרטי פרופיל והרשאות ניהול.",
+      "add": "הוספת משתמש",
+      "create": "יצירת משתמש",
+      "add_title": "יצירת משתמש",
+      "add_description": "הוספת חשבון ישירות, ללא שליחת הזמנה.",
+      "edit_title": "עריכת משתמש",
+      "edit_description": "עדכון הפרופיל ורמת הגישה של המשתמש.",
+      "delete_title": "מחיקת משתמש",
+      "delete_description": "למחוק את החשבון של {{email}}? פעולה זו אינה הפיכה.",
+      "delete_action": "מחיקת משתמש",
+      "edit_label": "עריכת {{email}}",
+      "delete_label": "מחיקת {{email}}",
+      "empty": "עוד לא נוצרו משתמשים.",
+      "table_label": "משתמשים רשומים"
+    },
+    "invites": {
+      "title": "הזמנות",
+      "description": "הזמנת משתמשים חדשים וסקירה או ביטול של הזמנות ממתינות.",
+      "invite": "הזמנת משתמש",
+      "invite_title": "הזמנת משתמש",
+      "invite_description": "יישלח קישור להשלמת ההרשמה.",
+      "message_placeholder": "אפשר להוסיף הערה אישית להזמנה",
+      "send": "שליחת הזמנה",
+      "revoke": "ביטול",
+      "revoke_title": "ביטול הזמנה",
+      "revoke_description": "לבטל את ההזמנה הממתינה עבור {{email}}? הקישור שנשלח לא יהיה תקף עוד.",
+      "empty": "אין הזמנות ממתינות.",
+      "table_label": "הזמנות ממתינות"
+    },
+    "notifications": {
+      "user_created": "המשתמש נוצר בהצלחה.",
+      "user_updated": "המשתמש עודכן בהצלחה.",
+      "user_deleted": "המשתמש נמחק בהצלחה.",
+      "invite_sent": "ההזמנה נשלחה בהצלחה.",
+      "invite_revoked": "ההזמנה בוטלה בהצלחה."
+    }
+  },
+  "board": {
+    "title": "עיון באינדקס",
+    "clear_search": "ניקוי חיפוש",
+    "clear_filters": "ניקוי מסננים",
+    "results_label": "תוצאות חיפוש",
+    "loaded_count": "מוצגות {{loaded}} מתוך {{total}} רשומות",
+    "facets": {
+      "title": "מסננים",
+      "bulk_actions": "פעולות בחירת מסננים",
+      "select_value": "בחירת {{value}}",
+      "filter_placeholder": "חיפוש אפשרויות...",
+      "filter_label": "חיפוש באפשרויות הסינון",
+      "active_filters": "מסננים פעילים",
+      "active_value": "{{field}}: {{value}}",
+      "remove_filter": "הסרת המסנן {{filter}}",
+      "no_values": "אין אפשרויות סינון זמינות.",
+      "no_matching_values": "אין אפשרויות תואמות.",
+      "apply": "עדכון החיפוש",
+      "referenced_type": "{{type}} קשורים"
+    },
+    "no_results": "לא נמצאו רשומות.",
+    "no_matching_results": "אין רשומות שתואמות את החיפוש.",
+    "new_entity": "הוספת רשומה חדשה"
+  },
+  "entity": {
+    "draft_badge": "טיוטה",
+    "reference": {
+      "unavailable": "הרשומה אינה זמינה"
+    },
+    "notifications": {
+      "created": "הרשומה נוצרה בהצלחה.",
+      "updated": "הרשומה עודכנה בהצלחה.",
+      "deleted": "הרשומה נמחקה בהצלחה."
+    },
+    "types": {
+      "idhi:Person": "אדם",
+      "idhi:Organization": "ארגון",
+      "idhi:Facility": "מתקן",
+      "idhi:Project": "פרויקט",
+      "idhi:Tool": "כלי",
+      "idhi:Service": "שירות",
+      "idhi:Publication": "פרסום",
+      "idhi:Event": "אירוע",
+      "idhi:Dataset": "מערך נתונים",
+      "idhi:TrainingMaterial": "חומר הדרכה"
+    },
+    "typesPlural": {
+      "idhi:Person": "אנשים",
+      "idhi:Organization": "ארגונים",
+      "idhi:Facility": "מתקנים",
+      "idhi:Project": "פרויקטים",
+      "idhi:Tool": "כלים",
+      "idhi:Service": "שירותים",
+      "idhi:Publication": "פרסומים",
+      "idhi:Event": "אירועים",
+      "idhi:Dataset": "מערכי נתונים",
+      "idhi:TrainingMaterial": "חומרי הדרכה"
+    },
+    "enums": {
+      "affiliation_role": {
+        "AFFILIATE": "סינוף",
+        "ASSOCIATE": "עמיתות",
+        "EMPLOYEE": "העסקה",
+        "MANAGER": "ניהול",
+        "MEMBER": "חברות",
+        "PROFESSOR": "פרופסורה"
+      },
+      "authorship_role": {
+        "AUTHOR": "כתיבה",
+        "CONTRIBUTOR": "תרומה",
+        "EDITOR": "עריכה",
+        "TRANSLATOR": "תרגום"
+      },
+      "dataset_type": {
+        "ANNOTATION_SET": "אוסף אנוטציות",
+        "CORPUS": "קורפוס",
+        "DATABASE": "בסיס נתונים",
+        "DIGITAL_EDITION": "מהדורה דיגיטלית",
+        "GAZETTEER": "מילון גאוגרפי (גזטיר)",
+        "IMAGE_COLLECTION": "אוסף תמונות",
+        "METADATA_CATALOG": "קטלוג מטא־נתונים",
+        "OTHER_RESEARCH_DATA": "נתוני מחקר אחרים"
+      },
+      "digital_humanities_activities": {
+        "tadirah:abstractThinking": "חשיבה מופשטת",
+        "tadirah:academicPublishing": "פרסום אקדמי",
+        "tadirah:adding": "הוספה",
+        "tadirah:aggregating": "צבירה",
+        "tadirah:analyzing": "ניתוח",
+        "tadirah:annotating": "אנוטציה",
+        "tadirah:archiving": "ארכוב",
+        "tadirah:associate": "שיוך",
+        "tadirah:associating": "קישור בין פריטים",
+        "tadirah:audioAnnotation": "אנוטציית שמע",
+        "tadirah:audioConferencing": "ועידה קולית",
+        "tadirah:audioRecording": "הקלטת שמע",
+        "tadirah:authorshipAttribution": "ייחוס מחברים",
+        "tadirah:bitStreamPreservation": "שימור זרם סיביות",
+        "tadirah:blogging": "כתיבת בלוג",
+        "tadirah:browsing": "עיון",
+        "tadirah:capturing": "לכידה",
+        "tadirah:cataloging": "קיטלוג",
+        "tadirah:clusterAnalysis": "ניתוח אשכולות",
+        "tadirah:coOccurrence": "הופעה משותפת",
+        "tadirah:collaborating": "שיתוף פעולה",
+        "tadirah:collating": "השוואת נוסחים",
+        "tadirah:collecting": "איסוף",
+        "tadirah:collocationAnalysis": "ניתוח צירופי לשון",
+        "tadirah:commenting": "כתיבת תגובות",
+        "tadirah:communicating": "תקשורת",
+        "tadirah:comparing": "השוואה",
+        "tadirah:compiling": "ליקוט",
+        "tadirah:conceptualizing": "המשגה",
+        "tadirah:concordance": "קונקורדנציה",
+        "tadirah:contentAnalysis": "ניתוח תוכן",
+        "tadirah:contextualizing": "מתן הקשר",
+        "tadirah:contrastiveAnalysis": "ניתוח מנגיד",
+        "tadirah:converting": "המרה",
+        "tadirah:correcting": "תיקון",
+        "tadirah:creating": "יצירה",
+        "tadirah:cropping": "חיתוך",
+        "tadirah:crowdsourcing": "מיקור המונים",
+        "tadirah:dataCleansing": "ניקוי נתונים",
+        "tadirah:dataIngestion": "קליטת נתונים",
+        "tadirah:dataMapping": "מיפוי נתונים",
+        "tadirah:dataMining": "כריית נתונים",
+        "tadirah:dataRecognition": "זיהוי נתונים",
+        "tadirah:dataVisualization": "המחשת נתונים",
+        "tadirah:debugging": "ניפוי שגיאות",
+        "tadirah:defining": "הגדרה",
+        "tadirah:description": "תיאור",
+        "tadirah:designing": "עיצוב",
+        "tadirah:diagramming": "שרטוט תרשימים",
+        "tadirah:digitalObjectIdentifier": "מזהה אובייקט דיגיטלי (DOI)",
+        "tadirah:digitalPublishing": "פרסום דיגיטלי",
+        "tadirah:discourseAnalysis": "ניתוח שיח",
+        "tadirah:discovering": "גילוי",
+        "tadirah:discussing": "דיון",
+        "tadirah:disseminating": "הפצה",
+        "tadirah:distanceMeasures": "מדדי מרחק",
+        "tadirah:drawing": "ציור",
+        "tadirah:eMailing": "התכתבות באימייל",
+        "tadirah:editing": "עריכה",
+        "tadirah:emulation": "אמולציה",
+        "tadirah:encoding": "קידוד",
+        "tadirah:enriching": "העשרה",
+        "tadirah:explanation": "הסבר",
+        "tadirah:exploration": "חקירה",
+        "tadirah:expressingOpinion": "הבעת דעה",
+        "tadirah:extracting": "חילוץ",
+        "tadirah:finding": "מציאה",
+        "tadirah:formatting": "עיצוב מבנה",
+        "tadirah:gamification": "משחוק",
+        "tadirah:gathering": "כינוס חומרים",
+        "tadirah:genreRecognition": "זיהוי סוגה",
+        "tadirah:georeferencing": "עיגון גאוגרפי",
+        "tadirah:graphicsProgramming": "תכנות גרפי",
+        "tadirah:highlighting": "הדגשה",
+        "tadirah:identifier": "מזהה",
+        "tadirah:identifying": "זיהוי",
+        "tadirah:imaging": "הדמיה",
+        "tadirah:improving": "שיפור",
+        "tadirah:informationMining": "כריית מידע",
+        "tadirah:informationRetrieval": "אחזור מידע",
+        "tadirah:instantMessaging": "מסרים מיידיים",
+        "tadirah:integrating": "שילוב",
+        "tadirah:interpreting": "פרשנות",
+        "tadirah:knowledgeDiscovery": "גילוי ידע",
+        "tadirah:knowledgeExtraction": "חילוץ ידע",
+        "tadirah:lemmatizing": "למטיזציה",
+        "tadirah:lettering": "עיצוב אותיות",
+        "tadirah:linkedOpenData": "נתונים פתוחים מקושרים",
+        "tadirah:machineLearning": "למידת מכונה",
+        "tadirah:managing": "ניהול",
+        "tadirah:mapping": "מיפוי",
+        "tadirah:merging": "מיזוג",
+        "tadirah:microblogging": "מיקרובלוגינג",
+        "tadirah:migration": "העברת נתונים (מיגרציה)",
+        "tadirah:mindMapping": "מפות חשיבה",
+        "tadirah:modeling": "מידול",
+        "tadirah:modifying": "שינוי",
+        "tadirah:namedEntityRecognition": "זיהוי ישויות בשם (NER)",
+        "tadirah:namingConvention": "מוסכמות שיום",
+        "tadirah:naturalLanguageProcessing": "עיבוד שפה טבעית (NLP)",
+        "tadirah:networkAnalysis": "ניתוח רשתות",
+        "tadirah:opticalCharacterRecognition": "זיהוי תווים אופטי (OCR)",
+        "tadirah:opticalMusicRecognition": "זיהוי תווי נגינה אופטי",
+        "tadirah:organizing": "ארגון",
+        "tadirah:parsing": "ניתוח תחבירי",
+        "tadirah:patternRecognition": "זיהוי תבניות",
+        "tadirah:persistentIdentifier": "מזהה קבוע",
+        "tadirah:photographing": "צילום",
+        "tadirah:plotting": "שרטוט גרפים",
+        "tadirah:posTagging": "תיוג חלקי דיבר",
+        "tadirah:posting": "פרסום פוסטים",
+        "tadirah:preprocessing": "עיבוד מקדים",
+        "tadirah:preservationMetadata": "מטא־נתוני שימור",
+        "tadirah:preserving": "שימור",
+        "tadirah:principalComponentAnalysis": "ניתוח גורמים ראשיים (PCA)",
+        "tadirah:programming": "תכנות",
+        "tadirah:pseudoCoding": "פסאודו־קוד",
+        "tadirah:publishing": "פרסום",
+        "tadirah:querying": "שאילתות",
+        "tadirah:reasoning": "הסקה",
+        "tadirah:recording": "הקלטה",
+        "tadirah:relationalAnalysis": "ניתוח יחסים",
+        "tadirah:removing": "הסרה",
+        "tadirah:replication": "שכפול",
+        "tadirah:rhetoricalAnalysis": "ניתוח רטורי",
+        "tadirah:scanning": "סריקה",
+        "tadirah:screencast": "הקלטת מסך",
+        "tadirah:searching": "חיפוש",
+        "tadirah:segmenting": "פילוח",
+        "tadirah:semantification": "סמנטיפיקציה",
+        "tadirah:sentimentAnalysis": "ניתוח סנטימנט",
+        "tadirah:sequenceAlignment": "יישור רצפים",
+        "tadirah:sharing": "שיתוף",
+        "tadirah:socialNetworking": "רשתות חברתיות",
+        "tadirah:spatialAnalysis": "ניתוח מרחבי",
+        "tadirah:speechRecognizing": "זיהוי דיבור",
+        "tadirah:storing": "אחסון",
+        "tadirah:structuralAnalysis": "ניתוח מבני",
+        "tadirah:stylisticAnalysis": "ניתוח סגנוני",
+        "tadirah:stylometry": "סטילומטריה",
+        "tadirah:subtracting": "גריעה",
+        "tadirah:supplementing": "השלמה",
+        "tadirah:tagging": "תיוג",
+        "tadirah:teaching": "הוראה",
+        "tadirah:textCategorization": "סיווג טקסטים",
+        "tadirah:textMessaging": "מסרונים",
+        "tadirah:theorizing": "פיתוח תאוריה",
+        "tadirah:topicModeling": "מידול נושאים",
+        "tadirah:transcoding": "המרת קידוד",
+        "tadirah:transcribing": "תעתוק",
+        "tadirah:transformation": "התמרה",
+        "tadirah:translating": "תרגום",
+        "tadirah:treeTagging": "תיוג עצים תחביריים",
+        "tadirah:tweet": "ציוץ",
+        "tadirah:uniformResourceIdentifier": "מזהה משאבים אחיד (URI)",
+        "tadirah:upload": "העלאה",
+        "tadirah:userGeneratedContent": "תוכן גולשים",
+        "tadirah:versioning": "ניהול גרסאות",
+        "tadirah:videoCapture": "לכידת וידאו",
+        "tadirah:videoConference": "שיחת וידאו",
+        "tadirah:videoEditing": "עריכת וידאו",
+        "tadirah:visualAnalysis": "ניתוח חזותי",
+        "tadirah:visualAnnotation": "אנוטציה חזותית",
+        "tadirah:webCrawling": "זחילת רשת",
+        "tadirah:webDevelopment": "פיתוח אתרים",
+        "tadirah:webScraping": "קצירת נתונים מהרשת",
+        "tadirah:wireframing": "שלד עיצוב (Wireframe)",
+        "tadirah:writing": "כתיבה"
+      },
+      "event_agent_role": {
+        "HOST": "אירוח",
+        "ORGANIZER": "ארגון האירוע",
+        "PANELIST": "השתתפות בפאנל",
+        "PARTICIPANT": "השתתפות",
+        "SPEAKER": "הרצאה",
+        "SPONSOR": "מתן חסות"
+      },
+      "event_type": {
+        "CONFERENCE": "כנס",
+        "EXHIBITION": "תערוכה",
+        "HACKATHON": "האקתון",
+        "LECTURE": "הרצאה",
+        "SEMINAR": "סמינר",
+        "WORKSHOP": "סדנה"
+      },
+      "facility_affiliation_role": {
+        "HOST": "אירוח",
+        "OWNER": "בעלות"
+      },
+      "funding_currency": {
+        "EUR": "€ (EUR)",
+        "ILS": "₪ (ILS)",
+        "USD": "$ (USD)"
+      },
+      "funding_status": {
+        "ACTIVE_GRANT_FUNDING": "מימון מענק פעיל",
+        "INSTITUTIONALLY_SUSTAINED": "נתמך מוסדית",
+        "IN_KIND_ONLY": "תמיכה בשווה כסף בלבד",
+        "UNFUNDED": "ללא מימון",
+        "VOLUNTEER_RUN": "מופעל בהתנדבות"
+      },
+      "license": {
+        "APACHE_2_0": "Apache License 2.0",
+        "CC0_1_0": "Creative Commons CC0 1.0",
+        "CC_BY_4_0": "Creative Commons Attribution 4.0",
+        "CC_BY_SA_4_0": "Creative Commons Attribution-ShareAlike 4.0",
+        "GPL_3_0": "GNU General Public License 3.0",
+        "MIT": "MIT License"
+      },
+      "org_project_role": {
+        "COORDINATOR": "תיאום",
+        "DATA_PROVIDER": "אספקת נתונים",
+        "FUNDER": "מימון",
+        "HOST": "אירוח",
+        "PARTNER": "שותפות"
+      },
+      "organization_type": {
+        "ACADEMIC_INSTITUTION": "מוסד אקדמי",
+        "COMPANY": "חברה",
+        "FUNDER": "גוף מממן",
+        "GLAM_INSTITUTION": "גלריה, ספרייה, ארכיון או מוזיאון (GLAM)",
+        "INFORMAL_GROUP": "קבוצה בלתי פורמלית",
+        "NON_PROFIT": "מלכ״ר",
+        "RESEARCH_CENTER": "מרכז מחקר"
+      },
+      "participation_role": {
+        "ADVISOR": "ייעוץ",
+        "CONSULTANT": "ייעוץ חיצוני",
+        "CONTRIBUTOR": "תרומה",
+        "CO_PI": "חוקר ראשי שותף",
+        "DEVELOPER": "פיתוח",
+        "DH_LEAD": "הובלת תחום מדעי הרוח הדיגיטליים",
+        "PRINCIPAL_INVESTIGATOR": "חוקר ראשי",
+        "RESEARCHER": "מחקר",
+        "STUDENT": "סטודנט.ית",
+        "TECHNICAL_LEAD": "הובלה טכנית"
+      },
+      "publication_type": {
+        "coar:1YTN-RJZE": "מסמכי בית משפט",
+        "coar:2H0M-X761": "נתונים גאוגרפיים־מרחביים",
+        "coar:43KC-T6DC": "כתבה במגזין",
+        "coar:542X-3S04": "עיצוב",
+        "coar:63NG-B465": "נתוני ניסוי",
+        "coar:6NC7-GK9S": "תעתיק",
+        "coar:8KJG-QS0Y": "כלי מחקר",
+        "coar:9DKX-KSAF": "מודל שימושי",
+        "coar:A8F1-NPV9": "נתונים גנומיים",
+        "coar:ACF7-8YT9": "נתונים מצטברים",
+        "coar:AM6W-6QAW": "נתונים מקודדים",
+        "coar:BW7T-YM2G": "עיצוב פריסה",
+        "coar:C53B-JCY5": "פטנט עיצוב",
+        "coar:CQMR-7K63": "נתונים מוקלטים",
+        "coar:D97F-VB57": "פרשנות",
+        "coar:DD58-GFSX": "נתוני מדידה ובדיקה",
+        "coar:DX5J-TA9R": "פרוטוקול סינתזת ידע",
+        "coar:EHVM-H119": "נתוני מחקר",
+        "coar:F8RT-TJK0": "יצירה אמנותית",
+        "coar:FF4C-28RK": "נתוני תצפית",
+        "coar:FXF3-D3G7": "נתונים מלוקטים",
+        "coar:GPQ7-G5VE": "הגנת זני צמחים",
+        "coar:GSZA-Y7V7": "מערכת ארגון ידע",
+        "coar:H41Y-FW7B": "יומן מעבדה",
+        "coar:H6QP-SC1X": "סימן מסחר",
+        "coar:H9BQ-739P": "ביקורת עמיתים",
+        "coar:JBNF-DYAD": "עיצוב תעשייתי",
+        "coar:MW8G-3CR8": "פטנט תוכנה",
+        "coar:NHD0-W6SY": "נתוני סקר",
+        "coar:QH80-2R4E": "קוד מקור",
+        "coar:QX5C-AR31": "כתב עת תקופתי אחר",
+        "coar:R60J-J5BD": "הצגה בכנס",
+        "coar:RMP5-3GQ6": "אוסף",
+        "coar:S7R1-K5P0": "דגימה פיזית",
+        "coar:SB3Y-W4EH": "בקשת PCT",
+        "coar:W2XT-7017": "נתוני סימולציה",
+        "coar:YC9F-HGCF": "אוסף ארכיוני",
+        "coar:YZ1N-ZFT9": "פרוטוקול מחקר",
+        "coar:Z907-YMBB": "פטנט צמחים",
+        "coar:c_0040": "כתב יד",
+        "coar:c_0640": "כתב עת",
+        "coar:c_0857": "מכתב",
+        "coar:c_1162": "אנוטציה",
+        "coar:c_12cc": "חומר קרטוגרפי",
+        "coar:c_12cd": "מפה",
+        "coar:c_12ce": "וידאו",
+        "coar:c_15cd": "פטנט",
+        "coar:c_1843": "אחר",
+        "coar:c_186u": "דוח מדיניות",
+        "coar:c_18cc": "שמע",
+        "coar:c_18cd": "יצירה מוזיקלית",
+        "coar:c_18cf": "טקסט",
+        "coar:c_18co": "פוסטר כנס שאינו בקובץ ההרצאות",
+        "coar:c_18cp": "מאמר כנס שאינו בקובץ ההרצאות",
+        "coar:c_18cw": "תווי נגינה",
+        "coar:c_18gh": "דוח טכני",
+        "coar:c_18hj": "דוח לגוף מממן",
+        "coar:c_18op": "תוצר פרויקט",
+        "coar:c_18wq": "דוח מסוג אחר",
+        "coar:c_18ws": "דוח מחקר",
+        "coar:c_18ww": "דוח פנימי",
+        "coar:c_18wz": "תזכיר",
+        "coar:c_2659": "כתב עת תקופתי",
+        "coar:c_26e4": "ריאיון",
+        "coar:c_2cd9": "מגזין",
+        "coar:c_2df8fbb1": "מאמר מחקר",
+        "coar:c_2f33": "ספר",
+        "coar:c_2fe3": "עיתון",
+        "coar:c_3248": "פרק בספר",
+        "coar:c_393c": "תהליך עבודה",
+        "coar:c_3e5a": "תרומה לכתב עת",
+        "coar:c_46ec": "עבודת גמר",
+        "coar:c_545b": "מכתב למערכת",
+        "coar:c_5794": "מאמר כנס",
+        "coar:c_5ce6": "תוכנה",
+        "coar:c_6501": "מאמר בכתב עת",
+        "coar:c_6670": "פוסטר כנס",
+        "coar:c_6947": "פוסט בבלוג",
+        "coar:c_71bd": "תיעוד טכני",
+        "coar:c_7877": "מחקר קליני",
+        "coar:c_7a1f": "עבודת גמר לתואר ראשון",
+        "coar:c_7acd": "הודעת תיקון",
+        "coar:c_7ad9": "אתר אינטרנט",
+        "coar:c_7bab": "מאמר תוכנה",
+        "coar:c_8042": "נייר עבודה",
+        "coar:c_816b": "קדם־פרסום (Preprint)",
+        "coar:c_8544": "הרצאה",
+        "coar:c_86bc": "ביבליוגרפיה",
+        "coar:c_8a7e": "תמונה נעה",
+        "coar:c_93fc": "דוח",
+        "coar:c_998f": "כתבה בעיתון",
+        "coar:c_ab20": "תוכנית ניהול נתונים",
+        "coar:c_b239": "מאמר מערכת",
+        "coar:c_ba08": "ביקורת ספר",
+        "coar:c_ba1f": "חלק מדוח",
+        "coar:c_baaf": "הצעת מחקר",
+        "coar:c_bdcc": "עבודת גמר לתואר שני",
+        "coar:c_beb9": "מאמר נתונים",
+        "coar:c_c513": "תמונה",
+        "coar:c_c94f": "תוצר כנס",
+        "coar:c_c950": "תוכנת מחקר",
+        "coar:c_cb28": "נתוני ניסוי קליני",
+        "coar:c_db06": "עבודת דוקטור",
+        "coar:c_dcae04bc": "מאמר סקירה",
+        "coar:c_ddb1": "מערך נתונים",
+        "coar:c_e059": "יחידת למידה",
+        "coar:c_e9a0": "משאב אינטראקטיבי",
+        "coar:c_ecc8": "תמונת סטילס",
+        "coar:c_efa0": "ביקורת",
+        "coar:c_f744": "קובץ הרצאות כנס"
+      },
+      "resource_contribution_role": {
+        "CONTRIBUTOR": "תרומה",
+        "CREATOR": "יצירה",
+        "DATA_CURATOR": "אוצרות נתונים",
+        "DEVELOPER": "פיתוח",
+        "MAINTAINER": "תחזוקה"
+      },
+      "service_type": {
+        "API_SERVICE": "שירות API",
+        "COMMAND_LINE_TOOL": "כלי שורת פקודה",
+        "CONSULTING_SERVICE": "שירות ייעוץ",
+        "DATABASE": "בסיס נתונים",
+        "DESKTOP_APPLICATION": "יישום שולחני",
+        "DIGITIZATION_SERVICE": "שירות דיגיטציה",
+        "LIBRARY": "ספריית תוכנה",
+        "WEB_APPLICATION": "יישום רשת"
+      },
+      "tool_type": {
+        "API_SERVICE": "שירות API",
+        "COMMAND_LINE_TOOL": "כלי שורת פקודה",
+        "CONSULTING_SERVICE": "שירות ייעוץ",
+        "DATABASE": "בסיס נתונים",
+        "DESKTOP_APPLICATION": "יישום שולחני",
+        "DIGITIZATION_SERVICE": "שירות דיגיטציה",
+        "LIBRARY": "ספריית תוכנה",
+        "WEB_APPLICATION": "יישום רשת"
+      },
+      "training_material_type": {
+        "COURSE_MATERIAL": "חומרי קורס",
+        "LESSON": "שיעור",
+        "OTHER_DIDACTIC_RESOURCE": "משאב לימודי אחר",
+        "SELF_PACED_EXERCISE": "תרגול עצמי",
+        "TUTORIAL": "מדריך",
+        "WORKSHOP_MATERIAL": "חומרי סדנה"
+      }
+    },
+    "fields": {
+      "Person": {
+        "$self": {
+          "label": "$t(common.labels.person)",
+          "description": "אדם הפעיל במדעי הרוח הדיגיטליים: במחקר, בפיתוח, בספרנות, בלימודים וכדומה."
+        },
+        "affiliations": {
+          "label": "השתייכויות",
+          "description": "העסקה וחברות רשמית של האדם בארגונים, כולל התפקיד ותקופת ההשתייכות."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "היכרות עם האדם, עבודתו ותחומי העניין שלו."
+        },
+        "emails": {
+          "label": "כתובות אימייל",
+          "description": "כתובות אימייל שדרכן ניתן ליצור קשר באופן פומבי."
+        },
+        "family_name": {
+          "label": "שם משפחה",
+          "description": "שם המשפחה של האדם."
+        },
+        "given_name": {
+          "label": "שם פרטי",
+          "description": "השם הפרטי של האדם, כולל שמות אמצעיים."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "האתר או עמוד הפרופיל הציבורי המרכזי של האדם."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "דיוקן או תמונה מייצגת של האדם."
+        },
+        "orcid": {
+          "label": "ORCID",
+          "description": "מזהה ה־ORCID של האדם, המקשר את זהותו המחקרית בין מערכות."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו אדם במערכות אחרות, כגון Wikidata או VIAF."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Organization": {
+        "$self": {
+          "label": "$t(common.labels.organization)",
+          "description": "ארגון מכל סוג - אוניברסיטה, גלריה, ספרייה, ארכיון, מוזיאון, מרכז מחקר, גוף מממן, חברה או מלכ״ר."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על הארגון מעבר לאתרו, כגון בלוג, פרופיל ברשת חברתית או רישום במרשם."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "הכתובת של הארגון."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של הארגון, כגון תיבת משרד או מחלקה."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של הארגון ופעילותו."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "האתר הרשמי של הארגון."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "הלוגו של הארגון או תמונה אחרת המייצגת אותו."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "המקום שבו הארגון פועל, כגון עיר."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "שמו הרשמי של הארגון."
+        },
+        "organization_structure": {
+          "label": "$t(common.labels.organization_structure)",
+          "description": "מקומו הרשמי של הארגון בתוך ארגוני אב גדולים יותר, כגון מחלקה בתוך אוניברסיטה, כולל התאריכים הרלוונטיים."
+        },
+        "organization_type": {
+          "label": "סוג הארגון",
+          "description": "הקטגוריה המתארת את הארגון בצורה הטובה ביותר, כגון אוניברסיטה, חברה או מרכז מחקר."
+        },
+        "ror": {
+          "label": "מזהה ROR",
+          "description": "המזהה של הארגון במרשם ארגוני המחקר (ROR)."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו ארגון במערכות אחרות, כגון Wikidata."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Facility": {
+        "$self": {
+          "label": "מתקן",
+          "description": "מתקן פיזי או וירטואלי כגון מעבדת מדעי רוח דיגיטליים, סטודיו דיגיטציה או תשתית מחקר. יש להשתמש במתקן כאשר היחידה מציעה שירותים או כלים ויש לה זהות משלה, נפרדת מהארגון המארח; אחרת יש להשתמש בארגון עצמו."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על המתקן, כגון בלוג, פרופיל ברשת חברתית או סיקור תקשורתי."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "הכתובת של המתקן."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של המתקן, כגון תיבת מעבדה או דלפק שירות."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של המתקן ומה שהוא מציע לקהילת המחקר."
+        },
+        "facility_affiliations": {
+          "label": "השתייכויות המתקן",
+          "description": "הארגונים המארחים את המתקן או המחזיקים בבעלותו, כולל תפקידיהם ותקופות מעורבותם."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "עמוד האינטרנט הציבורי המרכזי של המתקן."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "צילום, לוגו או תמונה אחרת המייצגת את המתקן."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "המקום שבו המתקן שוכן, כגון עיר."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "השם שבו המתקן מוכר לציבור."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו מתקן במערכות אחרות."
+        },
+        "services_offered": {
+          "label": "שירותים מוצעים",
+          "description": "שירותים שהמתקן מציע לקהילת המחקר."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "tools_provided": {
+          "label": "כלים מסופקים",
+          "description": "כלי תוכנה שהמתקן מתחזק או מנגיש, כולל שירותים מאוחסנים ותוכנות בתמיכת המעבדה."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Project": {
+        "$self": {
+          "label": "פרויקט",
+          "description": "פרויקט מחקר במדעי הרוח הדיגיטליים - הרשומה המרכזית של האינדקס, המקשרת אנשים, ארגונים, תוצרים ואת התקופות והמקומות הנחקרים."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על הפרויקט, כגון בלוג, פרופיל ברשת חברתית או סיקור תקשורתי."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של צוות הפרויקט."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של מטרות הפרויקט, שיטותיו ותוצאותיו."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "פעילויות המחקר במדעי הרוח הדיגיטליים המתבצעות במסגרת הפרויקט."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו הפרויקט הסתיים."
+        },
+        "funding": {
+          "label": "$t(common.labels.funding)",
+          "description": "המענקים ומקורות המימון האחרים שהפרויקט קיבל."
+        },
+        "funding_status": {
+          "label": "מצב מימון",
+          "description": "מצב המימון או הקיימות הנוכחי של הפרויקט."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "האתר הציבורי המרכזי של הפרויקט."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "הלוגו של הפרויקט או תמונה אחרת המייצגת אותו."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "השם שבו הפרויקט מוכר לציבור."
+        },
+        "organization_roles": {
+          "label": "תפקידי ארגונים",
+          "description": "ארגונים המעורבים בפרויקט - בתיאום, בשותפות, באספקת נתונים, במימון או באירוח."
+        },
+        "outputs_datasets": {
+          "label": "מערכי נתונים כתוצרים",
+          "description": "מערכי נתונים שהפרויקט הפיק או אצר."
+        },
+        "outputs_publications": {
+          "label": "פרסומים כתוצרים",
+          "description": "פרסומים שנוצרו כתוצאה מהפרויקט."
+        },
+        "outputs_tools": {
+          "label": "כלים כתוצרים",
+          "description": "כלים שהפרויקט הפיק."
+        },
+        "outputs_training_materials": {
+          "label": "חומרי הדרכה כתוצרים",
+          "description": "חומרי הדרכה שנוצרו כתוצרי הפרויקט."
+        },
+        "project_participations": {
+          "label": "השתתפות בפרויקט",
+          "description": "האנשים המעורבים בפרויקט, כולל תפקידם והתאריכים."
+        },
+        "research_disciplines": {
+          "label": "תחומי מחקר",
+          "description": "תחומי מדעי הרוח של הפרויקט, כגון היסטוריה, בלשנות או ארכאולוגיה."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו פרויקט במערכות אחרות, כגון מרשם הפרויקטים של גוף מממן."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת הפרויקט."
+        },
+        "studied_periods": {
+          "label": "תקופות נחקרות",
+          "description": "התקופות ההיסטוריות שהפרויקט חוקר, כגון התקופה העות'מאנית."
+        },
+        "studied_places": {
+          "label": "מקומות נחקרים",
+          "description": "המקומות והאזורים הגאוגרפיים שהמחקר של הפרויקט בוחן."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        },
+        "uses_datasets": {
+          "label": "מערכי נתונים בשימוש",
+          "description": "מערכי נתונים קיימים ששימשו כמקורות או כקלט מחקרי לפרויקט."
+        },
+        "uses_services": {
+          "label": "שירותים בשימוש",
+          "description": "שירותים התומכים בעבודת הפרויקט."
+        },
+        "uses_tools": {
+          "label": "כלים בשימוש",
+          "description": "כלי תוכנה המשמשים לביצוע המחקר של הפרויקט."
+        }
+      },
+      "Tool": {
+        "$self": {
+          "label": "כלי",
+          "description": "תוכנה לשימוש חוזר שניתן להתקין, להריץ או לגשת אליה, כגון יישום רשת, ספריית תוכנה או תוכנית שורת פקודה."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על הכלי, כגון פוסט בבלוג, מדריך או רישום במרשם."
+        },
+        "code_repository": {
+          "label": "מאגר קוד",
+          "description": "קישור למאגר קוד המקור, כגון GitHub או GitLab, אם הוא פתוח."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של מתחזקי הכלי."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של מה שהכלי עושה ולמי הוא מיועד."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "פעילויות המחקר במדעי הרוח הדיגיטליים שהכלי תומך בהן."
+        },
+        "documentation_url": {
+          "label": "$t(common.labels.documentation_url)",
+          "description": "תיעוד למשתמשים או למפתחים של הכלי, כגון מדריך, ויקי או תיעוד API."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "מזהה האובייקט הדיגיטלי (DOI) של הכלי, שלרוב מוקצה דרך הפקדת תוכנה."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "העמוד הציבורי המרכזי של הכלי - האתר או דף הנחיתה שלו."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "לוגו, צילום מסך או תמונה אחרת המייצגת את הכלי."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "התנאים המשפטיים שבמסגרתם מותר להשתמש בכלי, לשנות אותו או לשתף אותו."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "השם שבו הכלי מוכר לציבור."
+        },
+        "programming_languages": {
+          "label": "שפות תכנות",
+          "description": "שפות התכנות שבהן הכלי ממומש, כגון Python או JavaScript."
+        },
+        "resource_contributions": {
+          "label": "$t(common.labels.resource_contributions)",
+          "description": "האנשים והארגונים שיצרו, פיתחו או מתחזקים את הכלי, כולל תחומי אחריותם ותקופות מעורבותם."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו כלי במערכות אחרות, כגון Wikidata או SSH Open Marketplace."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "tool_type": {
+          "label": "סוג הכלי",
+          "description": "האופן העיקרי שבו משתמשים בכלי: יישום רשת, ספריית תוכנה, שורת פקודה וכדומה."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Service": {
+        "$self": {
+          "label": "שירות",
+          "description": "שירות הניתן על ידי אנשים במתקן או בארגון, כגון דיגיטציה לפי דרישה או תמיכה באצירת נתונים."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על השירות, כגון תמחור, תנאי שימוש או פוסט בבלוג."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת לבקשת השירות או לבירורים לגביו."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של מה שהשירות מספק ולמי הוא מיועד."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "פעילויות המחקר במדעי הרוח הדיגיטליים שהשירות תומך בהן."
+        },
+        "documentation_url": {
+          "label": "$t(common.labels.documentation_url)",
+          "description": "תיעוד למשתמשים של השירות, כגון מדריך או הוראות שימוש."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "עמוד האינטרנט הציבורי המרכזי של השירות."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "לוגו או תמונה אחרת המייצגת את השירות."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "השם שבו השירות מוכר לציבור."
+        },
+        "provider": {
+          "label": "ספק",
+          "description": "הארגון המספק את השירות והאחראי עליו."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו שירות במערכות אחרות, כגון SSH Open Marketplace."
+        },
+        "service_type": {
+          "label": "סוג השירות",
+          "description": "סוג השירות המוצע, כגון דיגיטציה או ייעוץ."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Publication": {
+        "$self": {
+          "label": "פרסום",
+          "description": "פרסום אקדמי: מאמר בכתב עת, ספר, פרק, מאמר כנס, עבודת גמר או דוח."
+        },
+        "authorships": {
+          "label": "מחברים",
+          "description": "האנשים שתרמו לפרסום, כולל סדר הופעתם ותפקידם."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "התאריך שבו הפרסום ראה אור באופן רשמי."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "תקציר או סיכום של תוכן הפרסום."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "מזהה האובייקט הדיגיטלי (DOI) של הפרסום."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "דף הנחיתה של הפרסום, כגון עמודו באתר ההוצאה לאור."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "כריכה או תמונה אחרת המייצגת את הפרסום."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "הכותרת שבה הפרסום מוכר."
+        },
+        "part_of": {
+          "label": "חלק מ־",
+          "description": "היצירה המכילה, כגון הספר עבור פרק או קובץ ההרצאות עבור מאמר."
+        },
+        "presented_at": {
+          "label": "הוצג ב־",
+          "description": "אירועים שבהם הפרסום הוצג, כגון הכנס שבו המאמר הועבר."
+        },
+        "publication_type": {
+          "label": "סוג הפרסום",
+          "description": "צורת הפרסום, כגון מאמר בכתב עת, ספר, פרק, עבודת גמר או דוח."
+        },
+        "published_in": {
+          "label": "פורסם ב־",
+          "description": "שם כתב העת, הספר או קובץ ההרצאות שבו הפרסום הופיע."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "הארגון שפרסם אותו באופן רשמי."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו פרסום במערכות אחרות, כגון קטלוג ספרייה או Wikidata."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Event": {
+        "$self": {
+          "label": "אירוע",
+          "description": "מפגש אקדמי מסוים, כגון כנס, סדנה, סמינר, הרצאה, האקתון או תערוכה."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על האירוע, כגון תוכנייה, עמוד הרשמה או הקלטות."
+        },
+        "address": {
+          "label": "$t(common.labels.address)",
+          "description": "הכתובת של מקום האירוע."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של מארגני האירוע."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של נושא האירוע, מטרתו ותוכניתו."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "מועד סיום האירוע."
+        },
+        "event_agent_roles": {
+          "label": "גורמים באירוע",
+          "description": "האנשים והארגונים המעורבים באירוע - בארגון, באירוח, בהרצאה, בהשתתפות או במתן חסות."
+        },
+        "event_type": {
+          "label": "סוג האירוע",
+          "description": "סוג האירוע האקדמי."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "אתר האירוע או עמוד ההכרזה המרכזי שלו."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "כרזה, באנר, צילום או תמונה אחרת המייצגת את האירוע."
+        },
+        "location": {
+          "label": "$t(common.labels.location)",
+          "description": "המקום שבו האירוע מתקיים, כגון עיר."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "השם שבו האירוע מוכר לציבור."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו אירוע במערכות אחרות, כגון אינדקס כנסים."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת האירוע."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Dataset": {
+        "$self": {
+          "label": "מערך נתונים",
+          "description": "מערך נתונים או משאב דומה: מהדורה דיגיטלית, קורפוס, בסיס נתונים, מילון גאוגרפי, אוסף תמונות או אוסף אנוטציות. גם קטלוגים המתארים משאבים אחרים, כגון אינדקס של ארכיון או ספרייה, הם סוג של מערך נתונים."
+        },
+        "byte_size": {
+          "label": "גודל בבתים",
+          "description": "הגודל הכולל המדויק של מערך הנתונים, בבתים."
+        },
+        "dataset_type": {
+          "label": "סוג מערך הנתונים",
+          "description": "הצורה העיקרית של מערך הנתונים, כגון מהדורה דיגיטלית, קורפוס, בסיס נתונים או מילון גאוגרפי."
+        },
+        "datasets": {
+          "label": "מערכי נתונים מקובצים",
+          "description": "מערכי נתונים שרשומה זו מקבצת כאשר היא משמשת כקטלוג."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "התאריך שבו מערך הנתונים פורסם באופן רשמי."
+        },
+        "derived_from": {
+          "label": "נגזר ממערכי נתונים",
+          "description": "מערכי הנתונים המקוריים שמהם מערך זה נוקה, הותמר, נדגם או נגזר בדרך אחרת."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של תוכן מערך הנתונים, היקפו ומקורו."
+        },
+        "distribution_url": {
+          "label": "קישור להורדה",
+          "description": "קישור ישיר להורדה או לגישה למערך הנתונים."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "מזהה האובייקט הדיגיטלי (DOI) של מערך הנתונים."
+        },
+        "extent": {
+          "label": "הצהרות היקף",
+          "description": "מדידות המתארות את היקף מערך הנתונים, כגון מספר הרשומות, הפריטים, התמונות או הקבצים שבו."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "העמוד הציבורי המרכזי של מערך הנתונים, כגון דף הנחיתה שלו במאגר."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "פריט לדוגמה, לוגו או תמונה אחרת המייצגת את מערך הנתונים."
+        },
+        "in_languages": {
+          "label": "$t(common.labels.content_languages)",
+          "description": "השפות האנושיות המיוצגות באופן מהותי בתוכן מערך הנתונים."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "התנאים המשפטיים שבמסגרתם מותר לגשת למערך הנתונים, להשתמש בו או לשתף אותו."
+        },
+        "media_type": {
+          "label": "$t(common.labels.media_type)",
+          "description": "פורמטי הקובץ או המדיה הטכניים של מערך הנתונים, כגון text/html או application/pdf."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "הכותרת שבה מערך הנתונים מוכר לציבור."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "הארגון שפרסם את מערך הנתונים באופן רשמי."
+        },
+        "related_publications": {
+          "label": "פרסומים קשורים",
+          "description": "פרסומים הנלווים ישירות למערך הנתונים, כגון המקבילה המודפסת של מהדורה דיגיטלית."
+        },
+        "resource_contributions": {
+          "label": "$t(common.labels.resource_contributions)",
+          "description": "האנשים והארגונים שיצרו, אצרו או מתחזקים את מערך הנתונים, כולל תחומי אחריותם ותקופות מעורבותם."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו מערך נתונים במערכות אחרות, כגון מאגר נתונים או קטלוג."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "themes": {
+          "label": "נושאים",
+          "description": "מילות מפתח המבטאות את הנושאים המרכזיים המיוצגים במערך הנתונים."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "TrainingMaterial": {
+        "$self": {
+          "label": "חומר הדרכה",
+          "description": "מדריך, שיעור או משאב לימודי אחר שמסביר כיצד לעשות משהו או מגדיר מה נלמד ממנו."
+        },
+        "additional_urls": {
+          "label": "$t(common.labels.additional_urls)",
+          "description": "עמודי אינטרנט רלוונטיים נוספים על החומר, כגון פוסט בבלוג או רישום קורס."
+        },
+        "contact_email": {
+          "label": "$t(common.labels.contact_email)",
+          "description": "כתובת קשר מפורסמת של מתחזקי החומר."
+        },
+        "creators": {
+          "label": "יוצרים",
+          "description": "האנשים או הארגונים האחראים ליצירת החומר."
+        },
+        "date_issued": {
+          "label": "$t(common.labels.date_issued)",
+          "description": "התאריך שבו חומר ההדרכה פורסם באופן רשמי."
+        },
+        "description": {
+          "label": "$t(common.labels.description)",
+          "description": "סקירה של מה שהחומר מלמד וכיצד לומדים ממנו."
+        },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "פעילויות המחקר במדעי הרוח הדיגיטליים שהחומר מלמד."
+        },
+        "doi": {
+          "label": "$t(common.labels.doi)",
+          "description": "מזהה האובייקט הדיגיטלי (DOI) של חומר ההדרכה."
+        },
+        "educational_level": {
+          "label": "רמת לימוד",
+          "description": "רמת הניסיון המוקדם המצופה מהלומדים, כגון מתחילים, מתקדמים או תארים מתקדמים."
+        },
+        "homepage": {
+          "label": "$t(common.labels.homepage_url)",
+          "description": "האתר המרכזי או העמוד הציבורי הרחב יותר של חומר ההדרכה."
+        },
+        "id": {
+          "label": "$t(common.labels.id)",
+          "description": "$t(common.field_descriptions.id)"
+        },
+        "image": {
+          "label": "$t(common.labels.image)",
+          "description": "כריכה או תמונה אחרת המייצגת את חומר ההדרכה."
+        },
+        "in_languages": {
+          "label": "$t(common.labels.content_languages)",
+          "description": "השפות האנושיות שבהן חומר ההדרכה זמין."
+        },
+        "learning_outcomes": {
+          "label": "תוצרי למידה",
+          "description": "הידע או המיומנויות שהלומדים צפויים לרכוש מהחומר."
+        },
+        "license": {
+          "label": "$t(common.labels.license)",
+          "description": "התנאים המשפטיים שבמסגרתם מותר לגשת לחומר ההדרכה, להשתמש בו או לשתף אותו."
+        },
+        "material_url": {
+          "label": "קישור לחומר",
+          "description": "הכתובת הישירה שבה ניתן לגשת לחומר ההדרכה."
+        },
+        "media_type": {
+          "label": "$t(common.labels.media_type)",
+          "description": "הפורמט הטכני של חומר ההדרכה, כגון עמוד אינטרנט, מסמך PDF או וידאו."
+        },
+        "name": {
+          "label": "$t(common.labels.name)",
+          "description": "הכותרת שבה חומר ההדרכה מוכר לציבור."
+        },
+        "part_of_training_material": {
+          "label": "חלק מחומר הדרכה",
+          "description": "חומר ההדרכה הגדול יותר שמשאב זה הוא יחידה או שיעור בתוכו."
+        },
+        "prerequisites": {
+          "label": "דרישות קדם",
+          "description": "הידע, המיומנויות, התוכנות או הלמידה המוקדמת המצופים לפני תחילת הלימוד."
+        },
+        "publisher": {
+          "label": "$t(common.labels.publisher)",
+          "description": "הארגון שמפרסם את החומר באופן רשמי, אם הוא שונה מיוצריו."
+        },
+        "related_datasets": {
+          "label": "מערכי נתונים קשורים",
+          "description": "מערכי נתונים המשמשים כנושא או כדוגמה מעשית בחומר."
+        },
+        "related_services": {
+          "label": "שירותים קשורים",
+          "description": "שירותים שהחומר מסביר כיצד לגשת אליהם או להשתמש בהם."
+        },
+        "related_tools": {
+          "label": "כלים קשורים",
+          "description": "כלי תוכנה שחומר ההדרכה מלמד או מדגים."
+        },
+        "same_as": {
+          "label": "$t(common.labels.same_as)",
+          "description": "קישורים המזהים את אותו חומר הדרכה במערכות אחרות, כגון קטלוג הדרכות."
+        },
+        "tags": {
+          "label": "$t(common.labels.tags)",
+          "description": "$t(common.field_descriptions.tags)"
+        },
+        "target_audiences": {
+          "label": "קהלי יעד",
+          "description": "קבוצות הלומדים שהחומר מיועד להן, כגון קהילת המחקר, צוותי ספריות או סטודנטים."
+        },
+        "training_material_type": {
+          "label": "סוג חומר ההדרכה",
+          "description": "האופן שבו לומדים מהחומר, לא פורמט הקובץ שלו."
+        },
+        "type": {
+          "label": "$t(common.labels.type)",
+          "description": "$t(common.field_descriptions.type)"
+        }
+      },
+      "Affiliation": {
+        "$self": {
+          "label": "השתייכות",
+          "description": "העסקה או חברות של אדם בארגון, ללא תלות בפרויקט מסוים."
+        },
+        "affiliation_role": {
+          "label": "תפקיד",
+          "description": "מעמדו של האדם בארגון - התפקיד או הסטטוס שלו, לא תפקידו בפרויקט."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו ההשתייכות הסתיימה."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "הארגון שאליו האדם משתייך."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת ההשתייכות."
+        }
+      },
+      "Authorship": {
+        "$self": {
+          "label": "מחברוּת",
+          "description": "כתיבה או תרומה מוכרת אחרת של אדם לפרסום."
+        },
+        "author": {
+          "label": "$t(common.labels.person)",
+          "description": "האדם שתרם לפרסום."
+        },
+        "author_order": {
+          "label": "סדר מחברים",
+          "description": "המיקום ברשימת המחברים; 1 הוא המחבר הראשון."
+        },
+        "authorship_role": {
+          "label": "תפקיד בכתיבה",
+          "description": "התרומה המוכרת של האדם לפרסום, כגון כתיבה, עריכה או תרגום."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו תרומת האדם לפרסום הסתיימה."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "התאריך שבו תרומת האדם לפרסום החלה."
+        }
+      },
+      "EventAgentRole": {
+        "$self": {
+          "label": "גורם באירוע",
+          "description": "אדם או ארגון המעורב באירוע בתפקיד מסוים."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו מעורבות האדם או הארגון באירוע הסתיימה."
+        },
+        "event_agent": {
+          "label": "אדם או ארגון",
+          "description": "האדם או הארגון המעורב באירוע."
+        },
+        "event_agent_role": {
+          "label": "תפקיד באירוע",
+          "description": "תפקיד האדם או הארגון באירוע, כגון ארגון, אירוח, הרצאה או מתן חסות."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "התאריך שבו מעורבות האדם או הארגון באירוע החלה."
+        }
+      },
+      "FacilityAffiliation": {
+        "$self": {
+          "label": "השתייכות מתקן",
+          "description": "הקשר של המתקן עם ארגון מארח או בעלים."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו הקשר של הארגון עם המתקן הסתיים."
+        },
+        "facility_affiliation_role": {
+          "label": "תפקיד בהשתייכות המתקן",
+          "description": "הקשר של הארגון למתקן, כמארח או כבעלים."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "הארגון המארח את המתקן או המחזיק בבעלותו."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת הקשר של הארגון עם המתקן."
+        }
+      },
+      "Funding": {
+        "$self": {
+          "label": "$t(common.labels.funding)",
+          "description": "מענק מימון נפרד שהפרויקט קיבל."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו תקופת המימון הסתיימה."
+        },
+        "funding_amount": {
+          "label": "סכום המימון",
+          "description": "הערך הכספי המדווח בפומבי של מענק המימון."
+        },
+        "funding_currency": {
+          "label": "מטבע המימון",
+          "description": "המטבע שבו סכום המימון הוענק."
+        },
+        "funding_organization": {
+          "label": "הארגון המממן",
+          "description": "הארגון המעניק את המימון."
+        },
+        "funding_program": {
+          "label": "תוכנית מימון",
+          "description": "תוכנית או מסלול המימון הרחב שבמסגרתו הוענק המענק."
+        },
+        "funding_url": {
+          "label": "קישור למענק",
+          "description": "עמוד האינטרנט הציבורי של מענק המימון הספציפי."
+        },
+        "grant_name": {
+          "label": "שם המענק",
+          "description": "הכותרת הרשמית של המענק או מקור המימון הספציפי."
+        },
+        "grant_number": {
+          "label": "מספר המענק",
+          "description": "המזהה שהוקצה על ידי הארגון המממן, בדיוק כפי שפורסם."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת תקופת המימון."
+        }
+      },
+      "LangString": {
+        "$self": {
+          "label": "טקסט לפי שפה",
+          "description": "קטע טקסט יחד עם השפה שבה הוא כתוב."
+        },
+        "language": {
+          "label": "שפה",
+          "description": "השפה שבה הטקסט כתוב."
+        },
+        "value": {
+          "label": "ערך",
+          "description": "הטקסט בשפה שנבחרה."
+        }
+      },
+      "OrganizationStructure": {
+        "$self": {
+          "label": "$t(common.labels.organization_structure)",
+          "description": "הכלה רשמית של ארגון זה בתוך ארגון אב גדול יותר."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו הארגון חדל להיות חלק מארגון האב."
+        },
+        "parent_organization": {
+          "label": "ארגון אב",
+          "description": "הארגון הגדול יותר שארגון זה הוא חלק ממנו."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "המועד שבו הארגון הפך לחלק מארגון האב."
+        }
+      },
+      "OrganizationProjectRole": {
+        "$self": {
+          "label": "$t(common.labels.organization_role)",
+          "description": "מעורבות של ארגון בפרויקט."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו מעורבות הארגון בפרויקט הסתיימה."
+        },
+        "org_project_role": {
+          "label": "$t(common.labels.organization_role)",
+          "description": "תפקיד הארגון בפרויקט, כגון תיאום, שותפות, אספקת נתונים, מימון או אירוח."
+        },
+        "organization": {
+          "label": "$t(common.labels.organization)",
+          "description": "הארגון המעורב בפרויקט."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת מעורבות הארגון בפרויקט."
+        }
+      },
+      "ProjectParticipation": {
+        "$self": {
+          "label": "השתתפות בפרויקט",
+          "description": "השתתפות של אדם בפרויקט."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו השתתפות האדם בפרויקט הסתיימה."
+        },
+        "participant": {
+          "label": "$t(common.labels.person)",
+          "description": "האדם המשתתף בפרויקט."
+        },
+        "participation_role": {
+          "label": "תפקיד בפרויקט",
+          "description": "תפקיד האדם בצוות הפרויקט, כגון חוקר ראשי, פיתוח, מחקר או לימודים."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת השתתפות האדם בפרויקט."
+        }
+      },
+      "ResourceContribution": {
+        "$self": {
+          "label": "תרומה למשאב",
+          "description": "אדם או ארגון התורם למשאב זה בתפקיד מוגדר."
+        },
+        "contributor": {
+          "label": "גורם תורם",
+          "description": "האדם או הארגון התורם למשאב זה."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו אחריות הגורם התורם על המשאב הסתיימה."
+        },
+        "resource_contribution_role": {
+          "label": "תפקיד בתרומה",
+          "description": "אחריות הגורם התורם על המשאב, כגון יצירה, פיתוח, תחזוקה או אוצרות נתונים."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת אחריות הגורם התורם על המשאב."
+        }
+      }
+    },
+    "detail": {
+      "created": "נוצר",
+      "modified": "עדכון אחרון",
+      "by": "על ידי",
+      "audit": "היסטוריית שינויים",
+      "edit": "עריכת רשומה",
+      "delete": "מחיקת רשומה"
+    },
+    "relationships": {
+      "labels": {
+        "people_affiliated_with_organization": "אנשים משתייכים",
+        "organizations_within_organization": "ארגוני משנה",
+        "facilities_affiliated_with_organization": "מתקנים משתייכים",
+        "facilities_offering_service": "זמין במתקנים",
+        "facilities_providing_tool": "מסופק על ידי מתקנים",
+        "projects_involving_organization": "פרויקטים מעורבים",
+        "projects_involving_person": "פרויקטים מעורבים",
+        "projects_funded_by_organization": "פרויקטים במימון",
+        "projects_using_dataset": "בשימוש פרויקטים",
+        "projects_using_service": "בשימוש פרויקטים",
+        "projects_using_tool": "בשימוש פרויקטים",
+        "projects_producing_publication": "תוצר של פרויקטים",
+        "projects_producing_dataset": "תוצר של פרויקטים",
+        "projects_producing_tool": "תוצר של פרויקטים",
+        "projects_producing_training_material": "תוצר של פרויקטים",
+        "tools_with_contributor": "כלים בתרומה",
+        "services_provided_by_organization": "שירותים מסופקים",
+        "publications_authored_by_person": "פרסומים שנכתבו",
+        "publications_published_by_organization": "יצירות שפורסמו",
+        "publications_within_publication": "פרסומים מוכלים",
+        "publications_presented_at_event": "פרסומים שהוצגו",
+        "events_involving_agent": "אירועים קשורים",
+        "datasets_published_by_organization": "מערכי נתונים שפורסמו",
+        "datasets_containing_dataset": "מערכי נתונים מכילים",
+        "datasets_derived_from_dataset": "מערכי נתונים נגזרים",
+        "datasets_related_to_publication": "מערכי נתונים קשורים",
+        "datasets_with_contributor": "מערכי נתונים בתרומה",
+        "training_materials_created_by_agent": "חומרי הדרכה שנוצרו",
+        "training_materials_published_by_organization": "חומרי הדרכה שפורסמו",
+        "training_materials_within_training_material": "חומרי הדרכה מוכלים",
+        "training_materials_related_to_tool": "חומרי הדרכה קשורים",
+        "training_materials_related_to_service": "חומרי הדרכה קשורים",
+        "training_materials_related_to_dataset": "חומרי הדרכה קשורים"
+      },
+      "load_error": "לא ניתן היה לטעון קשר זה."
+    },
+    "picker": {
+      "choose_another": "בחירת רשומה אחרת...",
+      "no_results": "לא נמצאו התאמות."
+    },
+    "form": {
+      "new_title": "יצירת {{type}}",
+      "edit_title": "עריכת {{type}}",
+      "image_error": "לא ניתן היה לקרוא את הקובץ שנבחר כתמונה.",
+      "image_size_error": "גודל התמונה מוגבל ל־{{maxSizeMb}}MB.",
+      "image_preview": "תצוגה מקדימה של תמונת הרשומה",
+      "remove_image": "הסרת תמונה",
+      "select_type": "בחירת סוג רשומה",
+      "select_type_description": "נא לבחור איזה סוג רשומה ליצור.",
+      "unsaved_changes_title": "שינויים שלא נשמרו",
+      "unsaved_changes": "יש שינויים שלא נשמרו. לצאת בכל זאת?",
+      "leave_page": "יציאה מהדף",
+      "publish": "פרסום",
+      "save_draft": "שמירה כטיוטה",
+      "add_lang_string": "הוספת ערך בשפה נוספת",
+      "add_item": "הוספת פריט",
+      "add_value": "הוספת \"{{term}}\"",
+      "language": "שפה",
+      "language_search": "חיפוש שפות...",
+      "external_url_placeholder": "או הזנת קישור חיצוני...",
+      "clear_selection": "ניקוי בחירה",
+      "remove_entity": "הסרת רשומה"
+    }
+  },
+  "validation": {
+    "required": "שדה חובה.",
+    "email": "יש להזין כתובת אימייל תקינה.",
+    "url": "יש להזין קישור (URL) תקין.",
+    "date": "יש להזין תאריך תקין.",
+    "doi": "יש להזין קישור DOI מלא, שמתחיל ב־https://doi.org/.",
+    "integer": "יש להזין מספר שלם.",
+    "number": "יש להזין מספר.",
+    "entity": "יש לבחור רשומה תקינה.",
+    "orcid": "יש להזין קישור ORCID מלא, שמתחיל ב־https://orcid.org/.",
+    "ror": "יש להזין קישור ROR מלא, שמתחיל ב־https://ror.org/.",
+    "min": "הערך חייב להיות לפחות {{min}}.",
+    "unsupported_value": "יש לבחור ערך נתמך.",
+    "invalid_list": "יש להזין רשימה תקינה.",
+    "add_at_least_one_value": "יש להוסיף ערך אחד לפחות.",
+    "invalid_multilingual_value": "יש להזין ערך רב־לשוני תקין.",
+    "choose_language": "יש לבחור שפה.",
+    "language_value_required": "יש להזין ערך עבור כל שפה שנוספה, או להסיר אותה.",
+    "duplicate_language": "כל שפה יכולה להופיע פעם אחת בלבד.",
+    "invalid_entity_list": "יש לבחור רשומות תקינות.",
+    "duplicate_entity": "כל רשומה יכולה להיבחר פעם אחת בלבד.",
+    "invalid_selected_entities": "אחת או יותר מהרשומות שנבחרו אינה תקינה."
+  }
+}

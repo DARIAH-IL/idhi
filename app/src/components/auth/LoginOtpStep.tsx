@@ -53,7 +53,7 @@ export function LoginOtpStep({
           autoFocus
           required
         >
-          <InputOTPGroup>
+          <InputOTPGroup dir="ltr">
             {Array.from({ length: digits }, (_, index) => (
               <InputOTPSlot key={index} index={index} />
             ))}
@@ -69,7 +69,7 @@ export function LoginOtpStep({
       >
         {isPending ? t('common.loading') : t('common.verify')}
       </Button>
-      <Button variant="ghost" size="sm" onPress={onBack}>
+      <Button variant="outline" size="sm" onPress={onBack}>
         {t('auth.back_to_email')}
       </Button>
     </form>

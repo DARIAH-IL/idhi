@@ -96,7 +96,7 @@ export function EntityPicker({
             <button
               key={id}
               type="button"
-              className="flex w-full items-center justify-between gap-2 rounded px-2 py-2 text-left hover:bg-accent"
+              className="flex w-full items-center justify-between gap-2 rounded px-2 py-2 text-start hover:bg-accent"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => {
                 onChange(id)

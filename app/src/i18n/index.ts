@@ -6,6 +6,8 @@ import ar from './locales/ar.json'
 import { useUIStore } from '@/stores/ui'
 import type { UiLanguage } from '@/api/models'
 
+he satisfies typeof en
+
 const RTL_LANGUAGES: UiLanguage[] = ['he', 'ar']
 
 export function isRtlLanguage(language: UiLanguage) {

@@ -33,6 +33,8 @@ import {
 } from '@/components/ui/select'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowLeftIcon, ArrowRightIcon } from '@hugeicons/core-free-icons'
+import { isRtlLanguage } from '@/i18n'
+import { useUIStore } from '@/stores/ui'
 
 const cellVariants = cva(
   'group/day relative mt-2 aspect-square h-full w-full cursor-default rounded-(--cell-radius) p-0 text-center select-none [&:is(:last-child>[data-selected=true])>div]:rounded-e-(--cell-radius)',
@@ -145,6 +147,9 @@ function CalendarInner({
   ) => React.ReactNode
   isRange?: boolean
 }) {
+  const isRtl = isRtlLanguage(useUIStore((state) => state.language))
+  const previousIcon = isRtl ? ArrowRightIcon : ArrowLeftIcon
+  const nextIcon = isRtl ? ArrowLeftIcon : ArrowRightIcon
   return (
     <div className="relative flex flex-col gap-4 md:flex-row">
       <header className="absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1">
@@ -154,7 +159,7 @@ function CalendarInner({
           className="size-(--cell-size) p-0 select-none aria-disabled:opacity-50"
         >
           <HugeiconsIcon
-            icon={ArrowLeftIcon}
+            icon={previousIcon}
             strokeWidth={2}
             className="size-4"
           />
@@ -165,7 +170,7 @@ function CalendarInner({
           className="size-(--cell-size) p-0 select-none aria-disabled:opacity-50"
         >
           <HugeiconsIcon
-            icon={ArrowRightIcon}
+            icon={nextIcon}
             strokeWidth={2}
             className="size-4"
           />

@@ -14,6 +14,18 @@ function TooltipTrigger({
   ...props
 }: React.ComponentProps<typeof TooltipTriggerPrimitive>) {
   const [trigger, tooltip] = React.Children.toArray(children)
+  const ref = React.useRef<HTMLSpanElement>(null)
+  const [connected, setConnected] = React.useState(false)
+
+  React.useLayoutEffect(() => {
+    setConnected(ref.current?.isConnected ?? false)
+  }, [])
+
+  const triggerElement = (
+    <span ref={ref} role="button">
+      {trigger}
+    </span>
+  )
 
   return (
     <TooltipTriggerPrimitive
@@ -21,9 +33,7 @@ function TooltipTrigger({
       delay={delay}
       {...props}
     >
-      <Focusable>
-        <span role="button">{trigger}</span>
-      </Focusable>
+      {connected ? <Focusable>{triggerElement}</Focusable> : triggerElement}
       {tooltip}
     </TooltipTriggerPrimitive>
   )
@@ -50,7 +60,7 @@ function Tooltip({
       offset={offset}
       crossOffset={crossOffset}
       className={cn(
-        'z-50 inline-flex w-fit max-w-xs origin-(--trigger-anchor-point) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm',
+        'z-50 inline-flex w-fit max-w-xs origin-(--trigger-anchor-point) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=start]:slide-in-from-end-2 data-[placement=end]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm',
         className,
       )}
       {...props}

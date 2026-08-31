@@ -10,6 +10,7 @@ import { getApiErrorMessage, getApiErrorResponse } from '@/lib/api-error'
 import { toast } from 'sonner'
 import type { AuthLinkFlow } from '@/stores/auth-link'
 import { useAuthStore } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui'
 import { usePasskeyStore } from '@/stores/passkey'
 import {
   Dialog,
@@ -44,6 +45,7 @@ export function LoginDialog({
   authLinkParams,
 }: LoginDialogProps) {
   const { t } = useTranslation()
+  const language = useUIStore((state) => state.language)
   const setToken = useAuthStore((state) => state.setToken)
   const credentialId = usePasskeyStore((state) => state.credentialId)
   const passkeyEmail = usePasskeyStore((state) => state.email)
@@ -165,7 +167,7 @@ export function LoginDialog({
 
     setEmail(normalizedEmail)
     setError(null)
-    startOtp.mutate({ data: { email: normalizedEmail } })
+    startOtp.mutate({ data: { email: normalizedEmail, lang: language } })
   }
 
   const handleEmailSubmit = () => startEmailLogin(email)
@@ -215,12 +217,6 @@ export function LoginDialog({
           </DialogDescription>
         )}
       </DialogHeader>
-
-      {step === 'otp' && (
-        <p className="-mt-2 text-center text-xs text-muted-foreground">
-          {t('auth.otp_check_spam')}
-        </p>
-      )}
 
       {step === 'loading' ? (
         <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
@@ -278,6 +274,12 @@ export function LoginDialog({
             setStep('start')
           }}
         />
+      )}
+
+      {step === 'otp' && (
+        <p className="-mt-2 text-center text-xs text-muted-foreground">
+          {t('auth.otp_check_spam')}
+        </p>
       )}
     </Dialog>
   )

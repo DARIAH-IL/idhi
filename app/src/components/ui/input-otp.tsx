@@ -54,7 +54,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        'relative flex size-7 items-center justify-center border-y border-e border-input bg-input/20 text-xs/relaxed transition-all outline-none first:rounded-s-md first:border-s last:rounded-e-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-1 data-[active=true]:ring-ring/30 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:border-input/15 dark:bg-input/15 dark:aria-invalid:border-destructive dark:data-[active=true]:border-muted-foreground dark:data-[active=true]:ring-muted-foreground/30 dark:data-[active=true]:aria-invalid:border-destructive dark:data-[active=true]:aria-invalid:ring-destructive/40',
+        'relative flex size-7 items-center justify-center border-y border-e border-input bg-input/20 text-xs/relaxed transition-all outline-none first:rounded-s-md first:border-s last:rounded-e-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-1 data-[active=true]:ring-ring/30 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:border-input dark:bg-input/45 dark:aria-invalid:border-destructive dark:data-[active=true]:border-muted-foreground dark:data-[active=true]:ring-muted-foreground/30 dark:data-[active=true]:aria-invalid:border-destructive dark:data-[active=true]:aria-invalid:ring-destructive/40',
         className,
       )}
       {...props}

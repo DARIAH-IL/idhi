@@ -230,7 +230,7 @@ function CodeBlock({ code }: { code: string }) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-1.5 right-1.5"
+        className="absolute top-1.5 inset-e-1.5"
         aria-label={copied ? t('common.copied') : t('common.copy')}
         onPress={() => {
           void navigator.clipboard.writeText(code)

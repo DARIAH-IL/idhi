@@ -29,14 +29,16 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useUIStore } from '#/stores/ui.ts'
 
 export function InviteDialog({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation()
+  const uiLanguage = useUIStore((state) => state.language)
   const queryClient = useQueryClient()
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [expiryDays, setExpiryDays] = useState('7')
-  const [lang, setLang] = useState<UiLanguage>(UiLanguage.en)
+  const [lang, setLang] = useState<UiLanguage>(uiLanguage)
   const invite = useInviteUser({
     mutation: {
       onSuccess: () => {

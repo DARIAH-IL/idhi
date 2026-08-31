@@ -182,7 +182,7 @@ function ComboboxContent({
       crossOffset={crossOffset}
       triggerRef={anchor}
       className={cn(
-        'relative isolate z-50 max-h-72 w-(--trigger-width) min-w-32 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=left]:slide-in-from-right-2 data-[placement=right]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 **:data-[slot$=-item]:data-focused:bg-foreground/10 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-7 *:data-[slot=input-group]:border-none *:data-[slot=input-group]:bg-input/20 *:data-[slot=input-group]:shadow-none',
+        'relative isolate z-50 max-h-72 w-(--trigger-width) min-w-32 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=start]:slide-in-from-end-2 data-[placement=end]:slide-in-from-left-2 data-[placement=top]:slide-in-from-bottom-2 **:data-[slot$=-item]:data-focused:bg-foreground/10 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-7 *:data-[slot=input-group]:border-none *:data-[slot=input-group]:bg-input/20 *:data-[slot=input-group]:shadow-none',
         className,
       )}
       {...props}
@@ -224,7 +224,7 @@ function ComboboxItem<T extends object>({
       {composeRenderProps(children, (renderedChildren, { isSelected }) => (
         <>
           {renderedChildren}
-          <span className="pointer-events-none absolute right-2 flex items-center justify-center">
+          <span className="pointer-events-none absolute inset-e-2 flex items-center justify-center">
             {isSelected ? (
               <HugeiconsIcon
                 icon={Tick02Icon}
