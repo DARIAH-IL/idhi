@@ -169,11 +169,7 @@ function CalendarInner({
           slot="next"
           className="size-(--cell-size) p-0 select-none aria-disabled:opacity-50"
         >
-          <HugeiconsIcon
-            icon={nextIcon}
-            strokeWidth={2}
-            className="size-4"
-          />
+          <HugeiconsIcon icon={nextIcon} strokeWidth={2} className="size-4" />
         </Button>
       </header>
       {Array.from({ length: numberOfMonths }, (_, i) => (
