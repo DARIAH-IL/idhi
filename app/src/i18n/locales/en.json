@@ -264,7 +264,7 @@
       "title": "Filters",
       "bulk_actions": "Filter selection actions",
       "select_value": "Select {{value}}",
-      "filter_placeholder": "Search options...",
+      "filter_placeholder": "Search filter options...",
       "filter_label": "Search filter options",
       "active_filters": "Active filters",
       "active_value": "{{field}}: {{value}}",
@@ -272,7 +272,8 @@
       "no_values": "No filter options are available.",
       "no_matching_values": "No matching options.",
       "apply": "Refine search",
-      "referenced_type": "Related {{type}}"
+      "referenced_type": "Related {{type}}",
+      "open": "Filters"
     },
     "no_results": "No entries found.",
     "no_matching_results": "No entries match your search.",

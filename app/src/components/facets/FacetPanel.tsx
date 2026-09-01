@@ -13,6 +13,7 @@ import {
   InputGroupInput,
 } from '#/components/ui/input-group.tsx'
 import { useToggleMap } from '#/hooks/useToggleMap.ts'
+import { useUIStore } from '#/stores/ui.ts'
 import { FacetSection } from './FacetSection.tsx'
 import {
   buildRelationshipFacetValues,
@@ -56,7 +57,8 @@ export function FacetPanel({
     updateRelationshipValue,
   } = useDraftFacetFilters(initialFilters)
   const [expandedValues, toggleValuesExpanded] = useToggleMap()
-  const [collapsedFacets, toggleCollapsed] = useToggleMap()
+  const collapsedFacets = useUIStore((state) => state.collapsedFacets)
+  const toggleCollapsed = useUIStore((state) => state.toggleFacetCollapsed)
   const [facetSearch, setFacetSearch] = useState('')
 
   return (

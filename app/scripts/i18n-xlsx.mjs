@@ -66,7 +66,8 @@ const exportXlsx = (xlsxPath) => {
   console.log(`Exported ${keys.length} keys to ${xlsxPath}`)
 }
 
-const hasValue = (value) => value !== '' && value !== undefined && value !== null
+const hasValue = (value) =>
+  value !== '' && value !== undefined && value !== null
 
 const importXlsx = (xlsxPath) => {
   const workbook = XLSX.readFile(xlsxPath)

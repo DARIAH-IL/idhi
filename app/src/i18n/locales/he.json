@@ -266,7 +266,7 @@
       "title": "מסננים",
       "bulk_actions": "פעולות בחירת מסננים",
       "select_value": "בחירת {{value}}",
-      "filter_placeholder": "חיפוש אפשרויות...",
+      "filter_placeholder": "חיפוש באפשרויות הסינון...",
       "filter_label": "חיפוש באפשרויות הסינון",
       "active_filters": "מסננים פעילים",
       "active_value": "{{field}}: {{value}}",
@@ -274,7 +274,8 @@
       "no_values": "אין אפשרויות סינון זמינות.",
       "no_matching_values": "אין אפשרויות תואמות.",
       "apply": "עדכון החיפוש",
-      "referenced_type": "{{type}} קשורים"
+      "referenced_type": "{{type}} קשורים",
+      "open": "מסננים"
     },
     "no_results": "לא נמצאו רשומות.",
     "no_matching_results": "אין רשומות שתואמות את החיפוש.",

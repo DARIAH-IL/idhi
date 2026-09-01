@@ -268,7 +268,7 @@
       "title": "المرشّحات",
       "bulk_actions": "إجراءات تحديد المرشّحات",
       "select_value": "تحديد {{value}}",
-      "filter_placeholder": "البحث في الخيارات...",
+      "filter_placeholder": "البحث في خيارات الترشيح...",
       "filter_label": "البحث في خيارات الترشيح",
       "active_filters": "المرشّحات النشطة",
       "active_value": "{{field}}: {{value}}",
@@ -276,7 +276,8 @@
       "no_values": "لا توجد خيارات ترشيح متاحة.",
       "no_matching_values": "لا توجد خيارات مطابقة.",
       "apply": "تحديث البحث",
-      "referenced_type": "{{type}} ذات صلة"
+      "referenced_type": "{{type}} ذات صلة",
+      "open": "المرشّحات"
     },
     "no_results": "لم يُعثر على سجلات.",
     "no_matching_results": "لا توجد سجلات مطابقة للبحث.",

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "SENTRY_DISABLED=true vite",
     "build": "tsc --noEmit && vite build",
     "deploy": "pnpm run build && wrangler deploy",
     "secrets:sync": "wrangler secret bulk .dev.vars",

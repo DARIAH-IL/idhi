@@ -6,7 +6,7 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev",
+    "dev": "VITE_SENTRY_DISABLED=true vite dev",
     "generate-routes": "tsr generate",
     "generate-terms": "node scripts/generate-term-uris.mjs",
     "i18n-export": "node scripts/i18n-xlsx.mjs export",

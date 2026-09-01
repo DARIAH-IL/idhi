@@ -70,6 +70,7 @@ app.onError(unhandledErrorHandler)
 export default withSentry(
   (env: Bindings) => ({
     dsn: env.SENTRY_DSN,
+    enabled: env.SENTRY_DISABLED !== 'true',
     tracesSampleRate: 1.0,
   }),
   { fetch: app.fetch },

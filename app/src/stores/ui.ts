@@ -9,6 +9,8 @@ interface UIState {
   setLanguage: (lang: UiLanguage) => void
   auditCollapsed: boolean
   setAuditCollapsed: (collapsed: boolean) => void
+  collapsedFacets: Record<string, boolean>
+  toggleFacetCollapsed: (facetKey: string) => void
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
@@ -31,6 +33,14 @@ export const useUIStore = create<UIState>()(
       setLanguage: (language) => set({ language }),
       auditCollapsed: false,
       setAuditCollapsed: (auditCollapsed) => set({ auditCollapsed }),
+      collapsedFacets: {},
+      toggleFacetCollapsed: (facetKey) =>
+        set((state) => ({
+          collapsedFacets: {
+            ...state.collapsedFacets,
+            [facetKey]: !state.collapsedFacets[facetKey],
+          },
+        })),
     }),
     { name: UI_STORAGE_KEY },
   ),

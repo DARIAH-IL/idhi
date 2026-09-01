@@ -13,6 +13,7 @@ export type Bindings = {
   OTP_MAX_ATTEMPTS?: string
 
   SENTRY_DSN: string
+  SENTRY_DISABLED?: string
 
   SERVER_ALLOWED_HOSTS: string
 

@@ -6,6 +6,12 @@ Use the `#/*` or `@/*` aliases for app source imports where appropriate. Maintai
 
 Always use css start/end and not left/right.
 
+## UI primitives
+
+Shared primitives in `app/src/components/ui/` were originally scaffolded via shadcn but have since been hand-adapted onto `react-aria-components` (not Radix) and onto this app's RTL logical-property conventions (`start`/`end`, `inset-s`/`inset-e`, never `left`/`right`). Treat every file in that directory as the house style, not as vanilla shadcn output.
+
+When a needed primitive doesn't exist yet (e.g. a drawer/sheet), do not just run `npx shadcn add <x>` and drop it in unasked — its Radix/Vaul-based output will conflict with the RAC + logical-property conventions already in place. Do not silently hand-roll a replacement either. Instead, surface the tradeoff to the user before writing code: stock shadcn component vs. a hand-rolled one matching the existing `ui/` pattern, and that adding it via the shadcn CLI means running an `npx`/package-manager command, which requires explicit user instruction per the global CLAUDE.md rule against running `npm`/`yarn`/`pip` unasked. Let the user pick; don't default to either path on your own.
+
 ## Localization
 
 All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.

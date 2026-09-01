@@ -8,6 +8,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Add01Icon,
   Cancel01Icon,
+  FilterIcon,
   Loading03Icon,
 } from '@hugeicons/core-free-icons'
 import {
@@ -58,6 +59,7 @@ import type {
 import { SortableColumnLabel } from '../../../components/facets/SortableColumnLabel.tsx'
 import { FacetPanel } from '../../../components/facets/FacetPanel.tsx'
 import { ActiveFilterChip } from '../../../components/facets/ActiveFilterChip.tsx'
+import { Drawer, DrawerTrigger } from '@/components/ui/drawer'
 import { useRelationshipFacetPanelData } from '../../../api/useRelationshipFacetPanelData.ts'
 import {
   getActiveFacetFilters,
@@ -91,6 +93,7 @@ function EntityBoard() {
   const { q, facetFilters, sort } = Route.useSearch()
 
   const [searchInput, setSearchInput] = useState(q ?? '')
+  const [isFacetsDrawerOpen, setIsFacetsDrawerOpen] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
@@ -229,6 +232,42 @@ function EntityBoard() {
           <Button type="submit" variant="outline" size="default">
             {t('common.search')}
           </Button>
+
+          <DrawerTrigger
+            isOpen={isFacetsDrawerOpen}
+            onOpenChange={setIsFacetsDrawerOpen}
+          >
+            <Button type="button" variant="outline" className="md:hidden">
+              <HugeiconsIcon
+                icon={FilterIcon}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+              {t('board.facets.open')}
+            </Button>
+            <Drawer>
+              <FacetPanel
+                key={JSON.stringify(facetFilters ?? {})}
+                facets={facets}
+                relationshipFacets={relationshipFacets}
+                relationshipEntitiesById={relationshipReferences.entitiesById}
+                areRelationshipNamesLoading={relationshipReferences.isLoading}
+                initialFilters={facetFilters ?? {}}
+                isLoading={isLoading}
+                isRefetching={isRefetching}
+                onApply={(nextFacetFilters) => {
+                  setIsFacetsDrawerOpen(false)
+                  updateSearch({
+                    q: searchInput || undefined,
+                    facetFilters:
+                      Object.keys(nextFacetFilters).length > 0
+                        ? nextFacetFilters
+                        : undefined,
+                  })
+                }}
+              />
+            </Drawer>
+          </DrawerTrigger>
         </form>
 
         {(q ||
@@ -286,25 +325,27 @@ function EntityBoard() {
       </div>
 
       <div className="grid items-start gap-6 md:min-h-0 md:flex-1 md:grid-cols-[16rem_minmax(0,1fr)]">
-        <FacetPanel
-          key={JSON.stringify(facetFilters ?? {})}
-          facets={facets}
-          relationshipFacets={relationshipFacets}
-          relationshipEntitiesById={relationshipReferences.entitiesById}
-          areRelationshipNamesLoading={relationshipReferences.isLoading}
-          initialFilters={facetFilters ?? {}}
-          isLoading={isLoading}
-          isRefetching={isRefetching}
-          onApply={(nextFacetFilters) =>
-            updateSearch({
-              q: searchInput || undefined,
-              facetFilters:
-                Object.keys(nextFacetFilters).length > 0
-                  ? nextFacetFilters
-                  : undefined,
-            })
-          }
-        />
+        <div className="hidden md:block">
+          <FacetPanel
+            key={JSON.stringify(facetFilters ?? {})}
+            facets={facets}
+            relationshipFacets={relationshipFacets}
+            relationshipEntitiesById={relationshipReferences.entitiesById}
+            areRelationshipNamesLoading={relationshipReferences.isLoading}
+            initialFilters={facetFilters ?? {}}
+            isLoading={isLoading}
+            isRefetching={isRefetching}
+            onApply={(nextFacetFilters) =>
+              updateSearch({
+                q: searchInput || undefined,
+                facetFilters:
+                  Object.keys(nextFacetFilters).length > 0
+                    ? nextFacetFilters
+                    : undefined,
+              })
+            }
+          />
+        </div>
 
         <section
           aria-label={t('board.results_label')}
