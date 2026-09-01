@@ -128,7 +128,7 @@ function TableLoadMoreItem({ className, ...props }: TableLoadMoreItemProps) {
     <TableLoadMoreItemPrimitive
       data-slot="table-load-more"
       className={cn(
-        'h-10 text-center text-xs text-muted-foreground',
+        'h-10 text-start lg:text-center text-xs text-muted-foreground',
         className,
       )}
       {...props}
