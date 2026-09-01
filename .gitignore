@@ -12,3 +12,5 @@ __unconfig*
 .pnp.*
 .dev.vars
 .idea
+
+i18n.xlsx
