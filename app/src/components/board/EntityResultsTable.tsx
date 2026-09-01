@@ -37,6 +37,7 @@ interface EntityResultsTableProps {
   hasResultsLoaded: boolean
   q: string | undefined
   facetFilters: FacetFilters | undefined
+  hasAdvancedFilter: boolean
   isError: boolean
   isFetching: boolean
   isLoading: boolean
@@ -57,6 +58,7 @@ export function EntityResultsTable({
   hasResultsLoaded,
   q,
   facetFilters,
+  hasAdvancedFilter,
   isError,
   isFetching,
   isLoading,
@@ -93,10 +95,10 @@ export function EntityResultsTable({
 
       <div className="relative md:min-h-0 md:flex-1">
         {(isLoading || isRefetching) && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-background/80">
+          <div className="absolute inset-0 z-10 flex items-start justify-center rounded-lg bg-background/80">
             <div
               role="status"
-              className="flex flex-col items-center gap-3 text-muted-foreground"
+              className="flex flex-col items-center gap-3 text-muted-foreground mt-12 md:mt-32"
             >
               <HugeiconsIcon
                 icon={Loading03Icon}
@@ -164,7 +166,9 @@ export function EntityResultsTable({
                     className="h-24 text-center text-sm text-muted-foreground"
                   >
                     {t(
-                      q || Object.keys(facetFilters ?? {}).length > 0
+                      q ||
+                        Object.keys(facetFilters ?? {}).length > 0 ||
+                        hasAdvancedFilter
                         ? 'board.no_matching_results'
                         : 'board.no_results',
                     )}
