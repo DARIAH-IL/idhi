@@ -30,5 +30,10 @@ export async function initializeEntityIndexes(
       { entityId: 1, at: -1 },
       { name: 'audit_entity_history' },
     ),
+    entities.createIndex({ type: 1 }, { name: 'entity_type' }),
+    entities.createIndex({ doi: 1 }, { name: 'entity_doi' }),
+    entities.createIndex({ orcid: 1 }, { name: 'entity_orcid' }),
+    entities.createIndex({ ror: 1 }, { name: 'entity_ror' }),
+    entities.createIndex({ 'name.value': 1 }, { name: 'entity_name_value' }),
   ])
 }
