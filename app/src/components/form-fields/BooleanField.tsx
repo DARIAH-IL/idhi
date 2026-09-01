@@ -11,7 +11,10 @@ export function BooleanField({ label }: { label: React.ReactNode }) {
     <Checkbox
       isSelected={field.state.value === true}
       onChange={field.handleChange}
-      className={cn('flex items-center gap-2 text-sm', rowClass)}
+      className={cn(
+        'flex items-center gap-2 rounded-md text-sm outline-none data-[focus-visible]:ring-2 data-[focus-visible]:ring-ring',
+        rowClass,
+      )}
     >
       {({ isSelected }) => (
         <>

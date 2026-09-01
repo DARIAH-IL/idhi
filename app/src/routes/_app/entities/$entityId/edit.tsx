@@ -62,12 +62,20 @@ function EditEntityPage() {
   }
 
   if (!entity) {
-    return <p className="text-muted-foreground">{t('common.loading')}</p>
+    return (
+      <p role="status" className="text-muted-foreground">
+        {t('common.loading')}
+      </p>
+    )
   }
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
-      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
+      {serverError && (
+        <p role="alert" className="text-sm text-destructive">
+          {serverError}
+        </p>
+      )}
 
       <EntityForm
         entityType={entity.type}

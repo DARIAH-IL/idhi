@@ -54,7 +54,8 @@
       "listed_other": "{{count}} items listed",
       "previous_page": "Previous page",
       "next_page": "Next page",
-      "page_count": "{{page}} of {{total}}"
+      "page_count": "{{page}} of {{total}}",
+      "label": "Pagination"
     },
     "labels": {
       "additional_urls": "Additional links",
@@ -91,7 +92,9 @@
       "id": "The entry’s unique identifier within the index.",
       "tags": "Keywords that describe the entry and make it easier to discover.",
       "type": "The kind of entry this is."
-    }
+    },
+    "skip_to_content": "Skip to main content",
+    "primary_navigation": "Primary"
   },
   "about": {
     "title": "About",

@@ -83,7 +83,11 @@ function EntityDetailPage() {
   })
 
   if (!entity) {
-    return <p className="text-muted-foreground">{t('common.loading')}</p>
+    return (
+      <p role="status" className="text-muted-foreground">
+        {t('common.loading')}
+      </p>
+    )
   }
 
   const { audit, ...raw } = entity
@@ -123,7 +127,9 @@ function EntityDetailPage() {
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span>{getEntityTypeLabel(entity.type)}</span>
               <span aria-hidden>·</span>
-              <span className="font-mono">{decodedId}</span>
+              <span dir="ltr" className="font-mono">
+                {decodedId}
+              </span>
               <EntityTags tags={entity.tags} />
             </div>
           </div>
@@ -195,7 +201,9 @@ function EntityDetailPage() {
                     <span className="text-muted-foreground">
                       {t('entity.detail.by')}
                     </span>{' '}
-                    <span className="font-mono">{audit.createdBy}</span>
+                    <span dir="ltr" className="font-mono">
+                      {audit.createdBy}
+                    </span>
                   </div>
                 )}
               </div>
@@ -212,7 +220,9 @@ function EntityDetailPage() {
                     <span className="text-muted-foreground">
                       {t('entity.detail.by')}
                     </span>{' '}
-                    <span className="font-mono">{audit.modifiedBy}</span>
+                    <span dir="ltr" className="font-mono">
+                      {audit.modifiedBy}
+                    </span>
                   </div>
                 )}
               </div>

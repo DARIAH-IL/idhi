@@ -145,7 +145,12 @@ function useActiveSection(): string {
 }
 
 function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches
+  document
+    .getElementById(id)
+    ?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' })
 }
 
 function NavLink({
@@ -163,6 +168,7 @@ function NavLink({
     <li>
       <button
         type="button"
+        aria-current={active || undefined}
         onClick={() => scrollToSection(id)}
         className={cn(
           'block w-full cursor-pointer border-s-2 py-1 ps-3 text-start text-xs transition-colors',
@@ -243,6 +249,9 @@ function CodeBlock({ code }: { code: string }) {
           strokeWidth={1.8}
         />
       </Button>
+      <span role="status" className="sr-only">
+        {copied ? t('common.copied') : ''}
+      </span>
     </div>
   )
 }

@@ -39,9 +39,13 @@ export function LoginPasskeyStep({
           {t('auth.use_different_account')}
         </Button>
       </div>
-      {error && <p className="text-center text-xs text-destructive">{error}</p>}
+      {error && (
+        <p role="alert" className="text-center text-xs text-destructive">
+          {error}
+        </p>
+      )}
       <Button className="w-full" size="lg" isDisabled={busy} onPress={onSignIn}>
-        <HugeiconsIcon icon={FingerPrintIcon} strokeWidth={2} />
+        <HugeiconsIcon icon={FingerPrintIcon} strokeWidth={2} aria-hidden="true" />
         {passkeyBusy ? t('common.loading') : t('auth.passkey_login')}
       </Button>
       <Button

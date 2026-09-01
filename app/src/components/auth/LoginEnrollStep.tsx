@@ -20,15 +20,26 @@ export function LoginEnrollStep({
 
   return (
     <div className="flex flex-col items-center gap-4 px-16">
-      <span className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <span
+        aria-hidden="true"
+        className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary"
+      >
         <HugeiconsIcon icon={FingerPrintIcon} size={32} strokeWidth={1.5} />
       </span>
-      {error && <p className="text-center text-xs text-destructive">{error}</p>}
+      {error && (
+        <p role="alert" className="text-center text-xs text-destructive">
+          {error}
+        </p>
+      )}
       <Button className="w-full" size="lg" isDisabled={busy} onPress={onCreate}>
-        <HugeiconsIcon icon={FingerPrintIcon} strokeWidth={2} />
+        <HugeiconsIcon
+          icon={FingerPrintIcon}
+          strokeWidth={2}
+          aria-hidden="true"
+        />
         {busy ? t('common.loading') : t('auth.passkey_create')}
       </Button>
-      <Button variant="ghost" size="sm" isDisabled={busy} onPress={onNotNow}>
+      <Button variant="outline" size="sm" isDisabled={busy} onPress={onNotNow}>
         {t('auth.passkey_not_now')}
       </Button>
     </div>

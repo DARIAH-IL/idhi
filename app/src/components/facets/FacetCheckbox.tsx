@@ -23,7 +23,7 @@ export function FacetCheckbox({
 }: FacetCheckboxProps) {
   return (
     <Checkbox
-      aria-label={accessibleLabel}
+      aria-label={`${accessibleLabel} (${count})`}
       isSelected={isSelected}
       onChange={onChange}
       className="flex cursor-pointer items-center gap-2 rounded-md px-1.5 py-1 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"

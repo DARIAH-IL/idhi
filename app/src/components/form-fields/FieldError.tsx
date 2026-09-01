@@ -1,9 +1,9 @@
-export function FieldError({ error }: { error?: string }) {
+export function FieldError({ error, id }: { error?: string; id?: string }) {
   if (!error) {
     return null
   }
   return (
-    <p className="text-xs text-destructive" role="alert">
+    <p id={id} className="text-xs text-destructive" role="alert">
       {error}
     </p>
   )

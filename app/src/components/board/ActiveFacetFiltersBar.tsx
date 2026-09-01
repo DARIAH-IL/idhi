@@ -43,6 +43,7 @@ export function ActiveFacetFiltersBar({
 
   return (
     <div
+      role="group"
       className="flex flex-wrap gap-1.5"
       aria-label={t('board.facets.active_filters')}
     >

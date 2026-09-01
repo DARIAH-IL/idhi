@@ -33,8 +33,11 @@ export function UserPagination({
   }
 
   return (
-    <div className="flex items-center justify-between gap-3 border-t px-4 pt-4">
-      <p className="text-xs text-muted-foreground">
+    <nav
+      aria-label={t('common.pagination.label')}
+      className="flex items-center justify-between gap-3 border-t px-4 pt-4"
+    >
+      <p aria-live="polite" className="text-xs text-muted-foreground">
         {t('common.pagination.range', {
           start: page * ADMIN_USERS_PAGE_SIZE + 1,
           end: Math.min((page + 1) * ADMIN_USERS_PAGE_SIZE, totalUsers),
@@ -49,7 +52,7 @@ export function UserPagination({
           isDisabled={page === 0}
           onPress={() => onPageChange(Math.max(0, page - 1))}
         >
-          <HugeiconsIcon icon={previousIcon} strokeWidth={2} />
+          <HugeiconsIcon icon={previousIcon} strokeWidth={2} aria-hidden="true" />
         </Button>
         <span className="flex min-w-16 items-center justify-center text-xs tabular-nums">
           {t('common.pagination.page_count', {
@@ -64,9 +67,9 @@ export function UserPagination({
           isDisabled={page + 1 >= totalPages}
           onPress={() => onPageChange(page + 1)}
         >
-          <HugeiconsIcon icon={nextIcon} strokeWidth={2} />
+          <HugeiconsIcon icon={nextIcon} strokeWidth={2} aria-hidden="true" />
         </Button>
       </div>
-    </div>
+    </nav>
   )
 }

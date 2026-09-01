@@ -58,7 +58,8 @@
       "listed_other": "{{count}} عنصر في القائمة",
       "previous_page": "الصفحة السابقة",
       "next_page": "الصفحة التالية",
-      "page_count": "{{page}} من {{total}}"
+      "page_count": "{{page}} من {{total}}",
+      "label": "ترقيم الصفحات"
     },
     "labels": {
       "additional_urls": "روابط إضافية",
@@ -95,7 +96,9 @@
       "id": "المعرّف الفريد للسجل داخل الفهرس.",
       "tags": "كلمات مفتاحية تصف السجل وتسهّل العثور عليه.",
       "type": "نوع السجل."
-    }
+    },
+    "skip_to_content": "تخطي إلى المحتوى الرئيسي",
+    "primary_navigation": "التنقل الرئيسي"
   },
   "about": {
     "title": "حول",

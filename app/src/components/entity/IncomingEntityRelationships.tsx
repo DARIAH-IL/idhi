@@ -97,7 +97,7 @@ function IncomingRelationshipError({
     <section className="flex flex-col gap-3">
       <RelationshipHeading relationship={relationship} />
       <Card>
-        <CardContent className="text-sm text-destructive">
+        <CardContent role="alert" className="text-sm text-destructive">
           {t('entity.relationships.load_error')}
         </CardContent>
       </Card>

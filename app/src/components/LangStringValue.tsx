@@ -43,12 +43,18 @@ export function LangStringValue({ items }: { items: LangStringItem[] }) {
   const bestValue = best.value
 
   if (others.length === 0) {
-    return bestValue
+    return best.language === language ? (
+      bestValue
+    ) : (
+      <span lang={best.language}>{bestValue}</span>
+    )
   }
 
   return (
     <span className="inline-flex items-center gap-1.5">
-      {bestValue}
+      <span lang={best.language === language ? undefined : best.language}>
+        {bestValue}
+      </span>
       <TooltipTrigger>
         <HugeiconsIcon
           icon={TranslateIcon}
@@ -56,7 +62,9 @@ export function LangStringValue({ items }: { items: LangStringItem[] }) {
         />
         <Tooltip className="flex-col items-start gap-1">
           {others.map((item) => (
-            <span key={item.language}>{item.value}</span>
+            <span key={item.language} lang={item.language}>
+              {item.value}
+            </span>
           ))}
         </Tooltip>
       </TooltipTrigger>

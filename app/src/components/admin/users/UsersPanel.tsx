@@ -43,8 +43,12 @@ export function UsersPanel() {
       <Card>
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2">
-            <HugeiconsIcon icon={UserMultipleIcon} strokeWidth={1.8} />
-            {t('admin.users.title')}
+            <HugeiconsIcon
+              icon={UserMultipleIcon}
+              strokeWidth={1.8}
+              aria-hidden="true"
+            />
+            <h2>{t('admin.users.title')}</h2>
             <Badge variant="secondary">
               {users.isPending ? '…' : totalUsers}
             </Badge>
@@ -52,7 +56,7 @@ export function UsersPanel() {
           <CardDescription>{t('admin.users.description')}</CardDescription>
           <CardAction>
             <Button onPress={() => setUserDialog('new')}>
-              <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+              <HugeiconsIcon icon={Add01Icon} strokeWidth={2} aria-hidden="true" />
               {t('admin.users.add')}
             </Button>
           </CardAction>

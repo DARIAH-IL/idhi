@@ -63,9 +63,10 @@ export function InvitesTable({
             <TableCell>
               <div className="flex justify-end">
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   className="text-destructive"
+                  aria-label={`${t('admin.invites.revoke')}: ${invite.email}`}
                   onPress={() => onRevoke(invite)}
                 >
                   {t('admin.invites.revoke')}

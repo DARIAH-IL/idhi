@@ -52,6 +52,8 @@ export function LoginOtpStep({
           containerClassName="justify-center"
           autoFocus
           required
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? 'login-otp-error' : undefined}
         >
           <InputOTPGroup dir="ltr">
             {Array.from({ length: digits }, (_, index) => (
@@ -60,7 +62,11 @@ export function LoginOtpStep({
           </InputOTPGroup>
         </InputOTP>
       </div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && (
+        <p id="login-otp-error" role="alert" className="text-xs text-destructive">
+          {error}
+        </p>
+      )}
       <Button
         type="submit"
         className="w-full"

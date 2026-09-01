@@ -82,12 +82,12 @@ export function EntityPicker({
         className="z-50 max-h-64 overflow-y-auto rounded-md border bg-popover p-1 shadow-md"
       >
         {isFetching && (
-          <p className="px-2 py-1.5 text-xs text-muted-foreground">
+          <p role="status" className="px-2 py-1.5 text-xs text-muted-foreground">
             {t('common.searching')}
           </p>
         )}
         {!isFetching && data?.results.length === 0 && (
-          <p className="px-2 py-1.5 text-xs text-muted-foreground">
+          <p role="status" className="px-2 py-1.5 text-xs text-muted-foreground">
             {t('entity.picker.no_results')}
           </p>
         )}
@@ -106,11 +106,7 @@ export function EntityPicker({
               }}
             >
               <span className="flex min-w-0 items-center gap-2">
-                <EntityImage
-                  image={entity.image}
-                  type={entity.type}
-                  alt={getEntityDisplayName(entity)}
-                />
+                <EntityImage image={entity.image} type={entity.type} alt="" />
                 <span className="min-w-0">
                   <span className="flex items-center gap-1.5">
                     <span className="block truncate text-sm font-medium">

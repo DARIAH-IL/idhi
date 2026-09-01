@@ -9,11 +9,16 @@ export function ExternalLink({
   refText?: string
   preferFaviconOnly?: boolean
 }) {
+  const linkText =
+    refText ||
+    href.replace(/^https?:\/\/(dx\.)?doi\.org\//, '').replace('https://', '')
+
   return (
     <a
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
+      aria-label={preferFaviconOnly ? linkText : undefined}
       className="app-link break-all"
     >
       <img
@@ -25,14 +30,7 @@ export function ExternalLink({
         )}
       />
 
-      {!preferFaviconOnly && (
-        <>
-          {refText ||
-            href
-              .replace(/^https?:\/\/(dx\.)?doi\.org\//, '')
-              .replace('https://', '')}
-        </>
-      )}
+      {!preferFaviconOnly && <>{linkText}</>}
     </a>
   )
 }

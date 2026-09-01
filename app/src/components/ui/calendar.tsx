@@ -156,7 +156,7 @@ function CalendarInner({
         <Button
           variant={buttonVariant}
           slot="previous"
-          className="size-(--cell-size) p-0 select-none aria-disabled:opacity-50"
+          className="size-(--cell-size) p-0 select-none disabled:opacity-50 aria-disabled:opacity-50"
         >
           <HugeiconsIcon
             icon={previousIcon}
@@ -167,7 +167,7 @@ function CalendarInner({
         <Button
           variant={buttonVariant}
           slot="next"
-          className="size-(--cell-size) p-0 select-none aria-disabled:opacity-50"
+          className="size-(--cell-size) p-0 select-none disabled:opacity-50 aria-disabled:opacity-50"
         >
           <HugeiconsIcon icon={nextIcon} strokeWidth={2} className="size-4" />
         </Button>

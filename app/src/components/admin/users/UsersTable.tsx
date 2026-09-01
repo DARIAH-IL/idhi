@@ -69,17 +69,21 @@ export function UsersTable({
             <TableCell>
               <div className="flex justify-end gap-1">
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   aria-label={t('admin.users.edit_label', {
                     email: user.email,
                   })}
                   onPress={() => onEdit(user)}
                 >
-                  <HugeiconsIcon icon={Edit03Icon} strokeWidth={2} />
+                  <HugeiconsIcon
+                    icon={Edit03Icon}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   className="text-destructive"
                   aria-label={t('admin.users.delete_label', {
@@ -87,7 +91,11 @@ export function UsersTable({
                   })}
                   onPress={() => onDelete(user)}
                 >
-                  <HugeiconsIcon icon={Delete04Icon} strokeWidth={2} />
+                  <HugeiconsIcon
+                    icon={Delete04Icon}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
                 </Button>
               </div>
             </TableCell>

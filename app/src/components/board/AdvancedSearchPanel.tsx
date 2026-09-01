@@ -147,6 +147,7 @@ function FilterGroupEditor({
             <Button
               key={combinator}
               size="xs"
+              aria-pressed={groupNode.combinator === combinator}
               variant={
                 groupNode.combinator === combinator ? 'outline' : 'ghost'
               }
@@ -447,6 +448,7 @@ function ConditionValueEditor({
   return (
     <Input
       className="w-48"
+      aria-label={t('common.value')}
       type={kind === 'number' ? 'number' : 'text'}
       value={value === undefined || value === null ? '' : String(value)}
       onChange={(event) => {

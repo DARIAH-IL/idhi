@@ -47,15 +47,29 @@ export function LoginEmailStep({
           onChange={(event) => onEmailChange(event.target.value)}
           autoFocus
           required
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? 'login-email-error' : undefined}
         />
       </div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error && (
+        <p
+          id="login-email-error"
+          role="alert"
+          className="text-xs text-destructive"
+        >
+          {error}
+        </p>
+      )}
       <Button type="submit" className="w-full" size="lg" isDisabled={isPending}>
         {isPending ? t('common.loading') : t('common.continue')}
       </Button>
       {showPasskeyOption && (
-        <Button variant="ghost" size="sm" onPress={onUsePasskey}>
-          <HugeiconsIcon icon={FingerPrintIcon} strokeWidth={2} />
+        <Button variant="outline" size="sm" onPress={onUsePasskey}>
+          <HugeiconsIcon
+            icon={FingerPrintIcon}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
           {t('auth.passkey_use_passkey')}
         </Button>
       )}

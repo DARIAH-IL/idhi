@@ -35,8 +35,12 @@ export function InvitesPanel() {
       <Card>
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2">
-            <HugeiconsIcon icon={MailOpenIcon} strokeWidth={1.8} />
-            {t('admin.invites.title')}
+            <HugeiconsIcon
+              icon={MailOpenIcon}
+              strokeWidth={1.8}
+              aria-hidden="true"
+            />
+            <h2>{t('admin.invites.title')}</h2>
             <Badge variant="secondary">
               {invites.isPending ? '…' : (invites.data?.length ?? 0)}
             </Badge>
@@ -44,7 +48,11 @@ export function InvitesPanel() {
           <CardDescription>{t('admin.invites.description')}</CardDescription>
           <CardAction>
             <Button onPress={() => setInviteDialogOpen(true)}>
-              <HugeiconsIcon icon={MailAdd01Icon} strokeWidth={2} />
+              <HugeiconsIcon
+                icon={MailAdd01Icon}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
               {t('admin.invites.invite')}
             </Button>
           </CardAction>

@@ -29,27 +29,31 @@ export function TextField({
 
   return (
     <FieldRow label={label}>
-      <>
-        <Input
-          type={type}
-          dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
-          value={field.state.value == null ? '' : String(field.state.value)}
-          onBlur={field.handleBlur}
-          onChange={(event) => {
-            const value = event.target.value
-            field.handleChange(
-              type === 'number' && value !== '' ? Number(value) : value,
-            )
-          }}
-          placeholder={placeholder}
-          required={required}
-          min={min}
-          readOnly={readOnly}
-          aria-invalid={Boolean(error)}
-          className={className}
-        />
-        <FieldError error={error} />
-      </>
+      {(labelId) => (
+        <>
+          <Input
+            type={type}
+            dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
+            value={field.state.value == null ? '' : String(field.state.value)}
+            onBlur={field.handleBlur}
+            onChange={(event) => {
+              const value = event.target.value
+              field.handleChange(
+                type === 'number' && value !== '' ? Number(value) : value,
+              )
+            }}
+            placeholder={placeholder}
+            required={required}
+            min={min}
+            readOnly={readOnly}
+            aria-labelledby={labelId}
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? `${labelId}-error` : undefined}
+            className={className}
+          />
+          <FieldError id={`${labelId}-error`} error={error} />
+        </>
+      )}
     </FieldRow>
   )
 }

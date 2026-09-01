@@ -51,9 +51,13 @@ export function UserMenu() {
             <MenuItem
               id="admin"
               onAction={() => void navigate({ to: '/admin' })}
-              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground"
+              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground"
             >
-              <HugeiconsIcon icon={UserShield01Icon} strokeWidth={2} />
+              <HugeiconsIcon
+                icon={UserShield01Icon}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
               {t('admin.menu_item')}
             </MenuItem>
           )}
@@ -63,9 +67,13 @@ export function UserMenu() {
               logout()
               toast.success(t('auth.signed_out'))
             }}
-            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground"
+            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground"
           >
-            <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
+            <HugeiconsIcon
+              icon={Logout01Icon}
+              strokeWidth={2}
+              aria-hidden="true"
+            />
             {t('common.logout')}
           </MenuItem>
         </Menu>

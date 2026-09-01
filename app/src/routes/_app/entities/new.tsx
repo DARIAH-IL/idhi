@@ -101,7 +101,7 @@ function NewEntityPage() {
                       <span className="font-semibold">
                         {t(`entity.fields.${className}.$self.label`)}
                       </span>
-                      <span className="font-mono text-[0.625rem] text-muted-foreground/70">
+                      <span className="font-mono text-[0.625rem] text-muted-foreground">
                         {getEntityTermUri(et)}
                       </span>
                     </span>
@@ -119,7 +119,11 @@ function NewEntityPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
-      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
+      {serverError && (
+        <p role="alert" className="text-sm text-destructive">
+          {serverError}
+        </p>
+      )}
 
       <EntityForm
         entityType={selectedType}

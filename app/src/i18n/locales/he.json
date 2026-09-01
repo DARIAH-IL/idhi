@@ -56,7 +56,8 @@
       "listed_other": "{{count}} פריטים ברשימה",
       "previous_page": "העמוד הקודם",
       "next_page": "העמוד הבא",
-      "page_count": "{{page}} מתוך {{total}}"
+      "page_count": "{{page}} מתוך {{total}}",
+      "label": "עימוד"
     },
     "labels": {
       "additional_urls": "קישורים נוספים",
@@ -93,7 +94,9 @@
       "id": "המזהה הייחודי של הרשומה באינדקס.",
       "tags": "מילות מפתח שמתארות את הרשומה ומקלות על מציאתה.",
       "type": "סוג הרשומה."
-    }
+    },
+    "skip_to_content": "דילוג לתוכן הראשי",
+    "primary_navigation": "ניווט ראשי"
   },
   "about": {
     "title": "אודות",

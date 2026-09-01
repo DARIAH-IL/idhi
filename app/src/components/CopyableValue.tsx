@@ -23,7 +23,7 @@ export function CopyableValue({ value }: { value: string }) {
           setTimeout(() => setCopied(false), 1500)
         }}
         className={cn(
-          'inline-flex shrink-0 cursor-pointer items-center rounded-sm p-0.5 text-muted-foreground transition-colors hover:bg-border hover:text-foreground',
+          'inline-flex shrink-0 cursor-pointer items-center rounded-sm p-1.5 text-muted-foreground transition-colors hover:bg-border hover:text-foreground',
           copied && 'text-primary hover:text-primary',
         )}
       >
@@ -31,8 +31,12 @@ export function CopyableValue({ value }: { value: string }) {
           icon={copied ? Tick02Icon : Copy01Icon}
           strokeWidth={1.8}
           className="size-3"
+          aria-hidden="true"
         />
       </button>
+      <span role="status" className="sr-only">
+        {copied ? t('common.copied') : ''}
+      </span>
     </span>
   )
 }

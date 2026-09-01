@@ -69,22 +69,23 @@ function AppLayout() {
 
   return (
     <div className="flex h-screen flex-col">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:start-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:ring-2 focus:ring-foreground"
+      >
+        {t('common.skip_to_content')}
+      </a>
       <header className="flex min-h-14 items-center justify-between gap-4 border-b px-6 py-2">
-        <Link
-          to="/entities"
-          aria-label={t('common.home')}
-          className="flex items-center gap-3"
-        >
-          <img
-            src="/logo.png"
-            alt={t('common.site_name')}
-            className="h-7 w-auto"
-          />
+        <Link to="/entities" className="flex items-center gap-3">
+          <img src="/logo.png" alt="" className="h-7 w-auto" />
           <span className="text-sm font-semibold sm:text-base">
             {t('common.site_name')}
           </span>
         </Link>
-        <div className="flex items-center gap-2">
+        <nav
+          aria-label={t('common.primary_navigation')}
+          className="flex items-center gap-2"
+        >
           <UiLanguagePicker />
           <TooltipTrigger delay={0}>
             <Button
@@ -126,11 +127,16 @@ function AppLayout() {
               <Tooltip>{t('common.login')}</Tooltip>
             </TooltipTrigger>
           )}
-        </div>
+        </nav>
       </header>
       <Separator />
       <div className="relative flex min-h-0 flex-1 flex-col">
-        <main ref={mainRef} className="flex-1 overflow-y-auto p-6">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          ref={mainRef}
+          className="flex-1 overflow-y-auto p-6 outline-none"
+        >
           <Outlet />
         </main>
         <JumpToTop scrollRef={mainRef} />

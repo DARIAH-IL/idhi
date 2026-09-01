@@ -69,7 +69,7 @@ export function FacetSection({
           variant="ghost"
           className="-ms-1.5 h-auto w-full justify-start gap-1.5 px-1.5 py-1 text-xs font-semibold"
           aria-expanded={!isCollapsed}
-          aria-controls={bodyId}
+          aria-controls={isCollapsed ? undefined : bodyId}
           onPress={onToggleCollapsed}
         >
           <HugeiconsIcon
@@ -86,12 +86,13 @@ export function FacetSection({
         <div id={bodyId}>
           <div
             role="group"
-            aria-label={t('board.facets.bulk_actions')}
+            aria-label={`${t('board.facets.bulk_actions')}: ${label}`}
             className="mt-2 grid grid-cols-2 rounded-md bg-muted p-0.5"
           >
             <Button
               size="xs"
               variant="ghost"
+              aria-label={`${t('common.select_all')}: ${label}`}
               isDisabled={isSelectAllDisabled}
               onPress={() =>
                 onSelectAll(filteredValues.map(({ value }) => value))
@@ -102,6 +103,7 @@ export function FacetSection({
             <Button
               size="xs"
               variant="ghost"
+              aria-label={`${t('common.clear_all')}: ${label}`}
               isDisabled={selectedValues.size === 0}
               onPress={onClearAll}
             >
@@ -110,18 +112,19 @@ export function FacetSection({
           </div>
 
           <div
+            aria-busy={isRefetching}
             className={`mt-2 grid gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
           >
             {isContentLoading ? (
-              <p className="px-1 py-3 text-xs text-muted-foreground">
+              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
                 {t('common.loading')}
               </p>
             ) : values.length === 0 ? (
-              <p className="px-1 py-3 text-xs text-muted-foreground">
+              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
                 {t('board.facets.no_values')}
               </p>
             ) : filteredValues.length === 0 ? (
-              <p className="px-1 py-3 text-xs text-muted-foreground">
+              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
                 {t('board.facets.no_matching_values')}
               </p>
             ) : (

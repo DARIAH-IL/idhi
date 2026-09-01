@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -68,6 +68,10 @@ function OauthAuthorizePage() {
   const [error, setError] = useState<string | null>(null)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
+  useEffect(() => {
+    document.title = `${t('oauth.title')} · ${t('common.site_name')}`
+  }, [t])
+
   const authorize = useCompleteOauthAuthorization({
     mutation: {
       onSuccess: ({ redirectUrl }) => {
@@ -109,7 +113,9 @@ function OauthAuthorizePage() {
       <Card className="w-full max-w-md text-center">
         <CardHeader className="items-center">
           <img src="/logo.png" alt="" className="mx-auto mb-2 h-16 w-auto" />
-          <CardTitle>{t('oauth.title')}</CardTitle>
+          <CardTitle>
+            <h1>{t('oauth.title')}</h1>
+          </CardTitle>
           <CardDescription>
             {requestValid ? t('oauth.description') : t('oauth.invalid_request')}
           </CardDescription>
@@ -121,7 +127,11 @@ function OauthAuthorizePage() {
               <p className="text-muted-foreground">
                 {t('oauth.redirect_notice')}
               </p>
-              {error && <p className="text-destructive">{error}</p>}
+              {error && (
+                <p role="alert" className="text-destructive">
+                  {error}
+                </p>
+              )}
             </CardContent>
             <CardFooter className="justify-center gap-3">
               <Button

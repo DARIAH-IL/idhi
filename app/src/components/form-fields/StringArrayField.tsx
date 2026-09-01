@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { getEnumValueLabel } from '@/lib/entity'
@@ -32,10 +33,11 @@ export function StringArrayField({
     field.moveValue,
   )
   const rowClass = useFieldRowClass()
+  const labelId = useId()
 
   return (
     <div className={cn('flex flex-col gap-2', rowClass)}>
-      <Label>{label}</Label>
+      <Label id={labelId}>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       <div className="flex flex-col gap-1.5">
         {items.map((item, index) => (
@@ -47,6 +49,7 @@ export function StringArrayField({
             <DragHandle {...getHandleProps(index)} />
             <Input
               type={type}
+              aria-labelledby={labelId}
               dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
               value={item}
               onChange={(event) =>
@@ -64,7 +67,7 @@ export function StringArrayField({
               variant="ghost"
               size="icon-sm"
               onPress={() => field.removeValue(index)}
-              aria-label={t('common.remove')}
+              aria-label={`${t('common.remove')} (${index + 1})`}
             >
               ×
             </Button>

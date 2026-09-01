@@ -19,7 +19,7 @@ export function AdvancedSearchToggleButton({
   const { t } = useTranslation()
   const isLocked = activeCount > 0
   const label = isLocked
-    ? t('board.advanced.toggle_locked')
+    ? `${t('board.advanced.toggle_locked')} (${activeCount})`
     : t(isVisible ? 'board.advanced.toggle_hide' : 'board.advanced.toggle_show')
 
   return (

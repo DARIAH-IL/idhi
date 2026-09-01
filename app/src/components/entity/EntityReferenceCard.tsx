@@ -54,11 +54,11 @@ export function EntityReferenceCard({
       <Card size="sm" className="bg-muted/20">
         <CardContent className="p-2.5">
           {isLoading ? (
-            <span className="text-xs text-muted-foreground">
+            <span role="status" className="text-xs text-muted-foreground">
               {t('common.loading')}
             </span>
           ) : (
-            <span className="text-xs text-destructive">
+            <span role="alert" className="text-xs text-destructive">
               {t('entity.reference.unavailable')}
             </span>
           )}
@@ -75,11 +75,7 @@ export function EntityReferenceCard({
       <Card size="sm" className="bg-muted/20 hover:bg-accent-foreground/10">
         <CardContent className="p-2.5">
           <div className="flex items-center gap-3">
-            <EntityImage
-              image={data.image}
-              type={data.type}
-              alt={getEntityDisplayName(data)}
-            />
+            <EntityImage image={data.image} type={data.type} alt="" />
             <div className="flex min-w-0 flex-col gap-0.5">
               <EntityNameIdentifiers entity={data}>
                 <span className="flex items-center gap-1.5">

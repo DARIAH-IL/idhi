@@ -13,7 +13,7 @@ export function RoutePending() {
       <HugeiconsIcon
         icon={Loading03Icon}
         strokeWidth={2}
-        className="size-6 animate-spin"
+        className="size-6 animate-spin motion-reduce:animate-none"
         aria-hidden="true"
       />
       <p className="text-sm">{t('common.loading')}</p>

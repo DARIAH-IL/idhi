@@ -81,7 +81,9 @@ export function EntityResultsTable({
       aria-busy={isFetching}
     >
       {isError && (
-        <p className="text-sm text-destructive">{t('common.error')}</p>
+        <p role="alert" className="text-sm text-destructive">
+          {t('common.error')}
+        </p>
       )}
 
       {hasResultsLoaded && (
@@ -103,7 +105,7 @@ export function EntityResultsTable({
               <HugeiconsIcon
                 icon={Loading03Icon}
                 strokeWidth={2}
-                className="size-6 animate-spin"
+                className="size-6 animate-spin motion-reduce:animate-none"
                 aria-hidden="true"
               />
               <p className="text-sm">{t('common.loading')}</p>
@@ -188,7 +190,7 @@ export function EntityResultsTable({
                         <EntityImage
                           image={entity.image}
                           type={entity.type}
-                          alt={getEntityDisplayName(entity)}
+                          alt=""
                         />
                       </TableCell>
                       <TableCell>

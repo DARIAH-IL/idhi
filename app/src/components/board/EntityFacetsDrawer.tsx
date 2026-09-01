@@ -9,6 +9,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import { FacetPanel } from '@/components/facets/FacetPanel.tsx'
@@ -55,6 +56,7 @@ export function EntityFacetsDrawer({
         }
       />
       <DrawerContent className="rounded-none m-0 [&_aside]:rounded-none">
+        <DrawerTitle className="sr-only">{t('board.facets.title')}</DrawerTitle>
         <div className="relative flex-1 overflow-y-auto">
           <DrawerClose
             render={
@@ -63,7 +65,11 @@ export function EntityFacetsDrawer({
                 size="icon-sm"
                 className="absolute top-2 end-2 z-10"
               >
-                <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
                 <span className="sr-only">{t('common.close')}</span>
               </Button>
             }

@@ -37,7 +37,7 @@ export function UiLanguagePicker() {
               key={lang}
               id={lang}
               onAction={() => setLanguage(lang)}
-              className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground"
+              className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground"
             >
               <span>{languageName(lang) ?? lang}</span>
               {language === lang && (

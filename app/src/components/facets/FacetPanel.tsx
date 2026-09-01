@@ -62,7 +62,10 @@ export function FacetPanel({
   const [facetSearch, setFacetSearch] = useState('')
 
   return (
-    <aside className="self-start rounded-lg border bg-muted/20 md:max-h-full md:overflow-y-auto">
+    <aside
+      aria-label={t('board.facets.title')}
+      className="self-start rounded-lg border bg-muted/20 md:max-h-full md:overflow-y-auto"
+    >
       <div className="border-b p-4">
         <h2 className="text-sm font-semibold">{t('board.facets.title')}</h2>
       </div>

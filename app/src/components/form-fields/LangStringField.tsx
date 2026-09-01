@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
@@ -120,6 +120,7 @@ export function LangStringField({
     field.moveValue,
   )
   const rowClass = useFieldRowClass()
+  const labelId = useId()
 
   const { topLanguages, otherLanguages, optionByCode, languageFilter } =
     useMemo(() => {
@@ -169,7 +170,7 @@ export function LangStringField({
 
   return (
     <div className={cn('flex flex-col gap-2', rowClass)}>
-      <Label>{label}</Label>
+      <Label id={labelId}>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {items.map((item, index) => (
         <div
@@ -188,6 +189,7 @@ export function LangStringField({
           />
           {multiline ? (
             <Textarea
+              aria-labelledby={labelId}
               dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
@@ -199,6 +201,7 @@ export function LangStringField({
             />
           ) : (
             <Input
+              aria-labelledby={labelId}
               dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
@@ -212,7 +215,7 @@ export function LangStringField({
             variant="ghost"
             size="icon-sm"
             onPress={() => field.removeValue(index)}
-            aria-label={t('common.remove')}
+            aria-label={`${t('common.remove')} (${index + 1})`}
           >
             ×
           </Button>

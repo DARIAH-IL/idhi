@@ -30,11 +30,17 @@ export function EntityBoardSearchBar({
   const { t } = useTranslation()
 
   return (
-    <form onSubmit={onSubmit} className="flex gap-2">
+    <form
+      role="search"
+      aria-label={t('common.search')}
+      onSubmit={onSubmit}
+      className="flex gap-2"
+    >
       <InputGroup className="max-w-sm">
         <InputGroupInput
           ref={searchInputRef}
           type="search"
+          aria-label={t('common.search')}
           placeholder={t('common.search_placeholder')}
           value={searchInput}
           onChange={(event) => onSearchInputChange(event.target.value)}

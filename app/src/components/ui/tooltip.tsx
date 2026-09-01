@@ -67,6 +67,7 @@ function Tooltip({
     >
       {children}
       <OverlayArrow
+        aria-hidden="true"
         className="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-[2px] bg-foreground"
         style={({ placement: arrowPlacement, defaultStyle }) => ({
           ...defaultStyle,

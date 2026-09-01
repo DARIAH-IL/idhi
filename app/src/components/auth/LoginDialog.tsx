@@ -219,7 +219,9 @@ export function LoginDialog({
       </DialogHeader>
 
       {step === 'loading' ? (
-        <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
+        <p role="status" className="text-sm text-muted-foreground">
+          {t('common.loading')}
+        </p>
       ) : step === 'start' && hasPasskey ? (
         <LoginPasskeyStep
           email={passkeyEmail}

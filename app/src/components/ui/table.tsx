@@ -89,7 +89,7 @@ function TableRow<T>({ className, ...props }: RowProps<T>) {
     <RowPrimitive
       data-slot="table-row"
       className={cn(
-        'border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted data-selected:bg-muted',
+        'border-b transition-colors outline-none hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted data-selected:bg-muted data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground',
         className,
       )}
       {...props}
@@ -102,7 +102,7 @@ function TableHead({ className, ...props }: ColumnProps) {
     <ColumnPrimitive
       data-slot="table-head"
       className={cn(
-        'h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground [&:has([data-slot=checkbox])]:pe-0 [&:has([role=checkbox])]:pe-0',
+        'h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground outline-none data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground [&:has([data-slot=checkbox])]:pe-0 [&:has([role=checkbox])]:pe-0',
         className,
       )}
       {...props}
@@ -115,7 +115,7 @@ function TableCell({ className, ...props }: CellProps) {
     <CellPrimitive
       data-slot="table-cell"
       className={cn(
-        'p-2 align-middle whitespace-nowrap [&:has([data-slot=checkbox])]:pe-0 [&:has([role=checkbox])]:pe-0',
+        'p-2 align-middle whitespace-nowrap outline-none data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground [&:has([data-slot=checkbox])]:pe-0 [&:has([role=checkbox])]:pe-0',
         className,
       )}
       {...props}

@@ -32,6 +32,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             icon={CheckmarkCircle02Icon}
             strokeWidth={2}
             className="size-4"
+            aria-hidden="true"
           />
         ),
         info: (
@@ -39,6 +40,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             icon={InformationCircleIcon}
             strokeWidth={2}
             className="size-4"
+            aria-hidden="true"
           />
         ),
         warning: (
@@ -46,6 +48,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             icon={Alert02Icon}
             strokeWidth={2}
             className="size-4"
+            aria-hidden="true"
           />
         ),
         error: (
@@ -53,13 +56,15 @@ const Toaster = ({ ...props }: ToasterProps) => {
             icon={MultiplicationSignCircleIcon}
             strokeWidth={2}
             className="size-4"
+            aria-hidden="true"
           />
         ),
         loading: (
           <HugeiconsIcon
             icon={Loading03Icon}
             strokeWidth={2}
-            className="size-4 animate-spin"
+            className="size-4 animate-spin motion-reduce:animate-none"
+            aria-hidden="true"
           />
         ),
       }}
