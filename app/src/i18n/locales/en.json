@@ -5,6 +5,10 @@
     "go_back": "Go back",
     "close": "Close",
     "clear": "Clear",
+    "apply": "Apply",
+    "field": "Field",
+    "operator": "Operator",
+    "value": "Value",
     "delete": "Delete",
     "loading": "Loading...",
     "loading_more": "Loading more...",
@@ -59,7 +63,7 @@
       "content_languages": "Content languages",
       "date_issued": "Date issued",
       "description": "Description",
-      "dh_activities": "DH activities",
+      "dh_activities": "Digital humanities activities",
       "documentation_url": "Documentation link",
       "doi": "DOI",
       "email": "Email address",
@@ -84,7 +88,7 @@
       "type": "Type"
     },
     "field_descriptions": {
-      "id": "The entry’s unique identifier within IDHI.",
+      "id": "The entry’s unique identifier within the index.",
       "tags": "Keywords that describe the entry and make it easier to discover.",
       "type": "The kind of entry this is."
     }
@@ -107,7 +111,7 @@
           "update_entity": "replace an existing entry",
           "delete_entity": "delete an entry"
         },
-        "auth_note": "Authentication uses the standard MCP OAuth flow: the first time your tool calls a write tool, it opens the IDHI sign-in page in your browser and continues automatically once you approve."
+        "auth_note": "Authentication uses the standard MCP OAuth flow: the first time your tool calls a write tool, it opens the index sign-in page in your browser and continues automatically once you approve."
       },
       "clients": {
         "title": "Connecting popular tools",
@@ -278,7 +282,41 @@
     },
     "no_results": "No entries found.",
     "no_matching_results": "No entries match your search.",
-    "new_entity": "Add a new entry"
+    "new_entity": "Add a new entry",
+    "advanced": {
+      "title": "Advanced search",
+      "toggle_show": "Show advanced search",
+      "toggle_hide": "Hide advanced search",
+      "toggle_locked": "Clear advanced search to enable hiding the panel",
+      "combinator": "Combine conditions with",
+      "combinators": {
+        "and": "AND",
+        "or": "OR"
+      },
+      "select_field": "Select a field",
+      "select_operator": "Select an operator",
+      "select_value": "Select a value",
+      "list_placeholder": "Comma-separated values",
+      "boolean_true": "Yes",
+      "boolean_false": "No",
+      "exists_true": "Has a value",
+      "exists_false": "Has no value",
+      "add_condition": "Add condition",
+      "add_group": "Add group",
+      "remove_condition": "Remove condition",
+      "remove_group": "Remove group",
+      "operators": {
+        "eq": "is",
+        "ne": "is not",
+        "gt": "is greater than",
+        "gte": "is greater than or equal to",
+        "lt": "is less than",
+        "lte": "is less than or equal to",
+        "in": "is one of",
+        "nin": "is none of",
+        "exists": "presence"
+      }
+    }
   },
   "entity": {
     "draft_badge": "Draft",

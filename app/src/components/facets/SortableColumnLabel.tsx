@@ -9,9 +9,9 @@ export function SortableColumnLabel({
 }: {
   label: string
   property: EntitySort['property']
-  sort: EntitySort
+  sort: EntitySort | undefined
 }) {
-  const direction = sort.property === property ? sort.direction : undefined
+  const direction = sort?.property === property ? sort.direction : undefined
 
   return (
     <span className="inline-flex items-center gap-1.5">

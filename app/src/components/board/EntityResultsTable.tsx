@@ -45,7 +45,7 @@ interface EntityResultsTableProps {
   isFetchingNextPage: boolean
   hasNextPage: boolean
   onFetchNextPage: () => void
-  activeSort: EntitySort
+  activeSort: EntitySort | undefined
   sortDescriptor: SortDescriptor
   onSortChange: (descriptor: SortDescriptor) => void
   tableContainerRef: RefObject<HTMLDivElement | null>

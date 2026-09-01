@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import type { SortDescriptor } from 'react-aria-components'
 import type { EntityType } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui'
 import {
   DEFAULT_SORT,
   getInfiniteEntityQueryOptions,
@@ -20,6 +21,10 @@ import {
   removeFacetFilterValue,
   removeRelationshipFacetFilterValue,
 } from '@/lib/facetFilterMutations.ts'
+import {
+  compileAdvancedFilter,
+  countActiveConditions,
+} from '@/lib/advancedFilterTree.ts'
 
 export type UpdateEntityBoardSearch = (
   updates: Partial<{
@@ -49,10 +54,32 @@ export function useEntityBoardState({
   const searchInputRef = useRef<HTMLInputElement>(null)
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
-  const activeSort = sort ?? DEFAULT_SORT
+  const advancedSearchFilterNode = useUIStore(
+    (state) => state.advancedSearchFilter,
+  )
+  const setAdvancedSearchFilterNode = useUIStore(
+    (state) => state.setAdvancedSearchFilter,
+  )
+  const advancedSearchCollapsed = useUIStore(
+    (state) => state.advancedSearchCollapsed,
+  )
+  const setAdvancedSearchCollapsed = useUIStore(
+    (state) => state.setAdvancedSearchCollapsed,
+  )
+  const advancedFilter = useMemo(
+    () => compileAdvancedFilter(advancedSearchFilterNode),
+    [advancedSearchFilterNode],
+  )
+  const advancedFilterActiveCount = useMemo(
+    () => countActiveConditions(advancedSearchFilterNode),
+    [advancedSearchFilterNode],
+  )
+  const clearAdvancedFilter = () => setAdvancedSearchFilterNode(undefined)
+
   const sortDescriptor: SortDescriptor = {
-    column: activeSort.property,
-    direction: activeSort.direction === 'asc' ? 'ascending' : 'descending',
+    column: (sort ?? DEFAULT_SORT).property,
+    direction:
+      (sort ?? DEFAULT_SORT).direction === 'asc' ? 'ascending' : 'descending',
   }
 
   const {
@@ -63,7 +90,9 @@ export function useEntityBoardState({
     isFetchingNextPage,
     isLoading,
     isFetching,
-  } = useInfiniteQuery(getInfiniteEntityQueryOptions(q, facetFilters, sort))
+  } = useInfiniteQuery(
+    getInfiniteEntityQueryOptions(q, facetFilters, sort, advancedFilter),
+  )
   const isRefetching = isFetching && !isLoading && !isFetchingNextPage
   const results = data?.pages.flatMap((resultPage) => resultPage.results) ?? []
   const total = data?.pages[0]?.total ?? 0
@@ -82,12 +111,17 @@ export function useEntityBoardState({
       return
     }
 
-    updateSearch({
-      sort: {
-        property: property.data,
-        direction: descriptor.direction === 'ascending' ? 'asc' : 'desc',
-      },
-    })
+    if (!sort || sort.property !== property.data) {
+      updateSearch({ sort: { property: property.data, direction: 'asc' } })
+      return
+    }
+
+    if (sort.direction === 'asc') {
+      updateSearch({ sort: { property: property.data, direction: 'desc' } })
+      return
+    }
+
+    updateSearch({ sort: undefined })
   }
 
   const clearSearch = () => {
@@ -133,7 +167,7 @@ export function useEntityBoardState({
     setSearchInput,
     searchInputRef,
     tableContainerRef,
-    activeSort,
+    activeSort: sort,
     sortDescriptor,
     data,
     results,
@@ -158,5 +192,11 @@ export function useEntityBoardState({
     removeRelationshipFacetFilter,
     activeFacetFilters,
     activeRelationshipFacetFilters,
+    advancedSearchFilterNode,
+    setAdvancedSearchFilterNode,
+    advancedFilterActiveCount,
+    clearAdvancedFilter,
+    advancedSearchCollapsed,
+    setAdvancedSearchCollapsed,
   }
 }

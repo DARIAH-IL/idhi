@@ -5,6 +5,10 @@
     "go_back": "חזרה",
     "close": "סגירה",
     "clear": "ניקוי",
+    "apply": "החל",
+    "field": "שדה",
+    "operator": "אופרטור",
+    "value": "ערך",
     "delete": "מחיקה",
     "loading": "טוען...",
     "loading_more": "טוען עוד...",
@@ -280,7 +284,41 @@
     },
     "no_results": "לא נמצאו רשומות.",
     "no_matching_results": "אין רשומות שתואמות את החיפוש.",
-    "new_entity": "הוספת רשומה חדשה"
+    "new_entity": "הוספת רשומה חדשה",
+    "advanced": {
+      "title": "חיפוש מתקדם",
+      "toggle_show": "הצגת חיפוש מתקדם",
+      "toggle_hide": "הסתרת חיפוש מתקדם",
+      "toggle_locked": "יש לנקות את החיפוש המתקדם כדי לאפשר הסתרת הלוח",
+      "combinator": "שילוב תנאים באמצעות",
+      "combinators": {
+        "and": "וגם",
+        "or": "או"
+      },
+      "select_field": "בחירת שדה",
+      "select_operator": "בחירת אופרטור",
+      "select_value": "בחירת ערך",
+      "list_placeholder": "ערכים מופרדים בפסיק",
+      "boolean_true": "כן",
+      "boolean_false": "לא",
+      "exists_true": "יש ערך",
+      "exists_false": "אין ערך",
+      "add_condition": "הוספת תנאי",
+      "add_group": "הוספת קבוצה",
+      "remove_condition": "הסרת תנאי",
+      "remove_group": "הסרת קבוצה",
+      "operators": {
+        "eq": "שווה ל",
+        "ne": "שונה מ",
+        "gt": "גדול מ",
+        "gte": "גדול או שווה ל",
+        "lt": "קטן מ",
+        "lte": "קטן או שווה ל",
+        "in": "אחד מ",
+        "nin": "אינו אחד מ",
+        "exists": "קיום ערך"
+      }
+    }
   },
   "entity": {
     "draft_badge": "טיוטה",

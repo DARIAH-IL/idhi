@@ -124,10 +124,27 @@ export function buildFacetFilter(facetFilters: FacetFilters | undefined) {
   return { and: clauses } satisfies EntityFilter
 }
 
+export function combineFilters(
+  ...filters: (EntityFilter | undefined)[]
+): EntityFilter | undefined {
+  const clauses = filters.filter(
+    (filter): filter is EntityFilter => filter !== undefined,
+  )
+
+  if (clauses.length === 0) {
+    return undefined
+  }
+  if (clauses.length === 1) {
+    return clauses[0]
+  }
+  return { and: clauses }
+}
+
 export function createEntitySearch(
   q: string | undefined,
   facetFilters: FacetFilters | undefined,
   sort: EntitySort | undefined,
+  advancedFilter?: EntityFilter,
 ): TypedEntitySearch {
   const sourceTypes = facetFilters?.type?.include
 
@@ -139,8 +156,8 @@ export function createEntitySearch(
         sourceTypes?.length ? sourceTypes : undefined,
       ),
     ],
-    filter: buildFacetFilter(facetFilters),
-    sort: [sort ?? DEFAULT_SORT],
+    filter: combineFilters(buildFacetFilter(facetFilters), advancedFilter),
+    sort: sort ? [sort] : undefined,
     pageSize: PAGE_SIZE,
   }
 }
@@ -149,8 +166,9 @@ export function getInfiniteEntityQueryOptions(
   q: string | undefined,
   facetFilters: FacetFilters | undefined,
   sort: EntitySort | undefined,
+  advancedFilter?: EntityFilter,
 ) {
-  const search = createEntitySearch(q, facetFilters, sort)
+  const search = createEntitySearch(q, facetFilters, sort, advancedFilter)
 
   return infiniteQueryOptions({
     queryKey: [...getSearchEntitiesTypedQueryKey(search), 'infinite'] as const,

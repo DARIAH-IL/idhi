@@ -5,13 +5,17 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Add01Icon } from '@hugeicons/core-free-icons'
 import { buttonVariants } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
+import { useUIStore } from '@/stores/ui'
 import {
   entityBoardSearchSchema,
   getInfiniteEntityQueryOptions,
 } from '../../../api/entityBoardSearch.ts'
 import type { FacetFilters } from '../../../api/entityBoardSearch.ts'
+import { compileAdvancedFilter } from '../../../lib/advancedFilterTree.ts'
 import { EntityBoardSearchBar } from '@/components/board/EntityBoardSearchBar.tsx'
 import { ActiveFacetFiltersBar } from '@/components/board/ActiveFacetFiltersBar.tsx'
+import { AdvancedSearchPanel } from '@/components/board/AdvancedSearchPanel.tsx'
+import { AdvancedSearchToggleButton } from '@/components/board/AdvancedSearchToggleButton.tsx'
 import { EntityFacetsDrawer } from '@/components/board/EntityFacetsDrawer.tsx'
 import { EntityFacetsDesktopPanel } from '@/components/board/EntityFacetsDesktopPanel.tsx'
 import { EntityResultsTable } from '@/components/board/EntityResultsTable.tsx'
@@ -30,8 +34,16 @@ export const Route = createFileRoute('/_app/entities/')({
     sort,
   }),
   loader: ({ context, deps }) => {
+    const advancedFilter = compileAdvancedFilter(
+      useUIStore.getState().advancedSearchFilter,
+    )
     void context.queryClient.prefetchInfiniteQuery(
-      getInfiniteEntityQueryOptions(deps.q, deps.facetFilters, deps.sort),
+      getInfiniteEntityQueryOptions(
+        deps.q,
+        deps.facetFilters,
+        deps.sort,
+        advancedFilter,
+      ),
     )
   },
   component: EntityBoard,
@@ -83,6 +95,12 @@ function EntityBoard() {
     removeRelationshipFacetFilter,
     activeFacetFilters,
     activeRelationshipFacetFilters,
+    advancedSearchFilterNode,
+    setAdvancedSearchFilterNode,
+    advancedFilterActiveCount,
+    clearAdvancedFilter,
+    advancedSearchCollapsed,
+    setAdvancedSearchCollapsed,
   } = useEntityBoardState({ q, facetFilters, sort, updateSearch })
 
   const applyFacetFilters = (nextFacetFilters: FacetFilters) =>
@@ -91,6 +109,9 @@ function EntityBoard() {
       facetFilters:
         Object.keys(nextFacetFilters).length > 0 ? nextFacetFilters : undefined,
     })
+
+  const isAdvancedSearchVisible =
+    !advancedSearchCollapsed || advancedFilterActiveCount > 0
 
   return (
     <div className="flex flex-col gap-4 md:h-full">
@@ -124,6 +145,13 @@ function EntityBoard() {
             onOpenChange={setIsFacetsDrawerOpen}
             onApply={applyFacetFilters}
           />
+          <AdvancedSearchToggleButton
+            isVisible={isAdvancedSearchVisible}
+            activeCount={advancedFilterActiveCount}
+            onToggle={() =>
+              setAdvancedSearchCollapsed(!advancedSearchCollapsed)
+            }
+          />
         </EntityBoardSearchBar>
 
         <ActiveFacetFiltersBar
@@ -134,6 +162,14 @@ function EntityBoard() {
           onClearFilters={clearFilters}
           onRemoveFacetFilter={removeFacetFilter}
           onRemoveRelationshipFacetFilter={removeRelationshipFacetFilter}
+        />
+
+        <AdvancedSearchPanel
+          filter={advancedSearchFilterNode}
+          activeCount={advancedFilterActiveCount}
+          isCollapsed={!isAdvancedSearchVisible}
+          onApply={setAdvancedSearchFilterNode}
+          onClear={clearAdvancedFilter}
         />
       </div>
 
@@ -155,6 +191,7 @@ function EntityBoard() {
           hasResultsLoaded={Boolean(data)}
           q={q}
           facetFilters={facetFilters}
+          hasAdvancedFilter={advancedFilterActiveCount > 0}
           isError={isError}
           isFetching={isFetching}
           isLoading={isLoading}

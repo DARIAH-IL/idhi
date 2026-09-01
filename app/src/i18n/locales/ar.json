@@ -5,6 +5,10 @@
     "go_back": "رجوع",
     "close": "إغلاق",
     "clear": "مسح",
+    "apply": "تطبيق",
+    "field": "الحقل",
+    "operator": "المُعامل",
+    "value": "القيمة",
     "delete": "حذف",
     "loading": "جارٍ التحميل...",
     "loading_more": "جارٍ تحميل المزيد...",
@@ -282,7 +286,41 @@
     },
     "no_results": "لم يُعثر على سجلات.",
     "no_matching_results": "لا توجد سجلات مطابقة للبحث.",
-    "new_entity": "إضافة سجل جديد"
+    "new_entity": "إضافة سجل جديد",
+    "advanced": {
+      "title": "بحث متقدم",
+      "toggle_show": "إظهار البحث المتقدم",
+      "toggle_hide": "إخفاء البحث المتقدم",
+      "toggle_locked": "مسح البحث المتقدم لتمكين إخفاء اللوحة",
+      "combinator": "دمج الشروط باستخدام",
+      "combinators": {
+        "and": "و",
+        "or": "أو"
+      },
+      "select_field": "اختيار حقل",
+      "select_operator": "اختيار مُعامل",
+      "select_value": "اختيار قيمة",
+      "list_placeholder": "قيم مفصولة بفواصل",
+      "boolean_true": "نعم",
+      "boolean_false": "لا",
+      "exists_true": "له قيمة",
+      "exists_false": "بلا قيمة",
+      "add_condition": "إضافة شرط",
+      "add_group": "إضافة مجموعة",
+      "remove_condition": "إزالة الشرط",
+      "remove_group": "إزالة المجموعة",
+      "operators": {
+        "eq": "يساوي",
+        "ne": "لا يساوي",
+        "gt": "أكبر من",
+        "gte": "أكبر من أو يساوي",
+        "lt": "أصغر من",
+        "lte": "أصغر من أو يساوي",
+        "in": "أحد",
+        "nin": "ليس أحد",
+        "exists": "وجود القيمة"
+      }
+    }
   },
   "entity": {
     "draft_badge": "مسودة",
