@@ -62,6 +62,38 @@ function enumSpecFromI18n(enumName: string): AdvancedSearchFieldSpec {
   return { kind: 'enum', values: Object.keys(enums[enumName] ?? {}) }
 }
 
+/**
+ * A "container" field is one that has at least one deeper dotted path under
+ * it (e.g. `affiliations` because `affiliations.organization` exists, or
+ * `description` because `description.value` exists). Containers hold complex
+ * objects, not a directly comparable value, so they can never be search
+ * fields themselves — only their leaves can. This is computed purely from
+ * `EntityField`, so it never goes stale as the schema changes.
+ */
+type ContainerOf<TField> = TField extends string
+  ? Extract<EntityField, `${TField}.${string}`> extends never
+    ? never
+    : TField
+  : never
+type ContainerField = ContainerOf<EntityField>
+
+/** The raw `.language` half of every multilingual `{ language, value }` pair. */
+type LanguageLeafField = Extract<EntityField, `${string}.language`>
+
+/**
+ * Every remaining field is a real, filterable leaf and MUST be given a kind
+ * below (or added here with a reason) — `ADVANCED_SEARCH_FIELDS` is checked
+ * against this exact set, not a partial one, so a new or renamed schema
+ * field that isn't accounted for is a compile error, not a silent gap.
+ */
+type ExcludedField =
+  | ContainerField
+  | LanguageLeafField
+  // A base64-encoded image blob: nothing sensible to filter on.
+  | 'image'
+
+type RequiredAdvancedSearchField = Exclude<EntityField, ExcludedField>
+
 export const ADVANCED_SEARCH_FIELDS = {
   type: { kind: 'enum', values: ENTITY_TYPES },
   tags: { kind: 'string' },
@@ -114,6 +146,7 @@ export const ADVANCED_SEARCH_FIELDS = {
   ),
   'funding.funding_organization': { kind: 'string' },
   'funding.grant_name.value': { kind: 'string' },
+  'funding.funding_program.value': { kind: 'string' },
   'funding.grant_number': { kind: 'string' },
   'funding.funding_amount': { kind: 'number' },
   'funding.funding_currency': enumSpec(ProjectFundingItemFundingCurrency),
@@ -204,7 +237,10 @@ export const ADVANCED_SEARCH_FIELDS = {
   related_tools: { kind: 'string' },
   'target_audiences.value': { kind: 'string' },
   training_material_type: enumSpec(TrainingMaterialTrainingMaterialType),
-} as const satisfies Partial<Record<EntityField, AdvancedSearchFieldSpec>>
+} as const satisfies Record<
+  RequiredAdvancedSearchField,
+  AdvancedSearchFieldSpec
+>
 
 export type AdvancedSearchField = keyof typeof ADVANCED_SEARCH_FIELDS
 
@@ -262,130 +298,41 @@ export function getAdvancedSearchEnumValueLabel(
     : getEnumValueLabel(field, value)
 }
 
-interface FieldLabelSource {
-  ownerClass: string
-  nestedClass?: string
+/**
+ * Finds which i18n `entity.fields.<Class>` group defines a given field name,
+ * so we never have to hand-maintain a field-to-class mapping: any class that
+ * already has a translated label for that field name is picked up automatically.
+ */
+function findFieldOwnerClass(fieldName: string): string | undefined {
+  const allFields: Record<string, Record<string, unknown> | undefined> = i18n.t(
+    'entity.fields',
+    { returnObjects: true },
+  )
+  return Object.keys(allFields).find(
+    (className) => allFields[className]?.[fieldName] !== undefined,
+  )
 }
 
-const FIELD_LABEL_SOURCES: Record<string, FieldLabelSource> = {
-  type: { ownerClass: 'Person' },
-  tags: { ownerClass: 'Person' },
-  id: { ownerClass: 'Person' },
-  name: { ownerClass: 'Organization' },
-  description: { ownerClass: 'Person' },
-  homepage: { ownerClass: 'Person' },
-  same_as: { ownerClass: 'Person' },
-  additional_urls: { ownerClass: 'Organization' },
-  contact_email: { ownerClass: 'Organization' },
-  start_date: { ownerClass: 'Project' },
-  end_date: { ownerClass: 'Project' },
-
-  affiliations: { ownerClass: 'Person', nestedClass: 'Affiliation' },
-  emails: { ownerClass: 'Person' },
-  family_name: { ownerClass: 'Person' },
-  given_name: { ownerClass: 'Person' },
-  orcid: { ownerClass: 'Person' },
-
-  address: { ownerClass: 'Organization' },
-  location: { ownerClass: 'Organization' },
-  organization_type: { ownerClass: 'Organization' },
-  organization_structure: {
-    ownerClass: 'Organization',
-    nestedClass: 'OrganizationStructure',
-  },
-  ror: { ownerClass: 'Organization' },
-
-  facility_affiliations: {
-    ownerClass: 'Facility',
-    nestedClass: 'FacilityAffiliation',
-  },
-  services_offered: { ownerClass: 'Facility' },
-  tools_provided: { ownerClass: 'Facility' },
-
-  digital_humanities_activities: { ownerClass: 'Project' },
-  funding: { ownerClass: 'Project', nestedClass: 'Funding' },
-  funding_status: { ownerClass: 'Project' },
-  organization_roles: {
-    ownerClass: 'Project',
-    nestedClass: 'OrganizationProjectRole',
-  },
-  outputs_datasets: { ownerClass: 'Project' },
-  outputs_publications: { ownerClass: 'Project' },
-  outputs_tools: { ownerClass: 'Project' },
-  outputs_training_materials: { ownerClass: 'Project' },
-  project_participations: {
-    ownerClass: 'Project',
-    nestedClass: 'ProjectParticipation',
-  },
-  research_disciplines: { ownerClass: 'Project' },
-  studied_periods: { ownerClass: 'Project' },
-  studied_places: { ownerClass: 'Project' },
-  uses_datasets: { ownerClass: 'Project' },
-  uses_services: { ownerClass: 'Project' },
-  uses_tools: { ownerClass: 'Project' },
-
-  code_repository: { ownerClass: 'Tool' },
-  documentation_url: { ownerClass: 'Tool' },
-  doi: { ownerClass: 'Tool' },
-  license: { ownerClass: 'Tool' },
-  programming_languages: { ownerClass: 'Tool' },
-  resource_contributions: {
-    ownerClass: 'Tool',
-    nestedClass: 'ResourceContribution',
-  },
-  tool_type: { ownerClass: 'Tool' },
-
-  provider: { ownerClass: 'Service' },
-  service_type: { ownerClass: 'Service' },
-
-  authorships: { ownerClass: 'Publication', nestedClass: 'Authorship' },
-  date_issued: { ownerClass: 'Publication' },
-  part_of: { ownerClass: 'Publication' },
-  presented_at: { ownerClass: 'Publication' },
-  publication_type: { ownerClass: 'Publication' },
-  published_in: { ownerClass: 'Publication' },
-  publisher: { ownerClass: 'Publication' },
-
-  event_agent_roles: { ownerClass: 'Event', nestedClass: 'EventAgentRole' },
-  event_type: { ownerClass: 'Event' },
-
-  byte_size: { ownerClass: 'Dataset' },
-  dataset_type: { ownerClass: 'Dataset' },
-  datasets: { ownerClass: 'Dataset' },
-  derived_from: { ownerClass: 'Dataset' },
-  distribution_url: { ownerClass: 'Dataset' },
-  extent: { ownerClass: 'Dataset' },
-  in_languages: { ownerClass: 'Dataset' },
-  media_type: { ownerClass: 'Dataset' },
-  related_publications: { ownerClass: 'Dataset' },
-  themes: { ownerClass: 'Dataset' },
-
-  creators: { ownerClass: 'TrainingMaterial' },
-  educational_level: { ownerClass: 'TrainingMaterial' },
-  learning_outcomes: { ownerClass: 'TrainingMaterial' },
-  material_url: { ownerClass: 'TrainingMaterial' },
-  part_of_training_material: { ownerClass: 'TrainingMaterial' },
-  prerequisites: { ownerClass: 'TrainingMaterial' },
-  related_datasets: { ownerClass: 'TrainingMaterial' },
-  related_services: { ownerClass: 'TrainingMaterial' },
-  related_tools: { ownerClass: 'TrainingMaterial' },
-  target_audiences: { ownerClass: 'TrainingMaterial' },
-  training_material_type: { ownerClass: 'TrainingMaterial' },
+function resolveFieldLabel(fieldName: string): string {
+  const ownerClass = findFieldOwnerClass(fieldName)
+  return ownerClass
+    ? getEntityFieldLabelText(ownerClass, fieldName)
+    : fieldName.replaceAll('_', ' ')
 }
 
-function getAuditFieldLabel(field: AdvancedSearchField): string | undefined {
-  switch (field) {
-    case 'audit.createdAt':
-      return String(i18n.t('entity.detail.created'))
-    case 'audit.modifiedAt':
-      return String(i18n.t('entity.detail.modified'))
-    case 'audit.createdBy':
-      return `${i18n.t('entity.detail.created')} ${i18n.t('entity.detail.by')}`
-    case 'audit.modifiedBy':
-      return `${i18n.t('entity.detail.modified')} ${i18n.t('entity.detail.by')}`
-    default:
-      return undefined
-  }
+type AuditField = Extract<AdvancedSearchField, `audit.${string}`>
+
+const AUDIT_FIELD_LABELS: Record<AuditField, () => string> = {
+  'audit.createdAt': () => String(i18n.t('entity.detail.created')),
+  'audit.modifiedAt': () => String(i18n.t('entity.detail.modified')),
+  'audit.createdBy': () =>
+    `${i18n.t('entity.detail.created')} ${i18n.t('entity.detail.by')}`,
+  'audit.modifiedBy': () =>
+    `${i18n.t('entity.detail.modified')} ${i18n.t('entity.detail.by')}`,
+}
+
+function isAuditField(field: AdvancedSearchField): field is AuditField {
+  return field in AUDIT_FIELD_LABELS
 }
 
 export function getAdvancedSearchFieldLabel(
@@ -395,25 +342,17 @@ export function getAdvancedSearchFieldLabel(
     return String(i18n.t('entity.draft_badge'))
   }
 
-  const auditLabel = getAuditFieldLabel(field)
-  if (auditLabel) {
-    return auditLabel
+  if (isAuditField(field)) {
+    return AUDIT_FIELD_LABELS[field]()
   }
 
   const [base, sub] = field.split('.')
   const baseName = base ?? field
-  const source = FIELD_LABEL_SOURCES[baseName]
-  const baseLabel = source
-    ? getEntityFieldLabelText(source.ownerClass, baseName)
-    : baseName.replaceAll('_', ' ')
+  const baseLabel = resolveFieldLabel(baseName)
 
   if (!sub || sub === 'value' || sub === 'language') {
     return baseLabel
   }
 
-  const nestedLabel = source?.nestedClass
-    ? getEntityFieldLabelText(source.nestedClass, sub)
-    : sub.replaceAll('_', ' ')
-
-  return `${baseLabel}: ${nestedLabel}`
+  return `${baseLabel}: ${resolveFieldLabel(sub)}`
 }
