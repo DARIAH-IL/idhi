@@ -7,6 +7,7 @@
     "clear": "ניקוי",
     "delete": "מחיקה",
     "loading": "טוען...",
+    "loading_more": "טוען עוד...",
     "error": "משהו השתבש",
     "route_error_description": "לא הצלחנו לטעון את הדף. נא לנסות שוב.",
     "try_again": "ניסיון נוסף",

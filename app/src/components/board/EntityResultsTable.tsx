@@ -228,7 +228,7 @@ export function EntityResultsTable({
                     }
                   }}
                 >
-                  {t('common.loading')}
+                  {t('common.loading_more')}
                 </TableLoadMoreItem>
               )}
             </TableBody>
