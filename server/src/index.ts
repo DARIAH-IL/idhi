@@ -1,3 +1,4 @@
+import { withSentry } from '@sentry/cloudflare'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
@@ -66,4 +67,10 @@ app.use('*', authMiddleware)
 app.route('/', generatedRoutes)
 app.onError(unhandledErrorHandler)
 
-export default app
+export default withSentry(
+  (env: Bindings) => ({
+    dsn: env.SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  }),
+  { fetch: app.fetch },
+)

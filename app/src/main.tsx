@@ -11,6 +11,16 @@ import { useLanguageQueryParam } from '@/hooks/useLanguageQueryParam'
 import { useAuthLinkQueryParams } from '@/hooks/useAuthLinkQueryParams'
 import { getRouter } from './router'
 
+import * as Sentry from '@sentry/react'
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  dataCollection: {},
+  integrations: [Sentry.browserTracingIntegration()],
+  tracesSampleRate: 1.0,
+  tracePropagationTargets: [/^https?:\/\//],
+})
+
 const router = getRouter()
 
 const reactAriaLocales = {

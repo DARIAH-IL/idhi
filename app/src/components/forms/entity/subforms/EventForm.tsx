@@ -12,6 +12,7 @@ interface Props {
   title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
+  onCancel: () => void
 }
 
 export function EventForm({ event, ...props }: Props) {
@@ -31,6 +32,7 @@ export function EventForm({ event, ...props }: Props) {
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!event || event.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
+        onCancel={props.onCancel}
       >
         <CommonEntityFields
           form={form}

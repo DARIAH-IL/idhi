@@ -10,11 +10,15 @@ Always use css start/end and not left/right.
 
 All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.
 
+The app ships three languages — English (`en`), Hebrew (`he`), and Arabic (`ar`) — and all three must be kept in sync at all times. Every key added, renamed, or removed in one locale file must be added, renamed, or removed in the other two in the same change; never leave a key present in only some locales. When adding new copy, provide real translations for all three languages rather than placeholder or copied English text in `he.json`/`ar.json`.
+
+Prefer gender-neutral phrasing in all user-facing copy, in every language. Avoid wording that presumes a specific gender for the user, an entity's contributors, or people described by the data (e.g. authors, contacts, administrators). Where a language's grammar forces a gendered form, choose the most neutral construction available in that language rather than defaulting to masculine.
+
 Scope translation keys by meaning and reuse, not by the first feature that needs them. Generic interface copy — including pagination ranges, previous/next-page labels, page counts, loading states, and common actions — belongs under `common` and must be reused across features. Do not duplicate or feature-scope generic text under namespaces such as `admin`, `entity`, or a specific component; reserve those namespaces for genuinely domain-specific copy.
 
-Locale resources live in `app/src/i18n/locales/` (currently `en.json` only), initialized in `app/src/i18n/index.ts`. Translation keys are fully typed: `app/src/i18n/i18next.d.ts` derives the key space from `en.json`, so adding a key there immediately makes it available (and type-checked) through `t(...)`.
+Locale resources live in `app/src/i18n/locales/` (`en.json`, `he.json`, `ar.json`), initialized in `app/src/i18n/index.ts`. Translation keys are fully typed: `app/src/i18n/i18next.d.ts` derives the key space from `en.json`, so adding a key there immediately makes it available (and type-checked) through `t(...)`; still add the matching key to `he.json` and `ar.json` so the three files stay structurally identical.
 
-`en.json` is standard 2-space-indented JSON that round-trips byte-identically through `JSON.stringify(data, null, 2)`; scripted edits that parse, modify, and re-serialize the file are safe and preferred for bulk changes.
+Locale files are standard 2-space-indented JSON that round-trip byte-identically through `JSON.stringify(data, null, 2)`; scripted edits that parse, modify, and re-serialize the files are safe and preferred for bulk changes, and should touch all three locale files together.
 
 Entity field copy lives under `entity.fields`, keyed by schema class name then field name, mirroring the key structure of `app/src/api/termUris/termUris.ts`. Each entry holds both a `label` and a `description`, and each class also has a `$self` entry describing the class itself:
 

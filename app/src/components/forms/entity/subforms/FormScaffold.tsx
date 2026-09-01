@@ -19,6 +19,7 @@ interface ScaffoldProps {
   isSubmitting?: boolean
   canSaveAsDraft: boolean
   onSubmit: (isDraft: boolean) => void
+  onCancel: () => void
 }
 
 export function FormScaffold({
@@ -28,6 +29,7 @@ export function FormScaffold({
   isSubmitting,
   canSaveAsDraft,
   onSubmit,
+  onCancel,
 }: ScaffoldProps) {
   const { t } = useTranslation()
   const isDirty = useStore(
@@ -70,7 +72,7 @@ export function FormScaffold({
                 {t('entity.form.save_draft')}
               </Button>
             )}
-            <Button variant="outline" onPress={() => window.history.back()}>
+            <Button variant="outline" onPress={onCancel}>
               {t('common.cancel')}
             </Button>
           </div>

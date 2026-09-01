@@ -43,10 +43,10 @@ const exportXlsx = (xlsxPath) => {
     ]),
   )
 
-  const otherKeys = LANGS.filter((lang) => lang !== 'en').flatMap((lang) =>
-    Object.keys(flattened[lang]),
+  const allKeys = LANGS.flatMap((lang) => Object.keys(flattened[lang]))
+  const keys = [...new Set(allKeys)].sort((a, b) =>
+    a.localeCompare(b, 'en', { numeric: true }),
   )
-  const keys = [...new Set([...Object.keys(flattened.en), ...otherKeys.sort()])]
 
   const rows = keys.map((key) => {
     const row = { key }
@@ -66,21 +66,54 @@ const exportXlsx = (xlsxPath) => {
   console.log(`Exported ${keys.length} keys to ${xlsxPath}`)
 }
 
+const hasValue = (value) => value !== '' && value !== undefined && value !== null
+
 const importXlsx = (xlsxPath) => {
   const workbook = XLSX.readFile(xlsxPath)
   const worksheet =
     workbook.Sheets[SHEET_NAME] ?? workbook.Sheets[workbook.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json(worksheet, { defval: '' })
 
+  const original = Object.fromEntries(
+    LANGS.map((lang) => [
+      lang,
+      flatten(JSON.parse(readFileSync(localePath(lang), 'utf8'))),
+    ]),
+  )
+
+  const rowByKey = new Map()
+  for (const row of rows) {
+    if (!row.key) continue
+    rowByKey.set(row.key, row)
+  }
+
+  const allKeys = new Set([
+    ...rowByKey.keys(),
+    ...LANGS.flatMap((lang) => Object.keys(original[lang])),
+  ])
+
   const flattened = Object.fromEntries(LANGS.map((lang) => [lang, {}]))
 
-  for (const row of rows) {
-    const key = row.key
-    if (!key) continue
+  for (const key of allKeys) {
+    const row = rowByKey.get(key)
     for (const lang of LANGS) {
-      const value = row[lang]
-      if (value !== '' && value !== undefined && value !== null) {
-        flattened[lang][key] = String(value)
+      const sheetVal = row?.[lang]
+      const sheetHasValue = hasValue(sheetVal)
+      const jsonVal = original[lang][key]
+      const jsonHasValue = hasValue(jsonVal)
+
+      if (sheetHasValue && jsonHasValue) {
+        flattened[lang][key] = String(sheetVal)
+      } else if (!sheetHasValue && !jsonHasValue) {
+        continue
+      } else if (sheetHasValue && !jsonHasValue) {
+        throw new Error(
+          `Key "${key}" (${lang}) has a value in the sheet but not in ${localePath(lang)}`,
+        )
+      } else {
+        throw new Error(
+          `Key "${key}" (${lang}) has a value in ${localePath(lang)} but not in the sheet`,
+        )
       }
     }
   }

@@ -19,8 +19,8 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function caseInsensitiveEquals(value: string): Record<string, string> {
-  return { $regex: `^${escapeRegExp(value)}$`, $options: 'i' }
+function caseInsensitiveEquals(value: string): RegExp {
+  return new RegExp(`^${escapeRegExp(value)}$`, 'i')
 }
 
 function comparisonFilter(

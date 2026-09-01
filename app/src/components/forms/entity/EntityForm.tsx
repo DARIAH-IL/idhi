@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router'
 import type { AuditedEntity, Entity } from '@/api/models'
 import type { EntityType } from '@/lib/entity'
 import { DuplicateCheckProvider } from './duplicate-check'
@@ -21,17 +22,32 @@ interface Props {
 }
 
 export function EntityForm({ entityType, entity, ...props }: Props) {
+  const navigate = useNavigate()
+  const onCancel = () => {
+    if (entity) {
+      void navigate({
+        to: '/entities/$entityId',
+        params: { entityId: encodeURIComponent(entity.id) },
+      })
+    } else {
+      void navigate({ to: '/entities' })
+    }
+  }
   return (
     <DuplicateCheckProvider
       entityType={entityType}
       enabled={entity === undefined}
     >
-      {renderEntitySubform({ entityType, entity, ...props })}
+      {renderEntitySubform({ entityType, entity, ...props, onCancel })}
     </DuplicateCheckProvider>
   )
 }
 
-function renderEntitySubform({ entityType, entity, ...props }: Props) {
+function renderEntitySubform({
+  entityType,
+  entity,
+  ...props
+}: Props & { onCancel: () => void }) {
   switch (entityType) {
     case 'idhi:Person': {
       if (entity?.type !== entityType) {

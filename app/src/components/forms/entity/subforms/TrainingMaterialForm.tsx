@@ -15,6 +15,7 @@ interface Props {
   title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
+  onCancel: () => void
 }
 
 export function TrainingMaterialForm({ trainingMaterial, ...props }: Props) {
@@ -34,6 +35,7 @@ export function TrainingMaterialForm({ trainingMaterial, ...props }: Props) {
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!trainingMaterial || trainingMaterial.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
+        onCancel={props.onCancel}
       >
         <CommonEntityFields
           form={form}

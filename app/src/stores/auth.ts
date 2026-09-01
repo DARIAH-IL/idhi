@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import * as Sentry from '@sentry/react'
 
 import type { User } from '@/api/models'
 import { useStorageSync } from '@/hooks/useStorageSync'
@@ -18,7 +19,16 @@ const AUTH_STORAGE_KEY = 'idhi-auth'
 
 function sessionFromToken(token: string): PersistedAuthState {
   const user = userFromToken(token)
-  return user ? { token, user } : { token: null, user: null }
+  if (user) {
+    Sentry.setUser({
+      id: user.id,
+      email: user.email,
+    })
+    return { token, user }
+  } else {
+    Sentry.setUser(null)
+    return { token: null, user: null }
+  }
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -27,7 +37,10 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       setToken: (token) => set(sessionFromToken(token)),
-      logout: () => set({ token: null, user: null }),
+      logout: () => {
+        Sentry.setUser(null)
+        set({ token: null, user: null })
+      },
     }),
     {
       name: AUTH_STORAGE_KEY,

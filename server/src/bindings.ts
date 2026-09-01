@@ -12,6 +12,8 @@ export type Bindings = {
   OTP_DIGITS?: string
   OTP_MAX_ATTEMPTS?: string
 
+  SENTRY_DSN: string
+
   SERVER_ALLOWED_HOSTS: string
 
   SMTP_FROM_EMAIL: string

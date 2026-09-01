@@ -12,6 +12,7 @@ interface Props {
   title: React.ReactNode
   isSubmitting?: boolean
   onSubmit: (data: Entity, isDraft: boolean) => void
+  onCancel: () => void
 }
 
 export function DatasetForm({ dataset, ...props }: Props) {
@@ -31,6 +32,7 @@ export function DatasetForm({ dataset, ...props }: Props) {
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!dataset || dataset.isDraft === true}
         onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
+        onCancel={props.onCancel}
       >
         <CommonEntityFields
           form={form}
