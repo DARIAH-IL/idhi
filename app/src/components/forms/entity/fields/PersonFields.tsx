@@ -1,6 +1,7 @@
 import { PersonAffiliationsItemAffiliationRole } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
+import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -14,6 +15,7 @@ import { personFormOptions } from '../entity-form-options.ts'
 export const PersonFields = withForm({
   ...personFormOptions,
   render: function Render({ form }) {
+    const duplicateCheck = useDuplicateCheck()
     return (
       <>
         <form.AppField
@@ -23,6 +25,7 @@ export const PersonFields = withForm({
           {(field) => (
             <field.OrcidField
               label={<EntityFieldLabel entityClass="Person" field="orcid" />}
+              onBlurValue={(value) => duplicateCheck?.check('orcid', value)}
               onSelect={(suggestion) => {
                 if (
                   suggestion.givenNames &&
@@ -62,6 +65,9 @@ export const PersonFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Person" field="given_name" />
               }
+              onItemBlur={(value) =>
+                duplicateCheck?.check('given_name.value', value)
+              }
             />
           )}
         </form.AppField>
@@ -73,6 +79,9 @@ export const PersonFields = withForm({
             <field.LangStringField
               label={
                 <EntityFieldLabel entityClass="Person" field="family_name" />
+              }
+              onItemBlur={(value) =>
+                duplicateCheck?.check('family_name.value', value)
               }
             />
           )}

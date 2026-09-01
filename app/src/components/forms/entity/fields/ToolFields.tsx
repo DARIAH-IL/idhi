@@ -6,6 +6,7 @@ import {
 } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
+import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -19,12 +20,14 @@ import { toolFormOptions } from '../entity-form-options.ts'
 export const ToolFields = withForm({
   ...toolFormOptions,
   render: function Render({ form }) {
+    const duplicateCheck = useDuplicateCheck()
     return (
       <>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.DoiField
               label={<EntityFieldLabel entityClass="Tool" field="doi" />}
+              onBlurValue={(value) => duplicateCheck?.check('doi', value)}
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.title))
@@ -37,6 +40,7 @@ export const ToolFields = withForm({
           {(field) => (
             <field.LangStringField
               label={<EntityFieldLabel entityClass="Tool" field="name" />}
+              onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
           )}
         </form.AppField>

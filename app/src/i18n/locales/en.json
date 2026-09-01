@@ -1826,6 +1826,11 @@
       "identifier_search_placeholder": "Enter a URL directly, or start typing to search by name...",
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entry"
+    },
+    "duplicate_check": {
+      "title": "Possible duplicate entries",
+      "description": "We found existing entries that may match \"{{keyword}}\". Review them before continuing.",
+      "dismiss": "Continue anyway"
     }
   },
   "validation": {

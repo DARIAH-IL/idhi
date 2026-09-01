@@ -21,11 +21,11 @@ export function UserMenu() {
     <MenuTrigger>
       <Button
         variant="ghost"
-        size="icon-lg"
+        size="icon-xl"
         className="rounded-full"
         aria-label={t('common.user_menu')}
       >
-        <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase">
+        <span className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase">
           {user.name?.charAt(0) || user.email.charAt(0)}
         </span>
       </Button>

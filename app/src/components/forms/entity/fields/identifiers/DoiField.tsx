@@ -12,6 +12,7 @@ interface Props {
   label: React.ReactNode
   placeholder?: string
   onSelect?: (suggestion: DoiSuggestion) => void
+  onBlurValue?: (value: string) => void
 }
 
 function doiSubtitle(suggestion: DoiSuggestion): string {
@@ -24,7 +25,7 @@ function doiSubtitle(suggestion: DoiSuggestion): string {
     .join(' · ')
 }
 
-export function DoiField({ label, placeholder, onSelect }: Props) {
+export function DoiField({ label, placeholder, onSelect, onBlurValue }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -38,6 +39,7 @@ export function DoiField({ label, placeholder, onSelect }: Props) {
       getSuggestionValue={(suggestion) => `https://doi.org/${suggestion.doi}`}
       normalizeValue={normalizeDoi}
       onSelect={onSelect}
+      onBlurValue={onBlurValue}
       renderSuggestion={(suggestion) => (
         <AutocompleteSuggestionContent
           title={suggestion.title}

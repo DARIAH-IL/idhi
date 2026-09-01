@@ -8,13 +8,14 @@ interface Props {
   label: React.ReactNode
   placeholder?: string
   onSelect?: (suggestion: RorSuggestion) => void
+  onBlurValue?: (value: string) => void
 }
 
 export function rorLocation(suggestion: RorSuggestion): string {
   return [suggestion.city, suggestion.country].filter(Boolean).join(', ')
 }
 
-export function RorField({ label, placeholder, onSelect }: Props) {
+export function RorField({ label, placeholder, onSelect, onBlurValue }: Props) {
   const { t } = useTranslation()
 
   return (
@@ -27,6 +28,7 @@ export function RorField({ label, placeholder, onSelect }: Props) {
       shouldSearch={(query) => !/^https?:\/\//i.test(query)}
       getSuggestionValue={(suggestion) => suggestion.id}
       onSelect={onSelect}
+      onBlurValue={onBlurValue}
       renderSuggestion={(suggestion) => (
         <AutocompleteSuggestionContent
           title={suggestion.name}

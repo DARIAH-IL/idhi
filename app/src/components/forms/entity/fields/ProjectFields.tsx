@@ -6,6 +6,7 @@ import {
 } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
+import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -19,12 +20,14 @@ import { projectFormOptions } from '../entity-form-options.ts'
 export const ProjectFields = withForm({
   ...projectFormOptions,
   render: function Render({ form }) {
+    const duplicateCheck = useDuplicateCheck()
     return (
       <>
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
               label={<EntityFieldLabel entityClass="Project" field="name" />}
+              onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
           )}
         </form.AppField>

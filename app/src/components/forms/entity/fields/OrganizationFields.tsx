@@ -1,6 +1,7 @@
 import { OrganizationOrganizationType } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
+import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -15,6 +16,7 @@ import { organizationFormOptions } from '../entity-form-options.ts'
 export const OrganizationFields = withForm({
   ...organizationFormOptions,
   render: function Render({ form }) {
+    const duplicateCheck = useDuplicateCheck()
     return (
       <>
         <form.AppField name="ror" validators={valueValidators({ kind: 'ror' })}>
@@ -23,6 +25,7 @@ export const OrganizationFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Organization" field="ror" />
               }
+              onBlurValue={(value) => duplicateCheck?.check('ror', value)}
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.name))
@@ -44,6 +47,7 @@ export const OrganizationFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Organization" field="name" />
               }
+              onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
           )}
         </form.AppField>

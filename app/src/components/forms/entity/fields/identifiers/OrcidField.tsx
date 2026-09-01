@@ -12,9 +12,15 @@ interface Props {
   label: React.ReactNode
   placeholder?: string
   onSelect?: (suggestion: OrcidSuggestion) => void
+  onBlurValue?: (value: string) => void
 }
 
-export function OrcidField({ label, placeholder, onSelect }: Props) {
+export function OrcidField({
+  label,
+  placeholder,
+  onSelect,
+  onBlurValue,
+}: Props) {
   const { t } = useTranslation()
 
   return (
@@ -28,6 +34,7 @@ export function OrcidField({ label, placeholder, onSelect }: Props) {
       getSuggestionValue={(suggestion) => suggestion.id}
       normalizeValue={normalizeOrcid}
       onSelect={onSelect}
+      onBlurValue={onBlurValue}
       renderSuggestion={(suggestion) => (
         <AutocompleteSuggestionContent
           title={orcidDisplayName(suggestion)}

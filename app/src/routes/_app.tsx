@@ -8,7 +8,7 @@ import {
 import { TooltipTrigger } from 'react-aria-components'
 import {
   InformationCircleIcon,
-  SparklesIcon,
+  ChatBotIcon,
   UserIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -89,7 +89,7 @@ function AppLayout() {
           <TooltipTrigger delay={0}>
             <Button
               variant="outline"
-              size="icon-lg"
+              size="icon-xl"
               className="rounded-full"
               aria-label={t('about.title')}
               onPress={() => void navigate({ to: '/about' })}
@@ -101,12 +101,12 @@ function AppLayout() {
           <TooltipTrigger delay={0}>
             <Button
               variant="outline"
-              size="icon-lg"
+              size="icon-xl"
               className="rounded-full"
               aria-label={t('about.ai.title')}
               onPress={() => void navigate({ to: '/about/ai' })}
             >
-              <HugeiconsIcon icon={SparklesIcon} strokeWidth={1.8} />
+              <HugeiconsIcon icon={ChatBotIcon} strokeWidth={1.8} />
             </Button>
             <Tooltip>{t('about.ai.title')}</Tooltip>
           </TooltipTrigger>
@@ -116,7 +116,7 @@ function AppLayout() {
             <TooltipTrigger delay={0}>
               <Button
                 variant="outline"
-                size="icon-lg"
+                size="icon-xl"
                 className="rounded-full"
                 aria-label={t('common.login')}
                 onPress={() => setLoginOpen(true)}

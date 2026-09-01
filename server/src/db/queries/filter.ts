@@ -15,23 +15,42 @@ const MONGO_OPERATORS: Record<FilterOperator, string> = {
   exists: '$exists',
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function caseInsensitiveEquals(value: string): Record<string, string> {
+  return { $regex: `^${escapeRegExp(value)}$`, $options: 'i' }
+}
+
 function comparisonFilter(
   field: FilterableField,
   operator: FilterOperator,
   value: unknown,
   mapField: MongoFieldMapper,
 ): QueryFilter<Record<string, unknown>> {
-  const mongoValue =
-    operator === 'in' || operator === 'nin'
-      ? Array.isArray(value)
-        ? value
-        : [value]
-      : operator === 'exists'
-        ? Boolean(value)
-        : value
+  const mongoField = mapField(field)
+
+  if (operator === 'eq' && typeof value === 'string') {
+    return { [mongoField]: caseInsensitiveEquals(value) }
+  }
+
+  if (operator === 'ne' && typeof value === 'string') {
+    return { [mongoField]: { $not: caseInsensitiveEquals(value) } }
+  }
+
+  if (operator === 'in' || operator === 'nin') {
+    const values = Array.isArray(value) ? value : [value]
+    const mongoValues = values.map((item) =>
+      typeof item === 'string' ? caseInsensitiveEquals(item) : item,
+    )
+    return { [mongoField]: { [MONGO_OPERATORS[operator]]: mongoValues } }
+  }
+
+  const mongoValue = operator === 'exists' ? Boolean(value) : value
 
   return {
-    [mapField(field)]: { [MONGO_OPERATORS[operator]]: mongoValue },
+    [mongoField]: { [MONGO_OPERATORS[operator]]: mongoValue },
   }
 }
 

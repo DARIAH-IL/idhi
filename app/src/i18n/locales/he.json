@@ -1828,6 +1828,11 @@
       "identifier_search_placeholder": "הזינו קישור ישירות, או התחילו להקליד כדי לחפש לפי שם...",
       "clear_selection": "ניקוי בחירה",
       "remove_entity": "הסרת רשומה"
+    },
+    "duplicate_check": {
+      "title": "רשומות כפולות אפשריות",
+      "description": "מצאנו רשומות קיימות שעשויות להתאים ל-\"{{keyword}}\". בדקו אותן לפני שממשיכים.",
+      "dismiss": "המשך בכל זאת"
     }
   },
   "validation": {

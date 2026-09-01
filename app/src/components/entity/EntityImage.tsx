@@ -90,7 +90,7 @@ export function EntityImage({
       alt={alt}
       onError={() => setFailedSource(source)}
       className={cn(
-        'shrink-0 bg-muted object-cover',
+        'shrink-0 bg-muted object-cover border-accent-foreground/20 border-2',
         dimensions.image,
         className,
       )}

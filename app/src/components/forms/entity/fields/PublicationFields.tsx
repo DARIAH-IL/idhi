@@ -4,6 +4,7 @@ import {
 } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
+import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -18,12 +19,14 @@ import { publicationFormOptions } from '../entity-form-options.ts'
 export const PublicationFields = withForm({
   ...publicationFormOptions,
   render: function Render({ form }) {
+    const duplicateCheck = useDuplicateCheck()
     return (
       <>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
           {(field) => (
             <field.DoiField
               label={<EntityFieldLabel entityClass="Publication" field="doi" />}
+              onBlurValue={(value) => duplicateCheck?.check('doi', value)}
               onSelect={(suggestion) => {
                 if (!hasLangStringValue(form.getFieldValue('name'))) {
                   form.setFieldValue('name', langString(suggestion.title))
@@ -53,6 +56,7 @@ export const PublicationFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Publication" field="name" />
               }
+              onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
           )}
         </form.AppField>

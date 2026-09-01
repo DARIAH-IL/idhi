@@ -1,5 +1,6 @@
 import type { AuditedEntity, Entity } from '@/api/models'
 import type { EntityType } from '@/lib/entity'
+import { DuplicateCheckProvider } from './duplicate-check'
 import { DatasetForm } from './subforms/DatasetForm'
 import { EventForm } from './subforms/EventForm'
 import { FacilityForm } from './subforms/FacilityForm'
@@ -20,6 +21,17 @@ interface Props {
 }
 
 export function EntityForm({ entityType, entity, ...props }: Props) {
+  return (
+    <DuplicateCheckProvider
+      entityType={entityType}
+      enabled={entity === undefined}
+    >
+      {renderEntitySubform({ entityType, entity, ...props })}
+    </DuplicateCheckProvider>
+  )
+}
+
+function renderEntitySubform({ entityType, entity, ...props }: Props) {
   switch (entityType) {
     case 'idhi:Person': {
       if (entity?.type !== entityType) {

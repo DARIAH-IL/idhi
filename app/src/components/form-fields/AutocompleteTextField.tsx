@@ -24,6 +24,7 @@ interface Props<T extends object> {
   onSelect?: (item: T) => void
   shouldSearch?: (query: string) => boolean
   normalizeValue?: (raw: string) => string
+  onBlurValue?: (value: string) => void
 }
 
 export function AutocompleteTextField<T extends object>({
@@ -35,6 +36,7 @@ export function AutocompleteTextField<T extends object>({
   onSelect,
   shouldSearch,
   normalizeValue,
+  onBlurValue,
 }: Props<T>) {
   const { t } = useTranslation()
   const field = useFieldContext<string | null | undefined>()
@@ -48,13 +50,16 @@ export function AutocompleteTextField<T extends object>({
   )
 
   const handleBlur = () => {
+    let finalValue = value
     if (normalizeValue) {
       const normalized = normalizeValue(value)
       if (normalized !== value) {
         field.handleChange(normalized)
+        finalValue = normalized
       }
     }
     field.handleBlur()
+    onBlurValue?.(finalValue)
     window.setTimeout(autocomplete.reset, 150)
   }
 

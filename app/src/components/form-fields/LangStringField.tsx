@@ -37,6 +37,7 @@ interface LocalizedValue {
 interface Props {
   label: React.ReactNode
   multiline?: boolean
+  onItemBlur?: (value: string) => void
 }
 
 interface LanguageComboboxProps {
@@ -106,7 +107,11 @@ function LanguageCombobox({
   )
 }
 
-export function LangStringField({ label, multiline = false }: Props) {
+export function LangStringField({
+  label,
+  multiline = false,
+  onItemBlur,
+}: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<LocalizedValue[] | null | undefined>()
   const items = field.state.value ?? []
@@ -188,6 +193,7 @@ export function LangStringField({ label, multiline = false }: Props) {
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })
               }
+              onBlur={() => onItemBlur?.(item.value)}
               className="flex-1"
               rows={3}
             />
@@ -198,6 +204,7 @@ export function LangStringField({ label, multiline = false }: Props) {
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })
               }
+              onBlur={() => onItemBlur?.(item.value)}
               className="flex-1"
             />
           )}

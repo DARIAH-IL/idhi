@@ -18,7 +18,7 @@ export function UiLanguagePicker() {
       <TooltipTrigger>
         <Button
           variant="outline"
-          size="icon-lg"
+          size="icon-xl"
           className="rounded-full"
           aria-label={t('common.language_picker')}
         >

@@ -1830,6 +1830,11 @@
       "identifier_search_placeholder": "إدخال رابط مباشرة، أو بدء الكتابة للبحث بالاسم...",
       "clear_selection": "مسح التحديد",
       "remove_entity": "إزالة السجل"
+    },
+    "duplicate_check": {
+      "title": "سجلات مكررة محتملة",
+      "description": "وجدنا سجلات موجودة قد تطابق \"{{keyword}}\". راجعها قبل الاستمرار.",
+      "dismiss": "الاستمرار على أي حال"
     }
   },
   "validation": {
