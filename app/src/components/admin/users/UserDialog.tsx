@@ -12,6 +12,7 @@ import {
   useReplaceUserById,
 } from '@/api/hooks/user-management/user-management'
 import type { User, UserWrite } from '@/api/models'
+import { getApiErrorMessage } from '@/lib/api-error'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -36,6 +37,7 @@ export function UserDialog({
   const [name, setName] = useState(user?.name ?? '')
   const [email, setEmail] = useState(user?.email ?? '')
   const [isAdmin, setIsAdmin] = useState(user?.isAdmin ?? false)
+  const [error, setError] = useState<string | null>(null)
   const finish = () => {
     void queryClient.invalidateQueries({ queryKey: getListUsersQueryKey() })
     toast.success(
@@ -47,12 +49,16 @@ export function UserDialog({
     )
     onClose()
   }
-  const create = useCreateUser({ mutation: { onSuccess: finish } })
-  const update = useReplaceUserById({ mutation: { onSuccess: finish } })
+  const onError = (err: unknown) => setError(getApiErrorMessage(err))
+  const create = useCreateUser({ mutation: { onSuccess: finish, onError } })
+  const update = useReplaceUserById({
+    mutation: { onSuccess: finish, onError },
+  })
   const isPending = create.isPending || update.isPending
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setError(null)
     const data: UserWrite = {
       email: email.trim(),
       isAdmin,
@@ -107,6 +113,11 @@ export function UserDialog({
             />
           </div>
           <AdminAccessCheckbox isSelected={isAdmin} onChange={setIsAdmin} />
+          {error && (
+            <p role="alert" className="text-xs text-destructive">
+              {error}
+            </p>
+          )}
         </div>
         <DialogFooter>
           <DialogClose>{t('common.cancel')}</DialogClose>
@@ -146,6 +157,7 @@ function AdminAccessCheckbox({
                 icon={Tick02Icon}
                 strokeWidth={2.5}
                 className="size-3"
+                aria-hidden="true"
               />
             )}
           </span>

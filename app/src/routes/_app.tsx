@@ -13,11 +13,9 @@ import {
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
-import i18n, { isRtlLanguage } from '@/i18n'
 import { useAuthLinkStore } from '@/stores/auth-link'
 import type { AuthLinkFlow } from '@/stores/auth-link'
 import { useAuthStore } from '@/stores/auth'
-import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip } from '@/components/ui/tooltip'
@@ -40,19 +38,8 @@ function AppLayout() {
   } | null>(null)
   const user = useAuthStore((s) => s.user)
   const navigate = useNavigate()
-  const language = useUIStore((s) => s.language)
   const authLinkConsumedRef = useRef(false)
   const mainRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    void i18n.changeLanguage(language)
-    document.documentElement.lang = language
-    document.documentElement.dir = isRtlLanguage(language) ? 'rtl' : 'ltr'
-  }, [language])
-
-  useEffect(() => {
-    document.title = t('common.site_name')
-  }, [t])
 
   useEffect(() => {
     if (authLinkConsumedRef.current) {

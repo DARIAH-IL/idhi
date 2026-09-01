@@ -28,7 +28,7 @@ export function TextField({
   const error = firstError(field.state.meta.errors)
 
   return (
-    <FieldRow label={label}>
+    <FieldRow label={label} required={required}>
       {(labelId) => (
         <>
           <Input

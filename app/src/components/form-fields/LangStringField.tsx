@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { Input } from '@/components/ui/input'
@@ -26,6 +26,7 @@ import type { LanguageOption } from '@/lib/languages'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
 import { useFieldRowClass } from './FieldNesting'
+import { focusAfterRemove } from './removeFocus'
 import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
@@ -36,6 +37,7 @@ interface LocalizedValue {
 
 interface Props {
   label: React.ReactNode
+  required?: boolean
   multiline?: boolean
   onItemBlur?: (value: string) => void
 }
@@ -109,6 +111,7 @@ function LanguageCombobox({
 
 export function LangStringField({
   label,
+  required = false,
   multiline = false,
   onItemBlur,
 }: Props) {
@@ -121,6 +124,7 @@ export function LangStringField({
   )
   const rowClass = useFieldRowClass()
   const labelId = useId()
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const { topLanguages, otherLanguages, optionByCode, languageFilter } =
     useMemo(() => {
@@ -169,8 +173,15 @@ export function LangStringField({
   }
 
   return (
-    <div className={cn('flex flex-col gap-2', rowClass)}>
-      <Label id={labelId}>{label}</Label>
+    <div ref={containerRef} data-remove-scope="" className={cn('flex flex-col gap-2', rowClass)}>
+      <Label id={labelId}>
+        {label}
+        {required && (
+          <span aria-hidden="true" className="text-destructive">
+            *
+          </span>
+        )}
+      </Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {items.map((item, index) => (
         <div
@@ -190,6 +201,7 @@ export function LangStringField({
           {multiline ? (
             <Textarea
               aria-labelledby={labelId}
+              aria-required={required || undefined}
               dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
@@ -202,6 +214,7 @@ export function LangStringField({
           ) : (
             <Input
               aria-labelledby={labelId}
+              aria-required={required || undefined}
               dir={isRtlLanguageCode(item.language) ? 'rtl' : 'ltr'}
               value={item.value}
               onChange={(event) =>
@@ -214,7 +227,12 @@ export function LangStringField({
           <Button
             variant="ghost"
             size="icon-sm"
-            onPress={() => field.removeValue(index)}
+            data-remove-button
+            onPress={() => {
+              void Promise.resolve(field.removeValue(index)).then(() =>
+                focusAfterRemove(containerRef.current, index),
+              )
+            }}
             aria-label={`${t('common.remove')} (${index + 1})`}
           >
             ×
@@ -224,6 +242,7 @@ export function LangStringField({
       <Button
         variant="outline"
         size="sm"
+        data-add-button
         onPress={() => field.pushValue({ language: 'en', value: '' })}
         className="w-fit"
       >

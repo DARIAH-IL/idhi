@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useStore } from '@tanstack/react-form'
 import { useBlocker } from '@tanstack/react-router'
@@ -32,6 +33,16 @@ export function FormScaffold({
   onCancel,
 }: ScaffoldProps) {
   const { t } = useTranslation()
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const focusFirstInvalid = () => {
+    window.setTimeout(() => {
+      formRef.current
+        ?.querySelector<HTMLElement>('[aria-invalid="true"]')
+        ?.focus()
+    }, 50)
+  }
+
   const isDirty = useStore(
     form.store,
     (state) => state.isDirty && !state.isSubmitSuccessful,
@@ -45,9 +56,11 @@ export function FormScaffold({
 
   return (
     <form
+      ref={formRef}
       onSubmit={(event) => {
         event.preventDefault()
         onSubmit(false)
+        focusFirstInvalid()
       }}
       className="flex flex-col gap-4"
     >
@@ -67,7 +80,10 @@ export function FormScaffold({
                 type="button"
                 variant="outline"
                 isDisabled={isSubmitting}
-                onPress={() => onSubmit(true)}
+                onPress={() => {
+                  onSubmit(true)
+                  focusFirstInvalid()
+                }}
               >
                 {t('entity.form.save_draft')}
               </Button>

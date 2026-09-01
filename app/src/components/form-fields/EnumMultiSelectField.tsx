@@ -43,7 +43,7 @@ export function EnumMultiSelectField({
     .sort((a, b) => a.label.localeCompare(b.label))
 
   return (
-    <FieldRow label={label}>
+    <FieldRow label={label} required={required}>
       {(labelId) => (
         <>
           <Combobox

@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { Button } from '@/components/ui/button'
@@ -5,6 +6,7 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
 import { NestedFields, useFieldRowClass } from './FieldNesting'
+import { focusAfterRemove } from './removeFocus'
 import { useReorderableList } from './useReorderableList'
 
 interface Props {
@@ -24,9 +26,13 @@ export function ArraySection({ label, defaultItem, children }: Props) {
     field.moveValue,
   )
   const rowClass = useFieldRowClass()
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}>
+    <div
+      ref={containerRef} data-remove-scope=""
+      className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}
+    >
       <Label>{label}</Label>
       <div className="ms-3 flex flex-col gap-3">
         {items.map((_, index) => (
@@ -43,8 +49,13 @@ export function ArraySection({ label, defaultItem, children }: Props) {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                onPress={() => field.removeValue(index)}
-                aria-label={t('common.remove')}
+                data-remove-button
+                onPress={() => {
+                  void Promise.resolve(field.removeValue(index)).then(() =>
+                    focusAfterRemove(containerRef.current, index),
+                  )
+                }}
+                aria-label={`${t('common.remove')} (${index + 1})`}
               >
                 ×
               </Button>
@@ -56,6 +67,7 @@ export function ArraySection({ label, defaultItem, children }: Props) {
           variant="outline"
           size="sm"
           className="w-fit"
+          data-add-button
           onPress={() => field.pushValue(defaultItem)}
         >
           + {label}

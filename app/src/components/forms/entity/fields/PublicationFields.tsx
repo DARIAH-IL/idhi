@@ -53,6 +53,7 @@ export const PublicationFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={
                 <EntityFieldLabel entityClass="Publication" field="name" />
               }
@@ -171,6 +172,7 @@ export const PublicationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="Authorship"

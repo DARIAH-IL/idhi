@@ -56,7 +56,11 @@ export function UsersPanel() {
           <CardDescription>{t('admin.users.description')}</CardDescription>
           <CardAction>
             <Button onPress={() => setUserDialog('new')}>
-              <HugeiconsIcon icon={Add01Icon} strokeWidth={2} aria-hidden="true" />
+              <HugeiconsIcon
+                icon={Add01Icon}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
               {t('admin.users.add')}
             </Button>
           </CardAction>

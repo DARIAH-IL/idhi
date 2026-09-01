@@ -39,7 +39,6 @@ interface EntityResultsTableProps {
   facetFilters: FacetFilters | undefined
   hasAdvancedFilter: boolean
   isError: boolean
-  isFetching: boolean
   isLoading: boolean
   isRefetching: boolean
   isFetchingNextPage: boolean
@@ -60,7 +59,6 @@ export function EntityResultsTable({
   facetFilters,
   hasAdvancedFilter,
   isError,
-  isFetching,
   isLoading,
   isRefetching,
   isFetchingNextPage,
@@ -78,7 +76,6 @@ export function EntityResultsTable({
     <section
       aria-label={t('board.results_label')}
       className="min-w-0 space-y-4 md:flex md:h-full md:min-h-0 md:flex-col"
-      aria-busy={isFetching}
     >
       {isError && (
         <p role="alert" className="text-sm text-destructive">
@@ -86,14 +83,29 @@ export function EntityResultsTable({
         </p>
       )}
 
-      {hasResultsLoaded && (
-        <p aria-live="polite" className="text-xs text-muted-foreground">
-          {t('board.loaded_count', {
-            loaded: results.length,
-            total,
-          })}
-        </p>
-      )}
+      <p
+        aria-live="polite"
+        className={
+          hasResultsLoaded && results.length === 0
+            ? 'sr-only'
+            : 'text-xs text-muted-foreground'
+        }
+      >
+        {hasResultsLoaded
+          ? results.length === 0
+            ? t(
+                q ||
+                  Object.keys(facetFilters ?? {}).length > 0 ||
+                  hasAdvancedFilter
+                  ? 'board.no_matching_results'
+                  : 'board.no_results',
+              )
+            : t('board.loaded_count', {
+                loaded: results.length,
+                total,
+              })
+          : ''}
+      </p>
 
       <div className="relative md:min-h-0 md:flex-1">
         {(isLoading || isRefetching) && (

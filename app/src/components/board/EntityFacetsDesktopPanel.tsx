@@ -27,7 +27,6 @@ export function EntityFacetsDesktopPanel({
   return (
     <div className="hidden md:block">
       <FacetPanel
-        key={JSON.stringify(facetFilters ?? {})}
         facets={facets}
         relationshipFacets={relationshipFacets}
         relationshipEntitiesById={relationshipEntitiesById}

@@ -8,6 +8,9 @@ import {
 
 import { cn } from '@/lib/utils'
 
+const INTERACTIVE_SELECTOR =
+  'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
 function TooltipTrigger({
   delay = 0,
   children,
@@ -15,17 +18,20 @@ function TooltipTrigger({
 }: React.ComponentProps<typeof TooltipTriggerPrimitive>) {
   const [trigger, tooltip] = React.Children.toArray(children)
   const ref = React.useRef<HTMLSpanElement>(null)
-  const [connected, setConnected] = React.useState(false)
+  const [mode, setMode] = React.useState<
+    'initial' | 'focusable' | 'interactive'
+  >('initial')
 
   React.useLayoutEffect(() => {
-    setConnected(ref.current?.isConnected ?? false)
+    if (!ref.current?.isConnected) {
+      return
+    }
+    setMode(
+      ref.current.querySelector(INTERACTIVE_SELECTOR)
+        ? 'interactive'
+        : 'focusable',
+    )
   }, [])
-
-  const triggerElement = (
-    <span ref={ref} role="button">
-      {trigger}
-    </span>
-  )
 
   return (
     <TooltipTriggerPrimitive
@@ -33,7 +39,17 @@ function TooltipTrigger({
       delay={delay}
       {...props}
     >
-      {connected ? <Focusable>{triggerElement}</Focusable> : triggerElement}
+      {mode === 'interactive' ? (
+        trigger
+      ) : mode === 'focusable' ? (
+        <Focusable>
+          <span ref={ref} role="button">
+            {trigger}
+          </span>
+        </Focusable>
+      ) : (
+        <span ref={ref}>{trigger}</span>
+      )}
       {tooltip}
     </TooltipTriggerPrimitive>
   )

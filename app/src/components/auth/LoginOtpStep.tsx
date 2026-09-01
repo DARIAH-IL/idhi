@@ -63,7 +63,11 @@ export function LoginOtpStep({
         </InputOTP>
       </div>
       {error && (
-        <p id="login-otp-error" role="alert" className="text-xs text-destructive">
+        <p
+          id="login-otp-error"
+          role="alert"
+          className="text-xs text-destructive"
+        >
           {error}
         </p>
       )}

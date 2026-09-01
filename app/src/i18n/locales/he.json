@@ -96,7 +96,8 @@
       "type": "סוג הרשומה."
     },
     "skip_to_content": "דילוג לתוכן הראשי",
-    "primary_navigation": "ניווט ראשי"
+    "primary_navigation": "ניווט ראשי",
+    "page_loaded": "הדף נטען"
   },
   "about": {
     "title": "אודות",
@@ -1870,7 +1871,8 @@
       "external_url_placeholder": "או הזנת קישור חיצוני...",
       "identifier_search_placeholder": "הזינו קישור ישירות, או התחילו להקליד כדי לחפש לפי שם...",
       "clear_selection": "ניקוי בחירה",
-      "remove_entity": "הסרת רשומה"
+      "remove_entity": "הסרת רשומה",
+      "image_uploaded": "התמונה הועלתה"
     },
     "duplicate_check": {
       "title": "רשומות כפולות אפשריות",

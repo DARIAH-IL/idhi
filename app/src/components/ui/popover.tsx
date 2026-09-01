@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {
+  Dialog,
   DialogTrigger,
   Heading,
   Popover as PopoverPrimitive,
@@ -24,9 +25,13 @@ function Popover({
   placement = 'bottom',
   offset = 4,
   crossOffset = 0,
+  children,
+  'aria-label': ariaLabel,
   ...props
-}: Omit<PopoverPrimitiveProps, 'className'> & {
+}: Omit<PopoverPrimitiveProps, 'className' | 'children'> & {
   className?: string
+  children?: React.ReactNode
+  'aria-label'?: string
 }) {
   return (
     <PopoverPrimitive
@@ -35,11 +40,18 @@ function Popover({
       offset={offset}
       crossOffset={crossOffset}
       className={cn(
-        'z-50 flex w-72 origin-(--trigger-anchor-point) flex-col gap-4 rounded-lg bg-popover p-2.5 text-xs text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=top]:slide-in-from-bottom-2',
+        'z-50 flex w-72 origin-(--trigger-anchor-point) flex-col rounded-lg bg-popover p-2.5 text-xs text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95 data-[placement=bottom]:slide-in-from-top-2 data-[placement=top]:slide-in-from-bottom-2',
         className,
       )}
       {...props}
-    />
+    >
+      <Dialog
+        aria-label={ariaLabel}
+        className="flex flex-col gap-4 outline-hidden"
+      >
+        {children}
+      </Dialog>
+    </PopoverPrimitive>
   )
 }
 
@@ -59,6 +71,7 @@ function PopoverTitle({
 }: React.ComponentProps<typeof Heading>) {
   return (
     <Heading
+      slot="title"
       data-slot="popover-title"
       className={cn('text-sm font-medium', className)}
       {...props}

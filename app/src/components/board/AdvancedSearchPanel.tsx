@@ -429,6 +429,7 @@ function ConditionValueEditor({
   if (kind === 'date') {
     return (
       <DatePicker
+        aria-label={t('common.value')}
         value={typeof value === 'string' ? value : null}
         onChange={(nextValue) => onChange(nextValue || undefined)}
       />

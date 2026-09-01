@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { Focusable } from 'react-aria-components'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -136,17 +137,19 @@ function EntityDetailPage() {
           {isAuthenticated && (
             <div className="ms-auto flex shrink-0 gap-2">
               <TooltipTrigger>
-                <Link
-                  to="/entities/$entityId/edit"
-                  params={{ entityId }}
-                  aria-label={t('entity.detail.edit')}
-                  className={buttonVariants({
-                    variant: 'secondary',
-                    size: 'icon',
-                  })}
-                >
-                  <HugeiconsIcon icon={Edit02Icon} />
-                </Link>
+                <Focusable>
+                  <Link
+                    to="/entities/$entityId/edit"
+                    params={{ entityId }}
+                    aria-label={t('entity.detail.edit')}
+                    className={buttonVariants({
+                      variant: 'secondary',
+                      size: 'icon',
+                    })}
+                  >
+                    <HugeiconsIcon icon={Edit02Icon} aria-hidden="true" />
+                  </Link>
+                </Focusable>
                 <Tooltip>{t('entity.detail.edit')}</Tooltip>
               </TooltipTrigger>
               <TooltipTrigger>

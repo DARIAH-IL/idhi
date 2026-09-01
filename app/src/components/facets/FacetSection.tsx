@@ -7,6 +7,7 @@ import type { FacetValue } from './facetValues.ts'
 import { FacetCheckbox } from './FacetCheckbox.tsx'
 
 interface FacetSectionProps {
+  idPrefix: string
   facetKey: string
   label: string
   values: FacetValue[]
@@ -25,6 +26,7 @@ interface FacetSectionProps {
 }
 
 export function FacetSection({
+  idPrefix,
   facetKey,
   label,
   values,
@@ -56,8 +58,8 @@ export function FacetSection({
     filteredValues.length === 0 ||
     filteredValues.every(({ value }) => selectedValues.has(value))
   const isContentLoading = isLoading || areLabelsLoading
-  const headingId = `facet-${facetKey}-heading`
-  const bodyId = `facet-${facetKey}-body`
+  const headingId = `${idPrefix}facet-${facetKey}-heading`
+  const bodyId = `${idPrefix}facet-${facetKey}-body`
 
   return (
     <section
@@ -116,15 +118,24 @@ export function FacetSection({
             className={`mt-2 grid gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
           >
             {isContentLoading ? (
-              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
+              <p
+                role="status"
+                className="px-1 py-3 text-xs text-muted-foreground"
+              >
                 {t('common.loading')}
               </p>
             ) : values.length === 0 ? (
-              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
+              <p
+                role="status"
+                className="px-1 py-3 text-xs text-muted-foreground"
+              >
                 {t('board.facets.no_values')}
               </p>
             ) : filteredValues.length === 0 ? (
-              <p role="status" className="px-1 py-3 text-xs text-muted-foreground">
+              <p
+                role="status"
+                className="px-1 py-3 text-xs text-muted-foreground"
+              >
                 {t('board.facets.no_matching_values')}
               </p>
             ) : (

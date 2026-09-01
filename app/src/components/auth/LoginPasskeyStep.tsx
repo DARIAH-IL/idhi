@@ -45,7 +45,11 @@ export function LoginPasskeyStep({
         </p>
       )}
       <Button className="w-full" size="lg" isDisabled={busy} onPress={onSignIn}>
-        <HugeiconsIcon icon={FingerPrintIcon} strokeWidth={2} aria-hidden="true" />
+        <HugeiconsIcon
+          icon={FingerPrintIcon}
+          strokeWidth={2}
+          aria-hidden="true"
+        />
         {passkeyBusy ? t('common.loading') : t('auth.passkey_login')}
       </Button>
       <Button

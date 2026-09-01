@@ -23,6 +23,7 @@ export const ServiceFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={<EntityFieldLabel entityClass="Service" field="name" />}
               onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />

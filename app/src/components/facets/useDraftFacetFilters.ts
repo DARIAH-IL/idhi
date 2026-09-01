@@ -4,6 +4,13 @@ import type { EntityType } from '#/lib/entity.ts'
 
 export function useDraftFacetFilters(initialFilters: FacetFilters) {
   const [draftFilters, setDraftFilters] = useState(initialFilters)
+  const initialKey = JSON.stringify(initialFilters)
+  const [lastInitialKey, setLastInitialKey] = useState(initialKey)
+
+  if (initialKey !== lastInitialKey) {
+    setLastInitialKey(initialKey)
+    setDraftFilters(initialFilters)
+  }
 
   const setFieldValues = (field: FacetField, values: string[]) => {
     setDraftFilters((currentFilters) => {

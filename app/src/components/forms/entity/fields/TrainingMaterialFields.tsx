@@ -41,6 +41,7 @@ export const TrainingMaterialFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={
                 <EntityFieldLabel entityClass="TrainingMaterial" field="name" />
               }

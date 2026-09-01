@@ -75,7 +75,6 @@ export function EntityFacetsDrawer({
             }
           />
           <FacetPanel
-            key={JSON.stringify(facetFilters ?? {})}
             facets={facets}
             relationshipFacets={relationshipFacets}
             relationshipEntitiesById={relationshipEntitiesById}

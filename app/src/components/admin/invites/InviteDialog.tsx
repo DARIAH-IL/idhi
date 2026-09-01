@@ -9,6 +9,7 @@ import {
 } from '@/api/hooks/user-invites/user-invites'
 import { UiLanguage } from '@/api/models'
 import type { UserInviteWrite } from '@/api/models'
+import { getApiErrorMessage } from '@/lib/api-error'
 import { languageName } from '@/lib/languages'
 import { Button } from '@/components/ui/button'
 import {
@@ -39,6 +40,7 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
   const [message, setMessage] = useState('')
   const [expiryDays, setExpiryDays] = useState('7')
   const [lang, setLang] = useState<UiLanguage>(uiLanguage)
+  const [error, setError] = useState<string | null>(null)
   const invite = useInviteUser({
     mutation: {
       onSuccess: () => {
@@ -48,11 +50,13 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
         toast.success(t('admin.notifications.invite_sent'))
         onClose()
       },
+      onError: (err) => setError(getApiErrorMessage(err)),
     },
   })
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setError(null)
     const data: UserInviteWrite = {
       email: email.trim(),
       expiryDays: Number(expiryDays),
@@ -141,6 +145,11 @@ export function InviteDialog({ onClose }: { onClose: () => void }) {
               </Select>
             </div>
           </div>
+          {error && (
+            <p role="alert" className="text-xs text-destructive">
+              {error}
+            </p>
+          )}
         </div>
         <DialogFooter>
           <DialogClose>{t('common.cancel')}</DialogClose>

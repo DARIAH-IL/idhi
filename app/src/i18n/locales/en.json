@@ -94,7 +94,8 @@
       "type": "The kind of entry this is."
     },
     "skip_to_content": "Skip to main content",
-    "primary_navigation": "Primary"
+    "primary_navigation": "Primary",
+    "page_loaded": "Page loaded"
   },
   "about": {
     "title": "About",
@@ -1868,7 +1869,8 @@
       "external_url_placeholder": "Or enter an external URL...",
       "identifier_search_placeholder": "Enter a URL directly, or start typing to search by name...",
       "clear_selection": "Clear selection",
-      "remove_entity": "Remove entry"
+      "remove_entity": "Remove entry",
+      "image_uploaded": "Image uploaded"
     },
     "duplicate_check": {
       "title": "Possible duplicate entries",

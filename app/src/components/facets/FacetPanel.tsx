@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
@@ -60,6 +60,9 @@ export function FacetPanel({
   const collapsedFacets = useUIStore((state) => state.collapsedFacets)
   const toggleCollapsed = useUIStore((state) => state.toggleFacetCollapsed)
   const [facetSearch, setFacetSearch] = useState('')
+  const instanceId = useId()
+  const isDirty =
+    JSON.stringify(draftFilters) !== JSON.stringify(initialFilters)
 
   return (
     <aside
@@ -74,7 +77,7 @@ export function FacetPanel({
         <div className="mb-4 border-b pb-4">
           <Button
             className="w-full"
-            isDisabled={Object.keys(draftFilters).length === 0}
+            isDisabled={!isDirty}
             onPress={() => onApply(draftFilters)}
           >
             {t('board.facets.apply')}
@@ -115,6 +118,7 @@ export function FacetPanel({
           return (
             <FacetSection
               key={field}
+              idPrefix={instanceId}
               facetKey={field}
               label={getFacetFieldLabel(field)}
               values={values}
@@ -157,6 +161,7 @@ export function FacetPanel({
           return (
             <FacetSection
               key={facetKey}
+              idPrefix={instanceId}
               facetKey={facetKey}
               label={t('board.facets.referenced_type', {
                 type: getEntityTypePluralLabel(targetType),

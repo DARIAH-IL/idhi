@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { EntityType } from '#/lib/entity.ts'
 import { Button } from '#/components/ui/button.tsx'
@@ -8,6 +9,7 @@ import { EntityReferenceCard } from '#/components/entity/EntityReferenceCard.tsx
 import { DragHandle } from '#/components/form-fields/DragHandle.tsx'
 import { FieldError } from '#/components/form-fields/FieldError.tsx'
 import { useFieldRowClass } from '#/components/form-fields/FieldNesting.tsx'
+import { focusAfterRemove } from '#/components/form-fields/removeFocus.ts'
 import { useReorderableList } from '#/components/form-fields/useReorderableList.ts'
 import { firstError } from '#/components/form-fields/validation.ts'
 import { useFieldContext } from '#/components/forms/form-context.ts'
@@ -17,12 +19,14 @@ interface EntityRefProps {
   label: React.ReactNode
   entityTypes: EntityType[]
   allowExternalUrl?: boolean
+  required?: boolean
 }
 
 export function EntityRefField({
   label,
   entityTypes,
   allowExternalUrl = false,
+  required = false,
 }: EntityRefProps) {
   const { t } = useTranslation()
   const field = useFieldContext<string | null | undefined>()
@@ -32,12 +36,20 @@ export function EntityRefField({
 
   return (
     <div className={cn('flex flex-col gap-1', rowClass)}>
-      <Label>{label}</Label>
+      <Label>
+        {label}
+        {required && (
+          <span aria-hidden="true" className="text-destructive">
+            *
+          </span>
+        )}
+      </Label>
       <EntityPicker
         value={value.startsWith('idhi:') ? value : undefined}
         onChange={field.handleChange}
         entityTypes={entityTypes}
         invalid={Boolean(error)}
+        required={required}
       />
       {allowExternalUrl && (
         <Input
@@ -81,9 +93,10 @@ export function EntityRefArrayField({
     field.moveValue,
   )
   const rowClass = useFieldRowClass()
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className={cn('flex flex-col gap-2', rowClass)}>
+    <div ref={containerRef} data-remove-scope="" className={cn('flex flex-col gap-2', rowClass)}>
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {values.map((id, index) => (
@@ -99,8 +112,13 @@ export function EntityRefArrayField({
           <Button
             variant="ghost"
             size="icon-sm"
-            onPress={() => field.removeValue(index)}
-            aria-label={t('entity.form.remove_entity')}
+            data-remove-button
+            onPress={() => {
+              void Promise.resolve(field.removeValue(index)).then(() =>
+                focusAfterRemove(containerRef.current, index),
+              )
+            }}
+            aria-label={`${t('entity.form.remove_entity')} (${index + 1})`}
           >
             ×
           </Button>

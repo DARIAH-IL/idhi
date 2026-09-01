@@ -22,6 +22,19 @@ function DialogTrigger({ ...props }: DialogTriggerPrimitiveProps) {
   return <DialogTriggerPrimitive data-slot="dialog-trigger" {...props} />
 }
 
+const DialogDescriptionContext = React.createContext<
+  ((id: string) => () => void) | null
+>(null)
+
+function useDialogDescriptionRegistry() {
+  const [descriptionIds, setDescriptionIds] = React.useState<string[]>([])
+  const register = React.useCallback((id: string) => {
+    setDescriptionIds((ids) => [...ids, id])
+    return () => setDescriptionIds((ids) => ids.filter((i) => i !== id))
+  }, [])
+  return { descriptionIds, register }
+}
+
 function DialogClose({
   className,
   variant = 'outline',
@@ -75,6 +88,7 @@ function Dialog({
     showCloseButton?: boolean
   }) {
   const { t } = useTranslation()
+  const { descriptionIds, register } = useDialogDescriptionRegistry()
   return (
     <DialogOverlay isDismissable={isDismissable} {...props}>
       <ModalPrimitive
@@ -86,19 +100,28 @@ function Dialog({
       >
         <DialogPrimitive
           data-slot="dialog"
+          aria-describedby={
+            descriptionIds.length > 0 ? descriptionIds.join(' ') : undefined
+          }
           className="[display:inherit] [gap:inherit] outline-none"
         >
-          {children}
-          {showCloseButton && (
-            <DialogClose
-              variant="ghost"
-              className="absolute top-2 end-2"
-              size="icon-sm"
-            >
-              <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
-              <span className="sr-only">{t('common.close')}</span>
-            </DialogClose>
-          )}
+          <DialogDescriptionContext.Provider value={register}>
+            {children}
+            {showCloseButton && (
+              <DialogClose
+                variant="ghost"
+                className="absolute top-2 end-2"
+                size="icon-sm"
+              >
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+                <span className="sr-only">{t('common.close')}</span>
+              </DialogClose>
+            )}
+          </DialogDescriptionContext.Provider>
         </DialogPrimitive>
       </ModalPrimitive>
     </DialogOverlay>
@@ -159,8 +182,12 @@ function DialogDescription({
   className,
   ...props
 }: Omit<React.ComponentProps<'div'>, 'slot'>) {
+  const register = React.useContext(DialogDescriptionContext)
+  const id = React.useId()
+  React.useEffect(() => register?.(id), [register, id])
   return (
     <div
+      id={id}
       data-slot="dialog-description"
       className={cn(
         'text-xs/relaxed text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground',

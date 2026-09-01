@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { Focusable } from 'react-aria-components'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { getGetEntityByIdQueryOptions } from '@/api/hooks/entities/entities'
@@ -72,33 +73,35 @@ export function EntityReferenceCard({
 
   return (
     <TooltipTrigger>
-      <Card size="sm" className="bg-muted/20 hover:bg-accent-foreground/10">
-        <CardContent className="p-2.5">
-          <div className="flex items-center gap-3">
-            <EntityImage image={data.image} type={data.type} alt="" />
-            <div className="flex min-w-0 flex-col gap-0.5">
-              <EntityNameIdentifiers entity={data}>
-                <span className="flex items-center gap-1.5">
-                  <Link
-                    to="/entities/$entityId"
-                    params={{ entityId: encodeURIComponent(entityId) }}
-                    className="text-sm font-semibold hover:underline"
-                  >
-                    {getEntityDisplayName(data)}
-                  </Link>
-                  <DraftBadge isDraft={data.isDraft} />
-                </span>
-              </EntityNameIdentifiers>
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-                <span>{getEntityTypeLabel(data.type)}</span>
-                <span aria-hidden>·</span>
-                <span className="truncate font-mono">{entityId}</span>
-                <EntityTags tags={data.tags} />
+      <Focusable>
+        <Card size="sm" className="bg-muted/20 hover:bg-accent-foreground/10">
+          <CardContent className="p-2.5">
+            <div className="flex items-center gap-3">
+              <EntityImage image={data.image} type={data.type} alt="" />
+              <div className="flex min-w-0 flex-col gap-0.5">
+                <EntityNameIdentifiers entity={data}>
+                  <span className="flex items-center gap-1.5">
+                    <Link
+                      to="/entities/$entityId"
+                      params={{ entityId: encodeURIComponent(entityId) }}
+                      className="text-sm font-semibold hover:underline"
+                    >
+                      {getEntityDisplayName(data)}
+                    </Link>
+                    <DraftBadge isDraft={data.isDraft} />
+                  </span>
+                </EntityNameIdentifiers>
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                  <span>{getEntityTypeLabel(data.type)}</span>
+                  <span aria-hidden>·</span>
+                  <span className="truncate font-mono">{entityId}</span>
+                  <EntityTags tags={data.tags} />
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Focusable>
       <Tooltip className="flex-col items-start gap-0.5">
         {description && <span>{description}</span>}
         {term && (

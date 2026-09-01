@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -67,10 +67,6 @@ function OauthAuthorizePage() {
   )
   const [error, setError] = useState<string | null>(null)
   const [isRedirecting, setIsRedirecting] = useState(false)
-
-  useEffect(() => {
-    document.title = `${t('oauth.title')} · ${t('common.site_name')}`
-  }, [t])
 
   const authorize = useCompleteOauthAuthorization({
     mutation: {

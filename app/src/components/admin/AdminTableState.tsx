@@ -3,7 +3,10 @@ import { Button } from '@/components/ui/button'
 
 export function AdminTableState({ message }: { message: string }) {
   return (
-    <p role="status" className="px-4 py-12 text-center text-sm text-muted-foreground">
+    <p
+      role="status"
+      className="px-4 py-12 text-center text-sm text-muted-foreground"
+    >
       {message}
     </p>
   )

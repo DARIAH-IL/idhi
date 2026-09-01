@@ -136,22 +136,6 @@ function TableLoadMoreItem({ className, ...props }: TableLoadMoreItemProps) {
   )
 }
 
-function TableCaption({
-  className,
-  ...props
-}: React.ComponentProps<'figcaption'>) {
-  return (
-    <figcaption
-      data-slot="table-caption"
-      className={cn(
-        'mt-4 text-center text-xs text-muted-foreground',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
 export {
   Table,
   TableHeader,
@@ -161,5 +145,4 @@ export {
   TableRow,
   TableCell,
   TableLoadMoreItem,
-  TableCaption,
 }

@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from 'react'
+import { useId, useMemo, useRef, useState } from 'react'
 import { getLocalTimeZone, parseDate } from '@internationalized/date'
 import type { CalendarDate } from '@internationalized/date'
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
@@ -15,6 +15,7 @@ interface DatePickerProps {
   value?: string | null
   onChange: (value: string) => void
   onBlur?: () => void
+  'aria-label'?: string
   'aria-labelledby'?: string
   'aria-invalid'?: boolean
   className?: string
@@ -36,6 +37,7 @@ function DatePicker({
   value,
   onChange,
   onBlur,
+  'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-invalid': ariaInvalid,
   className,
@@ -43,6 +45,7 @@ function DatePicker({
   const { t } = useTranslation()
   const { locale } = useLocale()
   const valueId = useId()
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
   const date = parseValue(value)
   const formatter = useMemo(
@@ -77,7 +80,9 @@ function DatePicker({
         }}
       >
         <Button
+          ref={triggerRef}
           variant="outline"
+          aria-label={ariaLabel}
           aria-labelledby={
             ariaLabelledBy ? `${ariaLabelledBy} ${valueId}` : undefined
           }
@@ -91,6 +96,7 @@ function DatePicker({
           </span>
         </Button>
         <Popover
+          aria-label={ariaLabel ?? t('common.date_picker.select')}
           className="w-auto overflow-hidden bg-popover p-0 text-popover-foreground"
           placement="bottom start"
         >
@@ -109,9 +115,14 @@ function DatePicker({
           onPress={() => {
             onChange('')
             onBlur?.()
+            triggerRef.current?.focus()
           }}
         >
-          <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
+          <HugeiconsIcon
+            icon={Cancel01Icon}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
         </Button>
       ) : null}
     </div>

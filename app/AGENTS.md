@@ -12,6 +12,50 @@ Shared primitives in `app/src/components/ui/` were originally scaffolded via sha
 
 When a needed primitive doesn't exist yet (e.g. a drawer/sheet), do not just run `npx shadcn add <x>` and drop it in unasked — its Radix/Vaul-based output will conflict with the RAC + logical-property conventions already in place. Do not silently hand-roll a replacement either. Instead, surface the tradeoff to the user before writing code: stock shadcn component vs. a hand-rolled one matching the existing `ui/` pattern, and that adding it via the shadcn CLI means running an `npx`/package-manager command, which requires explicit user instruction per the global CLAUDE.md rule against running `npm`/`yarn`/`pip` unasked. Let the user pick; don't default to either path on your own.
 
+## Accessibility (WCAG 2.1/2.2 AA)
+
+The app went through a full WCAG audit and remediation (see `app/A11Y_PLAN.md` for the
+tracked items and their status). All new code must preserve these conventions — do not
+regress them:
+
+- **Names**: every interactive element needs an accessible name. Icon-only buttons get
+  `aria-label` (translated); decorative icons get `aria-hidden="true"`. When the same control
+  repeats per row/section (remove, revoke, select all), scope its name with the item context,
+  e.g. ``aria-label={`${t('common.remove')} (${index + 1})`}``.
+- **Async status**: loading/empty/success messages get `role="status"`, errors get
+  `role="alert"`. A live region that must announce updates has to be permanently mounted with
+  changing text — a conditionally-mounted `aria-live` node is not announced.
+- **Forms**: use `FieldRow`'s render-prop form so the control gets `aria-labelledby={labelId}`;
+  wire errors with `aria-invalid` + `aria-describedby` pointing at a `FieldError` with an `id`.
+  Pass `required` so `FieldRow` renders the visual marker. Never label an input by placeholder
+  alone.
+- **Focus**: never unmount the focused element without moving focus — for list-item removal
+  use `focusAfterRemove` (`app/src/components/form-fields/removeFocus.ts`): mark the list
+  container with `ref` + `data-remove-scope=""` and the buttons with
+  `data-remove-button`/`data-add-button` (the helper only matches buttons whose nearest
+  `data-remove-scope` ancestor is that container, so nested lists stay independent), and call
+  it after the removal promise resolves
+  (`void Promise.resolve(field.removeValue(i)).then(() => focusAfterRemove(...))`). Never add `outline-none`/`outline-hidden`
+  without a visible `focus-visible`/`data-focus-visible` replacement. Focus-ring strength
+  (`--ring` token, `ring-ring/70`) was tuned to meet 3:1 non-text contrast — do not lighten it.
+- **Tooltips**: RAC `Button` triggers work inside `TooltipTrigger` as-is; any non-RAC
+  interactive trigger (e.g. TanStack `Link`, a clickable `Card`) must be wrapped in RAC
+  `<Focusable>` or its tooltip silently stops working. Never put essential info in a
+  hover-only tooltip.
+- **Dialogs/drawers/popovers**: every `Dialog` needs a `DialogTitle`; `DialogDescription` is
+  auto-wired to `aria-describedby` — use it for consequence text (especially destructive
+  confirms). Drawers need a `DrawerTitle` (sr-only is fine). `ui/popover` renders a RAC
+  `Dialog` inside for focus containment — don't bypass it.
+- **RTL/lang**: LTR-only values (ids, emails, URLs, code) rendered inside localized text get
+  `dir="ltr"`. Values in a language other than the UI language get a `lang` attribute.
+  `lang`/`dir`/`document.title` are managed once in `src/routes/__root.tsx` — the app keeps a
+  single localized title; do not add per-route titles.
+- **State, not remount**: don't force-remount panels with `key={JSON.stringify(...)}` to sync
+  props to state — it destroys keyboard focus. Sync state to props instead (see
+  `useDraftFacetFilters`).
+- **Motion**: pair `animate-*` with `motion-reduce:animate-none`; check
+  `prefers-reduced-motion` before `scrollIntoView({ behavior: 'smooth' })`.
+
 ## Localization
 
 All user-visible app text must use the app's localization system. Add copy to the locale resources and reference it through translation keys; do not hard-code user-facing strings in TSX or browser helpers.

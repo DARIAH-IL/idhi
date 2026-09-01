@@ -26,6 +26,7 @@ export const ProjectFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={<EntityFieldLabel entityClass="Project" field="name" />}
               onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
@@ -197,6 +198,7 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="OrganizationProjectRole"
@@ -282,6 +284,7 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="ProjectParticipation"
@@ -481,6 +484,7 @@ export const ProjectFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="Funding"

@@ -98,7 +98,8 @@
       "type": "نوع السجل."
     },
     "skip_to_content": "تخطي إلى المحتوى الرئيسي",
-    "primary_navigation": "التنقل الرئيسي"
+    "primary_navigation": "التنقل الرئيسي",
+    "page_loaded": "تم تحميل الصفحة"
   },
   "about": {
     "title": "حول",
@@ -1872,7 +1873,8 @@
       "external_url_placeholder": "أو إدخال رابط خارجي...",
       "identifier_search_placeholder": "إدخال رابط مباشرة، أو بدء الكتابة للبحث بالاسم...",
       "clear_selection": "مسح التحديد",
-      "remove_entity": "إزالة السجل"
+      "remove_entity": "إزالة السجل",
+      "image_uploaded": "تم رفع الصورة"
     },
     "duplicate_check": {
       "title": "سجلات مكررة محتملة",

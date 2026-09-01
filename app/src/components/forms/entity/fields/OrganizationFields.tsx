@@ -44,6 +44,7 @@ export const OrganizationFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={
                 <EntityFieldLabel entityClass="Organization" field="name" />
               }
@@ -170,6 +171,7 @@ export const OrganizationFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="OrganizationHierarchy"

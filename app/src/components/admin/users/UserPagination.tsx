@@ -52,7 +52,11 @@ export function UserPagination({
           isDisabled={page === 0}
           onPress={() => onPageChange(Math.max(0, page - 1))}
         >
-          <HugeiconsIcon icon={previousIcon} strokeWidth={2} aria-hidden="true" />
+          <HugeiconsIcon
+            icon={previousIcon}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
         </Button>
         <span className="flex min-w-16 items-center justify-center text-xs tabular-nums">
           {t('common.pagination.page_count', {

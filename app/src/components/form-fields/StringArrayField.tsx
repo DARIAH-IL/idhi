@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
 import { getEnumValueLabel } from '@/lib/entity'
@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
 import { FieldError } from './FieldError'
 import { useFieldRowClass } from './FieldNesting'
+import { focusAfterRemove } from './removeFocus'
 import { useReorderableList } from './useReorderableList'
 import { firstError } from './validation'
 
@@ -34,9 +35,10 @@ export function StringArrayField({
   )
   const rowClass = useFieldRowClass()
   const labelId = useId()
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className={cn('flex flex-col gap-2', rowClass)}>
+    <div ref={containerRef} data-remove-scope="" className={cn('flex flex-col gap-2', rowClass)}>
       <Label id={labelId}>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       <div className="flex flex-col gap-1.5">
@@ -66,7 +68,12 @@ export function StringArrayField({
             <Button
               variant="ghost"
               size="icon-sm"
-              onPress={() => field.removeValue(index)}
+              data-remove-button
+              onPress={() => {
+                void Promise.resolve(field.removeValue(index)).then(() =>
+                  focusAfterRemove(containerRef.current, index),
+                )
+              }}
               aria-label={`${t('common.remove')} (${index + 1})`}
             >
               ×
@@ -88,6 +95,7 @@ export function StringArrayField({
       <Button
         variant="outline"
         size="sm"
+        data-add-button
         onPress={() => field.pushValue('')}
         className="w-fit"
       >

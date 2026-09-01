@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { EntityImage } from '#/components/entity/EntityImage.tsx'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
@@ -32,6 +32,7 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
   const { t } = useTranslation()
   const field = useFieldContext<string | null | undefined>()
   const inputRef = useRef<HTMLInputElement>(null)
+  const errorId = useId()
   const [error, setError] = useState<string>()
   const image = field.state.value ?? undefined
 
@@ -60,6 +61,8 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
               getEntityClassName(entityType),
               'image',
             )}
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? errorId : undefined}
             onChange={(event) => {
               const file = event.target.files?.[0]
               if (!file) {
@@ -95,13 +98,17 @@ export function ImageField({ entityType }: { entityType: EntityType }) {
                 field.handleChange(undefined)
                 if (inputRef.current) {
                   inputRef.current.value = ''
+                  inputRef.current.focus()
                 }
               }}
             >
               {t('entity.form.remove_image')}
             </Button>
           )}
-          <FieldError error={error} />
+          <span role="status" className="sr-only">
+            {image && !error ? t('entity.form.image_uploaded') : ''}
+          </span>
+          <FieldError id={errorId} error={error} />
         </div>
       </div>
     </FieldRow>

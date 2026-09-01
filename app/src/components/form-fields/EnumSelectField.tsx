@@ -36,7 +36,7 @@ export function EnumSelectField({ label, options, required = false }: Props) {
     .sort((a, b) => a.label.localeCompare(b.label))
 
   return (
-    <FieldRow label={label}>
+    <FieldRow label={label} required={required}>
       {(labelId) => (
         <>
           <Combobox

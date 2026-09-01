@@ -142,6 +142,7 @@ export const PersonFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="Affiliation"

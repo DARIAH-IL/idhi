@@ -21,6 +21,7 @@ export const FacilityFields = withForm({
         <form.AppField name="name" validators={localizedValueValidators(true)}>
           {(field) => (
             <field.LangStringField
+              required
               label={<EntityFieldLabel entityClass="Facility" field="name" />}
               onItemBlur={(value) => duplicateCheck?.check('name.value', value)}
             />
@@ -129,6 +130,7 @@ export const FacilityFields = withForm({
                   >
                     {(nestedField) => (
                       <nestedField.EntityRefField
+                        required
                         label={
                           <EntityFieldLabel
                             entityClass="FacilityAffiliation"

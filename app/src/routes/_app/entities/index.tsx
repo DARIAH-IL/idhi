@@ -81,7 +81,6 @@ function EntityBoard() {
     isError,
     isFetchingNextPage,
     isLoading,
-    isFetching,
     isRefetching,
     relationshipFacets,
     relationshipReferences,
@@ -193,7 +192,6 @@ function EntityBoard() {
           facetFilters={facetFilters}
           hasAdvancedFilter={advancedFilterActiveCount > 0}
           isError={isError}
-          isFetching={isFetching}
           isLoading={isLoading}
           isRefetching={isRefetching}
           isFetchingNextPage={isFetchingNextPage}
