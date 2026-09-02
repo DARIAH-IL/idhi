@@ -4,13 +4,13 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ToolDescriptionItem } from './toolDescriptionItem'
-import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem'
-import type { ToolLicense } from './toolLicense'
-import type { ToolNameItem } from './toolNameItem'
-import type { ToolResourceContributionsItem } from './toolResourceContributionsItem'
-import type { ToolToolType } from './toolToolType'
-import type { ToolType } from './toolType'
+import type { ToolDescriptionItem } from './toolDescriptionItem.ts'
+import type { ToolDigitalHumanitiesActivitiesItem } from './toolDigitalHumanitiesActivitiesItem.ts'
+import type { ToolLicense } from './toolLicense.ts'
+import type { ToolNameItem } from './toolNameItem.ts'
+import type { ToolResourceContributionsItem } from './toolResourceContributionsItem.ts'
+import type { ToolToolType } from './toolToolType.ts'
+import type { ToolType } from './toolType.ts'
 
 /**
  * A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.

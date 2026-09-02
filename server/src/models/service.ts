@@ -4,11 +4,11 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ServiceDescriptionItem } from './serviceDescriptionItem'
-import type { ServiceDigitalHumanitiesActivitiesItem } from './serviceDigitalHumanitiesActivitiesItem'
-import type { ServiceNameItem } from './serviceNameItem'
-import type { ServiceServiceType } from './serviceServiceType'
-import type { ServiceType } from './serviceType'
+import type { ServiceDescriptionItem } from './serviceDescriptionItem.ts'
+import type { ServiceDigitalHumanitiesActivitiesItem } from './serviceDigitalHumanitiesActivitiesItem.ts'
+import type { ServiceNameItem } from './serviceNameItem.ts'
+import type { ServiceServiceType } from './serviceServiceType.ts'
+import type { ServiceType } from './serviceType.ts'
 
 /**
  * A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.

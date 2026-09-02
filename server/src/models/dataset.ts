@@ -4,14 +4,14 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { DatasetDatasetType } from './datasetDatasetType'
-import type { DatasetDescriptionItem } from './datasetDescriptionItem'
-import type { DatasetDigitalHumanitiesActivitiesItem } from './datasetDigitalHumanitiesActivitiesItem'
-import type { DatasetLicense } from './datasetLicense'
-import type { DatasetNameItem } from './datasetNameItem'
-import type { DatasetResourceContributionsItem } from './datasetResourceContributionsItem'
-import type { DatasetThemesItem } from './datasetThemesItem'
-import type { DatasetType } from './datasetType'
+import type { DatasetDatasetType } from './datasetDatasetType.ts'
+import type { DatasetDescriptionItem } from './datasetDescriptionItem.ts'
+import type { DatasetDigitalHumanitiesActivitiesItem } from './datasetDigitalHumanitiesActivitiesItem.ts'
+import type { DatasetLicense } from './datasetLicense.ts'
+import type { DatasetNameItem } from './datasetNameItem.ts'
+import type { DatasetResourceContributionsItem } from './datasetResourceContributionsItem.ts'
+import type { DatasetThemesItem } from './datasetThemesItem.ts'
+import type { DatasetType } from './datasetType.ts'
 
 /**
  * A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.

@@ -4,9 +4,9 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Audited } from './audited'
-import type { Date } from './date'
-import type { InviteId } from './inviteId'
+import type { Audited } from './audited.ts'
+import type { Date } from './date.ts'
+import type { InviteId } from './inviteId.ts'
 
 export type UserInvite = Audited & {
   id: InviteId

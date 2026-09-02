@@ -640,6 +640,7 @@ components:
         facets:
           type: array
           description: Entity fields for which facet counts should be returned.
+          maxItems: 100
           items:
             $ref: "#/components/schemas/FilterableField"
         filter:

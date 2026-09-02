@@ -7,7 +7,7 @@
 import { createFactory } from 'hono/factory'
 import { ApiError } from '../../errors/ApiError'
 import { ErrorCode } from '../../models/errorCode'
-import type { GetHealthContext } from './default.context'
+import { GetHealthContext } from './default.context.ts'
 
 const factory = createFactory()
 export const getHealthHandlers = factory.createHandlers(

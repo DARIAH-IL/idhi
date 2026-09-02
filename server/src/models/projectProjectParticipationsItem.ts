@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ProjectProjectParticipationsItemParticipationRole } from './projectProjectParticipationsItemParticipationRole'
+import type { ProjectProjectParticipationsItemParticipationRole } from './projectProjectParticipationsItemParticipationRole.ts'
 
 /**
  * A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.

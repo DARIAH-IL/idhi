@@ -4,11 +4,11 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { PersonAffiliationsItem } from './personAffiliationsItem'
-import type { PersonDescriptionItem } from './personDescriptionItem'
-import type { PersonFamilyNameItem } from './personFamilyNameItem'
-import type { PersonGivenNameItem } from './personGivenNameItem'
-import type { PersonType } from './personType'
+import type { PersonAffiliationsItem } from './personAffiliationsItem.ts'
+import type { PersonDescriptionItem } from './personDescriptionItem.ts'
+import type { PersonFamilyNameItem } from './personFamilyNameItem.ts'
+import type { PersonGivenNameItem } from './personGivenNameItem.ts'
+import type { PersonType } from './personType.ts'
 
 /**
  * A human agent in the DH index: researcher, developer, librarian, student, etc.

@@ -20,12 +20,12 @@ import {
 } from '../../utils/otp'
 import { sendInviteEmail } from '../../utils/smtp'
 import { requiredValue } from '../../utils/values'
-import { zValidator } from '../api.validator'
-import type {
+import { zValidator } from '../api.validator.ts'
+import {
   InviteUserContext,
   ListUserInvitesContext,
   RevokeUserInviteByIdContext,
-} from './user-invites.context'
+} from './user-invites.context.ts'
 import {
   InviteUserBody,
   InviteUserResponse,

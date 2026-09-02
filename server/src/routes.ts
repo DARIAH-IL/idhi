@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import { Hono } from 'hono'
-import { getHealthHandlers } from './handlers/default/default.handlers'
+import { getHealthHandlers } from './handlers/default/default.handlers.ts'
 import {
   startOtpChallengeHandlers,
   completeOtpChallengeHandlers,
@@ -13,14 +13,14 @@ import {
   completePasskeyRegistrationHandlers,
   startPasskeyAuthenticationHandlers,
   completePasskeyAuthenticationHandlers,
-} from './handlers/user-auth/user-auth.handlers'
+} from './handlers/user-auth/user-auth.handlers.ts'
 import {
   searchEntitiesHandlers,
   createEntityHandlers,
   getEntityByIdHandlers,
   updateEntityByIdHandlers,
   deleteEntityByIdHandlers,
-} from './handlers/entities/entities.handlers'
+} from './handlers/entities/entities.handlers.ts'
 import {
   listUsersHandlers,
   createUserHandlers,
@@ -28,13 +28,13 @@ import {
   replaceUserByIdHandlers,
   updateUserByIdHandlers,
   deleteUserByIdHandlers,
-} from './handlers/user-management/user-management.handlers'
+} from './handlers/user-management/user-management.handlers.ts'
 import {
   inviteUserHandlers,
   listUserInvitesHandlers,
   revokeUserInviteByIdHandlers,
-} from './handlers/user-invites/user-invites.handlers'
-import { completeOauthAuthorizationHandlers } from './handlers/oauth/oauth.handlers'
+} from './handlers/user-invites/user-invites.handlers.ts'
+import { completeOauthAuthorizationHandlers } from './handlers/oauth/oauth.handlers.ts'
 
 const app = new Hono()
   .get('/api/v1/health', ...getHealthHandlers)

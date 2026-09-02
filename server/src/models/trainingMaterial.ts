@@ -4,16 +4,16 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { TrainingMaterialDescriptionItem } from './trainingMaterialDescriptionItem'
-import type { TrainingMaterialDigitalHumanitiesActivitiesItem } from './trainingMaterialDigitalHumanitiesActivitiesItem'
-import type { TrainingMaterialEducationalLevelItem } from './trainingMaterialEducationalLevelItem'
-import type { TrainingMaterialLearningOutcomesItem } from './trainingMaterialLearningOutcomesItem'
-import type { TrainingMaterialLicense } from './trainingMaterialLicense'
-import type { TrainingMaterialNameItem } from './trainingMaterialNameItem'
-import type { TrainingMaterialPrerequisitesItem } from './trainingMaterialPrerequisitesItem'
-import type { TrainingMaterialTargetAudiencesItem } from './trainingMaterialTargetAudiencesItem'
-import type { TrainingMaterialTrainingMaterialType } from './trainingMaterialTrainingMaterialType'
-import type { TrainingMaterialType } from './trainingMaterialType'
+import type { TrainingMaterialDescriptionItem } from './trainingMaterialDescriptionItem.ts'
+import type { TrainingMaterialDigitalHumanitiesActivitiesItem } from './trainingMaterialDigitalHumanitiesActivitiesItem.ts'
+import type { TrainingMaterialEducationalLevelItem } from './trainingMaterialEducationalLevelItem.ts'
+import type { TrainingMaterialLearningOutcomesItem } from './trainingMaterialLearningOutcomesItem.ts'
+import type { TrainingMaterialLicense } from './trainingMaterialLicense.ts'
+import type { TrainingMaterialNameItem } from './trainingMaterialNameItem.ts'
+import type { TrainingMaterialPrerequisitesItem } from './trainingMaterialPrerequisitesItem.ts'
+import type { TrainingMaterialTargetAudiencesItem } from './trainingMaterialTargetAudiencesItem.ts'
+import type { TrainingMaterialTrainingMaterialType } from './trainingMaterialTrainingMaterialType.ts'
+import type { TrainingMaterialType } from './trainingMaterialType.ts'
 
 /**
  * A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.

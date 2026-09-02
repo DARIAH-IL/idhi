@@ -4,14 +4,17 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Filter } from './filter'
-import type { FilterableField } from './filterableField'
-import type { SortCriterion } from './sortCriterion'
+import type { Filter } from './filter.ts'
+import type { FilterableField } from './filterableField.ts'
+import type { SortCriterion } from './sortCriterion.ts'
 
 export interface EntitySearch {
   /** Optional free-text search query. */
   q?: string
-  /** Entity fields for which facet counts should be returned. */
+  /**
+   * Entity fields for which facet counts should be returned.
+   * @maxItems 100
+   */
   facets?: FilterableField[]
   filter?: Filter
   /**

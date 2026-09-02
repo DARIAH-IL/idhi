@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuthEmailWrite } from './authEmailWrite'
-import type { UiLanguage } from './uiLanguage'
+import type { AuthEmailWrite } from './authEmailWrite.ts'
+import type { UiLanguage } from './uiLanguage.ts'
 
 export type AuthOtpStartWrite = AuthEmailWrite & {
   lang?: UiLanguage

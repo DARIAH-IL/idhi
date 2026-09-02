@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ProjectOrganizationRolesItemOrgProjectRole } from './projectOrganizationRolesItemOrgProjectRole'
+import type { ProjectOrganizationRolesItemOrgProjectRole } from './projectOrganizationRolesItemOrgProjectRole.ts'
 
 /**
  * An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.

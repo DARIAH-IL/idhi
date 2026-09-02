@@ -42,15 +42,15 @@ import {
   enforceAuthRateLimits,
 } from '../../utils/authRateLimit'
 import { requiredValue, splitValues } from '../../utils/values'
-import { zValidator } from '../api.validator'
-import type {
+import { zValidator } from '../api.validator.ts'
+import {
   StartOtpChallengeContext,
   CompleteOtpChallengeContext,
   StartPasskeyRegistrationContext,
   CompletePasskeyRegistrationContext,
   StartPasskeyAuthenticationContext,
   CompletePasskeyAuthenticationContext,
-} from './user-auth.context'
+} from './user-auth.context.ts'
 import {
   StartOtpChallengeBody,
   StartOtpChallengeResponse,
@@ -66,7 +66,7 @@ import {
   CompletePasskeyAuthenticationParams,
   CompletePasskeyAuthenticationBody,
   CompletePasskeyAuthenticationResponse,
-} from './user-auth.zod'
+} from './user-auth.zod.ts'
 
 const factory = createFactory()
 const RP_NAME = 'IDHI'

@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuthChallenge } from './authChallenge'
-import type { PasskeyAuthenticationChallengeOptions } from './passkeyAuthenticationChallengeOptions'
+import type { AuthChallenge } from './authChallenge.ts'
+import type { PasskeyAuthenticationChallengeOptions } from './passkeyAuthenticationChallengeOptions.ts'
 
 export type PasskeyAuthenticationChallenge = AuthChallenge & {
   /** Matches @simplewebauthn/PublicKeyCredentialRequestOptionsJSON. */

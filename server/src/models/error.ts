@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ErrorCode } from './errorCode'
+import type { ErrorCode } from './errorCode.ts'
 
 export interface Error {
   errorCode: ErrorCode

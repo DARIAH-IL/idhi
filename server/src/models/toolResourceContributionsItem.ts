@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ToolResourceContributionsItemResourceContributionRole } from './toolResourceContributionsItemResourceContributionRole'
+import type { ToolResourceContributionsItemResourceContributionRole } from './toolResourceContributionsItemResourceContributionRole.ts'
 
 /**
  * A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.

@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuditedAudit } from './auditedAudit'
+import type { AuditedAudit } from './auditedAudit.ts'
 
 export interface Audited {
   audit?: AuditedAudit

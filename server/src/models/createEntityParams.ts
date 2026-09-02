@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { IsDraftParameter } from './isDraftParameter'
+import type { IsDraftParameter } from './isDraftParameter.ts'
 
 export type CreateEntityParams = {
   /**

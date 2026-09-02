@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { UiLanguage } from './uiLanguage'
+import type { UiLanguage } from './uiLanguage.ts'
 
 export interface UserInviteWrite {
   email: string

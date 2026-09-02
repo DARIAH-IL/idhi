@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { EventEventAgentRolesItemEventAgentRole } from './eventEventAgentRolesItemEventAgentRole'
+import type { EventEventAgentRolesItemEventAgentRole } from './eventEventAgentRolesItemEventAgentRole.ts'
 
 /**
  * A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.

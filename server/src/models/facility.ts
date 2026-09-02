@@ -4,12 +4,12 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { FacilityAddressItem } from './facilityAddressItem'
-import type { FacilityDescriptionItem } from './facilityDescriptionItem'
-import type { FacilityFacilityAffiliationsItem } from './facilityFacilityAffiliationsItem'
-import type { FacilityLocationItem } from './facilityLocationItem'
-import type { FacilityNameItem } from './facilityNameItem'
-import type { FacilityType } from './facilityType'
+import type { FacilityAddressItem } from './facilityAddressItem.ts'
+import type { FacilityDescriptionItem } from './facilityDescriptionItem.ts'
+import type { FacilityFacilityAffiliationsItem } from './facilityFacilityAffiliationsItem.ts'
+import type { FacilityLocationItem } from './facilityLocationItem.ts'
+import type { FacilityNameItem } from './facilityNameItem.ts'
+import type { FacilityType } from './facilityType.ts'
 
 /**
  * A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.

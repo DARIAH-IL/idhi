@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { OauthAuthorizeWriteCodeChallengeMethod } from './oauthAuthorizeWriteCodeChallengeMethod'
-import type { OauthAuthorizeWriteResponseType } from './oauthAuthorizeWriteResponseType'
+import type { OauthAuthorizeWriteCodeChallengeMethod } from './oauthAuthorizeWriteCodeChallengeMethod.ts'
+import type { OauthAuthorizeWriteResponseType } from './oauthAuthorizeWriteResponseType.ts'
 
 export interface OauthAuthorizeWrite {
   response_type: OauthAuthorizeWriteResponseType

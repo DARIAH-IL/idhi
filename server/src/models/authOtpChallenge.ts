@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuthChallenge } from './authChallenge'
+import type { AuthChallenge } from './authChallenge.ts'
 
 export type AuthOtpChallenge = AuthChallenge & {
   /**

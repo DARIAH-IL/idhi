@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { FacilityFacilityAffiliationsItemFacilityAffiliationRole } from './facilityFacilityAffiliationsItemFacilityAffiliationRole'
+import type { FacilityFacilityAffiliationsItemFacilityAffiliationRole } from './facilityFacilityAffiliationsItemFacilityAffiliationRole.ts'
 
 /**
  * A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.

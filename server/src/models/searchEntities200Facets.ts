@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { SearchEntities200FacetsItem } from './searchEntities200FacetsItem'
+import type { SearchEntities200FacetsItem } from './searchEntities200FacetsItem.ts'
 
 export type SearchEntities200Facets = {
   [key: string]: SearchEntities200FacetsItem[]

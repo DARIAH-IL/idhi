@@ -16,14 +16,14 @@ import {
   updateEntity,
 } from '../../utils/entityOps'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
-import { zValidator } from '../api.validator'
-import type {
+import { zValidator } from '../api.validator.ts'
+import {
   SearchEntitiesContext,
   CreateEntityContext,
   GetEntityByIdContext,
   UpdateEntityByIdContext,
   DeleteEntityByIdContext,
-} from './entities.context'
+} from './entities.context.ts'
 import {
   SearchEntitiesBody,
   SearchEntitiesResponse,

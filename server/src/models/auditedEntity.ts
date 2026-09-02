@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Audited } from './audited'
-import type { Entity } from './entity'
+import type { Audited } from './audited.ts'
+import type { Entity } from './entity.ts'
 
 export type AuditedEntity = Entity &
   Audited & {

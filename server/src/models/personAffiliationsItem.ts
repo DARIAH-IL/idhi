@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { PersonAffiliationsItemAffiliationRole } from './personAffiliationsItemAffiliationRole'
+import type { PersonAffiliationsItemAffiliationRole } from './personAffiliationsItemAffiliationRole.ts'
 
 /**
  * A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.

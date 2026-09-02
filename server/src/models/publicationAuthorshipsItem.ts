@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { PublicationAuthorshipsItemAuthorshipRole } from './publicationAuthorshipsItemAuthorshipRole'
+import type { PublicationAuthorshipsItemAuthorshipRole } from './publicationAuthorshipsItemAuthorshipRole.ts'
 
 /**
  * A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.

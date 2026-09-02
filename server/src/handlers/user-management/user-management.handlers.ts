@@ -14,15 +14,15 @@ import type { User } from '../../models/user'
 import type { UserWrite } from '../../models/userWrite'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { normalizeEmail } from '../../db/services/users'
-import { zValidator } from '../api.validator'
-import type {
+import { zValidator } from '../api.validator.ts'
+import {
   ListUsersContext,
   CreateUserContext,
   GetUserByIdContext,
   ReplaceUserByIdContext,
   UpdateUserByIdContext,
   DeleteUserByIdContext,
-} from './user-management.context'
+} from './user-management.context.ts'
 import {
   ListUsersQueryParams,
   ListUsersResponse,

@@ -4,13 +4,13 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { OrganizationAddressItem } from './organizationAddressItem'
-import type { OrganizationDescriptionItem } from './organizationDescriptionItem'
-import type { OrganizationLocationItem } from './organizationLocationItem'
-import type { OrganizationNameItem } from './organizationNameItem'
-import type { OrganizationOrganizationStructureItem } from './organizationOrganizationStructureItem'
-import type { OrganizationOrganizationType } from './organizationOrganizationType'
-import type { OrganizationType } from './organizationType'
+import type { OrganizationAddressItem } from './organizationAddressItem.ts'
+import type { OrganizationDescriptionItem } from './organizationDescriptionItem.ts'
+import type { OrganizationLocationItem } from './organizationLocationItem.ts'
+import type { OrganizationNameItem } from './organizationNameItem.ts'
+import type { OrganizationOrganizationStructureItem } from './organizationOrganizationStructureItem.ts'
+import type { OrganizationOrganizationType } from './organizationOrganizationType.ts'
+import type { OrganizationType } from './organizationType.ts'
 
 /**
  * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.

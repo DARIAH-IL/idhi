@@ -4,12 +4,12 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { PublicationAuthorshipsItem } from './publicationAuthorshipsItem'
-import type { PublicationDescriptionItem } from './publicationDescriptionItem'
-import type { PublicationNameItem } from './publicationNameItem'
-import type { PublicationPublicationType } from './publicationPublicationType'
-import type { PublicationPublishedInItem } from './publicationPublishedInItem'
-import type { PublicationType } from './publicationType'
+import type { PublicationAuthorshipsItem } from './publicationAuthorshipsItem.ts'
+import type { PublicationDescriptionItem } from './publicationDescriptionItem.ts'
+import type { PublicationNameItem } from './publicationNameItem.ts'
+import type { PublicationPublicationType } from './publicationPublicationType.ts'
+import type { PublicationPublishedInItem } from './publicationPublishedInItem.ts'
+import type { PublicationType } from './publicationType.ts'
 
 /**
  * An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.

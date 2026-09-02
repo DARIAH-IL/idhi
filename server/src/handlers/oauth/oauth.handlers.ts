@@ -7,12 +7,12 @@
 import { createFactory } from 'hono/factory'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import { issueAuthorizationCode } from '../../oauth/codes'
-import { zValidator } from '../api.validator'
-import { CompleteOauthAuthorizationContext } from './oauth.context'
+import { zValidator } from '../api.validator.ts'
+import { CompleteOauthAuthorizationContext } from './oauth.context.ts'
 import {
   CompleteOauthAuthorizationBody,
   CompleteOauthAuthorizationResponse,
-} from './oauth.zod'
+} from './oauth.zod.ts'
 
 const factory = createFactory()
 export const completeOauthAuthorizationHandlers = factory.createHandlers(

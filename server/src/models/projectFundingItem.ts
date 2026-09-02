@@ -4,9 +4,9 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ProjectFundingItemFundingCurrency } from './projectFundingItemFundingCurrency'
-import type { ProjectFundingItemFundingProgramItem } from './projectFundingItemFundingProgramItem'
-import type { ProjectFundingItemGrantNameItem } from './projectFundingItemGrantNameItem'
+import type { ProjectFundingItemFundingCurrency } from './projectFundingItemFundingCurrency.ts'
+import type { ProjectFundingItemFundingProgramItem } from './projectFundingItemFundingProgramItem.ts'
+import type { ProjectFundingItemGrantNameItem } from './projectFundingItemGrantNameItem.ts'
 
 /**
  * A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.

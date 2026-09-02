@@ -9,6 +9,8 @@ import { z as zod } from 'zod'
 export const searchEntitiesBodyFacetsItemRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
+export const searchEntitiesBodyFacetsMax = 100
+
 export const searchEntitiesBodyFilterOneFieldRegExp = new RegExp(
   '^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*$',
 )
@@ -41,6 +43,7 @@ export const SearchEntitiesBody = zod.object({
           'A dot-separated entity field path. Operators and array indexes are not allowed.',
         ),
     )
+    .max(searchEntitiesBodyFacetsMax)
     .optional()
     .describe('Entity fields for which facet counts should be returned.'),
   filter: zod

@@ -4,13 +4,13 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { EventAddressItem } from './eventAddressItem'
-import type { EventDescriptionItem } from './eventDescriptionItem'
-import type { EventEventAgentRolesItem } from './eventEventAgentRolesItem'
-import type { EventEventType } from './eventEventType'
-import type { EventLocationItem } from './eventLocationItem'
-import type { EventNameItem } from './eventNameItem'
-import type { EventType } from './eventType'
+import type { EventAddressItem } from './eventAddressItem.ts'
+import type { EventDescriptionItem } from './eventDescriptionItem.ts'
+import type { EventEventAgentRolesItem } from './eventEventAgentRolesItem.ts'
+import type { EventEventType } from './eventEventType.ts'
+import type { EventLocationItem } from './eventLocationItem.ts'
+import type { EventNameItem } from './eventNameItem.ts'
+import type { EventType } from './eventType.ts'
 
 /**
  * A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.

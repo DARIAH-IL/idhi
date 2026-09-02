@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { UserId } from './userId'
+import type { UserId } from './userId.ts'
 
 export interface User {
   id: UserId

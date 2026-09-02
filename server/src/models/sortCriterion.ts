@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { FilterableField } from './filterableField'
-import type { SortDirection } from './sortDirection'
+import type { FilterableField } from './filterableField.ts'
+import type { SortDirection } from './sortDirection.ts'
 
 export interface SortCriterion {
   property: FilterableField

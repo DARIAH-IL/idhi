@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { AuditedEntity } from './auditedEntity'
-import type { SearchEntities200Facets } from './searchEntities200Facets'
+import type { AuditedEntity } from './auditedEntity.ts'
+import type { SearchEntities200Facets } from './searchEntities200Facets.ts'
 
 export type SearchEntities200 = {
   results: AuditedEntity[]

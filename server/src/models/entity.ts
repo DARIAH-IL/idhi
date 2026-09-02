@@ -4,16 +4,16 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Dataset } from './dataset'
-import type { Event } from './event'
-import type { Facility } from './facility'
-import type { Organization } from './organization'
-import type { Person } from './person'
-import type { Project } from './project'
-import type { Publication } from './publication'
-import type { Service } from './service'
-import type { Tool } from './tool'
-import type { TrainingMaterial } from './trainingMaterial'
+import type { Dataset } from './dataset.ts'
+import type { Event } from './event.ts'
+import type { Facility } from './facility.ts'
+import type { Organization } from './organization.ts'
+import type { Person } from './person.ts'
+import type { Project } from './project.ts'
+import type { Publication } from './publication.ts'
+import type { Service } from './service.ts'
+import type { Tool } from './tool.ts'
+import type { TrainingMaterial } from './trainingMaterial.ts'
 
 export type Entity =
   | Person

@@ -4,7 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { Error } from './error'
+import type { Error } from './error.ts'
 
 /**
  * Applicative error

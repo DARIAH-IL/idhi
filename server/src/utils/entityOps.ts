@@ -51,7 +51,6 @@ export interface EntitySearchInput {
 }
 
 const SEARCH_QUERY_MAX_LENGTH = 256
-const SEARCH_FACETS_MAX_COUNT = 10
 const SEARCH_FILTER_MAX_DEPTH = 10
 
 function filterDepth(filter: EntityFilter): number {
@@ -73,13 +72,6 @@ export async function searchEntities(
     throw new ApiError(
       ErrorCode.InvalidInput,
       `q must not exceed ${SEARCH_QUERY_MAX_LENGTH} characters`,
-    )
-  }
-
-  if (facets !== undefined && facets.length > SEARCH_FACETS_MAX_COUNT) {
-    throw new ApiError(
-      ErrorCode.InvalidInput,
-      `facets must not contain more than ${SEARCH_FACETS_MAX_COUNT} entries`,
     )
   }
 

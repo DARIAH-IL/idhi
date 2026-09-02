@@ -4,8 +4,8 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { FilterableField } from './filterableField'
-import type { FilterOperator } from './filterOperator'
+import type { FilterableField } from './filterableField.ts'
+import type { FilterOperator } from './filterOperator.ts'
 
 export type Filter =
   | {

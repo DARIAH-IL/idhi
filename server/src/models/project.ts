@@ -4,17 +4,17 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
-import type { ProjectDescriptionItem } from './projectDescriptionItem'
-import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem'
-import type { ProjectFundingItem } from './projectFundingItem'
-import type { ProjectFundingStatus } from './projectFundingStatus'
-import type { ProjectNameItem } from './projectNameItem'
-import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem'
-import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem'
-import type { ProjectResearchDisciplinesItem } from './projectResearchDisciplinesItem'
-import type { ProjectStudiedPeriodsItem } from './projectStudiedPeriodsItem'
-import type { ProjectStudiedPlacesItem } from './projectStudiedPlacesItem'
-import type { ProjectType } from './projectType'
+import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
+import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
+import type { ProjectFundingItem } from './projectFundingItem.ts'
+import type { ProjectFundingStatus } from './projectFundingStatus.ts'
+import type { ProjectNameItem } from './projectNameItem.ts'
+import type { ProjectOrganizationRolesItem } from './projectOrganizationRolesItem.ts'
+import type { ProjectProjectParticipationsItem } from './projectProjectParticipationsItem.ts'
+import type { ProjectResearchDisciplinesItem } from './projectResearchDisciplinesItem.ts'
+import type { ProjectStudiedPeriodsItem } from './projectStudiedPeriodsItem.ts'
+import type { ProjectStudiedPlacesItem } from './projectStudiedPlacesItem.ts'
+import type { ProjectType } from './projectType.ts'
 
 /**
  * A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.
