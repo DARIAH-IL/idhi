@@ -125,24 +125,12 @@ function exposeUser(user: HydratedDocument<StoredUser>): UserWithCredentials {
 
 export async function createUserDatabaseService(
   connection: Connection,
-  initializeIndexes: boolean,
 ): Promise<UserDatabaseService> {
   const users = connection.model<StoredUser>(
     'User',
     userSchema,
     COLLECTIONS.users,
   )
-
-  if (initializeIndexes) {
-    await users.collection.createIndex(
-      { email: 1 },
-      {
-        name: 'users_email_unique_case_insensitive',
-        unique: true,
-        collation: emailCollation,
-      },
-    )
-  }
 
   return {
     async list(page, pageSize) {

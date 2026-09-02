@@ -16,10 +16,7 @@ import type {
 import { createEntityId } from '../../utils/entityId'
 import { createId } from '../../utils/id'
 import { COLLECTIONS } from '../collections'
-import {
-  ENTITY_SEARCH_INDEX_NAME,
-  initializeEntityIndexes,
-} from '../indexes/entities'
+import { ENTITY_SEARCH_INDEX_NAME } from '../indexes/entities'
 import {
   storedEntityField,
   toMongoEntityFilter,
@@ -151,7 +148,6 @@ function exposeEntity(entity: HydratedDocument<StoredEntity>): AuditedEntity {
 
 export async function createEntityDatabaseService(
   connection: Connection,
-  initializeIndexes: boolean,
 ): Promise<EntityDatabaseService> {
   const entities = connection.model<StoredEntity>(
     'Entity',
@@ -168,11 +164,6 @@ export async function createEntityDatabaseService(
     entityAuditSchema,
     COLLECTIONS.audit,
   )
-
-  if (initializeIndexes) {
-    await entities.createCollection()
-    await initializeEntityIndexes(entities.collection, entityAudit.collection)
-  }
 
   return {
     async search(

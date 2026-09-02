@@ -1,5 +1,6 @@
-import type { Collection } from 'mongoose'
+import type { mongo } from 'mongoose'
 
+type Collection = mongo.Collection
 type SearchIndexDefinition = Record<string, unknown>
 
 function normalizeIndexDefinition(value: unknown): unknown {

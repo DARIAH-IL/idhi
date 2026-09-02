@@ -10,7 +10,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "validate": "orval && pnpm lint --fix && pnpm format && pnpm build",
-    "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs"
+    "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs",
+    "indexes:ensure": "node --env-file-if-exists=.env --env-file-if-exists=.env.local src/cli/ensure-indexes.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.9.0",

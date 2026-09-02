@@ -33,23 +33,12 @@ const authRateLimitSchema = new Schema<StoredAuthRateLimit>(
 
 export async function createAuthRateLimitDatabaseService(
   connection: Connection,
-  initializeIndexes: boolean,
 ): Promise<AuthRateLimitDatabaseService> {
   const authRateLimits = connection.model<StoredAuthRateLimit>(
     'AuthRateLimit',
     authRateLimitSchema,
     COLLECTIONS.authRateLimits,
   )
-
-  if (initializeIndexes) {
-    await authRateLimits.collection.createIndex(
-      { expiresAt: 1 },
-      {
-        name: 'auth_rate_limits_expiration',
-        expireAfterSeconds: 0,
-      },
-    )
-  }
 
   return {
     async consume(scope, identity, limit, windowMilliseconds) {

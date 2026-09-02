@@ -1,6 +1,8 @@
-import type { Collection } from 'mongoose'
-import { CASE_INSENSITIVE_COLLATION } from '../queries/filter'
-import { ensureSearchIndex } from './search'
+import type { mongo } from 'mongoose'
+import { CASE_INSENSITIVE_COLLATION } from '../queries/filter.ts'
+import { ensureSearchIndex } from './search.ts'
+
+type Collection = mongo.Collection
 
 export const ENTITY_SEARCH_INDEX_NAME = 'entities_search'
 

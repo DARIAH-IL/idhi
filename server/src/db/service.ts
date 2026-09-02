@@ -22,22 +22,18 @@ export interface DatabaseService {
   users: UserDatabaseService
 }
 
-let indexesInitialized = false
-
 export const createDatabaseService = async (
   connection: Connection,
 ): Promise<DatabaseService> => {
-  const initializeIndexes = !indexesInitialized
   const [authChallenges, authRateLimits, entities, locks, users, userInvites] =
     await Promise.all([
-      createAuthChallengeDatabaseService(connection, initializeIndexes),
-      createAuthRateLimitDatabaseService(connection, initializeIndexes),
-      createEntityDatabaseService(connection, initializeIndexes),
-      createDistributedLockDatabaseService(connection, initializeIndexes),
-      createUserDatabaseService(connection, initializeIndexes),
-      createUserInviteDatabaseService(connection, initializeIndexes),
+      createAuthChallengeDatabaseService(connection),
+      createAuthRateLimitDatabaseService(connection),
+      createEntityDatabaseService(connection),
+      createDistributedLockDatabaseService(connection),
+      createUserDatabaseService(connection),
+      createUserInviteDatabaseService(connection),
     ])
-  indexesInitialized = true
 
   return {
     authChallenges,

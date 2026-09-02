@@ -54,24 +54,12 @@ function exposeUserInvite(
 
 export async function createUserInviteDatabaseService(
   connection: Connection,
-  initializeIndexes: boolean,
 ): Promise<UserInviteDatabaseService> {
   const userInvites = connection.model<StoredUserInvite>(
     'UserInvite',
     userInviteSchema,
     COLLECTIONS.userInvites,
   )
-
-  if (initializeIndexes) {
-    await userInvites.collection.createIndex(
-      { email: 1 },
-      {
-        name: 'user_invites_email_unique_case_insensitive',
-        unique: true,
-        collation: emailCollation,
-      },
-    )
-  }
 
   return {
     async listPending() {
