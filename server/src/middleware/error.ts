@@ -1,4 +1,5 @@
 import type { ErrorHandler, MiddlewareHandler } from 'hono'
+import { captureException } from '@sentry/cloudflare'
 import { ApiError } from '../errors/ApiError'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
@@ -98,6 +99,8 @@ export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
   if (declaredError) {
     c.res = jsonResponse(declaredError, status, c.res.headers)
   } else {
+    const originalError = readableOriginalError(responseBody)
+
     c.get('logger').error('Normalized non-contract error response', {
       method: c.req.method,
       path: c.req.path,
@@ -105,7 +108,16 @@ export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
       responseType: isRecord(responseBody)
         ? Object.keys(responseBody).sort().join(',')
         : typeof responseBody,
-      originalError: readableOriginalError(responseBody),
+      originalError,
+    })
+
+    captureException(new Error('Normalized non-contract error response'), {
+      extra: {
+        method: c.req.method,
+        path: c.req.path,
+        status,
+        originalError,
+      },
     })
 
     c.res = internalServerError(c.res.headers)
@@ -117,6 +129,15 @@ export const errorResponseMiddleware: MiddlewareHandler = async (c, next) => {
       method: c.req.method,
       path: c.req.path,
       status,
+    })
+  } else {
+    captureException(new Error(declaredError.message), {
+      extra: {
+        method: c.req.method,
+        path: c.req.path,
+        status,
+        errorCode: declaredError.errorCode,
+      },
     })
   }
 }
@@ -130,6 +151,17 @@ export const unhandledErrorHandler: ErrorHandler = (error, c) => {
       errorCode: error.errorCode,
     })
 
+    if (error.status >= 500) {
+      captureException(error, {
+        extra: {
+          method: c.req.method,
+          path: c.req.path,
+          status: error.status,
+          errorCode: error.errorCode,
+        },
+      })
+    }
+
     const response: ErrorResponse = {
       errorCode: error.errorCode,
       message: error.message,
@@ -142,6 +174,13 @@ export const unhandledErrorHandler: ErrorHandler = (error, c) => {
     method: c.req.method,
     path: c.req.path,
     error: serializeError(error),
+  })
+
+  captureException(error, {
+    extra: {
+      method: c.req.method,
+      path: c.req.path,
+    },
   })
 
   return internalServerError()
