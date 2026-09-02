@@ -4,7 +4,6 @@ import { ApiError } from '../errors/ApiError'
 import { serializeError } from '../middleware/logger'
 import type { RequestLogger } from '../middleware/logger'
 import { ErrorCode } from '../models/errorCode'
-import { createId } from './id'
 
 export type AuthenticationTarget = {
   email: string
@@ -68,16 +67,13 @@ export async function createInvitedUserAfterAuthentication(
     )
   }
 
-  const userId = createId('user')
-
   logger.debug('Creating user from pending invite', {
     inviteId: invite.id,
-    userId,
+    email: invite.email,
   })
 
   try {
     const user = await db.users.insert({
-      id: userId,
       email: invite.email,
       isAdmin: false,
       passkeyCredentials: [],
@@ -106,14 +102,14 @@ export async function createInvitedUserAfterAuthentication(
     } catch (restoreError) {
       logger.error('User invite restoration failed', {
         inviteId: invite.id,
-        userId,
+        email: invite.email,
         error: serializeError(restoreError),
       })
     }
 
     logger.error('User creation from pending invite failed', {
       inviteId: invite.id,
-      userId,
+      email: invite.email,
       inviteRestored,
       error: serializeError(error),
     })

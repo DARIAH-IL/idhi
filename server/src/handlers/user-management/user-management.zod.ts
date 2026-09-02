@@ -26,12 +26,10 @@ export const ListUsersQueryParams = zod.object({
     .default(listUsersQueryPageSizeDefault),
 })
 
-export const listUsersResponseResultsItemIdRegExp = new RegExp('^idhi:user:.+$')
-
 export const ListUsersResponse = zod.object({
   results: zod.array(
     zod.object({
-      id: zod.string().regex(listUsersResponseResultsItemIdRegExp),
+      id: zod.email(),
       name: zod.string().optional(),
       email: zod.email(),
       isAdmin: zod.boolean(),
@@ -46,10 +44,8 @@ export const CreateUserBody = zod.object({
   isAdmin: zod.boolean(),
 })
 
-export const createUserResponseIdRegExp = new RegExp('^idhi:user:.+$')
-
 export const CreateUserResponse = zod.object({
-  id: zod.string().regex(createUserResponseIdRegExp),
+  id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
@@ -59,10 +55,8 @@ export const GetUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
-export const getUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
-
 export const GetUserByIdResponse = zod.object({
-  id: zod.string().regex(getUserByIdResponseIdRegExp),
+  id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
@@ -78,10 +72,8 @@ export const ReplaceUserByIdBody = zod.object({
   isAdmin: zod.boolean(),
 })
 
-export const replaceUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
-
 export const ReplaceUserByIdResponse = zod.object({
-  id: zod.string().regex(replaceUserByIdResponseIdRegExp),
+  id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
@@ -97,10 +89,8 @@ export const UpdateUserByIdBody = zod.object({
   isAdmin: zod.boolean(),
 })
 
-export const updateUserByIdResponseIdRegExp = new RegExp('^idhi:user:.+$')
-
 export const UpdateUserByIdResponse = zod.object({
-  id: zod.string().regex(updateUserByIdResponseIdRegExp),
+  id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),

@@ -13,7 +13,7 @@ import { ErrorCode } from '../../models/errorCode'
 import type { User } from '../../models/user'
 import type { UserWrite } from '../../models/userWrite'
 import { isDuplicateKeyError } from '../../utils/mongo'
-import { createId } from '../../utils/id'
+import { normalizeEmail } from '../../db/services/users'
 import { zValidator } from '../api.validator'
 import type {
   ListUsersContext,
@@ -57,31 +57,29 @@ function duplicateUser(): ApiError {
   return new ApiError(ErrorCode.InvalidInput, 'A user with this email exists')
 }
 
+function emailCannotBeChanged(): ApiError {
+  return new ApiError(
+    ErrorCode.InvalidInput,
+    "A user's email cannot be changed",
+  )
+}
+
 async function replaceUser(
   db: DatabaseService,
   userId: string,
   values: UserWrite,
 ): Promise<User> {
-  const userWithEmail = await db.users.getByEmail(values.email)
-
-  if (userWithEmail && userWithEmail.id !== userId) {
-    throw duplicateUser()
+  if (normalizeEmail(values.email) !== normalizeEmail(userId)) {
+    throw emailCannotBeChanged()
   }
 
-  try {
-    const user = await db.users.replace(userId, values)
+  const user = await db.users.replace(userId, values)
 
-    if (!user) {
-      throw userNotFound(userId)
-    }
-
-    return publicUser(user)
-  } catch (error) {
-    if (isDuplicateKeyError(error)) {
-      throw duplicateUser()
-    }
-    throw error
+  if (!user) {
+    throw userNotFound(userId)
   }
+
+  return publicUser(user)
 }
 
 export const listUsersHandlers = factory.createHandlers(
@@ -115,7 +113,6 @@ export const createUserHandlers = factory.createHandlers(
 
     try {
       const createdUser = await c.var.db.users.insert({
-        id: createId('user'),
         ...values,
         passkeyCredentials: [],
       })

@@ -5,7 +5,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * @pattern ^idhi:user:.+$
- */
 export type UserId = string

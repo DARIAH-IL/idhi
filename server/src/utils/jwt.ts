@@ -7,7 +7,7 @@ import { requiredValue } from './values'
 const DEFAULT_EXPIRATION_SECONDS = 7 * 24 * 60 * 60
 
 const userSchema = z.object({
-  id: z.string().regex(/^idhi:user:.+$/),
+  id: z.email(),
   name: z.string().optional(),
   email: z.email(),
   isAdmin: z.boolean(),

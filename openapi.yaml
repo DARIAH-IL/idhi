@@ -545,8 +545,8 @@ components:
   schemas:
     UserId:
       type: string
-      pattern: "^idhi:user:.+$"
-      example: "idhi:user:abc123"
+      format: email
+      example: "jane.doe@example.com"
 
     InviteId:
       type: string

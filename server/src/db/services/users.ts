@@ -65,7 +65,9 @@ export interface UserDatabaseService {
   get: (userId: string) => Promise<UserWithCredentials | null>
   getPasskeyCredentials: (userId: string) => Promise<PasskeyCredential[]>
   getByEmail: (email: string) => Promise<UserWithCredentials | null>
-  insert: (user: UserWithCredentials) => Promise<UserWithCredentials>
+  insert: (
+    user: Omit<UserWithCredentials, 'id'>,
+  ) => Promise<UserWithCredentials>
   update: (user: UserWithCredentials) => Promise<UserWithCredentials | null>
   enrollPasskeyCredential: (
     userId: string,
@@ -83,7 +85,7 @@ export interface UserDatabaseService {
   delete: (userId: string) => Promise<boolean>
 }
 
-function normalizeEmail(email: string): string {
+export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
 }
 
@@ -158,13 +160,13 @@ export async function createUserDatabaseService(
     },
 
     async get(userId) {
-      const user = await users.findById(userId).exec()
+      const user = await users.findById(normalizeEmail(userId)).exec()
       return user ? exposeUser(user) : null
     },
 
     async getPasskeyCredentials(userId) {
       const user = await users
-        .findById(userId)
+        .findById(normalizeEmail(userId))
         .select({ passkeyCredentials: 1 })
         .exec()
 
@@ -181,10 +183,12 @@ export async function createUserDatabaseService(
     },
 
     async insert(user) {
+      const email = normalizeEmail(user.email)
       const createdUser = new users()
       createdUser.set({
         ...user,
-        email: normalizeEmail(user.email),
+        id: email,
+        email,
         passkeyCredentials: user.passkeyCredentials.map(storePasskeyCredential),
       })
       await createdUser.save()
@@ -196,7 +200,7 @@ export async function createUserDatabaseService(
       const { id, passkeyCredentials, ...values } = user
       const updatedUser = await users
         .findByIdAndUpdate(
-          id,
+          normalizeEmail(id),
           {
             $set: {
               ...values,
@@ -214,10 +218,11 @@ export async function createUserDatabaseService(
     },
 
     async enrollPasskeyCredential(userId, credential) {
+      const normalizedUserId = normalizeEmail(userId)
       const storedCredential = storePasskeyCredential(credential)
       const result = await users.updateOne(
         {
-          _id: userId,
+          _id: normalizedUserId,
           'passkeyCredentials.id': { $ne: credential.id },
         },
         { $push: { passkeyCredentials: storedCredential } },
@@ -227,16 +232,17 @@ export async function createUserDatabaseService(
         return 'enrolled'
       }
 
-      return (await users.exists({ _id: userId }))
+      return (await users.exists({ _id: normalizedUserId }))
         ? 'duplicate'
         : 'userNotFound'
     },
 
     async replacePasskeyCredential(userId, replacingCredentialId, credential) {
+      const normalizedUserId = normalizeEmail(userId)
       const storedCredential = storePasskeyCredential(credential)
       const result = await users.updateOne(
         {
-          _id: userId,
+          _id: normalizedUserId,
           passkeyCredentials: { $elemMatch: { id: replacingCredentialId } },
           ...(credential.id === replacingCredentialId
             ? {}
@@ -249,7 +255,7 @@ export async function createUserDatabaseService(
         return 'replaced'
       }
 
-      const user = await users.findById(userId).exec()
+      const user = await users.findById(normalizedUserId).exec()
 
       if (!user) {
         return 'userNotFound'
@@ -269,7 +275,7 @@ export async function createUserDatabaseService(
     async replace(userId, user) {
       const updatedUser = await users
         .findByIdAndUpdate(
-          userId,
+          normalizeEmail(userId),
           { $set: { ...user, email: normalizeEmail(user.email) } },
           { new: true },
         )
@@ -279,7 +285,9 @@ export async function createUserDatabaseService(
     },
 
     async delete(userId) {
-      const result = await users.deleteOne({ _id: userId }).exec()
+      const result = await users
+        .deleteOne({ _id: normalizeEmail(userId) })
+        .exec()
       return result.deletedCount === 1
     },
   }

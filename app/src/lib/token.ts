@@ -19,7 +19,7 @@ export function userFromToken(token: string): User | null {
       payload === null ||
       !('id' in payload) ||
       typeof payload.id !== 'string' ||
-      !payload.id.startsWith('idhi:user:') ||
+      payload.id.length === 0 ||
       !('email' in payload) ||
       typeof payload.email !== 'string' ||
       !('isAdmin' in payload) ||

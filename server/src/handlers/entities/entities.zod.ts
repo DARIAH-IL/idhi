@@ -291,10 +291,6 @@ export const searchEntitiesResponseResultsItemOneOnezeroPrerequisitesItemLanguag
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const searchEntitiesResponseResultsItemOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const searchEntitiesResponseResultsItemTwoAuditCreatedByRegExp =
-  new RegExp('^idhi:user:.+$')
-export const searchEntitiesResponseResultsItemTwoAuditModifiedByRegExp =
-  new RegExp('^idhi:user:.+$')
 
 export const SearchEntitiesResponse = zod.object({
   results: zod.array(
@@ -3628,19 +3624,11 @@ export const SearchEntitiesResponse = zod.object({
               createdAt: zod.iso
                 .datetime({ offset: true })
                 .describe('UTC date and time'),
-              createdBy: zod
-                .string()
-                .regex(
-                  searchEntitiesResponseResultsItemTwoAuditCreatedByRegExp,
-                ),
+              createdBy: zod.email(),
               modifiedAt: zod.iso
                 .datetime({ offset: true })
                 .describe('UTC date and time'),
-              modifiedBy: zod
-                .string()
-                .regex(
-                  searchEntitiesResponseResultsItemTwoAuditModifiedByRegExp,
-                ),
+              modifiedBy: zod.email(),
             })
             .optional(),
         }),
@@ -7141,12 +7129,6 @@ export const createEntityResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const createEntityResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const createEntityResponseTwoAuditCreatedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
-export const createEntityResponseTwoAuditModifiedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
 
 export const CreateEntityResponse = zod
   .union([
@@ -10434,15 +10416,11 @@ export const CreateEntityResponse = zod
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          createdBy: zod
-            .string()
-            .regex(createEntityResponseTwoAuditCreatedByRegExp),
+          createdBy: zod.email(),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          modifiedBy: zod
-            .string()
-            .regex(createEntityResponseTwoAuditModifiedByRegExp),
+          modifiedBy: zod.email(),
         })
         .optional(),
     }),
@@ -10604,12 +10582,6 @@ export const getEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const getEntityByIdResponseTwoAuditCreatedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
-export const getEntityByIdResponseTwoAuditModifiedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
 
 export const GetEntityByIdResponse = zod
   .union([
@@ -13903,15 +13875,11 @@ export const GetEntityByIdResponse = zod
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          createdBy: zod
-            .string()
-            .regex(getEntityByIdResponseTwoAuditCreatedByRegExp),
+          createdBy: zod.email(),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          modifiedBy: zod
-            .string()
-            .regex(getEntityByIdResponseTwoAuditModifiedByRegExp),
+          modifiedBy: zod.email(),
         })
         .optional(),
     }),
@@ -17540,12 +17508,6 @@ export const updateEntityByIdResponseOneOnezeroPrerequisitesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const updateEntityByIdResponseOneOnezeroTargetAudiencesItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
-export const updateEntityByIdResponseTwoAuditCreatedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
-export const updateEntityByIdResponseTwoAuditModifiedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
 
 export const UpdateEntityByIdResponse = zod
   .union([
@@ -20853,15 +20815,11 @@ export const UpdateEntityByIdResponse = zod
           createdAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          createdBy: zod
-            .string()
-            .regex(updateEntityByIdResponseTwoAuditCreatedByRegExp),
+          createdBy: zod.email(),
           modifiedAt: zod.iso
             .datetime({ offset: true })
             .describe('UTC date and time'),
-          modifiedBy: zod
-            .string()
-            .regex(updateEntityByIdResponseTwoAuditModifiedByRegExp),
+          modifiedBy: zod.email(),
         })
         .optional(),
     }),

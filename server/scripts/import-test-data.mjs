@@ -5,7 +5,7 @@ import { createConnection } from 'mongoose'
 /** @typedef {import('../src/models/entity.ts').Entity} Entity */
 
 const ENTITY_COUNT = 5
-const CREATED_BY = 'idhi:user:mockseed'
+const CREATED_BY = 'mockseed@idhi.dev'
 const INVITE_ID = 'idhi:invite:mockseed'
 const INVITE_EMAIL = 'reallyliri@gmail.com'
 const INVITE_EXPIRY_DAYS = 30

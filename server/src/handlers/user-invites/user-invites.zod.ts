@@ -20,12 +20,6 @@ export const InviteUserBody = zod.object({
   lang: zod.enum(['en', 'he', 'ar']).optional(),
 })
 
-export const inviteUserResponseOneAuditCreatedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
-export const inviteUserResponseOneAuditModifiedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
 export const inviteUserResponseTwoIdRegExp = new RegExp('^idhi:invite:.+$')
 
 export const InviteUserResponse = zod
@@ -35,15 +29,11 @@ export const InviteUserResponse = zod
         createdAt: zod.iso
           .datetime({ offset: true })
           .describe('UTC date and time'),
-        createdBy: zod
-          .string()
-          .regex(inviteUserResponseOneAuditCreatedByRegExp),
+        createdBy: zod.email(),
         modifiedAt: zod.iso
           .datetime({ offset: true })
           .describe('UTC date and time'),
-        modifiedBy: zod
-          .string()
-          .regex(inviteUserResponseOneAuditModifiedByRegExp),
+        modifiedBy: zod.email(),
       })
       .optional(),
   })
@@ -58,12 +48,6 @@ export const InviteUserResponse = zod
     }),
   )
 
-export const listUserInvitesResponseOneAuditCreatedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
-export const listUserInvitesResponseOneAuditModifiedByRegExp = new RegExp(
-  '^idhi:user:.+$',
-)
 export const listUserInvitesResponseTwoIdRegExp = new RegExp('^idhi:invite:.+$')
 
 export const ListUserInvitesResponseItem = zod
@@ -73,15 +57,11 @@ export const ListUserInvitesResponseItem = zod
         createdAt: zod.iso
           .datetime({ offset: true })
           .describe('UTC date and time'),
-        createdBy: zod
-          .string()
-          .regex(listUserInvitesResponseOneAuditCreatedByRegExp),
+        createdBy: zod.email(),
         modifiedAt: zod.iso
           .datetime({ offset: true })
           .describe('UTC date and time'),
-        modifiedBy: zod
-          .string()
-          .regex(listUserInvitesResponseOneAuditModifiedByRegExp),
+        modifiedBy: zod.email(),
       })
       .optional(),
   })
