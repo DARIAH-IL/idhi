@@ -203,6 +203,7 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     datasets: 'rendered',
     date_issued: 'rendered',
     derived_from: 'rendered',
+    digital_humanities_activities: 'rendered',
     distribution_url: 'rendered',
     doi: 'rendered',
     extent: 'rendered',

@@ -389,7 +389,7 @@ export type EntityUpdate =
           }[]
         | null
       /**
-       * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+       * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
        * @nullable
        */
       digital_humanities_activities?:
@@ -849,7 +849,7 @@ export type EntityUpdate =
           }[]
         | null
       /**
-       * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+       * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
        * @nullable
        */
       digital_humanities_activities?:
@@ -1146,7 +1146,7 @@ export type EntityUpdate =
           }[]
         | null
       /**
-       * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+       * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
        * @nullable
        */
       digital_humanities_activities?:
@@ -1788,6 +1788,182 @@ export type EntityUpdate =
           }[]
         | null
       /**
+       * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+       * @nullable
+       */
+      digital_humanities_activities?:
+        | (
+            | 'tadirah:abstractThinking'
+            | 'tadirah:academicPublishing'
+            | 'tadirah:adding'
+            | 'tadirah:aggregating'
+            | 'tadirah:analyzing'
+            | 'tadirah:annotating'
+            | 'tadirah:archiving'
+            | 'tadirah:associate'
+            | 'tadirah:associating'
+            | 'tadirah:audioAnnotation'
+            | 'tadirah:audioConferencing'
+            | 'tadirah:audioRecording'
+            | 'tadirah:authorshipAttribution'
+            | 'tadirah:bitStreamPreservation'
+            | 'tadirah:blogging'
+            | 'tadirah:browsing'
+            | 'tadirah:capturing'
+            | 'tadirah:cataloging'
+            | 'tadirah:clusterAnalysis'
+            | 'tadirah:coOccurrence'
+            | 'tadirah:collaborating'
+            | 'tadirah:collating'
+            | 'tadirah:collecting'
+            | 'tadirah:collocationAnalysis'
+            | 'tadirah:commenting'
+            | 'tadirah:communicating'
+            | 'tadirah:comparing'
+            | 'tadirah:compiling'
+            | 'tadirah:conceptualizing'
+            | 'tadirah:concordance'
+            | 'tadirah:contentAnalysis'
+            | 'tadirah:contextualizing'
+            | 'tadirah:contrastiveAnalysis'
+            | 'tadirah:converting'
+            | 'tadirah:correcting'
+            | 'tadirah:creating'
+            | 'tadirah:cropping'
+            | 'tadirah:crowdsourcing'
+            | 'tadirah:dataCleansing'
+            | 'tadirah:dataIngestion'
+            | 'tadirah:dataMapping'
+            | 'tadirah:dataMining'
+            | 'tadirah:dataRecognition'
+            | 'tadirah:dataVisualization'
+            | 'tadirah:debugging'
+            | 'tadirah:defining'
+            | 'tadirah:description'
+            | 'tadirah:designing'
+            | 'tadirah:diagramming'
+            | 'tadirah:digitalObjectIdentifier'
+            | 'tadirah:digitalPublishing'
+            | 'tadirah:discourseAnalysis'
+            | 'tadirah:discovering'
+            | 'tadirah:discussing'
+            | 'tadirah:disseminating'
+            | 'tadirah:distanceMeasures'
+            | 'tadirah:drawing'
+            | 'tadirah:eMailing'
+            | 'tadirah:editing'
+            | 'tadirah:emulation'
+            | 'tadirah:encoding'
+            | 'tadirah:enriching'
+            | 'tadirah:explanation'
+            | 'tadirah:exploration'
+            | 'tadirah:expressingOpinion'
+            | 'tadirah:extracting'
+            | 'tadirah:finding'
+            | 'tadirah:formatting'
+            | 'tadirah:gamification'
+            | 'tadirah:gathering'
+            | 'tadirah:genreRecognition'
+            | 'tadirah:georeferencing'
+            | 'tadirah:graphicsProgramming'
+            | 'tadirah:highlighting'
+            | 'tadirah:identifier'
+            | 'tadirah:identifying'
+            | 'tadirah:imaging'
+            | 'tadirah:improving'
+            | 'tadirah:informationMining'
+            | 'tadirah:informationRetrieval'
+            | 'tadirah:instantMessaging'
+            | 'tadirah:integrating'
+            | 'tadirah:interpreting'
+            | 'tadirah:knowledgeDiscovery'
+            | 'tadirah:knowledgeExtraction'
+            | 'tadirah:lemmatizing'
+            | 'tadirah:lettering'
+            | 'tadirah:linkedOpenData'
+            | 'tadirah:machineLearning'
+            | 'tadirah:managing'
+            | 'tadirah:mapping'
+            | 'tadirah:merging'
+            | 'tadirah:microblogging'
+            | 'tadirah:migration'
+            | 'tadirah:mindMapping'
+            | 'tadirah:modeling'
+            | 'tadirah:modifying'
+            | 'tadirah:namedEntityRecognition'
+            | 'tadirah:namingConvention'
+            | 'tadirah:naturalLanguageProcessing'
+            | 'tadirah:networkAnalysis'
+            | 'tadirah:opticalCharacterRecognition'
+            | 'tadirah:opticalMusicRecognition'
+            | 'tadirah:organizing'
+            | 'tadirah:parsing'
+            | 'tadirah:patternRecognition'
+            | 'tadirah:persistentIdentifier'
+            | 'tadirah:photographing'
+            | 'tadirah:plotting'
+            | 'tadirah:posTagging'
+            | 'tadirah:posting'
+            | 'tadirah:preprocessing'
+            | 'tadirah:preservationMetadata'
+            | 'tadirah:preserving'
+            | 'tadirah:principalComponentAnalysis'
+            | 'tadirah:programming'
+            | 'tadirah:pseudoCoding'
+            | 'tadirah:publishing'
+            | 'tadirah:querying'
+            | 'tadirah:reasoning'
+            | 'tadirah:recording'
+            | 'tadirah:relationalAnalysis'
+            | 'tadirah:removing'
+            | 'tadirah:replication'
+            | 'tadirah:rhetoricalAnalysis'
+            | 'tadirah:scanning'
+            | 'tadirah:screencast'
+            | 'tadirah:searching'
+            | 'tadirah:segmenting'
+            | 'tadirah:semantification'
+            | 'tadirah:sentimentAnalysis'
+            | 'tadirah:sequenceAlignment'
+            | 'tadirah:sharing'
+            | 'tadirah:socialNetworking'
+            | 'tadirah:spatialAnalysis'
+            | 'tadirah:speechRecognizing'
+            | 'tadirah:storing'
+            | 'tadirah:structuralAnalysis'
+            | 'tadirah:stylisticAnalysis'
+            | 'tadirah:stylometry'
+            | 'tadirah:subtracting'
+            | 'tadirah:supplementing'
+            | 'tadirah:tagging'
+            | 'tadirah:teaching'
+            | 'tadirah:textCategorization'
+            | 'tadirah:textMessaging'
+            | 'tadirah:theorizing'
+            | 'tadirah:topicModeling'
+            | 'tadirah:transcoding'
+            | 'tadirah:transcribing'
+            | 'tadirah:transformation'
+            | 'tadirah:translating'
+            | 'tadirah:treeTagging'
+            | 'tadirah:tweet'
+            | 'tadirah:uniformResourceIdentifier'
+            | 'tadirah:upload'
+            | 'tadirah:userGeneratedContent'
+            | 'tadirah:versioning'
+            | 'tadirah:videoCapture'
+            | 'tadirah:videoConference'
+            | 'tadirah:videoEditing'
+            | 'tadirah:visualAnalysis'
+            | 'tadirah:visualAnnotation'
+            | 'tadirah:webCrawling'
+            | 'tadirah:webDevelopment'
+            | 'tadirah:webScraping'
+            | 'tadirah:wireframing'
+            | 'tadirah:writing'
+          )[]
+        | null
+      /**
        * Direct download or access URL for the dataset.
        * @nullable
        */
@@ -1945,7 +2121,7 @@ export type EntityUpdate =
           }[]
         | null
       /**
-       * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+       * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
        * @nullable
        */
       digital_humanities_activities?:

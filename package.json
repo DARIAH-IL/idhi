@@ -6,5 +6,5 @@
     "dev:server": "pnpm --filter @idhi/server dev",
     "validate": "pnpm --filter @idhi/app validate && pnpm --filter @idhi/server validate"
   },
-  "packageManager": "pnpm@11.24.0"
+  "packageManager": "pnpm@11.25.0"
 }

@@ -265,6 +265,7 @@ export const entities = [
       index % 2 === 0 ? 'Cultural heritage' : 'Historical texts',
       index,
     ),
+    digital_humanities_activities: ['tadirah:archiving', 'tadirah:cataloging'],
     datasets: index === 0 ? datasetIds.slice(1) : null,
     derived_from: index === 0 ? null : [datasetIds[index - 1]],
     related_publications: [related(publicationIds, index)],

@@ -173,7 +173,11 @@ export function LangStringField({
   }
 
   return (
-    <div ref={containerRef} data-remove-scope="" className={cn('flex flex-col gap-2', rowClass)}>
+    <div
+      ref={containerRef}
+      data-remove-scope=""
+      className={cn('flex flex-col gap-2', rowClass)}
+    >
       <Label id={labelId}>
         {label}
         {required && (

@@ -37,6 +37,7 @@ export const termUris = {
     date_issued: 'dcterms:issued',
     derived_from: 'prov:wasDerivedFrom',
     description: 'dcterms:description',
+    digital_humanities_activities: 'dcterms:subject',
     distribution_url: 'dcat:downloadURL',
     doi: 'bibo:doi',
     extent: 'dcterms:extent',

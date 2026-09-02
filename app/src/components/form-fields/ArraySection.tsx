@@ -30,7 +30,8 @@ export function ArraySection({ label, defaultItem, children }: Props) {
 
   return (
     <div
-      ref={containerRef} data-remove-scope=""
+      ref={containerRef}
+      data-remove-scope=""
       className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}
     >
       <Label>{label}</Label>

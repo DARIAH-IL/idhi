@@ -30,7 +30,7 @@ export interface Service {
    */
   description?: ServiceDescriptionItem[] | null
   /**
-   * Digital-humanities research activities practiced in this project, tool or service, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+   * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
    * @nullable
    */
   digital_humanities_activities?:

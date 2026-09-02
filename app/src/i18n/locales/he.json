@@ -1379,6 +1379,10 @@
           "label": "$t(common.labels.description)",
           "description": "סקירה של תוכן מערך הנתונים, היקפו ומקורו."
         },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "פעילויות המחקר במדעי הרוח הדיגיטליים הכרוכות ביצירת מערך הנתונים או באצירתו."
+        },
         "distribution_url": {
           "label": "קישור להורדה",
           "description": "קישור ישיר להורדה או לגישה למערך הנתונים."

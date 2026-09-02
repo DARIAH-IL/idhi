@@ -88,6 +88,7 @@ const ENTITY_FIELD_ORDER = {
     dataset_type: true,
     doi: true,
     description: true,
+    digital_humanities_activities: true,
     homepage: true,
     distribution_url: true,
     date_issued: true,

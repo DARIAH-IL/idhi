@@ -1381,6 +1381,10 @@
           "label": "$t(common.labels.description)",
           "description": "لمحة عامة عن محتوى مجموعة البيانات ونطاقها وأصلها."
         },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "أنشطة البحث في العلوم الإنسانية الرقمية المتّبعة في إنشاء مجموعة البيانات أو صيانتها."
+        },
         "distribution_url": {
           "label": "رابط التنزيل",
           "description": "رابط مباشر لتنزيل مجموعة البيانات أو الوصول إليها."

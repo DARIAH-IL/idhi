@@ -6,6 +6,7 @@
  */
 import type { DatasetDatasetType } from './datasetDatasetType.ts'
 import type { DatasetDescriptionItem } from './datasetDescriptionItem.ts'
+import type { DatasetDigitalHumanitiesActivitiesItem } from './datasetDigitalHumanitiesActivitiesItem.ts'
 import type { DatasetLicense } from './datasetLicense.ts'
 import type { DatasetNameItem } from './datasetNameItem.ts'
 import type { DatasetResourceContributionsItem } from './datasetResourceContributionsItem.ts'
@@ -43,6 +44,12 @@ export interface Dataset {
    * @nullable
    */
   description?: DatasetDescriptionItem[] | null
+  /**
+   * Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.
+   * @nullable
+   */
+  digital_humanities_activities?:
+    DatasetDigitalHumanitiesActivitiesItem[] | null
   /**
    * Direct download or access URL for the dataset.
    * @nullable

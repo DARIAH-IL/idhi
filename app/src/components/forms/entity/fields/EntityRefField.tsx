@@ -96,7 +96,11 @@ export function EntityRefArrayField({
   const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div ref={containerRef} data-remove-scope="" className={cn('flex flex-col gap-2', rowClass)}>
+    <div
+      ref={containerRef}
+      data-remove-scope=""
+      className={cn('flex flex-col gap-2', rowClass)}
+    >
       <Label>{label}</Label>
       <FieldError error={firstError(field.state.meta.errors)} />
       {values.map((id, index) => (

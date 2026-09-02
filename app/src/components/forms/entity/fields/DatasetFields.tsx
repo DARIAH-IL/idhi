@@ -1,5 +1,6 @@
 import {
   DatasetDatasetType,
+  DatasetDigitalHumanitiesActivitiesItem,
   DatasetLicense,
   DatasetResourceContributionsItemResourceContributionRole,
 } from '#/api/models'
@@ -68,6 +69,24 @@ export const DatasetFields = withForm({
                 <EntityFieldLabel entityClass="Dataset" field="description" />
               }
               multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="digital_humanities_activities"
+          validators={stringArrayValidators({
+            allowedValues: DatasetDigitalHumanitiesActivitiesItem,
+          })}
+        >
+          {(field) => (
+            <field.EnumMultiSelectField
+              label={
+                <EntityFieldLabel
+                  entityClass="Dataset"
+                  field="digital_humanities_activities"
+                />
+              }
+              options={DatasetDigitalHumanitiesActivitiesItem}
             />
           )}
         </form.AppField>

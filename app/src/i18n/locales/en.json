@@ -1377,6 +1377,10 @@
           "label": "$t(common.labels.description)",
           "description": "An overview of the dataset’s contents, scope and origin."
         },
+        "digital_humanities_activities": {
+          "label": "$t(common.labels.dh_activities)",
+          "description": "The digital humanities research activities practiced in creating or curating the dataset."
+        },
         "distribution_url": {
           "label": "Distribution URL",
           "description": "A direct download or access URL for the dataset."

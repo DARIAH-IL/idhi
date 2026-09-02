@@ -11,19 +11,21 @@ import type {
 } from '#/api/typedEntitySearch.ts'
 import {
   ENTITY_TYPES,
-  getEntityFieldLabelText,
   getEntityTypeFromId,
   getEntityTypeLabel,
+  getEnumValueLabel,
 } from '#/lib/entity.ts'
 import {
   getEntityRelationshipFacetDefinitions,
   getEntityRelationshipFacetPaths,
 } from '#/lib/entityRelationships.ts'
+import i18n from '#/i18n'
 
 export const PAGE_SIZE = 20
 export const FACET_VISIBLE_LIMIT = 5
 export const DEFAULT_FACETS = [
   'type',
+  'digital_humanities_activities',
   'tags',
 ] as const satisfies readonly EntityField[]
 
@@ -39,6 +41,7 @@ export const facetFiltersSchema = z.object({
       include: z.array(z.enum(ENTITY_TYPES)).optional(),
     })
     .optional(),
+  digital_humanities_activities: facetSelectionSchema.optional(),
   tags: facetSelectionSchema.optional(),
   relationships: z
     .partialRecord(z.enum(ENTITY_TYPES), facetSelectionSchema)
@@ -46,11 +49,23 @@ export const facetFiltersSchema = z.object({
 })
 
 export function getFacetValueLabel(field: FacetField, value: string): string {
-  return field === 'type' ? getEntityTypeLabel(value) : value
+  if (field === 'type') {
+    return getEntityTypeLabel(value)
+  }
+  if (field === 'digital_humanities_activities') {
+    return getEnumValueLabel(field, value)
+  }
+  return value
 }
 
+const FACET_FIELD_LABEL_KEYS = {
+  type: 'common.labels.type',
+  digital_humanities_activities: 'common.labels.dh_activities',
+  tags: 'common.labels.tags',
+} as const satisfies Record<FacetField, string>
+
 export function getFacetFieldLabel(field: FacetField): string {
-  return getEntityFieldLabelText('Person', field)
+  return String(i18n.t(FACET_FIELD_LABEL_KEYS[field]))
 }
 const SORT_PROPERTIES = [
   'name.value',
