@@ -27,6 +27,7 @@ function RootComponent() {
   const { t } = useTranslation()
   const router = useRouter()
   const language = useUIStore((state) => state.language)
+  const isRtl = isRtlLanguage(language)
   const [announcement, setAnnouncement] = useState('')
   const previousPathnameRef = useRef(router.state.location.pathname)
   const hasResolvedOnceRef = useRef(false)
@@ -67,7 +68,7 @@ function RootComponent() {
       <div aria-live="polite" role="status" className="sr-only">
         {announcement}
       </div>
-      <Toaster richColors />
+      <Toaster richColors position={isRtl ? 'bottom-left' : 'bottom-right'} />
       {import.meta.env.DEV && (
         <TanStackDevtools
           config={{ position: 'bottom-right' }}
