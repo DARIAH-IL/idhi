@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import type { AuditedEntity, SearchEntities200Facets } from '@/api/models'
 import type { EntityRelationshipFacets } from '@/api/entityRelationshipFacets.ts'
 import type { FacetFilters } from '@/api/entityBoardSearch.ts'
@@ -25,14 +24,6 @@ export function EntityFacetsDesktopPanel({
   isRefetching,
   onApply,
 }: EntityFacetsDesktopPanelProps) {
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previousOverflow
-    }
-  }, [])
-
   return (
     <div className="hidden md:contents">
       <FacetPanel
