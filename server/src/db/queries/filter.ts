@@ -15,13 +15,7 @@ const MONGO_OPERATORS: Record<FilterOperator, string> = {
   exists: '$exists',
 }
 
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
-function caseInsensitiveEquals(value: string): RegExp {
-  return new RegExp(`^${escapeRegExp(value)}$`, 'i')
-}
+export const CASE_INSENSITIVE_COLLATION = { locale: 'en', strength: 2 }
 
 function comparisonFilter(
   field: FilterableField,
@@ -31,20 +25,9 @@ function comparisonFilter(
 ): QueryFilter<Record<string, unknown>> {
   const mongoField = mapField(field)
 
-  if (operator === 'eq' && typeof value === 'string') {
-    return { [mongoField]: caseInsensitiveEquals(value) }
-  }
-
-  if (operator === 'ne' && typeof value === 'string') {
-    return { [mongoField]: { $not: caseInsensitiveEquals(value) } }
-  }
-
   if (operator === 'in' || operator === 'nin') {
     const values = Array.isArray(value) ? value : [value]
-    const mongoValues = values.map((item) =>
-      typeof item === 'string' ? caseInsensitiveEquals(item) : item,
-    )
-    return { [mongoField]: { [MONGO_OPERATORS[operator]]: mongoValues } }
+    return { [mongoField]: { [MONGO_OPERATORS[operator]]: values } }
   }
 
   const mongoValue = operator === 'exists' ? Boolean(value) : value

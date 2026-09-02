@@ -14,7 +14,7 @@ export function EntityTags({
   return (
     <>
       {separator && <span aria-hidden>·</span>}
-      {tags.sort().map((tag) => (
+      {[...tags].sort().map((tag) => (
         <Badge
           key={tag}
           variant="secondary"

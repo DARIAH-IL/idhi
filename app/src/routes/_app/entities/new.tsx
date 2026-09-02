@@ -137,9 +137,9 @@ function NewEntityPage() {
             </h1>
           </div>
         }
-        onSubmit={(data, isDraft) => {
-          createMutation.mutate({ data, params: { isDraft } })
-        }}
+        onSubmit={(data, isDraft) =>
+          createMutation.mutateAsync({ data, params: { isDraft } })
+        }
         isSubmitting={createMutation.isPending}
       />
     </div>

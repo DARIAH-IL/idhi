@@ -46,7 +46,8 @@
     "language_picker": "החלפת שפה",
     "date_picker": {
       "select": "בחירת תאריך",
-      "clear": "ניקוי תאריך"
+      "clear": "ניקוי תאריך",
+      "invalid_cleared": "התאריך השמור \"{{value}}\" אינו תקין ולכן נוקה."
     },
     "pagination": {
       "range": "מוצגים {{start}}–{{end}} מתוך {{total}}",
@@ -1876,7 +1877,8 @@
       "identifier_search_placeholder": "הזינו קישור ישירות, או התחילו להקליד כדי לחפש לפי שם...",
       "clear_selection": "ניקוי בחירה",
       "remove_entity": "הסרת רשומה",
-      "image_uploaded": "התמונה הועלתה"
+      "image_uploaded": "התמונה הועלתה",
+      "lookup_failed": "החיפוש נכשל. נא לנסות שוב."
     },
     "duplicate_check": {
       "title": "רשומות כפולות אפשריות",

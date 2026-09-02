@@ -89,8 +89,9 @@ export async function sendInviteEmail(
   inviteUrl: string,
   lang: UiLanguage,
   bindings: Bindings,
+  message?: string,
 ): Promise<void> {
-  const { subject, html } = inviteEmailContent(lang, inviteUrl)
+  const { subject, html } = inviteEmailContent(lang, inviteUrl, message)
 
   await sendEmail(bindings, recipient, subject, html)
 }

@@ -1,5 +1,17 @@
 import { cn } from '#/lib/utils.ts'
 
+function safeHostname(href: string): string | undefined {
+  try {
+    return new URL(href).hostname
+  } catch {
+    try {
+      return new URL(`https://${href}`).hostname
+    } catch {
+      return undefined
+    }
+  }
+}
+
 export function ExternalLink({
   href,
   refText,
@@ -12,6 +24,7 @@ export function ExternalLink({
   const linkText =
     refText ||
     href.replace(/^https?:\/\/(dx\.)?doi\.org\//, '').replace('https://', '')
+  const hostname = safeHostname(href)
 
   return (
     <a
@@ -21,14 +34,16 @@ export function ExternalLink({
       aria-label={preferFaviconOnly ? linkText : undefined}
       className="app-link break-all"
     >
-      <img
-        src={`https://www.google.com/s2/favicons?domain=${new URL(href).hostname}&sz=32`}
-        alt=""
-        className={cn(
-          'inline size-4 rounded-sm align-[-3px]',
-          preferFaviconOnly ? undefined : 'me-1.5',
-        )}
-      />
+      {hostname && (
+        <img
+          src={`https://www.google.com/s2/favicons?domain=${hostname}&sz=32`}
+          alt=""
+          className={cn(
+            'inline size-4 rounded-sm align-[-3px]',
+            preferFaviconOnly ? undefined : 'me-1.5',
+          )}
+        />
+      )}
 
       {!preferFaviconOnly && <>{linkText}</>}
     </a>

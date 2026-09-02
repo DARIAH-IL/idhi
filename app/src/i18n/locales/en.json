@@ -46,7 +46,8 @@
     "language_picker": "Change language",
     "date_picker": {
       "select": "Select date",
-      "clear": "Clear date"
+      "clear": "Clear date",
+      "invalid_cleared": "The stored date \"{{value}}\" is not a valid date and was cleared."
     },
     "pagination": {
       "range": "Showing {{start}}–{{end}} of {{total}}",
@@ -1874,7 +1875,8 @@
       "identifier_search_placeholder": "Enter a URL directly, or start typing to search by name...",
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entry",
-      "image_uploaded": "Image uploaded"
+      "image_uploaded": "Image uploaded",
+      "lookup_failed": "Lookup failed. Please try again."
     },
     "duplicate_check": {
       "title": "Possible duplicate entries",

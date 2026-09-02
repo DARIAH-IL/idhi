@@ -25,6 +25,7 @@ import {
   toMongoEntityFilter,
   toMongoEntitySort,
 } from '../queries/entities'
+import { CASE_INSENSITIVE_COLLATION } from '../queries/filter'
 import { SEARCH_SCORE_FIELD, escapeWildcardQuery } from '../queries/search'
 
 type StoredEntity = Omit<AuditedEntity, 'id'> & {
@@ -99,6 +100,7 @@ export interface EntityDatabaseService {
     entity: EntityWrite,
     userId: string,
     isDraft: boolean,
+    viewer: EntityViewer,
   ) => Promise<AuditedEntity | null>
   delete: (entityId: string, viewer: EntityViewer) => Promise<boolean>
 }
@@ -251,7 +253,11 @@ export async function createEntityDatabaseService(
       }
 
       pipeline.push({ $facet: facets })
-      const [aggregation] = await entities.aggregate(pipeline).exec()
+      const aggregateQuery = entities.aggregate(pipeline)
+      if (structuredMatch) {
+        await aggregateQuery.collation(CASE_INSENSITIVE_COLLATION)
+      }
+      const [aggregation] = await aggregateQuery.exec()
       const documents = aggregation?.documents ?? []
       const facetEntries = facetFields.map((field, index) => [
         field,
@@ -312,8 +318,13 @@ export async function createEntityDatabaseService(
       return exposeEntity(createdEntity)
     },
 
-    async replace(entityId, entity, userId, isDraft) {
-      const currentEntity = await entities.findById(entityId).exec()
+    async replace(entityId, entity, userId, isDraft, viewer) {
+      const draftMatch = draftVisibilityCondition(viewer)
+      const currentEntity = await entities
+        .findOne(
+          draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
+        )
+        .exec()
 
       if (!currentEntity) {
         return null
@@ -331,7 +342,7 @@ export async function createEntityDatabaseService(
       const { id: _ignoredId, ...values } = entity
       const updatedEntity = await entities
         .findOneAndReplace(
-          { _id: entityId },
+          draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
           {
             _id: entityId,
             ...values,

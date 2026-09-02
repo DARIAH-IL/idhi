@@ -17,7 +17,7 @@ interface Props {
   entityType: EntityType
   entity?: AuditedEntity
   title: React.ReactNode
-  onSubmit: (data: Entity, isDraft: boolean) => void
+  onSubmit: (data: Entity, isDraft: boolean) => Promise<unknown>
   isSubmitting?: boolean
 }
 

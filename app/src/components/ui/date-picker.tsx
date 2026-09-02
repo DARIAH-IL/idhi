@@ -1,10 +1,11 @@
-import { useId, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { getLocalTimeZone, parseDate } from '@internationalized/date'
 import type { CalendarDate } from '@internationalized/date'
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { useLocale } from 'react-aria-components'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -48,6 +49,14 @@ function DatePicker({
   const triggerRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
   const date = parseValue(value)
+
+  useEffect(() => {
+    if (value && !parseValue(value)) {
+      onChange('')
+      toast.warning(t('common.date_picker.invalid_cleared', { value }))
+    }
+  }, [value, onChange, t])
+
   const formatter = useMemo(
     () =>
       new Intl.DateTimeFormat(locale, {

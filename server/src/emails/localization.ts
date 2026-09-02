@@ -34,6 +34,23 @@ function render(template: string, vars: Record<string, string>): string {
   return template.replace(/{{(\w+)}}/g, (_match, key) => vars[key] ?? '')
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+function messageBlockHtml(message: string | undefined): string {
+  if (!message?.trim()) {
+    return ''
+  }
+
+  return `<p style="margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #18181b; text-align: center; white-space: pre-wrap;">${escapeHtml(message)}</p>`
+}
+
 export function otpEmailContent(
   lang: UiLanguage,
   otp: string,
@@ -49,10 +66,14 @@ export function otpEmailContent(
 export function inviteEmailContent(
   lang: UiLanguage,
   inviteUrl: string,
+  message?: string,
 ): { subject: string; html: string } {
   return {
     subject: INVITE_SUBJECTS[lang],
-    html: render(INVITE_TEMPLATES[lang], { inviteUrl }),
+    html: render(INVITE_TEMPLATES[lang], {
+      inviteUrl,
+      messageBlock: messageBlockHtml(message),
+    }),
   }
 }
 

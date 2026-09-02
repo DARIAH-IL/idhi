@@ -46,7 +46,8 @@
     "language_picker": "تغيير اللغة",
     "date_picker": {
       "select": "اختيار التاريخ",
-      "clear": "مسح التاريخ"
+      "clear": "مسح التاريخ",
+      "invalid_cleared": "التاريخ المخزّن \"{{value}}\" غير صالح وتم مسحه."
     },
     "pagination": {
       "range": "عرض {{start}}–{{end}} من {{total}}",
@@ -1878,7 +1879,8 @@
       "identifier_search_placeholder": "إدخال رابط مباشرة، أو بدء الكتابة للبحث بالاسم...",
       "clear_selection": "مسح التحديد",
       "remove_entity": "إزالة السجل",
-      "image_uploaded": "تم رفع الصورة"
+      "image_uploaded": "تم رفع الصورة",
+      "lookup_failed": "فشل البحث. يرجى المحاولة مرة أخرى."
     },
     "duplicate_check": {
       "title": "سجلات مكررة محتملة",

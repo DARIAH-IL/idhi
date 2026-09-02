@@ -50,15 +50,62 @@ export interface EntitySearchInput {
   pageSize?: number
 }
 
+const SEARCH_QUERY_MAX_LENGTH = 256
+const SEARCH_FACETS_MAX_COUNT = 10
+const SEARCH_FILTER_MAX_DEPTH = 10
+
+function filterDepth(filter: EntityFilter): number {
+  if ('and' in filter) {
+    return 1 + Math.max(0, ...filter.and.map(filterDepth))
+  }
+  if ('or' in filter) {
+    return 1 + Math.max(0, ...filter.or.map(filterDepth))
+  }
+  return 1
+}
+
 export async function searchEntities(
   entities: EntityDatabaseService,
   { q, facets, filter, sort, page, pageSize }: EntitySearchInput,
   viewer: EntityViewer | undefined,
 ): Promise<EntitySearchResult> {
+  if (q !== undefined && q.length > SEARCH_QUERY_MAX_LENGTH) {
+    throw new ApiError(
+      ErrorCode.InvalidInput,
+      `q must not exceed ${SEARCH_QUERY_MAX_LENGTH} characters`,
+    )
+  }
+
+  if (facets !== undefined && facets.length > SEARCH_FACETS_MAX_COUNT) {
+    throw new ApiError(
+      ErrorCode.InvalidInput,
+      `facets must not contain more than ${SEARCH_FACETS_MAX_COUNT} entries`,
+    )
+  }
+
+  let parsedFilter: EntityFilter | undefined
+  if (filter !== undefined) {
+    try {
+      parsedFilter = entityFilterSchema.parse(filter)
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        throw new ApiError(ErrorCode.InvalidInput, 'Invalid filter')
+      }
+      throw error
+    }
+
+    if (filterDepth(parsedFilter) > SEARCH_FILTER_MAX_DEPTH) {
+      throw new ApiError(
+        ErrorCode.InvalidInput,
+        `filter must not be nested more than ${SEARCH_FILTER_MAX_DEPTH} levels deep`,
+      )
+    }
+  }
+
   return entities.search(
     q,
     facets,
-    filter === undefined ? undefined : entityFilterSchema.parse(filter),
+    parsedFilter,
     sort,
     page ?? searchEntitiesBodyPageDefault,
     pageSize ?? searchEntitiesBodyPageSizeDefault,
@@ -105,6 +152,7 @@ export async function updateEntity(
   entity: EntityWrite,
   userId: string,
   isDraft: boolean,
+  viewer: EntityViewer,
 ): Promise<AuditedEntity> {
   const requestEntityId = entity.id
 
@@ -132,6 +180,7 @@ export async function updateEntity(
     entity,
     userId,
     isDraft,
+    viewer,
   )
 
   if (!updatedEntity) {

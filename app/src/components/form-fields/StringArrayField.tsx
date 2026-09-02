@@ -29,13 +29,14 @@ export function StringArrayField({
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
   const items = field.state.value ?? []
-  const { getHandleProps, getRowProps } = useReorderableList(
-    items.length,
-    field.moveValue,
-  )
   const rowClass = useFieldRowClass()
   const labelId = useId()
   const containerRef = useRef<HTMLDivElement>(null)
+  const { getHandleProps, getRowProps } = useReorderableList(
+    items.length,
+    field.moveValue,
+    containerRef,
+  )
 
   return (
     <div

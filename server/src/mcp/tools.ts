@@ -101,16 +101,19 @@ export function registerEntityTools(
         'Replace an existing IDHI entity by its ID (requires authentication)',
       inputSchema: UpdateEntityInput,
     },
-    async ({ entityId, entity }) =>
-      jsonResult(
+    async ({ entityId, entity }) => {
+      const authenticatedUser = requireUser(user)
+      return jsonResult(
         await updateEntity(
           db.entities,
           entityId,
           entity,
-          requireUser(user).id,
+          authenticatedUser.id,
           false,
+          authenticatedUser,
         ),
-      ),
+      )
+    },
   )
 
   server.registerTool(

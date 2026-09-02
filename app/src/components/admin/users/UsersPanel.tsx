@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Add01Icon, UserMultipleIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -37,6 +37,12 @@ export function UsersPanel() {
   })
   const totalUsers = users.data?.total ?? 0
   const totalPages = Math.max(1, Math.ceil(totalUsers / ADMIN_USERS_PAGE_SIZE))
+
+  useEffect(() => {
+    if (users.data && page > totalPages - 1) {
+      setPage(totalPages - 1)
+    }
+  }, [users.data, page, totalPages])
 
   return (
     <>

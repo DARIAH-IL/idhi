@@ -21,12 +21,13 @@ export function ArraySection({ label, defaultItem, children }: Props) {
     Array<Record<string, unknown>> | null | undefined
   >()
   const items = field.state.value ?? []
+  const rowClass = useFieldRowClass()
+  const containerRef = useRef<HTMLDivElement>(null)
   const { getHandleProps, getRowProps } = useReorderableList(
     items.length,
     field.moveValue,
+    containerRef,
   )
-  const rowClass = useFieldRowClass()
-  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
     <div

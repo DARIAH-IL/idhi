@@ -18,6 +18,7 @@ export function useAutocomplete<T>({
 }: UseAutocompleteOptions<T>) {
   const [items, setItems] = useState<T[] | undefined>(undefined)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const debounceRef = useRef<number | undefined>(undefined)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -34,6 +35,7 @@ export function useAutocomplete<T>({
     abortRef.current?.abort()
     setItems(undefined)
     setLoading(false)
+    setError(false)
   }
 
   const handleQueryChange = (raw: string) => {
@@ -47,6 +49,7 @@ export function useAutocomplete<T>({
     abortRef.current?.abort()
     setItems([])
     setLoading(true)
+    setError(false)
 
     debounceRef.current = window.setTimeout(() => {
       const controller = new AbortController()
@@ -63,10 +66,12 @@ export function useAutocomplete<T>({
           if (controller.signal.aborted) {
             return
           }
-          reset()
+          setItems(undefined)
+          setLoading(false)
+          setError(true)
         })
     }, debounceMs)
   }
 
-  return { items, loading, handleQueryChange, reset }
+  return { items, loading, error, handleQueryChange, reset }
 }

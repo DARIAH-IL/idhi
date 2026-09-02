@@ -82,6 +82,12 @@ export default [
     },
   },
   {
+    files: ['scripts/**'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['src/api/typedEntitySearch.ts'],
     rules: {
       'no-restricted-imports': [

@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Loading03Icon } from '@hugeicons/core-free-icons'
+import { toast } from 'sonner'
 import { useFieldContext } from '@/components/forms/form-context'
 import { useAutocomplete } from '@/hooks/useAutocomplete'
 import { FieldRow } from './FieldRow'
@@ -45,6 +47,12 @@ export function AutocompleteTextField<T extends object>({
 
   const autocomplete = useAutocomplete<T>({ search, shouldSearch })
   const items = autocomplete.items ?? []
+
+  useEffect(() => {
+    if (autocomplete.error) {
+      toast.error(t('entity.form.lookup_failed'))
+    }
+  }, [autocomplete.error, t])
   const itemsByKey = new Map(
     items.map((item) => [getSuggestionValue(item), item]),
   )

@@ -19,6 +19,8 @@ import {
   getEntityRelationshipFacetDefinitions,
   getEntityRelationshipFacetPaths,
 } from '#/lib/entityRelationships.ts'
+import { isFilterGroupNode } from '#/lib/advancedFilterTree.ts'
+import type { FilterGroupNode } from '#/lib/advancedFilterTree.ts'
 import i18n from '#/i18n'
 
 export const PAGE_SIZE = 20
@@ -85,10 +87,14 @@ export const DEFAULT_SORT = {
 export type FacetFilters = z.infer<typeof facetFiltersSchema>
 export type EntitySort = z.infer<typeof sortSchema>
 
+export const advancedFilterNodeSchema =
+  z.custom<FilterGroupNode>(isFilterGroupNode)
+
 export const entityBoardSearchSchema = z.object({
   q: z.string().optional(),
   facetFilters: facetFiltersSchema.optional(),
   sort: sortSchema.optional(),
+  advancedFilter: advancedFilterNodeSchema.optional(),
 })
 
 export type EntityBoardSearch = z.infer<typeof entityBoardSearchSchema>

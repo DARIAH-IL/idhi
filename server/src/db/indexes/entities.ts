@@ -1,4 +1,5 @@
 import type { Collection } from 'mongoose'
+import { CASE_INSENSITIVE_COLLATION } from '../queries/filter'
 import { ensureSearchIndex } from './search'
 
 export const ENTITY_SEARCH_INDEX_NAME = 'entities_search'
@@ -31,9 +32,17 @@ export async function initializeEntityIndexes(
       { name: 'audit_entity_history' },
     ),
     entities.createIndex({ type: 1 }, { name: 'entity_type' }),
+    entities.createIndex(
+      { type: 1 },
+      { name: 'entity_type_ci', collation: CASE_INSENSITIVE_COLLATION },
+    ),
     entities.createIndex({ type: 1, doi: 1 }, { name: 'entity_type_doi' }),
     entities.createIndex({ type: 1, orcid: 1 }, { name: 'entity_type_orcid' }),
     entities.createIndex({ type: 1, ror: 1 }, { name: 'entity_type_ror' }),
     entities.createIndex({ 'name.value': 1 }, { name: 'entity_name_value' }),
+    entities.createIndex(
+      { 'audit.modifiedAt': -1 },
+      { name: 'entity_audit_modified_at' },
+    ),
   ])
 }

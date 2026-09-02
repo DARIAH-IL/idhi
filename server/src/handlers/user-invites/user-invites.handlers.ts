@@ -13,7 +13,11 @@ import { createAuthLink } from '../../utils/authLink'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { createId } from '../../utils/id'
 import { defaultLang } from '../../emails/localization'
-import { createOtp, otpDigits } from '../../utils/otp'
+import {
+  createOtp,
+  INVITE_CHALLENGE_TIMEOUT_MS,
+  otpDigits,
+} from '../../utils/otp'
 import { sendInviteEmail } from '../../utils/smtp'
 import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator'
@@ -61,7 +65,7 @@ export const inviteUserHandlers = factory.createHandlers(
     }
 
     const now = new Date().toISOString()
-    const expiresAtEpoch =
+    const inviteExpiresAtEpoch =
       Date.now() + (expiryDays || DEFAULT_EXPIRY_DAYS) * 24 * 60 * 60 * 1000
 
     try {
@@ -69,7 +73,7 @@ export const inviteUserHandlers = factory.createHandlers(
         id: createId('invite'),
         email,
         message,
-        expiration: new Date(expiresAtEpoch).toISOString(),
+        expiration: new Date(inviteExpiresAtEpoch).toISOString(),
         audit: {
           createdAt: now,
           createdBy: user.id,
@@ -80,15 +84,36 @@ export const inviteUserHandlers = factory.createHandlers(
 
       const challengeId = createId('auth_challenge')
       const otp = createOtp(otpDigits(c.env.OTP_DIGITS))
+      const challengeExpiresAtEpoch = Date.now() + INVITE_CHALLENGE_TIMEOUT_MS
 
-      await c.var.db.authChallenges.insert({
-        challengeId,
-        type: 'otp',
-        code: otp,
-        attempts: 0,
-        email,
-        expiresAtEpoch,
-      })
+      try {
+        await c.var.db.authChallenges.insert({
+          challengeId,
+          type: 'otp',
+          code: otp,
+          attempts: 0,
+          email,
+          expiresAtEpoch: challengeExpiresAtEpoch,
+        })
+      } catch (error) {
+        try {
+          await c.var.db.userInvites.delete(invite.id)
+        } catch (cleanupError) {
+          c.var.logger.error(
+            'Invite cleanup after challenge-insert failure threw',
+            {
+              inviteId: invite.id,
+              error: serializeError(cleanupError),
+            },
+          )
+        }
+
+        c.var.logger.error('Invite auth challenge creation failed', {
+          inviteId: invite.id,
+          error: serializeError(error),
+        })
+        throw error
+      }
 
       try {
         const resolvedLang = lang ?? defaultLang(c.env.DEFAULT_LANG)
@@ -101,7 +126,7 @@ export const inviteUserHandlers = factory.createHandlers(
           'invite',
         )
 
-        await sendInviteEmail(email, inviteUrl, resolvedLang, c.env)
+        await sendInviteEmail(email, inviteUrl, resolvedLang, c.env, message)
       } catch (error) {
         try {
           await c.var.db.authChallenges.delete(challengeId)

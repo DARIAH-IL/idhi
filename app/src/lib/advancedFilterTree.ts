@@ -78,6 +78,50 @@ export function compileNode(node: FilterNode): EntityFilter | undefined {
   return node.kind === 'condition' ? compileCondition(node) : compileGroup(node)
 }
 
+function isFilterConditionNode(value: unknown): value is FilterConditionNode {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  if (
+    !('kind' in value) ||
+    !('id' in value) ||
+    !('field' in value) ||
+    !('operator' in value)
+  ) {
+    return false
+  }
+  return (
+    value.kind === 'condition' &&
+    typeof value.id === 'string' &&
+    typeof value.field === 'string' &&
+    typeof value.operator === 'string'
+  )
+}
+
+export function isFilterGroupNode(value: unknown): value is FilterGroupNode {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  if (
+    !('kind' in value) ||
+    !('id' in value) ||
+    !('combinator' in value) ||
+    !('children' in value)
+  ) {
+    return false
+  }
+  return (
+    value.kind === 'group' &&
+    typeof value.id === 'string' &&
+    (value.combinator === 'and' || value.combinator === 'or') &&
+    Array.isArray(value.children) &&
+    value.children.every(
+      (child: unknown) =>
+        isFilterConditionNode(child) || isFilterGroupNode(child),
+    )
+  )
+}
+
 export function compileAdvancedFilter(
   root: FilterGroupNode | undefined,
 ): EntityFilter | undefined {

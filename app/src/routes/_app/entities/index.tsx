@@ -5,7 +5,6 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Add01Icon } from '@hugeicons/core-free-icons'
 import { buttonVariants } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
-import { useUIStore } from '@/stores/ui'
 import {
   entityBoardSearchSchema,
   getInfiniteEntityQueryOptions,
@@ -28,15 +27,14 @@ export const Route = createFileRoute('/_app/entities/')({
   beforeLoad: ({ search, cause }) => {
     restoreOrPersistEntityBoardSearch({ search, cause })
   },
-  loaderDeps: ({ search: { q, facetFilters, sort } }) => ({
+  loaderDeps: ({ search: { q, facetFilters, sort, advancedFilter } }) => ({
     q,
     facetFilters,
     sort,
+    advancedFilter,
   }),
   loader: ({ context, deps }) => {
-    const advancedFilter = compileAdvancedFilter(
-      useUIStore.getState().advancedSearchFilter,
-    )
+    const advancedFilter = compileAdvancedFilter(deps.advancedFilter)
     void context.queryClient.prefetchInfiniteQuery(
       getInfiniteEntityQueryOptions(
         deps.q,
@@ -53,7 +51,7 @@ function EntityBoard() {
   const { t } = useTranslation()
   const isAuthenticated = useAuthStore((state) => Boolean(state.token))
   const navigate = useNavigate({ from: Route.fullPath })
-  const { q, facetFilters, sort } = Route.useSearch()
+  const { q, facetFilters, sort, advancedFilter } = Route.useSearch()
 
   const updateSearch: UpdateEntityBoardSearch = useCallback(
     (updates) => {
@@ -100,11 +98,16 @@ function EntityBoard() {
     clearAdvancedFilter,
     advancedSearchCollapsed,
     setAdvancedSearchCollapsed,
-  } = useEntityBoardState({ q, facetFilters, sort, updateSearch })
+  } = useEntityBoardState({
+    q,
+    facetFilters,
+    sort,
+    advancedSearchFilterNode: advancedFilter,
+    updateSearch,
+  })
 
   const applyFacetFilters = (nextFacetFilters: FacetFilters) =>
     updateSearch({
-      q: searchInput || undefined,
       facetFilters:
         Object.keys(nextFacetFilters).length > 0 ? nextFacetFilters : undefined,
     })

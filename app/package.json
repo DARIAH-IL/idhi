@@ -11,10 +11,11 @@
     "generate-terms": "node scripts/generate-term-uris.mjs",
     "i18n-export": "node scripts/i18n-xlsx.mjs export",
     "i18n-import": "node scripts/i18n-xlsx.mjs import",
+    "check-form-coverage": "node scripts/check-form-coverage.ts",
     "build": "tsc && vite build",
     "lint": "eslint --fix && i18next-cli lint",
     "format": "prettier --write .",
-    "validate": "orval && pnpm generate-terms && pnpm lint && pnpm format && pnpm build",
+    "validate": "orval && pnpm generate-terms && pnpm check-form-coverage && pnpm lint && pnpm format && pnpm build",
     "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
   "dependencies": {

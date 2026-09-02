@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { getSearchEntitiesTypedQueryOptions } from '@/api/typedEntitySearch'
@@ -44,7 +44,13 @@ export function EntityPicker({
   const { t } = useTranslation()
   const searchPlaceholder = placeholder ?? t('common.search_placeholder')
   const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedQuery(query), 300)
+    return () => window.clearTimeout(timeout)
+  }, [query])
 
   const filter = useMemo<EntityFilter>(() => {
     if (entityTypes.length === 1) {
@@ -53,8 +59,8 @@ export function EntityPicker({
     return { field: 'type', op: 'in', value: entityTypes }
   }, [entityTypes])
   const search = useMemo<TypedEntitySearch>(
-    () => ({ q: query || undefined, filter, page: 0, pageSize: 10 }),
-    [filter, query],
+    () => ({ q: debouncedQuery || undefined, filter, page: 0, pageSize: 10 }),
+    [filter, debouncedQuery],
   )
   const { data, isFetching } = useQuery({
     ...getSearchEntitiesTypedQueryOptions(search),

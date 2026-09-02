@@ -117,6 +117,7 @@ export const updateEntityByIdHandlers = factory.createHandlers(
       c.req.valid('json') as unknown as EntityWrite,
       user.id,
       isDraft,
+      user,
     )
 
     return c.json(updatedEntity)

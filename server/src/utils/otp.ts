@@ -3,6 +3,9 @@ const DEFAULT_MAX_ATTEMPTS = 5
 const MAX_DIGITS = 32
 const MAX_UNBIASED_BYTE = 250
 
+export const OTP_CHALLENGE_TIMEOUT_MS = 5 * 60 * 1000
+export const INVITE_CHALLENGE_TIMEOUT_MS = 60 * 60 * 1000
+
 export function otpDigits(value: string | undefined): number {
   const digits = Number(value || DEFAULT_DIGITS)
 

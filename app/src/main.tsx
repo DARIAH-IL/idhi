@@ -1,4 +1,5 @@
 import './i18n/index.ts'
+import { useSyncExternalStore } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { I18nProvider } from 'react-aria-components'
@@ -19,7 +20,9 @@ Sentry.init({
   dataCollection: {},
   integrations: [Sentry.browserTracingIntegration()],
   tracesSampleRate: 1.0,
-  tracePropagationTargets: [/^https?:\/\//],
+  tracePropagationTargets: [
+    import.meta.env['VITE_SERVER_URL'] ?? 'http://localhost:8787',
+  ],
 })
 
 const router = getRouter()
@@ -31,15 +34,18 @@ const reactAriaLocales = {
 } satisfies Record<UiLanguage, string>
 
 const TanStackRouterAdapter: QueryParamAdapterComponent = ({ children }) => {
+  const location = useSyncExternalStore(
+    router.history.subscribe,
+    () => router.history.location,
+  )
+
   const getPath = (search: string) => {
     const { pathname, hash } = router.history.location
     return `${pathname}${search}${hash}`
   }
 
   return children({
-    get location() {
-      return router.history.location
-    },
+    location,
     push: ({ search, state }) => router.history.push(getPath(search), state),
     replace: ({ search, state }) =>
       router.history.replace(getPath(search), state),

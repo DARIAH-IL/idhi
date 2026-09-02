@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware'
 
 import { UiLanguage } from '@/api/models'
 import { useStorageSync } from '@/hooks/useStorageSync'
-import type { FilterGroupNode } from '@/lib/advancedFilterTree'
 
 interface UIState {
   language: UiLanguage
@@ -14,8 +13,6 @@ interface UIState {
   toggleFacetCollapsed: (facetKey: string) => void
   advancedSearchCollapsed: boolean
   setAdvancedSearchCollapsed: (collapsed: boolean) => void
-  advancedSearchFilter: FilterGroupNode | undefined
-  setAdvancedSearchFilter: (filter: FilterGroupNode | undefined) => void
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
@@ -49,9 +46,6 @@ export const useUIStore = create<UIState>()(
       advancedSearchCollapsed: true,
       setAdvancedSearchCollapsed: (advancedSearchCollapsed) =>
         set({ advancedSearchCollapsed }),
-      advancedSearchFilter: undefined,
-      setAdvancedSearchFilter: (advancedSearchFilter) =>
-        set({ advancedSearchFilter }),
     }),
     { name: UI_STORAGE_KEY },
   ),

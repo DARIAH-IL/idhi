@@ -1,5 +1,6 @@
 import {
   ProjectDigitalHumanitiesActivitiesItem,
+  ProjectFundingItemFundingCurrency,
   ProjectFundingStatus,
   ProjectOrganizationRolesItemOrgProjectRole,
   ProjectProjectParticipationsItemParticipationRole,
@@ -509,6 +510,24 @@ export const ProjectFields = withForm({
                         }
                         type="number"
                         min={0}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`funding[${index}].funding_currency`}
+                    validators={enumValidators(
+                      ProjectFundingItemFundingCurrency,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Funding"
+                            field="funding_currency"
+                          />
+                        }
+                        options={ProjectFundingItemFundingCurrency}
                       />
                     )}
                   </form.AppField>

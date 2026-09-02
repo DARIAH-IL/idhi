@@ -26,7 +26,12 @@ import { createAuthLink } from '../../utils/authLink'
 import { createId } from '../../utils/id'
 import { createJwtForUser } from '../../utils/jwt'
 import { defaultLang } from '../../emails/localization'
-import { createOtp, otpDigits, otpMaxAttempts } from '../../utils/otp'
+import {
+  createOtp,
+  OTP_CHALLENGE_TIMEOUT_MS,
+  otpDigits,
+  otpMaxAttempts,
+} from '../../utils/otp'
 import { sendOtpEmail } from '../../utils/smtp'
 import {
   createInvitedUserAfterAuthentication,
@@ -65,7 +70,6 @@ import {
 
 const factory = createFactory()
 const RP_NAME = 'IDHI'
-const DEFAULT_CHALLENGE_TIMEOUT_MS = 5 * 60 * 1000
 const LOCK_TTL_MS = 10 * 1000
 
 type OtpChallenge = Extract<AuthChallenge, { type: 'otp' }>
@@ -100,7 +104,7 @@ function relyingParty(
 }
 
 function expirationFor(options: { timeout?: number }): number {
-  return Date.now() + (options.timeout ?? DEFAULT_CHALLENGE_TIMEOUT_MS)
+  return Date.now() + (options.timeout ?? OTP_CHALLENGE_TIMEOUT_MS)
 }
 
 function challengeNotFound(): ApiError {
@@ -201,7 +205,7 @@ export const startOtpChallengeHandlers = factory.createHandlers(
     )
     const code = createOtp(digits)
     const challengeId = createId('auth_challenge')
-    const expiresAtEpoch = Date.now() + DEFAULT_CHALLENGE_TIMEOUT_MS
+    const expiresAtEpoch = Date.now() + OTP_CHALLENGE_TIMEOUT_MS
 
     await c.var.db.authChallenges.insert({
       challengeId,

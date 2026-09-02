@@ -25,7 +25,7 @@ export const authRateLimits = {
     return {
       scope: 'otp_start_email',
       identity: email.trim().toLowerCase(),
-      limit: 3,
+      limit: 5,
       windowMilliseconds: OTP_START_BURST_WINDOW_MS,
     }
   },
@@ -33,7 +33,7 @@ export const authRateLimits = {
     return {
       scope: 'otp_start_email_daily',
       identity: email.trim().toLowerCase(),
-      limit: 10,
+      limit: 20,
       windowMilliseconds: OTP_START_SUSTAINED_WINDOW_MS,
     }
   },
@@ -49,7 +49,7 @@ export const authRateLimits = {
     return {
       scope: 'otp_completion_email',
       identity: email.trim().toLowerCase(),
-      limit: 5,
+      limit: 8,
       windowMilliseconds: OTP_EMAIL_ATTEMPT_BURST_WINDOW_MS,
     }
   },
@@ -57,7 +57,7 @@ export const authRateLimits = {
     return {
       scope: 'otp_completion_email_daily',
       identity: email.trim().toLowerCase(),
-      limit: 10,
+      limit: 20,
       windowMilliseconds: OTP_EMAIL_ATTEMPT_SUSTAINED_WINDOW_MS,
     }
   },

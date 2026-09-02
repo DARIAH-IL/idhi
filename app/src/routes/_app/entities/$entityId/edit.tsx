@@ -99,13 +99,13 @@ function EditEntityPage() {
             </div>
           </div>
         }
-        onSubmit={(data, isDraft) => {
-          updateMutation.mutate({
+        onSubmit={(data, isDraft) =>
+          updateMutation.mutateAsync({
             entityId: decodedId,
             data,
             params: { isDraft },
           })
-        }}
+        }
         isSubmitting={updateMutation.isPending}
       />
     </div>

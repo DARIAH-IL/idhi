@@ -10,7 +10,7 @@ interface Props {
   person?: Person & { isDraft?: boolean }
   title: React.ReactNode
   isSubmitting?: boolean
-  onSubmit: (data: Entity, isDraft: boolean) => void
+  onSubmit: (data: Entity, isDraft: boolean) => Promise<unknown>
   onCancel: () => void
 }
 
@@ -29,7 +29,9 @@ export function PersonForm({ person, ...props }: Props) {
         title={props.title}
         isSubmitting={props.isSubmitting}
         canSaveAsDraft={!person || person.isDraft === true}
-        onSubmit={(isDraft) => void form.handleSubmit({ isDraft })}
+        onSubmit={(isDraft) => {
+          form.handleSubmit({ isDraft }).catch(() => {})
+        }}
         onCancel={props.onCancel}
       >
         <CommonEntityFields

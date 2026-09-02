@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import type { SortDescriptor } from 'react-aria-components'
 import type { EntityType } from '@/lib/entity'
+import type { FilterGroupNode } from '@/lib/advancedFilterTree'
 import { useAuthStore } from '@/stores/auth'
 import { useUIStore } from '@/stores/ui'
 import {
@@ -31,6 +32,7 @@ export type UpdateEntityBoardSearch = (
     q: string
     facetFilters: FacetFilters | undefined
     sort: EntitySort
+    advancedFilter: FilterGroupNode | undefined
   }>,
 ) => void
 
@@ -38,6 +40,7 @@ interface UseEntityBoardStateParams {
   q: string | undefined
   facetFilters: FacetFilters | undefined
   sort: EntitySort | undefined
+  advancedSearchFilterNode: FilterGroupNode | undefined
   updateSearch: UpdateEntityBoardSearch
 }
 
@@ -45,6 +48,7 @@ export function useEntityBoardState({
   q,
   facetFilters,
   sort,
+  advancedSearchFilterNode,
   updateSearch,
 }: UseEntityBoardStateParams) {
   const isAuthenticated = useAuthStore((state) => Boolean(state.token))
@@ -54,12 +58,9 @@ export function useEntityBoardState({
   const searchInputRef = useRef<HTMLInputElement>(null)
   const tableContainerRef = useRef<HTMLDivElement>(null)
 
-  const advancedSearchFilterNode = useUIStore(
-    (state) => state.advancedSearchFilter,
-  )
-  const setAdvancedSearchFilterNode = useUIStore(
-    (state) => state.setAdvancedSearchFilter,
-  )
+  const setAdvancedSearchFilterNode = (
+    advancedFilterNode: FilterGroupNode | undefined,
+  ) => updateSearch({ advancedFilter: advancedFilterNode })
   const advancedSearchCollapsed = useUIStore(
     (state) => state.advancedSearchCollapsed,
   )

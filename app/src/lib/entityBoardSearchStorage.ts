@@ -5,7 +5,9 @@ import type { EntityBoardSearch } from '#/api/entityBoardSearch.ts'
 const STORED_SEARCH_KEY = 'entityBoardSearch'
 
 function isEmptySearch(search: EntityBoardSearch) {
-  return !search.q && !search.facetFilters && !search.sort
+  return (
+    !search.q && !search.facetFilters && !search.sort && !search.advancedFilter
+  )
 }
 
 function readStoredSearch(): EntityBoardSearch | undefined {

@@ -118,13 +118,14 @@ export function LangStringField({
   const { t } = useTranslation()
   const field = useFieldContext<LocalizedValue[] | null | undefined>()
   const items = field.state.value ?? []
-  const { getHandleProps, getRowProps } = useReorderableList(
-    items.length,
-    field.moveValue,
-  )
   const rowClass = useFieldRowClass()
   const labelId = useId()
   const containerRef = useRef<HTMLDivElement>(null)
+  const { getHandleProps, getRowProps } = useReorderableList(
+    items.length,
+    field.moveValue,
+    containerRef,
+  )
 
   const { topLanguages, otherLanguages, optionByCode, languageFilter } =
     useMemo(() => {
