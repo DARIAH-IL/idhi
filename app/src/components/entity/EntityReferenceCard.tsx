@@ -74,7 +74,11 @@ export function EntityReferenceCard({
   return (
     <TooltipTrigger>
       <Focusable>
-        <Card size="sm" className="bg-muted/20 hover:bg-accent-foreground/10">
+        <Card
+          role="button"
+          size="sm"
+          className="bg-muted/20 hover:bg-accent-foreground/10"
+        >
           <CardContent className="p-2.5">
             <div className="flex items-center gap-3">
               <EntityImage image={data.image} type={data.type} alt="" />

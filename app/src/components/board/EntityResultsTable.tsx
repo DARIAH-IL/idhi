@@ -75,7 +75,7 @@ export function EntityResultsTable({
   return (
     <section
       aria-label={t('board.results_label')}
-      className="flex h-full min-h-0 min-w-0 flex-col space-y-4"
+      className="flex min-h-0 min-w-0 flex-col space-y-4"
     >
       {isError && (
         <p role="alert" className="text-sm text-destructive">

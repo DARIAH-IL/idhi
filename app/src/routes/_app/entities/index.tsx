@@ -116,7 +116,7 @@ function EntityBoard() {
     !advancedSearchCollapsed || advancedFilterActiveCount > 0
 
   return (
-    <div className="flex flex-col gap-4 md:h-full">
+    <div className="flex h-full min-h-0 flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{t('board.title')}</h1>
         {isAuthenticated && (
@@ -175,7 +175,7 @@ function EntityBoard() {
         />
       </div>
 
-      <div className="grid items-start gap-6 md:min-h-0 md:flex-1 md:grid-cols-[16rem_minmax(0,1fr)]">
+      <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] gap-6 overflow-hidden md:grid-cols-[16rem_minmax(0,1fr)]">
         <EntityFacetsDesktopPanel
           facets={facets}
           relationshipFacets={relationshipFacets}
