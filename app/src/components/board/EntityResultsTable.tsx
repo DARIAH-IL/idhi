@@ -75,7 +75,7 @@ export function EntityResultsTable({
   return (
     <section
       aria-label={t('board.results_label')}
-      className="min-w-0 space-y-4 md:flex md:h-full md:min-h-0 md:flex-col"
+      className="flex h-full min-h-0 min-w-0 flex-col space-y-4"
     >
       {isError && (
         <p role="alert" className="text-sm text-destructive">
@@ -107,7 +107,7 @@ export function EntityResultsTable({
           : ''}
       </p>
 
-      <div className="relative md:min-h-0 md:flex-1">
+      <div className="relative min-h-0 flex-1">
         {(isLoading || isRefetching) && (
           <div className="absolute inset-0 z-10 flex items-start justify-center rounded-lg bg-background/80">
             <div
@@ -131,7 +131,7 @@ export function EntityResultsTable({
           <Table
             aria-label={t('board.results_label')}
             containerRef={tableContainerRef}
-            containerClassName="max-h-[calc(100vh-12rem)] overflow-y-auto md:max-h-full"
+            containerClassName="h-full overflow-y-auto"
             sortDescriptor={sortDescriptor}
             onSortChange={onSortChange}
           >
