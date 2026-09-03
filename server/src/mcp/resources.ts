@@ -59,7 +59,9 @@ function flattenFields(
 
   out.push({
     path: prefix,
-    type: resolved.type ?? 'unknown',
+    type: Array.isArray(resolved.type)
+      ? resolved.type.join(' | ')
+      : (resolved.type ?? 'unknown'),
     description: resolved.description,
   })
 }
