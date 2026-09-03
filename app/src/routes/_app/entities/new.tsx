@@ -18,7 +18,7 @@ import {
 } from '@/lib/entity'
 import { getEntityTermUri } from '@/api/termUris/termUri'
 import type { EntityType } from '@/lib/entity'
-import { EntityForm } from '@/components/forms/entity/EntityForm'
+import { EntityFormCreationHost } from '@/components/forms/entity/EntityFormCreationHost'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
@@ -125,7 +125,7 @@ function NewEntityPage() {
         </p>
       )}
 
-      <EntityForm
+      <EntityFormCreationHost
         entityType={selectedType}
         title={
           <div className="flex items-center gap-2.5">
@@ -138,7 +138,10 @@ function NewEntityPage() {
           </div>
         }
         onSubmit={(data, isDraft) =>
-          createMutation.mutateAsync({ data, params: { isDraft } })
+          createMutation.mutateAsync({
+            data,
+            params: isDraft ? { isDraft: true } : undefined,
+          })
         }
         isSubmitting={createMutation.isPending}
       />

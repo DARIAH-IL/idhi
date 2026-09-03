@@ -11,7 +11,10 @@ import type { SortCriterion } from './sortCriterion.ts'
 export interface EntitySearch {
   /** Optional free-text search query. */
   q?: string
-  /** Entity fields for which facet counts should be returned. */
+  /**
+   * Entity fields for which facet counts should be returned.
+   * @maxItems 100
+   */
   facets?: FilterableField[]
   filter?: Filter
   /**

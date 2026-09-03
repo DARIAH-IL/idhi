@@ -12,7 +12,30 @@ export function storedEntityField(field: FilterableField): string {
 }
 
 export function toMongoEntityFilter(filter: EntityFilter) {
-  return toMongoFilter(filter, storedEntityField)
+  return toMongoFilter(normalizeEntityFilter(filter), storedEntityField)
+}
+
+function normalizeEntityFilter(filter: EntityFilter): EntityFilter {
+  if ('and' in filter) {
+    return { and: filter.and.map(normalizeEntityFilter) }
+  }
+
+  if ('or' in filter) {
+    return { or: filter.or.map(normalizeEntityFilter) }
+  }
+
+  if (
+    filter.field !== 'isDraft' ||
+    (filter.op !== 'eq' && filter.op !== 'ne') ||
+    typeof filter.value !== 'boolean'
+  ) {
+    return filter
+  }
+
+  const matchesDraft = filter.op === 'eq' ? filter.value : !filter.value
+  return matchesDraft
+    ? { field: 'isDraft', op: 'eq', value: true }
+    : { field: 'isDraft', op: 'ne', value: true }
 }
 
 export function toMongoEntitySort(

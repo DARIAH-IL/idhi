@@ -1026,6 +1026,7 @@ components:
         - InvalidInput
         - InternalServerError
         - EntityNotFound
+        - EntityReferenced
         - UserNotFound
         - UserAlreadyInvitedOrRegistered
         - WrongOtpCode

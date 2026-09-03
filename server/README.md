@@ -23,10 +23,10 @@ From the workspace root, run:
 pnpm --filter @idhi/server test-data:import
 ```
 
-The script drops the entire configured database, then invokes `mongoimport` to
-load the deterministic mock entities and an invite for `reallyliri@gmail.com`
-that expires 30 days after the import. Do not point it at a database containing
-non-test data.
+The script drops every collection except `users` and `userInvites`, then invokes
+`mongoimport` to load the deterministic mock entities. It adds an invite for
+`reallyliri@gmail.com` that expires 30 days after the import only when the
+database has no users.
 
 ## Testing MCP
 

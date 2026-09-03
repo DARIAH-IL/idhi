@@ -9,6 +9,7 @@ const errorTranslationKeys = {
   [ErrorCodes.InvalidInput]: 'api.errors.InvalidInput',
   [ErrorCodes.InternalServerError]: 'api.errors.InternalServerError',
   [ErrorCodes.EntityNotFound]: 'api.errors.EntityNotFound',
+  [ErrorCodes.EntityReferenced]: 'api.errors.EntityReferenced',
   [ErrorCodes.UserNotFound]: 'api.errors.UserNotFound',
   [ErrorCodes.UserAlreadyInvitedOrRegistered]:
     'api.errors.UserAlreadyInvitedOrRegistered',

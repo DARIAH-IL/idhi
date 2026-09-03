@@ -10,6 +10,7 @@ const ENTITY_SEARCH_INDEX_DEFINITION = {
   mappings: {
     dynamic: true,
     fields: {
+      _references: [],
       audit: {
         type: 'document',
         dynamic: false,
@@ -34,6 +35,10 @@ export async function initializeEntityIndexes(
       { name: 'audit_entity_history' },
     ),
     entities.createIndex({ type: 1 }, { name: 'entity_type' }),
+    entities.createIndex(
+      { _references: 1 },
+      { name: 'entity_references', sparse: true },
+    ),
     entities.createIndex(
       { type: 1 },
       { name: 'entity_type_ci', collation: CASE_INSENSITIVE_COLLATION },

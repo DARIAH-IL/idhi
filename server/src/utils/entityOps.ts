@@ -187,7 +187,16 @@ export async function deleteEntity(
   entityId: string,
   viewer: EntityViewer,
 ): Promise<void> {
-  if (!(await entities.delete(entityId, viewer))) {
+  const result = await entities.delete(entityId, viewer)
+
+  if (result.status === 'notFound') {
     throw entityNotFound(entityId)
+  }
+
+  if (result.status === 'referenced') {
+    throw new ApiError(
+      ErrorCode.EntityReferenced,
+      `Entity ${entityId} is referenced by another entity and cannot be deleted`,
+    )
   }
 }

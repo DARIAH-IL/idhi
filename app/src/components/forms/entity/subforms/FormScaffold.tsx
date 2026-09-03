@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { useAllowEntityDraft } from '@/hooks/useAllowEntityDraft'
 
 interface ScaffoldProps {
   form: AnyFormApi
@@ -34,6 +35,8 @@ export function FormScaffold({
 }: ScaffoldProps) {
   const { t } = useTranslation()
   const formRef = useRef<HTMLFormElement>(null)
+  const allowSaveAsDraft = useAllowEntityDraft()
+  const showSaveAsDraft = canSaveAsDraft && allowSaveAsDraft
 
   const focusFirstInvalid = () => {
     window.setTimeout(() => {
@@ -75,7 +78,7 @@ export function FormScaffold({
                   ? t('entity.form.publish')
                   : t('common.save')}
             </Button>
-            {canSaveAsDraft && (
+            {showSaveAsDraft && (
               <Button
                 type="button"
                 variant="outline"

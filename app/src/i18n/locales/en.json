@@ -162,6 +162,7 @@
       "InvalidInput": "The submitted information is invalid. Please review it and try again.",
       "InternalServerError": "Something went wrong on our side, we are looking into it.",
       "EntityNotFound": "The requested entry could not be found.",
+      "EntityReferenced": "This entry is referenced by another entry and cannot be deleted.",
       "UserNotFound": "The requested user could not be found.",
       "UserAlreadyInvitedOrRegistered": "This user is already invited or registered.",
       "WrongOtpCode": "The one-time code is incorrect. Please try again.",
@@ -1850,7 +1851,8 @@
     },
     "picker": {
       "choose_another": "Choose a different entry...",
-      "no_results": "No matches found."
+      "no_results": "No matches found.",
+      "create_new": "Create a new entry"
     },
     "form": {
       "new_title": "New {{type}}",
@@ -1861,6 +1863,8 @@
       "remove_image": "Remove image",
       "select_type": "Select entry type",
       "select_type_description": "Choose what kind of entry you want to create.",
+      "select_related_type_description": "Choose the kind of related entry you want to create.",
+      "create_related_description": "Create a related entry without leaving the current form.",
       "unsaved_changes_title": "Unsaved changes",
       "unsaved_changes": "You have unsaved changes. Are you sure you want to leave?",
       "leave_page": "Leave page",

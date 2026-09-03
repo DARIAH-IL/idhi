@@ -14,6 +14,7 @@ import type {
   User,
 } from '../../models'
 import { createEntityId } from '../../utils/entityId'
+import { collectEntityReferences } from '../../utils/entityReferences'
 import { createId } from '../../utils/id'
 import { COLLECTIONS } from '../collections'
 import { ENTITY_SEARCH_INDEX_NAME } from '../indexes/entities'
@@ -25,9 +26,14 @@ import {
 import { CASE_INSENSITIVE_COLLATION } from '../queries/filter'
 import { SEARCH_SCORE_FIELD, escapeWildcardQuery } from '../queries/search'
 
-type StoredEntity = Omit<AuditedEntity, 'id'> & {
+type StoredEntity = Omit<AuditedEntity, 'id' | 'isDraft'> & {
   _id: string
+  _references?: string[]
+  isDraft?: true
 }
+
+export type EntityDeleteResult =
+  { status: 'deleted' } | { status: 'notFound' } | { status: 'referenced' }
 
 export type EntityWrite = Entity extends infer EntityVariant
   ? EntityVariant extends { id: string }
@@ -99,7 +105,10 @@ export interface EntityDatabaseService {
     isDraft: boolean,
     viewer: EntityViewer,
   ) => Promise<AuditedEntity | null>
-  delete: (entityId: string, viewer: EntityViewer) => Promise<boolean>
+  delete: (
+    entityId: string,
+    viewer: EntityViewer,
+  ) => Promise<EntityDeleteResult>
 }
 
 const serializationOptions: ToObjectOptions<StoredEntity> = {
@@ -107,6 +116,7 @@ const serializationOptions: ToObjectOptions<StoredEntity> = {
   virtuals: true,
   transform(_document, entity) {
     Reflect.deleteProperty(entity, '_id')
+    Reflect.deleteProperty(entity, '_references')
     return entity
   },
 }
@@ -114,6 +124,7 @@ const serializationOptions: ToObjectOptions<StoredEntity> = {
 const entitySchema = new Schema<StoredEntity>(
   {
     _id: { type: String, alias: 'id' },
+    _references: { type: [String], select: false },
   },
   {
     id: false,
@@ -293,7 +304,8 @@ export async function createEntityDatabaseService(
       createdEntity.set({
         _id: id,
         ...values,
-        isDraft,
+        _references: collectEntityReferences(values),
+        ...(isDraft ? { isDraft: true } : {}),
         audit,
       })
       await createdEntity.save()
@@ -329,7 +341,7 @@ export async function createEntityDatabaseService(
         modifiedAt: now,
         modifiedBy: userId,
       }
-      const nextIsDraft = Boolean(currentEntity.isDraft) && isDraft
+      const nextIsDraft = currentEntity.isDraft === true && isDraft
       const { id: _ignoredId, ...values } = entity
       const updatedEntity = await entities
         .findOneAndReplace(
@@ -337,7 +349,8 @@ export async function createEntityDatabaseService(
           {
             _id: entityId,
             ...values,
-            isDraft: nextIsDraft,
+            _references: collectEntityReferences(values),
+            ...(nextIsDraft ? { isDraft: true } : {}),
             audit,
           },
           { new: true },
@@ -364,12 +377,31 @@ export async function createEntityDatabaseService(
 
     async delete(entityId, viewer) {
       const draftMatch = draftVisibilityCondition(viewer)
+      const targetExists = await entities
+        .exists(
+          draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
+        )
+        .exec()
+
+      if (!targetExists) {
+        return { status: 'notFound' }
+      }
+
+      const referrer = await entities
+        .findOne({ _id: { $ne: entityId }, _references: entityId }, { _id: 1 })
+        .lean()
+        .exec()
+
+      if (referrer) {
+        return { status: 'referenced' }
+      }
+
       const deletedEntity = await entities.findOneAndDelete(
         draftMatch ? { _id: entityId, ...draftMatch } : { _id: entityId },
       )
 
       if (!deletedEntity) {
-        return false
+        return { status: 'notFound' }
       }
 
       const before = exposeEntity(deletedEntity)
@@ -390,7 +422,7 @@ export async function createEntityDatabaseService(
         before,
       })
 
-      return true
+      return { status: 'deleted' }
     },
   }
 }

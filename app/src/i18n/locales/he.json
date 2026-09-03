@@ -164,6 +164,7 @@
       "InvalidInput": "המידע שנשלח אינו תקין. נא לבדוק אותו ולנסות שוב.",
       "InternalServerError": "משהו השתבש אצלנו, אנחנו בודקים את זה.",
       "EntityNotFound": "הרשומה המבוקשת לא נמצאה.",
+      "EntityReferenced": "לא ניתן למחוק את הרשומה משום שרשומה אחרת מפנה אליה.",
       "UserNotFound": "המשתמש המבוקש לא נמצא.",
       "UserAlreadyInvitedOrRegistered": "המשתמש כבר הוזמן או נרשם.",
       "WrongOtpCode": "הקוד שהוכנס שגוי. נא לנסות שוב.",
@@ -1852,7 +1853,8 @@
     },
     "picker": {
       "choose_another": "בחירת רשומה אחרת...",
-      "no_results": "לא נמצאו התאמות."
+      "no_results": "לא נמצאו התאמות.",
+      "create_new": "יצירת רשומה חדשה"
     },
     "form": {
       "new_title": "יצירת {{type}}",
@@ -1863,6 +1865,8 @@
       "remove_image": "הסרת תמונה",
       "select_type": "בחירת סוג רשומה",
       "select_type_description": "נא לבחור איזה סוג רשומה ליצור.",
+      "select_related_type_description": "נא לבחור את סוג הרשומה המקושרת שברצונכם ליצור.",
+      "create_related_description": "יצירת רשומה מקושרת מבלי לצאת מהטופס הנוכחי.",
       "unsaved_changes_title": "שינויים שלא נשמרו",
       "unsaved_changes": "קיימים שינויים שלא נשמרו. לצאת בכל זאת?",
       "leave_page": "יציאה מהדף",

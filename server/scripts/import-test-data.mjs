@@ -428,14 +428,27 @@ function importCollection(
   if (result.status !== 0) process.exit(result.status ?? 1)
 }
 
-async function dropDatabase(connectionString, databaseName) {
+async function clearSeedCollections(connectionString, databaseName) {
   const connection = await createConnection(connectionString, {
     bufferCommands: false,
     dbName: databaseName,
   }).asPromise()
 
   try {
-    await connection.dropDatabase()
+    const db = connection.db
+    const userCount = await db.collection('users').countDocuments()
+    const collections = await db
+      .listCollections({}, { nameOnly: true })
+      .toArray()
+
+    await Promise.all(
+      collections
+        .map(({ name }) => name)
+        .filter((name) => name !== 'users' && name !== 'userInvites')
+        .map((name) => db.dropCollection(name)),
+    )
+
+    return userCount === 0
   } finally {
     await connection.close()
   }
@@ -452,30 +465,37 @@ async function main() {
     process.exit(1)
   }
 
-  await dropDatabase(connectionString, databaseName)
+  const shouldSeedInvite = await clearSeedCollections(
+    connectionString,
+    databaseName,
+  )
 
   const documents = entities.map(toStoredEntity)
   const now = new Date()
   const importedAt = now.toISOString()
-  const invite = {
-    _id: INVITE_ID,
-    email: INVITE_EMAIL,
-    expiration: new Date(
-      now.getTime() + INVITE_EXPIRY_DAYS * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    audit: {
-      createdAt: importedAt,
-      createdBy: CREATED_BY,
-      modifiedAt: importedAt,
-      modifiedBy: CREATED_BY,
-    },
-  }
+  const invite = shouldSeedInvite
+    ? {
+        _id: INVITE_ID,
+        email: INVITE_EMAIL,
+        expiration: new Date(
+          now.getTime() + INVITE_EXPIRY_DAYS * 24 * 60 * 60 * 1000,
+        ).toISOString(),
+        audit: {
+          createdAt: importedAt,
+          createdBy: CREATED_BY,
+          modifiedAt: importedAt,
+          modifiedBy: CREATED_BY,
+        },
+      }
+    : undefined
 
   importCollection(connectionString, databaseName, 'entities', documents)
-  importCollection(connectionString, databaseName, 'userInvites', [invite])
+  if (invite) {
+    importCollection(connectionString, databaseName, 'userInvites', [invite])
+  }
 
   console.log(
-    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type) and an invite for ${INVITE_EMAIL}.`,
+    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type)${invite ? ` and an invite for ${INVITE_EMAIL}` : ''}.`,
   )
 }
 

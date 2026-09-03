@@ -13,17 +13,23 @@ import { ServiceForm } from './subforms/ServiceForm'
 import { ToolForm } from './subforms/ToolForm'
 import { TrainingMaterialForm } from './subforms/TrainingMaterialForm'
 
-interface Props {
+export interface EntityFormProps {
   entityType: EntityType
   entity?: AuditedEntity
   title: React.ReactNode
   onSubmit: (data: Entity, isDraft: boolean) => Promise<unknown>
   isSubmitting?: boolean
+  onCancel?: () => void
 }
 
-export function EntityForm({ entityType, entity, ...props }: Props) {
+export function EntityForm({
+  entityType,
+  entity,
+  onCancel: onCancelProp,
+  ...props
+}: EntityFormProps) {
   const navigate = useNavigate()
-  const onCancel = () => {
+  const defaultOnCancel = () => {
     if (entity) {
       void navigate({
         to: '/entities/$entityId',
@@ -33,6 +39,7 @@ export function EntityForm({ entityType, entity, ...props }: Props) {
       void navigate({ to: '/entities' })
     }
   }
+  const onCancel = onCancelProp ?? defaultOnCancel
   return (
     <DuplicateCheckProvider
       entityType={entityType}
@@ -47,7 +54,7 @@ function renderEntitySubform({
   entityType,
   entity,
   ...props
-}: Props & { onCancel: () => void }) {
+}: EntityFormProps & { onCancel: () => void }) {
   switch (entityType) {
     case 'idhi:Person': {
       if (entity?.type !== entityType) {

@@ -12,6 +12,7 @@ export const ErrorCode = {
   InvalidInput: 'InvalidInput',
   InternalServerError: 'InternalServerError',
   EntityNotFound: 'EntityNotFound',
+  EntityReferenced: 'EntityReferenced',
   UserNotFound: 'UserNotFound',
   UserAlreadyInvitedOrRegistered: 'UserAlreadyInvitedOrRegistered',
   WrongOtpCode: 'WrongOtpCode',

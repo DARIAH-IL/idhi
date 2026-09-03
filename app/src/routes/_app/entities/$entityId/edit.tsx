@@ -12,7 +12,7 @@ import {
   getGetEntityByIdQueryOptions,
   useUpdateEntityById,
 } from '@/api/hooks/entities/entities'
-import { EntityForm } from '@/components/forms/entity/EntityForm'
+import { EntityFormCreationHost } from '@/components/forms/entity/EntityFormCreationHost'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { getEntityDisplayName, getEntityTypeLabel } from '@/lib/entity'
 import { useAuthStore } from '@/stores/auth'
@@ -77,7 +77,7 @@ function EditEntityPage() {
         </p>
       )}
 
-      <EntityForm
+      <EntityFormCreationHost
         entityType={entity.type}
         entity={entity}
         title={
@@ -103,7 +103,7 @@ function EditEntityPage() {
           updateMutation.mutateAsync({
             entityId: decodedId,
             data,
-            params: { isDraft },
+            params: isDraft ? { isDraft: true } : undefined,
           })
         }
         isSubmitting={updateMutation.isPending}
