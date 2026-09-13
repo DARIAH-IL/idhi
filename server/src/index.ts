@@ -1,4 +1,10 @@
-import { withSentry } from '@sentry/cloudflare'
+import {
+  withSentry,
+  dedupeIntegration,
+  inboundFiltersIntegration,
+  functionToStringIntegration,
+  linkedErrorsIntegration,
+} from '@sentry/cloudflare'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
@@ -71,7 +77,14 @@ export default withSentry(
   (env: Bindings) => ({
     dsn: env.SENTRY_DSN,
     enabled: env.SENTRY_DISABLED !== 'true',
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0,
+    skipOpenTelemetrySetup: true,
+    defaultIntegrations: [
+      dedupeIntegration(),
+      inboundFiltersIntegration(),
+      functionToStringIntegration(),
+      linkedErrorsIntegration(),
+    ],
   }),
   { fetch: app.fetch },
 )
