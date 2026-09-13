@@ -79,6 +79,7 @@ export const createEntityHandlers = factory.createHandlers(
       c.req.valid('json') as unknown as EntityWrite,
       user.id,
       isDraft,
+      { source: 'web' },
     )
 
     return c.json(entity, 201)
@@ -118,6 +119,7 @@ export const updateEntityByIdHandlers = factory.createHandlers(
       user.id,
       isDraft,
       user,
+      { source: 'web' },
     )
 
     return c.json(updatedEntity)
@@ -129,7 +131,7 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-    await deleteEntity(c.var.db.entities, entityId, user)
+    await deleteEntity(c.var.db.entities, entityId, user, { source: 'web' })
 
     return c.body(null, 204)
   },

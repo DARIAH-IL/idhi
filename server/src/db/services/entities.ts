@@ -63,12 +63,22 @@ const FACET_VALUES_LIMIT = 100
 const ENTITY_AUDIT_OPERATIONS = ['create', 'update', 'delete'] as const
 type EntityAuditOperation = (typeof ENTITY_AUDIT_OPERATIONS)[number]
 
+const ENTITY_AUDIT_SOURCES = ['web', 'mcp'] as const
+export type EntityAuditSource = (typeof ENTITY_AUDIT_SOURCES)[number]
+
+export interface EntityAuditContext {
+  source: EntityAuditSource
+  client?: { name?: string; version?: string }
+}
+
 type StoredEntityAudit = {
   _id: string
   entityId: string
   operation: EntityAuditOperation
   at: string
   by: string
+  source: EntityAuditSource
+  client?: { name?: string; version?: string }
   before?: AuditedEntity
   after?: AuditedEntity
 }
@@ -97,6 +107,7 @@ export interface EntityDatabaseService {
     entity: EntityWrite,
     userId: string,
     isDraft: boolean,
+    context: EntityAuditContext,
   ) => Promise<AuditedEntity>
   replace: (
     entityId: string,
@@ -104,10 +115,12 @@ export interface EntityDatabaseService {
     userId: string,
     isDraft: boolean,
     viewer: EntityViewer,
+    context: EntityAuditContext,
   ) => Promise<AuditedEntity | null>
   delete: (
     entityId: string,
     viewer: EntityViewer,
+    context: EntityAuditContext,
   ) => Promise<EntityDeleteResult>
 }
 
@@ -147,6 +160,17 @@ const entityAuditSchema = new Schema<StoredEntityAudit>(
     },
     at: { type: String, required: true },
     by: { type: String, required: true },
+    source: {
+      type: String,
+      enum: ENTITY_AUDIT_SOURCES,
+      required: true,
+    },
+    client: {
+      type: new Schema(
+        { name: { type: String }, version: { type: String } },
+        { _id: false },
+      ),
+    },
     before: { type: Schema.Types.Mixed },
     after: { type: Schema.Types.Mixed },
   },
@@ -290,7 +314,7 @@ export async function createEntityDatabaseService(
       return entity ? exposeEntity(entity) : null
     },
 
-    async insert(entity, userId, isDraft) {
+    async insert(entity, userId, isDraft, context) {
       const now = new Date().toISOString()
       const id = createEntityId(entity.type)
       const audit = {
@@ -315,13 +339,15 @@ export async function createEntityDatabaseService(
         operation: 'create',
         at: now,
         by: userId,
+        source: context.source,
+        client: context.client,
         after: exposeEntity(createdEntity),
       })
 
       return exposeEntity(createdEntity)
     },
 
-    async replace(entityId, entity, userId, isDraft, viewer) {
+    async replace(entityId, entity, userId, isDraft, viewer, context) {
       const draftMatch = draftVisibilityCondition(viewer)
       const currentEntity = await entities
         .findOne(
@@ -368,6 +394,8 @@ export async function createEntityDatabaseService(
         operation: 'update',
         at: now,
         by: userId,
+        source: context.source,
+        client: context.client,
         before: exposeEntity(currentEntity),
         after: exposedUpdatedEntity,
       })
@@ -375,7 +403,7 @@ export async function createEntityDatabaseService(
       return exposedUpdatedEntity
     },
 
-    async delete(entityId, viewer) {
+    async delete(entityId, viewer, context) {
       const draftMatch = draftVisibilityCondition(viewer)
       const targetExists = await entities
         .exists(
@@ -419,6 +447,8 @@ export async function createEntityDatabaseService(
         operation: 'delete',
         at,
         by: viewer.id,
+        source: context.source,
+        client: context.client,
         before,
       })
 

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import type {
+  EntityAuditContext,
   EntityDatabaseService,
   EntitySearchResult,
   EntityViewer,
@@ -124,9 +125,10 @@ export async function createEntity(
   entity: EntityWrite,
   userId: string,
   isDraft: boolean,
+  context: EntityAuditContext,
 ): Promise<AuditedEntity> {
   try {
-    return await entities.insert(entity, userId, isDraft)
+    return await entities.insert(entity, userId, isDraft, context)
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       throw new ApiError(
@@ -145,6 +147,7 @@ export async function updateEntity(
   userId: string,
   isDraft: boolean,
   viewer: EntityViewer,
+  context: EntityAuditContext,
 ): Promise<AuditedEntity> {
   const requestEntityId = entity.id
 
@@ -173,6 +176,7 @@ export async function updateEntity(
     userId,
     isDraft,
     viewer,
+    context,
   )
 
   if (!updatedEntity) {
@@ -186,8 +190,9 @@ export async function deleteEntity(
   entities: EntityDatabaseService,
   entityId: string,
   viewer: EntityViewer,
+  context: EntityAuditContext,
 ): Promise<void> {
-  const result = await entities.delete(entityId, viewer)
+  const result = await entities.delete(entityId, viewer, context)
 
   if (result.status === 'notFound') {
     throw entityNotFound(entityId)

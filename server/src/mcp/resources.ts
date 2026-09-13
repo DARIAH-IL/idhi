@@ -85,8 +85,18 @@ function entityTypeSchemas(): EntityTypeSchema[] {
   })
 }
 
+let cachedTypeSchemas: EntityTypeSchema[] | undefined
+
+function getEntityTypeSchemas(): EntityTypeSchema[] {
+  if (!cachedTypeSchemas) {
+    cachedTypeSchemas = entityTypeSchemas()
+  }
+
+  return cachedTypeSchemas
+}
+
 export function registerEntitySchemaResources(server: McpServer): void {
-  const typeSchemas = entityTypeSchemas()
+  const typeSchemas = getEntityTypeSchemas()
 
   server.registerResource(
     'entity-types',

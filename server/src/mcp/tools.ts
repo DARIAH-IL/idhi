@@ -51,6 +51,14 @@ function requireUser(user: User | undefined): User {
   return user
 }
 
+function mcpAuditContext(server: McpServer) {
+  const client = server.server.getClientVersion()
+  return {
+    source: 'mcp' as const,
+    client: client ? { name: client.name, version: client.version } : undefined,
+  }
+}
+
 export function registerEntityTools(
   server: McpServer,
   db: DatabaseService,
@@ -89,7 +97,13 @@ export function registerEntityTools(
     },
     async (input) =>
       jsonResult(
-        await createEntity(db.entities, input, requireUser(user).id, false),
+        await createEntity(
+          db.entities,
+          input,
+          requireUser(user).id,
+          false,
+          mcpAuditContext(server),
+        ),
       ),
   )
 
@@ -111,6 +125,7 @@ export function registerEntityTools(
           authenticatedUser.id,
           false,
           authenticatedUser,
+          mcpAuditContext(server),
         ),
       )
     },
@@ -124,7 +139,12 @@ export function registerEntityTools(
       inputSchema: DeleteEntityByIdParams,
     },
     async ({ entityId }) => {
-      await deleteEntity(db.entities, entityId, requireUser(user))
+      await deleteEntity(
+        db.entities,
+        entityId,
+        requireUser(user),
+        mcpAuditContext(server),
+      )
 
       return jsonResult({ deleted: true, entityId })
     },
