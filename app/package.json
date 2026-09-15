@@ -16,7 +16,7 @@
     "lint": "eslint --fix --max-warnings 0 && i18next-cli lint",
     "format": "prettier --write .",
     "validate": "orval && pnpm generate-terms && pnpm check-form-coverage && pnpm lint && pnpm format && pnpm build",
-    "deploy": "VITE_SERVER_URL=https://idhi-server.reallyliri.workers.dev pnpm build && pnpm wrangler pages deploy dist --branch main"
+    "deploy": "VITE_SERVER_URL=https://api.idh-index.org pnpm build && pnpm wrangler pages deploy dist --branch main"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
