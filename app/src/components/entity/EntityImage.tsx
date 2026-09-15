@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 const SIZES = {
   sm: { image: 'size-6 rounded-md', icon: 'sm' },
   md: { image: 'size-8 rounded-lg', icon: 'md' },
-  lg: { image: 'size-11 rounded-xl', icon: 'lg' },
+  lg: { image: 'size-15 rounded-xl', icon: 'lg' },
 } as const
 
 function inferImageMimeType(base64: string): string | undefined {
@@ -90,7 +90,7 @@ export function EntityImage({
       alt={alt}
       onError={() => setFailedSource(source)}
       className={cn(
-        'shrink-0 bg-muted object-cover border-accent-foreground/20 border-2',
+        'shrink-0 bg-muted object-contain border-accent-foreground/20 border-1',
         dimensions.image,
         className,
       )}
