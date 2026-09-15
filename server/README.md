@@ -56,20 +56,15 @@ In the inspector UI:
 Calling a write tool without a token returns a `401` challenge, which is also
 how MCP clients discover that authentication is required.
 
-## Gmail SMTP setup
+## Cloudflare Email Sending setup
 
-Gmail SMTP requires a Google app password. Do not use the normal password for
-the Google account.
-
-1. Enable [2-Step Verification](https://myaccount.google.com/signinoptions/two-step-verification)
-   for the sending Google account.
-2. Open [Google App Passwords](https://myaccount.google.com/apppasswords).
-3. Create an app password for the server and copy the generated 16-character
-   password.
-4. Configure in `server/.env.local`:
+The Worker sends transactional email through its `EMAIL` binding. Onboard
+`idh-index.org` in Cloudflare Email Sending and configure the sender in
+`server/.env.local`:
 
 ```env
-SMTP_USERNAME=sender@gmail.com
-SMTP_PASSWORD=generated-app-password
-SMTP_FROM_EMAIL=sender@gmail.com
+EMAIL_FROM_ADDRESS=noreply@idh-index.org
 ```
+
+The binding restricts sending to that address. Local development uses the
+remote binding and therefore sends real email.

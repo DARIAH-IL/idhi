@@ -17,10 +17,6 @@ export type Bindings = {
 
   SERVER_ALLOWED_HOSTS: string
 
-  SMTP_FROM_EMAIL: string
-  SMTP_HOST: string
-  SMTP_PASSWORD: string
-  SMTP_PORT?: string
-  SMTP_SECURE?: string
-  SMTP_USERNAME: string
+  EMAIL: SendEmail
+  EMAIL_FROM_ADDRESS: string
 }

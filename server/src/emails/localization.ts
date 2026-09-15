@@ -18,6 +18,12 @@ const OTP_TEMPLATES: Record<UiLanguage, string> = {
   ar: otpArHtml,
 }
 
+const OTP_FALLBACK_TEXT_TEMPLATES: Record<UiLanguage, string> = {
+  en: 'Your IDHI login code is: {{otp}}\n\nSign in: {{loginUrl}}\n\nThis code expires at {{expiration}}.',
+  he: 'קוד ההתחברות שלך הוא: {{otp}}\n\nלהתחברות: {{loginUrl}}\n\nהקוד תקף עד {{expiration}}.',
+  ar: 'رمز تسجيل الدخول الخاص بك هو: {{otp}}\n\nلتسجيل الدخول: {{loginUrl}}\n\nهذا الرمز صالح حتى {{expiration}}.',
+}
+
 const INVITE_SUBJECTS: Record<UiLanguage, string> = {
   en: "You've been invited to IDHI",
   he: 'הוזמנת להצטרף לאינדקס מדעי הרוח הדיגיטליים',
@@ -28,6 +34,12 @@ const INVITE_TEMPLATES: Record<UiLanguage, string> = {
   en: inviteEnHtml,
   he: inviteHeHtml,
   ar: inviteArHtml,
+}
+
+const INVITE_FALLBACK_TEXT_TEMPLATES: Record<UiLanguage, string> = {
+  en: "You've been invited to join IDHI.{{message}}\n\nAccept the invitation: {{inviteUrl}}",
+  he: 'הוזמנת להצטרף ל-IDHI.{{message}}\n\nלקבלת ההזמנה: {{inviteUrl}}',
+  ar: 'تمت دعوتك للانضمام إلى IDHI.{{message}}\n\nلقبول الدعوة: {{inviteUrl}}',
 }
 
 function render(template: string, vars: Record<string, string>): string {
@@ -51,15 +63,24 @@ function messageBlockHtml(message: string | undefined): string {
   return `<p style="margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #18181b; text-align: center; white-space: pre-wrap;">${escapeHtml(message)}</p>`
 }
 
+function messageBlockFallbackText(message: string | undefined): string {
+  return message?.trim() ? `\n\n${message.trim()}` : ''
+}
+
 export function otpEmailContent(
   lang: UiLanguage,
   otp: string,
   expiration: string,
   loginUrl: string,
-): { subject: string; html: string } {
+): { subject: string; html: string; text: string } {
   return {
     subject: OTP_SUBJECTS[lang],
     html: render(OTP_TEMPLATES[lang], { otp, expiration, loginUrl }),
+    text: render(OTP_FALLBACK_TEXT_TEMPLATES[lang], {
+      otp,
+      expiration,
+      loginUrl,
+    }),
   }
 }
 
@@ -67,12 +88,16 @@ export function inviteEmailContent(
   lang: UiLanguage,
   inviteUrl: string,
   message?: string,
-): { subject: string; html: string } {
+): { subject: string; html: string; text: string } {
   return {
     subject: INVITE_SUBJECTS[lang],
     html: render(INVITE_TEMPLATES[lang], {
       inviteUrl,
       messageBlock: messageBlockHtml(message),
+    }),
+    text: render(INVITE_FALLBACK_TEXT_TEMPLATES[lang], {
+      inviteUrl,
+      message: messageBlockFallbackText(message),
     }),
   }
 }

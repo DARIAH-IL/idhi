@@ -7,6 +7,7 @@
     "build": "tsc --noEmit && vite build",
     "deploy": "pnpm run build && wrangler deploy",
     "secrets:sync": "wrangler secret bulk .dev.vars",
+    "types:cloudflare": "wrangler types",
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write .",
     "validate": "orval && pnpm lint --fix && pnpm format && pnpm build",
@@ -20,12 +21,11 @@
     "@simplewebauthn/server": "^13.3.3",
     "hono": "^4.13.5",
     "mongoose": "^9.9.4",
-    "nodemailer": "^9.1.1",
     "zod": "^4.5.4"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.54.3",
-    "@types/nodemailer": "^8.0.1",
+    "@types/node": "^26.5.1",
     "eslint": "^10.9.1",
     "orval": "^8.27.0",
     "prettier": "^3.9.6",

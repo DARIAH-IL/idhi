@@ -18,7 +18,7 @@ import {
   INVITE_CHALLENGE_TIMEOUT_MS,
   otpDigits,
 } from '../../utils/otp'
-import { sendInviteEmail } from '../../utils/smtp'
+import { sendInviteEmail } from '../../utils/email'
 import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator.ts'
 import {

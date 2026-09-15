@@ -32,7 +32,7 @@ import {
   otpDigits,
   otpMaxAttempts,
 } from '../../utils/otp'
-import { sendOtpEmail } from '../../utils/smtp'
+import { sendOtpEmail } from '../../utils/email'
 import {
   createInvitedUserAfterAuthentication,
   resolveAuthenticationTarget,
@@ -428,7 +428,7 @@ export const startPasskeyRegistrationHandlers = factory.createHandlers(
       rpID,
       userName: user.email,
       userDisplayName: user.name ?? user.email,
-      userID: new TextEncoder().encode(user.id),
+      userID: new Uint8Array(new TextEncoder().encode(user.id)),
       attestationType: 'none',
       authenticatorSelection: {
         residentKey: 'preferred',
