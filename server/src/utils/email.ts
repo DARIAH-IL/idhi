@@ -14,7 +14,7 @@ async function sendEmail(
   const from = requiredValue(bindings, 'EMAIL_FROM_ADDRESS')
 
   await bindings.EMAIL.send({
-    from: { email: from, name: 'IDHI' },
+    from: { email: from, name: 'Israeli Digital Humanities Index' },
     to: recipient,
     subject,
     html,
