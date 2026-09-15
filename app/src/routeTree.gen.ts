@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
+import { Route as AppPrivacyPolicyRouteImport } from './routes/_app/privacy-policy'
+import { Route as AppTermsOfUseRouteImport } from './routes/_app/terms-of-use'
 import { Route as OauthAuthorizeRouteImport } from './routes/oauth.authorize'
 import { Route as AppAboutIndexRouteImport } from './routes/_app/about.index'
 import { Route as AppAboutAiRouteImport } from './routes/_app/about.ai'
@@ -32,6 +34,16 @@ const AppRoute = AppRouteImport.update({
 const AppAdminRoute = AppAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPrivacyPolicyRoute = AppPrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTermsOfUseRoute = AppTermsOfUseRouteImport.update({
+  id: '/terms-of-use',
+  path: '/terms-of-use',
   getParentRoute: () => AppRoute,
 } as any)
 const OauthAuthorizeRoute = OauthAuthorizeRouteImport.update({
@@ -74,6 +86,8 @@ const AppEntitiesEntityIdEditRoute = AppEntitiesEntityIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AppAdminRoute
+  '/privacy-policy': typeof AppPrivacyPolicyRoute
+  '/terms-of-use': typeof AppTermsOfUseRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/about/ai': typeof AppAboutAiRoute
   '/entities/new': typeof AppEntitiesNewRoute
@@ -85,6 +99,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AppAdminRoute
+  '/privacy-policy': typeof AppPrivacyPolicyRoute
+  '/terms-of-use': typeof AppTermsOfUseRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/about/ai': typeof AppAboutAiRoute
   '/entities/new': typeof AppEntitiesNewRoute
@@ -98,6 +114,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/admin': typeof AppAdminRoute
+  '/_app/privacy-policy': typeof AppPrivacyPolicyRoute
+  '/_app/terms-of-use': typeof AppTermsOfUseRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/_app/about/ai': typeof AppAboutAiRoute
   '/_app/entities/new': typeof AppEntitiesNewRoute
@@ -111,6 +129,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/privacy-policy'
+    | '/terms-of-use'
     | '/oauth/authorize'
     | '/about/ai'
     | '/entities/new'
@@ -122,6 +142,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
+    | '/privacy-policy'
+    | '/terms-of-use'
     | '/oauth/authorize'
     | '/about/ai'
     | '/entities/new'
@@ -134,6 +156,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/_app/admin'
+    | '/_app/privacy-policy'
+    | '/_app/terms-of-use'
     | '/oauth/authorize'
     | '/_app/about/ai'
     | '/_app/entities/new'
@@ -170,6 +194,20 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AppAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/privacy-policy': {
+      id: '/_app/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof AppPrivacyPolicyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/terms-of-use': {
+      id: '/_app/terms-of-use'
+      path: '/terms-of-use'
+      fullPath: '/terms-of-use'
+      preLoaderRoute: typeof AppTermsOfUseRouteImport
       parentRoute: typeof AppRoute
     }
     '/oauth/authorize': {
@@ -226,6 +264,8 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
+  AppPrivacyPolicyRoute: typeof AppPrivacyPolicyRoute
+  AppTermsOfUseRoute: typeof AppTermsOfUseRoute
   AppAboutAiRoute: typeof AppAboutAiRoute
   AppEntitiesNewRoute: typeof AppEntitiesNewRoute
   AppAboutIndexRoute: typeof AppAboutIndexRoute
@@ -236,6 +276,8 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRoute,
+  AppPrivacyPolicyRoute: AppPrivacyPolicyRoute,
+  AppTermsOfUseRoute: AppTermsOfUseRoute,
   AppAboutAiRoute: AppAboutAiRoute,
   AppEntitiesNewRoute: AppEntitiesNewRoute,
   AppAboutIndexRoute: AppAboutIndexRoute,

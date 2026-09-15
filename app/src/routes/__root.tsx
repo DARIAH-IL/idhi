@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
   Outlet,
   createRootRouteWithContext,
+  retainSearchParams,
   useRouter,
 } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
@@ -9,16 +10,27 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
+import { UiLanguage } from '@/api/models'
 import i18n, { isRtlLanguage } from '@/i18n'
 import { useUIStore } from '@/stores/ui'
 import { Toaster } from '@/components/ui/sonner'
+import { useSeoMetadata } from '@/hooks/useSeoMetadata'
 import '../styles.css'
 
 interface RouterContext {
   queryClient: QueryClient
 }
 
+const rootSearchSchema = z.object({
+  lang: z.enum(UiLanguage).optional(),
+})
+
 export const Route = createRootRouteWithContext<RouterContext>()({
+  validateSearch: rootSearchSchema,
+  search: {
+    middlewares: [retainSearchParams(['lang'])],
+  },
   component: RootComponent,
 })
 
@@ -38,22 +50,20 @@ function RootComponent() {
     document.documentElement.dir = isRtlLanguage(language) ? 'rtl' : 'ltr'
   }, [language])
 
-  useEffect(() => {
-    document.title = t('common.site_name')
-  }, [t])
+  useSeoMetadata()
 
   useEffect(() => {
     return router.subscribe('onResolved', () => {
-      const pathname = router.state.location.pathname
+      const nextPathname = router.state.location.pathname
       if (!hasResolvedOnceRef.current) {
         hasResolvedOnceRef.current = true
-        previousPathnameRef.current = pathname
+        previousPathnameRef.current = nextPathname
         return
       }
-      if (pathname === previousPathnameRef.current) {
+      if (nextPathname === previousPathnameRef.current) {
         return
       }
-      previousPathnameRef.current = pathname
+      previousPathnameRef.current = nextPathname
       document.getElementById('main-content')?.focus({ preventScroll: true })
       setAnnouncement('')
       requestAnimationFrame(() => {

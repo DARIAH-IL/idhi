@@ -129,7 +129,26 @@ function AppLayout() {
         <JumpToTop scrollRef={mainRef} />
       </div>
       <footer className="border-t px-4 py-4 text-center text-xs text-muted-foreground">
-        <p>{t('common.copyright', { year: new Date().getFullYear() })}</p>
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <p>{t('common.copyright', { year: new Date().getFullYear() })}</p>
+
+          <span aria-hidden="true">·</span>
+
+          <nav aria-label={t('common.legal_navigation')}>
+            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+              <li>
+                <Link className="app-link" to="/privacy-policy">
+                  {t('common.privacy_policy')}
+                </Link>
+              </li>
+              <li>
+                <Link className="app-link" to="/terms-of-use">
+                  {t('common.terms_of_use')}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
         <p className="mt-1">{t('common.work_in_progress')}</p>
       </footer>
       <LoginDialog

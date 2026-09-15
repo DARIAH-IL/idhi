@@ -17,12 +17,14 @@ export function useLanguageQueryParam() {
 
   useEffect(() => {
     if (language == null) {
+      setLanguageQueryParam(useUIStore.getState().language, 'replaceIn')
       return
     }
 
     if (isLanguage(language)) {
       setLanguage(language)
+      return
     }
-    setLanguageQueryParam(undefined, 'replaceIn')
+    setLanguageQueryParam(useUIStore.getState().language, 'replaceIn')
   }, [language, setLanguage, setLanguageQueryParam])
 }

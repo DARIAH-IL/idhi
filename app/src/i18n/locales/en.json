@@ -39,6 +39,9 @@
     "site_name": "Israeli Digital Humanities Index",
     "copyright": "© {{year}} $t(common.site_name)",
     "work_in_progress": "This site is a work in progress and is subject to change as it is reviewed and refined.",
+    "legal_navigation": "Legal information",
+    "privacy_policy": "Privacy policy",
+    "terms_of_use": "Terms of use",
     "remove": "Remove",
     "reorder": "Drag to reorder",
     "copy": "Copy",
@@ -98,9 +101,51 @@
     "primary_navigation": "Primary",
     "page_loaded": "Page loaded"
   },
+  "seo": {
+    "description": "Explore people, organizations, projects, datasets, tools, publications, and other resources in Israel's digital humanities community.",
+    "about_description": "Learn about the Israeli Digital Humanities Index and its catalogue of people, organizations, projects, and resources.",
+    "entity_description": "Explore {{name}} in the Israeli Digital Humanities Index."
+  },
   "about": {
     "title": "About",
-    "placeholder": "This page will describe the Israeli Digital Humanities Index. Content coming soon.",
+    "intro": "The Israeli Digital Humanities Index (IDHI) is a shared gateway to digital humanities research, resources, and expertise across Israel.",
+    "logos": {
+      "idhi": "Israeli Digital Humanities Index",
+      "dariah_il": "DARIAH-IL"
+    },
+    "why": {
+      "title": "Bringing a distributed community together",
+      "body": "Digital humanities projects, publications, datasets, tools, and expertise in Israel are spread across many institutions. This makes valuable work harder to discover, reuse, and build upon. IDHI brings these resources together in one publicly accessible place, strengthening connections within the community and opening its work to researchers and the wider public."
+    },
+    "directory": {
+      "title": "A national directory for digital humanities",
+      "body": "The index documents projects, publications, datasets, digital tools, repositories, research centres, events, educational programmes, people, organisations, and other digital humanities resources. A single searchable platform makes this activity easier to explore and provides a unified entry point to computational tools and digital collections."
+    },
+    "goals": {
+      "title": "Our goals",
+      "items": {
+        "discover": {
+          "title": "Improve discovery",
+          "body": "Make digital humanities work and expertise in Israel visible and accessible through one national index."
+        },
+        "connect": {
+          "title": "Support collaboration",
+          "body": "Help people and institutions find one another, share knowledge, and avoid duplicating existing efforts."
+        },
+        "preserve": {
+          "title": "Sustain research outputs",
+          "body": "Create durable records of projects and resources so they remain discoverable and can support future work."
+        },
+        "represent": {
+          "title": "Strengthen international visibility",
+          "body": "Present Israeli digital humanities as a connected community and link its work with international research infrastructures."
+        }
+      }
+    },
+    "dariah": {
+      "title": "Part of DARIAH-IL",
+      "body": "IDHI is being developed as part of DARIAH-IL (Digital Research Infrastructure for the Arts and Humanities in Israel). The initiative connects local digital humanities activity with international infrastructures, helping the Israeli community participate in a wider network of research, tools, and knowledge."
+    },
     "ai": {
       "title": "Connect to AI",
       "intro": "The Israeli Digital Humanities Index provides a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, look up entries, and - after signing in - create, update, or delete entries, all from within your chat or coding tool.",
@@ -154,6 +199,16 @@
         }
       },
       "nav": "On this page"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy policy",
+      "placeholder": "Our privacy policy is being prepared. This page will be updated with information about how the Israeli Digital Humanities Index collects, uses, and protects personal information."
+    },
+    "terms": {
+      "title": "Terms of use",
+      "placeholder": "Our terms of use are being prepared. This page will be updated with the conditions that apply when accessing and using the Israeli Digital Humanities Index."
     }
   },
   "api": {

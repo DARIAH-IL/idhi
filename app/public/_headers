@@ -3,3 +3,21 @@ https://idhi.pages.dev/*
 
 https://:version.idhi.pages.dev/*
   X-Robots-Tag: noindex
+
+/admin
+  X-Robots-Tag: noindex, nofollow
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+
+/oauth/*
+  X-Robots-Tag: noindex, nofollow
+
+/entities/new
+  X-Robots-Tag: noindex, nofollow
+
+/entities/:entityId/edit
+  X-Robots-Tag: noindex, nofollow
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
