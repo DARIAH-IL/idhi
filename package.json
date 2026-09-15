@@ -7,5 +7,5 @@
     "validate": "pnpm --filter @idhi/app validate && pnpm --filter @idhi/server validate",
     "deploy": "pnpm --filter @idhi/app deploy && pnpm --filter @idhi/server deploy"
   },
-  "packageManager": "pnpm@11.25.0"
+  "packageManager": "pnpm@12.4.1"
 }
