@@ -2,10 +2,8 @@ import { AlphabetHebrewIcon, Tick02Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
-import { StringParam, useQueryParam } from 'use-query-params'
 import { UiLanguage } from '@/api/models'
 import { languageName } from '@/lib/languages'
-import { QUERY_PARAMS } from '@/lib/queryParams'
 import { useUIStore } from '@/stores/ui'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
@@ -14,15 +12,6 @@ export function UiLanguagePicker() {
   const { t } = useTranslation()
   const language = useUIStore((s) => s.language)
   const setLanguage = useUIStore((s) => s.setLanguage)
-  const [, setLanguageQueryParam] = useQueryParam(
-    QUERY_PARAMS.language,
-    StringParam,
-  )
-
-  const selectLanguage = (lang: UiLanguage) => {
-    setLanguage(lang)
-    setLanguageQueryParam(lang, 'replaceIn')
-  }
 
   return (
     <MenuTrigger>
@@ -47,7 +36,7 @@ export function UiLanguagePicker() {
             <MenuItem
               key={lang}
               id={lang}
-              onAction={() => selectLanguage(lang)}
+              onAction={() => setLanguage(lang)}
               className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-xs outline-none data-focused:bg-accent data-focused:text-accent-foreground data-focus-visible:outline-2 data-focus-visible:-outline-offset-2 data-focus-visible:outline-foreground"
             >
               <span>{languageName(lang) ?? lang}</span>

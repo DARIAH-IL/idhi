@@ -61,6 +61,7 @@ function NewEntityPage() {
         void navigate({
           to: '/entities/$entityId',
           params: { entityId: encodeURIComponent(entity.id) },
+          ignoreBlocker: true,
         })
       },
       onError: () => setServerError(t('common.error')),

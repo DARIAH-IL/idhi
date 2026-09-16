@@ -51,7 +51,7 @@ function EditEntityPage() {
       onSuccess: (updatedEntity) => {
         void cacheSavedEntity(queryClient, updatedEntity)
         toast.success(t('entity.notifications.updated'))
-        void navigate({ to: '/entities' })
+        void navigate({ to: '/entities', ignoreBlocker: true })
       },
       onError: () => setServerError(t('common.error')),
     },
