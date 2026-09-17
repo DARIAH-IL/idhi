@@ -1,0 +1,83 @@
+name: Backup database
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Every day at 2:00 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: database-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    name: Back up MongoDB to R2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      R2_BUCKET: idhi-db-backup
+      MONGODB_DATABASE_NAME: idhi
+      MONGODB_TOOLS_VERSION: 100.18.0
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install MongoDB Database Tools
+        run: |
+          tools_package="${RUNNER_TEMP}/mongodb-database-tools.deb"
+          curl --fail --location --silent --show-error \
+            "https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2404-x86_64-${MONGODB_TOOLS_VERSION}.deb" \
+            --output "${tools_package}"
+          sudo dpkg --install "${tools_package}"
+          mongodump --version
+
+      - name: Create compressed database backup
+        id: dump
+        env:
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+        run: |
+          if [[ -z "${MONGODB_CONNECTION_STRING}" ]]; then
+            echo "::error::MONGODB_CONNECTION_STRING repository secret is required"
+            exit 1
+          fi
+
+          umask 077
+          backup_name="idhi-backup-$(date -u +'%Y-%m-%d-%H-%M').archive.gz"
+          backup_path="${RUNNER_TEMP}/${backup_name}"
+
+          mongodump \
+            --uri="${MONGODB_CONNECTION_STRING}" \
+            --db="${MONGODB_DATABASE_NAME}" \
+            --archive="${backup_path}" \
+            --gzip
+
+          backup_size_bytes="$(stat --format='%s' "${backup_path}")"
+          backup_size_human="$(numfmt --to=iec-i --suffix=B "${backup_size_bytes}")"
+          echo "Generated ${backup_name}: ${backup_size_human} (${backup_size_bytes} bytes)"
+
+          echo "name=${backup_name}" >> "${GITHUB_OUTPUT}"
+          echo "path=${backup_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Upload backup to Cloudflare R2
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          pnpm --filter @idhi/server exec wrangler r2 object put \
+            "${R2_BUCKET}/${{ steps.dump.outputs.name }}" \
+            --file "${{ steps.dump.outputs.path }}" \
+            --content-type application/gzip \
+            --remote

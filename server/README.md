@@ -28,6 +28,58 @@ The script drops every collection except `users` and `userInvites`, then invokes
 `reallyliri@gmail.com` that expires 30 days after the import only when the
 database has no users.
 
+## Database backups
+
+Production database backups are compressed MongoDB archives stored in the
+private Cloudflare R2 bucket `idhi-db-backup`. Archive names use UTC and have
+the form `idhi-backup-yyyy-MM-dd-HH-mm.archive.gz`.
+
+The `Backup database` GitHub Actions workflow creates a backup every day at
+02:00 UTC and can be manually riggered.
+
+### Create a backup locally
+
+Install the [MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/installation/).
+
+```sh
+read -rsp 'MongoDB connection string: ' MONGODB_CONNECTION_STRING
+printf '\n'
+
+backup_name="idhi-backup-$(date -u +'%Y-%m-%d-%H-%M').archive.gz"
+mongodump \
+  --uri="${MONGODB_CONNECTION_STRING}" \
+  --db=idhi \
+  --archive="${backup_name}" \
+  --gzip
+unset MONGODB_CONNECTION_STRING
+```
+
+### Restore a backup
+
+Either use a local backup, or fetch one from R2:
+
+```sh
+backup_name="idhi-backup-yyyy-MM-dd-HH-mm.archive.gz"
+pnpm --filter @idhi/server exec wrangler r2 object get \
+  "idhi-db-backup/${backup_name}" \
+  --file "${backup_name}" \
+  --remote
+```
+
+Then:
+
+```sh
+read -rsp 'Target MongoDB connection string: ' TARGET_MONGODB_CONNECTION_STRING
+printf '\n'
+mongorestore \
+  --uri="${TARGET_MONGODB_CONNECTION_STRING}" \
+  --archive="${backup_name}" \
+  --gzip \
+  --nsInclude='idhi.*' \
+  --drop
+unset TARGET_MONGODB_CONNECTION_STRING
+```
+
 ## Testing MCP
 
 The server exposes an MCP endpoint at `/mcp` with entity tools: `get_entity`
