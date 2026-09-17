@@ -177,7 +177,7 @@
         },
         "cursor": {
           "title": "Cursor",
-          "instructions": "יש להוסיף לקובץ {projectPath} בפרויקט. עבור כל הפרויקטים, יש להוסיף במקום זאת אל {globalPath} ב־macOS וב־Linux, או אל {globalPathWindows} ב־Windows:"
+          "instructions": "יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של הפרויקט בנתיב הקובץ {projectPath}. כדי להשתמש בו בכל הפרויקטים, יש להוסיף אותו לקובץ התצורה בנתיב הקובץ {globalPath} ב־macOS וב־Linux. ב־Windows יש להשתמש בקובץ התצורה בנתיב הקובץ {globalPathWindows}:"
         },
         "chatgpt": {
           "title": "ChatGPT",
@@ -185,15 +185,15 @@
         },
         "codex": {
           "title": "Codex CLI",
-          "instructions": "יש להוסיף לקובץ {path} ב־macOS וב־Linux, או אל {pathWindows} ב־Windows:"
+          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Codex בנתיב הקובץ {path}, או ב־Windows להוסיף אותו לקובץ בנתיב הקובץ {pathWindows}:"
         },
         "gemini": {
           "title": "Gemini CLI",
-          "instructions": "יש להוסיף לקובץ {path} ב־macOS וב־Linux, או אל {pathWindows} ב־Windows:"
+          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Gemini בנתיב הקובץ {path}. ב־Windows יש להוסיף אותו לקובץ התצורה של Gemini בנתיב הקובץ {pathWindows}:"
         },
         "vscode": {
           "title": "VS Code (GitHub Copilot)",
-          "instructions": "יש להוסיף לקובץ {path} בסביבת העבודה:"
+          "instructions": "יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה בנתיב {path} בסביבת העבודה:"
         },
         "other": {
           "title": "כלים אחרים",

@@ -171,27 +171,27 @@
         },
         "claude": {
           "title": "Claude (web and desktop)",
-          "instructions": "Go to Settings → Connectors → Add custom connector, name it {name}, and paste the MCP endpoint URL."
+          "instructions": "Go to Settings → Connectors → Add custom connector, name it {name}, and paste the MCP endpoint URL:"
         },
         "cursor": {
           "title": "Cursor",
-          "instructions": "Add to {projectPath} in your project. For all projects, add instead to {globalPath} on macOS and Linux, or {globalPathWindows} on Windows:"
+          "instructions": "Add the following snippet to your project's configuration file at the path {projectPath}. To use it in all projects, add it to the configuration file at the path {globalPath} on macOS and Linux. On Windows, use the configuration file at the path {globalPathWindows}:"
         },
         "chatgpt": {
           "title": "ChatGPT",
-          "instructions": "Enable Developer mode under Settings → Apps & Connectors → Advanced settings, then choose Create and paste the MCP endpoint URL."
+          "instructions": "Enable Developer mode under Settings → Apps & Connectors → Advanced settings, then choose Create and paste the MCP endpoint URL:"
         },
         "codex": {
           "title": "Codex CLI",
-          "instructions": "Add to {path} on macOS and Linux, or {pathWindows} on Windows:"
+          "instructions": "On macOS and Linux, add the following snippet to the Codex configuration file at the path {path}, or on Windows, add it to the file at the path {pathWindows}:"
         },
         "gemini": {
           "title": "Gemini CLI",
-          "instructions": "Add to {path} on macOS and Linux, or {pathWindows} on Windows:"
+          "instructions": "On macOS and Linux, add the following snippet to the Gemini configuration file at the path {path}. On Windows, add it to the Gemini configuration file at the path {pathWindows}:"
         },
         "vscode": {
           "title": "VS Code (GitHub Copilot)",
-          "instructions": "Add to {path} in your workspace:"
+          "instructions": "Add the following snippet to the configuration file at {path} in your workspace:"
         },
         "other": {
           "title": "Other tools",

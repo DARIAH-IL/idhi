@@ -70,7 +70,7 @@ const CLIENTS: {
   values?: Record<string, string>
 }[] = [
   { key: 'claude_code', snippet: CLAUDE_CODE_SNIPPET },
-  { key: 'claude', values: { name: 'IDHI' } },
+  { key: 'claude', snippet: MCP_URL, values: { name: 'IDHI' } },
   {
     key: 'cursor',
     snippet: CURSOR_SNIPPET,
@@ -80,7 +80,7 @@ const CLIENTS: {
       globalPathWindows: '%USERPROFILE%\\.cursor\\mcp.json',
     },
   },
-  { key: 'chatgpt' },
+  { key: 'chatgpt', snippet: MCP_URL },
   {
     key: 'codex',
     snippet: CODEX_SNIPPET,

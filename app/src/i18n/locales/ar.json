@@ -179,7 +179,7 @@
         },
         "cursor": {
           "title": "Cursor",
-          "instructions": "تُضاف الإعدادات إلى الملف {projectPath} في المشروع. ولجميع المشاريع، تُضاف بدلاً من ذلك إلى {globalPath} على macOS وLinux، أو إلى {globalPathWindows} على Windows:"
+          "instructions": "أضف المقتطف التالي إلى ملف إعدادات مشروعك في مسار الملف {projectPath}. ولاستخدامه في جميع المشاريع، أضِفه إلى ملف الإعدادات في مسار الملف {globalPath} على macOS وLinux. على Windows، استخدم ملف الإعدادات في مسار الملف {globalPathWindows}:"
         },
         "chatgpt": {
           "title": "ChatGPT",
@@ -187,15 +187,15 @@
         },
         "codex": {
           "title": "Codex CLI",
-          "instructions": "تُضاف الإعدادات إلى الملف {path} على macOS وLinux، أو إلى {pathWindows} على Windows:"
+          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Codex في مسار الملف {path}، أو على Windows أضِفه إلى الملف في مسار الملف {pathWindows}:"
         },
         "gemini": {
           "title": "Gemini CLI",
-          "instructions": "تُضاف الإعدادات إلى الملف {path} على macOS وLinux، أو إلى {pathWindows} على Windows:"
+          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Gemini في مسار الملف {path}. على Windows، أضِفه إلى ملف إعدادات Gemini في مسار الملف {pathWindows}:"
         },
         "vscode": {
           "title": "VS Code (GitHub Copilot)",
-          "instructions": "تُضاف الإعدادات إلى الملف {path} في مساحة العمل:"
+          "instructions": "أضف المقتطف التالي إلى ملف الإعدادات الموجود في المسار {path} ضمن مساحة العمل:"
         },
         "other": {
           "title": "أدوات أخرى",
