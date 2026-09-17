@@ -146,6 +146,24 @@
       "title": "Part of DARIAH-IL",
       "body": "IDHI is being developed as part of DARIAH-IL (Digital Research Infrastructure for the Arts and Humanities in Israel). The initiative connects local digital humanities activity with international infrastructures, helping the Israeli community participate in a wider network of research, tools, and knowledge."
     },
+    "technical": {
+      "title": "Explore and contribute",
+      "intro": "IDHI is built on open standards and open-source software. Explore the technical foundations of the index, and help improve it by sharing feedback or contributing code.",
+      "resources": {
+        "ontology": {
+          "title": "Ontology and schema",
+          "body": "Read the ontology and full schema documentation that describes the index's data model."
+        },
+        "api": {
+          "title": "OpenAPI specification",
+          "body": "Explore the API specification for integrating with and building on the index."
+        },
+        "code": {
+          "title": "Source code",
+          "body": "Review the index's code and submit a pull request to help improve it."
+        }
+      }
+    },
     "ai": {
       "title": "Connect to AI",
       "intro": "The Israeli Digital Humanities Index provides a Model Context Protocol (MCP) server. Connecting it to your AI assistant lets it search the index, look up entries, and - after signing in - create, update, or delete entries, all from within your chat or coding tool.",

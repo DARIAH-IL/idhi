@@ -1,5 +1,29 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import {
+  ApiIcon,
+  BookOpenTextIcon,
+  OpenSourceIcon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+
+const technicalResources = [
+  {
+    key: 'ontology',
+    href: 'https://dariah-il.github.io/idhi-manifests/',
+    icon: BookOpenTextIcon,
+  },
+  {
+    key: 'api',
+    href: 'https://api.idh-index.org/',
+    icon: ApiIcon,
+  },
+  {
+    key: 'code',
+    href: 'https://github.com/DARIAH-IL/idhi',
+    icon: OpenSourceIcon,
+  },
+] as const
 
 export const Route = createFileRoute('/_app/about/')({
   component: AboutPage,
@@ -81,6 +105,43 @@ function AboutPage() {
         <p className="mt-3 leading-7 text-muted-foreground">
           {t('about.dariah.body')}
         </p>
+      </section>
+
+      <section
+        aria-labelledby="about-technical"
+        className="rounded-2xl border p-6 sm:p-8"
+      >
+        <h2 id="about-technical" className="text-xl font-semibold">
+          {t('about.technical.title')}
+        </h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          {t('about.technical.intro')}
+        </p>
+        <ul className="mt-5 grid gap-4 sm:grid-cols-3">
+          {technicalResources.map(({ key, href, icon }) => (
+            <li key={key} className="rounded-xl border p-5">
+              <h3 className="flex items-center gap-2 font-semibold">
+                <HugeiconsIcon
+                  icon={icon}
+                  strokeWidth={1.8}
+                  className="size-5 shrink-0 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="app-link"
+                >
+                  {t(`about.technical.resources.${key}.title`)}
+                </a>
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {t(`about.technical.resources.${key}.body`)}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   )
