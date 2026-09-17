@@ -590,9 +590,11 @@ components:
 
     SortDirection:
       type: string
+      description: Sort direction. Use `random` to return a random sample after filtering; the criterion property and any other sort criteria are ignored.
       enum:
         - asc
         - desc
+        - random
 
     SortCriterion:
       type: object

@@ -101,6 +101,16 @@
     "primary_navigation": "Primary",
     "page_loaded": "Page loaded"
   },
+  "home": {
+    "title": "Welcome to the Israeli Digital Humanities Index",
+    "subtitle": "Discover the people, projects, organizations, and resources shaping digital humanities in Israel.",
+    "search_label": "Search the index",
+    "entity_types": "Entity types",
+    "all_entity_types": "All entity types",
+    "featured": "Featured entries",
+    "recent": "Recently added",
+    "see_all": "See all"
+  },
   "seo": {
     "description": "Explore people, organizations, projects, datasets, tools, publications, and other resources in Israel's digital humanities community.",
     "about_description": "Learn about the Israeli Digital Humanities Index and its catalogue of people, organizations, projects, and resources.",

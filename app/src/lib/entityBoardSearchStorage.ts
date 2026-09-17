@@ -3,6 +3,11 @@ import { entityBoardSearchSchema } from '#/api/entityBoardSearch.ts'
 import type { EntityBoardSearch } from '#/api/entityBoardSearch.ts'
 
 const STORED_SEARCH_KEY = 'entityBoardSearch'
+const SKIP_RESTORE_KEY = 'entityBoardSkipRestoreOnce'
+
+export function skipEntityBoardSearchRestoreOnce() {
+  sessionStorage.setItem(SKIP_RESTORE_KEY, 'true')
+}
 
 function isEmptySearch(search: EntityBoardSearch) {
   return (
@@ -31,6 +36,12 @@ export function restoreOrPersistEntityBoardSearch({
   cause: 'preload' | 'enter' | 'stay'
 }) {
   if (cause === 'preload') {
+    return
+  }
+  const shouldSkipRestore = sessionStorage.getItem(SKIP_RESTORE_KEY) === 'true'
+  if (shouldSkipRestore) {
+    sessionStorage.removeItem(SKIP_RESTORE_KEY)
+    sessionStorage.setItem(STORED_SEARCH_KEY, JSON.stringify(search))
     return
   }
   if (cause === 'enter' && isEmptySearch(search)) {

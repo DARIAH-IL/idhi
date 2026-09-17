@@ -147,7 +147,11 @@ export const SearchEntitiesBody = zod.object({
           .describe(
             'A dot-separated entity field path. Operators and array indexes are not allowed.',
           ),
-        direction: zod.enum(['asc', 'desc']),
+        direction: zod
+          .enum(['asc', 'desc', 'random'])
+          .describe(
+            'Sort direction. Use `random` to return a random sample after filtering; the criterion property and any other sort criteria are ignored.',
+          ),
       }),
     )
     .min(1)

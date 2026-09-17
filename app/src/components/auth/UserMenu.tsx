@@ -1,7 +1,8 @@
 import { Logout01Icon, UserShield01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useNavigate } from '@tanstack/react-router'
-import { Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components'
+import { Menu, MenuItem, Popover } from 'react-aria-components'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth'
@@ -12,27 +13,41 @@ export function UserMenu() {
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   if (!user) {
     return null
   }
 
   return (
-    <MenuTrigger>
+    <>
       <Button
-        variant="ghost"
+        ref={triggerRef}
+        variant="outline"
         size="icon-xl"
         className="rounded-full"
         aria-label={t('common.user_menu')}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        onPress={() => setIsOpen((open) => !open)}
+        onHoverChange={(isHovering) => {
+          if (isHovering) {
+            setIsOpen(true)
+          }
+        }}
       >
-        <span className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase">
+        <span className="flex size-6 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground uppercase lg:size-7">
           {user.name?.charAt(0) || user.email.charAt(0)}
         </span>
       </Button>
       <Popover
+        triggerRef={triggerRef}
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
         placement="bottom end"
         offset={6}
-        className="z-50 min-w-36 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95"
+        className="z-50 min-w-36 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover p-2 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95"
       >
         <div className="px-2 py-1.5">
           <p className="text-xs text-muted-foreground">
@@ -46,7 +61,11 @@ export function UserMenu() {
           </p>
         </div>
         <div className="my-1 h-px bg-border" />
-        <Menu aria-label={t('common.user_actions')} className="outline-none">
+        <Menu
+          aria-label={t('common.user_actions')}
+          autoFocus={false}
+          className="outline-none"
+        >
           {user.isAdmin && (
             <MenuItem
               id="admin"
@@ -78,6 +97,6 @@ export function UserMenu() {
           </MenuItem>
         </Menu>
       </Popover>
-    </MenuTrigger>
+    </>
   )
 }

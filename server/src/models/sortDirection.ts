@@ -5,9 +5,13 @@
  * OpenAPI spec version: 1.0.0
  */
 
+/**
+ * Sort direction. Use `random` to return a random sample after filtering; the criterion property and any other sort criteria are ignored.
+ */
 export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection]
 
 export const SortDirection = {
   asc: 'asc',
   desc: 'desc',
+  random: 'random',
 } as const

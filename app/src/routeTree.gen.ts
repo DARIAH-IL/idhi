@@ -9,8 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppAdminRouteImport } from './routes/_app/admin'
 import { Route as AppPrivacyPolicyRouteImport } from './routes/_app/privacy-policy'
 import { Route as AppTermsOfUseRouteImport } from './routes/_app/terms-of-use'
@@ -22,14 +22,14 @@ import { Route as AppEntitiesNewRouteImport } from './routes/_app/entities/new'
 import { Route as AppEntitiesEntityIdIndexRouteImport } from './routes/_app/entities/$entityId/index'
 import { Route as AppEntitiesEntityIdEditRouteImport } from './routes/_app/entities/$entityId/edit'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppAdminRoute = AppAdminRouteImport.update({
   id: '/admin',
@@ -84,7 +84,7 @@ const AppEntitiesEntityIdEditRoute = AppEntitiesEntityIdEditRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AppIndexRoute
   '/admin': typeof AppAdminRoute
   '/privacy-policy': typeof AppPrivacyPolicyRoute
   '/terms-of-use': typeof AppTermsOfUseRoute
@@ -97,11 +97,11 @@ export interface FileRoutesByFullPath {
   '/entities/$entityId/': typeof AppEntitiesEntityIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/admin': typeof AppAdminRoute
   '/privacy-policy': typeof AppPrivacyPolicyRoute
   '/terms-of-use': typeof AppTermsOfUseRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
+  '/': typeof AppIndexRoute
   '/about/ai': typeof AppAboutAiRoute
   '/entities/new': typeof AppEntitiesNewRoute
   '/about': typeof AppAboutIndexRoute
@@ -111,12 +111,12 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_app/admin': typeof AppAdminRoute
   '/_app/privacy-policy': typeof AppPrivacyPolicyRoute
   '/_app/terms-of-use': typeof AppTermsOfUseRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
+  '/_app/': typeof AppIndexRoute
   '/_app/about/ai': typeof AppAboutAiRoute
   '/_app/entities/new': typeof AppEntitiesNewRoute
   '/_app/about/': typeof AppAboutIndexRoute
@@ -140,11 +140,11 @@ export interface FileRouteTypes {
     | '/entities/$entityId/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/admin'
     | '/privacy-policy'
     | '/terms-of-use'
     | '/oauth/authorize'
+    | '/'
     | '/about/ai'
     | '/entities/new'
     | '/about'
@@ -153,12 +153,12 @@ export interface FileRouteTypes {
     | '/entities/$entityId'
   id:
     | '__root__'
-    | '/'
     | '/_app'
     | '/_app/admin'
     | '/_app/privacy-policy'
     | '/_app/terms-of-use'
     | '/oauth/authorize'
+    | '/_app/'
     | '/_app/about/ai'
     | '/_app/entities/new'
     | '/_app/about/'
@@ -168,26 +168,25 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   OauthAuthorizeRoute: typeof OauthAuthorizeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_app': {
       id: '/_app'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/admin': {
       id: '/_app/admin'
@@ -266,6 +265,7 @@ interface AppRouteChildren {
   AppAdminRoute: typeof AppAdminRoute
   AppPrivacyPolicyRoute: typeof AppPrivacyPolicyRoute
   AppTermsOfUseRoute: typeof AppTermsOfUseRoute
+  AppIndexRoute: typeof AppIndexRoute
   AppAboutAiRoute: typeof AppAboutAiRoute
   AppEntitiesNewRoute: typeof AppEntitiesNewRoute
   AppAboutIndexRoute: typeof AppAboutIndexRoute
@@ -278,6 +278,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminRoute: AppAdminRoute,
   AppPrivacyPolicyRoute: AppPrivacyPolicyRoute,
   AppTermsOfUseRoute: AppTermsOfUseRoute,
+  AppIndexRoute: AppIndexRoute,
   AppAboutAiRoute: AppAboutAiRoute,
   AppEntitiesNewRoute: AppEntitiesNewRoute,
   AppAboutIndexRoute: AppAboutIndexRoute,
@@ -289,7 +290,6 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   OauthAuthorizeRoute: OauthAuthorizeRoute,
 }

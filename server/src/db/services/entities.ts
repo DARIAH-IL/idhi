@@ -249,11 +249,16 @@ export async function createEntityDatabaseService(
         pipeline.push({ $match: combinedMatch })
       }
 
-      const documentStages: PipelineStage.FacetPipelineStage[] = [
-        { $sort: toMongoEntitySort(sort, Boolean(normalizedQuery)) },
-        { $skip: page * pageSize },
-        { $limit: pageSize },
-      ]
+      const isRandomSort = sort?.some(
+        (criterion) => criterion.direction === 'random',
+      )
+      const documentStages: PipelineStage.FacetPipelineStage[] = isRandomSort
+        ? [{ $sample: { size: pageSize } }]
+        : [
+            { $sort: toMongoEntitySort(sort, Boolean(normalizedQuery)) },
+            { $skip: page * pageSize },
+            { $limit: pageSize },
+          ]
       if (normalizedQuery) {
         documentStages.push({ $unset: SEARCH_SCORE_FIELD })
       }

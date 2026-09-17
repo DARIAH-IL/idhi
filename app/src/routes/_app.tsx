@@ -9,6 +9,7 @@ import { TooltipTrigger } from 'react-aria-components'
 import {
   InformationCircleIcon,
   ChatBotIcon,
+  Search01Icon,
   UserIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -63,12 +64,26 @@ function AppLayout() {
         {t('common.skip_to_content')}
       </a>
       <header className="flex min-h-14 items-center justify-between gap-4 border-b px-6 py-2">
-        <Link to="/entities" className="flex items-center gap-3">
-          <img src="/logo.png" alt="" className="h-7 w-auto" />
-          <span className="text-sm font-semibold sm:text-base">
-            {t('common.site_name')}
-          </span>
-        </Link>
+        <div className="flex min-w-0 items-center gap-2">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <img src="/logo.png" alt="" className="h-7 w-auto" />
+            <span className="truncate text-sm font-semibold sm:text-base">
+              {t('common.site_name')}
+            </span>
+          </Link>
+          <TooltipTrigger delay={0}>
+            <Button
+              variant="outline"
+              size="icon-xl"
+              className="shrink-0 rounded-full"
+              aria-label={t('board.title')}
+              onPress={() => void navigate({ to: '/entities' })}
+            >
+              <HugeiconsIcon icon={Search01Icon} strokeWidth={1.8} />
+            </Button>
+            <Tooltip>{t('board.title')}</Tooltip>
+          </TooltipTrigger>
+        </div>
         <nav
           aria-label={t('common.primary_navigation')}
           className="flex items-center gap-2"

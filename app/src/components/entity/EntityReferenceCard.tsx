@@ -16,14 +16,17 @@ import { EntityNameIdentifiers } from './EntityNameIdentifiers'
 import { EntityImage } from './EntityImage'
 import { DraftBadge } from './DraftBadge'
 import { useEntityReferences } from './EntityReferencesProvider'
+import { cn } from '@/lib/utils'
 import type { AuditedEntity } from '#/api/models/auditedEntity.ts'
 
 export function EntityReferenceCard({
   entityId,
   entity: providedEntity,
+  className,
 }: {
   entityId: string
   entity?: AuditedEntity
+  className?: string
 }) {
   const { t } = useTranslation()
   const references = useEntityReferences()
@@ -77,7 +80,7 @@ export function EntityReferenceCard({
         <Card
           role="button"
           size="sm"
-          className="bg-muted/20 hover:bg-accent-foreground/10"
+          className={cn('bg-muted/20 hover:bg-accent-foreground/10', className)}
         >
           <CardContent className="p-2.5">
             <div className="flex items-center gap-3">
