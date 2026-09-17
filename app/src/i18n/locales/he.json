@@ -151,11 +151,11 @@
     "ai": {
       "title": "חיבור ל־AI",
       "intro": "האינדקס הישראלי למדעי הרוח הדיגיטליים מפעיל שרת Model Context Protocol‏ (MCP). חיבורו לכלי ה־AI שלך מאפשר לו לחפש באינדקס, לעיין ברשומות, ולאחר התחברות גם ליצור, לעדכן או למחוק רשומות - הכול מתוך כלי הצ'אט או כלי הפיתוח שלך.",
-      "endpoint": "כתובת ה־MCP",
+      "endpoint": "כתובת שרת ה־MCP",
       "capabilities": {
         "title": "יכולות (Tools)",
-        "public": "זמין לכולם, ללא צורך בכניסה:",
-        "authenticated": "זמין לאחר כניסה:",
+        "public": "זמינות לכולם, ללא צורך בכניסה:",
+        "authenticated": "זמינות לאחר כניסה:",
         "tools": {
           "search_entities": "חיפוש באינדקס עם שאילתות טקסט חופשי, מסננים, פילוח, מיון ועימוד",
           "get_entity": "אחזור רשומה בודדת לפי המזהה שלה",
@@ -163,7 +163,7 @@
           "update_entity": "החלפת רשומה קיימת",
           "delete_entity": "מחיקת רשומה"
         },
-        "auth_note": "התחברות נעשית באמצעות תהליך ה-OAuth הסטנדרטי של MCP: בפעם הראשונה שהכלי שלך קורא לכלי שדורש הרשאות התחברות, נפתח בדפדפן דף הכניסה של האינדקס, והתהליך ממשיך אוטומטית לאחר התחברותך."
+        "auth_note": "התחברות נעשית באמצעות תהליך ה-OAuth הסטנדרטי של MCP: בפעם הראשונה שהסוכן שלך קורא לכלי שדורש הרשאות התחברות, נפתח בדפדפן דף ההתחברות של האינדקס, והתהליך ממשיך אוטומטית לאחר התחברותך."
       },
       "clients": {
         "title": "חיבור כלים נפוצים",
@@ -173,23 +173,23 @@
         },
         "claude": {
           "title": "Claude (דפדפן ושולחן עבודה)",
-          "instructions": "יש לגשת אל Settings → Connectors → Add custom connector, לתת את השם {name} ולהדביק את כתובת ה־MCP."
+          "instructions": "יש לגשת אל Settings → Connectors → Add custom connector, לתת את השם {name} ולהדביק את כתובת ה־MCP:"
         },
         "cursor": {
           "title": "Cursor",
-          "instructions": "יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של הפרויקט בנתיב הקובץ {projectPath}. כדי להשתמש בו בכל הפרויקטים, יש להוסיף אותו לקובץ התצורה בנתיב הקובץ {globalPath} ב־macOS וב־Linux. ב־Windows יש להשתמש בקובץ התצורה בנתיב הקובץ {globalPathWindows}:"
+          "instructions": "יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של הפרויקט בנתיב {projectPath}. כדי להשתמש בו בכל הפרויקטים, יש להוסיף אותו לקובץ התצורה בנתיב {globalPath} ב־macOS וב־Linux. ב־Windows יש להשתמש בקובץ התצורה בנתיב {globalPathWindows}:"
         },
         "chatgpt": {
           "title": "ChatGPT",
-          "instructions": "יש להפעיל Developer mode תחת Settings → Apps & Connectors → Advanced settings, לבחור Create ולהדביק את כתובת ה־MCP."
+          "instructions": "יש להפעיל Developer mode תחת Settings → Apps & Connectors → Advanced settings, לבחור Create ולהדביק את כתובת ה־MCP:"
         },
         "codex": {
           "title": "Codex CLI",
-          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Codex בנתיב הקובץ {path}, או ב־Windows להוסיף אותו לקובץ בנתיב הקובץ {pathWindows}:"
+          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Codex בנתיב {path}, או ב־Windows להוסיף אותו לקובץ בנתיב {pathWindows}:"
         },
         "gemini": {
           "title": "Gemini CLI",
-          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Gemini בנתיב הקובץ {path}. ב־Windows יש להוסיף אותו לקובץ התצורה של Gemini בנתיב הקובץ {pathWindows}:"
+          "instructions": "ב־macOS וב־Linux יש להוסיף את קטע ההגדרות שלהלן לקובץ התצורה של Gemini בנתיב {path}. ב־Windows יש להוסיף אותו לקובץ התצורה של Gemini בנתיב {pathWindows}:"
         },
         "vscode": {
           "title": "VS Code (GitHub Copilot)",

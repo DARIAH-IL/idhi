@@ -153,11 +153,11 @@
     "ai": {
       "title": "الربط بالذكاء الاصطناعي (AI)",
       "intro": "يوفّر الفهرس الإسرائيلي للعلوم الإنسانية الرقمية خادم Model Context Protocol‏ (MCP). ربطه بمساعد الذكاء الاصطناعي الخاص بك يتيح له البحث في الفهرس والاطلاع على السجلات، وبعد تسجيل الدخول أيضًا إنشاء سجلات أو تحديثها أو حذفها - كل ذلك من داخل أداة الدردشة أو أداة البرمجة الخاصة بك.",
-      "endpoint": "عنوان MCP",
+      "endpoint": "عنوان خادم MCP",
       "capabilities": {
         "title": "الإمكانات (Tools)",
-        "public": "متاح للجميع، دون الحاجة إلى تسجيل الدخول:",
-        "authenticated": "متاح بعد تسجيل الدخول:",
+        "public": "متاحة للجميع، دون الحاجة إلى تسجيل الدخول:",
+        "authenticated": "متاحة بعد تسجيل الدخول:",
         "tools": {
           "search_entities": "البحث في الفهرس باستعلامات نصية حرة، مع مرشّحات وتصنيفات وفرز وترقيم صفحات",
           "get_entity": "جلب سجل واحد حسب معرّفه",
@@ -165,7 +165,7 @@
           "update_entity": "استبدال سجل قائم",
           "delete_entity": "حذف سجل"
         },
-        "auth_note": "تتم المصادقة عبر تدفق OAuth القياسي في MCP: في المرة الأولى التي تستدعي فيها أداتك أداة تتطلب صلاحيات كتابة، تُفتح صفحة تسجيل الدخول إلى الفهرس في المتصفح، وتستمر العملية تلقائيًا بعد الموافقة."
+        "auth_note": "تتم المصادقة عبر تدفق OAuth القياسي في MCP: في المرة الأولى التي يستدعي فيها وكيلك أداة تتطلب صلاحيات تسجيل الدخول، تُفتح صفحة المصادقة الخاصة بالفهرس في المتصفح، وتستمر العملية تلقائيًا بعد تسجيل الدخول."
       },
       "clients": {
         "title": "ربط الأدوات الشائعة",
@@ -175,23 +175,23 @@
         },
         "claude": {
           "title": "Claude (الويب وسطح المكتب)",
-          "instructions": "الانتقال إلى Settings → Connectors → Add custom connector، وتسميته {name}، ولصق عنوان MCP."
+          "instructions": "الانتقال إلى Settings → Connectors → Add custom connector، وتسميته {name}، ولصق عنوان MCP:"
         },
         "cursor": {
           "title": "Cursor",
-          "instructions": "أضف المقتطف التالي إلى ملف إعدادات مشروعك في مسار الملف {projectPath}. ولاستخدامه في جميع المشاريع، أضِفه إلى ملف الإعدادات في مسار الملف {globalPath} على macOS وLinux. على Windows، استخدم ملف الإعدادات في مسار الملف {globalPathWindows}:"
+          "instructions": "أضف المقتطف التالي إلى ملف إعدادات مشروعك في المسار {projectPath}. ولاستخدامه في جميع المشاريع، أضِفه إلى ملف الإعدادات في المسار {globalPath} على macOS وLinux. على Windows، استخدم ملف الإعدادات في المسار {globalPathWindows}:"
         },
         "chatgpt": {
           "title": "ChatGPT",
-          "instructions": "تفعيل Developer mode ضمن Settings → Apps & Connectors → Advanced settings، ثم اختيار Create ولصق عنوان MCP."
+          "instructions": "تفعيل Developer mode ضمن Settings → Apps & Connectors → Advanced settings، ثم اختيار Create ولصق عنوان MCP:"
         },
         "codex": {
           "title": "Codex CLI",
-          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Codex في مسار الملف {path}، أو على Windows أضِفه إلى الملف في مسار الملف {pathWindows}:"
+          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Codex في المسار {path}، أو على Windows أضِفه إلى الملف في المسار {pathWindows}:"
         },
         "gemini": {
           "title": "Gemini CLI",
-          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Gemini في مسار الملف {path}. على Windows، أضِفه إلى ملف إعدادات Gemini في مسار الملف {pathWindows}:"
+          "instructions": "على macOS وLinux، أضف المقتطف التالي إلى ملف إعدادات Gemini في المسار {path}. على Windows، أضِفه إلى ملف إعدادات Gemini في المسار {pathWindows}:"
         },
         "vscode": {
           "title": "VS Code (GitHub Copilot)",
