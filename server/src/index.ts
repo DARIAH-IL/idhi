@@ -16,6 +16,7 @@ import {
 } from './middleware/error'
 import generatedRoutes from './routes'
 import mcpApp from './mcp/app'
+import swaggerApp from './swagger'
 import { requestLoggerMiddleware } from './middleware/logger'
 import type { Bindings } from './bindings'
 import { requiredValue, splitValues } from './utils/values'
@@ -64,7 +65,10 @@ app.use('*', async (c, next) => {
 
 app.use('*', logger())
 
+app.get('/', (c) => c.redirect('/swagger', 302))
+
 app.route('/', mcpApp)
+app.route('/', swaggerApp)
 
 app.use('*', errorResponseMiddleware)
 app.use('*', databaseMiddleware)

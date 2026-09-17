@@ -5,6 +5,7 @@ info:
   version: 1.0.0
 
 security:
+  - oauth2: [ ]
   - bearerAuth: [ ]
 
 tags:
@@ -497,6 +498,17 @@ paths:
 
 components:
   securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authorization code flow with PKCE. This is a public client:
+        no client secret is required, so leave the Client Secret field blank.
+        Access tokens are bearer JWTs.
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          tokenUrl: /oauth/token
+          scopes: { }
     bearerAuth:
       type: http
       scheme: bearer

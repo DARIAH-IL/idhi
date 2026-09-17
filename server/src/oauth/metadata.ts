@@ -7,9 +7,14 @@ export const MCP_PATH = '/mcp'
 export const OAUTH_AUTHORIZE_PATH = '/oauth/authorize'
 export const OAUTH_TOKEN_PATH = '/oauth/token'
 export const OAUTH_REGISTER_PATH = '/oauth/register'
+export const SWAGGER_CLIENT_ID = 'idhi-swagger-ui'
 
 export function serverOrigin(requestUrl: string): string {
   return new URL(requestUrl).origin
+}
+
+export function swaggerRedirectUri(origin: string): string {
+  return `${origin}/swagger/oauth2-redirect.html`
 }
 
 export function authMetadataOptions(origin: string): AuthMetadataOptions {

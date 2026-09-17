@@ -4,7 +4,13 @@ import type { Bindings } from '../bindings'
 import { createJwtForUser, jwtExpirationSeconds } from '../utils/jwt'
 import { requiredValue } from '../utils/values'
 import { randomUrlSafeToken, verifyPkceS256 } from '../utils/crypto'
-import { isAllowedRedirectUri, OAUTH_AUTHORIZE_PATH } from './metadata'
+import {
+  isAllowedRedirectUri,
+  OAUTH_AUTHORIZE_PATH,
+  serverOrigin,
+  SWAGGER_CLIENT_ID,
+  swaggerRedirectUri,
+} from './metadata'
 import { AuthorizeRequest, RegisterRequest, TokenRequest } from './oauth.zod'
 
 const factory = createFactory<{ Bindings: Bindings }>()
@@ -90,6 +96,16 @@ export const authorizeRedirectHandlers = factory.createHandlers((c) => {
 
   if (validated instanceof Response) {
     return validated
+  }
+
+  if (
+    validated.client_id === SWAGGER_CLIENT_ID &&
+    validated.redirect_uri !== swaggerRedirectUri(serverOrigin(c.req.url))
+  ) {
+    return oauthError(
+      'invalid_request',
+      'Swagger UI must use its registered redirect URI',
+    )
   }
 
   const frontendUrl = new URL(requiredValue(c.env, 'FRONTEND_URL'))
