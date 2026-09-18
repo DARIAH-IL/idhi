@@ -49,12 +49,14 @@ function HomePage() {
   const featuredQuery = useQuery(
     getSearchEntitiesTypedQueryOptions({
       pageSize: FEATURED_PAGE_SIZE,
+      filter: { field: 'isDraft', op: 'ne', value: true },
       sort: [{ property: 'id', direction: 'random' }],
     }),
   )
   const recentQuery = useQuery(
     getSearchEntitiesTypedQueryOptions({
       pageSize: RECENT_PAGE_SIZE,
+      filter: { field: 'isDraft', op: 'ne', value: true },
       sort: [{ property: 'audit.createdAt', direction: 'desc' }],
     }),
   )
