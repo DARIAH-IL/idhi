@@ -15,7 +15,7 @@ import type { UserWrite } from '../../models/userWrite'
 import { isDuplicateKeyError } from '../../utils/mongo'
 import { normalizeEmail } from '../../db/services/users'
 import { zValidator } from '../api.validator.ts'
-import {
+import type {
   ListUsersContext,
   CreateUserContext,
   GetUserByIdContext,

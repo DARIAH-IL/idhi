@@ -320,7 +320,7 @@ export const SearchEntitiesResponse = zod.object({
                       ])
                       .optional()
                       .describe(
-                        "A person's position within an organization (job\/status).",
+                        "A person's position within an organization (job/status).",
                       ),
                     end_date: zod.iso
                       .date()
@@ -876,7 +876,7 @@ export const SearchEntitiesResponse = zod.object({
               ),
           })
           .describe(
-            'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+            'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
           ),
         zod
           .object({
@@ -1435,7 +1435,7 @@ export const SearchEntitiesResponse = zod.object({
               )
               .nullish()
               .describe(
-                "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+                "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
               ),
             studied_places: zod
               .array(
@@ -1494,7 +1494,7 @@ export const SearchEntitiesResponse = zod.object({
               ),
           })
           .describe(
-            'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+            'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
           ),
         zod
           .object({
@@ -3012,7 +3012,7 @@ export const SearchEntitiesResponse = zod.object({
               .array(zod.string())
               .nullish()
               .describe(
-                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
               ),
             name: zod
               .array(
@@ -3480,7 +3480,7 @@ export const SearchEntitiesResponse = zod.object({
               .string()
               .nullish()
               .describe(
-                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+                'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
               ),
             name: zod
               .array(
@@ -3818,7 +3818,7 @@ export const CreateEntityBody = zod.union([
                 ])
                 .optional()
                 .describe(
-                  "A person's position within an organization (job\/status).",
+                  "A person's position within an organization (job/status).",
                 ),
               end_date: zod.iso
                 .date()
@@ -4337,7 +4337,7 @@ export const CreateEntityBody = zod.union([
         ),
     })
     .describe(
-      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
     ),
   zod
     .object({
@@ -4883,7 +4883,7 @@ export const CreateEntityBody = zod.union([
         )
         .nullish()
         .describe(
-          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
         ),
       studied_places: zod
         .array(
@@ -4940,7 +4940,7 @@ export const CreateEntityBody = zod.union([
         ),
     })
     .describe(
-      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
     ),
   zod
     .object({
@@ -6401,7 +6401,7 @@ export const CreateEntityBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
@@ -6852,7 +6852,7 @@ export const CreateEntityBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
@@ -7156,7 +7156,7 @@ export const CreateEntityResponse = zod
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job\/status).",
+                    "A person's position within an organization (job/status).",
                   ),
                 end_date: zod.iso
                   .date()
@@ -7696,7 +7696,7 @@ export const CreateEntityResponse = zod
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .object({
@@ -8251,7 +8251,7 @@ export const CreateEntityResponse = zod
           )
           .nullish()
           .describe(
-            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
           ),
         studied_places: zod
           .array(
@@ -8310,7 +8310,7 @@ export const CreateEntityResponse = zod
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
       ),
     zod
       .object({
@@ -9812,7 +9812,7 @@ export const CreateEntityResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
@@ -10274,7 +10274,7 @@ export const CreateEntityResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
@@ -10609,7 +10609,7 @@ export const GetEntityByIdResponse = zod
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job\/status).",
+                    "A person's position within an organization (job/status).",
                   ),
                 end_date: zod.iso
                   .date()
@@ -11153,7 +11153,7 @@ export const GetEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .object({
@@ -11708,7 +11708,7 @@ export const GetEntityByIdResponse = zod
           )
           .nullish()
           .describe(
-            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
           ),
         studied_places: zod
           .array(
@@ -11767,7 +11767,7 @@ export const GetEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
       ),
     zod
       .object({
@@ -13271,7 +13271,7 @@ export const GetEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
@@ -13733,7 +13733,7 @@ export const GetEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
@@ -14090,7 +14090,7 @@ export const UpdateEntityByIdBody = zod.union([
                 ])
                 .optional()
                 .describe(
-                  "A person's position within an organization (job\/status).",
+                  "A person's position within an organization (job/status).",
                 ),
               end_date: zod.iso
                 .date()
@@ -14642,7 +14642,7 @@ export const UpdateEntityByIdBody = zod.union([
         ),
     })
     .describe(
-      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
     ),
   zod
     .object({
@@ -15199,7 +15199,7 @@ export const UpdateEntityByIdBody = zod.union([
         )
         .nullish()
         .describe(
-          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
         ),
       studied_places: zod
         .array(
@@ -15256,7 +15256,7 @@ export const UpdateEntityByIdBody = zod.union([
         ),
     })
     .describe(
-      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
     ),
   zod
     .object({
@@ -16774,7 +16774,7 @@ export const UpdateEntityByIdBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
@@ -17238,7 +17238,7 @@ export const UpdateEntityByIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
         ),
       name: zod
         .array(
@@ -17535,7 +17535,7 @@ export const UpdateEntityByIdResponse = zod
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job\/status).",
+                    "A person's position within an organization (job/status).",
                   ),
                 end_date: zod.iso
                   .date()
@@ -18087,7 +18087,7 @@ export const UpdateEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services\/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+        'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
       ),
     zod
       .object({
@@ -18642,7 +18642,7 @@ export const UpdateEntityByIdResponse = zod
           )
           .nullish()
           .describe(
-            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date\/end_date.",
+            "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
           ),
         studied_places: zod
           .array(
@@ -18701,7 +18701,7 @@ export const UpdateEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods\/places all hang off it.',
+        'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
       ),
     zod
       .object({
@@ -20207,7 +20207,7 @@ export const UpdateEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(
@@ -20671,7 +20671,7 @@ export const UpdateEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text\/html, application\/pdf, application\/vnd.apache.parquet or video\/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+            'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
           ),
         name: zod
           .array(

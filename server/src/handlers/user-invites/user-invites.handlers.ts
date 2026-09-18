@@ -21,7 +21,7 @@ import {
 import { sendInviteEmail } from '../../utils/email'
 import { requiredValue } from '../../utils/values'
 import { zValidator } from '../api.validator.ts'
-import {
+import type {
   InviteUserContext,
   ListUserInvitesContext,
   RevokeUserInviteByIdContext,

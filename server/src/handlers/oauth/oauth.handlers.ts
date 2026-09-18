@@ -8,7 +8,7 @@ import { createFactory } from 'hono/factory'
 import { assertAuthenticatedUser } from '../../middleware/auth'
 import { issueAuthorizationCode } from '../../oauth/codes'
 import { zValidator } from '../api.validator.ts'
-import { CompleteOauthAuthorizationContext } from './oauth.context.ts'
+import type { CompleteOauthAuthorizationContext } from './oauth.context.ts'
 import {
   CompleteOauthAuthorizationBody,
   CompleteOauthAuthorizationResponse,

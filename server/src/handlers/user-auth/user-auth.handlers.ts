@@ -43,7 +43,7 @@ import {
 } from '../../utils/authRateLimit'
 import { requiredValue, splitValues } from '../../utils/values'
 import { zValidator } from '../api.validator.ts'
-import {
+import type {
   StartOtpChallengeContext,
   CompleteOtpChallengeContext,
   StartPasskeyRegistrationContext,

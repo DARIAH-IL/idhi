@@ -17,7 +17,7 @@ import {
 } from '../../utils/entityOps'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
 import { zValidator } from '../api.validator.ts'
-import {
+import type {
   SearchEntitiesContext,
   CreateEntityContext,
   GetEntityByIdContext,

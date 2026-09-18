@@ -71,7 +71,7 @@ export const StartPasskeyRegistrationResponse = zod
       options: zod
         .record(zod.string(), zod.unknown())
         .describe(
-          'Matches @simplewebauthn\/PublicKeyCredentialCreationOptionsJSON.',
+          'Matches @simplewebauthn/PublicKeyCredentialCreationOptionsJSON.',
         ),
     }),
   )
@@ -82,7 +82,7 @@ export const CompletePasskeyRegistrationParams = zod.object({
 
 export const CompletePasskeyRegistrationBody = zod
   .record(zod.string(), zod.unknown())
-  .describe('Matches @simplewebauthn\/RegistrationResponseJSON.')
+  .describe('Matches @simplewebauthn/RegistrationResponseJSON.')
 
 export const CompletePasskeyRegistrationResponse = zod.void()
 
@@ -102,7 +102,7 @@ export const StartPasskeyAuthenticationResponse = zod
       options: zod
         .record(zod.string(), zod.unknown())
         .describe(
-          'Matches @simplewebauthn\/PublicKeyCredentialRequestOptionsJSON.',
+          'Matches @simplewebauthn/PublicKeyCredentialRequestOptionsJSON.',
         ),
     }),
   )
@@ -113,7 +113,7 @@ export const CompletePasskeyAuthenticationParams = zod.object({
 
 export const CompletePasskeyAuthenticationBody = zod
   .record(zod.string(), zod.unknown())
-  .describe('Matches @simplewebauthn\/AuthenticationResponseJSON.')
+  .describe('Matches @simplewebauthn/AuthenticationResponseJSON.')
 
 export const CompletePasskeyAuthenticationResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
