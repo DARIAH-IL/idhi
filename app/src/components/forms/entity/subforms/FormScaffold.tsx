@@ -60,6 +60,7 @@ export function FormScaffold({
   return (
     <form
       ref={formRef}
+      noValidate
       onSubmit={(event) => {
         event.preventDefault()
         onSubmit(false)
