@@ -47,11 +47,22 @@ function HomePage() {
   const [query, setQuery] = useState('')
   const [entityTypes, setEntityTypes] = useState<EntityType[]>([])
   const featuredQuery = useQuery(
-    getSearchEntitiesTypedQueryOptions({
-      pageSize: FEATURED_PAGE_SIZE,
-      filter: { field: 'isDraft', op: 'ne', value: true },
-      sort: [{ property: 'id', direction: 'random' }],
-    }),
+    getSearchEntitiesTypedQueryOptions(
+      {
+        pageSize: FEATURED_PAGE_SIZE,
+        filter: { field: 'isDraft', op: 'ne', value: true },
+        sort: [{ property: 'id', direction: 'random' }],
+      },
+      {
+        query: {
+          staleTime: Infinity,
+          gcTime: Infinity,
+          refetchOnMount: false,
+          refetchOnWindowFocus: false,
+          refetchOnReconnect: false,
+        },
+      },
+    ),
   )
   const recentQuery = useQuery(
     getSearchEntitiesTypedQueryOptions({
