@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { EntityTypeIcon } from './EntityTypeIcon'
 import { cn } from '@/lib/utils'
 
@@ -71,7 +71,10 @@ export function EntityImage({
   className?: string
 }) {
   const dimensions = SIZES[size]
-  const source = image ? imageSource(image) : undefined
+  const source = useMemo(
+    () => (image ? imageSource(image) : undefined),
+    [image],
+  )
   const [failedSource, setFailedSource] = useState<string | null>(null)
 
   if (!source || failedSource === source) {
@@ -88,6 +91,8 @@ export function EntityImage({
     <img
       src={source}
       alt={alt}
+      loading="lazy"
+      decoding="async"
       onError={() => setFailedSource(source)}
       className={cn(
         'shrink-0 bg-muted object-contain border-accent-foreground/20 border-1',

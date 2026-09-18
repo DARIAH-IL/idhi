@@ -1,13 +1,14 @@
 import { Checkbox } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Tick02Icon } from '@hugeicons/core-free-icons'
-import { EntityTypeIcon } from '#/components/entity/EntityTypeIcon.tsx'
+import { EntityImage } from '#/components/entity/EntityImage.tsx'
 import type { ENTITY_TYPES } from '#/lib/entity.ts'
 
 interface FacetCheckboxProps {
   label: string
   accessibleLabel: string
   entityType?: (typeof ENTITY_TYPES)[number]
+  image?: string | null
   count: number
   isSelected?: boolean
   onChange: (isSelected: boolean) => void
@@ -17,6 +18,7 @@ export function FacetCheckbox({
   label,
   accessibleLabel,
   entityType,
+  image,
   count,
   isSelected,
   onChange,
@@ -47,8 +49,10 @@ export function FacetCheckbox({
             )}
           </span>
           {entityType && (
-            <EntityTypeIcon
+            <EntityImage
+              image={image}
               type={entityType}
+              alt=""
               size="sm"
               className="size-5 shrink-0 bg-transparent"
             />

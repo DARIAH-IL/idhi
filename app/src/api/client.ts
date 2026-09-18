@@ -11,8 +11,31 @@ const client = axios.create({
 
 const AUTH_FLOW_URL_PREFIX = '/api/v1/auth/'
 
+const ERROR_LOG_WINDOW_MS = 5000
+const ERROR_LOG_MAX_KEYS = 100
+const lastLoggedErrors = new Map<string, number>()
+
 function isAuthFlowRequest(url: string | undefined): boolean {
   return !!url && url.startsWith(AUTH_FLOW_URL_PREFIX)
+}
+
+function shouldLogError(errorKey: string): boolean {
+  const now = Date.now()
+  const lastLoggedAt = lastLoggedErrors.get(errorKey)
+  if (lastLoggedAt !== undefined && now - lastLoggedAt < ERROR_LOG_WINDOW_MS) {
+    return false
+  }
+
+  if (lastLoggedErrors.size >= ERROR_LOG_MAX_KEYS) {
+    for (const [staleKey, loggedAt] of lastLoggedErrors) {
+      if (now - loggedAt >= ERROR_LOG_WINDOW_MS) {
+        lastLoggedErrors.delete(staleKey)
+      }
+    }
+  }
+
+  lastLoggedErrors.set(errorKey, now)
+  return true
 }
 
 client.interceptors.request.use((config) => {
@@ -31,25 +54,26 @@ client.interceptors.response.use(
     }
 
     const apiError = getApiErrorResponse(err)
+    const errorKey = `api-error:${err.config?.method}:${err.config?.url}:${apiError?.errorCode ?? err.code}`
 
     // API failures are intentionally surfaced in developer tools as well as UI.
-    // eslint-disable-next-line no-console
-    console.error(
-      'API request failed',
-      {
-        method: err.config?.method?.toUpperCase(),
-        url: err.config?.url,
-        status: err.response?.status,
-        errorCode: apiError?.errorCode,
-        message: apiError?.message ?? err.message,
-      },
-      err,
-    )
+    if (shouldLogError(errorKey)) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'API request failed',
+        {
+          method: err.config?.method?.toUpperCase(),
+          url: err.config?.url,
+          status: err.response?.status,
+          errorCode: apiError?.errorCode,
+          message: apiError?.message ?? err.message,
+        },
+        err,
+      )
+    }
 
     if (!isAuthFlowRequest(err.config?.url)) {
-      toast.error(getApiErrorMessage(err), {
-        id: `api-error:${err.config?.method}:${err.config?.url}:${apiError?.errorCode ?? err.code}`,
-      })
+      toast.error(getApiErrorMessage(err), { id: errorKey })
     }
 
     if (apiError?.errorCode === ErrorCode.Unauthorized) {

@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import type { SortDescriptor } from 'react-aria-components'
+import type { AuditedEntity } from '@/api/models'
+import { auditedEntityId } from '@/lib/entity'
 import type { EntityType } from '@/lib/entity'
 import type { FilterGroupNode } from '@/lib/advancedFilterTree'
 import { useAuthStore } from '@/stores/auth'
@@ -26,6 +28,27 @@ import {
   compileAdvancedFilter,
   countActiveConditions,
 } from '@/lib/advancedFilterTree.ts'
+
+const reportedDuplicateEntityIds = new Set<string>()
+
+function reportDuplicateEntityIds(duplicateIds: string[]) {
+  const unreportedIds = duplicateIds.filter(
+    (entityId) => !reportedDuplicateEntityIds.has(entityId),
+  )
+  if (unreportedIds.length === 0) {
+    return
+  }
+
+  for (const entityId of unreportedIds) {
+    reportedDuplicateEntityIds.add(entityId)
+  }
+
+  // eslint-disable-next-line no-console
+  console.error(
+    'Entity search returned the same id on more than one page, which means offset pagination is unstable. Duplicate rows were dropped to keep the results collection valid.',
+    { duplicateIds: unreportedIds },
+  )
+}
 
 export type UpdateEntityBoardSearch = (
   updates: Partial<{
@@ -95,7 +118,24 @@ export function useEntityBoardState({
     getInfiniteEntityQueryOptions(q, facetFilters, sort, advancedFilter),
   )
   const isRefetching = isFetching && !isLoading && !isFetchingNextPage
-  const results = data?.pages.flatMap((resultPage) => resultPage.results) ?? []
+  const results = useMemo(() => {
+    const entitiesById = new Map<string, AuditedEntity>()
+    const duplicateIds: string[] = []
+
+    for (const resultPage of data?.pages ?? []) {
+      for (const entity of resultPage.results) {
+        const entityId = auditedEntityId(entity)
+        if (entitiesById.has(entityId)) {
+          duplicateIds.push(entityId)
+        }
+        entitiesById.set(entityId, entity)
+      }
+    }
+
+    reportDuplicateEntityIds(duplicateIds)
+
+    return [...entitiesById.values()]
+  }, [data])
   const total = data?.pages[0]?.total ?? 0
   const facets = data?.pages[0]?.facets ?? {}
   const { relationshipFacets, relationshipReferences } =

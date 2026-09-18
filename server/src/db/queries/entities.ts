@@ -46,6 +46,7 @@ export function toMongoEntitySort(
     return {
       ...(includeSearchScore ? { [SEARCH_SCORE_FIELD]: -1 } : {}),
       'audit.modifiedAt': -1,
+      _id: 1,
     }
   }
 
@@ -53,6 +54,9 @@ export function toMongoEntitySort(
   if (includeSearchScore) {
     fields.delete(SEARCH_SCORE_FIELD)
     fields.set(SEARCH_SCORE_FIELD, -1)
+  }
+  if (!fields.has('_id')) {
+    fields.set('_id', 1)
   }
 
   return Object.fromEntries(fields)

@@ -140,7 +140,7 @@ export function FacetSection({
               </p>
             ) : (
               visibleValues.map(
-                ({ value, label: valueLabel, count, entityType }) => (
+                ({ value, label: valueLabel, count, entityType, image }) => (
                   <FacetCheckbox
                     key={value}
                     label={valueLabel}
@@ -148,6 +148,7 @@ export function FacetSection({
                       value: valueLabel,
                     })}
                     entityType={entityType}
+                    image={image}
                     count={count}
                     isSelected={selectedValues.has(value)}
                     onChange={(selected) => onChange(value, selected)}

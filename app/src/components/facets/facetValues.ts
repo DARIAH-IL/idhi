@@ -14,6 +14,7 @@ export interface FacetValue {
   label: string
   count: number
   entityType?: EntityType
+  image?: string | null
 }
 
 export function buildStaticFacetValues(
@@ -61,6 +62,7 @@ export function buildRelationshipFacetValues(
       label: entity ? getEntityDisplayName(entity) : value,
       count,
       entityType: targetType,
+      image: entity?.image,
     }
   })
 }
