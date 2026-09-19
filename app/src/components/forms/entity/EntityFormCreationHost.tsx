@@ -76,7 +76,7 @@ export function EntityFormCreationHost(props: EntityFormProps) {
         }}
         swipeDirection={isRtlLanguage(language) ? 'left' : 'right'}
       >
-        <DrawerContent className="m-0 rounded-none [--drawer-content-width:min(90vw,80rem)]">
+        <DrawerContent className="m-0 rounded-none [--drawer-content-width:min(90vw,80rem)]!">
           <DrawerTitle className="sr-only">
             {selectedType
               ? t('entity.form.new_title', {
