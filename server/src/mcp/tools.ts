@@ -80,7 +80,7 @@ export function registerEntityTools(
     {
       title: 'Search entities',
       description:
-        'Search IDHI entities with an optional free-text query, facets, filters, sorting, and pagination',
+        'Search IDHI entities with an optional free-text query, facets, filters, sorting, and pagination. Always call this before create_entity to check for an existing match and avoid duplicates, especially for entities that other entities will reference (e.g. persons, organizations, publications). Search by name/label, and also by a known external identifier when one is available (e.g. DOI for publications/datasets/tools, ROR for organizations, ORCID for persons) — identifier matches are the most reliable way to find an existing entity.',
       inputSchema: SearchEntitiesInput,
     },
     async (input) => jsonResult(await searchEntities(db.entities, input, user)),
@@ -90,7 +90,8 @@ export function registerEntityTools(
     'create_entity',
     {
       title: 'Create entity',
-      description: 'Create a new IDHI entity (requires authentication)',
+      description:
+        'Create a new IDHI entity (requires authentication). Before calling this, use search_entities to check whether a matching entity already exists and reuse its ID instead — search by name/label and by any known external identifier (DOI, ROR, ORCID) the new entity would have. This is critical for entities that will be referenced by other entities, since duplicates fragment references and break data integrity.',
       inputSchema: CreateEntityBody.superRefine(
         refineUniqueLangStringLanguages,
       ),
