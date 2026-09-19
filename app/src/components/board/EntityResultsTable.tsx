@@ -246,7 +246,15 @@ export function EntityResultsTable({
                     }
                   }}
                 >
-                  {t('common.loading_more')}
+                  <span className="inline-flex items-center gap-2">
+                    <HugeiconsIcon
+                      icon={Loading03Icon}
+                      strokeWidth={2}
+                      className="size-3.5 animate-spin motion-reduce:animate-none"
+                      aria-hidden="true"
+                    />
+                    {t('common.loading_more')}
+                  </span>
                 </TableLoadMoreItem>
               )}
             </TableBody>
