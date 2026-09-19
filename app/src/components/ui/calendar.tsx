@@ -269,7 +269,7 @@ function YearDropdown({ format }: { format?: Intl.DateTimeFormatOptions }) {
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="min-w-0">
+          <SelectContent className="min-w-20">
             {props.items.map((item) => (
               <SelectItem key={item.id} id={item.id}>
                 {item.formatted}
