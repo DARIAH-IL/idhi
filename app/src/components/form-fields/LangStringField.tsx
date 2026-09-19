@@ -165,6 +165,16 @@ export function LangStringField({
       }
     }, [])
 
+  function nextUnusedLanguage() {
+    const used = new Set(items.map((item) => item.language))
+    for (const code of optionByCode.keys()) {
+      if (!used.has(code)) {
+        return code
+      }
+    }
+    return TOP_LANGUAGE_CODES[0]
+  }
+
   function updateItem(index: number, next: Partial<LocalizedValue>) {
     field.handleChange(
       items.map((item, itemIndex) =>
@@ -248,7 +258,9 @@ export function LangStringField({
         variant="outline"
         size="sm"
         data-add-button
-        onPress={() => field.pushValue({ language: 'en', value: '' })}
+        onPress={() =>
+          field.pushValue({ language: nextUnusedLanguage(), value: '' })
+        }
         className="w-fit"
       >
         + {t('entity.form.add_lang_string')}
