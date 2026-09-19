@@ -118,7 +118,7 @@ export const termUris = {
     start_date: 'schema:startDate',
   },
   FacilityProjectRole: {
-    $self: 'cerif:Project_Facility',
+    $self: 'schema:Role',
     end_date: 'schema:endDate',
     facility: 'idhi:facility',
     org_project_role: 'schema:roleName',
