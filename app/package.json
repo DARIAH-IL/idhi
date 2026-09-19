@@ -10,7 +10,7 @@
     "dev:remote": "VITE_SERVER_URL=https://api.idh-index.org pnpm dev",
     "generate-routes": "tsr generate",
     "generate-terms": "node scripts/generate-term-uris.mjs",
-    "generate-sitemap": "node scripts/generate-sitemap.mjs",
+    "generate-sitemap": "node scripts/generate-sitemap.ts",
     "i18n-export": "node scripts/i18n-xlsx.mjs export",
     "i18n-import": "node scripts/i18n-xlsx.mjs import",
     "check-form-coverage": "node scripts/check-form-coverage.ts",

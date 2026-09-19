@@ -3,6 +3,19 @@ import { mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { finished } from 'node:stream/promises'
 import { SitemapStream } from 'sitemap'
+import type { FileRouteTypes } from '../src/routeTree.gen'
+
+type StaticPath = FileRouteTypes['to']
+
+interface EntitySearchResult {
+  id: string
+  audit?: { modifiedAt?: string }
+}
+
+interface EntitySearchResponse {
+  results: EntitySearchResult[]
+  total: number
+}
 
 const siteUrl = (process.env.SITE_URL ?? 'https://idh-index.org').replace(
   /\/$/,
@@ -14,29 +27,34 @@ const apiUrl = (
   'https://api.idh-index.org'
 ).replace(/\/$/, '')
 const languages = ['en', 'he', 'ar']
-const staticPaths = [
+const staticPaths: StaticPath[] = [
   '/entities',
   '/about',
   '/about/ai',
   '/privacy-policy',
   '/terms-of-use',
 ]
+const entityRoutePath: StaticPath = '/entities/$entityId'
 
-function localizedUrl(path, language) {
+function localizedUrl(path: string, language: string): string {
   const url = new URL(path, siteUrl)
   url.searchParams.set('lang', language)
   return url.href
 }
 
-function alternates(path) {
+function alternates(path: string) {
   return [
     ...languages.map((lang) => ({ lang, url: localizedUrl(path, lang) })),
     { lang: 'x-default', url: localizedUrl(path, 'en') },
   ]
 }
 
-async function fetchPublicEntities() {
-  const entities = []
+function entityPath(entityId: string): string {
+  return entityRoutePath.replace('$entityId', encodeURIComponent(entityId))
+}
+
+async function fetchPublicEntities(): Promise<EntitySearchResult[]> {
+  const entities: EntitySearchResult[] = []
   const pageSize = 100
   let page = 0
   let total = Number.POSITIVE_INFINITY
@@ -53,7 +71,7 @@ async function fetchPublicEntities() {
       )
     }
 
-    const data = await response.json()
+    const data = (await response.json()) as EntitySearchResponse
     if (!Array.isArray(data.results) || typeof data.total !== 'number') {
       throw new Error('Entity API returned an unexpected search response')
     }
@@ -86,7 +104,7 @@ for (const path of staticPaths) {
 
 const entities = await fetchPublicEntities()
 for (const entity of entities) {
-  const path = `/entities/${encodeURIComponent(entity.id)}`
+  const path = entityPath(entity.id)
   for (const language of languages) {
     sitemap.write({
       url: localizedUrl(path, language),
