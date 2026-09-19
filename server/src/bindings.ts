@@ -1,3 +1,6 @@
+import type { Connection } from 'mongoose'
+import type { MongoDBConnection } from './do/MongoDBConnection'
+
 export type Bindings = {
   DEFAULT_LANG?: string
 
@@ -8,6 +11,10 @@ export type Bindings = {
 
   MONGODB_CONNECTION_STRING: string
   MONGODB_DATABASE_NAME: string
+  MONGO_CONNECTION: DurableObjectNamespace<
+    InstanceType<typeof MongoDBConnection>
+  >
+  MONGO_CONNECTION_PROMISE?: Promise<Connection>
 
   OTP_DIGITS?: string
   OTP_MAX_ATTEMPTS?: string

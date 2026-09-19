@@ -15,6 +15,14 @@ name = "EMAIL"
 remote = true
 allowed_sender_addresses = ["noreply@idh-index.org"]
 
+[[durable_objects.bindings]]
+name = "MONGO_CONNECTION"
+class_name = "MongoDBConnection"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MongoDBConnection"]
+
 [observability.logs]
 enabled = true
 invocation_logs = true
