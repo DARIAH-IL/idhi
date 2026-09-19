@@ -24,7 +24,11 @@ import {
   toMongoEntitySort,
 } from '../queries/entities'
 import { CASE_INSENSITIVE_COLLATION } from '../queries/filter'
-import { SEARCH_SCORE_FIELD, escapeWildcardQuery } from '../queries/search'
+import {
+  SEARCH_SCORE_FIELD,
+  escapeRegExpQuery,
+  escapeWildcardQuery,
+} from '../queries/search'
 
 type StoredEntity = Omit<AuditedEntity, 'id' | 'isDraft'> & {
   _id: string
@@ -99,6 +103,7 @@ export interface EntityDatabaseService {
     pageSize: number,
     viewer: EntityViewer | undefined,
   ) => Promise<EntitySearchResult>
+  searchTags: (query: string | undefined, limit: number) => Promise<string[]>
   get: (
     entityId: string,
     viewer: EntityViewer | undefined,
@@ -324,6 +329,34 @@ export async function createEntityDatabaseService(
         facets: Object.fromEntries(facetEntries),
         total: aggregation?.total[0]?.count ?? 0,
       }
+    },
+
+    async searchTags(query, limit) {
+      const normalizedQuery = query?.trim()
+      const pipeline: PipelineStage[] = [
+        { $unwind: '$tags' },
+        { $match: { tags: { $type: 'string' } } },
+      ]
+      if (normalizedQuery) {
+        pipeline.push({
+          $match: {
+            tags: {
+              $regex: escapeRegExpQuery(normalizedQuery),
+              $options: 'i',
+            },
+          },
+        })
+      }
+      pipeline.push(
+        { $group: { _id: '$tags' } },
+        { $sort: { _id: 1 } },
+        { $limit: limit },
+      )
+
+      const results = await entities
+        .aggregate<{ _id: string }>(pipeline)
+        .collation(CASE_INSENSITIVE_COLLATION)
+      return results.map(({ _id: value }) => value)
     },
 
     async get(entityId, viewer) {

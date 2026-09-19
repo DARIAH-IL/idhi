@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldContext } from '@/components/forms/form-context'
+import { useAutocomplete } from '@/hooks/useAutocomplete'
 import { FieldRow } from './FieldRow'
 import {
   Combobox,
@@ -19,6 +20,7 @@ import { firstError } from './validation'
 interface Props {
   label: React.ReactNode
   knownValues: string[]
+  search?: (query: string, signal: AbortSignal) => Promise<string[]>
   loading?: boolean
 }
 
@@ -27,9 +29,12 @@ interface Option {
   label: string
 }
 
+const NO_SEARCH = async () => []
+
 export function SuggestibleTagsField({
   label,
   knownValues,
+  search,
   loading = false,
 }: Props) {
   const { t } = useTranslation()
@@ -37,36 +42,71 @@ export function SuggestibleTagsField({
   const error = firstError(field.state.meta.errors)
   const selected = field.state.value ?? []
   const [query, setQuery] = useState('')
+  const autocomplete = useAutocomplete<string>({
+    search: search ?? NO_SEARCH,
+    shouldSearch: () => Boolean(search),
+    minQueryLength: 1,
+  })
+
+  const trimmed = query.trim()
+  const searching = Boolean(search) && trimmed.length > 0
+  const isLoading = loading || autocomplete.loading
 
   const items: Option[] = useMemo(() => {
+    const values = searching
+      ? [...(autocomplete.items ?? []), ...selected]
+      : [...knownValues, ...selected]
+
     const seen = new Set<string>()
     const options: Option[] = []
-    for (const value of [...knownValues, ...selected]) {
+    for (const value of values) {
       if (!seen.has(value)) {
         seen.add(value)
         options.push({ key: value, label: value })
       }
     }
 
-    const trimmed = query.trim()
-    if (!trimmed) {
+    if (!trimmed || autocomplete.loading) {
       return options
     }
 
-    const filtered = options.filter((option) =>
-      option.label.toLowerCase().includes(trimmed.toLowerCase()),
-    )
+    if (!searching) {
+      const filtered = options.filter((option) =>
+        option.label.toLowerCase().includes(trimmed.toLowerCase()),
+      )
+      const hasExactMatch = options.some(
+        (option) => option.label.toLowerCase() === trimmed.toLowerCase(),
+      )
+      return hasExactMatch
+        ? filtered
+        : [
+            {
+              key: trimmed,
+              label: t('entity.form.add_value', { term: trimmed }),
+            },
+            ...filtered,
+          ]
+    }
+
     const hasExactMatch = options.some(
       (option) => option.label.toLowerCase() === trimmed.toLowerCase(),
     )
     if (hasExactMatch) {
-      return filtered
+      return options
     }
     return [
       { key: trimmed, label: t('entity.form.add_value', { term: trimmed }) },
-      ...filtered,
+      ...options,
     ]
-  }, [knownValues, selected, query, t])
+  }, [
+    knownValues,
+    selected,
+    searching,
+    trimmed,
+    autocomplete.items,
+    autocomplete.loading,
+    t,
+  ])
 
   return (
     <FieldRow label={label}>
@@ -77,11 +117,15 @@ export function SuggestibleTagsField({
             selectionMode="multiple"
             items={items}
             inputValue={query}
-            onInputChange={setQuery}
+            onInputChange={(value) => {
+              setQuery(value)
+              autocomplete.handleQueryChange(value)
+            }}
             value={selected}
             onChange={(keys) => {
               field.handleChange(keys.map(String))
               setQuery('')
+              autocomplete.reset()
             }}
             isInvalid={Boolean(error)}
             menuTrigger="focus"
@@ -101,7 +145,7 @@ export function SuggestibleTagsField({
                 items={items}
                 renderEmptyState={() => (
                   <ComboboxEmpty>
-                    {loading ? t('common.searching') : t('common.no_results')}
+                    {isLoading ? t('common.searching') : t('common.no_results')}
                   </ComboboxEmpty>
                 )}
               >

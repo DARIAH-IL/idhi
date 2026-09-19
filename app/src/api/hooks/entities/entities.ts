@@ -27,6 +27,7 @@ import type {
   EntitySearch,
   ErrorResponse,
   SearchEntities200,
+  SearchEntityTagsParams,
   UpdateEntityByIdParams,
 } from '../../models'
 
@@ -286,6 +287,165 @@ export const useCreateEntity = <
 > => {
   return useMutation(getCreateEntityMutationOptions(options), queryClient)
 }
+/**
+ * Returns distinct tag values used across entities, optionally filtered by a substring, for autocomplete purposes.
+ * @summary Search tag values
+ */
+export const searchEntityTags = (
+  params?: SearchEntityTagsParams,
+  signal?: AbortSignal,
+) => {
+  return customInstance<string[]>({
+    url: `/api/v1/entities/tags`,
+    method: 'GET',
+    params,
+    signal,
+  })
+}
+
+export const getSearchEntityTagsQueryKey = (
+  params?: SearchEntityTagsParams,
+) => {
+  return [`/api/v1/entities/tags`, ...(params ? [params] : [])] as const
+}
+
+export const getSearchEntityTagsQueryOptions = <
+  TData = Awaited<ReturnType<typeof searchEntityTags>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: SearchEntityTagsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof searchEntityTags>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getSearchEntityTagsQueryKey(params)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof searchEntityTags>>
+  > = ({ signal }) => searchEntityTags(params, signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof searchEntityTags>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type SearchEntityTagsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof searchEntityTags>>
+>
+export type SearchEntityTagsQueryError = ErrorType<unknown>
+
+export function useSearchEntityTags<
+  TData = Awaited<ReturnType<typeof searchEntityTags>>,
+  TError = ErrorType<unknown>,
+>(
+  params: undefined | SearchEntityTagsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof searchEntityTags>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof searchEntityTags>>,
+          TError,
+          Awaited<ReturnType<typeof searchEntityTags>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useSearchEntityTags<
+  TData = Awaited<ReturnType<typeof searchEntityTags>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: SearchEntityTagsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof searchEntityTags>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof searchEntityTags>>,
+          TError,
+          Awaited<ReturnType<typeof searchEntityTags>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useSearchEntityTags<
+  TData = Awaited<ReturnType<typeof searchEntityTags>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: SearchEntityTagsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof searchEntityTags>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+/**
+ * @summary Search tag values
+ */
+
+export function useSearchEntityTags<
+  TData = Awaited<ReturnType<typeof searchEntityTags>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: SearchEntityTagsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof searchEntityTags>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getSearchEntityTagsQueryOptions(params, options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
 /**
  * Returns all properties of a specific entity.
  * @summary Get an entity

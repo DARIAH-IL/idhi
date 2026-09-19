@@ -10533,6 +10533,25 @@ export const CreateEntityResponse = zod
     }),
   )
 
+export const searchEntityTagsQueryLimitDefault = 20
+export const searchEntityTagsQueryLimitMax = 100
+
+export const SearchEntityTagsQueryParams = zod.object({
+  q: zod.coerce
+    .string()
+    .optional()
+    .describe('Optional case-insensitive substring to filter tag values by.'),
+  limit: zod.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(searchEntityTagsQueryLimitMax)
+    .default(searchEntityTagsQueryLimitDefault),
+})
+
+export const SearchEntityTagsResponseItem = zod.string()
+export const SearchEntityTagsResponse = zod.array(SearchEntityTagsResponseItem)
+
 export const GetEntityByIdParams = zod.object({
   entityId: zod.string(),
 })

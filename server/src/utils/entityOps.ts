@@ -106,6 +106,21 @@ export async function searchEntities(
   )
 }
 
+export async function searchEntityTags(
+  entities: EntityDatabaseService,
+  q: string | undefined,
+  limit: number,
+): Promise<string[]> {
+  if (q !== undefined && q.length > SEARCH_QUERY_MAX_LENGTH) {
+    throw new ApiError(
+      ErrorCode.InvalidInput,
+      `q must not exceed ${SEARCH_QUERY_MAX_LENGTH} characters`,
+    )
+  }
+
+  return entities.searchTags(q, limit)
+}
+
 export async function getEntityOrThrow(
   entities: EntityDatabaseService,
   entityId: string,

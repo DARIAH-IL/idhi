@@ -239,6 +239,39 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
 
+  /api/v1/entities/tags:
+    get:
+      operationId: searchEntityTags
+      tags:
+        - Entities
+      summary: Search tag values
+      description: Returns distinct tag values used across entities, optionally filtered by a substring, for autocomplete purposes.
+      security: [ ]
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: Optional case-insensitive substring to filter tag values by.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Matching tag values
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
   /api/v1/entities/{entityId}:
     parameters:
       - $ref: "#/components/parameters/EntityId"

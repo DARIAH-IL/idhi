@@ -13,6 +13,7 @@ import {
   deleteEntity,
   getEntityOrThrow,
   searchEntities,
+  searchEntityTags,
   updateEntity,
 } from '../../utils/entityOps'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
@@ -20,6 +21,7 @@ import { zValidator } from '../api.validator.ts'
 import type {
   SearchEntitiesContext,
   CreateEntityContext,
+  SearchEntityTagsContext,
   GetEntityByIdContext,
   UpdateEntityByIdContext,
   DeleteEntityByIdContext,
@@ -40,6 +42,11 @@ import {
   CreateEntityQueryParams,
   UpdateEntityByIdQueryParams,
 } from './entities.zod'
+import {
+  SearchEntityTagsQueryParams,
+  SearchEntityTagsResponse,
+  searchEntityTagsQueryLimitDefault,
+} from './entities.zod.ts'
 
 const factory = createFactory()
 
@@ -134,5 +141,15 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
     await deleteEntity(c.var.db.entities, entityId, user, { source: 'web' })
 
     return c.body(null, 204)
+  },
+)
+
+export const searchEntityTagsHandlers = factory.createHandlers(
+  zValidator('query', SearchEntityTagsQueryParams),
+  zValidator('response', SearchEntityTagsResponse),
+  async (c: SearchEntityTagsContext) => {
+    const { q, limit = searchEntityTagsQueryLimitDefault } =
+      c.req.valid('query')
+    return c.json(await searchEntityTags(c.var.db.entities, q, limit))
   },
 )

@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getSearchEntitiesTypedQueryOptions } from '@/api/typedEntitySearch'
 import type { TypedEntitySearch } from '@/api/typedEntitySearch'
+import { searchEntityTags } from '@/api/hooks/entities/entities'
 import { SuggestibleTagsField } from './SuggestibleTagsField'
 
 interface Props {
@@ -23,10 +24,17 @@ export function TagsField({ label }: Props) {
     [data],
   )
 
+  const search = useCallback(
+    (query: string, signal: AbortSignal) =>
+      searchEntityTags({ q: query }, signal),
+    [],
+  )
+
   return (
     <SuggestibleTagsField
       label={label}
       knownValues={knownTags}
+      search={search}
       loading={isLoading}
     />
   )

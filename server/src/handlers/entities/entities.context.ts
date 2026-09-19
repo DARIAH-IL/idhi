@@ -39,6 +39,7 @@ import type {
   EntityCreate,
   EntitySearch,
   EntityUpdate,
+  SearchEntityTagsParams,
   UpdateEntityByIdParams,
 } from '../../models'
 
@@ -53,6 +54,14 @@ export type CreateEntityContext<E extends Env = any> = Context<
   {
     in: { query: CreateEntityParams; json: NonReadonly<EntityCreate> }
     out: { query: CreateEntityParams; json: NonReadonly<EntityCreate> }
+  }
+>
+export type SearchEntityTagsContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/entities/tags',
+  {
+    in: { query: SearchEntityTagsParams }
+    out: { query: SearchEntityTagsParams }
   }
 >
 export type GetEntityByIdContext<E extends Env = any> = Context<
