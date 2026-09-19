@@ -20,6 +20,7 @@ const URL_TERMS = new Set([
   'schema:softwareHelp',
   'schema:codeRepository',
   'bibo:doi',
+  'dcat:downloadURL',
 ])
 const ADDRESS_TERM = 'schema:address'
 const EMAIL_TERMS = new Set(['schema:email', 'foaf:mbox'])

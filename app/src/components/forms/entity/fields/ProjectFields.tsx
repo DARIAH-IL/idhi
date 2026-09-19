@@ -269,7 +269,10 @@ export const ProjectFields = withForm({
           {(field) => (
             <field.ArraySection
               label={
-                <EntityFieldLabel entityClass="Project" field="facility_roles" />
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="facility_roles"
+                />
               }
               defaultItem={{ facility: '' }}
             >
