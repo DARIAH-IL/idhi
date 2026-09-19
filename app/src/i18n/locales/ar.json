@@ -77,6 +77,8 @@
       "doi": "DOI",
       "email": "عنوان البريد الإلكتروني",
       "end_date": "تاريخ الانتهاء",
+      "facility": "مرفق",
+      "facility_role": "الدور في المرفق",
       "funding": "التمويل",
       "homepage_url": "الصفحة الرئيسية",
       "id": "المعرّف",
@@ -1068,6 +1070,10 @@
           "label": "$t(common.labels.end_date)",
           "description": "التاريخ الذي انتهى فيه المشروع."
         },
+        "facility_roles": {
+          "label": "أدوار المرافق",
+          "description": "المرافق المشاركة في المشروع - في التنسيق أو الشراكة أو توفير البيانات أو الاستضافة."
+        },
         "funding": {
           "label": "$t(common.labels.funding)",
           "description": "المنح ومصادر التمويل الأخرى التي حصل عليها المشروع."
@@ -1749,6 +1755,28 @@
           "description": "موعد بدء علاقة المؤسسة بالمرفق."
         }
       },
+      "FacilityProjectRole": {
+        "$self": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "مشاركة مرفق في المشروع."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "التاريخ الذي انتهت فيه مشاركة المرفق في المشروع."
+        },
+        "facility": {
+          "label": "$t(common.labels.facility)",
+          "description": "المرفق المشارك في المشروع."
+        },
+        "org_project_role": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "دور المرفق في المشروع، مثل التنسيق أو الشراكة أو توفير البيانات أو الاستضافة."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "موعد بدء مشاركة المرفق في المشروع."
+        }
+      },
       "Funding": {
         "$self": {
           "label": "$t(common.labels.funding)",
@@ -1906,6 +1934,7 @@
         "facilities_offering_service": "متاحة في مرافق",
         "facilities_providing_tool": "متوفرة عبر مرافق",
         "projects_involving_organization": "مشاريع ذات مشاركة",
+        "projects_involving_facility": "مشاريع ذات مشاركة",
         "projects_involving_person": "مشاريع ذات مشاركة",
         "projects_funded_by_organization": "مشاريع ممولة",
         "projects_using_dataset": "مستخدمة في مشاريع",

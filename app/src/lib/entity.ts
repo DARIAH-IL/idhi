@@ -194,6 +194,12 @@ const ENTITY_FIELD_ORDER = {
     start_date: true,
     end_date: true,
   },
+  FacilityProjectRole: {
+    facility: true,
+    org_project_role: true,
+    start_date: true,
+    end_date: true,
+  },
   OrganizationProjectRole: {
     organization: true,
     org_project_role: true,
@@ -223,6 +229,7 @@ const ENTITY_FIELD_ORDER = {
     studied_periods: true,
     studied_places: true,
     organization_roles: true,
+    facility_roles: true,
     project_participations: true,
     funding_status: true,
     uses_datasets: true,

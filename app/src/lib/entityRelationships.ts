@@ -68,6 +68,11 @@ const ENTITY_RELATIONSHIPS = {
       label: 'projects_involving_organization',
     },
     {
+      path: 'facility_roles.facility',
+      targetTypes: ['idhi:Facility'],
+      label: 'projects_involving_facility',
+    },
+    {
       path: 'project_participations.participant',
       targetTypes: ['idhi:Person'],
       label: 'projects_involving_person',

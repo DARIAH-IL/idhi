@@ -6,6 +6,7 @@
  */
 import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
+import type { ProjectFacilityRolesItem } from './projectFacilityRolesItem.ts'
 import type { ProjectFundingItem } from './projectFundingItem.ts'
 import type { ProjectFundingStatus } from './projectFundingStatus.ts'
 import type { ProjectNameItem } from './projectNameItem.ts'
@@ -47,7 +48,12 @@ export interface Project {
    */
   end_date?: string | null
   /**
-   * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.
+   * Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.
+   * @nullable
+   */
+  facility_roles?: ProjectFacilityRolesItem[] | null
+  /**
+   * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.
    * @nullable
    */
   funding?: ProjectFundingItem[] | null
@@ -73,7 +79,7 @@ export interface Project {
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: ProjectNameItem[]
   /**
-   * Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.
+   * Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.
    * @nullable
    */
   organization_roles?: ProjectOrganizationRolesItem[] | null

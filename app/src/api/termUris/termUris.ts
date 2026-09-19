@@ -117,6 +117,13 @@ export const termUris = {
     organization: 'idhi:organization',
     start_date: 'schema:startDate',
   },
+  FacilityProjectRole: {
+    $self: 'cerif:Project_Facility',
+    end_date: 'schema:endDate',
+    facility: 'idhi:facility',
+    org_project_role: 'schema:roleName',
+    start_date: 'schema:startDate',
+  },
   Funding: {
     $self: 'schema:MonetaryGrant',
     end_date: 'schema:endDate',
@@ -200,6 +207,7 @@ export const termUris = {
     description: 'dcterms:description',
     digital_humanities_activities: 'dcterms:subject',
     end_date: 'schema:endDate',
+    facility_roles: 'idhi:facility_roles',
     funding: 'idhi:funding',
     funding_status: 'idhi:fundingStatus',
     homepage: 'foaf:homepage',
@@ -390,6 +398,7 @@ export const termUriRefs = {
   },
   Project: {
     description: 'LangString',
+    facility_roles: 'FacilityProjectRole',
     funding: 'Funding',
     name: 'LangString',
     organization_roles: 'OrganizationProjectRole',

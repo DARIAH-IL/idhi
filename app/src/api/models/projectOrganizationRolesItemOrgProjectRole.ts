@@ -6,7 +6,7 @@
  */
 
 /**
- * An organization's role in a project (one instance per role).
+ * An organization's or facility's role in a project (one instance per role).
  */
 export type ProjectOrganizationRolesItemOrgProjectRole =
   (typeof ProjectOrganizationRolesItemOrgProjectRole)[keyof typeof ProjectOrganizationRolesItemOrgProjectRole]
@@ -15,6 +15,5 @@ export const ProjectOrganizationRolesItemOrgProjectRole = {
   COORDINATOR: 'COORDINATOR',
   PARTNER: 'PARTNER',
   DATA_PROVIDER: 'DATA_PROVIDER',
-  FUNDER: 'FUNDER',
   HOST: 'HOST',
 } as const

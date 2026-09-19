@@ -75,6 +75,8 @@
       "doi": "DOI",
       "email": "כתובת אימייל",
       "end_date": "תאריך סיום",
+      "facility": "מתקן",
+      "facility_role": "תפקיד במתקן",
       "funding": "מימון",
       "homepage_url": "אתר בית",
       "id": "מזהה",
@@ -1066,6 +1068,10 @@
           "label": "$t(common.labels.end_date)",
           "description": "התאריך שבו הפרויקט הסתיים."
         },
+        "facility_roles": {
+          "label": "תפקידי מתקנים",
+          "description": "מתקנים המעורבים בפרויקט - בתיאום, בשותפות, באספקת נתונים או באירוח."
+        },
         "funding": {
           "label": "$t(common.labels.funding)",
           "description": "המענקים ומקורות המימון האחרים שהפרויקט קיבל."
@@ -1747,6 +1753,28 @@
           "description": "מועד תחילת הקשר של הארגון עם המתקן."
         }
       },
+      "FacilityProjectRole": {
+        "$self": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "מעורבות של מתקן בפרויקט."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "התאריך שבו מעורבות המתקן בפרויקט הסתיימה."
+        },
+        "facility": {
+          "label": "$t(common.labels.facility)",
+          "description": "המתקן המעורב בפרויקט."
+        },
+        "org_project_role": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "תפקיד המתקן בפרויקט, כגון תיאום, שותפות, אספקת נתונים או אירוח."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "מועד תחילת מעורבות המתקן בפרויקט."
+        }
+      },
       "Funding": {
         "$self": {
           "label": "$t(common.labels.funding)",
@@ -1904,6 +1932,7 @@
         "facilities_offering_service": "זמין במתקנים",
         "facilities_providing_tool": "מסופק על ידי מתקנים",
         "projects_involving_organization": "פרויקטים מעורבים",
+        "projects_involving_facility": "פרויקטים מעורבים",
         "projects_involving_person": "פרויקטים מעורבים",
         "projects_funded_by_organization": "פרויקטים במימון",
         "projects_using_dataset": "בשימוש פרויקטים",

@@ -73,6 +73,8 @@
       "doi": "DOI",
       "email": "Email address",
       "end_date": "End date",
+      "facility": "Facility",
+      "facility_role": "Facility role",
       "funding": "Funding",
       "homepage_url": "Homepage",
       "id": "ID",
@@ -1064,6 +1066,10 @@
           "label": "$t(common.labels.end_date)",
           "description": "The date on which the project concluded."
         },
+        "facility_roles": {
+          "label": "Facility roles",
+          "description": "Facilities engaged in the project - as coordinator, partner, data provider or host."
+        },
         "funding": {
           "label": "$t(common.labels.funding)",
           "description": "The grants and other funding awards received by the project."
@@ -1745,6 +1751,28 @@
           "description": "When the organization’s relationship with the facility began."
         }
       },
+      "FacilityProjectRole": {
+        "$self": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "A facility’s engagement in the project."
+        },
+        "end_date": {
+          "label": "$t(common.labels.end_date)",
+          "description": "The date on which the facility’s involvement in the project ended."
+        },
+        "facility": {
+          "label": "$t(common.labels.facility)",
+          "description": "The facility engaged in the project."
+        },
+        "org_project_role": {
+          "label": "$t(common.labels.facility_role)",
+          "description": "The facility’s function in the project, such as coordinator, partner, data provider or host."
+        },
+        "start_date": {
+          "label": "$t(common.labels.start_date)",
+          "description": "When the facility’s involvement in the project began."
+        }
+      },
       "Funding": {
         "$self": {
           "label": "$t(common.labels.funding)",
@@ -1902,6 +1930,7 @@
         "facilities_offering_service": "Available at facilities",
         "facilities_providing_tool": "Provided by facilities",
         "projects_involving_organization": "Involved projects",
+        "projects_involving_facility": "Involved projects",
         "projects_involving_person": "Involved projects",
         "projects_funded_by_organization": "Funded projects",
         "projects_using_dataset": "Used by projects",

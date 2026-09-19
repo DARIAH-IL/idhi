@@ -1105,6 +1105,42 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
               ),
+            facility_roles: zod
+              .array(
+                zod
+                  .object({
+                    end_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                      ),
+                    facility: zod
+                      .string()
+                      .describe(
+                        "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                      ),
+                    org_project_role: zod
+                      .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                      .optional()
+                      .describe(
+                        "An organization's or facility's role in a project (one instance per role).",
+                      ),
+                    start_date: zod.iso
+                      .date()
+                      .nullish()
+                      .describe(
+                        "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                      ),
+                  })
+                  .describe(
+                    "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+                  ),
+              )
+              .nullish()
+              .describe(
+                'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+              ),
             funding: zod
               .array(
                 zod
@@ -1204,12 +1240,12 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+                    "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
                   ),
               )
               .nullish()
               .describe(
-                'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+                "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
               ),
             funding_status: zod
               .enum([
@@ -1275,16 +1311,10 @@ export const SearchEntitiesResponse = zod.object({
                         'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                       ),
                     org_project_role: zod
-                      .enum([
-                        'COORDINATOR',
-                        'PARTNER',
-                        'DATA_PROVIDER',
-                        'FUNDER',
-                        'HOST',
-                      ])
+                      .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                       .optional()
                       .describe(
-                        "An organization's role in a project (one instance per role).",
+                        "An organization's or facility's role in a project (one instance per role).",
                       ),
                     organization: zod
                       .string()
@@ -1299,12 +1329,12 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                    "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
                   ),
               )
               .nullish()
               .describe(
-                'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+                'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
               ),
             outputs_datasets: zod
               .array(zod.string())
@@ -4564,6 +4594,42 @@ export const CreateEntityBody = zod.union([
         .describe(
           'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
+      facility_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              facility: zod
+                .string()
+                .describe(
+                  "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                ),
+              org_project_role: zod
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                .optional()
+                .describe(
+                  "An organization's or facility's role in a project (one instance per role).",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+        ),
       funding: zod
         .array(
           zod
@@ -4663,12 +4729,12 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
             ),
         )
         .nullish()
         .describe(
-          'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+          "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
         ),
       funding_status: zod
         .enum([
@@ -4727,16 +4793,10 @@ export const CreateEntityBody = zod.union([
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
-                .enum([
-                  'COORDINATOR',
-                  'PARTNER',
-                  'DATA_PROVIDER',
-                  'FUNDER',
-                  'HOST',
-                ])
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                 .optional()
                 .describe(
-                  "An organization's role in a project (one instance per role).",
+                  "An organization's or facility's role in a project (one instance per role).",
                 ),
               organization: zod
                 .string()
@@ -4751,12 +4811,12 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -7925,6 +7985,42 @@ export const CreateEntityResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        facility_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                facility: zod
+                  .string()
+                  .describe(
+                    "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                  ),
+                org_project_role: zod
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                  .optional()
+                  .describe(
+                    "An organization's or facility's role in a project (one instance per role).",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+              ),
+          )
+          .nullish()
+          .describe(
+            'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+          ),
         funding: zod
           .array(
             zod
@@ -8024,12 +8120,12 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+            "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
           ),
         funding_status: zod
           .enum([
@@ -8093,16 +8189,10 @@ export const CreateEntityResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum([
-                    'COORDINATOR',
-                    'PARTNER',
-                    'DATA_PROVIDER',
-                    'FUNDER',
-                    'HOST',
-                  ])
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                   .optional()
                   .describe(
-                    "An organization's role in a project (one instance per role).",
+                    "An organization's or facility's role in a project (one instance per role).",
                   ),
                 organization: zod
                   .string()
@@ -8117,12 +8207,12 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -11382,6 +11472,42 @@ export const GetEntityByIdResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        facility_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                facility: zod
+                  .string()
+                  .describe(
+                    "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                  ),
+                org_project_role: zod
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                  .optional()
+                  .describe(
+                    "An organization's or facility's role in a project (one instance per role).",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+              ),
+          )
+          .nullish()
+          .describe(
+            'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+          ),
         funding: zod
           .array(
             zod
@@ -11481,12 +11607,12 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+            "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
           ),
         funding_status: zod
           .enum([
@@ -11550,16 +11676,10 @@ export const GetEntityByIdResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum([
-                    'COORDINATOR',
-                    'PARTNER',
-                    'DATA_PROVIDER',
-                    'FUNDER',
-                    'HOST',
-                  ])
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                   .optional()
                   .describe(
-                    "An organization's role in a project (one instance per role).",
+                    "An organization's or facility's role in a project (one instance per role).",
                   ),
                 organization: zod
                   .string()
@@ -11574,12 +11694,12 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
           ),
         outputs_datasets: zod
           .array(zod.string())
@@ -14869,6 +14989,42 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
         ),
+      facility_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              facility: zod
+                .string()
+                .describe(
+                  "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                ),
+              org_project_role: zod
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                .optional()
+                .describe(
+                  "An organization's or facility's role in a project (one instance per role).",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+        ),
       funding: zod
         .array(
           zod
@@ -14968,12 +15124,12 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
             ),
         )
         .nullish()
         .describe(
-          'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+          "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
         ),
       funding_status: zod
         .enum([
@@ -15043,16 +15199,10 @@ export const UpdateEntityByIdBody = zod.union([
                   'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                 ),
               org_project_role: zod
-                .enum([
-                  'COORDINATOR',
-                  'PARTNER',
-                  'DATA_PROVIDER',
-                  'FUNDER',
-                  'HOST',
-                ])
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                 .optional()
                 .describe(
-                  "An organization's role in a project (one instance per role).",
+                  "An organization's or facility's role in a project (one instance per role).",
                 ),
               organization: zod
                 .string()
@@ -15067,12 +15217,12 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
             ),
         )
         .nullish()
         .describe(
-          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
         ),
       outputs_datasets: zod
         .array(zod.string())
@@ -18316,6 +18466,42 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
           ),
+        facility_roles: zod
+          .array(
+            zod
+              .object({
+                end_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                  ),
+                facility: zod
+                  .string()
+                  .describe(
+                    "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                  ),
+                org_project_role: zod
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                  .optional()
+                  .describe(
+                    "An organization's or facility's role in a project (one instance per role).",
+                  ),
+                start_date: zod.iso
+                  .date()
+                  .nullish()
+                  .describe(
+                    "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                  ),
+              })
+              .describe(
+                "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+              ),
+          )
+          .nullish()
+          .describe(
+            'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+          ),
         funding: zod
           .array(
             zod
@@ -18415,12 +18601,12 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. Use Funding when an award or grant is known; use an OrganizationProjectRole with FUNDER only when the funder's involvement is known but no distinct award can be described, and do not record the same funding fact in both structures. It is inlined within the funded Project and has no independent ID.",
+                "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
               ),
           )
           .nullish()
           .describe(
-            'Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.',
+            "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
           ),
         funding_status: zod
           .enum([
@@ -18484,16 +18670,10 @@ export const UpdateEntityByIdResponse = zod
                     'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
                   ),
                 org_project_role: zod
-                  .enum([
-                    'COORDINATOR',
-                    'PARTNER',
-                    'DATA_PROVIDER',
-                    'FUNDER',
-                    'HOST',
-                  ])
+                  .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
                   .optional()
                   .describe(
-                    "An organization's role in a project (one instance per role).",
+                    "An organization's or facility's role in a project (one instance per role).",
                   ),
                 organization: zod
                   .string()
@@ -18508,12 +18688,12 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Represent a known distinct funding award with Funding rather than an additional FUNDER role; use FUNDER only when no award can be described.",
+                "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
               ),
           )
           .nullish()
           .describe(
-            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.',
+            'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
           ),
         outputs_datasets: zod
           .array(zod.string())

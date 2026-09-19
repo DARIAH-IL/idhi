@@ -8,10 +8,10 @@
 /**
  * An organization's or facility's role in a project (one instance per role).
  */
-export type ProjectOrganizationRolesItemOrgProjectRole =
-  (typeof ProjectOrganizationRolesItemOrgProjectRole)[keyof typeof ProjectOrganizationRolesItemOrgProjectRole]
+export type ProjectFacilityRolesItemOrgProjectRole =
+  (typeof ProjectFacilityRolesItemOrgProjectRole)[keyof typeof ProjectFacilityRolesItemOrgProjectRole]
 
-export const ProjectOrganizationRolesItemOrgProjectRole = {
+export const ProjectFacilityRolesItemOrgProjectRole = {
   COORDINATOR: 'COORDINATOR',
   PARTNER: 'PARTNER',
   DATA_PROVIDER: 'DATA_PROVIDER',

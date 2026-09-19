@@ -570,7 +570,30 @@ export type EntityCreate =
        */
       end_date?: string | null
       /**
-       * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization, and record award dates here rather than duplicating the same fact as a FUNDER organization role.
+       * Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.
+       * @nullable
+       */
+      facility_roles?:
+        | {
+            /**
+             * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
+             * @nullable
+             */
+            end_date?: string | null
+            /** The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint. */
+            facility: string
+            /** An organization's or facility's role in a project (one instance per role). */
+            org_project_role?:
+              'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'HOST'
+            /**
+             * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
+             * @nullable
+             */
+            start_date?: string | null
+          }[]
+        | null
+      /**
+       * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.
        * @nullable
        */
       funding?:
@@ -665,7 +688,7 @@ export type EntityCreate =
         value: string
       }[]
       /**
-       * Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider, funder or host role. Reference each organization and infer the project from its containing record; use FUNDER only when no distinct award can be represented in funding.
+       * Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.
        * @nullable
        */
       organization_roles?:
@@ -675,9 +698,9 @@ export type EntityCreate =
              * @nullable
              */
             end_date?: string | null
-            /** An organization's role in a project (one instance per role). */
+            /** An organization's or facility's role in a project (one instance per role). */
             org_project_role?:
-              'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'FUNDER' | 'HOST'
+              'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'HOST'
             /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
             organization: string
             /**

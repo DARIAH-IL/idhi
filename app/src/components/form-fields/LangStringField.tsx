@@ -172,7 +172,7 @@ export function LangStringField({
         return code
       }
     }
-    return TOP_LANGUAGE_CODES[0]
+    return TOP_LANGUAGE_CODES[0] ?? 'en'
   }
 
   function updateItem(index: number, next: Partial<LocalizedValue>) {
