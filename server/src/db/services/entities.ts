@@ -219,13 +219,30 @@ export async function createEntityDatabaseService(
           $search: {
             index: ENTITY_SEARCH_INDEX_NAME,
             compound: {
-              should: words.map((word) => ({
-                wildcard: {
-                  query: `*${escapeWildcardQuery(word.toLowerCase())}*`,
-                  path: { wildcard: '*' },
-                  allowAnalyzedField: true,
+              should: [
+                {
+                  phrase: {
+                    query: normalizedQuery,
+                    path: { wildcard: '*' },
+                    score: { boost: { value: 8 } },
+                  },
                 },
-              })),
+                ...words.flatMap((word) => [
+                  {
+                    text: {
+                      query: word,
+                      path: { wildcard: '*' },
+                    },
+                  },
+                  {
+                    wildcard: {
+                      query: `*${escapeWildcardQuery(word.toLowerCase())}*`,
+                      path: { wildcard: '*' },
+                      allowAnalyzedField: true,
+                    },
+                  },
+                ]),
+              ],
               minimumShouldMatch: 1,
             },
           },
