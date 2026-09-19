@@ -71,7 +71,7 @@ async function fetchPublicEntities(): Promise<EntitySearchResult[]> {
       )
     }
 
-    const data = (await response.json()) as EntitySearchResponse
+    const data: EntitySearchResponse = await response.json()
     if (!Array.isArray(data.results) || typeof data.total !== 'number') {
       throw new Error('Entity API returned an unexpected search response')
     }
