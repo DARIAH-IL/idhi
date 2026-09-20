@@ -1,8 +1,8 @@
 import type { z } from 'zod'
 
-type LangString = { language: string; value: string }
+export type LangString = { language: string; value: string }
 
-function isLangString(value: unknown): value is LangString {
+export function isLangString(value: unknown): value is LangString {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
     return false
   }
@@ -45,4 +45,18 @@ export function refineUniqueLangStringLanguages(
   ctx: z.RefinementCtx,
 ): void {
   walk(data, [], ctx)
+}
+
+export function preferredLangStringValue(
+  values: LangString[],
+  language: string,
+): string | undefined {
+  const preferred =
+    values.find((item) => item.language.toLowerCase() === language) ??
+    values.find((item) =>
+      item.language.toLowerCase().startsWith(`${language}-`),
+    ) ??
+    values[0]
+
+  return preferred?.value.trim() || undefined
 }

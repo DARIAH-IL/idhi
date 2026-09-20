@@ -1,11 +1,16 @@
 import type { Bindings } from '../bindings'
 import { ApiError } from '../errors/ApiError'
 import type { RequestLogger } from '../middleware/logger'
+import type { Entity } from '../models'
 import { ProjectDigitalHumanitiesActivitiesItem } from '../models/projectDigitalHumanitiesActivitiesItem'
 import { ErrorCode } from '../models/errorCode'
 import { SuggestibleEntityField } from '../models/suggestibleEntityField'
+import { aiModel, runAiPrompt } from './ai'
+import { isLangString, preferredLangStringValue } from './langString'
 
-const DEFAULT_AI_MODEL = '@cf/openai/gpt-oss-120b'
+type UnionKeys<T> = T extends unknown ? keyof T : never
+type EntityFieldName = UnionKeys<Entity> & string
+
 const MAX_SUGGESTIONS = 12
 const MAX_SUGGESTION_LENGTH = 80
 const MAX_SUGGESTION_WORDS = 4
@@ -22,7 +27,7 @@ const tadirahActivitiesByName = new Map(
   ]),
 )
 
-const sharedPromptRules = `- Base every value only on what the record below actually states. Never invent, infer or guess anything that the record does not support.
+const sharedPromptRules = `- Base every value only on what the record below actually supports. Never invent or guess anything that the record does not support.
 - Prefer a short, confident answer over a comprehensive one. Two or three values is usually right, and one is often enough.
 - Omit any value you are not confident about. Returning nothing is better than returning something unsupported.
 - Do not repeat a value the record already lists.`
@@ -30,24 +35,41 @@ const sharedPromptRules = `- Base every value only on what the record below actu
 const outputInstruction = `Output the values as a single line of comma-separated values and nothing else. No explanation, no preamble, no bullet points, no quotes, no markdown. If you have no value to suggest, output an empty line.`
 
 const fieldPrompts: Record<SuggestibleEntityField, string> = {
-  [SuggestibleEntityField.tags]: `You assign free-text discovery tags to a record in IDHI, an index of Digital Humanities research.
+  [SuggestibleEntityField.tags]: `You assign free-text discovery tags to a record in an index of Digital Humanities research.
 
 Suggest tags for the record below.
 
 ${sharedPromptRules}
-- Each tag is a short lowercase noun phrase of one to three words.
-- Prefer wording that matches a concept in an established ontology or thesaurus, such as Wikidata, Getty AAT or TaDiRAH, so the tags can later be reconciled against it.
-- Tag what the record is about: its subject matter, materials, methods and domain. Do not tag generic qualities that apply to every record, such as "digital", "research" or "project".
+- Tags are short, meaningful labels used to help users discover, search, filter, and group related records.
+- Each tag is a short noun or noun phrase of one to three words.
+- Use lowercase for ordinary nouns and noun phrases, but preserve the conventional capitalization of proper names and named entities.
+- Tags may describe concepts, subjects, domains, materials, methods, technologies, genres, historical periods, places, people, works, collections, organizations, or other specific entities that are central to the record.
+- Tags do not have to be abstract concepts: specific names and named entities are valid tags when they are relevant to the record.
+- Prefer tags that are broadly reusable across multiple records. Use a tag when it could meaningfully describe other records in the index, rather than inventing a highly specific label that is unlikely to recur.
+- Prefer clear, conventional wording that users are likely to search for or recognize. Avoid unnecessarily technical, obscure, poetic, or overly elaborate phrasing.
+- Use the same natural term consistently rather than creating unnecessary synonyms or variants for the same concept.
+- Tag the substantive topics and entities represented by the record, rather than merely repeating incidental words from its title or description.
+- Do not tag generic qualities that apply to many or nearly all records, such as "digital", "research", or "project".
+- Prefer specific, useful tags over broad or redundant ones. Each tag should add meaningful information about the record and contribute to its discoverability or grouping.
 
 ${outputInstruction}`,
 
-  [SuggestibleEntityField.digital_humanities_activities]: `You classify a record in IDHI, an index of Digital Humanities research, by the TaDiRAH research activities it involves.
+  [SuggestibleEntityField.digital_humanities_activities]: `You classify a record in an index of Digital Humanities research according to the TaDiRAH research activities it involves.
 
-Choose the activities that the record below practises, or teaches if it is a training material.
+TaDiRAH (Taxonomy of Digital Research Activities in the Humanities) is a controlled vocabulary for describing the research activities performed in Digital Humanities work, from data creation and collection through processing, analysis, interpretation, dissemination, and related activities.
+
+Select the TaDiRAH activities that the record actually performs, describes as part of its research process, or teaches when the record is a training or instructional resource.
+
+The activities should describe **what is done**, not simply what the record is about. Do not classify a subject, research topic, technology, dataset, output, or general characteristic as an activity unless the record indicates that it is actually used as part of a research activity.
 
 ${sharedPromptRules}
 - Choose only from the allowed activities listed at the end of these instructions. Never output a value that is not on that list, and copy each value exactly as it is spelled there.
-- Prefer the most specific allowed activity the record supports over a broad one.
+- Select an activity only when there is sufficient evidence in the record that the activity is performed, described as part of the research process, or taught by the resource.
+- Prefer the most specific allowed activity supported by the record. Do not select a broader parent activity when a more specific allowed activity clearly applies.
+- Do not infer activities solely from the presence of a tool, technology, dataset, discipline, topic, or research output. For example, mentioning a database does not by itself mean that the record performs a database-related activity.
+- Do not select activities merely because they could plausibly be part of the research. Base the classification on what the record explicitly describes or clearly demonstrates.
+- Select multiple activities when the record clearly involves multiple distinct research activities.
+- Do not add activities simply to make the classification more comprehensive; precision is more important than coverage.
 
 ${outputInstruction}
 
@@ -55,7 +77,7 @@ Allowed activities:
 ${tadirahActivities.map((activity) => activity.slice(TADIRAH_PREFIX.length)).join(', ')}`,
 }
 
-const describedFields = [
+const describedFields: EntityFieldName[] = [
   'type',
   'name',
   'given_name',
@@ -83,34 +105,8 @@ const describedFields = [
   'code_repository',
   'distribution_url',
   'material_url',
-  'doi',
   'same_as',
 ]
-
-type LangString = { language: string; value: string }
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
-
-function isLangString(value: unknown): value is LangString {
-  return (
-    isRecord(value) &&
-    typeof value.language === 'string' &&
-    typeof value.value === 'string'
-  )
-}
-
-function preferredLangStringValue(values: LangString[]): string | undefined {
-  const preferred =
-    values.find((item) => item.language.toLowerCase() === PREFERRED_LANGUAGE) ??
-    values.find((item) =>
-      item.language.toLowerCase().startsWith(`${PREFERRED_LANGUAGE}-`),
-    ) ??
-    values[0]
-
-  return preferred?.value.trim() || undefined
-}
 
 function renderFieldValue(value: unknown): string | undefined {
   if (typeof value === 'string') {
@@ -126,7 +122,7 @@ function renderFieldValue(value: unknown): string | undefined {
   }
 
   if (value.every(isLangString)) {
-    return preferredLangStringValue(value)
+    return preferredLangStringValue(value, PREFERRED_LANGUAGE)
   }
 
   const items = value
@@ -150,53 +146,6 @@ export function describeEntity(entity: object): string {
   }
 
   return lines.join('\n').slice(0, MAX_ENTITY_DESCRIPTION_LENGTH)
-}
-
-function responseItemText(item: unknown): string[] {
-  if (!isRecord(item) || !Array.isArray(item.content)) {
-    return []
-  }
-
-  return item.content.flatMap((part) =>
-    isRecord(part) && typeof part.text === 'string' ? [part.text] : [],
-  )
-}
-
-function extractResponseText(result: unknown): string {
-  if (typeof result === 'string') {
-    return result
-  }
-
-  if (!isRecord(result)) {
-    return ''
-  }
-
-  if (typeof result.response === 'string') {
-    return result.response
-  }
-
-  if (typeof result.output_text === 'string') {
-    return result.output_text
-  }
-
-  if (Array.isArray(result.choices)) {
-    const message = result.choices.find(isRecord)?.message
-
-    if (isRecord(message) && typeof message.content === 'string') {
-      return message.content
-    }
-  }
-
-  if (Array.isArray(result.output)) {
-    const messages = result.output.filter(
-      (item) => isRecord(item) && item.type === 'message',
-    )
-    const items = messages.length > 0 ? messages : result.output
-
-    return items.flatMap(responseItemText).join('\n')
-  }
-
-  return ''
 }
 
 function parseCommaSeparatedValues(text: string): string[] | undefined {
@@ -267,20 +216,6 @@ function toTadirahActivities(values: string[]): string[] {
   })
 }
 
-function usageAttributes(result: unknown): Record<string, unknown> {
-  if (!isRecord(result) || !isRecord(result.usage)) {
-    return { inputTokens: undefined, outputTokens: undefined }
-  }
-
-  const { usage } = result
-
-  return {
-    inputTokens: usage.input_tokens ?? usage.prompt_tokens,
-    outputTokens: usage.output_tokens ?? usage.completion_tokens,
-    totalTokens: usage.total_tokens,
-  }
-}
-
 export async function suggestEntityFieldValues(
   bindings: Bindings,
   logger: RequestLogger,
@@ -297,25 +232,12 @@ export async function suggestEntityFieldValues(
   }
 
   const prompt = `${fieldPrompts[field]}\n\n${entityDescription}`
-  const model = bindings.AI_MODEL?.trim() || DEFAULT_AI_MODEL
-  const startedAt = Date.now()
-  const result = await bindings.AI.run(model, {
-    messages: [{ role: 'user', content: prompt }],
-  })
-
-  logger.debug('AI suggestion completed', {
-    model,
-    field,
-    promptCharacters: prompt.length,
-    durationMs: Date.now() - startedAt,
-    ...usageAttributes(result),
-  })
-
-  const values = parseCommaSeparatedValues(extractResponseText(result))
+  const text = await runAiPrompt(bindings, logger, prompt, { field })
+  const values = parseCommaSeparatedValues(text)
 
   if (!values) {
     logger.warn('AI suggestion response was not a comma-separated list', {
-      model,
+      model: aiModel(bindings),
       field,
     })
 

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { AiMagicIcon, Loading03Icon } from '@hugeicons/core-free-icons'
+import { SparklesIcon, Loading03Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -65,15 +65,15 @@ export function SuggestValuesButton({
         <Button
           ref={triggerRef}
           type="button"
-          variant="ghost"
-          size="icon-sm"
+          variant="outline"
+          size="icon-lg"
           aria-label={t('entity.form.suggest_values')}
           isDisabled={isPending}
           onPress={handlePress}
         >
           <HugeiconsIcon
-            icon={isPending ? Loading03Icon : AiMagicIcon}
-            strokeWidth={2}
+            icon={isPending ? Loading03Icon : SparklesIcon}
+            strokeWidth={1}
             className={cn(
               isPending && 'animate-spin motion-reduce:animate-none',
             )}
