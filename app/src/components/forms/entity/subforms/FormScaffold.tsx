@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { FieldColumns } from '@/components/form-fields/FieldColumns'
 import { useAllowEntityDraft } from '@/hooks/useAllowEntityDraft'
 import { EntitySuggestionProvider } from '../suggestions-provider'
 
@@ -102,11 +103,11 @@ export function FormScaffold({
           <Separator />
         </div>
       </div>
-      <div className="columns-1 gap-4 lg:columns-2 [&>*]:mb-4 [&>*]:break-inside-avoid">
+      <FieldColumns gap={4}>
         <EntitySuggestionProvider form={form}>
           {children}
         </EntitySuggestionProvider>
-      </div>
+      </FieldColumns>
       <Dialog
         isOpen={status === 'blocked'}
         onOpenChange={(open) => {

@@ -8,6 +8,7 @@ import {
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
+import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -46,30 +47,32 @@ export const ProjectFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField
-          name="start_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.DatePickerField
-              label={
-                <EntityFieldLabel entityClass="Project" field="start_date" />
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="end_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.DatePickerField
-              label={
-                <EntityFieldLabel entityClass="Project" field="end_date" />
-              }
-            />
-          )}
-        </form.AppField>
+        <FieldPair>
+          <form.AppField
+            name="start_date"
+            validators={valueValidators({ kind: 'date' })}
+          >
+            {(field) => (
+              <field.DatePickerField
+                label={
+                  <EntityFieldLabel entityClass="Project" field="start_date" />
+                }
+              />
+            )}
+          </form.AppField>
+          <form.AppField
+            name="end_date"
+            validators={valueValidators({ kind: 'date' })}
+          >
+            {(field) => (
+              <field.DatePickerField
+                label={
+                  <EntityFieldLabel entityClass="Project" field="end_date" />
+                }
+              />
+            )}
+          </form.AppField>
+        </FieldPair>
         <form.AppField
           name="digital_humanities_activities"
           validators={stringArrayValidators({
@@ -176,180 +179,6 @@ export const ProjectFields = withForm({
                 />
               }
             />
-          )}
-        </form.AppField>
-
-        <form.AppField name="organization_roles" mode="array">
-          {(field) => (
-            <field.ArraySection
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="organization_roles"
-                />
-              }
-              defaultItem={{ organization: '' }}
-            >
-              {(index) => (
-                <>
-                  <form.AppField
-                    name={`organization_roles[${index}].organization`}
-                    validators={entityRefValidators(['idhi:Organization'], {
-                      required: true,
-                    })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EntityRefField
-                        required
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="organization"
-                          />
-                        }
-                        entityTypes={['idhi:Organization']}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].org_project_role`}
-                    validators={enumValidators(
-                      ProjectOrganizationRolesItemOrgProjectRole,
-                    )}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EnumSelectField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="org_project_role"
-                          />
-                        }
-                        options={ProjectOrganizationRolesItemOrgProjectRole}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`organization_roles[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="OrganizationProjectRole"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                </>
-              )}
-            </field.ArraySection>
-          )}
-        </form.AppField>
-
-        <form.AppField name="project_participations" mode="array">
-          {(field) => (
-            <field.ArraySection
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="project_participations"
-                />
-              }
-              defaultItem={{ participant: '' }}
-            >
-              {(index) => (
-                <>
-                  <form.AppField
-                    name={`project_participations[${index}].participant`}
-                    validators={entityRefValidators(['idhi:Person'], {
-                      required: true,
-                    })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EntityRefField
-                        required
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ProjectParticipation"
-                            field="participant"
-                          />
-                        }
-                        entityTypes={['idhi:Person']}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`project_participations[${index}].participation_role`}
-                    validators={enumValidators(
-                      ProjectProjectParticipationsItemParticipationRole,
-                    )}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EnumSelectField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ProjectParticipation"
-                            field="participation_role"
-                          />
-                        }
-                        options={
-                          ProjectProjectParticipationsItemParticipationRole
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`project_participations[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ProjectParticipation"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`project_participations[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ProjectParticipation"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                </>
-              )}
-            </field.ArraySection>
           )}
         </form.AppField>
 
@@ -467,6 +296,196 @@ export const ProjectFields = withForm({
               }
               entityTypes={['idhi:TrainingMaterial']}
             />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              type="url"
+              label={<EntityFieldLabel entityClass="Project" field="same_as" />}
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="organization_roles" mode="array">
+          {(field) => (
+            <field.ArraySection
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="organization_roles"
+                />
+              }
+              defaultItem={{ organization: '' }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`organization_roles[${index}].organization`}
+                    validators={entityRefValidators(['idhi:Organization'], {
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EntityRefField
+                        required
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="organization"
+                          />
+                        }
+                        entityTypes={['idhi:Organization']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_roles[${index}].org_project_role`}
+                    validators={enumValidators(
+                      ProjectOrganizationRolesItemOrgProjectRole,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationProjectRole"
+                            field="org_project_role"
+                          />
+                        }
+                        options={ProjectOrganizationRolesItemOrgProjectRole}
+                      />
+                    )}
+                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`organization_roles[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="OrganizationProjectRole"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`organization_roles[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="OrganizationProjectRole"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
+                </>
+              )}
+            </field.ArraySection>
+          )}
+        </form.AppField>
+
+        <form.AppField name="project_participations" mode="array">
+          {(field) => (
+            <field.ArraySection
+              label={
+                <EntityFieldLabel
+                  entityClass="Project"
+                  field="project_participations"
+                />
+              }
+              defaultItem={{ participant: '' }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`project_participations[${index}].participant`}
+                    validators={entityRefValidators(['idhi:Person'], {
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EntityRefField
+                        required
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="participant"
+                          />
+                        }
+                        entityTypes={['idhi:Person']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`project_participations[${index}].participation_role`}
+                    validators={enumValidators(
+                      ProjectProjectParticipationsItemParticipationRole,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="ProjectParticipation"
+                            field="participation_role"
+                          />
+                        }
+                        options={
+                          ProjectProjectParticipationsItemParticipationRole
+                        }
+                      />
+                    )}
+                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`project_participations[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="ProjectParticipation"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`project_participations[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="ProjectParticipation"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
+                </>
+              )}
+            </field.ArraySection>
           )}
         </form.AppField>
 
@@ -590,51 +609,41 @@ export const ProjectFields = withForm({
                       />
                     )}
                   </form.AppField>
-                  <form.AppField
-                    name={`funding[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Funding"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`funding[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Funding"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`funding[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Funding"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`funding[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Funding"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
                 </>
               )}
             </field.ArraySection>
-          )}
-        </form.AppField>
-        <form.AppField
-          name="same_as"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              type="url"
-              label={<EntityFieldLabel entityClass="Project" field="same_as" />}
-              placeholder="https://…"
-            />
           )}
         </form.AppField>
       </>

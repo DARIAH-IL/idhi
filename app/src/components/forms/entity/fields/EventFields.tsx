@@ -5,6 +5,7 @@ import {
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
+import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -55,28 +56,32 @@ export const EventFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField
-          name="start_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.DatePickerField
-              label={
-                <EntityFieldLabel entityClass="Event" field="start_date" />
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="end_date"
-          validators={valueValidators({ kind: 'date' })}
-        >
-          {(field) => (
-            <field.DatePickerField
-              label={<EntityFieldLabel entityClass="Event" field="end_date" />}
-            />
-          )}
-        </form.AppField>
+        <FieldPair>
+          <form.AppField
+            name="start_date"
+            validators={valueValidators({ kind: 'date' })}
+          >
+            {(field) => (
+              <field.DatePickerField
+                label={
+                  <EntityFieldLabel entityClass="Event" field="start_date" />
+                }
+              />
+            )}
+          </form.AppField>
+          <form.AppField
+            name="end_date"
+            validators={valueValidators({ kind: 'date' })}
+          >
+            {(field) => (
+              <field.DatePickerField
+                label={
+                  <EntityFieldLabel entityClass="Event" field="end_date" />
+                }
+              />
+            )}
+          </form.AppField>
+        </FieldPair>
         <form.AppField
           name="homepage"
           validators={valueValidators({ kind: 'url' })}
@@ -126,6 +131,18 @@ export const EventFields = withForm({
               label={
                 <EntityFieldLabel entityClass="Event" field="additional_urls" />
               }
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              type="url"
+              label={<EntityFieldLabel entityClass="Event" field="same_as" />}
               placeholder="https://…"
             />
           )}
@@ -184,51 +201,41 @@ export const EventFields = withForm({
                       />
                     )}
                   </form.AppField>
-                  <form.AppField
-                    name={`event_agent_roles[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="EventAgentRole"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`event_agent_roles[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="EventAgentRole"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`event_agent_roles[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="EventAgentRole"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`event_agent_roles[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="EventAgentRole"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
                 </>
               )}
             </field.ArraySection>
-          )}
-        </form.AppField>
-        <form.AppField
-          name="same_as"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              type="url"
-              label={<EntityFieldLabel entityClass="Event" field="same_as" />}
-              placeholder="https://…"
-            />
           )}
         </form.AppField>
       </>

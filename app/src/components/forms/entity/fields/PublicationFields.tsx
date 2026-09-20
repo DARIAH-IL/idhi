@@ -5,6 +5,7 @@ import {
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
+import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
   entityRefArrayValidators,
   entityRefValidators,
@@ -150,6 +151,52 @@ export const PublicationFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField
+          name="part_of"
+          validators={entityRefValidators(['idhi:Publication'], {
+            allowExternalUrl: true,
+          })}
+        >
+          {(field) => (
+            <field.EntityRefField
+              label={
+                <EntityFieldLabel entityClass="Publication" field="part_of" />
+              }
+              entityTypes={['idhi:Publication']}
+              allowExternalUrl
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="presented_at"
+          validators={entityRefArrayValidators(['idhi:Event'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="presented_at"
+                />
+              }
+              entityTypes={['idhi:Event']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              type="url"
+              label={
+                <EntityFieldLabel entityClass="Publication" field="same_as" />
+              }
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
 
         <form.AppField name="authorships" mode="array">
           {(field) => (
@@ -218,85 +265,41 @@ export const PublicationFields = withForm({
                       />
                     )}
                   </form.AppField>
-                  <form.AppField
-                    name={`authorships[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Authorship"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`authorships[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Authorship"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`authorships[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Authorship"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`authorships[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Authorship"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
                 </>
               )}
             </field.ArraySection>
-          )}
-        </form.AppField>
-        <form.AppField
-          name="part_of"
-          validators={entityRefValidators(['idhi:Publication'], {
-            allowExternalUrl: true,
-          })}
-        >
-          {(field) => (
-            <field.EntityRefField
-              label={
-                <EntityFieldLabel entityClass="Publication" field="part_of" />
-              }
-              entityTypes={['idhi:Publication']}
-              allowExternalUrl
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="presented_at"
-          validators={entityRefArrayValidators(['idhi:Event'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Publication"
-                  field="presented_at"
-                />
-              }
-              entityTypes={['idhi:Event']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="same_as"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              type="url"
-              label={
-                <EntityFieldLabel entityClass="Publication" field="same_as" />
-              }
-              placeholder="https://…"
-            />
           )}
         </form.AppField>
       </>

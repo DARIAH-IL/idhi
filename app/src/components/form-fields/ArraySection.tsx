@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import { DragHandle } from './DragHandle'
+import { FieldColumns } from './FieldColumns'
 import { NestedFields, useFieldRowClass } from './FieldNesting'
 import { focusAfterRemove } from './removeFocus'
 import { useReorderableList } from './useReorderableList'
@@ -33,17 +34,18 @@ export function ArraySection({ label, defaultItem, children }: Props) {
     <div
       ref={containerRef}
       data-remove-scope=""
-      className={cn('flex flex-col gap-2 lg:[column-span:all]', rowClass)}
+      data-full-width=""
+      className={cn('flex flex-col gap-2', rowClass)}
     >
       <Label>{label}</Label>
       <div className="ms-3 flex flex-col gap-3">
         {items.map((_, index) => (
           <div
             key={index}
-            className="columns-1 gap-2 rounded border p-3 lg:columns-2 [&>*]:mb-2 [&>*]:break-inside-avoid"
+            className="flex flex-col gap-2 rounded border p-3"
             {...getRowProps(index)}
           >
-            <div className="flex items-center justify-between [column-span:all]">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <DragHandle {...getHandleProps(index)} />
                 <span className="text-xs font-medium">#{index + 1}</span>
@@ -62,7 +64,9 @@ export function ArraySection({ label, defaultItem, children }: Props) {
                 ×
               </Button>
             </div>
-            <NestedFields>{children(index)}</NestedFields>
+            <FieldColumns gap={2}>
+              <NestedFields>{children(index)}</NestedFields>
+            </FieldColumns>
           </div>
         ))}
         <Button

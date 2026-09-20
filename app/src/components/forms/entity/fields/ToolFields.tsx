@@ -7,6 +7,7 @@ import {
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
+import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -176,6 +177,18 @@ export const ToolFields = withForm({
             />
           )}
         </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              type="url"
+              label={<EntityFieldLabel entityClass="Tool" field="same_as" />}
+              placeholder="https://…"
+            />
+          )}
+        </form.AppField>
 
         <form.AppField name="resource_contributions" mode="array">
           {(field) => (
@@ -232,51 +245,41 @@ export const ToolFields = withForm({
                       />
                     )}
                   </form.AppField>
-                  <form.AppField
-                    name={`resource_contributions[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ResourceContribution"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`resource_contributions[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="ResourceContribution"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`resource_contributions[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="ResourceContribution"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`resource_contributions[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="ResourceContribution"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
                 </>
               )}
             </field.ArraySection>
-          )}
-        </form.AppField>
-        <form.AppField
-          name="same_as"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              type="url"
-              label={<EntityFieldLabel entityClass="Tool" field="same_as" />}
-              placeholder="https://…"
-            />
           )}
         </form.AppField>
       </>

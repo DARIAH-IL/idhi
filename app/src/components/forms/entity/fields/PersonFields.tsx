@@ -2,6 +2,7 @@ import { PersonAffiliationsItemAffiliationRole } from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
+import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
   entityRefValidators,
   enumValidators,
@@ -18,6 +19,37 @@ export const PersonFields = withForm({
     const duplicateCheck = useDuplicateCheck()
     return (
       <>
+        <form.AppField
+          name="given_name"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="given_name" />
+              }
+              onItemBlur={(value) =>
+                duplicateCheck?.check('given_name.value', value)
+              }
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="family_name"
+          validators={localizedValueValidators()}
+        >
+          {(field) => (
+            <field.LangStringField
+              label={
+                <EntityFieldLabel entityClass="Person" field="family_name" />
+              }
+              onItemBlur={(value) =>
+                duplicateCheck?.check('family_name.value', value)
+              }
+            />
+          )}
+        </form.AppField>
+
         <form.AppField
           name="orcid"
           validators={valueValidators({ kind: 'orcid' })}
@@ -57,36 +89,6 @@ export const PersonFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="given_name"
-          validators={localizedValueValidators()}
-        >
-          {(field) => (
-            <field.LangStringField
-              label={
-                <EntityFieldLabel entityClass="Person" field="given_name" />
-              }
-              onItemBlur={(value) =>
-                duplicateCheck?.check('given_name.value', value)
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="family_name"
-          validators={localizedValueValidators()}
-        >
-          {(field) => (
-            <field.LangStringField
-              label={
-                <EntityFieldLabel entityClass="Person" field="family_name" />
-              }
-              onItemBlur={(value) =>
-                duplicateCheck?.check('family_name.value', value)
-              }
-            />
-          )}
-        </form.AppField>
-        <form.AppField
           name="emails"
           validators={stringArrayValidators({ kind: 'email' })}
         >
@@ -120,6 +122,18 @@ export const PersonFields = withForm({
                 <EntityFieldLabel entityClass="Person" field="description" />
               }
               multiline
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="same_as"
+          validators={stringArrayValidators({ kind: 'url' })}
+        >
+          {(field) => (
+            <field.StringArrayField
+              type="url"
+              label={<EntityFieldLabel entityClass="Person" field="same_as" />}
+              placeholder="https://…"
             />
           )}
         </form.AppField>
@@ -171,51 +185,41 @@ export const PersonFields = withForm({
                       />
                     )}
                   </form.AppField>
-                  <form.AppField
-                    name={`affiliations[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Affiliation"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`affiliations[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="Affiliation"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
+                  <FieldPair>
+                    <form.AppField
+                      name={`affiliations[${index}].start_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Affiliation"
+                              field="start_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                    <form.AppField
+                      name={`affiliations[${index}].end_date`}
+                      validators={valueValidators({ kind: 'date' })}
+                    >
+                      {(nestedField) => (
+                        <nestedField.DatePickerField
+                          label={
+                            <EntityFieldLabel
+                              entityClass="Affiliation"
+                              field="end_date"
+                            />
+                          }
+                        />
+                      )}
+                    </form.AppField>
+                  </FieldPair>
                 </>
               )}
             </field.ArraySection>
-          )}
-        </form.AppField>
-        <form.AppField
-          name="same_as"
-          validators={stringArrayValidators({ kind: 'url' })}
-        >
-          {(field) => (
-            <field.StringArrayField
-              type="url"
-              label={<EntityFieldLabel entityClass="Person" field="same_as" />}
-              placeholder="https://…"
-            />
           )}
         </form.AppField>
       </>
