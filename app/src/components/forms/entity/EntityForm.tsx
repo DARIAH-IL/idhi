@@ -4,7 +4,6 @@ import type { EntityType } from '@/lib/entity'
 import { DuplicateCheckProvider } from './duplicate-check'
 import { DatasetForm } from './subforms/DatasetForm'
 import { EventForm } from './subforms/EventForm'
-import { FacilityForm } from './subforms/FacilityForm'
 import { OrganizationForm } from './subforms/OrganizationForm'
 import { PersonForm } from './subforms/PersonForm'
 import { ProjectForm } from './subforms/ProjectForm'
@@ -69,13 +68,6 @@ function renderEntitySubform({
       }
       const { audit: _audit, ...organization } = entity
       return <OrganizationForm {...props} organization={organization} />
-    }
-    case 'idhi:Facility': {
-      if (entity?.type !== entityType) {
-        return <FacilityForm {...props} />
-      }
-      const { audit: _audit, ...facility } = entity
-      return <FacilityForm {...props} facility={facility} />
     }
     case 'idhi:Project': {
       if (entity?.type !== entityType) {

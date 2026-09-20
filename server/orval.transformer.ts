@@ -3,7 +3,6 @@ type JsonObject = Record<string, unknown>
 const ENTITY_SCHEMAS = {
   Person: 'idhi:Person',
   Organization: 'idhi:Organization',
-  Facility: 'idhi:Facility',
   Project: 'idhi:Project',
   Tool: 'idhi:Tool',
   Service: 'idhi:Service',

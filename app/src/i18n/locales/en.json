@@ -73,8 +73,6 @@
       "doi": "DOI",
       "email": "Email address",
       "end_date": "End date",
-      "facility": "Facility",
-      "facility_role": "Facility role",
       "funding": "Funding",
       "homepage_url": "Homepage",
       "id": "ID",
@@ -424,7 +422,6 @@
     "types": {
       "idhi:Person": "Person",
       "idhi:Organization": "Organization",
-      "idhi:Facility": "Facility",
       "idhi:Project": "Project",
       "idhi:Tool": "Tool",
       "idhi:Service": "Service",
@@ -436,7 +433,6 @@
     "typesPlural": {
       "idhi:Person": "People",
       "idhi:Organization": "Organizations",
-      "idhi:Facility": "Facilities",
       "idhi:Project": "Projects",
       "idhi:Tool": "Tools",
       "idhi:Service": "Services",
@@ -656,10 +652,6 @@
         "SEMINAR": "Seminar",
         "WORKSHOP": "Workshop"
       },
-      "facility_affiliation_role": {
-        "HOST": "Host",
-        "OWNER": "Owner"
-      },
       "funding_currency": {
         "EUR": "€ (EUR)",
         "ILS": "₪ (ILS)",
@@ -686,6 +678,10 @@
         "FUNDER": "Funder",
         "HOST": "Host",
         "PARTNER": "Partner"
+      },
+      "organization_structure_role": {
+        "HOST": "Host",
+        "OWNER": "Owner"
       },
       "organization_type": {
         "ACADEMIC_INSTITUTION": "Academic institution",
@@ -914,7 +910,7 @@
       "Organization": {
         "$self": {
           "label": "$t(common.labels.organization)",
-          "description": "An organization of any kind - university, gallery, library, archive, museum, research center, funder, company or non-profit."
+          "description": "An organization of any kind, at any level of granularity - university, gallery, library, archive, museum, research center, funder, company or non-profit. A unit with an identity of its own, such as a university digital humanities lab or a library digitization studio, gets an entry of its own and points at its parent through the organization structure."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -954,7 +950,7 @@
         },
         "organization_structure": {
           "label": "$t(common.labels.organization_structure)",
-          "description": "The organization’s formal place within larger parent organizations, such as a department within a university, including the relevant dates."
+          "description": "The organization’s formal place within larger parent organizations, such as a department within a university, including each parent’s role and the relevant dates."
         },
         "organization_type": {
           "label": "Organization type",
@@ -968,67 +964,9 @@
           "label": "$t(common.labels.same_as)",
           "description": "Links that identify the same organization in other systems, such as Wikidata."
         },
-        "tags": {
-          "label": "$t(common.labels.tags)",
-          "description": "$t(common.field_descriptions.tags)"
-        },
-        "type": {
-          "label": "$t(common.labels.type)",
-          "description": "$t(common.field_descriptions.type)"
-        }
-      },
-      "Facility": {
-        "$self": {
-          "label": "Facility",
-          "description": "A physical or virtual facility such as a digital humanities lab, digitization studio or research infrastructure. Use a facility when the unit offers services or tools and has an identity of its own, distinct from its host organization; otherwise use the organization itself."
-        },
-        "additional_urls": {
-          "label": "$t(common.labels.additional_urls)",
-          "description": "Other relevant web pages about the facility, such as a blog, social-media profile or press coverage."
-        },
-        "address": {
-          "label": "$t(common.labels.address)",
-          "description": "The facility’s postal address."
-        },
-        "contact_email": {
-          "label": "$t(common.labels.contact_email)",
-          "description": "A published contact address for the facility, such as a lab or service-desk mailbox."
-        },
-        "description": {
-          "label": "$t(common.labels.description)",
-          "description": "An overview of the facility and what it offers researchers."
-        },
-        "facility_affiliations": {
-          "label": "Facility affiliations",
-          "description": "The organizations that host or own the facility, including their roles and periods of involvement."
-        },
-        "homepage": {
-          "label": "$t(common.labels.homepage_url)",
-          "description": "The facility’s main public web page."
-        },
-        "id": {
-          "label": "$t(common.labels.id)",
-          "description": "$t(common.field_descriptions.id)"
-        },
-        "image": {
-          "label": "$t(common.labels.image)",
-          "description": "A photo, logo or other image that represents the facility."
-        },
-        "location": {
-          "label": "$t(common.labels.location)",
-          "description": "The place where the facility is situated, such as a city."
-        },
-        "name": {
-          "label": "$t(common.labels.name)",
-          "description": "The name by which the facility is publicly known."
-        },
-        "same_as": {
-          "label": "$t(common.labels.same_as)",
-          "description": "Links that identify the same facility in other systems."
-        },
         "services_offered": {
           "label": "Services offered",
-          "description": "Services this facility offers to researchers."
+          "description": "Services this organization offers to researchers. List them on the unit that actually delivers them, such as a lab, rather than on its parent institution."
         },
         "tags": {
           "label": "$t(common.labels.tags)",
@@ -1036,7 +974,7 @@
         },
         "tools_provided": {
           "label": "Tools provided",
-          "description": "Software tools maintained by the facility or made available through it, including hosted services and lab-supported software."
+          "description": "Software tools maintained by the organization or made available through it, including hosted services and lab-supported software."
         },
         "type": {
           "label": "$t(common.labels.type)",
@@ -1067,10 +1005,6 @@
         "end_date": {
           "label": "$t(common.labels.end_date)",
           "description": "The date on which the project concluded."
-        },
-        "facility_roles": {
-          "label": "Facility roles",
-          "description": "Facilities engaged in the project - as coordinator, partner, data provider or host."
         },
         "funding": {
           "label": "$t(common.labels.funding)",
@@ -1242,7 +1176,7 @@
       "Service": {
         "$self": {
           "label": "Service",
-          "description": "An offering delivered by people at a facility or organization, such as digitization on demand or data curation support."
+          "description": "An offering delivered by people at an organization, such as digitization on demand or data curation support."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -1731,50 +1665,6 @@
           "description": "The date the person’s or organization’s involvement in the event began."
         }
       },
-      "FacilityAffiliation": {
-        "$self": {
-          "label": "Facility affiliation",
-          "description": "The facility’s relationship with a hosting or owning organization."
-        },
-        "end_date": {
-          "label": "$t(common.labels.end_date)",
-          "description": "The date on which the organization’s relationship with the facility ended."
-        },
-        "facility_affiliation_role": {
-          "label": "Facility affiliation role",
-          "description": "The organization’s relationship to the facility, as its host or owner."
-        },
-        "organization": {
-          "label": "$t(common.labels.organization)",
-          "description": "The organization that hosts or owns the facility."
-        },
-        "start_date": {
-          "label": "$t(common.labels.start_date)",
-          "description": "When the organization’s relationship with the facility began."
-        }
-      },
-      "FacilityProjectRole": {
-        "$self": {
-          "label": "$t(common.labels.facility_role)",
-          "description": "A facility’s engagement in the project."
-        },
-        "end_date": {
-          "label": "$t(common.labels.end_date)",
-          "description": "The date on which the facility’s involvement in the project ended."
-        },
-        "facility": {
-          "label": "$t(common.labels.facility)",
-          "description": "The facility engaged in the project."
-        },
-        "org_project_role": {
-          "label": "$t(common.labels.facility_role)",
-          "description": "The facility’s function in the project, such as coordinator, partner, data provider or host."
-        },
-        "start_date": {
-          "label": "$t(common.labels.start_date)",
-          "description": "When the facility’s involvement in the project began."
-        }
-      },
       "Funding": {
         "$self": {
           "label": "$t(common.labels.funding)",
@@ -1839,6 +1729,10 @@
         "end_date": {
           "label": "$t(common.labels.end_date)",
           "description": "The date on which the organization stopped being part of its parent."
+        },
+        "organization_structure_role": {
+          "label": "Parent organization role",
+          "description": "The parent organization’s relationship to this organization, as its host or owner. Leave it empty for ordinary containment."
         },
         "parent_organization": {
           "label": "Parent organization",
@@ -1928,11 +1822,9 @@
       "labels": {
         "people_affiliated_with_organization": "Affiliated people",
         "organizations_within_organization": "Sub-organizations",
-        "facilities_affiliated_with_organization": "Affiliated facilities",
-        "facilities_offering_service": "Available at facilities",
-        "facilities_providing_tool": "Provided by facilities",
+        "organizations_offering_service": "Available at organizations",
+        "organizations_providing_tool": "Provided by organizations",
         "projects_involving_organization": "Involved projects",
-        "projects_involving_facility": "Involved projects",
         "projects_involving_person": "Involved projects",
         "projects_funded_by_organization": "Funded projects",
         "projects_using_dataset": "Used by projects",

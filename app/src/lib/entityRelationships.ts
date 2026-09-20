@@ -43,22 +43,15 @@ const ENTITY_RELATIONSHIPS = {
       targetTypes: ['idhi:Organization'],
       label: 'organizations_within_organization',
     },
-  ],
-  'idhi:Facility': [
-    {
-      path: 'facility_affiliations.organization',
-      targetTypes: ['idhi:Organization'],
-      label: 'facilities_affiliated_with_organization',
-    },
     {
       path: 'services_offered',
       targetTypes: ['idhi:Service'],
-      label: 'facilities_offering_service',
+      label: 'organizations_offering_service',
     },
     {
       path: 'tools_provided',
       targetTypes: ['idhi:Tool'],
-      label: 'facilities_providing_tool',
+      label: 'organizations_providing_tool',
     },
   ],
   'idhi:Project': [
@@ -66,11 +59,6 @@ const ENTITY_RELATIONSHIPS = {
       path: 'organization_roles.organization',
       targetTypes: ['idhi:Organization'],
       label: 'projects_involving_organization',
-    },
-    {
-      path: 'facility_roles.facility',
-      targetTypes: ['idhi:Facility'],
-      label: 'projects_involving_facility',
     },
     {
       path: 'project_participations.participant',

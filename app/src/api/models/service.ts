@@ -11,7 +11,7 @@ import type { ServiceServiceType } from './serviceServiceType.ts'
 import type { ServiceType } from './serviceType.ts'
 
 /**
- * A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.
+ * A reusable, human- or organization-mediated service offered by an organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.
  */
 export interface Service {
   /**
@@ -60,7 +60,7 @@ export interface Service {
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: ServiceNameItem[]
   /**
-   * The organization formally responsible for delivering the service (the one you'd contact or contract with) — set this even when the service is listed under a Facility.
+   * The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.
    * @nullable
    */
   provider?: string | null

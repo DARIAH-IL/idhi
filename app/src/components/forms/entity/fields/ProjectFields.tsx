@@ -1,6 +1,5 @@
 import {
   ProjectDigitalHumanitiesActivitiesItem,
-  ProjectFacilityRolesItemOrgProjectRole,
   ProjectFundingItemFundingCurrency,
   ProjectFundingStatus,
   ProjectOrganizationRolesItemOrgProjectRole,
@@ -254,92 +253,6 @@ export const ProjectFields = withForm({
                         label={
                           <EntityFieldLabel
                             entityClass="OrganizationProjectRole"
-                            field="end_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                </>
-              )}
-            </field.ArraySection>
-          )}
-        </form.AppField>
-
-        <form.AppField name="facility_roles" mode="array">
-          {(field) => (
-            <field.ArraySection
-              label={
-                <EntityFieldLabel
-                  entityClass="Project"
-                  field="facility_roles"
-                />
-              }
-              defaultItem={{ facility: '' }}
-            >
-              {(index) => (
-                <>
-                  <form.AppField
-                    name={`facility_roles[${index}].facility`}
-                    validators={entityRefValidators(['idhi:Facility'], {
-                      required: true,
-                    })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EntityRefField
-                        required
-                        label={
-                          <EntityFieldLabel
-                            entityClass="FacilityProjectRole"
-                            field="facility"
-                          />
-                        }
-                        entityTypes={['idhi:Facility']}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`facility_roles[${index}].org_project_role`}
-                    validators={enumValidators(
-                      ProjectFacilityRolesItemOrgProjectRole,
-                    )}
-                  >
-                    {(nestedField) => (
-                      <nestedField.EnumSelectField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="FacilityProjectRole"
-                            field="org_project_role"
-                          />
-                        }
-                        options={ProjectFacilityRolesItemOrgProjectRole}
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`facility_roles[${index}].start_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="FacilityProjectRole"
-                            field="start_date"
-                          />
-                        }
-                      />
-                    )}
-                  </form.AppField>
-                  <form.AppField
-                    name={`facility_roles[${index}].end_date`}
-                    validators={valueValidators({ kind: 'date' })}
-                  >
-                    {(nestedField) => (
-                      <nestedField.DatePickerField
-                        label={
-                          <EntityFieldLabel
-                            entityClass="FacilityProjectRole"
                             field="end_date"
                           />
                         }

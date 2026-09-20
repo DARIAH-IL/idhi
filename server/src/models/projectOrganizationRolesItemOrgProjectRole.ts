@@ -6,7 +6,7 @@
  */
 
 /**
- * An organization's or facility's role in a project (one instance per role).
+ * An organization's role in a project (one instance per role).
  */
 export type ProjectOrganizationRolesItemOrgProjectRole =
   (typeof ProjectOrganizationRolesItemOrgProjectRole)[keyof typeof ProjectOrganizationRolesItemOrgProjectRole]

@@ -898,7 +898,6 @@ components:
       oneOf:
         - $ref: "#/components/schemas/Person"
         - $ref: "#/components/schemas/Organization"
-        - $ref: "#/components/schemas/Facility"
         - $ref: "#/components/schemas/Project"
         - $ref: "#/components/schemas/Tool"
         - $ref: "#/components/schemas/Service"
@@ -911,7 +910,6 @@ components:
         mapping:
           "idhi:Person": "#/components/schemas/Person"
           "idhi:Organization": "#/components/schemas/Organization"
-          "idhi:Facility": "#/components/schemas/Facility"
           "idhi:Project": "#/components/schemas/Project"
           "idhi:Tool": "#/components/schemas/Tool"
           "idhi:Service": "#/components/schemas/Service"
@@ -934,14 +932,6 @@ components:
         id:
           type: string
           pattern: ^idhi:organization:[0-9a-z]{4,12}$
-          readOnly: true
-
-    Facility:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Facility"
-      properties:
-        id:
-          type: string
-          pattern: ^idhi:facility:[0-9a-z]{4,12}$
           readOnly: true
 
     Project:

@@ -7,7 +7,6 @@ import {
   Database01Icon,
   File01Icon,
   FolderManagementIcon,
-  HierarchyIcon,
   GraduationCapIcon,
   DrawingCompassIcon,
   UserIcon,
@@ -19,7 +18,6 @@ import { cn } from '@/lib/utils'
 const ICONS = {
   'idhi:Person': UserIcon,
   'idhi:Organization': Building03Icon,
-  'idhi:Facility': HierarchyIcon,
   'idhi:Project': FolderManagementIcon,
   'idhi:Tool': DrawingCompassIcon,
   'idhi:Service': UngroupLayersIcon,
@@ -32,12 +30,11 @@ const ICONS = {
 const COLORS = {
   'idhi:Person': 'bg-sky-100 text-sky-700',
   'idhi:Organization': 'bg-violet-100 text-violet-700',
-  'idhi:Facility': 'bg-teal-100 text-teal-700',
   'idhi:Project': 'bg-amber-100 text-amber-700',
   'idhi:Tool': 'bg-slate-200 text-slate-700',
   'idhi:Service': 'bg-cyan-100 text-cyan-700',
   'idhi:Publication': 'bg-rose-100 text-rose-700',
-  'idhi:Event': 'bg-orange-100 text-orange-700',
+  'idhi:Event': 'bg-fuchsia-100 text-fuchsia-700',
   'idhi:Dataset': 'bg-indigo-100 text-indigo-700',
   'idhi:TrainingMaterial': 'bg-emerald-100 text-emerald-700',
 } satisfies Record<EntityType, string>

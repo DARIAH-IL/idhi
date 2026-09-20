@@ -6,7 +6,6 @@
  */
 import type { Dataset } from './dataset.ts'
 import type { Event } from './event.ts'
-import type { Facility } from './facility.ts'
 import type { Organization } from './organization.ts'
 import type { Person } from './person.ts'
 import type { Project } from './project.ts'
@@ -18,7 +17,6 @@ import type { TrainingMaterial } from './trainingMaterial.ts'
 export type Entity =
   | Person
   | Organization
-  | Facility
   | Project
   | Tool
   | Service

@@ -77,8 +77,6 @@
       "doi": "DOI",
       "email": "عنوان البريد الإلكتروني",
       "end_date": "تاريخ الانتهاء",
-      "facility": "مرفق",
-      "facility_role": "الدور في المرفق",
       "funding": "التمويل",
       "homepage_url": "الصفحة الرئيسية",
       "id": "المعرّف",
@@ -428,7 +426,6 @@
     "types": {
       "idhi:Person": "شخص",
       "idhi:Organization": "مؤسسة",
-      "idhi:Facility": "مرفق",
       "idhi:Project": "مشروع",
       "idhi:Tool": "أداة",
       "idhi:Service": "خدمة",
@@ -440,7 +437,6 @@
     "typesPlural": {
       "idhi:Person": "أشخاص",
       "idhi:Organization": "مؤسسات",
-      "idhi:Facility": "مرافق",
       "idhi:Project": "مشاريع",
       "idhi:Tool": "أدوات",
       "idhi:Service": "خدمات",
@@ -660,10 +656,6 @@
         "SEMINAR": "ندوة",
         "WORKSHOP": "ورشة عمل"
       },
-      "facility_affiliation_role": {
-        "HOST": "استضافة",
-        "OWNER": "ملكية"
-      },
       "funding_currency": {
         "EUR": "€ (EUR)",
         "ILS": "₪ (ILS)",
@@ -690,6 +682,10 @@
         "FUNDER": "تمويل",
         "HOST": "استضافة",
         "PARTNER": "شراكة"
+      },
+      "organization_structure_role": {
+        "HOST": "استضافة",
+        "OWNER": "ملكية"
       },
       "organization_type": {
         "ACADEMIC_INSTITUTION": "مؤسسة أكاديمية",
@@ -918,7 +914,7 @@
       "Organization": {
         "$self": {
           "label": "$t(common.labels.organization)",
-          "description": "مؤسسة من أي نوع - جامعة أو صالة عرض أو مكتبة أو أرشيف أو متحف أو مركز أبحاث أو جهة ممولة أو شركة أو منظمة غير ربحية."
+          "description": "مؤسسة من أي نوع وبأي مستوى من التفصيل - جامعة أو غاليري أو مكتبة أو أرشيف أو متحف أو مركز بحثي أو جهة مموّلة أو شركة أو منظمة غير ربحية. أما الوحدة ذات الهوية الخاصة بها، مثل مختبر العلوم الإنسانية الرقمية في جامعة أو استوديو الرقمنة في مكتبة، فتحصل على سجل خاص بها وتشير إلى مؤسستها الأم عبر بنية المؤسسة."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -958,7 +954,7 @@
         },
         "organization_structure": {
           "label": "$t(common.labels.organization_structure)",
-          "description": "الموقع الرسمي للمؤسسة داخل مؤسسات أم أكبر، مثل قسم داخل جامعة، بما في ذلك التواريخ ذات الصلة."
+          "description": "موقع المؤسسة الرسمي داخل مؤسسات أم أكبر، مثل قسم داخل جامعة، بما في ذلك دور كل مؤسسة أم والتواريخ المعنية."
         },
         "organization_type": {
           "label": "نوع المؤسسة",
@@ -972,67 +968,9 @@
           "label": "$t(common.labels.same_as)",
           "description": "روابط تحدّد المؤسسة نفسها في أنظمة أخرى، مثل Wikidata."
         },
-        "tags": {
-          "label": "$t(common.labels.tags)",
-          "description": "$t(common.field_descriptions.tags)"
-        },
-        "type": {
-          "label": "$t(common.labels.type)",
-          "description": "$t(common.field_descriptions.type)"
-        }
-      },
-      "Facility": {
-        "$self": {
-          "label": "مرفق",
-          "description": "مرفق مادي أو افتراضي مثل مختبر علوم إنسانية رقمية أو استوديو رقمنة أو بنية تحتية بحثية. يُستخدم المرفق عندما تقدّم الوحدة خدمات أو أدوات ولها هوية مستقلة عن المؤسسة المضيفة؛ وإلا فتُستخدم المؤسسة نفسها."
-        },
-        "additional_urls": {
-          "label": "$t(common.labels.additional_urls)",
-          "description": "صفحات ويب أخرى ذات صلة بالمرفق، مثل مدونة أو ملف على شبكة اجتماعية أو تغطية صحفية."
-        },
-        "address": {
-          "label": "$t(common.labels.address)",
-          "description": "العنوان البريدي للمرفق."
-        },
-        "contact_email": {
-          "label": "$t(common.labels.contact_email)",
-          "description": "عنوان تواصل معلن للمرفق، مثل بريد مختبر أو مكتب خدمة."
-        },
-        "description": {
-          "label": "$t(common.labels.description)",
-          "description": "لمحة عامة عن المرفق وما يقدّمه لمجتمع البحث."
-        },
-        "facility_affiliations": {
-          "label": "انتماءات المرفق",
-          "description": "المؤسسات التي تستضيف المرفق أو تملكه، بما في ذلك أدوارها وفترات مشاركتها."
-        },
-        "homepage": {
-          "label": "$t(common.labels.homepage_url)",
-          "description": "صفحة الويب العلنية الرئيسية للمرفق."
-        },
-        "id": {
-          "label": "$t(common.labels.id)",
-          "description": "$t(common.field_descriptions.id)"
-        },
-        "image": {
-          "label": "$t(common.labels.image)",
-          "description": "صورة فوتوغرافية أو شعار أو صورة أخرى تمثّل المرفق."
-        },
-        "location": {
-          "label": "$t(common.labels.location)",
-          "description": "المكان الذي يقع فيه المرفق، مثل مدينة."
-        },
-        "name": {
-          "label": "$t(common.labels.name)",
-          "description": "الاسم الذي يُعرف به المرفق علنًا."
-        },
-        "same_as": {
-          "label": "$t(common.labels.same_as)",
-          "description": "روابط تحدّد المرفق نفسه في أنظمة أخرى."
-        },
         "services_offered": {
-          "label": "الخدمات المقدَّمة",
-          "description": "الخدمات التي يقدّمها هذا المرفق لمجتمع البحث."
+          "label": "الخدمات المقدّمة",
+          "description": "الخدمات التي تقدّمها هذه المؤسسة لمجتمع البحث. تُدرَج لدى الوحدة التي تقدّمها فعليًا، مثل مختبر، لا لدى المؤسسة الأم."
         },
         "tags": {
           "label": "$t(common.labels.tags)",
@@ -1040,7 +978,7 @@
         },
         "tools_provided": {
           "label": "الأدوات المتوفرة",
-          "description": "أدوات برمجية يصونها المرفق أو يتيحها، بما في ذلك الخدمات المستضافة والبرمجيات المدعومة من المختبر."
+          "description": "أدوات برمجية تصونها المؤسسة أو تتيحها، بما في ذلك الخدمات المستضافة والبرمجيات المدعومة من المختبر."
         },
         "type": {
           "label": "$t(common.labels.type)",
@@ -1071,10 +1009,6 @@
         "end_date": {
           "label": "$t(common.labels.end_date)",
           "description": "التاريخ الذي انتهى فيه المشروع."
-        },
-        "facility_roles": {
-          "label": "أدوار المرافق",
-          "description": "المرافق المشاركة في المشروع - في التنسيق أو الشراكة أو توفير البيانات أو الاستضافة."
         },
         "funding": {
           "label": "$t(common.labels.funding)",
@@ -1246,7 +1180,7 @@
       "Service": {
         "$self": {
           "label": "خدمة",
-          "description": "خدمة يقدّمها أشخاص في مرفق أو مؤسسة، مثل الرقمنة عند الطلب أو دعم رعاية البيانات."
+          "description": "خدمة يقدّمها أشخاص في مؤسسة، مثل الرقمنة عند الطلب أو دعم رعاية البيانات."
         },
         "additional_urls": {
           "label": "$t(common.labels.additional_urls)",
@@ -1735,50 +1669,6 @@
           "description": "تاريخ بدء مشاركة الشخص أو المؤسسة في الفعالية."
         }
       },
-      "FacilityAffiliation": {
-        "$self": {
-          "label": "انتماء المرفق",
-          "description": "علاقة المرفق بمؤسسة مضيفة أو مالكة."
-        },
-        "end_date": {
-          "label": "$t(common.labels.end_date)",
-          "description": "التاريخ الذي انتهت فيه علاقة المؤسسة بالمرفق."
-        },
-        "facility_affiliation_role": {
-          "label": "دور انتماء المرفق",
-          "description": "علاقة المؤسسة بالمرفق، بصفتها مضيفة أو مالكة."
-        },
-        "organization": {
-          "label": "$t(common.labels.organization)",
-          "description": "المؤسسة التي تستضيف المرفق أو تملكه."
-        },
-        "start_date": {
-          "label": "$t(common.labels.start_date)",
-          "description": "موعد بدء علاقة المؤسسة بالمرفق."
-        }
-      },
-      "FacilityProjectRole": {
-        "$self": {
-          "label": "$t(common.labels.facility_role)",
-          "description": "مشاركة مرفق في المشروع."
-        },
-        "end_date": {
-          "label": "$t(common.labels.end_date)",
-          "description": "التاريخ الذي انتهت فيه مشاركة المرفق في المشروع."
-        },
-        "facility": {
-          "label": "$t(common.labels.facility)",
-          "description": "المرفق المشارك في المشروع."
-        },
-        "org_project_role": {
-          "label": "$t(common.labels.facility_role)",
-          "description": "دور المرفق في المشروع، مثل التنسيق أو الشراكة أو توفير البيانات أو الاستضافة."
-        },
-        "start_date": {
-          "label": "$t(common.labels.start_date)",
-          "description": "موعد بدء مشاركة المرفق في المشروع."
-        }
-      },
       "Funding": {
         "$self": {
           "label": "$t(common.labels.funding)",
@@ -1843,6 +1733,10 @@
         "end_date": {
           "label": "$t(common.labels.end_date)",
           "description": "التاريخ الذي توقفت فيه المؤسسة عن كونها جزءًا من المؤسسة الأم."
+        },
+        "organization_structure_role": {
+          "label": "دور المؤسسة الأم",
+          "description": "علاقة المؤسسة الأم بهذه المؤسسة، بصفتها مضيفة أو مالكة. يُترك فارغًا في حالة الاحتواء العادي."
         },
         "parent_organization": {
           "label": "المؤسسة الأم",
@@ -1932,11 +1826,9 @@
       "labels": {
         "people_affiliated_with_organization": "أشخاص منتمون",
         "organizations_within_organization": "مؤسسات فرعية",
-        "facilities_affiliated_with_organization": "مرافق منتمية",
-        "facilities_offering_service": "متاحة في مرافق",
-        "facilities_providing_tool": "متوفرة عبر مرافق",
+        "organizations_offering_service": "متاحة في مؤسسات",
+        "organizations_providing_tool": "متوفرة عبر مؤسسات",
         "projects_involving_organization": "مشاريع ذات مشاركة",
-        "projects_involving_facility": "مشاريع ذات مشاركة",
         "projects_involving_person": "مشاريع ذات مشاركة",
         "projects_funded_by_organization": "مشاريع ممولة",
         "projects_using_dataset": "مستخدمة في مشاريع",

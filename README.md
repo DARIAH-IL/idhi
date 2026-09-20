@@ -26,15 +26,7 @@ Requires Node.js, pnpm, and MongoDB. Install dependencies:
 pnpm install
 ```
 
-Create `server/.env.local`:
-
-```dotenv
-FRONTEND_URL=http://localhost:3000
-MONGODB_CONNECTION_STRING=mongodb://<your-mongodb-connection-string>
-MONGODB_DATABASE_NAME=<your-mongodb-database-name>
-JWT_SECRET=<your-jwt-secret>
-SENTRY_DISABLED=true
-```
+Create `server/.env.local` as described in the [server README](server/README.md#environment), which also covers test data, database backups, MCP testing, and email sending.
 
 To run either the server or the app:
 

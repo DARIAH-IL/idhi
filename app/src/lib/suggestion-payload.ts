@@ -7,8 +7,6 @@ const OMITTED_SUGGESTION_FIELDS = [
   'datasets',
   'derived_from',
   'event_agent_roles',
-  'facility_affiliations',
-  'facility_roles',
   'funding',
   'organization_roles',
   'organization_structure',

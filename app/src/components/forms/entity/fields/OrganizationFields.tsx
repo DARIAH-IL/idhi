@@ -1,8 +1,12 @@
-import { OrganizationOrganizationType } from '#/api/models'
+import {
+  OrganizationOrganizationStructureItemOrganizationStructureRole,
+  OrganizationOrganizationType,
+} from '#/api/models'
 import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
+  entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
@@ -174,11 +178,31 @@ export const OrganizationFields = withForm({
                         required
                         label={
                           <EntityFieldLabel
-                            entityClass="OrganizationHierarchy"
+                            entityClass="OrganizationStructure"
                             field="parent_organization"
                           />
                         }
                         entityTypes={['idhi:Organization']}
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`organization_structure[${index}].organization_structure_role`}
+                    validators={enumValidators(
+                      OrganizationOrganizationStructureItemOrganizationStructureRole,
+                    )}
+                  >
+                    {(nestedField) => (
+                      <nestedField.EnumSelectField
+                        label={
+                          <EntityFieldLabel
+                            entityClass="OrganizationStructure"
+                            field="organization_structure_role"
+                          />
+                        }
+                        options={
+                          OrganizationOrganizationStructureItemOrganizationStructureRole
+                        }
                       />
                     )}
                   </form.AppField>
@@ -190,7 +214,7 @@ export const OrganizationFields = withForm({
                       <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
-                            entityClass="OrganizationHierarchy"
+                            entityClass="OrganizationStructure"
                             field="start_date"
                           />
                         }
@@ -205,7 +229,7 @@ export const OrganizationFields = withForm({
                       <nestedField.DatePickerField
                         label={
                           <EntityFieldLabel
-                            entityClass="OrganizationHierarchy"
+                            entityClass="OrganizationStructure"
                             field="end_date"
                           />
                         }
@@ -215,6 +239,38 @@ export const OrganizationFields = withForm({
                 </>
               )}
             </field.ArraySection>
+          )}
+        </form.AppField>
+        <form.AppField
+          name="services_offered"
+          validators={entityRefArrayValidators(['idhi:Service'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="services_offered"
+                />
+              }
+              entityTypes={['idhi:Service']}
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="tools_provided"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel
+                  entityClass="Organization"
+                  field="tools_provided"
+                />
+              }
+              entityTypes={['idhi:Tool']}
+            />
           )}
         </form.AppField>
         <form.AppField

@@ -26,7 +26,7 @@ export type EntityUpdate =
              * @nullable
              */
             end_date?: string | null
-            /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
+            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. */
             organization: string
             /**
              * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
@@ -168,7 +168,7 @@ export type EntityUpdate =
        */
       image?: string | null
       /**
-       * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
+       * Place name where the organization or event is physically situated (e.g. a city), as free multilingual text.
        * @nullable
        */
       location?:
@@ -193,7 +193,7 @@ export type EntityUpdate =
         value: string
       }[]
       /**
-       * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
+       * Formal parent relationships of the containing organization, each with the parent, an optional host/owner role and optional start and end dates. Set this on every sub-organization: a university lab or institute names its university here, a museum's digital unit names the museum. Define each containment relationship only on the child organization; give a jointly run unit one instance per parent; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
        * @nullable
        */
       organization_structure?:
@@ -203,6 +203,8 @@ export type EntityUpdate =
              * @nullable
              */
             end_date?: string | null
+            /** IDHI-governed roles distinguishing the parent organizations of a sub-organization. Use one relationship per parent and role so hosting and ownership are not conflated; leave the role unset for ordinary containment. */
+            organization_structure_role?: 'HOST' | 'OWNER'
             /** The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent. */
             parent_organization: string
             /**
@@ -233,119 +235,7 @@ export type EntityUpdate =
        */
       same_as?: string[] | null
       /**
-       * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
-       * @nullable
-       */
-      tags?: string[] | null
-      /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
-      type: 'idhi:Organization'
-    }
-  | {
-      /**
-       * Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.
-       * @nullable
-       */
-      additional_urls?: string[] | null
-      /**
-       * Postal address, multilingual.
-       * @nullable
-       */
-      address?:
-        | {
-            /**
-             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
-             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
-             */
-            language: string
-            /** A localized text, in the language given by 'language'. */
-            value: string
-          }[]
-        | null
-      /**
-       * A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.
-       * @nullable
-       */
-      contact_email?: string | null
-      /**
-       * Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).
-       * @nullable
-       */
-      description?:
-        | {
-            /**
-             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
-             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
-             */
-            language: string
-            /** A localized text, in the language given by 'language'. */
-            value: string
-          }[]
-        | null
-      /**
-       * The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.
-       * @nullable
-       */
-      facility_affiliations?:
-        | {
-            /**
-             * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
-             * @nullable
-             */
-            end_date?: string | null
-            /** IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated. */
-            facility_affiliation_role: 'HOST' | 'OWNER'
-            /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
-            organization: string
-            /**
-             * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
-             * @nullable
-             */
-            start_date?: string | null
-          }[]
-        | null
-      /**
-       * Public landing page of the entity, if one exists.
-       * @nullable
-       */
-      homepage?: string | null
-      readonly id?: string | null | ''
-      /**
-       * A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.
-       * @nullable
-       */
-      image?: string | null
-      /**
-       * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
-       * @nullable
-       */
-      location?:
-        | {
-            /**
-             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
-             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
-             */
-            language: string
-            /** A localized text, in the language given by 'language'. */
-            value: string
-          }[]
-        | null
-      /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
-      name: {
-        /**
-         * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
-         * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
-         */
-        language: string
-        /** A localized text, in the language given by 'language'. */
-        value: string
-      }[]
-      /**
-       * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
-       * @nullable
-       */
-      same_as?: string[] | null
-      /**
-       * Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.
+       * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.
        * @nullable
        */
       services_offered?: string[] | null
@@ -355,12 +245,12 @@ export type EntityUpdate =
        */
       tags?: string[] | null
       /**
-       * Tools this facility maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
+       * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
        * @nullable
        */
       tools_provided?: string[] | null
       /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
-      type: 'idhi:Facility'
+      type: 'idhi:Organization'
     }
   | {
       /**
@@ -570,29 +460,6 @@ export type EntityUpdate =
        */
       end_date?: string | null
       /**
-       * Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.
-       * @nullable
-       */
-      facility_roles?:
-        | {
-            /**
-             * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
-             * @nullable
-             */
-            end_date?: string | null
-            /** The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint. */
-            facility: string
-            /** An organization's or facility's role in a project (one instance per role). */
-            org_project_role?:
-              'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'HOST'
-            /**
-             * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
-             * @nullable
-             */
-            start_date?: string | null
-          }[]
-        | null
-      /**
        * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.
        * @nullable
        */
@@ -698,10 +565,10 @@ export type EntityUpdate =
              * @nullable
              */
             end_date?: string | null
-            /** An organization's or facility's role in a project (one instance per role). */
+            /** An organization's role in a project (one instance per role). */
             org_project_role?:
               'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'HOST'
-            /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
+            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. */
             organization: string
             /**
              * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
@@ -1371,7 +1238,7 @@ export type EntityUpdate =
         value: string
       }[]
       /**
-       * The organization formally responsible for delivering the service (the one you'd contact or contract with) — set this even when the service is listed under a Facility.
+       * The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.
        * @nullable
        */
       provider?: string | null
@@ -1722,7 +1589,7 @@ export type EntityUpdate =
        */
       image?: string | null
       /**
-       * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
+       * Place name where the organization or event is physically situated (e.g. a city), as free multilingual text.
        * @nullable
        */
       location?:

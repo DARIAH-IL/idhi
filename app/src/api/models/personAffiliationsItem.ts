@@ -17,7 +17,7 @@ export type PersonAffiliationsItem = {
    * @nullable
    */
   end_date?: string | null
-  /** The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint. */
+  /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. */
   organization: string
   /**
    * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.

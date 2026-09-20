@@ -1,11 +1,24 @@
 # IDHI server
 
+## Environment
+
+Create `server/.env.local`:
+
+```dotenv
+FRONTEND_URL=http://localhost:3000
+MONGODB_CONNECTION_STRING=mongodb://<your-mongodb-connection-string>
+MONGODB_DATABASE_NAME=<your-mongodb-database-name>
+JWT_SECRET=<your-jwt-secret>
+SENTRY_DISABLED=true
+```
+
 ## Import test data
 
-The test-data import creates 50 linked mock records: five people, organizations,
-facilities, projects, tools, services, publications, events, datasets, and
-training materials. Relationships between records include affiliations, project
-participation and outputs, authorship, providers, publishers, facilities, and
+The test-data import creates 50 linked mock records: five people, projects,
+tools, services, publications, events, datasets, training materials, and ten
+organizations - five institutions and five sub-organizations nested under them.
+Relationships between records include affiliations, organization structure,
+project participation and outputs, authorship, providers, publishers, and
 training-material references.
 
 Install the [MongoDB Database Tools](https://www.mongodb.com/docs/database-tools/installation/)

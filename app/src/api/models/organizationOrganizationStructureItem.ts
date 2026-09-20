@@ -4,9 +4,10 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { OrganizationOrganizationStructureItemOrganizationStructureRole } from './organizationOrganizationStructureItemOrganizationStructureRole.ts'
 
 /**
- * Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.
+ * Formal containment of the containing Organization within a larger parent organization, with an optional host/owner role and optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; a university DH lab points at its university this way, and a jointly run lab gets one instance per parent. Do not use it for partnerships, project participation or informal association.
  */
 export type OrganizationOrganizationStructureItem = {
   /**
@@ -14,6 +15,8 @@ export type OrganizationOrganizationStructureItem = {
    * @nullable
    */
   end_date?: string | null
+  /** IDHI-governed roles distinguishing the parent organizations of a sub-organization. Use one relationship per parent and role so hosting and ownership are not conflated; leave the role unset for ordinary containment. */
+  organization_structure_role?: OrganizationOrganizationStructureItemOrganizationStructureRole
   /** The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent. */
   parent_organization: string
   /**

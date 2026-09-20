@@ -13,7 +13,7 @@ import type { OrganizationOrganizationType } from './organizationOrganizationTyp
 import type { OrganizationType } from './organizationType.ts'
 
 /**
- * An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.
+ * An organization of any kind, at any level of granularity. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. A unit inside a larger body is an Organization too: a university DH lab, a digitization studio or a library's digital collections department each get their own Organization record, typed RESEARCH_CENTER or GLAM_INSTITUTION, with organization_structure pointing at the parent university or institution. Create the sub-organization record whenever the unit has its own identity — a name researchers use, its own staff, services or tools — rather than folding it into its parent. All organizations use the idhi:organization:<shortid> URN form.
  */
 export interface Organization {
   /**
@@ -54,14 +54,14 @@ export interface Organization {
    */
   image?: string | null
   /**
-   * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
+   * Place name where the organization or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */
   location?: OrganizationLocationItem[] | null
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: OrganizationNameItem[]
   /**
-   * Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
+   * Formal parent relationships of the containing organization, each with the parent, an optional host/owner role and optional start and end dates. Set this on every sub-organization: a university lab or institute names its university here, a museum's digital unit names the museum. Define each containment relationship only on the child organization; give a jointly run unit one instance per parent; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.
    * @nullable
    */
   organization_structure?: OrganizationOrganizationStructureItem[] | null
@@ -79,10 +79,20 @@ export interface Organization {
    */
   same_as?: string[] | null
   /**
+   * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.
+   * @nullable
+   */
+  services_offered?: string[] | null
+  /**
    * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
    * @nullable
    */
   tags?: string[] | null
+  /**
+   * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
+   * @nullable
+   */
+  tools_provided?: string[] | null
   /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: OrganizationType
 }

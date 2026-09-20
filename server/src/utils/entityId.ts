@@ -6,7 +6,6 @@ type EntityType = Entity['type']
 const ENTITY_ID_SEGMENTS = {
   'idhi:Person': 'person',
   'idhi:Organization': 'organization',
-  'idhi:Facility': 'facility',
   'idhi:Project': 'project',
   'idhi:Tool': 'tool',
   'idhi:Service': 'service',

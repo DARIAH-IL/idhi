@@ -12,7 +12,6 @@ const COMMON_FIELDS_FILE = path.join(entityDir, 'subforms/common.tsx')
 const ENTITY_FIELDS_FILES: Record<string, string> = {
   person: 'PersonFields.tsx',
   organization: 'OrganizationFields.tsx',
-  facility: 'FacilityFields.tsx',
   project: 'ProjectFields.tsx',
   tool: 'ToolFields.tsx',
   service: 'ServiceFields.tsx',

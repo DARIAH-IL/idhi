@@ -6,7 +6,6 @@
  */
 import type { ProjectDescriptionItem } from './projectDescriptionItem.ts'
 import type { ProjectDigitalHumanitiesActivitiesItem } from './projectDigitalHumanitiesActivitiesItem.ts'
-import type { ProjectFacilityRolesItem } from './projectFacilityRolesItem.ts'
 import type { ProjectFundingItem } from './projectFundingItem.ts'
 import type { ProjectFundingStatus } from './projectFundingStatus.ts'
 import type { ProjectNameItem } from './projectNameItem.ts'
@@ -47,11 +46,6 @@ export interface Project {
    * @nullable
    */
   end_date?: string | null
-  /**
-   * Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.
-   * @nullable
-   */
-  facility_roles?: ProjectFacilityRolesItem[] | null
   /**
    * Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.
    * @nullable

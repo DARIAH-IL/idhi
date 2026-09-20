@@ -66,7 +66,7 @@ export interface Event {
    */
   image?: string | null
   /**
-   * Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.
+   * Place name where the organization or event is physically situated (e.g. a city), as free multilingual text.
    * @nullable
    */
   location?: EventLocationItem[] | null

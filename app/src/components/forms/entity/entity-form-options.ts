@@ -2,7 +2,6 @@ import { formOptions } from '@tanstack/react-form'
 import type {
   Dataset,
   Event,
-  Facility,
   Organization,
   Person,
   Project,
@@ -16,9 +15,6 @@ import { emptyLangString } from '@/lib/lang-string'
 export const personDefaults: Person = { id: '', type: 'idhi:Person' }
 export function organizationDefaults(language: string): Organization {
   return { id: '', name: emptyLangString(language), type: 'idhi:Organization' }
-}
-export function facilityDefaults(language: string): Facility {
-  return { id: '', name: emptyLangString(language), type: 'idhi:Facility' }
 }
 export function projectDefaults(language: string): Project {
   return { id: '', name: emptyLangString(language), type: 'idhi:Project' }
@@ -49,9 +45,6 @@ export function trainingMaterialDefaults(language: string): TrainingMaterial {
 export const personFormOptions = formOptions({ defaultValues: personDefaults })
 export const organizationFormOptions = formOptions({
   defaultValues: organizationDefaults('en'),
-})
-export const facilityFormOptions = formOptions({
-  defaultValues: facilityDefaults('en'),
 })
 export const projectFormOptions = formOptions({
   defaultValues: projectDefaults('en'),

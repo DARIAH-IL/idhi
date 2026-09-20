@@ -12,7 +12,6 @@ const OPEN_GRAPH_LOCALES: Record<UiLanguage, string> = {
 const SCHEMA_TYPES: Record<Entity['type'], string> = {
   'idhi:Person': 'Person',
   'idhi:Organization': 'Organization',
-  'idhi:Facility': 'Place',
   'idhi:Project': 'ResearchProject',
   'idhi:Tool': 'SoftwareApplication',
   'idhi:Service': 'Service',

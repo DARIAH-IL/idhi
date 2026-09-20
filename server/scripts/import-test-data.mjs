@@ -18,9 +18,9 @@ function entityId(kind, index) {
   return `idhi:${kind}:${String(index + 1).padStart(4, '0')}mock`
 }
 
-function ids(kind) {
+function ids(kind, offset = 0) {
   return Array.from({ length: ENTITY_COUNT }, (_, index) =>
-    entityId(kind, index),
+    entityId(kind, index + offset),
   )
 }
 
@@ -65,7 +65,7 @@ function auditTimestamps(index) {
 
 const personIds = ids('person')
 const organizationIds = ids('organization')
-const facilityIds = ids('facility')
+const labIds = ids('organization', ENTITY_COUNT)
 const projectIds = ids('project')
 const toolIds = ids('tool')
 const serviceIds = ids('service')
@@ -173,15 +173,19 @@ export const entities = [
     image: image(index),
     tags: ['mock-data', 'research-service'],
   })),
-  ...facilityIds.map((id, index) => ({
+  ...labIds.map((id, index) => ({
     id,
-    type: 'idhi:Facility',
+    type: 'idhi:Organization',
     name: localized('Mock Digital Lab', index),
-    description: localized('A facility created for local testing', index),
-    facility_affiliations: [
+    description: localized(
+      'A sub-organization created for local testing',
+      index,
+    ),
+    organization_type: 'RESEARCH_CENTER',
+    organization_structure: [
       {
-        organization: related(organizationIds, index),
-        facility_affiliation_role: index % 2 === 0 ? 'HOST' : 'OWNER',
+        parent_organization: related(organizationIds, index),
+        organization_structure_role: index % 2 === 0 ? 'HOST' : 'OWNER',
         start_date: `202${index}-01-01`,
       },
     ],
@@ -189,8 +193,8 @@ export const entities = [
     tools_provided: [related(toolIds, index)],
     location: localized('Jerusalem', index),
     address: localized('1 Mock Street', index),
-    contact_email: `facility${index + 1}@example.test`,
-    homepage: `https://example.test/facilities/${index + 1}`,
+    contact_email: `lab${index + 1}@example.test`,
+    homepage: `https://example.test/labs/${index + 1}`,
     image: image(index + 1),
     tags: ['mock-data', 'laboratory'],
   })),
@@ -495,7 +499,7 @@ async function main() {
   }
 
   console.log(
-    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type)${invite ? ` and an invite for ${INVITE_EMAIL}` : ''}.`,
+    `Imported ${documents.length} linked mock entities (${ENTITY_COUNT} of each type, plus ${ENTITY_COUNT} sub-organizations)${invite ? ` and an invite for ${INVITE_EMAIL}` : ''}.`,
   )
 }
 
