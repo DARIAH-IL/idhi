@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { SuggestibleEntityField } from '@/api/models'
 import { useFieldContext } from '@/components/forms/form-context'
+import { SuggestValuesButton } from './SuggestValuesButton'
 import { useAutocomplete } from '@/hooks/useAutocomplete'
 import { FieldRow } from './FieldRow'
 import {
@@ -22,6 +24,7 @@ interface Props {
   knownValues: string[]
   search?: (query: string, signal: AbortSignal) => Promise<string[]>
   loading?: boolean
+  suggestField?: SuggestibleEntityField
 }
 
 interface Option {
@@ -36,6 +39,7 @@ export function SuggestibleTagsField({
   knownValues,
   search,
   loading = false,
+  suggestField,
 }: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
@@ -109,7 +113,17 @@ export function SuggestibleTagsField({
   ])
 
   return (
-    <FieldRow label={label}>
+    <FieldRow
+      label={label}
+      action={
+        suggestField && (
+          <SuggestValuesButton
+            field={suggestField}
+            onSuggested={(values) => field.handleChange(values)}
+          />
+        )
+      }
+    >
       {(labelId) => (
         <>
           <Combobox

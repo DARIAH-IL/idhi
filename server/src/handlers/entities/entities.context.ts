@@ -40,6 +40,7 @@ import type {
   EntitySearch,
   EntityUpdate,
   SearchEntityTagsParams,
+  SuggestEntityFieldValuesParams,
   UpdateEntityByIdParams,
 } from '../../models'
 
@@ -62,6 +63,20 @@ export type SearchEntityTagsContext<E extends Env = any> = Context<
   {
     in: { query: SearchEntityTagsParams }
     out: { query: SearchEntityTagsParams }
+  }
+>
+export type SuggestEntityFieldValuesContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/entities/suggestions',
+  {
+    in: {
+      query: SuggestEntityFieldValuesParams
+      json: NonReadonly<EntityUpdate>
+    }
+    out: {
+      query: SuggestEntityFieldValuesParams
+      json: NonReadonly<EntityUpdate>
+    }
   }
 >
 export type GetEntityByIdContext<E extends Env = any> = Context<

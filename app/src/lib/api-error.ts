@@ -17,6 +17,9 @@ const errorTranslationKeys = {
   [ErrorCodes.TooManyAuthAttempts]: 'api.errors.TooManyAuthAttempts',
   [ErrorCodes.AuthChallengeNotFoundOrExpired]:
     'api.errors.AuthChallengeNotFoundOrExpired',
+  [ErrorCodes.AiSuggestionFailed]: 'api.errors.AiSuggestionFailed',
+  [ErrorCodes.AiSuggestionsLimitReached]:
+    'api.errors.AiSuggestionsLimitReached',
 } as const satisfies Record<ErrorCode, ParseKeys>
 
 function isErrorCode(value: unknown): value is ErrorCode {

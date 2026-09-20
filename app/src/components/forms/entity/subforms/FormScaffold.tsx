@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useAllowEntityDraft } from '@/hooks/useAllowEntityDraft'
+import { EntitySuggestionProvider } from '../suggestions-provider'
 
 interface ScaffoldProps {
   form: AnyFormApi
@@ -102,7 +103,9 @@ export function FormScaffold({
         </div>
       </div>
       <div className="columns-1 gap-4 lg:columns-2 [&>*]:mb-4 [&>*]:break-inside-avoid">
-        {children}
+        <EntitySuggestionProvider form={form}>
+          {children}
+        </EntitySuggestionProvider>
       </div>
       <Dialog
         isOpen={status === 'blocked'}

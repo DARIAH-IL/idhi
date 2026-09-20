@@ -2,6 +2,9 @@ import type { Connection } from 'mongoose'
 import type { MongoDBConnection } from './do/MongoDBConnection'
 
 export type Bindings = {
+  AI: Ai
+  AI_MODEL?: string
+
   DEFAULT_LANG?: string
 
   FRONTEND_URL: string

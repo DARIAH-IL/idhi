@@ -86,6 +86,7 @@ export const ProjectFields = withForm({
                 />
               }
               options={ProjectDigitalHumanitiesActivitiesItem}
+              suggestField="digital_humanities_activities"
             />
           )}
         </form.AppField>

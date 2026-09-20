@@ -18,4 +18,6 @@ export const ErrorCode = {
   WrongOtpCode: 'WrongOtpCode',
   TooManyAuthAttempts: 'TooManyAuthAttempts',
   AuthChallengeNotFoundOrExpired: 'AuthChallengeNotFoundOrExpired',
+  AiSuggestionFailed: 'AiSuggestionFailed',
+  AiSuggestionsLimitReached: 'AiSuggestionsLimitReached',
 } as const

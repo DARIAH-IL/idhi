@@ -272,6 +272,38 @@ paths:
                 items:
                   type: string
 
+  /api/v1/entities/suggestions:
+    post:
+      operationId: suggestEntityFieldValues
+      tags:
+        - Entities
+      summary: Suggest entity field values
+      description: Returns AI-generated suggestions for a single supported entity field, derived from the prominent fields of the supplied entity. The entity need not be persisted; its ID is ignored.
+      parameters:
+        - name: field
+          in: query
+          required: true
+          description: The entity field to suggest values for.
+          schema:
+            $ref: "#/components/schemas/SuggestibleEntityField"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Entity"
+      responses:
+        "200":
+          description: Suggested values for the requested field
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "400":
+          $ref: "#/components/responses/Error"
+
   /api/v1/entities/{entityId}:
     parameters:
       - $ref: "#/components/parameters/EntityId"
@@ -998,6 +1030,13 @@ components:
               type: boolean
               description: Whether the entity is a draft, visible only to its creator and administrators.
 
+    SuggestibleEntityField:
+      type: string
+      description: Entity fields that support AI-backed value suggestion.
+      enum:
+        - tags
+        - digital_humanities_activities
+
     User:
       type: object
       required:
@@ -1079,6 +1118,8 @@ components:
         - WrongOtpCode
         - TooManyAuthAttempts
         - AuthChallengeNotFoundOrExpired
+        - AiSuggestionFailed
+        - AiSuggestionsLimitReached
 
     Error:
       type: object

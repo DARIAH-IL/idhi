@@ -18,6 +18,7 @@ import {
   searchEntitiesHandlers,
   createEntityHandlers,
   searchEntityTagsHandlers,
+  suggestEntityFieldValuesHandlers,
   getEntityByIdHandlers,
   updateEntityByIdHandlers,
   deleteEntityByIdHandlers,
@@ -54,6 +55,7 @@ const app = new Hono()
   .post('/api/v1/entities', ...searchEntitiesHandlers)
   .put('/api/v1/entities', ...createEntityHandlers)
   .get('/api/v1/entities/tags', ...searchEntityTagsHandlers)
+  .post('/api/v1/entities/suggestions', ...suggestEntityFieldValuesHandlers)
   .get('/api/v1/entities/:entityId', ...getEntityByIdHandlers)
   .post('/api/v1/entities/:entityId', ...updateEntityByIdHandlers)
   .delete('/api/v1/entities/:entityId', ...deleteEntityByIdHandlers)

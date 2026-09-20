@@ -253,6 +253,8 @@
       "WrongOtpCode": "The one-time code is incorrect. Please try again.",
       "TooManyAuthAttempts": "Too many authentication attempts. Please try again later.",
       "AuthChallengeNotFoundOrExpired": "The authentication request has expired. Please start again.",
+      "AiSuggestionFailed": "The suggestion could not be generated. Please try again.",
+      "AiSuggestionsLimitReached": "You have reached the suggestion limit. Please try again later.",
       "network": "We couldn't reach the server. Please check your internet connection and try again.",
       "generic": "Something went wrong while communicating with the server, we are looking into it."
     }
@@ -1995,7 +1997,9 @@
       "clear_selection": "Clear selection",
       "remove_entity": "Remove entry",
       "image_uploaded": "Image uploaded",
-      "lookup_failed": "Lookup failed. Please try again."
+      "lookup_failed": "Lookup failed. Please try again.",
+      "suggest_values": "Suggest values",
+      "suggest_values_missing_context": "Please fill in at least a name and a description to get suggestions."
     },
     "duplicate_check": {
       "title": "Possible duplicate entries",

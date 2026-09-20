@@ -87,6 +87,7 @@ export const DatasetFields = withForm({
                 />
               }
               options={DatasetDigitalHumanitiesActivitiesItem}
+              suggestField="digital_humanities_activities"
             />
           )}
         </form.AppField>

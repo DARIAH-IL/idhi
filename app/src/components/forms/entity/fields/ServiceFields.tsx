@@ -100,6 +100,7 @@ export const ServiceFields = withForm({
                 />
               }
               options={ServiceDigitalHumanitiesActivitiesItem}
+              suggestField="digital_humanities_activities"
             />
           )}
         </form.AppField>

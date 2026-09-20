@@ -10552,6 +10552,3534 @@ export const SearchEntityTagsQueryParams = zod.object({
 export const SearchEntityTagsResponseItem = zod.string()
 export const SearchEntityTagsResponse = zod.array(SearchEntityTagsResponseItem)
 
+export const SuggestEntityFieldValuesQueryParams = zod.object({
+  field: zod
+    .enum(['tags', 'digital_humanities_activities'])
+    .describe('The entity field to suggest values for.'),
+})
+
+export const suggestEntityFieldValuesBodyOneDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOneFamilyNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOneGivenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOneIdOneRegExp = new RegExp(
+  '^idhi:person:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyOneOrcidRegExp = new RegExp(
+  'https://orcid.org/\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]',
+)
+export const suggestEntityFieldValuesBodyTwoAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyTwoDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyTwoIdOneRegExp = new RegExp(
+  '^idhi:organization:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyTwoLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyTwoNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const suggestEntityFieldValuesBodyTwoRorRegExp = new RegExp(
+  'https://ror.org/0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}',
+)
+export const suggestEntityFieldValuesBodyThreeAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyThreeDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyThreeIdOneRegExp = new RegExp(
+  '^idhi:facility:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyThreeLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyThreeNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourFundingItemFundingProgramItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourFundingItemGrantNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourIdOneRegExp = new RegExp(
+  '^idhi:project:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyFourNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourResearchDisciplinesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourStudiedPeriodsItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFourStudiedPlacesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFiveDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyFiveDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const suggestEntityFieldValuesBodyFiveIdOneRegExp = new RegExp(
+  '^idhi:tool:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyFiveNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodySixDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodySixIdOneRegExp = new RegExp(
+  '^idhi:service:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodySixNameItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const suggestEntityFieldValuesBodySevenDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodySevenDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const suggestEntityFieldValuesBodySevenIdOneRegExp = new RegExp(
+  '^idhi:publication:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodySevenNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodySevenPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyEightAddressItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyEightDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyEightIdOneRegExp = new RegExp(
+  '^idhi:event:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyEightLocationItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyEightNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyNineDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyNineDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const suggestEntityFieldValuesBodyNineIdOneRegExp = new RegExp(
+  '^idhi:dataset:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyNineInLanguagesItemRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const suggestEntityFieldValuesBodyNineNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyNineThemesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroDescriptionItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroDoiRegExp = new RegExp(
+  'https://doi.org/.+',
+)
+export const suggestEntityFieldValuesBodyOnezeroEducationalLevelItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroIdOneRegExp = new RegExp(
+  '^idhi:training_material:[0-9a-z]{4,12}$',
+)
+export const suggestEntityFieldValuesBodyOnezeroInLanguagesItemRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroLearningOutcomesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroPrerequisitesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodyOnezeroTargetAudiencesItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+
+export const SuggestEntityFieldValuesBody = zod.union([
+  zod
+    .object({
+      affiliations: zod
+        .array(
+          zod
+            .object({
+              affiliation_role: zod
+                .enum([
+                  'PROFESSOR',
+                  'ASSOCIATE',
+                  'MEMBER',
+                  'MANAGER',
+                  'AFFILIATE',
+                  'EMPLOYEE',
+                ])
+                .optional()
+                .describe(
+                  "A person's position within an organization (job/status).",
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              organization: zod
+                .string()
+                .describe(
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+            ),
+        )
+        .nullish()
+        .describe(
+          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOneDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      emails: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Contact email addresses (zero or more). Only record addresses the person has agreed to publish in the index.',
+        ),
+      family_name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOneFamilyNameItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          "Family (last) name as multilingual text. Use one LangString per available language with given_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
+        ),
+      given_name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOneGivenNameItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          "Given (first) name as multilingual text. Use one LangString per available language with family_name when the person's name is conventionally expressed in separate parts; do not use it for a full name.",
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyOneIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      orcid: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodyOneOrcidRegExp)
+        .nullish()
+        .describe(
+          "The person's persistent researcher identifier. It supplements the IDHI record id. Strongly recommended for every researcher; enables deduplication and linking to the scholarly record.",
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Person')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A human agent in the DH index: researcher, developer, librarian, student, etc.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyTwoAddressItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyTwoDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyTwoIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      location: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyTwoLocationItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyTwoNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      organization_structure: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              parent_organization: zod
+                .string()
+                .describe(
+                  'The larger organization containing the current child organization (by IDHI URN). Use only in Organization.organization_structure; define the relationship on the child rather than the parent.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'Formal containment of the containing Organization within a larger parent organization, with optional validity dates. Use in Organization.organization_structure for departments, laboratories, centers or subsidiaries that are structurally part of another organization; do not use it for partnerships, project participation or informal association.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Formal parent relationships of the containing organization, with the parent and optional start and end dates. Define each containment relationship only on the child organization; use organization_roles for project partnerships and omit this slot for informal associations. This uses an IDHI-specific property because established parent-organization properties point directly to the parent and cannot carry relationship dates.',
+        ),
+      organization_type: zod
+        .enum([
+          'ACADEMIC_INSTITUTION',
+          'GLAM_INSTITUTION',
+          'RESEARCH_CENTER',
+          'FUNDER',
+          'COMPANY',
+          'NON_PROFIT',
+          'INFORMAL_GROUP',
+        ])
+        .optional()
+        .describe(
+          "Kinds of organization. Canonical discriminator for Organization; pick the value matching the organization's PRIMARY nature.",
+        ),
+      ror: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodyTwoRorRegExp)
+        .nullish()
+        .describe(
+          "The organization's persistent registry identifier. It supplements the IDHI record id. Record it whenever the organization is registered in ROR — most universities and research institutes are.",
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Organization')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'An organization of any kind. Its kind (academic institution, GLAM, research center, funder, company, non-profit or informal group) is given by organization_type. All organizations use the idhi:organization:<shortid> URN form.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyThreeAddressItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyThreeDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      facility_affiliations: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              facility_affiliation_role: zod
+                .enum(['HOST', 'OWNER'])
+                .describe(
+                  'IDHI-governed roles distinguishing the organizations connected to a facility. Use one relationship per organization and role so hosting and ownership are not conflated.',
+                ),
+              organization: zod
+                .string()
+                .describe(
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A facility's affiliation with an organization, nested in a Facility so the facility is inferred from the containing record. Use one instance per hosting or owning organization in Facility.facility_affiliations and do not provide the containing facility's ID; joint labs get several.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'The organizations hosting or owning the containing facility, as reified FacilityAffiliation objects with a required relationship role and optional dates. Reference each organization and infer the facility from its containing record; define separate relationships if different organizations host and own the facility.',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyThreeIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      location: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyThreeLocationItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyThreeNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      services_offered: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Services this facility offers to researchers. Reference Service records by id; the Service's own 'provider' may still point at the parent Organization.",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      tools_provided: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools this facility maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+        ),
+      type: zod
+        .literal('idhi:Facility')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A physical or virtual facility such as a DH lab, digitization studio or research infrastructure, affiliated with one or more organizations. Use Facility when the unit offers services/tools and has its own identity distinct from its host organization; otherwise just use the Organization.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyFourDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      end_date: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+        ),
+      facility_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              facility: zod
+                .string()
+                .describe(
+                  "The facility referenced by a project role (by IDHI URN). Use only in FacilityProjectRole; the containing Project supplies the relationship's other endpoint.",
+                ),
+              org_project_role: zod
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                .optional()
+                .describe(
+                  "An organization's or facility's role in a project (one instance per role).",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A facility's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.facility_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'Facilities engaged in the containing project, as reified FacilityProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each facility and infer the project from its containing record.',
+        ),
+      funding: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              funding_amount: zod
+                .number()
+                .nullish()
+                .describe(
+                  'Amount awarded by the funding organization, if public, in the currency given by funding_currency, or ILS when no currency is recorded. Omit rather than guess.',
+                ),
+              funding_currency: zod
+                .enum(['ILS', 'USD', 'EUR'])
+                .optional()
+                .describe(
+                  'Currencies in which a funding award amount may be expressed, as ISO 4217 codes. The list covers the currencies relevant to IDHI records; extend it before recording an award in another currency.',
+                ),
+              funding_organization: zod
+                .string()
+                .describe(
+                  'The organization that provides this funding award (by IDHI URN).',
+                ),
+              funding_program: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          suggestEntityFieldValuesBodyFourFundingItemFundingProgramItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  'Multilingual name of the broader funding programme or scheme under which the award was made. This uses an IDHI-specific property because FRAPO defines FundingProgramme as a class but has no fitting property for a literal programme label.',
+                ),
+              funding_url: zod
+                .url()
+                .nullish()
+                .describe(
+                  "Public landing page for the individual award or its authoritative funding record. Use the funding organization's homepage on the Organization record instead when no award-specific page exists.",
+                ),
+              grant_name: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          suggestEntityFieldValuesBodyFourFundingItemGrantNameItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .nullish()
+                .describe(
+                  "Official multilingual title of the individual grant or award. Use this for the award's title, not the broader recurring programme, which belongs in funding_program.",
+                ),
+              grant_number: zod
+                .string()
+                .nullish()
+                .describe(
+                  "Identifier assigned to the grant by its funding organization. Use the funder's exact value and omit it when none is published.",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A distinct funding award for a project, identifying the organization that provides it and recording available award metadata and its funding period. This is the only place to record a project's funder; do not add a funder role in organization_roles. It is inlined within the funded Project and has no independent ID.",
+            ),
+        )
+        .nullish()
+        .describe(
+          "Funding awards received by the project. Use one entry per distinct award, including successive awards from the same organization; this is the only place a project's funder is recorded.",
+        ),
+      funding_status: zod
+        .enum([
+          'ACTIVE_GRANT_FUNDING',
+          'INSTITUTIONALLY_SUSTAINED',
+          'IN_KIND_ONLY',
+          'VOLUNTEER_RUN',
+          'UNFUNDED',
+        ])
+        .optional()
+        .describe(
+          "IDHI-governed values for the current primary way a project is financially or operationally sustained; no established controlled vocabulary covers these project-maintenance states. Historical grants belong in Funding records; choose the value that best describes the project's present circumstances.",
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyFourIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyFourNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      organization_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              org_project_role: zod
+                .enum(['COORDINATOR', 'PARTNER', 'DATA_PROVIDER', 'HOST'])
+                .optional()
+                .describe(
+                  "An organization's or facility's role in a project (one instance per role).",
+                ),
+              organization: zod
+                .string()
+                .describe(
+                  'The organization referenced by a person affiliation, facility affiliation or project role (by IDHI URN). The Person, Facility or Project containing the relationship supplies its other endpoint.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "An organization's engagement nested in a Project, so the project is inferred from the containing record. Use one instance per role in Project.organization_roles and do not provide the containing project's ID. Record a funder with Project.funding, not with a role here.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'Organizations engaged in the containing project, as reified OrganizationProjectRole objects carrying a coordinator, partner, data provider or host role. Reference each organization and infer the project from its containing record; use Project.funding to record a funder, not a role here.',
+        ),
+      outputs_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe('Datasets produced or curated by this project (by id).'),
+      outputs_publications: zod
+        .array(zod.string())
+        .nullish()
+        .describe('Publications resulting from this project (by id).'),
+      outputs_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe('Tools produced by this project (by id).'),
+      outputs_training_materials: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Training materials produced by this project (by IDHI URN); use only for project outputs, not materials merely used by the project.',
+        ),
+      project_participations: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              participant: zod
+                .string()
+                .describe(
+                  'The person taking part in the containing project (by IDHI URN). Use in Project.project_participations; do not define the relationship on the Person.',
+                ),
+              participation_role: zod
+                .enum([
+                  'PRINCIPAL_INVESTIGATOR',
+                  'CO_PI',
+                  'RESEARCHER',
+                  'DH_LEAD',
+                  'TECHNICAL_LEAD',
+                  'DEVELOPER',
+                  'STUDENT',
+                  'ADVISOR',
+                  'CONSULTANT',
+                  'CONTRIBUTOR',
+                ])
+                .optional()
+                .describe(
+                  "A person's role in a project. Where a CRediT (Contributor Roles Taxonomy) concept approximates the role, `meaning:` records it.",
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A person's participation nested in a Project, so the project is inferred from the containing record. Use one instance per participant and role in Project.project_participations and do not define project participation in Person; if a person changed roles over time, create one instance per role with start and end dates.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'People involved in the containing project, as reified ProjectParticipation objects carrying participant, role and dates. Define each participation only here on its Project; do not duplicate it on the Person.',
+        ),
+      research_disciplines: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyFourResearchDisciplinesItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Humanities discipline(s) of the project (history, linguistics, archaeology...). Free multilingual text for now; a controlled vocabulary is a planned upgrade.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      start_date: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+        ),
+      studied_periods: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyFourStudiedPeriodsItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          "Historical period(s) the project studies (e.g. Ottoman period), as free multilingual labels — distinct from the project's own start_date/end_date.",
+        ),
+      studied_places: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyFourStudiedPlacesItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Geographic focus of the research (places studied), as free multilingual labels — distinct from where the project team sits.',
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Project')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+      uses_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Existing datasets used as research inputs by the containing project (by IDHI URN). Use for source or reference data consumed by the project, not datasets produced by it, which belong in outputs_datasets.',
+        ),
+      uses_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services used by the containing project (by IDHI URN). Use for externally or institutionally delivered services that support the work, not services produced as project outputs.',
+        ),
+      uses_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools used to conduct the containing project (by IDHI URN). Use for substantive research or technical dependencies, not tools produced by the project, which belong in outputs_tools.',
+        ),
+    })
+    .describe(
+      'A Digital Humanities research project, classified by its research activities and disciplines. This is the central entity of the index; people, organizations, outputs and studied periods/places all hang off it.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      code_repository: zod
+        .url()
+        .nullish()
+        .describe('Source-code repository URL (GitHub, GitLab...), if open.'),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyFiveDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      documentation_url: zod
+        .url()
+        .nullish()
+        .describe(
+          'User or developer documentation for the tool or service (manual, wiki, API reference).',
+        ),
+      doi: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodyFiveDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyFiveIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      license: zod
+        .enum([
+          'CC_BY_4_0',
+          'CC_BY_SA_4_0',
+          'CC0_1_0',
+          'MIT',
+          'APACHE_2_0',
+          'GPL_3_0',
+        ])
+        .optional()
+        .describe(
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyFiveNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      programming_languages: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Implementation languages, as technical labels such as Python or JavaScript. Use one value for each language in which the tool is implemented; do not use this slot for natural languages supported by the tool.',
+        ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      tool_type: zod
+        .enum([
+          'WEB_APPLICATION',
+          'DESKTOP_APPLICATION',
+          'LIBRARY',
+          'COMMAND_LINE_TOOL',
+          'DATABASE',
+          'API_SERVICE',
+          'DIGITIZATION_SERVICE',
+          'CONSULTING_SERVICE',
+        ])
+        .optional()
+        .describe(
+          'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
+        ),
+      type: zod
+        .literal('idhi:Tool')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodySixDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      documentation_url: zod
+        .url()
+        .nullish()
+        .describe(
+          'User or developer documentation for the tool or service (manual, wiki, API reference).',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodySixIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodySixNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      provider: zod
+        .string()
+        .nullish()
+        .describe(
+          "The organization formally responsible for delivering the service (the one you'd contact or contract with) — set this even when the service is listed under a Facility.",
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      service_type: zod
+        .enum([
+          'WEB_APPLICATION',
+          'DESKTOP_APPLICATION',
+          'LIBRARY',
+          'COMMAND_LINE_TOOL',
+          'DATABASE',
+          'API_SERVICE',
+          'DIGITIZATION_SERVICE',
+          'CONSULTING_SERVICE',
+        ])
+        .optional()
+        .describe(
+          'Delivery forms for tools and kinds of services. Tool records use the software values; Service records use the service values.',
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Service')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A reusable, human- or organization-mediated service offered by a facility or organization (e.g., digitization on demand, OCR consulting, data curation support). Use Service when the offering requires the provider to act; use Tool for self-service software.',
+    ),
+  zod
+    .object({
+      authorships: zod
+        .array(
+          zod
+            .object({
+              author: zod
+                .string()
+                .describe(
+                  'The person contributing to the containing publication (by IDHI URN). Use in Publication.authorships; do not define the relationship on the Person.',
+                ),
+              author_order: zod
+                .int()
+                .nullish()
+                .describe('Position in the byline; 1 = first author.'),
+              authorship_role: zod
+                .enum(['AUTHOR', 'EDITOR', 'TRANSLATOR', 'CONTRIBUTOR'])
+                .optional()
+                .describe('The kind of contribution to a publication.'),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              "A person's contribution nested in a Publication, so the publication is inferred from the containing record. Use one instance per author in Publication.authorships and do not define authorship in Person; author_order preserves the byline sequence with 1 as the first author.",
+            ),
+        )
+        .nullish()
+        .describe(
+          'People who contributed to the containing publication, as reified Authorship objects carrying author, byline order and role. Define each authorship only here on its Publication; do not duplicate it on the Person.',
+        ),
+      date_issued: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'Formal publication date (or year-01-01 if only the year is known).',
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodySevenDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      doi: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodySevenDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodySevenIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodySevenNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      part_of: zod
+        .string()
+        .nullish()
+        .describe(
+          'The containing work (book for a chapter, proceedings for a paper), by IDHI URN or external URI.',
+        ),
+      presented_at: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Event(s) in the index where this publication was presented (by IDHI URN), e.g. the conference where the paper was given. Distinct from published_in, the container it appeared in.',
+        ),
+      publication_type: zod
+        .enum([
+          'coar:1YTN-RJZE',
+          'coar:2H0M-X761',
+          'coar:43KC-T6DC',
+          'coar:542X-3S04',
+          'coar:63NG-B465',
+          'coar:6NC7-GK9S',
+          'coar:8KJG-QS0Y',
+          'coar:9DKX-KSAF',
+          'coar:A8F1-NPV9',
+          'coar:ACF7-8YT9',
+          'coar:AM6W-6QAW',
+          'coar:BW7T-YM2G',
+          'coar:C53B-JCY5',
+          'coar:CQMR-7K63',
+          'coar:D97F-VB57',
+          'coar:DD58-GFSX',
+          'coar:DX5J-TA9R',
+          'coar:EHVM-H119',
+          'coar:F8RT-TJK0',
+          'coar:FF4C-28RK',
+          'coar:FXF3-D3G7',
+          'coar:GPQ7-G5VE',
+          'coar:GSZA-Y7V7',
+          'coar:H41Y-FW7B',
+          'coar:H6QP-SC1X',
+          'coar:H9BQ-739P',
+          'coar:JBNF-DYAD',
+          'coar:MW8G-3CR8',
+          'coar:NHD0-W6SY',
+          'coar:QH80-2R4E',
+          'coar:QX5C-AR31',
+          'coar:R60J-J5BD',
+          'coar:RMP5-3GQ6',
+          'coar:S7R1-K5P0',
+          'coar:SB3Y-W4EH',
+          'coar:W2XT-7017',
+          'coar:YC9F-HGCF',
+          'coar:YZ1N-ZFT9',
+          'coar:Z907-YMBB',
+          'coar:c_0040',
+          'coar:c_0640',
+          'coar:c_0857',
+          'coar:c_1162',
+          'coar:c_12cc',
+          'coar:c_12cd',
+          'coar:c_12ce',
+          'coar:c_15cd',
+          'coar:c_1843',
+          'coar:c_186u',
+          'coar:c_18cc',
+          'coar:c_18cd',
+          'coar:c_18cf',
+          'coar:c_18co',
+          'coar:c_18cp',
+          'coar:c_18cw',
+          'coar:c_18gh',
+          'coar:c_18hj',
+          'coar:c_18op',
+          'coar:c_18wq',
+          'coar:c_18ws',
+          'coar:c_18ww',
+          'coar:c_18wz',
+          'coar:c_2659',
+          'coar:c_26e4',
+          'coar:c_2cd9',
+          'coar:c_2df8fbb1',
+          'coar:c_2f33',
+          'coar:c_2fe3',
+          'coar:c_3248',
+          'coar:c_393c',
+          'coar:c_3e5a',
+          'coar:c_46ec',
+          'coar:c_545b',
+          'coar:c_5794',
+          'coar:c_5ce6',
+          'coar:c_6501',
+          'coar:c_6670',
+          'coar:c_6947',
+          'coar:c_71bd',
+          'coar:c_7877',
+          'coar:c_7a1f',
+          'coar:c_7acd',
+          'coar:c_7ad9',
+          'coar:c_7bab',
+          'coar:c_8042',
+          'coar:c_816b',
+          'coar:c_8544',
+          'coar:c_86bc',
+          'coar:c_8a7e',
+          'coar:c_93fc',
+          'coar:c_998f',
+          'coar:c_ab20',
+          'coar:c_b239',
+          'coar:c_ba08',
+          'coar:c_ba1f',
+          'coar:c_baaf',
+          'coar:c_bdcc',
+          'coar:c_beb9',
+          'coar:c_c513',
+          'coar:c_c94f',
+          'coar:c_c950',
+          'coar:c_cb28',
+          'coar:c_db06',
+          'coar:c_dcae04bc',
+          'coar:c_ddb1',
+          'coar:c_e059',
+          'coar:c_e9a0',
+          'coar:c_ecc8',
+          'coar:c_efa0',
+          'coar:c_f744',
+        ])
+        .optional()
+        .describe(
+          'The kind of publication, including journal article, book part, conference paper and thesis.',
+        ),
+      published_in: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodySevenPublishedInItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
+        ),
+      publisher: zod
+        .string()
+        .nullish()
+        .describe(
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Publication')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'An academic publication: journal article, book, chapter, conference paper, thesis, report, etc. The precise kind is given by publication_type.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      address: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyEightAddressItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Postal address, multilingual.'),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyEightDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      end_date: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+        ),
+      event_agent_roles: zod
+        .array(
+          zod
+            .object({
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              event_agent: zod
+                .string()
+                .describe(
+                  'The person or organization involved in the containing event (by IDHI URN). Use only in Event.event_agent_roles; do not duplicate the relationship on the Agent.',
+                ),
+              event_agent_role: zod
+                .enum([
+                  'ORGANIZER',
+                  'HOST',
+                  'SPEAKER',
+                  'PANELIST',
+                  'PARTICIPANT',
+                  'SPONSOR',
+                ])
+                .describe(
+                  'IDHI-governed roles for people and organizations involved in events. Choose the most specific role and use separate EventAgentRole instances for multiple capacities.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization involved in the containing Event in a defined capacity, with optional dates when the involvement covers only part of a multi-day event or programme. Use in Event.event_agent_roles for organizers, hosts, speakers, panelists, participants or sponsors; do not use it merely because an agent authored a publication presented at the event.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'People and organizations involved in the containing event, with their role and optional relationship dates. Define each involvement only on the Event; use Publication.authorships for authorship and presented_at for the event at which a publication was presented.',
+        ),
+      event_type: zod
+        .enum([
+          'CONFERENCE',
+          'WORKSHOP',
+          'SEMINAR',
+          'LECTURE',
+          'HACKATHON',
+          'EXHIBITION',
+        ])
+        .optional()
+        .describe('Kinds of scholarly events.'),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyEightIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      location: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyEightLocationItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Place name where the organization, facility or event is physically situated (e.g. a city), as free multilingual text.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyEightNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      start_date: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      type: zod
+        .literal('idhi:Event')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A scholarly event: conference, workshop, seminar, lecture, hackathon or exhibition. Use Event for time-bounded gatherings; recurring series should be modeled as one Event per occurrence.',
+    ),
+  zod
+    .object({
+      byte_size: zod
+        .int()
+        .nullish()
+        .describe(
+          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
+        ),
+      dataset_type: zod
+        .enum([
+          'DIGITAL_EDITION',
+          'CORPUS',
+          'DATABASE',
+          'GAZETTEER',
+          'IMAGE_COLLECTION',
+          'ANNOTATION_SET',
+          'METADATA_CATALOG',
+          'OTHER_RESEARCH_DATA',
+        ])
+        .optional()
+        .describe(
+          'IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics.',
+        ),
+      datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Datasets aggregated by a Dataset that functions as a catalog (by id).',
+        ),
+      date_issued: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'Formal publication date (or year-01-01 if only the year is known).',
+        ),
+      derived_from: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Source datasets from which this dataset was re-OCRed, cleaned, transformed, subsetted or otherwise derived. Reference each immediate source by IDHI URN; use datasets only for catalog aggregation rather than provenance.',
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyNineDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      distribution_url: zod
+        .url()
+        .nullish()
+        .describe('Direct download or access URL for the dataset.'),
+      doi: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodyNineDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      extent: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyNineIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      in_languages: zod
+        .array(
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyNineInLanguagesItemRegExp),
+        )
+        .nullish()
+        .describe(
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+        ),
+      license: zod
+        .enum([
+          'CC_BY_4_0',
+          'CC_BY_SA_4_0',
+          'CC0_1_0',
+          'MIT',
+          'APACHE_2_0',
+          'GPL_3_0',
+        ])
+        .optional()
+        .describe(
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+        ),
+      media_type: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyNineNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      publisher: zod
+        .string()
+        .nullish()
+        .describe(
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_publications: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Publications that are counterparts or direct scholarly companions of the dataset, such as the print counterpart of a digital edition. Reference Publication records by IDHI URN; use outputs_publications on Project for outputs that are related only by their project of origin.',
+        ),
+      resource_contributions: zod
+        .array(
+          zod
+            .object({
+              contributor: zod
+                .string()
+                .describe(
+                  'The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent.',
+                ),
+              end_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  'End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.',
+                ),
+              resource_contribution_role: zod
+                .enum([
+                  'CREATOR',
+                  'DEVELOPER',
+                  'MAINTAINER',
+                  'DATA_CURATOR',
+                  'CONTRIBUTOR',
+                ])
+                .describe(
+                  'Roles for named contributions to tools and datasets. Use the most specific responsibility and record separate contributions when one agent holds multiple materially different roles.',
+                ),
+              start_date: zod.iso
+                .date()
+                .nullish()
+                .describe(
+                  "Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.",
+                ),
+            })
+            .describe(
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Named contributions to the containing Tool or Dataset, with contributor, role and optional dates. Define each contribution only on the resource; use publisher where supported for the organization formally releasing it and Project.project_participations for work described only at project level.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      themes: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(suggestEntityFieldValuesBodyNineThemesItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe('Thematic keywords for the dataset, multilingual.'),
+      type: zod
+        .literal('idhi:Dataset')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.',
+    ),
+  zod
+    .object({
+      additional_urls: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          'Further relevant web pages beyond the homepage (blog, social-media profile, registry entry, press coverage...). For records describing the same entity in other systems use same_as instead.',
+        ),
+      contact_email: zod
+        .string()
+        .nullish()
+        .describe(
+          "A published contact address for the entity (office, team or service-desk mailbox). For a person's own addresses use 'emails'.",
+        ),
+      creators: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'People or organizations responsible for creating the training material (by IDHI URN). Use publisher for the organization that formally releases it when that differs from its creators.',
+        ),
+      date_issued: zod.iso
+        .date()
+        .nullish()
+        .describe(
+          'Formal publication date (or year-01-01 if only the year is known).',
+        ),
+      description: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroDescriptionItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Multilingual free-text description (a few sentences aimed at index visitors, not internal notes).',
+        ),
+      digital_humanities_activities: zod
+        .array(
+          zod
+            .enum([
+              'tadirah:abstractThinking',
+              'tadirah:academicPublishing',
+              'tadirah:adding',
+              'tadirah:aggregating',
+              'tadirah:analyzing',
+              'tadirah:annotating',
+              'tadirah:archiving',
+              'tadirah:associate',
+              'tadirah:associating',
+              'tadirah:audioAnnotation',
+              'tadirah:audioConferencing',
+              'tadirah:audioRecording',
+              'tadirah:authorshipAttribution',
+              'tadirah:bitStreamPreservation',
+              'tadirah:blogging',
+              'tadirah:browsing',
+              'tadirah:capturing',
+              'tadirah:cataloging',
+              'tadirah:clusterAnalysis',
+              'tadirah:coOccurrence',
+              'tadirah:collaborating',
+              'tadirah:collating',
+              'tadirah:collecting',
+              'tadirah:collocationAnalysis',
+              'tadirah:commenting',
+              'tadirah:communicating',
+              'tadirah:comparing',
+              'tadirah:compiling',
+              'tadirah:conceptualizing',
+              'tadirah:concordance',
+              'tadirah:contentAnalysis',
+              'tadirah:contextualizing',
+              'tadirah:contrastiveAnalysis',
+              'tadirah:converting',
+              'tadirah:correcting',
+              'tadirah:creating',
+              'tadirah:cropping',
+              'tadirah:crowdsourcing',
+              'tadirah:dataCleansing',
+              'tadirah:dataIngestion',
+              'tadirah:dataMapping',
+              'tadirah:dataMining',
+              'tadirah:dataRecognition',
+              'tadirah:dataVisualization',
+              'tadirah:debugging',
+              'tadirah:defining',
+              'tadirah:description',
+              'tadirah:designing',
+              'tadirah:diagramming',
+              'tadirah:digitalObjectIdentifier',
+              'tadirah:digitalPublishing',
+              'tadirah:discourseAnalysis',
+              'tadirah:discovering',
+              'tadirah:discussing',
+              'tadirah:disseminating',
+              'tadirah:distanceMeasures',
+              'tadirah:drawing',
+              'tadirah:eMailing',
+              'tadirah:editing',
+              'tadirah:emulation',
+              'tadirah:encoding',
+              'tadirah:enriching',
+              'tadirah:explanation',
+              'tadirah:exploration',
+              'tadirah:expressingOpinion',
+              'tadirah:extracting',
+              'tadirah:finding',
+              'tadirah:formatting',
+              'tadirah:gamification',
+              'tadirah:gathering',
+              'tadirah:genreRecognition',
+              'tadirah:georeferencing',
+              'tadirah:graphicsProgramming',
+              'tadirah:highlighting',
+              'tadirah:identifier',
+              'tadirah:identifying',
+              'tadirah:imaging',
+              'tadirah:improving',
+              'tadirah:informationMining',
+              'tadirah:informationRetrieval',
+              'tadirah:instantMessaging',
+              'tadirah:integrating',
+              'tadirah:interpreting',
+              'tadirah:knowledgeDiscovery',
+              'tadirah:knowledgeExtraction',
+              'tadirah:lemmatizing',
+              'tadirah:lettering',
+              'tadirah:linkedOpenData',
+              'tadirah:machineLearning',
+              'tadirah:managing',
+              'tadirah:mapping',
+              'tadirah:merging',
+              'tadirah:microblogging',
+              'tadirah:migration',
+              'tadirah:mindMapping',
+              'tadirah:modeling',
+              'tadirah:modifying',
+              'tadirah:namedEntityRecognition',
+              'tadirah:namingConvention',
+              'tadirah:naturalLanguageProcessing',
+              'tadirah:networkAnalysis',
+              'tadirah:opticalCharacterRecognition',
+              'tadirah:opticalMusicRecognition',
+              'tadirah:organizing',
+              'tadirah:parsing',
+              'tadirah:patternRecognition',
+              'tadirah:persistentIdentifier',
+              'tadirah:photographing',
+              'tadirah:plotting',
+              'tadirah:posTagging',
+              'tadirah:posting',
+              'tadirah:preprocessing',
+              'tadirah:preservationMetadata',
+              'tadirah:preserving',
+              'tadirah:principalComponentAnalysis',
+              'tadirah:programming',
+              'tadirah:pseudoCoding',
+              'tadirah:publishing',
+              'tadirah:querying',
+              'tadirah:reasoning',
+              'tadirah:recording',
+              'tadirah:relationalAnalysis',
+              'tadirah:removing',
+              'tadirah:replication',
+              'tadirah:rhetoricalAnalysis',
+              'tadirah:scanning',
+              'tadirah:screencast',
+              'tadirah:searching',
+              'tadirah:segmenting',
+              'tadirah:semantification',
+              'tadirah:sentimentAnalysis',
+              'tadirah:sequenceAlignment',
+              'tadirah:sharing',
+              'tadirah:socialNetworking',
+              'tadirah:spatialAnalysis',
+              'tadirah:speechRecognizing',
+              'tadirah:storing',
+              'tadirah:structuralAnalysis',
+              'tadirah:stylisticAnalysis',
+              'tadirah:stylometry',
+              'tadirah:subtracting',
+              'tadirah:supplementing',
+              'tadirah:tagging',
+              'tadirah:teaching',
+              'tadirah:textCategorization',
+              'tadirah:textMessaging',
+              'tadirah:theorizing',
+              'tadirah:topicModeling',
+              'tadirah:transcoding',
+              'tadirah:transcribing',
+              'tadirah:transformation',
+              'tadirah:translating',
+              'tadirah:treeTagging',
+              'tadirah:tweet',
+              'tadirah:uniformResourceIdentifier',
+              'tadirah:upload',
+              'tadirah:userGeneratedContent',
+              'tadirah:versioning',
+              'tadirah:videoCapture',
+              'tadirah:videoConference',
+              'tadirah:videoEditing',
+              'tadirah:visualAnalysis',
+              'tadirah:visualAnnotation',
+              'tadirah:webCrawling',
+              'tadirah:webDevelopment',
+              'tadirah:webScraping',
+              'tadirah:wireframing',
+              'tadirah:writing',
+            ])
+            .describe(
+              'Digital-humanities research activities: Analyzing, Capturing, Creating, Disseminating, Enriching, Interpreting, Storing, and their more specific subactivities.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Digital-humanities research activities practiced in this project, tool, service or dataset, or taught by this training material. Prefer the most specific applicable activity; multiple values are expected. This is the primary DH-facet for discovery.',
+        ),
+      doi: zod
+        .url()
+        .regex(suggestEntityFieldValuesBodyOnezeroDoiRegExp)
+        .nullish()
+        .describe(
+          "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
+        ),
+      educational_level: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroEducationalLevelItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Expected learner level, as multilingual text such as beginner, intermediate or graduate. Use target_audiences for who the material serves rather than their proficiency.',
+        ),
+      homepage: zod
+        .url()
+        .nullish()
+        .describe('Public landing page of the entity, if one exists.'),
+      id: zod
+        .union([
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyOnezeroIdOneRegExp)
+            .describe(
+              "The entity's primary identifier: an IDHI URN of the form\n  idhi:<class name>:<random short alphanumeric id>\ne.g. idhi:person:x7k2m9 or idhi:project:a83bq1. Minted by IDHI at record creation and never reused or changed. The class token is the lowercase snake_case class name; each concrete class enforces its own token via slot_usage. External identifiers (ORCID, ROR, DOI...) are supplementary and go in their dedicated slots — never here.",
+            ),
+          zod.null(),
+          zod.literal(''),
+        ])
+        .optional(),
+      image: zod
+        .string()
+        .nullish()
+        .describe(
+          'A representative image embedded as Base64-encoded binary content. Use for a single image that must travel with the entity record; omit it when no image is available, and use homepage or additional_urls for externally hosted pages rather than encoding a URL here.',
+        ),
+      in_languages: zod
+        .array(
+          zod
+            .string()
+            .regex(suggestEntityFieldValuesBodyOnezeroInLanguagesItemRegExp),
+        )
+        .nullish()
+        .describe(
+          'Languages substantially represented in a dataset or in which instructional content is available, using BCP-47 tags. For training material, record every complete language version and do not include a language used only in captions or examples; for datasets, record the languages of the data rather than its metadata page.',
+        ),
+      learning_outcomes: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroLearningOutcomesItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge or skills a learner should gain by completing the material, as multilingual statements. Use one entry per distinct outcome; do not use this for prerequisites.',
+        ),
+      license: zod
+        .enum([
+          'CC_BY_4_0',
+          'CC_BY_SA_4_0',
+          'CC0_1_0',
+          'MIT',
+          'APACHE_2_0',
+          'GPL_3_0',
+        ])
+        .optional()
+        .describe(
+          'Common licenses for tools, datasets and training materials. Extend as needed with canonical meanings.',
+        ),
+      material_url: zod
+        .url()
+        .nullish()
+        .describe(
+          'Direct landing or access URL for the instructional resource. Use homepage for a broader site about the material and material_url for the resource learners open.',
+        ),
+      media_type: zod
+        .string()
+        .nullish()
+        .describe(
+          'Technical media type of the primary dataset distribution or training resource, preferably an IANA media type such as text/html, application/pdf, application/vnd.apache.parquet or video/mp4. Dataset records may list multiple formats; do not use this for an intellectual or didactic form, which belongs in dataset_type or training_material_type.',
+        ),
+      name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroNameItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .describe(
+          'The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority.',
+        ),
+      part_of_training_material: zod
+        .string()
+        .nullish()
+        .describe(
+          'The larger training material of which this resource is a module or lesson (by IDHI URN). Use only for formal instructional containment, not loose topical similarity.',
+        ),
+      prerequisites: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroPrerequisitesItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Knowledge, skills, software or prior material learners should have before starting, expressed as multilingual text. Omit when no prerequisites apply.',
+        ),
+      publisher: zod
+        .string()
+        .nullish()
+        .describe(
+          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+        ),
+      related_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Datasets used as the subject or worked example of the material (by IDHI URN). Do not use this for incidental source data that learners never encounter.',
+        ),
+      related_services: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Services that the material explains how to access or use (by IDHI URN). Do not use this for the organization publishing the material.',
+        ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+        ),
+      same_as: zod
+        .array(zod.url())
+        .nullish()
+        .describe(
+          "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
+        ),
+      tags: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
+        ),
+      target_audiences: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodyOnezeroTargetAudiencesItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
+        .nullish()
+        .describe(
+          'Intended learner groups, as multilingual labels such as researchers, librarians or students. Use educational_level separately for the expected level of study or expertise.',
+        ),
+      training_material_type: zod
+        .enum([
+          'TUTORIAL',
+          'LESSON',
+          'COURSE_MATERIAL',
+          'WORKSHOP_MATERIAL',
+          'SELF_PACED_EXERCISE',
+          'OTHER_DIDACTIC_RESOURCE',
+        ])
+        .optional()
+        .describe(
+          "Didactic forms of training material. Choose the form that describes the learner's intended mode of engagement rather than the resource's technical format.",
+        ),
+      type: zod
+        .literal('idhi:TrainingMaterial')
+        .describe(
+          "Discriminator identifying the record's class; used for polymorphic serialization and deserialization.",
+        ),
+    })
+    .describe(
+      'A tutorial, lesson or other didactic resource that explains how to perform an action or states learning outcomes gained by using it. Use TrainingMaterial for resources intended to teach; use Publication for scholarly communication and Tool for software that performs the action itself.',
+    ),
+])
+
+export const SuggestEntityFieldValuesResponseItem = zod.string()
+export const SuggestEntityFieldValuesResponse = zod.array(
+  SuggestEntityFieldValuesResponseItem,
+)
+
 export const GetEntityByIdParams = zod.object({
   entityId: zod.string(),
 })

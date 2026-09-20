@@ -96,6 +96,7 @@ export const TrainingMaterialFields = withForm({
                 />
               }
               options={TrainingMaterialDigitalHumanitiesActivitiesItem}
+              suggestField="digital_humanities_activities"
             />
           )}
         </form.AppField>

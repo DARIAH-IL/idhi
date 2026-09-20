@@ -255,6 +255,8 @@
       "WrongOtpCode": "הקוד שהוכנס שגוי. נא לנסות שוב.",
       "TooManyAuthAttempts": "יותר מדי ניסיונות כניסה. נא לנסות שוב מאוחר יותר.",
       "AuthChallengeNotFoundOrExpired": "פג תוקף בקשת הכניסה. יש להתחיל מחדש.",
+      "AiSuggestionFailed": "לא ניתן היה להפיק הצעה. נא לנסות שוב.",
+      "AiSuggestionsLimitReached": "הגעת למגבלת ההצעות. נא לנסות שוב מאוחר יותר.",
       "network": "לא הצלחנו להגיע לשרת. נא לבדוק את חיבור האינטרנט ולנסות שוב.",
       "generic": "משהו השתבש בתקשורת עם השרת, אנחנו בודקים את זה."
     }
@@ -1997,7 +1999,9 @@
       "clear_selection": "ניקוי בחירה",
       "remove_entity": "הסרת רשומה",
       "image_uploaded": "התמונה הועלתה",
-      "lookup_failed": "החיפוש נכשל. נא לנסות שוב."
+      "lookup_failed": "החיפוש נכשל. נא לנסות שוב.",
+      "suggest_values": "הצעת ערכים",
+      "suggest_values_missing_context": "יש למלא לפחות שם ותיאור כדי לקבל הצעות."
     },
     "duplicate_check": {
       "title": "רשומות כפולות אפשריות",

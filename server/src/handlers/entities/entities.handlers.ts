@@ -16,12 +16,15 @@ import {
   searchEntityTags,
   updateEntity,
 } from '../../utils/entityOps'
+import { suggestEntityFieldValues } from '../../utils/entitySuggestions'
+import { enforceSuggestionRateLimits } from '../../utils/suggestionRateLimit'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
 import { zValidator } from '../api.validator.ts'
 import type {
   SearchEntitiesContext,
   CreateEntityContext,
   SearchEntityTagsContext,
+  SuggestEntityFieldValuesContext,
   GetEntityByIdContext,
   UpdateEntityByIdContext,
   DeleteEntityByIdContext,
@@ -47,6 +50,11 @@ import {
   SearchEntityTagsResponse,
   searchEntityTagsQueryLimitDefault,
 } from './entities.zod.ts'
+import {
+  SuggestEntityFieldValuesBody,
+  SuggestEntityFieldValuesResponse,
+} from './entities.zod.ts'
+import { SuggestEntityFieldValuesQueryParams } from './entities.zod.ts'
 
 const factory = createFactory()
 
@@ -151,5 +159,26 @@ export const searchEntityTagsHandlers = factory.createHandlers(
     const { q, limit = searchEntityTagsQueryLimitDefault } =
       c.req.valid('query')
     return c.json(await searchEntityTags(c.var.db.entities, q, limit))
+  },
+)
+
+export const suggestEntityFieldValuesHandlers = factory.createHandlers(
+  zValidator('json', SuggestEntityFieldValuesBody),
+  zValidator('response', SuggestEntityFieldValuesResponse),
+  zValidator('query', SuggestEntityFieldValuesQueryParams),
+  async (c: SuggestEntityFieldValuesContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+    await enforceSuggestionRateLimits(c, user.id)
+    const { field } = c.req.valid('query')
+
+    return c.json(
+      await suggestEntityFieldValues(
+        c.env,
+        c.get('logger'),
+        c.req.valid('json'),
+        field,
+      ),
+    )
   },
 )

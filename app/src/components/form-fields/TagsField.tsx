@@ -36,6 +36,7 @@ export function TagsField({ label }: Props) {
       knownValues={knownTags}
       search={search}
       loading={isLoading}
+      suggestField="tags"
     />
   )
 }

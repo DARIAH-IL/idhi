@@ -28,6 +28,7 @@ import type {
   ErrorResponse,
   SearchEntities200,
   SearchEntityTagsParams,
+  SuggestEntityFieldValuesParams,
   UpdateEntityByIdParams,
 } from '../../models'
 
@@ -446,6 +447,102 @@ export function useSearchEntityTags<
   return withQueryKey(query, queryOptions.queryKey)
 }
 
+/**
+ * Returns AI-generated suggestions for a single supported entity field, derived from the prominent fields of the supplied entity. The entity need not be persisted; its ID is ignored.
+ * @summary Suggest entity field values
+ */
+export const suggestEntityFieldValues = (
+  entity: BodyType<Entity>,
+  params: SuggestEntityFieldValuesParams,
+  signal?: AbortSignal,
+) => {
+  return customInstance<string[]>({
+    url: `/api/v1/entities/suggestions`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: entity,
+    params,
+    signal,
+  })
+}
+
+export const getSuggestEntityFieldValuesMutationKey = () =>
+  ['suggestEntityFieldValues'] as const
+
+export const getSuggestEntityFieldValuesMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof suggestEntityFieldValues>>,
+    TError,
+    SuggestEntityFieldValuesMutationVariables,
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof suggestEntityFieldValues>>,
+  TError,
+  SuggestEntityFieldValuesMutationVariables,
+  TContext
+> => {
+  const mutationKey = getSuggestEntityFieldValuesMutationKey()
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } }
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof suggestEntityFieldValues>>,
+    SuggestEntityFieldValuesMutationVariables
+  > = (props) => {
+    const { data, params } = props ?? {}
+
+    return suggestEntityFieldValues(data, params)
+  }
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type SuggestEntityFieldValuesMutationResult = NonNullable<
+  Awaited<ReturnType<typeof suggestEntityFieldValues>>
+>
+export type SuggestEntityFieldValuesMutationBody = BodyType<Entity>
+export type SuggestEntityFieldValuesMutationError = ErrorType<ErrorResponse>
+export type SuggestEntityFieldValuesMutationVariables = {
+  data: BodyType<Entity>
+  params: SuggestEntityFieldValuesParams
+}
+
+/**
+ * @summary Suggest entity field values
+ */
+export const useSuggestEntityFieldValues = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof suggestEntityFieldValues>>,
+      TError,
+      SuggestEntityFieldValuesMutationVariables,
+      TContext
+    >
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof suggestEntityFieldValues>>,
+  TError,
+  SuggestEntityFieldValuesMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getSuggestEntityFieldValuesMutationOptions(options),
+    queryClient,
+  )
+}
 /**
  * Returns all properties of a specific entity.
  * @summary Get an entity

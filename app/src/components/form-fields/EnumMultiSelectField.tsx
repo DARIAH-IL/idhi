@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import type { SuggestibleEntityField } from '@/api/models'
 import { useFieldContext } from '@/components/forms/form-context'
+import { SuggestValuesButton } from './SuggestValuesButton'
 import { getEnumValueLabel } from '@/lib/entity'
 import { FieldRow } from './FieldRow'
 import {
@@ -20,6 +22,7 @@ interface Props {
   label: React.ReactNode
   options: Record<string, string>
   required?: boolean
+  suggestField?: SuggestibleEntityField
 }
 
 interface Option {
@@ -31,6 +34,7 @@ export function EnumMultiSelectField({
   label,
   options,
   required = false,
+  suggestField,
 }: Props) {
   const { t } = useTranslation()
   const field = useFieldContext<string[] | null | undefined>()
@@ -43,7 +47,19 @@ export function EnumMultiSelectField({
     .sort((a, b) => a.label.localeCompare(b.label))
 
   return (
-    <FieldRow label={label} required={required}>
+    <FieldRow
+      label={label}
+      required={required}
+      action={
+        suggestField && (
+          <SuggestValuesButton
+            field={suggestField}
+            allowedValues={options}
+            onSuggested={(values) => field.handleChange(values)}
+          />
+        )
+      }
+    >
       {(labelId) => (
         <>
           <Combobox

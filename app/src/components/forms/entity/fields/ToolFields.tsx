@@ -159,6 +159,7 @@ export const ToolFields = withForm({
                 />
               }
               options={ToolDigitalHumanitiesActivitiesItem}
+              suggestField="digital_humanities_activities"
             />
           )}
         </form.AppField>

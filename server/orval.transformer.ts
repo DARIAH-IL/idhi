@@ -158,6 +158,12 @@ export default function markEntityIdsReadOnly<T extends JsonObject>(
     'post',
     'EntityUpdate',
   )
+  setRequestSchema(
+    document,
+    '/api/v1/entities/suggestions',
+    'post',
+    'EntityUpdate',
+  )
 
   return document
 }
