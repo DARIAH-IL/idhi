@@ -5,6 +5,8 @@ export type Bindings = {
   AI: Ai
   AI_MODEL?: string
 
+  BROWSER: BrowserRun
+
   DEFAULT_LANG?: string
 
   FRONTEND_URL: string
