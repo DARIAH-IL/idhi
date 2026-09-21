@@ -1164,6 +1164,10 @@
           "label": "$t(common.labels.same_as)",
           "description": "روابط تحدّد الأداة نفسها في أنظمة أخرى، مثل Wikidata أو SSH Open Marketplace."
         },
+        "serves_datasets": {
+          "label": "مجموعات البيانات المتاحة",
+          "description": "مجموعات البيانات التي تتيح الأداة الوصول إليها، مثل الفهرس أو المدونة أو قاعدة البيانات التي تقف خلف واجهة بحثها أو واجهة برمجة التطبيقات الخاصة بها."
+        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
@@ -1839,6 +1843,7 @@
         "projects_producing_tool": "من إنتاج مشاريع",
         "projects_producing_training_material": "من إنتاج مشاريع",
         "tools_with_contributor": "أدوات بمساهمة",
+        "tools_serving_dataset": "أدوات متيحة",
         "services_provided_by_organization": "خدمات مقدَّمة",
         "publications_authored_by_person": "منشورات مؤلَّفة",
         "publications_published_by_organization": "أعمال منشورة",

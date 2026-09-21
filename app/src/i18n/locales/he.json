@@ -1162,6 +1162,10 @@
           "label": "$t(common.labels.same_as)",
           "description": "קישורים המזהים את אותו כלי במערכות אחרות, כגון Wikidata או SSH Open Marketplace."
         },
+        "serves_datasets": {
+          "label": "מערכי נתונים המונגשים",
+          "description": "מערכי הנתונים שהכלי מספק אליהם גישה, כגון הקטלוג, הקורפוס או מסד הנתונים שמאחורי ממשק החיפוש או ה-API שלו."
+        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
@@ -1837,6 +1841,7 @@
         "projects_producing_tool": "תוצר של פרויקטים",
         "projects_producing_training_material": "תוצר של פרויקטים",
         "tools_with_contributor": "כלים בתרומה",
+        "tools_serving_dataset": "כלים המנגישים",
         "services_provided_by_organization": "שירותים מסופקים",
         "publications_authored_by_person": "פרסומים שנכתבו",
         "publications_published_by_organization": "יצירות שפורסמו",

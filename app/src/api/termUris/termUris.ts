@@ -272,6 +272,7 @@ export const termUris = {
     programming_languages: 'schema:programmingLanguage',
     resource_contributions: 'dcterms:contributor',
     same_as: 'schema:sameAs',
+    serves_datasets: 'dcat:servesDataset',
     tags: 'dcat:keyword',
     tool_type: 'schema:applicationCategory',
     type: 'rdf:type',

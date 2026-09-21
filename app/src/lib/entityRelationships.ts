@@ -112,6 +112,11 @@ const ENTITY_RELATIONSHIPS = {
       targetTypes: ['idhi:Person', 'idhi:Organization'],
       label: 'tools_with_contributor',
     },
+    {
+      path: 'serves_datasets',
+      targetTypes: ['idhi:Dataset'],
+      label: 'tools_serving_dataset',
+    },
   ],
   'idhi:Service': [
     {

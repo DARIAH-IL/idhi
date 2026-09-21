@@ -185,6 +185,7 @@ export const ADVANCED_SEARCH_FIELDS = {
   ),
   'resource_contributions.start_date': { kind: 'date' },
   'resource_contributions.end_date': { kind: 'date' },
+  serves_datasets: { kind: 'string' },
   tool_type: enumSpec(ToolToolType),
 
   provider: { kind: 'string' },

@@ -9,6 +9,7 @@ import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
+  entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
@@ -174,6 +175,19 @@ export const ToolFields = withForm({
                 <EntityFieldLabel entityClass="Tool" field="contact_email" />
               }
               type="email"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="serves_datasets"
+          validators={entityRefArrayValidators(['idhi:Dataset'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Tool" field="serves_datasets" />
+              }
+              entityTypes={['idhi:Dataset']}
             />
           )}
         </form.AppField>

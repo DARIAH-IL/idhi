@@ -1645,6 +1645,12 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
+            serves_datasets: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+              ),
             tags: zod
               .array(zod.string())
               .nullish()
@@ -1673,7 +1679,7 @@ export const SearchEntitiesResponse = zod.object({
               ),
           })
           .describe(
-            'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+            "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
           ),
         zod
           .object({
@@ -4896,6 +4902,12 @@ export const CreateEntityBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      serves_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+        ),
       tags: zod
         .array(zod.string())
         .nullish()
@@ -4924,7 +4936,7 @@ export const CreateEntityBody = zod.union([
         ),
     })
     .describe(
-      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+      "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
     ),
   zod
     .object({
@@ -8075,6 +8087,12 @@ export const CreateEntityResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        serves_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+          ),
         tags: zod
           .array(zod.string())
           .nullish()
@@ -8103,7 +8121,7 @@ export const CreateEntityResponse = zod
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
       ),
     zod
       .object({
@@ -11375,6 +11393,12 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      serves_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+        ),
       tags: zod
         .array(zod.string())
         .nullish()
@@ -11403,7 +11427,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         ),
     })
     .describe(
-      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+      "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
     ),
   zod
     .object({
@@ -14652,6 +14676,12 @@ export const GetEntityByIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        serves_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+          ),
         tags: zod
           .array(zod.string())
           .nullish()
@@ -14680,7 +14710,7 @@ export const GetEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
       ),
     zod
       .object({
@@ -17947,6 +17977,12 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
+      serves_datasets: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+        ),
       tags: zod
         .array(zod.string())
         .nullish()
@@ -17975,7 +18011,7 @@ export const UpdateEntityByIdBody = zod.union([
         ),
     })
     .describe(
-      'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+      "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
     ),
   zod
     .object({
@@ -21191,6 +21227,12 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
+        serves_datasets: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.",
+          ),
         tags: zod
           .array(zod.string())
           .nullish()
@@ -21219,7 +21261,7 @@ export const UpdateEntityByIdResponse = zod
           ),
       })
       .describe(
-        'A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.',
+        "A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.",
       ),
     zod
       .object({

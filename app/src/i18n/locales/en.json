@@ -1160,6 +1160,10 @@
           "label": "$t(common.labels.same_as)",
           "description": "Links that identify the same tool in other systems, such as Wikidata or the SSH Open Marketplace."
         },
+        "serves_datasets": {
+          "label": "Datasets served",
+          "description": "The datasets this tool provides access to, such as the catalog, corpus or database behind its search interface or API."
+        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
@@ -1835,6 +1839,7 @@
         "projects_producing_tool": "Produced by projects",
         "projects_producing_training_material": "Produced by projects",
         "tools_with_contributor": "Contributed tools",
+        "tools_serving_dataset": "Serving tools",
         "services_provided_by_organization": "Provided services",
         "publications_authored_by_person": "Authored publications",
         "publications_published_by_organization": "Published works",

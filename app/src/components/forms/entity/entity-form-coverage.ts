@@ -132,6 +132,7 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     'resource_contributions[].end_date': 'rendered',
     'resource_contributions[].resource_contribution_role': 'rendered',
     'resource_contributions[].start_date': 'rendered',
+    serves_datasets: 'rendered',
     tool_type: 'rendered',
   } satisfies FormCoverage<Tool>,
   service: {

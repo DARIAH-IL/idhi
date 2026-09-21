@@ -271,6 +271,7 @@ const ENTITY_FIELD_ORDER = {
     additional_urls: true,
     digital_humanities_activities: true,
     contact_email: true,
+    serves_datasets: true,
     resource_contributions: true,
     same_as: true,
   },

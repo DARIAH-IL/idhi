@@ -25,6 +25,7 @@ const OMITTED_SUGGESTION_FIELDS = [
   'related_services',
   'related_tools',
   'resource_contributions',
+  'serves_datasets',
   'services_offered',
   'tools_provided',
   'uses_datasets',

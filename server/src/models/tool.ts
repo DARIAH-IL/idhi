@@ -13,7 +13,7 @@ import type { ToolToolType } from './toolToolType.ts'
 import type { ToolType } from './toolType.ts'
 
 /**
- * A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead.
+ * A reusable software tool, typically produced by a project. Use Tool for software that others can install, run or call; for a human-mediated offering use Service instead. Software whose purpose is to expose a body of data — a library catalog's search interface, a corpus browser, a gazetteer API — is a Tool over a Dataset: register the content as a Dataset, this record as the software, and link them with serves_datasets.
  */
 export interface Tool {
   /**
@@ -88,6 +88,11 @@ export interface Tool {
    * @nullable
    */
   same_as?: string[] | null
+  /**
+   * Datasets this tool provides access to — the catalog, corpus, database or gazetteer that its browse interface, query endpoint or API exposes (by IDHI URN). Use it whenever the same content is registered twice, once as the data and once as the software over it, so a library catalog's search interface points at the catalog Dataset rather than being modeled as a dataset itself. Use Project.uses_datasets for data a project merely consumes, Dataset.datasets for catalog aggregation and Dataset.derived_from for dataset-to-dataset provenance.
+   * @nullable
+   */
+  serves_datasets?: string[] | null
   /**
    * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
    * @nullable
