@@ -118,6 +118,7 @@ function EntityDetailPage() {
             type={entity.type}
             alt={getEntityDisplayName(entity)}
             size="lg"
+            entityId={entity.id}
           />
           <div className="flex flex-col gap-0.5">
             <EntityNameIdentifiers entity={entity}>

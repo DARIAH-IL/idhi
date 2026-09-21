@@ -147,6 +147,7 @@ export function FacetSection({
                     accessibleLabel={t('board.facets.select_value', {
                       value: valueLabel,
                     })}
+                    entityId={value}
                     entityType={entityType}
                     image={image}
                     count={count}

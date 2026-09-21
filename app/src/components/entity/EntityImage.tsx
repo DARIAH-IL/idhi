@@ -57,18 +57,39 @@ function imageSource(image: string): string {
   return `data:${mimeType};base64,${base64}`
 }
 
+function describeImageFailure(image: string): string {
+  if (image.startsWith('data:image/')) {
+    return 'already a data url, rejected by the browser'
+  }
+
+  const base64 = image.replace(/\s/g, '')
+  if (!inferImageMimeType(base64)) {
+    return 'unrecognized image signature, served as application/octet-stream'
+  }
+
+  try {
+    atob(base64)
+  } catch {
+    return 'payload is not decodable base64'
+  }
+
+  return 'base64 decodes, but the browser rejected the image'
+}
+
 export function EntityImage({
   image,
   type,
   alt,
   size = 'md',
   className,
+  entityId,
 }: {
   image?: string | null
   type: string
   alt: string
   size?: keyof typeof SIZES
   className?: string
+  entityId?: string
 }) {
   const dimensions = SIZES[size]
   const source = useMemo(
@@ -93,7 +114,18 @@ export function EntityImage({
       alt={alt}
       loading="lazy"
       decoding="async"
-      onError={() => setFailedSource(source)}
+      onError={() => {
+        // eslint-disable-next-line no-console
+        console.error('Entity image failed to load', {
+          entityId,
+          type,
+          reason: describeImageFailure(image ?? ''),
+          mediaType: source.slice('data:'.length, source.indexOf(';')),
+          rawLength: image?.length,
+          rawPrefix: image?.slice(0, 48),
+        })
+        setFailedSource(source)
+      }}
       className={cn(
         'shrink-0 bg-muted object-contain border-accent-foreground/20 border-1',
         dimensions.image,

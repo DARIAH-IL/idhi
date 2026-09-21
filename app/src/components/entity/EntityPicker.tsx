@@ -197,6 +197,7 @@ export function EntityPicker({
                       image={entity.image}
                       type={entity.type}
                       alt=""
+                      entityId={id}
                     />
                     <span className="min-w-0">
                       <span className="flex items-center gap-1.5">

@@ -8,6 +8,7 @@ import type { ENTITY_TYPES } from '#/lib/entity.ts'
 interface FacetCheckboxProps {
   label: string
   accessibleLabel: string
+  entityId?: string
   entityType?: (typeof ENTITY_TYPES)[number]
   image?: string | null
   count: number
@@ -18,6 +19,7 @@ interface FacetCheckboxProps {
 export function FacetCheckbox({
   label,
   accessibleLabel,
+  entityId,
   entityType,
   image,
   count,
@@ -59,6 +61,7 @@ export function FacetCheckbox({
               alt=""
               size="sm"
               className="size-5 shrink-0 bg-transparent"
+              entityId={entityId}
             />
           )}
           <span className="min-w-0 flex-1 truncate text-start text-xs">

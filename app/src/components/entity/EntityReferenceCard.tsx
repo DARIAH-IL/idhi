@@ -101,7 +101,12 @@ export function EntityReferenceCard({
       )}
       <CardContent className="p-2.5">
         <div className="flex items-center gap-3">
-          <EntityImage image={data.image} type={data.type} alt="" />
+          <EntityImage
+            image={data.image}
+            type={data.type}
+            alt=""
+            entityId={entityId}
+          />
           <div className="flex min-w-0 flex-col gap-0.5">
             <EntityNameIdentifiers entity={data} className="relative">
               <span className="flex items-center gap-1.5">

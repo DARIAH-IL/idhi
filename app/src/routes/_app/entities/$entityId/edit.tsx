@@ -86,6 +86,7 @@ function EditEntityPage() {
               image={entity.image}
               type={entity.type}
               alt={getEntityDisplayName(entity)}
+              entityId={entity.id}
             />
             <div>
               <h1 className="text-lg font-semibold">

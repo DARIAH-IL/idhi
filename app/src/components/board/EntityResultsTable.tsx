@@ -210,6 +210,7 @@ export function EntityResultsTable({
                           image={entity.image}
                           type={entity.type}
                           alt=""
+                          entityId={id}
                         />
                       </TableCell>
                       <TableCell>
