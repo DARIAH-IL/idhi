@@ -1,6 +1,10 @@
 import type { RorSuggestion } from '#/api/external/ror.ts'
 import { useTranslation } from 'react-i18next'
-import { searchRorOrganizations } from '#/api/external/ror.ts'
+import {
+  extractRorId,
+  normalizeRor,
+  searchRorOrganizations,
+} from '#/api/external/ror.ts'
 import { AutocompleteTextField } from '#/components/form-fields/AutocompleteTextField.tsx'
 import { AutocompleteSuggestionContent } from '#/components/form-fields/AutocompleteSuggestionContent.tsx'
 
@@ -25,8 +29,11 @@ export function RorField({ label, placeholder, onSelect, onBlurValue }: Props) {
         placeholder ?? t('entity.form.identifier_search_placeholder')
       }
       search={searchRorOrganizations}
-      shouldSearch={(query) => !/^https?:\/\//i.test(query)}
+      shouldSearch={(query) =>
+        extractRorId(query) !== null || !/^https?:\/\//i.test(query)
+      }
       getSuggestionValue={(suggestion) => suggestion.id}
+      normalizeValue={normalizeRor}
       onSelect={onSelect}
       onBlurValue={onBlurValue}
       renderSuggestion={(suggestion) => (

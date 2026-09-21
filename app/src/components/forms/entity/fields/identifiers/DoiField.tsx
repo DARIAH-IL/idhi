@@ -1,6 +1,7 @@
 import type { DoiSuggestion } from '#/api/external/crossref.ts'
 import { useTranslation } from 'react-i18next'
 import {
+  extractDoi,
   formatDoiAuthors,
   normalizeDoi,
   searchCrossrefWorks,
@@ -35,7 +36,9 @@ export function DoiField({ label, placeholder, onSelect, onBlurValue }: Props) {
         placeholder ?? t('entity.form.identifier_search_placeholder')
       }
       search={searchCrossrefWorks}
-      shouldSearch={(query) => !/^(https?:\/\/|10\.|doi:)/i.test(query)}
+      shouldSearch={(query) =>
+        extractDoi(query) !== null || !/^(https?:\/\/|10\.|doi:)/i.test(query)
+      }
       getSuggestionValue={(suggestion) => `https://doi.org/${suggestion.doi}`}
       normalizeValue={normalizeDoi}
       onSelect={onSelect}

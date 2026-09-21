@@ -28,13 +28,16 @@ interface CrossrefWork {
 const DOI_PATTERN =
   /^(?:https?:\/\/(?:dx\.)?doi\.org\/|doi:)?(10\.\d{4,9}\/\S+)$/i
 
+export function extractDoi(raw: string): string | null {
+  return DOI_PATTERN.exec(raw.trim())?.[1] ?? null
+}
+
 export function normalizeDoi(raw: string): string {
   const trimmed = raw.trim()
   if (!trimmed) {
     return trimmed
   }
-  const match = DOI_PATTERN.exec(trimmed)
-  const doi = match?.[1]
+  const doi = extractDoi(trimmed)
   return doi ? `https://doi.org/${doi}` : trimmed
 }
 
@@ -79,10 +82,56 @@ function extractPublication(work: CrossrefWork): {
   return {}
 }
 
+function toDoiSuggestion(work: CrossrefWork): DoiSuggestion | null {
+  const doi = work.DOI
+  const title = work.title?.[0]
+  if (!doi || !title) {
+    return null
+  }
+  const authors = (work.author ?? [])
+    .map((author) => author.family ?? author.name)
+    .filter((name): name is string => Boolean(name))
+  const { year, date } = extractPublication(work)
+  return {
+    doi,
+    title,
+    authors,
+    year,
+    publishedDate: date,
+    containerTitle: work['container-title']?.[0],
+    publisher: work.publisher,
+  }
+}
+
+async function fetchCrossrefWork(
+  doi: string,
+  signal?: AbortSignal,
+): Promise<DoiSuggestion[]> {
+  const response = await fetch(
+    `https://api.crossref.org/works/${encodeURIComponent(doi)}`,
+    { signal },
+  )
+  if (response.status === 404) {
+    return []
+  }
+  if (!response.ok) {
+    throw new Error(`Crossref lookup failed (${response.status})`)
+  }
+
+  const data: { message?: CrossrefWork } = await response.json()
+  const suggestion = data.message ? toDoiSuggestion(data.message) : null
+  return suggestion ? [suggestion] : []
+}
+
 export async function searchCrossrefWorks(
   query: string,
   signal?: AbortSignal,
 ): Promise<DoiSuggestion[]> {
+  const doi = extractDoi(query)
+  if (doi) {
+    return fetchCrossrefWork(doi, signal)
+  }
+
   const url = new URL('https://api.crossref.org/works')
   url.searchParams.set('query.bibliographic', query)
   url.searchParams.set('rows', String(AUTOCOMPLETE_MAX_RESULTS))
@@ -100,25 +149,7 @@ export async function searchCrossrefWorks(
   const items = Array.isArray(data.message?.items) ? data.message.items : []
 
   return items.slice(0, AUTOCOMPLETE_MAX_RESULTS).flatMap((work) => {
-    const doi = work.DOI
-    const title = work.title?.[0]
-    if (!doi || !title) {
-      return []
-    }
-    const authors = (work.author ?? [])
-      .map((author) => author.family ?? author.name)
-      .filter((name): name is string => Boolean(name))
-    const { year, date } = extractPublication(work)
-    return [
-      {
-        doi,
-        title,
-        authors,
-        year,
-        publishedDate: date,
-        containerTitle: work['container-title']?.[0],
-        publisher: work.publisher,
-      },
-    ]
+    const suggestion = toDoiSuggestion(work)
+    return suggestion ? [suggestion] : []
   })
 }

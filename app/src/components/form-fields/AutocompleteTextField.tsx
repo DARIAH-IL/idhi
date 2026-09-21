@@ -104,7 +104,7 @@ export function AutocompleteTextField<T extends object>({
               showTrigger={false}
               dir="ltr"
             />
-            <ComboboxContent>
+            <ComboboxContent className="w-max min-w-(--trigger-width) max-w-[calc(var(--trigger-width)*2)]">
               <ComboboxList
                 items={items}
                 renderEmptyState={() => (

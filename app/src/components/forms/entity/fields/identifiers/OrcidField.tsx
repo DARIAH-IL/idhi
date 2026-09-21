@@ -1,6 +1,7 @@
 import type { OrcidSuggestion } from '#/api/external/orcid.ts'
 import { useTranslation } from 'react-i18next'
 import {
+  extractOrcidId,
   normalizeOrcid,
   orcidDisplayName,
   searchOrcidPeople,
@@ -30,7 +31,9 @@ export function OrcidField({
         placeholder ?? t('entity.form.identifier_search_placeholder')
       }
       search={searchOrcidPeople}
-      shouldSearch={(query) => !/^(https?:\/\/|\d{4}-)/i.test(query)}
+      shouldSearch={(query) =>
+        extractOrcidId(query) !== null || !/^(https?:\/\/|\d{4}-)/i.test(query)
+      }
       getSuggestionValue={(suggestion) => suggestion.id}
       normalizeValue={normalizeOrcid}
       onSelect={onSelect}

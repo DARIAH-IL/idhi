@@ -20,17 +20,21 @@ interface OrcidExpandedResult {
 
 const ORCID_ID_PATTERN = /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/i
 
+export function extractOrcidId(raw: string): string | null {
+  const match =
+    /^(?:https?:\/\/(?:www\.)?orcid\.org\/)?(\d{4}-\d{4}-\d{4}-\d{3}[\dX])$/i.exec(
+      raw.trim(),
+    )
+  return match?.[1]?.toUpperCase() ?? null
+}
+
 export function normalizeOrcid(raw: string): string {
   const trimmed = raw.trim()
   if (!trimmed) {
     return trimmed
   }
-  const match =
-    /^(?:https?:\/\/(?:www\.)?orcid\.org\/)?(\d{4}-\d{4}-\d{4}-\d{3}[\dX])$/i.exec(
-      trimmed,
-    )
-  const id = match?.[1]
-  return id ? `https://orcid.org/${id.toUpperCase()}` : trimmed
+  const id = extractOrcidId(trimmed)
+  return id ? `https://orcid.org/${id}` : trimmed
 }
 
 export function orcidDisplayName(suggestion: OrcidSuggestion): string {
@@ -44,8 +48,14 @@ export async function searchOrcidPeople(
   query: string,
   signal?: AbortSignal,
 ): Promise<OrcidSuggestion[]> {
+  const orcidId = extractOrcidId(query)
   const url = new URL('https://pub.orcid.org/v3.0/expanded-search/')
-  url.searchParams.set('q', query.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g, ' '))
+  url.searchParams.set(
+    'q',
+    orcidId
+      ? `orcid:${orcidId}`
+      : query.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g, ' '),
+  )
   url.searchParams.set('rows', String(AUTOCOMPLETE_MAX_RESULTS))
 
   const response = await fetch(url, {
