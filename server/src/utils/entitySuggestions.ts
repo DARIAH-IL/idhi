@@ -6,7 +6,6 @@ import { ProjectDigitalHumanitiesActivitiesItem } from '../models/projectDigital
 import { ErrorCode } from '../models/errorCode'
 import { SuggestibleEntityField } from '../models/suggestibleEntityField'
 import { aiModel, runAiPrompt } from './ai'
-import { extractUrls, inspectUrlTool } from './browser'
 import { isLangString, preferredLangStringValue } from './langString'
 
 type UnionKeys<T> = T extends unknown ? keyof T : never
@@ -28,26 +27,12 @@ const tadirahActivitiesByName = new Map(
   ]),
 )
 
-const webInspectionRules = `Web-page inspection:
-- The record may contain URLs.
-- Base classifications primarily on evidence contained in the record.
-- If the record does not provide enough information to confidently classify a value, and a relevant URL is present, you may inspect that URL using the inspect_url tool.
-- Use inspect_url only when the additional information could materially improve the classification.
-- Do not inspect URLs merely because they are present.
-- Prefer inspecting a URL that is directly associated with the record or classification in question.
-- Only inspect URLs that literally appear in the record. Never invent, complete, or modify a URL, and never follow unrelated links simply to gather more information.
-- Treat information returned by inspect_url as additional evidence, not as a reason to invent unsupported conclusions.
-- If the page does not provide relevant evidence, ignore it and continue using the available evidence.
-- If the page cannot be accessed, continue without it.
-- Never claim that a fact is supported by a webpage unless that fact actually appears in the retrieved page content.
-- When the available evidence remains insufficient after optional inspection, omit the uncertain classification rather than guessing.`
-
 const sharedPromptRules = `- Base every value only on what the record below actually supports. Never invent or guess anything that the record does not support.
 - Prefer a short, confident answer over a comprehensive one. Two or three values is usually right, and one is often enough.
 - Omit any value you are not confident about. Returning nothing is better than returning something unsupported.
 - Do not repeat a value the record already lists.`
 
-const outputInstruction = `Once you have finished gathering evidence, output the values as a single line of comma-separated values and nothing else. No explanation, no preamble, no bullet points, no quotes, no markdown. If you have no value to suggest, output an empty line.`
+const outputInstruction = `Output the values as a single line of comma-separated values and nothing else. No explanation, no preamble, no bullet points, no quotes, no markdown. If you have no value to suggest, output an empty line.`
 
 const fieldPrompts: Record<SuggestibleEntityField, string> = {
   [SuggestibleEntityField.tags]: `You assign free-text discovery tags to a record in an index of Digital Humanities research.
@@ -246,17 +231,8 @@ export async function suggestEntityFieldValues(
     )
   }
 
-  const recordUrls = extractUrls(entityDescription)
-  const tools =
-    recordUrls.length > 0
-      ? [inspectUrlTool(bindings, logger, recordUrls, { field })]
-      : []
-  const instructions =
-    recordUrls.length > 0
-      ? `${fieldPrompts[field]}\n\n${webInspectionRules}`
-      : fieldPrompts[field]
-  const prompt = `${instructions}\n\n${entityDescription}`
-  const text = await runAiPrompt(bindings, logger, prompt, { field }, tools)
+  const prompt = `${fieldPrompts[field]}\n\n${entityDescription}`
+  const text = await runAiPrompt(bindings, logger, prompt, { field })
   const values = parseCommaSeparatedValues(text)
 
   if (!values) {

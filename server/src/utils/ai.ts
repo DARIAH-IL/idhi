@@ -5,24 +5,12 @@ import { ErrorCode } from '../models/errorCode'
 
 const DEFAULT_AI_MODEL = '@cf/openai/gpt-oss-120b'
 const MAX_OUTPUT_TOKENS = 4096
-const MAX_MODEL_STEPS = 4
-
-export type AiTool = {
-  definition: ChatCompletionFunctionTool
-  run: (args: Record<string, unknown>) => Promise<string>
-}
-
-type AiToolCall = {
-  id: string
-  name: string
-  arguments: string
-}
 
 export function aiModel(bindings: Bindings): string {
   return bindings.AI_MODEL?.trim() || DEFAULT_AI_MODEL
 }
 
-export function isRecord(value: unknown): value is Record<string, unknown> {
+function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
@@ -99,172 +87,41 @@ function usageAttributes(result: unknown): Record<string, unknown> {
   }
 }
 
-function toolCallsFromChoices(result: Record<string, unknown>): AiToolCall[] {
-  if (!Array.isArray(result.choices)) {
-    return []
-  }
-
-  const message = result.choices.find(isRecord)?.message
-
-  if (!isRecord(message) || !Array.isArray(message.tool_calls)) {
-    return []
-  }
-
-  return message.tool_calls.flatMap((call) => {
-    if (!isRecord(call) || !isRecord(call.function)) {
-      return []
-    }
-
-    const { name } = call.function
-
-    if (typeof name !== 'string') {
-      return []
-    }
-
-    return [
-      {
-        id: typeof call.id === 'string' ? call.id : name,
-        name,
-        arguments:
-          typeof call.function.arguments === 'string'
-            ? call.function.arguments
-            : '{}',
-      },
-    ]
-  })
-}
-
-function toolCallsFromOutput(result: Record<string, unknown>): AiToolCall[] {
-  if (!Array.isArray(result.output)) {
-    return []
-  }
-
-  return result.output.flatMap((item) => {
-    if (
-      !isRecord(item) ||
-      item.type !== 'function_call' ||
-      typeof item.name !== 'string'
-    ) {
-      return []
-    }
-
-    const id = item.call_id ?? item.id
-
-    return [
-      {
-        id: typeof id === 'string' ? id : item.name,
-        name: item.name,
-        arguments: typeof item.arguments === 'string' ? item.arguments : '{}',
-      },
-    ]
-  })
-}
-
-function extractToolCalls(result: unknown): AiToolCall[] {
-  if (!isRecord(result)) {
-    return []
-  }
-
-  const calls = toolCallsFromChoices(result)
-
-  return calls.length > 0 ? calls : toolCallsFromOutput(result)
-}
-
-function parseToolArguments(args: string): Record<string, unknown> {
-  try {
-    const parsed: unknown = JSON.parse(args)
-
-    return isRecord(parsed) ? parsed : {}
-  } catch {
-    return {}
-  }
-}
-
 export async function runAiPrompt(
   bindings: Bindings,
   logger: RequestLogger,
   prompt: string,
   logAttributes: Record<string, unknown> = {},
-  tools: AiTool[] = [],
 ): Promise<string> {
   const model = aiModel(bindings)
-  const toolsByName = new Map(
-    tools.map((tool) => [tool.definition.function.name, tool]),
-  )
-  const messages: ChatCompletionMessageParam[] = [
-    { role: 'user', content: prompt },
-  ]
-  let text = ''
+  const startedAt = Date.now()
+  const result = await bindings.AI.run(model, {
+    messages: [{ role: 'user', content: prompt }],
+    max_tokens: MAX_OUTPUT_TOKENS,
+  })
+  const reason = finishReason(result)
 
-  for (let step = 0; step < MAX_MODEL_STEPS; step++) {
-    const toolsOffered = toolsByName.size > 0 && step < MAX_MODEL_STEPS - 1
-    const startedAt = Date.now()
-    const result = await bindings.AI.run(model, {
-      messages,
-      max_tokens: MAX_OUTPUT_TOKENS,
-      ...(toolsOffered
-        ? { tools: tools.map((tool) => tool.definition) }
-        : undefined),
-    })
-    const reason = finishReason(result)
-    const toolCalls = toolsOffered ? extractToolCalls(result) : []
+  logger.debug('AI prompt completed', {
+    ...logAttributes,
+    model,
+    promptCharacters: prompt.length,
+    durationMs: Date.now() - startedAt,
+    finishReason: reason,
+    ...usageAttributes(result),
+  })
 
-    text = extractResponseText(result)
-
-    logger.debug('AI prompt completed', {
+  if (reason === 'length') {
+    logger.warn('AI response was truncated by the output token limit', {
       ...logAttributes,
       model,
-      step,
-      promptCharacters: prompt.length,
-      durationMs: Date.now() - startedAt,
-      finishReason: reason,
-      toolCalls: toolCalls.map((call) => call.name),
-      ...usageAttributes(result),
+      maxOutputTokens: MAX_OUTPUT_TOKENS,
     })
 
-    if (reason === 'length') {
-      logger.warn('AI response was truncated by the output token limit', {
-        ...logAttributes,
-        model,
-        maxOutputTokens: MAX_OUTPUT_TOKENS,
-      })
-
-      throw new ApiError(
-        ErrorCode.AiSuggestionFailed,
-        'The model ran out of output tokens before completing its answer',
-      )
-    }
-
-    if (toolCalls.length === 0) {
-      return text
-    }
-
-    const assistantToolCalls: ChatCompletionMessageToolCall[] = toolCalls.map(
-      (call) => ({
-        id: call.id,
-        type: 'function',
-        function: { name: call.name, arguments: call.arguments },
-      }),
+    throw new ApiError(
+      ErrorCode.AiSuggestionFailed,
+      'The model ran out of output tokens before completing its answer',
     )
-
-    messages.push({
-      role: 'assistant',
-      content: text || null,
-      tool_calls: assistantToolCalls,
-    })
-
-    for (const call of toolCalls) {
-      const tool = toolsByName.get(call.name)
-
-      messages.push({
-        role: 'tool',
-        tool_call_id: call.id,
-        content: tool
-          ? await tool.run(parseToolArguments(call.arguments))
-          : `Unknown tool: ${call.name}`,
-      })
-    }
   }
 
-  return text
+  return extractResponseText(result)
 }
