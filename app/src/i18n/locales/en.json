@@ -36,6 +36,8 @@
     "signed_in_as": "Signed in as",
     "home": "Home page",
     "jump_to_top": "Jump to top",
+    "pause_animation": "Pause animation",
+    "resume_animation": "Resume animation",
     "site_name": "Israeli Digital Humanities Index",
     "copyright": "© {{year}} $t(common.site_name)",
     "work_in_progress": "This site is a work in progress and is subject to change as it is reviewed and refined.",

@@ -336,19 +336,25 @@ function getCurrentLanguage(): UiLanguage {
   return useUIStore.getState().language
 }
 
-function pickLocalizedValue(
+function pickLocalizedItem(
   items: readonly LocalizedValue[] | null | undefined,
-): string | undefined {
+): LocalizedValue | undefined {
   if (!items?.length) {
     return undefined
   }
 
   const language = getCurrentLanguage()
   return (
-    items.find((item) => item.language === language)?.value ??
-    items.find((item) => item.language === 'en')?.value ??
-    items[0]?.value
+    items.find((item) => item.language === language) ??
+    items.find((item) => item.language === 'en') ??
+    items[0]
   )
+}
+
+function pickLocalizedValue(
+  items: readonly LocalizedValue[] | null | undefined,
+): string | undefined {
+  return pickLocalizedItem(items)?.value
 }
 
 export function getEntityDisplayName(entity: Entity): string {
@@ -366,8 +372,27 @@ export function getEntityDisplayName(entity: Entity): string {
   return name || entity.id
 }
 
+export function getEntityDisplayNameLanguage(
+  entity: Entity,
+): string | undefined {
+  if (entity.type !== 'idhi:Person') {
+    return pickLocalizedItem(entity.name)?.language
+  }
+
+  return (
+    pickLocalizedItem(entity.given_name)?.language ??
+    pickLocalizedItem(entity.family_name)?.language
+  )
+}
+
 export function getEntityDescription(entity: Entity): string | undefined {
   return pickLocalizedValue(entity.description)
+}
+
+export function getEntityDescriptionLanguage(
+  entity: Entity,
+): string | undefined {
+  return pickLocalizedItem(entity.description)?.language
 }
 
 export function normalizeEntityType(type: string): EntityType | undefined {

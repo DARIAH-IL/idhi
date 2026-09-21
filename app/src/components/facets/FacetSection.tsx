@@ -115,7 +115,7 @@ export function FacetSection({
 
           <div
             aria-busy={isRefetching}
-            className={`mt-2 grid gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
+            className={`mt-2 grid grid-cols-1 gap-0.5 ${isRefetching ? 'opacity-50 transition-opacity duration-150' : ''}`}
           >
             {isContentLoading ? (
               <p

@@ -8,9 +8,12 @@ import { EntityTags } from '@/components/entity/EntityTags'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 import {
   getEntityDescription,
+  getEntityDescriptionLanguage,
   getEntityDisplayName,
+  getEntityDisplayNameLanguage,
   getEntityTypeLabel,
 } from '@/lib/entity'
+import { langStringDir } from '@/components/LangStringValue'
 import { getEntityTermUri } from '@/api/termUris/termUri'
 import { EntityNameIdentifiers } from './EntityNameIdentifiers'
 import { EntityImage } from './EntityImage'
@@ -23,10 +26,12 @@ export function EntityReferenceCard({
   entityId,
   entity: providedEntity,
   className,
+  titleLinkOnly = false,
 }: {
   entityId: string
   entity?: AuditedEntity
   className?: string
+  titleLinkOnly?: boolean
 }) {
   const { t } = useTranslation()
   const references = useEntityReferences()
@@ -72,45 +77,71 @@ export function EntityReferenceCard({
   }
 
   const description = getEntityDescription(data)
+  const descriptionLanguage = getEntityDescriptionLanguage(data)
+  const displayNameLanguage = getEntityDisplayNameLanguage(data)
   const term = getEntityTermUri(data.type)
+
+  const card = (
+    <Card
+      role="button"
+      size="sm"
+      className={cn(
+        'relative bg-muted/20 hover:bg-accent-foreground/10',
+        className,
+      )}
+    >
+      {!titleLinkOnly && (
+        <Link
+          to="/entities/$entityId"
+          params={{ entityId: encodeURIComponent(entityId) }}
+          aria-hidden
+          tabIndex={-1}
+          className="absolute inset-0"
+        />
+      )}
+      <CardContent className="p-2.5">
+        <div className="flex items-center gap-3">
+          <EntityImage image={data.image} type={data.type} alt="" />
+          <div className="flex min-w-0 flex-col gap-0.5">
+            <EntityNameIdentifiers entity={data} className="relative">
+              <span className="flex items-center gap-1.5">
+                <Link
+                  to="/entities/$entityId"
+                  params={{ entityId: encodeURIComponent(entityId) }}
+                  lang={displayNameLanguage}
+                  dir={langStringDir(displayNameLanguage)}
+                  className="text-sm font-semibold hover:underline"
+                >
+                  {getEntityDisplayName(data)}
+                </Link>
+                <DraftBadge isDraft={data.isDraft} />
+              </span>
+            </EntityNameIdentifiers>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+              <span>{getEntityTypeLabel(data.type)}</span>
+              <EntityTags tags={data.tags} />
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+
+  if (!description) {
+    return card
+  }
 
   return (
     <TooltipTrigger>
-      <Focusable>
-        <Card
-          role="button"
-          size="sm"
-          className={cn('bg-muted/20 hover:bg-accent-foreground/10', className)}
-        >
-          <CardContent className="p-2.5">
-            <div className="flex items-center gap-3">
-              <EntityImage image={data.image} type={data.type} alt="" />
-              <div className="flex min-w-0 flex-col gap-0.5">
-                <EntityNameIdentifiers entity={data}>
-                  <span className="flex items-center gap-1.5">
-                    <Link
-                      to="/entities/$entityId"
-                      params={{ entityId: encodeURIComponent(entityId) }}
-                      className="text-sm font-semibold hover:underline"
-                    >
-                      {getEntityDisplayName(data)}
-                    </Link>
-                    <DraftBadge isDraft={data.isDraft} />
-                  </span>
-                </EntityNameIdentifiers>
-                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-                  <span>{getEntityTypeLabel(data.type)}</span>
-                  <span aria-hidden>·</span>
-                  <span className="truncate font-mono">{entityId}</span>
-                  <EntityTags tags={data.tags} />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </Focusable>
+      <Focusable>{card}</Focusable>
       <Tooltip className="flex-col items-start gap-0.5">
-        {description && <span>{description}</span>}
+        <span
+          lang={descriptionLanguage}
+          dir={langStringDir(descriptionLanguage)}
+          className="block text-start"
+        >
+          {description}
+        </span>
         {term && (
           <span className="font-mono text-[0.625rem] opacity-70">{term}</span>
         )}

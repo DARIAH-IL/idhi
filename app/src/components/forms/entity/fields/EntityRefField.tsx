@@ -111,7 +111,7 @@ export function EntityRefArrayField({
         >
           <DragHandle {...getHandleProps(index)} className="mt-1.5" />
           <div className="min-w-0 flex-1">
-            <EntityReferenceCard entityId={id} />
+            <EntityReferenceCard entityId={id} titleLinkOnly />
           </div>
           <Button
             variant="ghost"

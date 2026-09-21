@@ -2,10 +2,11 @@ import { Logout01Icon, UserShield01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useNavigate } from '@tanstack/react-router'
 import { Menu, MenuItem, Popover } from 'react-aria-components'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth'
+import { useHoverAutoClose } from '@/hooks/useHoverAutoClose'
 import { Button } from '@/components/ui/button'
 
 export function UserMenu() {
@@ -13,7 +14,8 @@ export function UserMenu() {
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, setIsOpen, toggle, setIsHovered, hoverProps } =
+    useHoverAutoClose(3000)
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   if (!user) {
@@ -30,8 +32,9 @@ export function UserMenu() {
         aria-label={t('common.user_menu')}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        onPress={() => setIsOpen((open) => !open)}
+        onPress={toggle}
         onHoverChange={(isHovering) => {
+          setIsHovered(isHovering)
           if (isHovering) {
             setIsOpen(true)
           }
@@ -45,6 +48,7 @@ export function UserMenu() {
         triggerRef={triggerRef}
         isOpen={isOpen}
         onOpenChange={setIsOpen}
+        {...hoverProps}
         placement="bottom end"
         offset={6}
         className="z-50 min-w-36 origin-(--trigger-anchor-point) overflow-hidden rounded-lg bg-popover p-2 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none duration-100 data-entering:animate-in data-entering:fade-in-0 data-entering:zoom-in-95 data-exiting:animate-out data-exiting:fade-out-0 data-exiting:zoom-out-95"

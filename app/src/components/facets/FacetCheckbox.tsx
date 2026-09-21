@@ -2,6 +2,7 @@ import { Checkbox } from 'react-aria-components'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Tick02Icon } from '@hugeicons/core-free-icons'
 import { EntityImage } from '#/components/entity/EntityImage.tsx'
+import { Tooltip, TooltipTrigger } from '#/components/ui/tooltip.tsx'
 import type { ENTITY_TYPES } from '#/lib/entity.ts'
 
 interface FacetCheckboxProps {
@@ -48,6 +49,9 @@ export function FacetCheckbox({
               />
             )}
           </span>
+          <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+            {count}
+          </span>
           {entityType && (
             <EntityImage
               image={image}
@@ -57,9 +61,11 @@ export function FacetCheckbox({
               className="size-5 shrink-0 bg-transparent"
             />
           )}
-          <span className="min-w-0 truncate text-xs">{label}</span>
-          <span className="ms-auto text-xs tabular-nums text-muted-foreground">
-            {count}
+          <span className="min-w-0 flex-1 truncate text-start text-xs">
+            <TooltipTrigger>
+              <span>{label}</span>
+              <Tooltip>{label}</Tooltip>
+            </TooltipTrigger>
           </span>
         </>
       )}

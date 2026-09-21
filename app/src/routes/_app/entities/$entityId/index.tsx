@@ -11,6 +11,7 @@ import {
 import {
   getEntityClassName,
   getEntityDisplayName,
+  getEntityDisplayNameLanguage,
   getEntityFieldOrder,
   getEntityTypeLabel,
   isNonDisplayField,
@@ -49,6 +50,7 @@ import {
   renderEntityValue,
 } from '../../../../components/renderEntityValue.tsx'
 import { collectEntityReferenceIds } from '#/lib/entityReferences.ts'
+import { langStringDir } from '#/components/LangStringValue.tsx'
 import { removeDeletedEntityFromCache } from '#/api/entityCacheOps.ts'
 
 export const Route = createFileRoute('/_app/entities/$entityId/')({
@@ -93,6 +95,7 @@ function EntityDetailPage() {
 
   const { audit, ...raw } = entity
 
+  const displayNameLanguage = getEntityDisplayNameLanguage(entity)
   const entityClass = getEntityClassName(entity.type)
   const fieldOrder = getEntityFieldOrder(entity.type)
   const orderOf = (key: string) => fieldOrder[key] ?? Number.MAX_SAFE_INTEGER
@@ -119,7 +122,11 @@ function EntityDetailPage() {
           <div className="flex flex-col gap-0.5">
             <EntityNameIdentifiers entity={entity}>
               <span className="flex items-center gap-2">
-                <h1 className="text-lg font-semibold">
+                <h1
+                  lang={displayNameLanguage}
+                  dir={langStringDir(displayNameLanguage)}
+                  className="text-lg font-semibold"
+                >
                   {getEntityDisplayName(entity)}
                 </h1>
                 <DraftBadge isDraft={entity.isDraft} />

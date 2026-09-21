@@ -102,6 +102,7 @@ export function DuplicateCheckProvider({
               key={suspect.id}
               entityId={suspect.id}
               entity={suspect}
+              titleLinkOnly
             />
           ))}
         </div>

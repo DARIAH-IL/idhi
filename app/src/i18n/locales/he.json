@@ -36,6 +36,8 @@
     "signed_in_as": "החשבון המחובר",
     "home": "דף הבית",
     "jump_to_top": "חזרה לראש הדף",
+    "pause_animation": "השהיית האנימציה",
+    "resume_animation": "הפעלת האנימציה",
     "site_name": "האינדקס הישראלי למדעי הרוח הדיגיטליים",
     "copyright": "© {{year}} $t(common.site_name)",
     "work_in_progress": "אתר זה נמצא בשלבי פיתוח ועשוי להשתנות במהלך הבדיקה והליטוש שלו.",

@@ -2,6 +2,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { TranslateIcon } from '@hugeicons/core-free-icons'
 import { useUIStore } from '@/stores/ui'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
+import { isRtlLanguageCode } from '@/lib/languages'
 
 export interface LangStringItem {
   language: string
@@ -26,6 +27,13 @@ export function langStringsOf(v: unknown): LangStringItem[] {
   return result
 }
 
+export function langStringDir(language: string | undefined) {
+  if (!language) {
+    return undefined
+  }
+  return isRtlLanguageCode(language) ? 'rtl' : 'ltr'
+}
+
 export function LangStringValue({ items }: { items: LangStringItem[] }) {
   const language = useUIStore((state) => state.language)
 
@@ -43,18 +51,24 @@ export function LangStringValue({ items }: { items: LangStringItem[] }) {
   const bestValue = best.value
 
   if (others.length === 0) {
-    return best.language === language ? (
-      bestValue
-    ) : (
-      <span lang={best.language}>{bestValue}</span>
+    return (
+      <span
+        lang={best.language}
+        dir={langStringDir(best.language)}
+        className="block text-start"
+      >
+        {bestValue}
+      </span>
     )
   }
 
   return (
-    <span className="inline-flex items-center gap-1.5">
-      <span lang={best.language === language ? undefined : best.language}>
-        {bestValue}
-      </span>
+    <span
+      lang={best.language}
+      dir={langStringDir(best.language)}
+      className="flex flex-wrap items-center gap-1.5 text-start"
+    >
+      <span>{bestValue}</span>
       <TooltipTrigger>
         <HugeiconsIcon
           icon={TranslateIcon}
@@ -62,7 +76,12 @@ export function LangStringValue({ items }: { items: LangStringItem[] }) {
         />
         <Tooltip className="flex-col items-start gap-1">
           {others.map((item) => (
-            <span key={item.language} lang={item.language}>
+            <span
+              key={item.language}
+              lang={item.language}
+              dir={langStringDir(item.language)}
+              className="block text-start"
+            >
               {item.value}
             </span>
           ))}

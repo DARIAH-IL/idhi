@@ -17,6 +17,12 @@ export interface FacetValue {
   image?: string | null
 }
 
+function sortByCount(values: FacetValue[]): FacetValue[] {
+  return values.sort(
+    (a, b) => b.count - a.count || a.label.localeCompare(b.label),
+  )
+}
+
 export function buildStaticFacetValues(
   field: FacetField,
   facets: SearchEntities200Facets,
@@ -30,23 +36,25 @@ export function buildStaticFacetValues(
   )
 
   if (field === 'type') {
-    return ENTITY_TYPES.filter(
-      (entityType) =>
-        countByValue.has(entityType) || selectedValues.has(entityType),
-    ).map((value) => ({
-      value,
-      label: getFacetValueLabel(field, value),
-      count: countByValue.get(value) ?? 0,
-      entityType: value,
-    }))
+    return sortByCount(
+      ENTITY_TYPES.filter(
+        (entityType) =>
+          countByValue.has(entityType) || selectedValues.has(entityType),
+      ).map((value) => ({
+        value,
+        label: getFacetValueLabel(field, value),
+        count: countByValue.get(value) ?? 0,
+        entityType: value,
+      })),
+    )
   }
 
-  return [...new Set([...countByValue.keys(), ...selectedValues])].map(
-    (value) => ({
+  return sortByCount(
+    [...new Set([...countByValue.keys(), ...selectedValues])].map((value) => ({
       value,
       label: getFacetValueLabel(field, value),
       count: countByValue.get(value) ?? 0,
-    }),
+    })),
   )
 }
 
@@ -55,16 +63,18 @@ export function buildRelationshipFacetValues(
   relationshipFacets: EntityRelationshipFacets,
   relationshipEntitiesById: ReadonlyMap<string, AuditedEntity>,
 ): FacetValue[] {
-  return (relationshipFacets[targetType] ?? []).map(({ value, count }) => {
-    const entity = relationshipEntitiesById.get(value)
-    return {
-      value,
-      label: entity ? getEntityDisplayName(entity) : value,
-      count,
-      entityType: targetType,
-      image: entity?.image,
-    }
-  })
+  return sortByCount(
+    (relationshipFacets[targetType] ?? []).map(({ value, count }) => {
+      const entity = relationshipEntitiesById.get(value)
+      return {
+        value,
+        label: entity ? getEntityDisplayName(entity) : value,
+        count,
+        entityType: targetType,
+        image: entity?.image,
+      }
+    }),
+  )
 }
 
 export function getRelationshipFacetKey(targetType: EntityType): string {

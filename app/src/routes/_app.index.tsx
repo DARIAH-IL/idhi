@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react'
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Search01Icon } from '@hugeicons/core-free-icons'
+import { PauseIcon, PlayIcon, Search01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { TooltipTrigger } from 'react-aria-components'
 import { EntityReferenceCard } from '@/components/entity/EntityReferenceCard'
+import { HeroMatrixBackground } from '@/components/HeroMatrixBackground'
 import { EntityTypeIcon } from '@/components/entity/EntityTypeIcon'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,8 +21,10 @@ import {
   ComboboxList,
 } from '@/components/ui/combobox'
 import { Input } from '@/components/ui/input'
+import { Tooltip } from '@/components/ui/tooltip'
 import { getSearchEntitiesTypedQueryOptions } from '@/api/typedEntitySearch'
 import { skipEntityBoardSearchRestoreOnce } from '@/lib/entityBoardSearchStorage'
+import { useUIStore } from '@/stores/ui'
 import {
   ENTITY_TYPES,
   getEntityTypeLabel,
@@ -103,17 +107,9 @@ function HomePage() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 bg-linear-to-b from-white to-[#3aafd2]"
       />
-      <section className="relative z-20 px-6 pt-8 pb-8 sm:pt-12 sm:pb-12 lg:pb-44">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 flex justify-center"
-        >
-          <img
-            src="/heroes.png"
-            alt=""
-            className="size-full object-contain object-center opacity-70"
-          />
-        </div>
+      <section className="relative z-20 px-6 pt-8 pb-6 sm:pt-12 sm:pb-10 lg:pb-16">
+        <HeroMatrixBackground />
+
         <div className="relative z-20 mx-auto max-w-4xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
             {t('home.title')}
@@ -199,6 +195,7 @@ function HomePage() {
             </Button>
           </form>
         </div>
+        <BackgroundMotionToggle />
       </section>
 
       <section className="relative z-20 mx-auto grid max-w-6xl gap-10 px-6 pt-0 pb-12 lg:grid-cols-2">
@@ -220,6 +217,32 @@ function HomePage() {
           isError={recentQuery.isError}
         />
       </section>
+    </div>
+  )
+}
+
+function BackgroundMotionToggle() {
+  const { t } = useTranslation()
+  const paused = useUIStore((state) => state.backgroundMotionPaused)
+  const setPaused = useUIStore((state) => state.setBackgroundMotionPaused)
+  const label = paused
+    ? t('common.resume_animation')
+    : t('common.pause_animation')
+
+  return (
+    <div className="relative z-30 mt-6 flex justify-center sm:absolute sm:end-4 sm:bottom-4 sm:mt-0">
+      <TooltipTrigger delay={0}>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label={label}
+          onPress={() => setPaused(!paused)}
+          className="size-9 rounded-full bg-background/50 text-slate-700 opacity-70 backdrop-blur transition-opacity hover:bg-background/80 hover:opacity-100 focus-visible:opacity-100 sm:size-7 sm:opacity-60"
+        >
+          <HugeiconsIcon icon={paused ? PlayIcon : PauseIcon} strokeWidth={2} />
+        </Button>
+        <Tooltip>{label}</Tooltip>
+      </TooltipTrigger>
     </div>
   )
 }

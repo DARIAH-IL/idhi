@@ -14,6 +14,7 @@ import {
   getEntityTypeLabel,
 } from '@/lib/entity'
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import { DraftBadge } from '@/components/entity/DraftBadge'
 import { EntityImage } from '@/components/entity/EntityImage'
 import { EntityTags } from '@/components/entity/EntityTags'
@@ -130,6 +131,7 @@ export function EntityResultsTable({
         ) : (
           <Table
             aria-label={t('board.results_label')}
+            className="table-fixed"
             containerRef={tableContainerRef}
             containerClassName="h-full overflow-y-auto"
             sortDescriptor={sortDescriptor}
@@ -139,12 +141,13 @@ export function EntityResultsTable({
               <TableHead
                 id="image"
                 aria-label={getEntityFieldLabelText('Person', 'image')}
+                className="w-14"
               />
               <TableHead
                 id="name.value"
                 isRowHeader
                 allowsSorting
-                className="cursor-pointer"
+                className="w-[30%] cursor-pointer"
               >
                 <SortableColumnLabel
                   label={getEntityFieldLabelText('Organization', 'name')}
@@ -152,7 +155,11 @@ export function EntityResultsTable({
                   sort={activeSort}
                 />
               </TableHead>
-              <TableHead id="type" allowsSorting className="cursor-pointer">
+              <TableHead
+                id="type"
+                allowsSorting
+                className="w-36 cursor-pointer"
+              >
                 <SortableColumnLabel
                   label={getFacetFieldLabel('type')}
                   property="type"
@@ -163,7 +170,7 @@ export function EntityResultsTable({
               <TableHead
                 id="audit.modifiedAt"
                 allowsSorting
-                className="cursor-pointer"
+                className="w-32 cursor-pointer"
               >
                 <SortableColumnLabel
                   label={t('entity.detail.modified')}
@@ -198,7 +205,7 @@ export function EntityResultsTable({
                       onAction={() => onOpenEntity(id)}
                       className="cursor-pointer"
                     >
-                      <TableCell className="w-12">
+                      <TableCell>
                         <EntityImage
                           image={entity.image}
                           type={entity.type}
@@ -206,11 +213,11 @@ export function EntityResultsTable({
                         />
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex min-w-0 items-center gap-1.5">
                           <Link
                             to="/entities/$entityId"
                             params={{ entityId: encodeURIComponent(id) }}
-                            className="hover:underline font-medium"
+                            className="truncate hover:underline font-medium"
                           >
                             {getEntityDisplayName(entity)}
                           </Link>
@@ -220,7 +227,10 @@ export function EntityResultsTable({
                       <TableCell>
                         <Badge
                           variant="secondary"
-                          className={getEntityTypeColorClass(entity.type)}
+                          className={cn(
+                            'max-w-full truncate',
+                            getEntityTypeColorClass(entity.type),
+                          )}
                         >
                           {getEntityTypeLabel(entity.type)}
                         </Badge>

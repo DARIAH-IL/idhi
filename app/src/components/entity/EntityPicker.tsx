@@ -107,7 +107,7 @@ export function EntityPicker({
 
   return (
     <div className="flex flex-col gap-2">
-      {value && <EntityReferenceCard entityId={value} />}
+      {value && <EntityReferenceCard entityId={value} titleLinkOnly />}
       <Combobox
         aria-label={searchPlaceholder}
         aria-busy={isFetching}

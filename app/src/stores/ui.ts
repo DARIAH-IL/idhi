@@ -13,9 +13,15 @@ interface UIState {
   toggleFacetCollapsed: (facetKey: string) => void
   advancedSearchCollapsed: boolean
   setAdvancedSearchCollapsed: (collapsed: boolean) => void
+  backgroundMotionPaused: boolean
+  setBackgroundMotionPaused: (paused: boolean) => void
 }
 
 const UI_STORAGE_KEY = 'idhi-ui'
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
 
 function detectBrowserLanguage(): UiLanguage {
   for (const locale of navigator.languages) {
@@ -46,6 +52,9 @@ export const useUIStore = create<UIState>()(
       advancedSearchCollapsed: true,
       setAdvancedSearchCollapsed: (advancedSearchCollapsed) =>
         set({ advancedSearchCollapsed }),
+      backgroundMotionPaused: prefersReducedMotion(),
+      setBackgroundMotionPaused: (backgroundMotionPaused) =>
+        set({ backgroundMotionPaused }),
     }),
     { name: UI_STORAGE_KEY },
   ),

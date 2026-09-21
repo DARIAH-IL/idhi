@@ -101,10 +101,10 @@ body {
     @apply border-border outline-ring/70;
   }
   body {
-    @apply overflow-hidden bg-background text-foreground;
+    @apply overflow-clip bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    @apply overflow-clip font-sans;
   }
 }
 
