@@ -919,7 +919,7 @@ components:
           "idhi:TrainingMaterial": "#/components/schemas/TrainingMaterial"
 
     Person:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Person"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Person"
       properties:
         id:
           type: string
@@ -927,7 +927,7 @@ components:
           readOnly: true
 
     Organization:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Organization"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Organization"
       properties:
         id:
           type: string
@@ -935,7 +935,7 @@ components:
           readOnly: true
 
     Project:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Project"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Project"
       properties:
         id:
           type: string
@@ -943,7 +943,7 @@ components:
           readOnly: true
 
     Tool:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Tool"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Tool"
       properties:
         id:
           type: string
@@ -951,7 +951,7 @@ components:
           readOnly: true
 
     Service:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Service"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Service"
       properties:
         id:
           type: string
@@ -959,7 +959,7 @@ components:
           readOnly: true
 
     Publication:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Publication"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Publication"
       properties:
         id:
           type: string
@@ -967,7 +967,7 @@ components:
           readOnly: true
 
     Event:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Event"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Event"
       properties:
         id:
           type: string
@@ -975,7 +975,7 @@ components:
           readOnly: true
 
     Dataset:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/Dataset"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/Dataset"
       properties:
         id:
           type: string
@@ -983,7 +983,7 @@ components:
           readOnly: true
 
     TrainingMaterial:
-      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json#/$defs/TrainingMaterial"
+      $ref: "https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json#/$defs/TrainingMaterial"
       properties:
         id:
           type: string

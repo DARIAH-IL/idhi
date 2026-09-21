@@ -16,7 +16,7 @@ The Israeli Digital Humanities Index (IDHI) is a searchable catalogue of digital
 
 ## Data model
 
-The [IDHI Manifests documentation](https://dariah-il.github.io/idhi-manifests/) describes the canonical semantic model: entities, fields, relationships, controlled vocabularies, and mappings to established web ontologies. It is central to interoperability and data quality; its [generated JSON Schema](https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json) is imported by `openapi.yaml`, keeping API validation and generated client/server types aligned. See the [LinkML source](https://github.com/DARIAH-IL/idhi-manifests/blob/main/idhi.linkml.yaml) and [manifest repository](https://github.com/DARIAH-IL/idhi-manifests).
+The [IDHI Manifests documentation](https://dariah-il.github.io/idhi-manifests/) describes the canonical semantic model: entities, fields, relationships, controlled vocabularies, and mappings to established web ontologies. It is central to interoperability and data quality; its [generated JSON Schema](https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json) is imported by `openapi.yaml`, keeping API validation and generated client/server types aligned. See the [LinkML source](https://github.com/DARIAH-IL/idhi-manifests/blob/v1.0.0/idhi.linkml.yaml) and [manifest repository](https://github.com/DARIAH-IL/idhi-manifests).
 
 ## Quick start
 

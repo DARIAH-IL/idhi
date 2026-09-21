@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const SCHEMA_URL =
-  'https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/heads/main/gen/idhi.schema.json'
+  'https://raw.githubusercontent.com/DARIAH-IL/idhi-manifests/refs/tags/v1.0.0/gen/idhi.schema.json'
 
 const res = await fetch(SCHEMA_URL)
 if (!res.ok) {
