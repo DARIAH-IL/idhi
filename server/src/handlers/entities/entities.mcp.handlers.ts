@@ -29,3 +29,35 @@ export const CreateEntityBodyNoImage =
   omitImageFromEntityUnion(CreateEntityBody)
 export const UpdateEntityByIdBodyNoImage =
   omitImageFromEntityUnion(UpdateEntityByIdBody)
+
+type ExtendTuple<
+  T extends readonly z.ZodObject<z.ZodRawShape>[],
+  E extends z.ZodRawShape,
+> = {
+  [K in keyof T]: T[K] extends z.ZodObject<infer Shape>
+    ? z.ZodObject<Shape & E>
+    : T[K]
+}
+
+export function extendEntityUnion<
+  T extends readonly z.ZodObject<z.ZodRawShape>[],
+  E extends z.ZodRawShape,
+>(union: z.ZodUnion<T>, extension: E): z.ZodUnion<ExtendTuple<T, E>> {
+  const extendedOptions = union.options.map((option) =>
+    option.extend(extension),
+  ) as unknown as ExtendTuple<T, E>
+
+  return z.union(extendedOptions)
+}
+
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Omit<T, K>
+  : never
+
+export function withoutDraftFlag<T extends { isDraft: boolean }>(
+  input: T,
+): DistributiveOmit<T, 'isDraft'> {
+  const { isDraft: _isDraft, ...entity } = input
+
+  return entity as DistributiveOmit<T, 'isDraft'>
+}

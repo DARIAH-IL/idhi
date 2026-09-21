@@ -19,6 +19,8 @@ import {
 import {
   CreateEntityBodyNoImage,
   UpdateEntityByIdBodyNoImage,
+  extendEntityUnion,
+  withoutDraftFlag,
 } from '../handlers/entities/entities.mcp.handlers'
 
 export const WRITE_TOOL_NAMES: ReadonlySet<string> = new Set([
@@ -27,11 +29,26 @@ export const WRITE_TOOL_NAMES: ReadonlySet<string> = new Set([
   'delete_entity',
 ])
 
+const CreateEntityInput = extendEntityUnion(CreateEntityBodyNoImage, {
+  isDraft: z
+    .boolean()
+    .default(true)
+    .describe(
+      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to true: create entities as drafts so a human can review them before they become public. Only pass false when the user explicitly asked for the entity to be published right away. Publishing is irreversible — a published entity can never be turned back into a draft.',
+    ),
+}).superRefine(refineUniqueLangStringLanguages)
+
 const UpdateEntityInput = z.object({
   entityId: z.string().min(1),
   entity: UpdateEntityByIdBodyNoImage.superRefine(
     refineUniqueLangStringLanguages,
   ),
+  isDraft: z
+    .boolean()
+    .default(true)
+    .describe(
+      'Whether the entity should remain a draft. Defaults to true, which keeps the entity as it is: a draft stays a draft and a published entity stays published. Only pass false when the user explicitly asked to publish the entity, which turns a draft into a published entity. Publishing is irreversible — a published entity can never be turned back into a draft.',
+    ),
 })
 
 // Orval flattens the recursive OpenAPI filter and emits z.unknown() at its
@@ -110,10 +127,8 @@ export function registerEntityTools(
     {
       title: 'Create entity',
       description:
-        'Create a new IDHI entity (requires authentication). Before calling this, use search_entities to check whether a matching entity already exists and reuse its ID instead — search by name/label and by any known external identifier (DOI, ROR, ORCID) the new entity would have. This is critical for entities that will be referenced by other entities, since duplicates fragment references and break data integrity.',
-      inputSchema: CreateEntityBodyNoImage.superRefine(
-        refineUniqueLangStringLanguages,
-      ),
+        'Create a new IDHI entity (requires authentication). The entity is created as a draft unless isDraft is explicitly set to false. Before calling this, use search_entities to check whether a matching entity already exists and reuse its ID instead — search by name/label and by any known external identifier (DOI, ROR, ORCID) the new entity would have. This is critical for entities that will be referenced by other entities, since duplicates fragment references and break data integrity.',
+      inputSchema: CreateEntityInput,
     },
     async (input) =>
       jsonResult(
@@ -121,9 +136,9 @@ export function registerEntityTools(
           await createEntity(
             db.entities,
             // Ignore any image the client supplied
-            { ...input, image: undefined },
+            { ...withoutDraftFlag(input), image: undefined },
             requireUser(user).id,
-            false,
+            input.isDraft,
             mcpAuditContext(server),
           ),
         ),
@@ -135,10 +150,10 @@ export function registerEntityTools(
     {
       title: 'Update entity',
       description:
-        'Replace an existing IDHI entity by its ID (requires authentication)',
+        'Replace an existing IDHI entity by its ID (requires authentication). A draft stays a draft unless isDraft is explicitly set to false, which publishes it.',
       inputSchema: UpdateEntityInput,
     },
-    async ({ entityId, entity }) => {
+    async ({ entityId, entity, isDraft }) => {
       const authenticatedUser = requireUser(user)
 
       const current = await db.entities.get(entityId, authenticatedUser)
@@ -154,7 +169,7 @@ export function registerEntityTools(
             entityId,
             entityWithPreservedImage,
             authenticatedUser.id,
-            false,
+            isDraft,
             authenticatedUser,
             mcpAuditContext(server),
           ),
