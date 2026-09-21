@@ -25,7 +25,8 @@ interface RorOrganization {
   locations?: RorLocation[]
 }
 
-const ROR_ID_PATTERN = /^(?:https?:\/\/ror\.org\/)?(0[a-hj-km-np-tv-z0-9]{6}\d{2})$/i
+const ROR_ID_PATTERN =
+  /^(?:https?:\/\/ror\.org\/)?(0[a-hj-km-np-tv-z0-9]{6}\d{2})$/i
 
 export function extractRorId(raw: string): string | null {
   return ROR_ID_PATTERN.exec(raw.trim())?.[1]?.toLowerCase() ?? null
