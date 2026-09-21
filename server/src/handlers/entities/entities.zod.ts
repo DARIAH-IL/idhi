@@ -320,7 +320,7 @@ export const SearchEntitiesResponse = zod.object({
                     organization: zod
                       .string()
                       .describe(
-                        'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                        'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                       ),
                     start_date: zod.iso
                       .date()
@@ -663,7 +663,7 @@ export const SearchEntitiesResponse = zod.object({
               .array(zod.string())
               .nullish()
               .describe(
-                "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+                "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
               ),
             tags: zod
               .array(zod.string())
@@ -675,7 +675,7 @@ export const SearchEntitiesResponse = zod.object({
               .array(zod.string())
               .nullish()
               .describe(
-                'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+                'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
               ),
             type: zod
               .enum(['idhi:Organization'])
@@ -1091,7 +1091,7 @@ export const SearchEntitiesResponse = zod.object({
                     organization: zod
                       .string()
                       .describe(
-                        'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                        'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                       ),
                     start_date: zod.iso
                       .date()
@@ -3627,7 +3627,7 @@ export const CreateEntityBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -3946,7 +3946,7 @@ export const CreateEntityBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
         ),
       tags: zod
         .array(zod.string())
@@ -3958,7 +3958,7 @@ export const CreateEntityBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -4365,7 +4365,7 @@ export const CreateEntityBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -6780,7 +6780,7 @@ export const CreateEntityResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -7113,7 +7113,7 @@ export const CreateEntityResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
           ),
         tags: zod
           .array(zod.string())
@@ -7125,7 +7125,7 @@ export const CreateEntityResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -7539,7 +7539,7 @@ export const CreateEntityResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -10056,7 +10056,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -10407,7 +10407,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
         ),
       tags: zod
         .array(zod.string())
@@ -10419,7 +10419,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -10839,7 +10839,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -13367,7 +13367,7 @@ export const GetEntityByIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -13702,7 +13702,7 @@ export const GetEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
           ),
         tags: zod
           .array(zod.string())
@@ -13714,7 +13714,7 @@ export const GetEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -14128,7 +14128,7 @@ export const GetEntityByIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -16656,7 +16656,7 @@ export const UpdateEntityByIdBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -16997,7 +16997,7 @@ export const UpdateEntityByIdBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
         ),
       tags: zod
         .array(zod.string())
@@ -17009,7 +17009,7 @@ export const UpdateEntityByIdBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -17427,7 +17427,7 @@ export const UpdateEntityByIdBody = zod.union([
               organization: zod
                 .string()
                 .describe(
-                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                  'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                 ),
               start_date: zod.iso
                 .date()
@@ -19912,7 +19912,7 @@ export const UpdateEntityByIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()
@@ -20253,7 +20253,7 @@ export const UpdateEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.",
+            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
           ),
         tags: zod
           .array(zod.string())
@@ -20265,7 +20265,7 @@ export const UpdateEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.',
+            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -20679,7 +20679,7 @@ export const UpdateEntityByIdResponse = zod
                 organization: zod
                   .string()
                   .describe(
-                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint.',
+                    'The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both.',
                   ),
                 start_date: zod.iso
                   .date()

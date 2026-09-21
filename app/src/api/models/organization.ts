@@ -79,7 +79,7 @@ export interface Organization {
    */
   same_as?: string[] | null
   /**
-   * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.
+   * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.
    * @nullable
    */
   services_offered?: string[] | null
@@ -89,7 +89,7 @@ export interface Organization {
    */
   tags?: string[] | null
   /**
-   * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
+   * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.
    * @nullable
    */
   tools_provided?: string[] | null

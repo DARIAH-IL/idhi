@@ -26,7 +26,7 @@ export type EntityCreate =
              * @nullable
              */
             end_date?: string | null
-            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. */
+            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both. */
             organization: string
             /**
              * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
@@ -235,7 +235,7 @@ export type EntityCreate =
        */
       same_as?: string[] | null
       /**
-       * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university.
+       * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.
        * @nullable
        */
       services_offered?: string[] | null
@@ -245,7 +245,7 @@ export type EntityCreate =
        */
       tags?: string[] | null
       /**
-       * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use.
+       * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.
        * @nullable
        */
       tools_provided?: string[] | null
@@ -568,7 +568,7 @@ export type EntityCreate =
             /** An organization's role in a project (one instance per role). */
             org_project_role?:
               'COORDINATOR' | 'PARTNER' | 'DATA_PROVIDER' | 'HOST'
-            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. */
+            /** The organization referenced by a person affiliation or project role (by IDHI URN). The Person or Project containing the relationship supplies its other endpoint. This uses an IDHI-specific property because one slot serves two relationship types whose external terms differ (schema:affiliation for Affiliation, schema:participant for OrganizationProjectRole), so neither can be asserted for both. */
             organization: string
             /**
              * Start of the event, of the project's runtime, or of a relationship's validity, such as when participation, affiliation, maintenance responsibility or formal containment began.
