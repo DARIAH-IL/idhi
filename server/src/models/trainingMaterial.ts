@@ -114,7 +114,7 @@ export interface TrainingMaterial {
    */
   prerequisites?: TrainingMaterialPrerequisitesItem[] | null
   /**
-   * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+   * The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.
    * @nullable
    */
   publisher?: string | null

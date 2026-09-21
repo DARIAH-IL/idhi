@@ -9,6 +9,7 @@ import type { PublicationDescriptionItem } from './publicationDescriptionItem.ts
 import type { PublicationNameItem } from './publicationNameItem.ts'
 import type { PublicationPublicationType } from './publicationPublicationType.ts'
 import type { PublicationPublishedInItem } from './publicationPublishedInItem.ts'
+import type { PublicationPublisherNameItem } from './publicationPublisherNameItem.ts'
 import type { PublicationType } from './publicationType.ts'
 
 /**
@@ -73,10 +74,10 @@ export interface Publication {
    */
   published_in?: PublicationPublishedInItem[] | null
   /**
-   * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+   * Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.
    * @nullable
    */
-  publisher?: string | null
+  publisher_name?: PublicationPublisherNameItem[] | null
   /**
    * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
    * @nullable

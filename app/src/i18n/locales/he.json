@@ -1294,9 +1294,9 @@
           "label": "פורסם ב־",
           "description": "שם כתב העת, הספר או קובץ ההרצאות שבו הפרסום הופיע."
         },
-        "publisher": {
+        "publisher_name": {
           "label": "$t(common.labels.publisher)",
-          "description": "הארגון שפרסם אותו באופן רשמי."
+          "description": "שם ההוצאה לאור או הגוף שהוציא אותו לאור."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1844,7 +1844,6 @@
         "tools_serving_dataset": "כלים המנגישים",
         "services_provided_by_organization": "שירותים מסופקים",
         "publications_authored_by_person": "פרסומים שנכתבו",
-        "publications_published_by_organization": "יצירות שפורסמו",
         "publications_within_publication": "פרסומים מוכלים",
         "publications_presented_at_event": "פרסומים שהוצגו",
         "events_involving_agent": "אירועים קשורים",

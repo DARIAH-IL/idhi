@@ -162,7 +162,8 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     publication_type: 'rendered',
     'published_in[].language': 'rendered',
     'published_in[].value': 'rendered',
-    publisher: 'rendered',
+    'publisher_name[].language': 'rendered',
+    'publisher_name[].value': 'rendered',
   } satisfies FormCoverage<Publication>,
   event: {
     ...COMMON_ENTITY_FIELDS,

@@ -7,6 +7,7 @@ export type DoiSuggestion = {
   year?: number
   publishedDate?: string
   containerTitle?: string
+  publisher?: string
 }
 
 interface CrossrefDate {
@@ -21,6 +22,7 @@ interface CrossrefWork {
   'published-print'?: CrossrefDate
   'published-online'?: CrossrefDate
   'container-title'?: string[]
+  publisher?: string
 }
 
 const DOI_PATTERN =
@@ -86,7 +88,7 @@ export async function searchCrossrefWorks(
   url.searchParams.set('rows', String(AUTOCOMPLETE_MAX_RESULTS))
   url.searchParams.set(
     'select',
-    'DOI,title,author,published,published-print,published-online,container-title',
+    'DOI,title,author,published,published-print,published-online,container-title,publisher',
   )
 
   const response = await fetch(url, { signal })
@@ -115,6 +117,7 @@ export async function searchCrossrefWorks(
         year,
         publishedDate: date,
         containerTitle: work['container-title']?.[0],
+        publisher: work.publisher,
       },
     ]
   })

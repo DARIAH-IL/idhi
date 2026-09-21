@@ -99,7 +99,7 @@ export interface Dataset {
   /** The multilingual name or title used to identify the entity. Use one LangString per available language and do not repeat a language. Prefer the official localized name for organizations; for projects, tools and services, use localized names supplied by the team rather than translating branded names without authority. */
   name: DatasetNameItem[]
   /**
-   * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+   * The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.
    * @nullable
    */
   publisher?: string | null

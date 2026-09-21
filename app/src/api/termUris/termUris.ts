@@ -221,7 +221,7 @@ export const termUris = {
     presented_at: 'bibo:presentedAt',
     publication_type: 'dcterms:type',
     published_in: 'schema:isPartOf',
-    publisher: 'dcterms:publisher',
+    publisher_name: 'dcterms:publisher',
     same_as: 'schema:sameAs',
     tags: 'dcat:keyword',
     type: 'rdf:type',
@@ -373,6 +373,7 @@ export const termUriRefs = {
     description: 'LangString',
     name: 'LangString',
     published_in: 'LangString',
+    publisher_name: 'LangString',
   },
   Service: {
     description: 'LangString',

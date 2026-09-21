@@ -1292,9 +1292,9 @@
           "label": "Published in",
           "description": "The name of the journal, book or proceedings the publication appeared in."
         },
-        "publisher": {
+        "publisher_name": {
           "label": "$t(common.labels.publisher)",
-          "description": "The organization that formally published it."
+          "description": "The name of the press, imprint or issuing body that released it."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1842,7 +1842,6 @@
         "tools_serving_dataset": "Serving tools",
         "services_provided_by_organization": "Provided services",
         "publications_authored_by_person": "Authored publications",
-        "publications_published_by_organization": "Published works",
         "publications_within_publication": "Contained publications",
         "publications_presented_at_event": "Presented publications",
         "events_involving_agent": "Associated events",

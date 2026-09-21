@@ -229,7 +229,7 @@ const ENTITY_FIELD_ORDER = {
     description: true,
     homepage: true,
     date_issued: true,
-    publisher: true,
+    publisher_name: true,
     published_in: true,
     authorships: true,
     part_of: true,

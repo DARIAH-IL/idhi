@@ -47,6 +47,15 @@ export const PublicationFields = withForm({
                     langString(suggestion.containerTitle),
                   )
                 }
+                if (
+                  suggestion.publisher &&
+                  !hasLangStringValue(form.getFieldValue('publisher_name'))
+                ) {
+                  form.setFieldValue(
+                    'publisher_name',
+                    langString(suggestion.publisher),
+                  )
+                }
               }}
             />
           )}
@@ -124,15 +133,17 @@ export const PublicationFields = withForm({
           )}
         </form.AppField>
         <form.AppField
-          name="publisher"
-          validators={entityRefValidators(['idhi:Organization'])}
+          name="publisher_name"
+          validators={localizedValueValidators()}
         >
           {(field) => (
-            <field.EntityRefField
+            <field.LangStringField
               label={
-                <EntityFieldLabel entityClass="Publication" field="publisher" />
+                <EntityFieldLabel
+                  entityClass="Publication"
+                  field="publisher_name"
+                />
               }
-              entityTypes={['idhi:Organization']}
             />
           )}
         </form.AppField>

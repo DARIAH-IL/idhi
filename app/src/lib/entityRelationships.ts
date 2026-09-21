@@ -132,11 +132,6 @@ const ENTITY_RELATIONSHIPS = {
       label: 'publications_authored_by_person',
     },
     {
-      path: 'publisher',
-      targetTypes: ['idhi:Organization'],
-      label: 'publications_published_by_organization',
-    },
-    {
       path: 'part_of',
       targetTypes: ['idhi:Publication'],
       label: 'publications_within_publication',

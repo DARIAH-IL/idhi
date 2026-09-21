@@ -1296,9 +1296,9 @@
           "label": "نُشر في",
           "description": "اسم الدورية أو الكتاب أو وقائع المؤتمر التي ظهر فيها المنشور."
         },
-        "publisher": {
+        "publisher_name": {
           "label": "$t(common.labels.publisher)",
-          "description": "المؤسسة التي نشرته رسميًا."
+          "description": "اسم دار النشر أو الجهة التي أصدرته."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1846,7 +1846,6 @@
         "tools_serving_dataset": "أدوات متيحة",
         "services_provided_by_organization": "خدمات مقدَّمة",
         "publications_authored_by_person": "منشورات مؤلَّفة",
-        "publications_published_by_organization": "أعمال منشورة",
         "publications_within_publication": "منشورات مضمّنة",
         "publications_presented_at_event": "منشورات معروضة",
         "events_involving_agent": "فعاليات ذات صلة",

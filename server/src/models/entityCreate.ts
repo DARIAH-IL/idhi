@@ -1483,10 +1483,20 @@ export type EntityCreate =
           }[]
         | null
       /**
-       * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+       * Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.
        * @nullable
        */
-      publisher?: string | null
+      publisher_name?:
+        | {
+            /**
+             * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+             * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+             */
+            language: string
+            /** A localized text, in the language given by 'language'. */
+            value: string
+          }[]
+        | null
       /**
        * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
        * @nullable
@@ -1915,7 +1925,7 @@ export type EntityCreate =
         value: string
       }[]
       /**
-       * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+       * The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.
        * @nullable
        */
       publisher?: string | null
@@ -2293,7 +2303,7 @@ export type EntityCreate =
           }[]
         | null
       /**
-       * The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.
+       * The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.
        * @nullable
        */
       publisher?: string | null

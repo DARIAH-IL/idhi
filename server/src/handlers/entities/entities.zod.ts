@@ -242,6 +242,8 @@ export const searchEntitiesResponseResultsItemOneSixNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const searchEntitiesResponseResultsItemOneSixPublishedInItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const searchEntitiesResponseResultsItemOneSixPublisherNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const searchEntitiesResponseResultsItemOneSevenAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const searchEntitiesResponseResultsItemOneSevenDescriptionItemLanguageRegExp =
@@ -2266,11 +2268,31 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
               ),
-            publisher: zod
-              .string()
+            publisher_name: zod
+              .array(
+                zod
+                  .object({
+                    language: zod
+                      .string()
+                      .regex(
+                        searchEntitiesResponseResultsItemOneSixPublisherNameItemLanguageRegExp,
+                      )
+                      .describe(
+                        'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                      ),
+                    value: zod
+                      .string()
+                      .describe(
+                        "A localized text, in the language given by 'language'.",
+                      ),
+                  })
+                  .describe(
+                    'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                  ),
+              )
               .nullish()
               .describe(
-                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+                'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
               ),
             same_as: zod
               .array(zod.url())
@@ -2851,7 +2873,7 @@ export const SearchEntitiesResponse = zod.object({
               .string()
               .nullish()
               .describe(
-                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+                'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
               ),
             related_publications: zod
               .array(zod.string())
@@ -3351,7 +3373,7 @@ export const SearchEntitiesResponse = zod.object({
               .string()
               .nullish()
               .describe(
-                'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+                'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
               ),
             related_datasets: zod
               .array(zod.string())
@@ -3550,6 +3572,9 @@ export const createEntityBodySixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const createEntityBodySixPublishedInItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
+export const createEntityBodySixPublisherNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const createEntityBodySevenAddressItemLanguageRegExp = new RegExp(
@@ -5503,11 +5528,29 @@ export const CreateEntityBody = zod.union([
         .describe(
           'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
         ),
-      publisher: zod
-        .string()
+      publisher_name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(createEntityBodySixPublisherNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
         ),
       same_as: zod
         .array(zod.url())
@@ -6060,7 +6103,7 @@ export const CreateEntityBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_publications: zod
         .array(zod.string())
@@ -6537,7 +6580,7 @@ export const CreateEntityBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_datasets: zod
         .array(zod.string())
@@ -6696,6 +6739,8 @@ export const createEntityResponseOneSixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const createEntityResponseOneSixPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const createEntityResponseOneSixPublisherNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const createEntityResponseOneSevenAddressItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
@@ -8704,11 +8749,31 @@ export const CreateEntityResponse = zod
           .describe(
             'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
           ),
-        publisher: zod
-          .string()
+        publisher_name: zod
+          .array(
+            zod
+              .object({
+                language: zod
+                  .string()
+                  .regex(
+                    createEntityResponseOneSixPublisherNameItemLanguageRegExp,
+                  )
+                  .describe(
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
           ),
         same_as: zod
           .array(zod.url())
@@ -9279,7 +9344,7 @@ export const CreateEntityResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_publications: zod
           .array(zod.string())
@@ -9773,7 +9838,7 @@ export const CreateEntityResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_datasets: zod
           .array(zod.string())
@@ -9979,6 +10044,8 @@ export const suggestEntityFieldValuesBodySixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const suggestEntityFieldValuesBodySixPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const suggestEntityFieldValuesBodySixPublisherNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const suggestEntityFieldValuesBodySevenAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
@@ -12022,11 +12089,31 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .describe(
           'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
         ),
-      publisher: zod
-        .string()
+      publisher_name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(
+                  suggestEntityFieldValuesBodySixPublisherNameItemLanguageRegExp,
+                )
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
         ),
       same_as: zod
         .array(zod.url())
@@ -12613,7 +12700,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_publications: zod
         .array(zod.string())
@@ -13115,7 +13202,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_datasets: zod
         .array(zod.string())
@@ -13284,6 +13371,8 @@ export const getEntityByIdResponseOneSixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const getEntityByIdResponseOneSixPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const getEntityByIdResponseOneSixPublisherNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getEntityByIdResponseOneSevenAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
@@ -15293,11 +15382,31 @@ export const GetEntityByIdResponse = zod
           .describe(
             'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
           ),
-        publisher: zod
-          .string()
+        publisher_name: zod
+          .array(
+            zod
+              .object({
+                language: zod
+                  .string()
+                  .regex(
+                    getEntityByIdResponseOneSixPublisherNameItemLanguageRegExp,
+                  )
+                  .describe(
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
           ),
         same_as: zod
           .array(zod.url())
@@ -15870,7 +15979,7 @@ export const GetEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_publications: zod
           .array(zod.string())
@@ -16364,7 +16473,7 @@ export const GetEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_datasets: zod
           .array(zod.string())
@@ -16572,6 +16681,8 @@ export const updateEntityByIdBodySixNameItemLanguageRegExp = new RegExp(
 export const updateEntityByIdBodySixPublishedInItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
+export const updateEntityByIdBodySixPublisherNameItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const updateEntityByIdBodySevenAddressItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
@@ -18600,11 +18711,29 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
         ),
-      publisher: zod
-        .string()
+      publisher_name: zod
+        .array(
+          zod
+            .object({
+              language: zod
+                .string()
+                .regex(updateEntityByIdBodySixPublisherNameItemLanguageRegExp)
+                .describe(
+                  'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                ),
+              value: zod
+                .string()
+                .describe(
+                  "A localized text, in the language given by 'language'.",
+                ),
+            })
+            .describe(
+              'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+            ),
+        )
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
         ),
       same_as: zod
         .array(zod.url())
@@ -19181,7 +19310,7 @@ export const UpdateEntityByIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_publications: zod
         .array(zod.string())
@@ -19675,7 +19804,7 @@ export const UpdateEntityByIdBody = zod.union([
         .string()
         .nullish()
         .describe(
-          'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+          'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
         ),
       related_datasets: zod
         .array(zod.string())
@@ -19832,6 +19961,8 @@ export const updateEntityByIdResponseOneSixNameItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const updateEntityByIdResponseOneSixPublishedInItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
+export const updateEntityByIdResponseOneSixPublisherNameItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const updateEntityByIdResponseOneSevenAddressItemLanguageRegExp =
   new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
@@ -21844,11 +21975,31 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             'Name of the journal, book or proceedings the publication appeared in, as free multilingual text. If the container work has its own IDHI record or external URI, also link it via part_of.',
           ),
-        publisher: zod
-          .string()
+        publisher_name: zod
+          .array(
+            zod
+              .object({
+                language: zod
+                  .string()
+                  .regex(
+                    updateEntityByIdResponseOneSixPublisherNameItemLanguageRegExp,
+                  )
+                  .describe(
+                    'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                  ),
+                value: zod
+                  .string()
+                  .describe(
+                    "A localized text, in the language given by 'language'.",
+                  ),
+              })
+              .describe(
+                'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+              ),
+          )
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'Name of the press, imprint or issuing body that released the publication, as free multilingual text. Use this rather than an IDHI URN, since commercial publishers are not indexed as Organization records; use published_in for the journal, book or proceedings the work appeared in.',
           ),
         same_as: zod
           .array(zod.url())
@@ -22423,7 +22574,7 @@ export const UpdateEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_publications: zod
           .array(zod.string())
@@ -22919,7 +23070,7 @@ export const UpdateEntityByIdResponse = zod
           .string()
           .nullish()
           .describe(
-            'The organization formally publishing the dataset, publication or training material (by IDHI URN); use creators for responsibility for making a training material.',
+            'The organization formally publishing the dataset or training material (by IDHI URN); use creators for responsibility for making a training material and Publication.publisher_name for the press that released a publication.',
           ),
         related_datasets: zod
           .array(zod.string())

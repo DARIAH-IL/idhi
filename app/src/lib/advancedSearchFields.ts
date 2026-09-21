@@ -204,6 +204,7 @@ export const ADVANCED_SEARCH_FIELDS = {
   publication_type: enumSpecFromI18n('publication_type'),
   'published_in.value': { kind: 'string' },
   publisher: { kind: 'string' },
+  'publisher_name.value': { kind: 'string' },
 
   'event_agent_roles.event_agent': { kind: 'string' },
   'event_agent_roles.event_agent_role': enumSpec(

@@ -246,7 +246,7 @@ export const entities = [
     ],
     presented_at: [related(eventIds, index)],
     published_in: localized('Mock DH Journal', index),
-    publisher: related(organizationIds, index),
+    publisher_name: localized('Mock University Press', index),
     date_issued: `202${index}-06-01`,
     doi: `https://doi.org/10.5555/mock.${index + 1}`,
     homepage: `https://example.test/publications/${index + 1}`,
