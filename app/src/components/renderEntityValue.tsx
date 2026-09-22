@@ -9,10 +9,18 @@ import {
 import { ExternalLink } from '#/components/ExternalLink.tsx'
 import { TimeAgoReverse } from '#/components/TimeAgo.tsx'
 import { isEntityReference } from '#/lib/entityReferences.ts'
+import type { EntityField } from '#/api/typedEntitySearch.ts'
+import type { FacetField } from '#/api/entityBoardSearch.ts'
+import { Link } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipTrigger } from '@/components/ui/tooltip'
 
-const URL_FIELDS = new Set(['orcid', 'ror'])
+function fieldSet(...fields: readonly EntityField[]): ReadonlySet<string> {
+  return new Set<string>(fields)
+}
+
+const URL_FIELDS = fieldSet('orcid', 'ror')
+const DATE_FIELDS = fieldSet('start_date', 'end_date')
 const URL_TERMS = new Set([
   'schema:sameAs',
   'foaf:homepage',
@@ -24,17 +32,41 @@ const URL_TERMS = new Set([
 ])
 const ADDRESS_TERM = 'schema:address'
 const EMAIL_TERMS = new Set(['schema:email', 'foaf:mbox'])
-const PILL_FIELDS = new Set([
-  'publication_type',
-  'digital_humanities_activities',
-])
+const DH_ACTIVITIES_FIELD = 'digital_humanities_activities' satisfies FacetField
+const PILL_FIELDS = fieldSet('publication_type', DH_ACTIVITIES_FIELD)
 const EMPTY_PLACEHOLDER = '—'
 
 function EnumPill({ field, value }: { field: string; value: string }) {
+  const label = getEnumValueLabel(field, value)
+  const linkable = field === DH_ACTIVITIES_FIELD
   return (
     <TooltipTrigger>
-      <Badge variant="secondary" className="border-accent-foreground/25">
-        {getEnumValueLabel(field, value)}
+      <Badge
+        variant="secondary"
+        className={
+          linkable
+            ? 'border-accent-foreground/25 hover:bg-accent-foreground/20'
+            : 'border-accent-foreground/25'
+        }
+        render={
+          linkable
+            ? (props) => (
+                <Link
+                  {...props}
+                  to="/entities"
+                  search={{
+                    facetFilters: {
+                      [DH_ACTIVITIES_FIELD]: { include: [value] },
+                    },
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              )
+            : undefined
+        }
+      >
+        {label}
       </Badge>
       <Tooltip>{value}</Tooltip>
     </TooltipTrigger>
@@ -67,10 +99,7 @@ export function renderEntityValue(
       maximumFractionDigits: Number.isInteger(v) ? 0 : 2,
     }).format(v)
   }
-  if (
-    (field === 'start_date' || field === 'end_date') &&
-    typeof v === 'string'
-  ) {
+  if (field && DATE_FIELDS.has(field) && typeof v === 'string') {
     return <TimeAgoReverse date={v} />
   }
   if (entityClass === 'LangString') {
