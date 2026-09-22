@@ -245,7 +245,7 @@ function EntityDetailPage() {
       <EntityReferencesProvider entityIds={referencedEntityIds}>
         <Card>
           <CardContent>
-            <dl className="columns-1 gap-1 lg:columns-2">
+            <dl className="columns-1 gap-1 lg:columns-2 lg:gap-8 lg:[column-rule:1px_solid_var(--border)]">
               {entityFields.map((key) => {
                 const refValue = isEntityRefValue(values[key])
                 return (

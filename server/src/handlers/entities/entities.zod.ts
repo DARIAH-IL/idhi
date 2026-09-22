@@ -1957,6 +1957,12 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
               ),
+            related_tools: zod
+              .array(zod.string())
+              .nullish()
+              .describe(
+                "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+              ),
             same_as: zod
               .array(zod.url())
               .nullish()
@@ -3391,7 +3397,7 @@ export const SearchEntitiesResponse = zod.object({
               .array(zod.string())
               .nullish()
               .describe(
-                'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+                "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
               ),
             same_as: zod
               .array(zod.url())
@@ -5228,6 +5234,12 @@ export const CreateEntityBody = zod.union([
         .describe(
           "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
         ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+        ),
       same_as: zod
         .array(zod.url())
         .nullish()
@@ -6598,7 +6610,7 @@ export const CreateEntityBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
         ),
       same_as: zod
         .array(zod.url())
@@ -8440,6 +8452,12 @@ export const CreateEntityResponse = zod
           .describe(
             "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
           ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -9856,7 +9874,7 @@ export const CreateEntityResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
           ),
         same_as: zod
           .array(zod.url())
@@ -11774,6 +11792,12 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .describe(
           "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
         ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+        ),
       same_as: zod
         .array(zod.url())
         .nullish()
@@ -13220,7 +13244,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
         ),
       same_as: zod
         .array(zod.url())
@@ -15073,6 +15097,12 @@ export const GetEntityByIdResponse = zod
           .describe(
             "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
           ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -16491,7 +16521,7 @@ export const GetEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
           ),
         same_as: zod
           .array(zod.url())
@@ -18400,6 +18430,12 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
         ),
+      related_tools: zod
+        .array(zod.string())
+        .nullish()
+        .describe(
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+        ),
       same_as: zod
         .array(zod.url())
         .nullish()
@@ -19822,7 +19858,7 @@ export const UpdateEntityByIdBody = zod.union([
         .array(zod.string())
         .nullish()
         .describe(
-          'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+          "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
         ),
       same_as: zod
         .array(zod.url())
@@ -21666,6 +21702,12 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             "The organization formally responsible for delivering the service (the one you'd contact or contract with) — name the unit that delivers it, which may be a sub-organization such as a lab rather than its parent institution.",
           ),
+        related_tools: zod
+          .array(zod.string())
+          .nullish()
+          .describe(
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
+          ),
         same_as: zod
           .array(zod.url())
           .nullish()
@@ -23088,7 +23130,7 @@ export const UpdateEntityByIdResponse = zod
           .array(zod.string())
           .nullish()
           .describe(
-            'Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.',
+            "Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.",
           ),
         same_as: zod
           .array(zod.url())

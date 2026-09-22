@@ -1227,6 +1227,10 @@
           "label": "Provider",
           "description": "The organization that delivers the service and is responsible for it."
         },
+        "related_tools": {
+          "label": "Related tools",
+          "description": "Software tools the service supports, hosts, teaches or runs on the requester\u2019s behalf."
+        },
         "same_as": {
           "label": "$t(common.labels.same_as)",
           "description": "Links that identify the same service in other systems, such as the SSH Open Marketplace."
@@ -1846,6 +1850,7 @@
         "tools_with_contributor": "Contributed tools",
         "tools_serving_dataset": "Serving tools",
         "services_provided_by_organization": "Provided services",
+        "services_related_to_tool": "Related services",
         "publications_authored_by_person": "Authored publications",
         "publications_within_publication": "Contained publications",
         "publications_presented_at_event": "Presented publications",

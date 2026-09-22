@@ -256,6 +256,7 @@ const ENTITY_FIELD_ORDER = {
     contact_email: true,
     provider: true,
     additional_urls: true,
+    related_tools: true,
     same_as: true,
   },
   Tool: {

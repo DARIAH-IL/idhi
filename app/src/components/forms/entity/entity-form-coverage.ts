@@ -144,6 +144,7 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     'name[].language': 'rendered',
     'name[].value': 'rendered',
     provider: 'rendered',
+    related_tools: 'rendered',
     service_type: 'rendered',
   } satisfies FormCoverage<Service>,
   publication: {

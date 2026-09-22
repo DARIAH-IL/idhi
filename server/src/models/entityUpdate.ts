@@ -1248,6 +1248,11 @@ export type EntityUpdate =
        */
       provider?: string | null
       /**
+       * Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.
+       * @nullable
+       */
+      related_tools?: string[] | null
+      /**
        * URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).
        * @nullable
        */
@@ -2318,7 +2323,7 @@ export type EntityUpdate =
        */
       related_services?: string[] | null
       /**
-       * Tools whose use the material teaches or demonstrates (by IDHI URN). Do not use this merely for software used to produce the material.
+       * Tools that the containing resource centers on (by IDHI URN): those whose use a training material teaches or demonstrates, and those a service supports, hosts, trains people in or runs on the requester's behalf. Do not use it for software that is merely how the material was produced or how the service is delivered behind the scenes; the test is whether someone who found the tool would want this record returned alongside it.
        * @nullable
        */
       related_tools?: string[] | null

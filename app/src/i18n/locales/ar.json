@@ -1231,6 +1231,10 @@
           "label": "الجهة المقدِّمة",
           "description": "المؤسسة التي تقدّم الخدمة وتتحمّل مسؤوليتها."
         },
+        "related_tools": {
+          "label": "أدوات ذات صلة",
+          "description": "أدوات برمجية تدعمها الخدمة أو تستضيفها أو تُدرّب عليها أو تشغّلها نيابةً عن طالبها."
+        },
         "same_as": {
           "label": "$t(common.labels.same_as)",
           "description": "روابط تحدّد الخدمة نفسها في أنظمة أخرى، مثل SSH Open Marketplace."
@@ -1850,6 +1854,7 @@
         "tools_with_contributor": "أدوات بمساهمة",
         "tools_serving_dataset": "أدوات متيحة",
         "services_provided_by_organization": "خدمات مقدَّمة",
+        "services_related_to_tool": "خدمات ذات صلة",
         "publications_authored_by_person": "منشورات مؤلَّفة",
         "publications_within_publication": "منشورات مضمّنة",
         "publications_presented_at_event": "منشورات معروضة",

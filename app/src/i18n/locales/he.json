@@ -1229,6 +1229,10 @@
           "label": "ספק",
           "description": "הארגון המספק את השירות והאחראי עליו."
         },
+        "related_tools": {
+          "label": "כלים קשורים",
+          "description": "כלי תוכנה שהשירות תומך בהם, מארח אותם, מלמד אותם או מפעיל אותם עבור הפונה."
+        },
         "same_as": {
           "label": "$t(common.labels.same_as)",
           "description": "קישורים המזהים את אותו שירות במערכות אחרות, כגון SSH Open Marketplace."
@@ -1848,6 +1852,7 @@
         "tools_with_contributor": "כלים בתרומה",
         "tools_serving_dataset": "כלים המנגישים",
         "services_provided_by_organization": "שירותים מסופקים",
+        "services_related_to_tool": "שירותים קשורים",
         "publications_authored_by_person": "פרסומים שנכתבו",
         "publications_within_publication": "פרסומים מוכלים",
         "publications_presented_at_event": "פרסומים שהוצגו",

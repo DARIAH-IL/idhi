@@ -124,6 +124,11 @@ const ENTITY_RELATIONSHIPS = {
       targetTypes: ['idhi:Organization'],
       label: 'services_provided_by_organization',
     },
+    {
+      path: 'related_tools',
+      targetTypes: ['idhi:Tool'],
+      label: 'services_related_to_tool',
+    },
   ],
   'idhi:Publication': [
     {

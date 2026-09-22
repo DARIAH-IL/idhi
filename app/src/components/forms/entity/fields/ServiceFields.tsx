@@ -6,6 +6,7 @@ import { EntityFieldLabel } from '#/components/entity/EntityFieldLabel.tsx'
 import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import {
+  entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
@@ -144,6 +145,19 @@ export const ServiceFields = withForm({
                 />
               }
               placeholder="https://…"
+            />
+          )}
+        </form.AppField>
+        <form.AppField
+          name="related_tools"
+          validators={entityRefArrayValidators(['idhi:Tool'])}
+        >
+          {(field) => (
+            <field.EntityRefArrayField
+              label={
+                <EntityFieldLabel entityClass="Service" field="related_tools" />
+              }
+              entityTypes={['idhi:Tool']}
             />
           )}
         </form.AppField>
