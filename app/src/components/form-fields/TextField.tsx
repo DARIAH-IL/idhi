@@ -11,6 +11,7 @@ interface Props {
   placeholder?: string
   required?: boolean
   min?: number
+  step?: number | 'any'
   readOnly?: boolean
   className?: string
 }
@@ -21,6 +22,7 @@ export function TextField({
   placeholder,
   required = false,
   min,
+  step,
   readOnly,
   className,
 }: Props) {
@@ -45,6 +47,7 @@ export function TextField({
             placeholder={placeholder}
             required={required}
             min={min}
+            step={step}
             readOnly={readOnly}
             aria-labelledby={labelId}
             aria-invalid={Boolean(error)}

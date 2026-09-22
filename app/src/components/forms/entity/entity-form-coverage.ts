@@ -186,7 +186,6 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
   } satisfies FormCoverage<Event>,
   dataset: {
     ...COMMON_ENTITY_FIELDS,
-    byte_size: 'rendered',
     dataset_type: 'rendered',
     datasets: 'rendered',
     date_issued: 'rendered',
@@ -194,7 +193,9 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     digital_humanities_activities: 'rendered',
     distribution_url: 'rendered',
     doi: 'rendered',
-    extent: 'rendered',
+    'extent[].quantity': 'rendered',
+    'extent[].unit[].language': 'rendered',
+    'extent[].unit[].value': 'rendered',
     in_languages: 'rendered',
     license: 'rendered',
     media_type: 'rendered',

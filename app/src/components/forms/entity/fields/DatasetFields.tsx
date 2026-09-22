@@ -16,13 +16,19 @@ import {
   stringArrayValidators,
   valueValidators,
 } from '#/components/form-fields/validation.ts'
-import { hasLangStringValue, langString } from '#/lib/lang-string.ts'
+import {
+  emptyLangString,
+  hasLangStringValue,
+  langString,
+} from '#/lib/lang-string.ts'
+import { useUIStore } from '#/stores/ui.ts'
 import { datasetFormOptions } from '../entity-form-options.ts'
 
 export const DatasetFields = withForm({
   ...datasetFormOptions,
   render: function Render({ form }) {
     const duplicateCheck = useDuplicateCheck()
+    const language = useUIStore((state) => state.language)
     return (
       <>
         <form.AppField name="doi" validators={valueValidators({ kind: 'doi' })}>
@@ -172,25 +178,54 @@ export const DatasetFields = withForm({
             />
           )}
         </form.AppField>
-        <form.AppField name="extent">
+        <form.AppField name="extent" mode="array">
           {(field) => (
-            <field.StringArrayField
+            <field.ArraySection
               label={<EntityFieldLabel entityClass="Dataset" field="extent" />}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="byte_size"
-          validators={valueValidators({ kind: 'integer', min: 0 })}
-        >
-          {(field) => (
-            <field.TextField
-              label={
-                <EntityFieldLabel entityClass="Dataset" field="byte_size" />
-              }
-              type="number"
-              min={0}
-            />
+              defaultItem={{
+                quantity: '',
+                unit: emptyLangString(language),
+              }}
+            >
+              {(index) => (
+                <>
+                  <form.AppField
+                    name={`extent[${index}].quantity`}
+                    validators={valueValidators({
+                      kind: 'number',
+                      required: true,
+                    })}
+                  >
+                    {(nestedField) => (
+                      <nestedField.TextField
+                        required
+                        type="number"
+                        step="any"
+                        label={
+                          <EntityFieldLabel
+                            entityClass="Extent"
+                            field="quantity"
+                          />
+                        }
+                      />
+                    )}
+                  </form.AppField>
+                  <form.AppField
+                    name={`extent[${index}].unit`}
+                    validators={localizedValueValidators(true)}
+                  >
+                    {(nestedField) => (
+                      <nestedField.LangStringField
+                        required
+                        label={
+                          <EntityFieldLabel entityClass="Extent" field="unit" />
+                        }
+                      />
+                    )}
+                  </form.AppField>
+                </>
+              )}
+            </field.ArraySection>
           )}
         </form.AppField>
         <form.AppField

@@ -7,6 +7,7 @@
 import type { DatasetDatasetType } from './datasetDatasetType.ts'
 import type { DatasetDescriptionItem } from './datasetDescriptionItem.ts'
 import type { DatasetDigitalHumanitiesActivitiesItem } from './datasetDigitalHumanitiesActivitiesItem.ts'
+import type { DatasetExtentItem } from './datasetExtentItem.ts'
 import type { DatasetLicense } from './datasetLicense.ts'
 import type { DatasetNameItem } from './datasetNameItem.ts'
 import type { DatasetResourceContributionsItem } from './datasetResourceContributionsItem.ts'
@@ -17,11 +18,6 @@ import type { DatasetType } from './datasetType.ts'
  * A dataset or dataset-like intellectual object produced or curated by a project: digital editions, corpora, databases, gazetteers, image collections, annotation sets and metadata catalogs. Use Dataset for research data, digital scholarly editions and catalogs that describe other resources; a catalog can link the datasets it aggregates through datasets.
  */
 export interface Dataset {
-  /**
-   * Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.
-   * @nullable
-   */
-  byte_size?: number | null
   /** IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics. */
   dataset_type?: DatasetDatasetType
   /**
@@ -62,10 +58,10 @@ export interface Dataset {
    */
   doi?: string | null
   /**
-   * Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.
+   * Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.
    * @nullable
    */
-  extent?: string[] | null
+  extent?: DatasetExtentItem[] | null
   /**
    * Public landing page of the entity, if one exists.
    * @nullable

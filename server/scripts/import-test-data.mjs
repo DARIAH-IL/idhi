@@ -117,7 +117,7 @@ export const entities = [
     affiliations: [
       {
         organization: related(organizationIds, index),
-        affiliation_role: index === 0 ? 'PROFESSOR' : 'MEMBER',
+        affiliation_role: index === 0 ? 'FACULTY' : 'MEMBER',
         start_date: `202${index}-01-01`,
       },
     ],
@@ -285,8 +285,22 @@ export const entities = [
     date_issued: `202${index}-07-01`,
     in_languages: ['en', 'he'],
     media_type: index % 2 === 0 ? ['text/csv'] : ['application/json'],
-    byte_size: 1024 * (index + 1),
-    extent: [`${100 * (index + 1)} records`],
+    extent: [
+      {
+        quantity: 100 * (index + 1),
+        unit: [
+          { language: 'en', value: 'record' },
+          { language: 'he', value: 'רשומה' },
+        ],
+      },
+      {
+        quantity: 1024 * (index + 1),
+        unit: [
+          { language: 'en', value: 'byte' },
+          { language: 'he', value: 'בייט' },
+        ],
+      },
+    ],
     distribution_url: `https://example.test/datasets/${index + 1}/download`,
     homepage: `https://example.test/datasets/${index + 1}`,
     image: image(index + 1),

@@ -95,7 +95,6 @@ const ENTITY_FIELD_ORDER = {
     in_languages: true,
     publisher: true,
     extent: true,
-    byte_size: true,
     license: true,
     derived_from: true,
     datasets: true,
@@ -127,6 +126,10 @@ const ENTITY_FIELD_ORDER = {
     event_agent_role: true,
     start_date: true,
     end_date: true,
+  },
+  Extent: {
+    quantity: true,
+    unit: true,
   },
   Funding: {
     grant_name: true,

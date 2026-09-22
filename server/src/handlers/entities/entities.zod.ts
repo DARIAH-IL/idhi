@@ -260,6 +260,8 @@ export const searchEntitiesResponseResultsItemOneEightDescriptionItemLanguageReg
 export const searchEntitiesResponseResultsItemOneEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const searchEntitiesResponseResultsItemOneEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const searchEntitiesResponseResultsItemOneEightIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -302,16 +304,23 @@ export const SearchEntitiesResponse = zod.object({
                   .object({
                     affiliation_role: zod
                       .enum([
-                        'PROFESSOR',
-                        'ASSOCIATE',
-                        'MEMBER',
-                        'MANAGER',
-                        'AFFILIATE',
                         'EMPLOYEE',
+                        'FACULTY',
+                        'RESEARCHER',
+                        'STUDENT',
+                        'INTERN',
+                        'FOUNDER',
+                        'OWNER',
+                        'ADVISOR',
+                        'CONTRACTOR',
+                        'VOLUNTEER',
+                        'MEMBER',
+                        'FELLOW',
+                        'AFFILIATE',
                       ])
                       .optional()
                       .describe(
-                        "A person's position within an organization (job/status).",
+                        "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                       ),
                     end_date: zod.iso
                       .date()
@@ -332,12 +341,12 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+                    "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
                   ),
               )
               .nullish()
               .describe(
-                "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+                "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
               ),
             description: zod
               .array(
@@ -2540,12 +2549,6 @@ export const SearchEntitiesResponse = zod.object({
           ),
         zod
           .object({
-            byte_size: zod
-              .int()
-              .nullish()
-              .describe(
-                'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-              ),
             dataset_type: zod
               .enum([
                 'DIGITAL_EDITION',
@@ -2798,10 +2801,47 @@ export const SearchEntitiesResponse = zod.object({
                 "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
               ),
             extent: zod
-              .array(zod.string())
+              .array(
+                zod
+                  .object({
+                    quantity: zod
+                      .number()
+                      .describe(
+                        'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                      ),
+                    unit: zod
+                      .array(
+                        zod
+                          .object({
+                            language: zod
+                              .string()
+                              .regex(
+                                searchEntitiesResponseResultsItemOneEightExtentItemUnitItemLanguageRegExp,
+                              )
+                              .describe(
+                                'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                              ),
+                            value: zod
+                              .string()
+                              .describe(
+                                "A localized text, in the language given by 'language'.",
+                              ),
+                          })
+                          .describe(
+                            'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                          ),
+                      )
+                      .describe(
+                        'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                      ),
+                  })
+                  .describe(
+                    "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+                  ),
+              )
               .nullish()
               .describe(
-                'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+                "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
               ),
             homepage: zod
               .url()
@@ -3599,6 +3639,9 @@ export const createEntityBodyEightDescriptionItemLanguageRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
 export const createEntityBodyEightDoiRegExp = new RegExp('https://doi.org/.+')
+export const createEntityBodyEightExtentItemUnitItemLanguageRegExp = new RegExp(
+  '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
+)
 export const createEntityBodyEightInLanguagesItemRegExp = new RegExp(
   '^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$',
 )
@@ -3638,16 +3681,23 @@ export const CreateEntityBody = zod.union([
             .object({
               affiliation_role: zod
                 .enum([
-                  'PROFESSOR',
-                  'ASSOCIATE',
-                  'MEMBER',
-                  'MANAGER',
-                  'AFFILIATE',
                   'EMPLOYEE',
+                  'FACULTY',
+                  'RESEARCHER',
+                  'STUDENT',
+                  'INTERN',
+                  'FOUNDER',
+                  'OWNER',
+                  'ADVISOR',
+                  'CONTRACTOR',
+                  'VOLUNTEER',
+                  'MEMBER',
+                  'FELLOW',
+                  'AFFILIATE',
                 ])
                 .optional()
                 .describe(
-                  "A person's position within an organization (job/status).",
+                  "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                 ),
               end_date: zod.iso
                 .date()
@@ -3668,12 +3718,12 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+              "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
             ),
         )
         .nullish()
         .describe(
-          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+          "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
         ),
       description: zod
         .array(
@@ -5791,12 +5841,6 @@ export const CreateEntityBody = zod.union([
     ),
   zod
     .object({
-      byte_size: zod
-        .int()
-        .nullish()
-        .describe(
-          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-        ),
       dataset_type: zod
         .enum([
           'DIGITAL_EDITION',
@@ -6047,10 +6091,47 @@ export const CreateEntityBody = zod.union([
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
         ),
       extent: zod
-        .array(zod.string())
+        .array(
+          zod
+            .object({
+              quantity: zod
+                .number()
+                .describe(
+                  'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                ),
+              unit: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          createEntityBodyEightExtentItemUnitItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .describe(
+                  'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                ),
+            })
+            .describe(
+              "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+            ),
+        )
         .nullish()
         .describe(
-          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
         ),
       homepage: zod
         .url()
@@ -6772,6 +6853,8 @@ export const createEntityResponseOneEightDescriptionItemLanguageRegExp =
 export const createEntityResponseOneEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const createEntityResponseOneEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const createEntityResponseOneEightIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -6817,16 +6900,23 @@ export const CreateEntityResponse = zod
               .object({
                 affiliation_role: zod
                   .enum([
-                    'PROFESSOR',
-                    'ASSOCIATE',
-                    'MEMBER',
-                    'MANAGER',
-                    'AFFILIATE',
                     'EMPLOYEE',
+                    'FACULTY',
+                    'RESEARCHER',
+                    'STUDENT',
+                    'INTERN',
+                    'FOUNDER',
+                    'OWNER',
+                    'ADVISOR',
+                    'CONTRACTOR',
+                    'VOLUNTEER',
+                    'MEMBER',
+                    'FELLOW',
+                    'AFFILIATE',
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job/status).",
+                    "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                   ),
                 end_date: zod.iso
                   .date()
@@ -6847,12 +6937,12 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+                "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+            "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -9027,12 +9117,6 @@ export const CreateEntityResponse = zod
       ),
     zod
       .object({
-        byte_size: zod
-          .int()
-          .nullish()
-          .describe(
-            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-          ),
         dataset_type: zod
           .enum([
             'DIGITAL_EDITION',
@@ -9285,10 +9369,47 @@ export const CreateEntityResponse = zod
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         extent: zod
-          .array(zod.string())
+          .array(
+            zod
+              .object({
+                quantity: zod
+                  .number()
+                  .describe(
+                    'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                  ),
+                unit: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            createEntityResponseOneEightExtentItemUnitItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .describe(
+                    'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                  ),
+              })
+              .describe(
+                "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+              ),
+          )
           .nullish()
           .describe(
-            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+            "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
           ),
         homepage: zod
           .url()
@@ -10081,6 +10202,8 @@ export const suggestEntityFieldValuesBodyEightDescriptionItemLanguageRegExp =
 export const suggestEntityFieldValuesBodyEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const suggestEntityFieldValuesBodyEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const suggestEntityFieldValuesBodyEightIdOneRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -10121,16 +10244,23 @@ export const SuggestEntityFieldValuesBody = zod.union([
             .object({
               affiliation_role: zod
                 .enum([
-                  'PROFESSOR',
-                  'ASSOCIATE',
-                  'MEMBER',
-                  'MANAGER',
-                  'AFFILIATE',
                   'EMPLOYEE',
+                  'FACULTY',
+                  'RESEARCHER',
+                  'STUDENT',
+                  'INTERN',
+                  'FOUNDER',
+                  'OWNER',
+                  'ADVISOR',
+                  'CONTRACTOR',
+                  'VOLUNTEER',
+                  'MEMBER',
+                  'FELLOW',
+                  'AFFILIATE',
                 ])
                 .optional()
                 .describe(
-                  "A person's position within an organization (job/status).",
+                  "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                 ),
               end_date: zod.iso
                 .date()
@@ -10151,12 +10281,12 @@ export const SuggestEntityFieldValuesBody = zod.union([
                 ),
             })
             .describe(
-              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+              "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
             ),
         )
         .nullish()
         .describe(
-          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+          "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
         ),
       description: zod
         .array(
@@ -12383,12 +12513,6 @@ export const SuggestEntityFieldValuesBody = zod.union([
     ),
   zod
     .object({
-      byte_size: zod
-        .int()
-        .nullish()
-        .describe(
-          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-        ),
       dataset_type: zod
         .enum([
           'DIGITAL_EDITION',
@@ -12641,10 +12765,47 @@ export const SuggestEntityFieldValuesBody = zod.union([
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
         ),
       extent: zod
-        .array(zod.string())
+        .array(
+          zod
+            .object({
+              quantity: zod
+                .number()
+                .describe(
+                  'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                ),
+              unit: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          suggestEntityFieldValuesBodyEightExtentItemUnitItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .describe(
+                  'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                ),
+            })
+            .describe(
+              "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+            ),
+        )
         .nullish()
         .describe(
-          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
         ),
       homepage: zod
         .url()
@@ -13415,6 +13576,8 @@ export const getEntityByIdResponseOneEightDescriptionItemLanguageRegExp =
 export const getEntityByIdResponseOneEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const getEntityByIdResponseOneEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const getEntityByIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -13460,16 +13623,23 @@ export const GetEntityByIdResponse = zod
               .object({
                 affiliation_role: zod
                   .enum([
-                    'PROFESSOR',
-                    'ASSOCIATE',
-                    'MEMBER',
-                    'MANAGER',
-                    'AFFILIATE',
                     'EMPLOYEE',
+                    'FACULTY',
+                    'RESEARCHER',
+                    'STUDENT',
+                    'INTERN',
+                    'FOUNDER',
+                    'OWNER',
+                    'ADVISOR',
+                    'CONTRACTOR',
+                    'VOLUNTEER',
+                    'MEMBER',
+                    'FELLOW',
+                    'AFFILIATE',
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job/status).",
+                    "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                   ),
                 end_date: zod.iso
                   .date()
@@ -13490,12 +13660,12 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+                "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+            "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -15674,12 +15844,6 @@ export const GetEntityByIdResponse = zod
       ),
     zod
       .object({
-        byte_size: zod
-          .int()
-          .nullish()
-          .describe(
-            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-          ),
         dataset_type: zod
           .enum([
             'DIGITAL_EDITION',
@@ -15932,10 +16096,47 @@ export const GetEntityByIdResponse = zod
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         extent: zod
-          .array(zod.string())
+          .array(
+            zod
+              .object({
+                quantity: zod
+                  .number()
+                  .describe(
+                    'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                  ),
+                unit: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            getEntityByIdResponseOneEightExtentItemUnitItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .describe(
+                    'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                  ),
+              })
+              .describe(
+                "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+              ),
+          )
           .nullish()
           .describe(
-            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+            "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
           ),
         homepage: zod
           .url()
@@ -16732,6 +16933,8 @@ export const updateEntityByIdBodyEightDescriptionItemLanguageRegExp =
 export const updateEntityByIdBodyEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const updateEntityByIdBodyEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const updateEntityByIdBodyEightIdOneRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -16777,16 +16980,23 @@ export const UpdateEntityByIdBody = zod.union([
             .object({
               affiliation_role: zod
                 .enum([
-                  'PROFESSOR',
-                  'ASSOCIATE',
-                  'MEMBER',
-                  'MANAGER',
-                  'AFFILIATE',
                   'EMPLOYEE',
+                  'FACULTY',
+                  'RESEARCHER',
+                  'STUDENT',
+                  'INTERN',
+                  'FOUNDER',
+                  'OWNER',
+                  'ADVISOR',
+                  'CONTRACTOR',
+                  'VOLUNTEER',
+                  'MEMBER',
+                  'FELLOW',
+                  'AFFILIATE',
                 ])
                 .optional()
                 .describe(
-                  "A person's position within an organization (job/status).",
+                  "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                 ),
               end_date: zod.iso
                 .date()
@@ -16807,12 +17017,12 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+              "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
             ),
         )
         .nullish()
         .describe(
-          "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+          "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
         ),
       description: zod
         .array(
@@ -19009,12 +19219,6 @@ export const UpdateEntityByIdBody = zod.union([
     ),
   zod
     .object({
-      byte_size: zod
-        .int()
-        .nullish()
-        .describe(
-          'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-        ),
       dataset_type: zod
         .enum([
           'DIGITAL_EDITION',
@@ -19265,10 +19469,47 @@ export const UpdateEntityByIdBody = zod.union([
           "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
         ),
       extent: zod
-        .array(zod.string())
+        .array(
+          zod
+            .object({
+              quantity: zod
+                .number()
+                .describe(
+                  'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                ),
+              unit: zod
+                .array(
+                  zod
+                    .object({
+                      language: zod
+                        .string()
+                        .regex(
+                          updateEntityByIdBodyEightExtentItemUnitItemLanguageRegExp,
+                        )
+                        .describe(
+                          'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                        ),
+                      value: zod
+                        .string()
+                        .describe(
+                          "A localized text, in the language given by 'language'.",
+                        ),
+                    })
+                    .describe(
+                      'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                    ),
+                )
+                .describe(
+                  'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                ),
+            })
+            .describe(
+              "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+            ),
+        )
         .nullish()
         .describe(
-          'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+          "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
         ),
       homepage: zod
         .url()
@@ -20016,6 +20257,8 @@ export const updateEntityByIdResponseOneEightDescriptionItemLanguageRegExp =
 export const updateEntityByIdResponseOneEightDoiRegExp = new RegExp(
   'https://doi.org/.+',
 )
+export const updateEntityByIdResponseOneEightExtentItemUnitItemLanguageRegExp =
+  new RegExp('^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$')
 export const updateEntityByIdResponseOneEightIdRegExp = new RegExp(
   '^idhi:dataset:[0-9a-z]{4,12}$',
 )
@@ -20059,16 +20302,23 @@ export const UpdateEntityByIdResponse = zod
               .object({
                 affiliation_role: zod
                   .enum([
-                    'PROFESSOR',
-                    'ASSOCIATE',
-                    'MEMBER',
-                    'MANAGER',
-                    'AFFILIATE',
                     'EMPLOYEE',
+                    'FACULTY',
+                    'RESEARCHER',
+                    'STUDENT',
+                    'INTERN',
+                    'FOUNDER',
+                    'OWNER',
+                    'ADVISOR',
+                    'CONTRACTOR',
+                    'VOLUNTEER',
+                    'MEMBER',
+                    'FELLOW',
+                    'AFFILIATE',
                   ])
                   .optional()
                   .describe(
-                    "A person's position within an organization (job/status).",
+                    "IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.",
                   ),
                 end_date: zod.iso
                   .date()
@@ -20089,12 +20339,12 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                "A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.",
+                "A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.",
               ),
           )
           .nullish()
           .describe(
-            "The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
+            "The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.",
           ),
         description: zod
           .array(
@@ -22281,12 +22531,6 @@ export const UpdateEntityByIdResponse = zod
       ),
     zod
       .object({
-        byte_size: zod
-          .int()
-          .nullish()
-          .describe(
-            'Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.',
-          ),
         dataset_type: zod
           .enum([
             'DIGITAL_EDITION',
@@ -22539,10 +22783,47 @@ export const UpdateEntityByIdResponse = zod
             "The publication, dataset, tool or training material's DOI persistent identifier. Record it whenever one exists; it is the preferred deduplication key and is supplementary to the IDHI URN.",
           ),
         extent: zod
-          .array(zod.string())
+          .array(
+            zod
+              .object({
+                quantity: zod
+                  .number()
+                  .describe(
+                    'The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot.',
+                  ),
+                unit: zod
+                  .array(
+                    zod
+                      .object({
+                        language: zod
+                          .string()
+                          .regex(
+                            updateEntityByIdResponseOneEightExtentItemUnitItemLanguageRegExp,
+                          )
+                          .describe(
+                            'BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.',
+                          ),
+                        value: zod
+                          .string()
+                          .describe(
+                            "A localized text, in the language given by 'language'.",
+                          ),
+                      })
+                      .describe(
+                        'A single language-tagged text value. Instances are combined in a multivalued slot to give variants of one field in any language identified by a BCP-47 tag. Use one LangString per language; do not repeat a language within the same field.',
+                      ),
+                  )
+                  .describe(
+                    'Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure.',
+                  ),
+              })
+              .describe(
+                "A quantitative measure of a dataset's size or scope, expressed as a numeric quantity and one or more localized unit labels. Use one Extent for each independently useful measure, including bytes, records, files, images or duration; do not combine multiple measures or explanatory prose in one instance.",
+              ),
+          )
           .nullish()
           .describe(
-            'Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.',
+            "Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.",
           ),
         homepage: zod
           .url()

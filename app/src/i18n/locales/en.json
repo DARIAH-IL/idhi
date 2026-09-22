@@ -449,11 +449,18 @@
     "enums": {
       "affiliation_role": {
         "AFFILIATE": "Affiliate",
-        "ASSOCIATE": "Associate",
+        "ADVISOR": "Advisor",
+        "CONTRACTOR": "Contractor",
         "EMPLOYEE": "Employee",
-        "MANAGER": "Manager",
+        "FACULTY": "Faculty",
+        "FELLOW": "Fellow",
+        "FOUNDER": "Founder",
+        "INTERN": "Intern",
         "MEMBER": "Member",
-        "PROFESSOR": "Professor"
+        "OWNER": "Owner",
+        "RESEARCHER": "Researcher",
+        "STUDENT": "Student",
+        "VOLUNTEER": "Volunteer"
       },
       "authorship_role": {
         "AUTHOR": "Author",
@@ -1393,10 +1400,6 @@
           "label": "Dataset",
           "description": "A dataset or similar resource: digital edition, corpus, database, gazetteer, image collection or annotation set. Catalogs that describe other resources, such as an archive or library index, are also a kind of dataset."
         },
-        "byte_size": {
-          "label": "Byte size",
-          "description": "The dataset’s exact total size, measured in bytes."
-        },
         "dataset_type": {
           "label": "Dataset type",
           "description": "The dataset’s primary form, such as a digital edition, corpus, database or gazetteer."
@@ -1430,8 +1433,8 @@
           "description": "The dataset’s Digital Object Identifier (DOI)."
         },
         "extent": {
-          "label": "Extent statements",
-          "description": "Measurements that describe the dataset’s extent, such as its number of records, items, images or files."
+          "label": "Extents",
+          "description": "Quantitative measurements of the dataset’s size or scope, including bytes and record, item, image or file counts."
         },
         "homepage": {
           "label": "$t(common.labels.homepage_url)",
@@ -1611,11 +1614,11 @@
       "Affiliation": {
         "$self": {
           "label": "Affiliation",
-          "description": "A person’s employment or membership at an organization, independent of any project."
+          "description": "A person’s formal relationship with an organization, independent of any project."
         },
         "affiliation_role": {
           "label": "Role",
-          "description": "The person’s position at the organization - their job or status, not their project role."
+          "description": "The person’s specific role or status in the organization, not their role in a project."
         },
         "end_date": {
           "label": "$t(common.labels.end_date)",
@@ -1676,6 +1679,20 @@
         "start_date": {
           "label": "$t(common.labels.start_date)",
           "description": "The date the person’s or organization’s involvement in the event began."
+        }
+      },
+      "Extent": {
+        "$self": {
+          "label": "Extent",
+          "description": "One quantitative measurement of a dataset’s size or scope."
+        },
+        "quantity": {
+          "label": "Quantity",
+          "description": "The numeric amount of this measurement."
+        },
+        "unit": {
+          "label": "Unit",
+          "description": "Localized names for the unit of measurement, such as byte, record, image, file or hour."
         }
       },
       "Funding": {

@@ -8,19 +8,26 @@
 export type EntityCreate =
   | {
       /**
-       * The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.
+       * The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.
        * @nullable
        */
       affiliations?:
         | {
-            /** A person's position within an organization (job/status). */
+            /** IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation. */
             affiliation_role?:
-              | 'PROFESSOR'
-              | 'ASSOCIATE'
-              | 'MEMBER'
-              | 'MANAGER'
-              | 'AFFILIATE'
               | 'EMPLOYEE'
+              | 'FACULTY'
+              | 'RESEARCHER'
+              | 'STUDENT'
+              | 'INTERN'
+              | 'FOUNDER'
+              | 'OWNER'
+              | 'ADVISOR'
+              | 'CONTRACTOR'
+              | 'VOLUNTEER'
+              | 'MEMBER'
+              | 'FELLOW'
+              | 'AFFILIATE'
             /**
              * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
              * @nullable
@@ -1652,11 +1659,6 @@ export type EntityCreate =
       type: 'idhi:Event'
     }
   | {
-      /**
-       * Total size of the described dataset distribution in bytes. Use an exact or documented aggregate byte count and omit it when only an unreliable estimate is available.
-       * @nullable
-       */
-      byte_size?: number | null
       /** IDHI-governed discovery categories for datasets and dataset-like intellectual objects. Choose the primary form and use tags for secondary characteristics. */
       dataset_type?:
         | 'DIGITAL_EDITION'
@@ -1885,10 +1887,25 @@ export type EntityCreate =
        */
       doi?: string | null
       /**
-       * Technical extent statements such as record, item, issue, image or file counts. Use one concise statement per measure, include its unit, and use byte_size rather than prose for total bytes.
+       * Quantitative measures of the dataset's size or scope, including total bytes and record, item, issue, image or file counts. Use one inlined Extent per measure and omit estimates that are too unreliable to support discovery or comparison.
        * @nullable
        */
-      extent?: string[] | null
+      extent?:
+        | {
+            /** The numeric magnitude of an Extent measure. Use an integer when the measure is a count or an exact byte total, and a decimal only when the chosen unit requires one; put the unit in the accompanying unit slot. */
+            quantity: number
+            /** Localized labels for the unit of an Extent quantity, such as byte, record, image, file or hour. Use one LangString per available language, prefer a concise singular unit label rather than a sentence, and keep qualifications in the Dataset description or another extent measure. */
+            unit: {
+              /**
+               * BCP-47 language tag of the value, such as en, he, ar, de, yi or lad. Use the shortest registered tag that accurately identifies the text; the deliberately permissive syntax guard accepts private and grandfathered tags and does not verify registration in the IANA language-subtag registry.
+               * @pattern ^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$
+               */
+              language: string
+              /** A localized text, in the language given by 'language'. */
+              value: string
+            }[]
+          }[]
+        | null
       /**
        * Public landing page of the entity, if one exists.
        * @nullable

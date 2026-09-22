@@ -15,7 +15,7 @@ import type { PersonType } from './personType.ts'
  */
 export interface Person {
   /**
-   * The containing person's institutional affiliations, as reified Affiliation objects with organization, position and dates. Use for employment or formal membership, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.
+   * The containing person's formal organization-level relationships, as reified Affiliation objects with organization, role and dates. Use for employment, faculty, study, membership, ownership or another defined affiliation status, not for project involvement; the containing person's ID is inferred and must not be repeated in each relationship.
    * @nullable
    */
   affiliations?: PersonAffiliationsItem[] | null

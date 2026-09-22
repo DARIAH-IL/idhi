@@ -6,16 +6,23 @@
  */
 
 /**
- * A person's position within an organization (job/status).
+ * IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation.
  */
 export type PersonAffiliationsItemAffiliationRole =
   (typeof PersonAffiliationsItemAffiliationRole)[keyof typeof PersonAffiliationsItemAffiliationRole]
 
 export const PersonAffiliationsItemAffiliationRole = {
-  PROFESSOR: 'PROFESSOR',
-  ASSOCIATE: 'ASSOCIATE',
-  MEMBER: 'MEMBER',
-  MANAGER: 'MANAGER',
-  AFFILIATE: 'AFFILIATE',
   EMPLOYEE: 'EMPLOYEE',
+  FACULTY: 'FACULTY',
+  RESEARCHER: 'RESEARCHER',
+  STUDENT: 'STUDENT',
+  INTERN: 'INTERN',
+  FOUNDER: 'FOUNDER',
+  OWNER: 'OWNER',
+  ADVISOR: 'ADVISOR',
+  CONTRACTOR: 'CONTRACTOR',
+  VOLUNTEER: 'VOLUNTEER',
+  MEMBER: 'MEMBER',
+  FELLOW: 'FELLOW',
+  AFFILIATE: 'AFFILIATE',
 } as const

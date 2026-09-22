@@ -7,10 +7,10 @@
 import type { PersonAffiliationsItemAffiliationRole } from './personAffiliationsItemAffiliationRole.ts'
 
 /**
- * A person's employment or membership at an organization, nested in a Person so the member is inferred from the containing record. Use in Person.affiliations for the person's institutional home(s), independent of any project; do not provide the containing person's ID in the relationship.
+ * A person's formal relationship with an organization, nested in a Person so the person is inferred from the containing record. Use in Person.affiliations for employment, faculty, study, membership, ownership and other organization-level statuses independent of any project; do not provide the containing person's ID in the relationship.
  */
 export type PersonAffiliationsItem = {
-  /** A person's position within an organization (job/status). */
+  /** IDHI-governed roles and statuses for a person's formal relationship with an organization. Choose the most specific applicable role, use separate Affiliation instances for distinct concurrent or successive roles, and keep project-specific responsibilities in ProjectParticipation. */
   affiliation_role?: PersonAffiliationsItemAffiliationRole
   /**
    * End of the event, project runtime or relationship. Omit for ongoing relationships and open-ended projects.
