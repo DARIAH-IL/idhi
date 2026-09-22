@@ -11,6 +11,7 @@ const userSchema = z.object({
   name: z.string().optional(),
   email: z.email(),
   isAdmin: z.boolean(),
+  groups: z.array(z.string()).default([]),
 })
 
 const userClaimsSchema = userSchema.extend({
@@ -82,6 +83,7 @@ export async function createJwtForUser(
       ...(user.name === undefined ? {} : { name: user.name }),
       email: user.email,
       isAdmin: user.isAdmin,
+      groups: user.groups,
       iat: issuedAt,
       exp: issuedAt + jwtExpirationSeconds(bindings),
     },

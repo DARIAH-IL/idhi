@@ -26,6 +26,8 @@ export const ListUsersQueryParams = zod.object({
     .default(listUsersQueryPageSizeDefault),
 })
 
+export const listUsersResponseResultsItemGroupsItemMax = 64
+
 export const ListUsersResponse = zod.object({
   results: zod.array(
     zod.object({
@@ -33,67 +35,131 @@ export const ListUsersResponse = zod.object({
       name: zod.string().optional(),
       email: zod.email(),
       isAdmin: zod.boolean(),
+      groups: zod
+        .array(
+          zod.string().min(1).max(listUsersResponseResultsItemGroupsItemMax),
+        )
+        .describe(
+          'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+        ),
     }),
   ),
   total: zod.int(),
 })
 
+export const createUserBodyGroupsItemMax = 64
+
 export const CreateUserBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(createUserBodyGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
+
+export const createUserResponseGroupsItemMax = 64
 
 export const CreateUserResponse = zod.object({
   id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(createUserResponseGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
+
+export const listUserGroupsResponseMax = 64
+
+export const ListUserGroupsResponseItem = zod
+  .string()
+  .min(1)
+  .max(listUserGroupsResponseMax)
+export const ListUserGroupsResponse = zod.array(ListUserGroupsResponseItem)
 
 export const GetUserByIdParams = zod.object({
   userId: zod.string(),
 })
+
+export const getUserByIdResponseGroupsItemMax = 64
 
 export const GetUserByIdResponse = zod.object({
   id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(getUserByIdResponseGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
 
 export const ReplaceUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
+export const replaceUserByIdBodyGroupsItemMax = 64
+
 export const ReplaceUserByIdBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(replaceUserByIdBodyGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
+
+export const replaceUserByIdResponseGroupsItemMax = 64
 
 export const ReplaceUserByIdResponse = zod.object({
   id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(replaceUserByIdResponseGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
 
 export const UpdateUserByIdParams = zod.object({
   userId: zod.string(),
 })
 
+export const updateUserByIdBodyGroupsItemMax = 64
+
 export const UpdateUserByIdBody = zod.object({
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(updateUserByIdBodyGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
+
+export const updateUserByIdResponseGroupsItemMax = 64
 
 export const UpdateUserByIdResponse = zod.object({
   id: zod.email(),
   name: zod.string().optional(),
   email: zod.email(),
   isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(updateUserByIdResponseGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
 })
 
 export const DeleteUserByIdParams = zod.object({

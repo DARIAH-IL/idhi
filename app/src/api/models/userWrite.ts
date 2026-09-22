@@ -4,9 +4,11 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { UserGroups } from './userGroups.ts'
 
 export interface UserWrite {
   name?: string
   email: string
   isAdmin: boolean
+  groups: UserGroups
 }

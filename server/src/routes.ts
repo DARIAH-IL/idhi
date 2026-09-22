@@ -26,6 +26,7 @@ import {
 import {
   listUsersHandlers,
   createUserHandlers,
+  listUserGroupsHandlers,
   getUserByIdHandlers,
   replaceUserByIdHandlers,
   updateUserByIdHandlers,
@@ -64,6 +65,7 @@ const app = new Hono()
   .post('/api/v1/users/invite', ...inviteUserHandlers)
   .get('/api/v1/users/invites', ...listUserInvitesHandlers)
   .delete('/api/v1/users/invites/:inviteId', ...revokeUserInviteByIdHandlers)
+  .get('/api/v1/users/groups', ...listUserGroupsHandlers)
   .get('/api/v1/users/:userId', ...getUserByIdHandlers)
   .put('/api/v1/users/:userId', ...replaceUserByIdHandlers)
   .post('/api/v1/users/:userId', ...updateUserByIdHandlers)

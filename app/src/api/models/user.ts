@@ -4,6 +4,7 @@
  * IDHI API
  * OpenAPI spec version: 1.0.0
  */
+import type { UserGroups } from './userGroups.ts'
 import type { UserId } from './userId.ts'
 
 export interface User {
@@ -11,4 +12,5 @@ export interface User {
   name?: string
   email: string
   isAdmin: boolean
+  groups: UserGroups
 }

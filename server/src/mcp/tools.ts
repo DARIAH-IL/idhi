@@ -10,6 +10,10 @@ import {
   searchEntities,
   updateEntity,
 } from '../utils/entityOps'
+import {
+  resolveEntityViewer,
+  resolveOptionalEntityViewer,
+} from '../utils/entityViewer'
 import { refineUniqueLangStringLanguages } from '../utils/langString'
 import {
   SearchEntitiesBody,
@@ -34,7 +38,7 @@ const CreateEntityInput = extendEntityUnion(CreateEntityBodyNoImage, {
     .boolean()
     .default(true)
     .describe(
-      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to true: create entities as drafts so a human can review them before they become public. Only pass false when the user explicitly asked for the entity to be published right away. Publishing is irreversible — a published entity can never be turned back into a draft.',
+      "Whether to save the entity as a draft, visible only to its creator, the members of the creator's groups, and administrators, instead of publishing it. Defaults to true: create entities as drafts so a human can review them before they become public. Only pass false when the user explicitly asked for the entity to be published right away. Publishing is irreversible — a published entity can never be turned back into a draft.",
     ),
 }).superRefine(refineUniqueLangStringLanguages)
 
@@ -101,7 +105,13 @@ export function registerEntityTools(
     },
     async ({ entityId }) =>
       jsonResult(
-        stripImage(await getEntityOrThrow(db.entities, entityId, user)),
+        stripImage(
+          await getEntityOrThrow(
+            db.entities,
+            entityId,
+            await resolveOptionalEntityViewer(db, user),
+          ),
+        ),
       ),
   )
 
@@ -114,7 +124,11 @@ export function registerEntityTools(
       inputSchema: SearchEntitiesInput,
     },
     async (input) => {
-      const result = await searchEntities(db.entities, input, user)
+      const result = await searchEntities(
+        db.entities,
+        input,
+        await resolveOptionalEntityViewer(db, user),
+      )
       return jsonResult({
         ...result,
         results: result.results.map(stripImage),
@@ -127,7 +141,7 @@ export function registerEntityTools(
     {
       title: 'Create entity',
       description:
-        'Create a new IDHI entity (requires authentication). The entity is created as a draft unless isDraft is explicitly set to false. Before calling this, use search_entities to check whether a matching entity already exists and reuse its ID instead — search by name/label and by any known external identifier (DOI, ROR, ORCID) the new entity would have. This is critical for entities that will be referenced by other entities, since duplicates fragment references and break data integrity.',
+        "Create a new IDHI entity (requires authentication). The entity is created as a draft, visible only to its creator, the members of the creator's groups, and administrators, unless isDraft is explicitly set to false. Before calling this, use search_entities to check whether a matching entity already exists and reuse its ID instead — search by name/label and by any known external identifier (DOI, ROR, ORCID) the new entity would have. This is critical for entities that will be referenced by other entities, since duplicates fragment references and break data integrity.",
       inputSchema: CreateEntityInput,
     },
     async (input) =>
@@ -155,8 +169,9 @@ export function registerEntityTools(
     },
     async ({ entityId, entity, isDraft }) => {
       const authenticatedUser = requireUser(user)
+      const viewer = await resolveEntityViewer(db, authenticatedUser)
 
-      const current = await db.entities.get(entityId, authenticatedUser)
+      const current = await db.entities.get(entityId, viewer)
       const entityWithPreservedImage = {
         ...entity,
         image: current?.image ?? null,
@@ -170,7 +185,7 @@ export function registerEntityTools(
             entityWithPreservedImage,
             authenticatedUser.id,
             isDraft,
-            authenticatedUser,
+            viewer,
             mcpAuditContext(server),
           ),
         ),
@@ -189,7 +204,7 @@ export function registerEntityTools(
       await deleteEntity(
         db.entities,
         entityId,
-        requireUser(user),
+        await resolveEntityViewer(db, requireUser(user)),
         mcpAuditContext(server),
       )
 

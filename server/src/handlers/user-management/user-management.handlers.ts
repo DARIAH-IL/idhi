@@ -18,6 +18,7 @@ import { zValidator } from '../api.validator.ts'
 import type {
   ListUsersContext,
   CreateUserContext,
+  ListUserGroupsContext,
   GetUserByIdContext,
   ReplaceUserByIdContext,
   UpdateUserByIdContext,
@@ -30,6 +31,7 @@ import {
   listUsersQueryPageSizeDefault,
   CreateUserBody,
   CreateUserResponse,
+  ListUserGroupsResponse,
   GetUserByIdParams,
   GetUserByIdResponse,
   ReplaceUserByIdParams,
@@ -176,5 +178,15 @@ export const deleteUserByIdHandlers = factory.createHandlers(
     }
 
     return c.body(null, 204)
+  },
+)
+
+export const listUserGroupsHandlers = factory.createHandlers(
+  zValidator('response', ListUserGroupsResponse),
+  async (c: ListUserGroupsContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+
+    return c.json(await c.var.db.users.listGroups())
   },
 )

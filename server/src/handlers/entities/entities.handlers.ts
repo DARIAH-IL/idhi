@@ -16,6 +16,10 @@ import {
   searchEntityTags,
   updateEntity,
 } from '../../utils/entityOps'
+import {
+  resolveEntityViewer,
+  resolveOptionalEntityViewer,
+} from '../../utils/entityViewer'
 import { suggestEntityFieldValues } from '../../utils/entitySuggestions'
 import { enforceSuggestionRateLimits } from '../../utils/suggestionRateLimit'
 import { refineUniqueLangStringLanguages } from '../../utils/langString'
@@ -71,7 +75,7 @@ export const searchEntitiesHandlers = factory.createHandlers(
       await searchEntities(
         c.var.db.entities,
         c.req.valid('json'),
-        c.get('user'),
+        await resolveOptionalEntityViewer(c.var.db, c.get('user')),
       ),
     )
   },
@@ -107,7 +111,11 @@ export const getEntityByIdHandlers = factory.createHandlers(
     const { entityId } = c.req.valid('param')
 
     return c.json(
-      await getEntityOrThrow(c.var.db.entities, entityId, c.get('user')),
+      await getEntityOrThrow(
+        c.var.db.entities,
+        entityId,
+        await resolveOptionalEntityViewer(c.var.db, c.get('user')),
+      ),
     )
   },
 )
@@ -133,7 +141,7 @@ export const updateEntityByIdHandlers = factory.createHandlers(
       c.req.valid('json') as unknown as EntityWrite,
       user.id,
       isDraft,
-      user,
+      await resolveEntityViewer(c.var.db, user),
       { source: 'web' },
     )
 
@@ -146,7 +154,12 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
     const user = c.get('user')
     assertAuthenticatedUser(user)
     const { entityId } = c.req.valid('param')
-    await deleteEntity(c.var.db.entities, entityId, user, { source: 'web' })
+    await deleteEntity(
+      c.var.db.entities,
+      entityId,
+      await resolveEntityViewer(c.var.db, user),
+      { source: 'web' },
+    )
 
     return c.body(null, 204)
   },

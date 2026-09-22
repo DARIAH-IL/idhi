@@ -24,6 +24,9 @@ export function userFromToken(token: string): User | null {
       typeof payload.email !== 'string' ||
       !('isAdmin' in payload) ||
       typeof payload.isAdmin !== 'boolean' ||
+      ('groups' in payload &&
+        payload.groups !== undefined &&
+        !Array.isArray(payload.groups)) ||
       ('name' in payload &&
         payload.name !== undefined &&
         typeof payload.name !== 'string')
@@ -35,6 +38,12 @@ export function userFromToken(token: string): User | null {
       id: payload.id,
       email: payload.email,
       isAdmin: payload.isAdmin,
+      groups:
+        'groups' in payload && Array.isArray(payload.groups)
+          ? payload.groups.filter(
+              (group): group is string => typeof group === 'string',
+            )
+          : [],
       ...('name' in payload && typeof payload.name === 'string'
         ? { name: payload.name }
         : {}),

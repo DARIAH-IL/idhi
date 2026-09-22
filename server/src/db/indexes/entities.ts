@@ -51,5 +51,13 @@ export async function initializeEntityIndexes(
       { 'audit.modifiedAt': -1 },
       { name: 'entity_audit_modified_at' },
     ),
+    entities.createIndex(
+      { 'audit.createdBy': 1 },
+      { name: 'entity_audit_created_by' },
+    ),
+    entities.createIndex(
+      { isDraft: 1, 'audit.createdBy': 1 },
+      { name: 'entity_draft_created_by' },
+    ),
   ])
 }

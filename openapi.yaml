@@ -471,6 +471,22 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
 
+  /api/v1/users/groups:
+    get:
+      operationId: listUserGroups
+      tags:
+        - UserManagement
+      summary: List the group names currently assigned to users
+      responses:
+        "200":
+          description: Group names currently assigned to users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserGroups"
+        "400":
+          $ref: "#/components/responses/Error"
+
   /api/v1/users/{userId}:
     parameters:
       - $ref: "#/components/parameters/UserId"
@@ -592,7 +608,7 @@ components:
       in: query
       required: false
       description: |
-        Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).
+        Whether to save the entity as a draft, visible only to its creator, the members of the creator's groups, and administrators, instead of publishing it. Defaults to false (publish).
         An already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.
       schema:
         type: boolean
@@ -1018,7 +1034,7 @@ components:
           properties:
             isDraft:
               type: boolean
-              description: Whether the entity is a draft, visible only to its creator and administrators.
+              description: Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators.
 
     SuggestibleEntityField:
       type: string
@@ -1027,12 +1043,21 @@ components:
         - tags
         - digital_humanities_activities
 
+    UserGroups:
+      type: array
+      description: Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.
+      items:
+        type: string
+        minLength: 1
+        maxLength: 64
+
     User:
       type: object
       required:
         - id
         - email
         - isAdmin
+        - groups
       properties:
         id:
           $ref: "#/components/schemas/UserId"
@@ -1043,12 +1068,15 @@ components:
           format: email
         isAdmin:
           type: boolean
+        groups:
+          $ref: "#/components/schemas/UserGroups"
 
     UserWrite:
       type: object
       required:
         - email
         - isAdmin
+        - groups
       properties:
         name:
           type: string
@@ -1057,6 +1085,8 @@ components:
           format: email
         isAdmin:
           type: boolean
+        groups:
+          $ref: "#/components/schemas/UserGroups"
 
     UserInvite:
       allOf:

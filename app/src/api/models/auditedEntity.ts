@@ -9,6 +9,6 @@ import type { Entity } from './entity.ts'
 
 export type AuditedEntity = Entity &
   Audited & {
-    /** Whether the entity is a draft, visible only to its creator and administrators. */
+    /** Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators. */
     isDraft?: boolean
   }

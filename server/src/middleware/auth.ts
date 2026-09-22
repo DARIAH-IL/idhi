@@ -95,6 +95,7 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
       id: storedUser.id,
       email: storedUser.email,
       isAdmin: storedUser.isAdmin,
+      groups: storedUser.groups,
       ...(storedUser.name ? { name: storedUser.name } : {}),
     }
     c.set('user', user)

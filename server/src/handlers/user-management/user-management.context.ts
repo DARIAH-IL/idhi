@@ -18,6 +18,10 @@ export type CreateUserContext<E extends Env = any> = Context<
   '/api/v1/users',
   { in: { json: UserWrite }; out: { json: UserWrite } }
 >
+export type ListUserGroupsContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/users/groups'
+>
 export type GetUserByIdContext<E extends Env = any> = Context<
   E,
   '/api/v1/users/:userId',

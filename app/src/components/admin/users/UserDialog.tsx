@@ -7,6 +7,7 @@ import { Checkbox } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import {
+  getListUserGroupsQueryKey,
   getListUsersQueryKey,
   useCreateUser,
   useReplaceUserById,
@@ -24,6 +25,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { UserGroupsField } from './UserGroupsField'
 
 export function UserDialog({
   user,
@@ -37,9 +39,13 @@ export function UserDialog({
   const [name, setName] = useState(user?.name ?? '')
   const [email, setEmail] = useState(user?.email ?? '')
   const [isAdmin, setIsAdmin] = useState(user?.isAdmin ?? false)
+  const [groups, setGroups] = useState<string[]>(user?.groups ?? [])
   const [error, setError] = useState<string | null>(null)
   const finish = () => {
     void queryClient.invalidateQueries({ queryKey: getListUsersQueryKey() })
+    void queryClient.invalidateQueries({
+      queryKey: getListUserGroupsQueryKey(),
+    })
     toast.success(
       t(
         user
@@ -62,6 +68,7 @@ export function UserDialog({
     const data: UserWrite = {
       email: email.trim(),
       isAdmin,
+      groups,
       ...(name.trim() ? { name: name.trim() } : {}),
     }
 
@@ -112,6 +119,7 @@ export function UserDialog({
               required
             />
           </div>
+          <UserGroupsField groups={groups} onChange={setGroups} />
           <AdminAccessCheckbox isSelected={isAdmin} onChange={setIsAdmin} />
           {error && (
             <p role="alert" className="text-xs text-destructive">

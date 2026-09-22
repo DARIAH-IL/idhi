@@ -46,6 +46,7 @@ export function UsersTable({
       <TableHeader>
         <TableHead isRowHeader>{t('admin.fields.user')}</TableHead>
         <TableHead>{t('admin.fields.role')}</TableHead>
+        <TableHead>{t('admin.fields.groups')}</TableHead>
         <TableHead className="w-28 text-end">
           {t('admin.fields.actions')}
         </TableHead>
@@ -65,6 +66,21 @@ export function UsersTable({
               <Badge variant={user.isAdmin ? 'default' : 'secondary'}>
                 {user.isAdmin ? t('admin.roles.admin') : t('admin.roles.user')}
               </Badge>
+            </TableCell>
+            <TableCell>
+              {user.groups.length > 0 ? (
+                <div className="flex min-w-32 flex-wrap gap-1">
+                  {user.groups.map((group) => (
+                    <Badge key={group} variant="outline">
+                      {group}
+                    </Badge>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-muted-foreground">
+                  {t('admin.users.no_groups')}
+                </span>
+              )}
             </TableCell>
             <TableCell>
               <div className="flex justify-end gap-1">

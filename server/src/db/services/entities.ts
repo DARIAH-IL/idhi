@@ -45,7 +45,9 @@ export type EntityWrite = Entity extends infer EntityVariant
     : never
   : never
 
-export type EntityViewer = Pick<User, 'id' | 'isAdmin'>
+export type EntityViewer = Pick<User, 'id' | 'isAdmin'> & {
+  draftAuthorIds: string[]
+}
 
 function draftVisibilityCondition(
   viewer: EntityViewer | undefined,
@@ -54,10 +56,14 @@ function draftVisibilityCondition(
     return undefined
   }
 
+  const draftAuthorIds = viewer?.draftAuthorIds ?? []
+
   return {
     $or: [
       { isDraft: { $ne: true } },
-      ...(viewer ? [{ 'audit.createdBy': viewer.id }] : []),
+      ...(draftAuthorIds.length > 0
+        ? [{ 'audit.createdBy': { $in: draftAuthorIds } }]
+        : []),
     ],
   }
 }

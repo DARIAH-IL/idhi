@@ -3476,7 +3476,7 @@ export const SearchEntitiesResponse = zod.object({
             .boolean()
             .optional()
             .describe(
-              'Whether the entity is a draft, visible only to its creator and administrators.',
+              "Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators.",
             ),
         }),
       ),
@@ -3502,7 +3502,7 @@ export const CreateEntityQueryParams = zod.object({
     .boolean()
     .default(createEntityQueryIsDraftDefault)
     .describe(
-      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n',
+      "Whether to save the entity as a draft, visible only to its creator, the members of the creator's groups, and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n",
     ),
 })
 
@@ -9941,7 +9941,7 @@ export const CreateEntityResponse = zod
         .boolean()
         .optional()
         .describe(
-          'Whether the entity is a draft, visible only to its creator and administrators.',
+          "Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators.",
         ),
     }),
   )
@@ -16576,7 +16576,7 @@ export const GetEntityByIdResponse = zod
         .boolean()
         .optional()
         .describe(
-          'Whether the entity is a draft, visible only to its creator and administrators.',
+          "Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators.",
         ),
     }),
   )
@@ -16592,7 +16592,7 @@ export const UpdateEntityByIdQueryParams = zod.object({
     .boolean()
     .default(updateEntityByIdQueryIsDraftDefault)
     .describe(
-      'Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n',
+      "Whether to save the entity as a draft, visible only to its creator, the members of the creator's groups, and administrators, instead of publishing it. Defaults to false (publish).\nAn already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.\n",
     ),
 })
 
@@ -23173,7 +23173,7 @@ export const UpdateEntityByIdResponse = zod
         .boolean()
         .optional()
         .describe(
-          'Whether the entity is a draft, visible only to its creator and administrators.',
+          "Whether the entity is a draft, visible only to its creator, the members of the creator's groups, and administrators.",
         ),
     }),
   )

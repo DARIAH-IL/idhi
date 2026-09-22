@@ -6,7 +6,7 @@
  */
 
 /**
- * Whether to save the entity as a draft, visible only to its creator and administrators, instead of publishing it. Defaults to false (publish).
+ * Whether to save the entity as a draft, visible only to its creator, the members of the creator's groups, and administrators, instead of publishing it. Defaults to false (publish).
  * An already-published entity cannot be turned back into a draft; the parameter is ignored on update once the entity is published.
  */
 export type IsDraftParameter = boolean

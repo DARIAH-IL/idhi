@@ -42,6 +42,7 @@ const passkeyCredentialSchema = new Schema<PasskeyCredential>(
 const userSchema = new Schema<StoredUser>(
   {
     _id: { type: String, alias: 'id' },
+    groups: { type: [String], required: true, default: [] },
     passkeyCredentials: {
       type: [passkeyCredentialSchema],
       required: true,
@@ -62,6 +63,8 @@ const emailCollation = { locale: 'en', strength: 2 } as const
 
 export interface UserDatabaseService {
   list: (page: number, pageSize: number) => Promise<UserListResult>
+  listGroups: () => Promise<string[]>
+  listIdsSharingGroups: (groups: string[]) => Promise<string[]>
   get: (userId: string) => Promise<UserWithCredentials | null>
   getPasskeyCredentials: (userId: string) => Promise<PasskeyCredential[]>
   getByEmail: (email: string) => Promise<UserWithCredentials | null>
@@ -87,6 +90,10 @@ export interface UserDatabaseService {
 
 export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
+}
+
+export function normalizeGroups(groups: string[]): string[] {
+  return [...new Set(groups.map((group) => group.trim()).filter(Boolean))]
 }
 
 function exposePasskeyCredential(
@@ -147,6 +154,28 @@ export async function createUserDatabaseService(
       return { results: documents.map(exposeUser), total }
     },
 
+    async listGroups() {
+      const groups = await users.distinct('groups').exec()
+      return normalizeGroups(
+        groups.filter((group): group is string => typeof group === 'string'),
+      ).sort((left, right) => left.localeCompare(right))
+    },
+
+    async listIdsSharingGroups(groups) {
+      const normalizedGroups = normalizeGroups(groups)
+
+      if (normalizedGroups.length === 0) {
+        return []
+      }
+
+      const documents = await users
+        .find({ groups: { $in: normalizedGroups } }, { _id: 1 })
+        .lean()
+        .exec()
+
+      return documents.map((document) => document._id)
+    },
+
     async get(userId) {
       const user = await users.findById(normalizeEmail(userId)).exec()
       return user ? exposeUser(user) : null
@@ -177,6 +206,7 @@ export async function createUserDatabaseService(
         ...user,
         id: email,
         email,
+        groups: normalizeGroups(user.groups),
         passkeyCredentials: user.passkeyCredentials.map(storePasskeyCredential),
       })
       await createdUser.save()
@@ -193,6 +223,7 @@ export async function createUserDatabaseService(
             $set: {
               ...values,
               email: normalizeEmail(values.email),
+              groups: normalizeGroups(values.groups),
               passkeyCredentials: passkeyCredentials.map(
                 storePasskeyCredential,
               ),
@@ -264,7 +295,13 @@ export async function createUserDatabaseService(
       const updatedUser = await users
         .findByIdAndUpdate(
           normalizeEmail(userId),
-          { $set: { ...user, email: normalizeEmail(user.email) } },
+          {
+            $set: {
+              ...user,
+              email: normalizeEmail(user.email),
+              groups: normalizeGroups(user.groups),
+            },
+          },
           { new: true },
         )
         .exec()

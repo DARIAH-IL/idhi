@@ -76,6 +76,7 @@ export async function createInvitedUserAfterAuthentication(
     const user = await db.users.insert({
       email: invite.email,
       isAdmin: false,
+      groups: [],
       passkeyCredentials: [],
     })
 

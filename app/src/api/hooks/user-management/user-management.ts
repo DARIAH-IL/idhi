@@ -25,6 +25,7 @@ import type {
   ListUsers200,
   ListUsersParams,
   User,
+  UserGroups,
   UserWrite,
 } from '../../models'
 
@@ -270,6 +271,131 @@ export const useCreateUser = <
 > => {
   return useMutation(getCreateUserMutationOptions(options), queryClient)
 }
+/**
+ * @summary List the group names currently assigned to users
+ */
+export const listUserGroups = (signal?: AbortSignal) => {
+  return customInstance<UserGroups>({
+    url: `/api/v1/users/groups`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getListUserGroupsQueryKey = () => {
+  return [`/api/v1/users/groups`] as const
+}
+
+export const getListUserGroupsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listUserGroups>>,
+  TError = ErrorType<ErrorResponse>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listUserGroups>>, TError, TData>
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getListUserGroupsQueryKey()
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listUserGroups>>> = ({
+    signal,
+  }) => listUserGroups(signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listUserGroups>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListUserGroupsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listUserGroups>>
+>
+export type ListUserGroupsQueryError = ErrorType<ErrorResponse>
+
+export function useListUserGroups<
+  TData = Awaited<ReturnType<typeof listUserGroups>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUserGroups>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listUserGroups>>,
+          TError,
+          Awaited<ReturnType<typeof listUserGroups>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useListUserGroups<
+  TData = Awaited<ReturnType<typeof listUserGroups>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUserGroups>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listUserGroups>>,
+          TError,
+          Awaited<ReturnType<typeof listUserGroups>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useListUserGroups<
+  TData = Awaited<ReturnType<typeof listUserGroups>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUserGroups>>, TError, TData>
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+/**
+ * @summary List the group names currently assigned to users
+ */
+
+export function useListUserGroups<
+  TData = Awaited<ReturnType<typeof listUserGroups>>,
+  TError = ErrorType<ErrorResponse>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listUserGroups>>, TError, TData>
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getListUserGroupsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  return withQueryKey(query, queryOptions.queryKey)
+}
+
 /**
  * @summary Get a user
  */
