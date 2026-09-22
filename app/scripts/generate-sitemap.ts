@@ -7,25 +7,10 @@ import type { FileRouteTypes } from '../src/routeTree.gen'
 
 type StaticPath = FileRouteTypes['to']
 
-interface EntitySearchResult {
-  id: string
-  audit?: { modifiedAt?: string }
-}
-
-interface EntitySearchResponse {
-  results: EntitySearchResult[]
-  total: number
-}
-
 const siteUrl = (process.env.SITE_URL ?? 'https://idh-index.org').replace(
   /\/$/,
   '',
 )
-const apiUrl = (
-  process.env.SITEMAP_API_URL ??
-  process.env.VITE_SERVER_URL ??
-  'https://api.idh-index.org'
-).replace(/\/$/, '')
 const languages = ['en', 'he', 'ar']
 const staticPaths: StaticPath[] = [
   '/entities',
@@ -34,7 +19,6 @@ const staticPaths: StaticPath[] = [
   '/privacy-policy',
   '/terms-of-use',
 ]
-const entityRoutePath: StaticPath = '/entities/$entityId'
 
 function localizedUrl(path: string, language: string): string {
   const url = new URL(path, siteUrl)
@@ -47,43 +31,6 @@ function alternates(path: string) {
     ...languages.map((lang) => ({ lang, url: localizedUrl(path, lang) })),
     { lang: 'x-default', url: localizedUrl(path, 'en') },
   ]
-}
-
-function entityPath(entityId: string): string {
-  return entityRoutePath.replace('$entityId', encodeURIComponent(entityId))
-}
-
-async function fetchPublicEntities(): Promise<EntitySearchResult[]> {
-  const entities: EntitySearchResult[] = []
-  const pageSize = 100
-  let page = 0
-  let total = Number.POSITIVE_INFINITY
-
-  while (entities.length < total) {
-    const response = await fetch(`${apiUrl}/api/v1/entities`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ page, pageSize }),
-    })
-    if (!response.ok) {
-      throw new Error(
-        `Entity API returned ${response.status} ${response.statusText}`,
-      )
-    }
-
-    const data: EntitySearchResponse = await response.json()
-    if (!Array.isArray(data.results) || typeof data.total !== 'number') {
-      throw new Error('Entity API returned an unexpected search response')
-    }
-    entities.push(...data.results)
-    total = data.total
-    if (data.results.length === 0) {
-      break
-    }
-    page += 1
-  }
-
-  return entities
 }
 
 await mkdir(resolve('dist'), { recursive: true })
@@ -102,22 +49,8 @@ for (const path of staticPaths) {
   }
 }
 
-const entities = await fetchPublicEntities()
-for (const entity of entities) {
-  const path = entityPath(entity.id)
-  for (const language of languages) {
-    sitemap.write({
-      url: localizedUrl(path, language),
-      links: alternates(path),
-      lastmod: entity.audit?.modifiedAt,
-      changefreq: 'weekly',
-      priority: 0.8,
-    })
-  }
-}
-
 sitemap.end()
 await finished(output)
 console.log(
-  `Generated sitemap.xml with ${staticPaths.length * languages.length + entities.length * languages.length} localized URLs.`,
+  `Generated sitemap.xml with ${staticPaths.length * languages.length} localized URLs.`,
 )
