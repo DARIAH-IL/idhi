@@ -64,6 +64,7 @@ const emailCollation = { locale: 'en', strength: 2 } as const
 export interface UserDatabaseService {
   list: (page: number, pageSize: number) => Promise<UserListResult>
   listGroups: () => Promise<string[]>
+  listAdminEmails: () => Promise<string[]>
   listIdsSharingGroups: (groups: string[]) => Promise<string[]>
   get: (userId: string) => Promise<UserWithCredentials | null>
   getPasskeyCredentials: (userId: string) => Promise<PasskeyCredential[]>
@@ -159,6 +160,15 @@ export async function createUserDatabaseService(
       return normalizeGroups(
         groups.filter((group): group is string => typeof group === 'string'),
       ).sort((left, right) => left.localeCompare(right))
+    },
+
+    async listAdminEmails() {
+      const documents = await users
+        .find({ isAdmin: true }, { email: 1 })
+        .lean()
+        .exec()
+
+      return documents.map((document) => document.email)
     },
 
     async listIdsSharingGroups(groups) {

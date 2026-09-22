@@ -42,6 +42,18 @@ const INVITE_FALLBACK_TEXT_TEMPLATES: Record<UiLanguage, string> = {
   ar: 'تمت دعوتك للانضمام إلى IDHI.{{message}}\n\nلقبول الدعوة: {{inviteUrl}}',
 }
 
+const NEW_USER_SUBJECTS: Record<UiLanguage, string> = {
+  en: 'A new user joined IDHI',
+  he: 'משתמש חדש הצטרף לאינדקס מדעי הרוח הדיגיטליים',
+  ar: 'انضم مستخدم جديد إلى مؤشر العلوم الإنسانية الرقمية',
+}
+
+const NEW_USER_TEXT_TEMPLATES: Record<UiLanguage, string> = {
+  en: 'The invited user {{email}} signed in for the first time and now has an IDHI account.',
+  he: 'המשתמש המוזמן {{email}} התחבר בפעם הראשונה וכעת יש לו חשבון ב-IDHI.',
+  ar: 'قام المستخدم المدعو {{email}} بتسجيل الدخول للمرة الأولى ولديه الآن حساب في IDHI.',
+}
+
 function render(template: string, vars: Record<string, string>): string {
   return template.replace(/{{(\w+)}}/g, (_match, key) => vars[key] ?? '')
 }
@@ -99,6 +111,19 @@ export function inviteEmailContent(
       inviteUrl,
       message: messageBlockFallbackText(message),
     }),
+  }
+}
+
+export function newUserEmailContent(
+  lang: UiLanguage,
+  email: string,
+): { subject: string; html: string; text: string } {
+  const text = render(NEW_USER_TEXT_TEMPLATES[lang], { email })
+
+  return {
+    subject: NEW_USER_SUBJECTS[lang],
+    html: `<p>${escapeHtml(text)}</p>`,
+    text,
   }
 }
 

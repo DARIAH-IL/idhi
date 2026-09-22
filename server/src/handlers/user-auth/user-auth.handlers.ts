@@ -362,6 +362,7 @@ export const completeOtpChallengeHandlers = factory.createHandlers(
         challenge.email,
         c.var.db,
         c.var.logger,
+        c.env,
       )
 
       c.var.logger.debug('OTP authentication completed', {

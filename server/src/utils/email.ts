@@ -1,5 +1,9 @@
 import type { Bindings } from '../bindings'
-import { inviteEmailContent, otpEmailContent } from '../emails/localization'
+import {
+  inviteEmailContent,
+  newUserEmailContent,
+  otpEmailContent,
+} from '../emails/localization'
 import { requiredValue } from './values'
 import { formatDate } from './date'
 import type { UiLanguage } from '../models'
@@ -51,4 +55,19 @@ export async function sendInviteEmail(
   const { subject, html, text } = inviteEmailContent(lang, inviteUrl, message)
 
   await sendEmail(bindings, recipient, subject, html, text)
+}
+
+export async function sendNewUserNotificationEmails(
+  recipients: string[],
+  newUserEmail: string,
+  lang: UiLanguage,
+  bindings: Bindings,
+): Promise<void> {
+  const { subject, html, text } = newUserEmailContent(lang, newUserEmail)
+
+  await Promise.all(
+    recipients.map((recipient) =>
+      sendEmail(bindings, recipient, subject, html, text),
+    ),
+  )
 }
