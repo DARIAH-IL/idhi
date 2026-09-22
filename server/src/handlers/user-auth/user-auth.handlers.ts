@@ -19,6 +19,7 @@ import type { DatabaseService } from '../../db/service'
 import type { AuthChallenge } from '../../db/models/AuthChallenge'
 import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { corruptedDataHook, invalidInputHook } from '../../middleware/error'
 import { serializeError } from '../../middleware/logger'
 import type { RequestLogger } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
@@ -189,8 +190,8 @@ async function getOtpChallenge(
 }
 
 export const startOtpChallengeHandlers = factory.createHandlers(
-  zValidator('json', StartOtpChallengeBody),
-  zValidator('response', StartOtpChallengeResponse),
+  zValidator('json', StartOtpChallengeBody, invalidInputHook),
+  zValidator('response', StartOtpChallengeResponse, corruptedDataHook),
   async (c: StartOtpChallengeContext) => {
     const { email, lang } = c.req.valid('json')
     await enforceAuthRateLimits(c, [
@@ -270,9 +271,9 @@ export const startOtpChallengeHandlers = factory.createHandlers(
   },
 )
 export const completeOtpChallengeHandlers = factory.createHandlers(
-  zValidator('param', CompleteOtpChallengeParams),
-  zValidator('json', CompleteOtpChallengeBody),
-  zValidator('response', CompleteOtpChallengeResponse),
+  zValidator('param', CompleteOtpChallengeParams, invalidInputHook),
+  zValidator('json', CompleteOtpChallengeBody, invalidInputHook),
+  zValidator('response', CompleteOtpChallengeResponse, corruptedDataHook),
   async (c: CompleteOtpChallengeContext) => {
     const { challengeId } = c.req.valid('param')
     const { otp } = c.req.valid('json')
@@ -391,8 +392,8 @@ export const completeOtpChallengeHandlers = factory.createHandlers(
   },
 )
 export const startPasskeyRegistrationHandlers = factory.createHandlers(
-  zValidator('response', StartPasskeyRegistrationResponse),
-  zValidator('json', StartPasskeyRegistrationBody),
+  zValidator('response', StartPasskeyRegistrationResponse, corruptedDataHook),
+  zValidator('json', StartPasskeyRegistrationBody, invalidInputHook),
   async (c: StartPasskeyRegistrationContext) => {
     const { replacingCredentialId } = c.req.valid('json')
     const user = c.get('user')
@@ -471,8 +472,8 @@ export const startPasskeyRegistrationHandlers = factory.createHandlers(
   },
 )
 export const completePasskeyRegistrationHandlers = factory.createHandlers(
-  zValidator('param', CompletePasskeyRegistrationParams),
-  zValidator('json', CompletePasskeyRegistrationBody),
+  zValidator('param', CompletePasskeyRegistrationParams, invalidInputHook),
+  zValidator('json', CompletePasskeyRegistrationBody, invalidInputHook),
   async (c: CompletePasskeyRegistrationContext) => {
     const authenticatedUser = c.get('user')
     assertAuthenticatedUser(authenticatedUser)
@@ -576,8 +577,8 @@ export const completePasskeyRegistrationHandlers = factory.createHandlers(
   },
 )
 export const startPasskeyAuthenticationHandlers = factory.createHandlers(
-  zValidator('response', StartPasskeyAuthenticationResponse),
-  zValidator('json', StartPasskeyAuthenticationBody),
+  zValidator('response', StartPasskeyAuthenticationResponse, corruptedDataHook),
+  zValidator('json', StartPasskeyAuthenticationBody, invalidInputHook),
   async (c: StartPasskeyAuthenticationContext) => {
     const { email } = c.req.valid('json')
     await enforceAuthRateLimits(c, [
@@ -632,9 +633,13 @@ export const startPasskeyAuthenticationHandlers = factory.createHandlers(
   },
 )
 export const completePasskeyAuthenticationHandlers = factory.createHandlers(
-  zValidator('param', CompletePasskeyAuthenticationParams),
-  zValidator('json', CompletePasskeyAuthenticationBody),
-  zValidator('response', CompletePasskeyAuthenticationResponse),
+  zValidator('param', CompletePasskeyAuthenticationParams, invalidInputHook),
+  zValidator('json', CompletePasskeyAuthenticationBody, invalidInputHook),
+  zValidator(
+    'response',
+    CompletePasskeyAuthenticationResponse,
+    corruptedDataHook,
+  ),
   async (c: CompletePasskeyAuthenticationContext) => {
     const { challengeId } = c.req.valid('param')
     await enforceAuthRateLimits(c, [

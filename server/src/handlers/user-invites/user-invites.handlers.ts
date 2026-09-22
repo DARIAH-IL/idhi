@@ -7,6 +7,7 @@
 import { createFactory } from 'hono/factory'
 import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { corruptedDataHook, invalidInputHook } from '../../middleware/error'
 import { serializeError } from '../../middleware/logger'
 import { ErrorCode } from '../../models/errorCode'
 import { createAuthLink } from '../../utils/authLink'
@@ -45,7 +46,7 @@ function duplicateInvite(): ApiError {
 }
 
 export const inviteUserHandlers = factory.createHandlers(
-  zValidator('json', InviteUserBody),
+  zValidator('json', InviteUserBody, invalidInputHook),
   async (c: InviteUserContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -157,7 +158,7 @@ export const inviteUserHandlers = factory.createHandlers(
   },
 )
 export const listUserInvitesHandlers = factory.createHandlers(
-  zValidator('response', ListUserInvitesResponse),
+  zValidator('response', ListUserInvitesResponse, corruptedDataHook),
   async (c: ListUserInvitesContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -165,7 +166,7 @@ export const listUserInvitesHandlers = factory.createHandlers(
   },
 )
 export const revokeUserInviteByIdHandlers = factory.createHandlers(
-  zValidator('param', RevokeUserInviteByIdParams),
+  zValidator('param', RevokeUserInviteByIdParams, invalidInputHook),
   async (c: RevokeUserInviteByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)

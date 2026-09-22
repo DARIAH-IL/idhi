@@ -1,9 +1,16 @@
-import type { ErrorHandler, MiddlewareHandler } from 'hono'
+import type { Context, ErrorHandler, MiddlewareHandler } from 'hono'
 import { captureException } from '@sentry/cloudflare'
 import { ApiError } from '../errors/ApiError'
 import { ErrorCode } from '../models/errorCode'
 import type { Error as ErrorResponse } from '../models/error'
 import { serializeError } from './logger'
+
+const CORRUPTED_DATA_MESSAGE =
+  'Stored data is corrupted and does not match the API schema'
+
+const LOGGED_ISSUES_LIMIT = 20
+
+const REPORTED_ISSUES_LIMIT = 5
 
 const errorCodes = new Set<string>(Object.values(ErrorCode))
 
@@ -65,6 +72,91 @@ function jsonResponse(
   headers.set('content-type', 'application/json; charset=UTF-8')
 
   return Response.json(body, { status, headers })
+}
+
+function issueSummary(issue: unknown): Record<string, unknown> {
+  if (!isRecord(issue)) {
+    return { message: String(issue) }
+  }
+
+  return {
+    path: Array.isArray(issue.path) ? issue.path.map(String).join('.') : '',
+    code: issue.code,
+    message: issue.message,
+  }
+}
+
+function validationIssues(error: unknown): unknown[] {
+  if (!isRecord(error) || !Array.isArray(error.issues)) {
+    return []
+  }
+
+  return error.issues
+}
+
+function issueText(issue: unknown): string {
+  const summary = issueSummary(issue)
+  const path = typeof summary.path === 'string' ? summary.path : ''
+  const message =
+    typeof summary.message === 'string' ? summary.message : 'Invalid value'
+
+  return path ? `${path}: ${message}` : message
+}
+
+export function invalidInputHook(
+  result: { success: boolean; error?: unknown },
+  c: Context,
+): Response | undefined {
+  if (result.success) {
+    return undefined
+  }
+
+  const issues = validationIssues(result.error)
+  const detail = issues
+    .slice(0, REPORTED_ISSUES_LIMIT)
+    .map(issueText)
+    .join('; ')
+
+  c.get('logger').warn('Request failed input validation', {
+    method: c.req.method,
+    path: c.req.path,
+    issueCount: issues.length,
+    issues: issues.slice(0, LOGGED_ISSUES_LIMIT).map(issueSummary),
+  })
+
+  return jsonResponse(
+    {
+      errorCode: ErrorCode.InvalidInput,
+      message: detail ? `Invalid input: ${detail}` : 'Invalid input',
+    },
+    400,
+  )
+}
+
+export function corruptedDataHook(
+  result: { success: boolean; error?: unknown },
+  c: Context,
+): Response | undefined {
+  if (result.success) {
+    return undefined
+  }
+
+  const issues = validationIssues(result.error)
+
+  c.get('logger').error('Response failed contract validation', {
+    method: c.req.method,
+    path: c.req.path,
+    issueCount: issues.length,
+    issues: issues.slice(0, LOGGED_ISSUES_LIMIT).map(issueSummary),
+  })
+
+  return jsonResponse(
+    {
+      errorCode: ErrorCode.InternalServerError,
+      message: CORRUPTED_DATA_MESSAGE,
+    },
+    500,
+  )
 }
 
 function internalServerError(sourceHeaders?: Headers): Response {

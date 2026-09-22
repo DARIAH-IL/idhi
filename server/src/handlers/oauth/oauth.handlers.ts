@@ -6,6 +6,7 @@
  */
 import { createFactory } from 'hono/factory'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { corruptedDataHook, invalidInputHook } from '../../middleware/error'
 import { issueAuthorizationCode } from '../../oauth/codes'
 import { zValidator } from '../api.validator.ts'
 import type { CompleteOauthAuthorizationContext } from './oauth.context.ts'
@@ -16,8 +17,8 @@ import {
 
 const factory = createFactory()
 export const completeOauthAuthorizationHandlers = factory.createHandlers(
-  zValidator('json', CompleteOauthAuthorizationBody),
-  zValidator('response', CompleteOauthAuthorizationResponse),
+  zValidator('json', CompleteOauthAuthorizationBody, invalidInputHook),
+  zValidator('response', CompleteOauthAuthorizationResponse, corruptedDataHook),
   async (c: CompleteOauthAuthorizationContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)

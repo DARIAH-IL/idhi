@@ -9,6 +9,7 @@ import type { DatabaseService } from '../../db/service'
 import type { UserWithCredentials } from '../../db/models/UserWithCredentials'
 import { ApiError } from '../../errors/ApiError'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { corruptedDataHook, invalidInputHook } from '../../middleware/error'
 import { ErrorCode } from '../../models/errorCode'
 import type { User } from '../../models/user'
 import type { UserWrite } from '../../models/userWrite'
@@ -85,8 +86,8 @@ async function replaceUser(
 }
 
 export const listUsersHandlers = factory.createHandlers(
-  zValidator('query', ListUsersQueryParams),
-  zValidator('response', ListUsersResponse),
+  zValidator('query', ListUsersQueryParams, invalidInputHook),
+  zValidator('response', ListUsersResponse, corruptedDataHook),
   async (c: ListUsersContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -103,7 +104,7 @@ export const listUsersHandlers = factory.createHandlers(
   },
 )
 export const createUserHandlers = factory.createHandlers(
-  zValidator('json', CreateUserBody),
+  zValidator('json', CreateUserBody, invalidInputHook),
   async (c: CreateUserContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -129,8 +130,8 @@ export const createUserHandlers = factory.createHandlers(
   },
 )
 export const getUserByIdHandlers = factory.createHandlers(
-  zValidator('param', GetUserByIdParams),
-  zValidator('response', GetUserByIdResponse),
+  zValidator('param', GetUserByIdParams, invalidInputHook),
+  zValidator('response', GetUserByIdResponse, corruptedDataHook),
   async (c: GetUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -145,9 +146,9 @@ export const getUserByIdHandlers = factory.createHandlers(
   },
 )
 export const replaceUserByIdHandlers = factory.createHandlers(
-  zValidator('param', ReplaceUserByIdParams),
-  zValidator('json', ReplaceUserByIdBody),
-  zValidator('response', ReplaceUserByIdResponse),
+  zValidator('param', ReplaceUserByIdParams, invalidInputHook),
+  zValidator('json', ReplaceUserByIdBody, invalidInputHook),
+  zValidator('response', ReplaceUserByIdResponse, corruptedDataHook),
   async (c: ReplaceUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -156,9 +157,9 @@ export const replaceUserByIdHandlers = factory.createHandlers(
   },
 )
 export const updateUserByIdHandlers = factory.createHandlers(
-  zValidator('param', UpdateUserByIdParams),
-  zValidator('json', UpdateUserByIdBody),
-  zValidator('response', UpdateUserByIdResponse),
+  zValidator('param', UpdateUserByIdParams, invalidInputHook),
+  zValidator('json', UpdateUserByIdBody, invalidInputHook),
+  zValidator('response', UpdateUserByIdResponse, corruptedDataHook),
   async (c: UpdateUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -167,7 +168,7 @@ export const updateUserByIdHandlers = factory.createHandlers(
   },
 )
 export const deleteUserByIdHandlers = factory.createHandlers(
-  zValidator('param', DeleteUserByIdParams),
+  zValidator('param', DeleteUserByIdParams, invalidInputHook),
   async (c: DeleteUserByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -182,7 +183,7 @@ export const deleteUserByIdHandlers = factory.createHandlers(
 )
 
 export const listUserGroupsHandlers = factory.createHandlers(
-  zValidator('response', ListUserGroupsResponse),
+  zValidator('response', ListUserGroupsResponse, corruptedDataHook),
   async (c: ListUserGroupsContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)

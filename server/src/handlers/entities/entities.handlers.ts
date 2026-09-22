@@ -8,6 +8,7 @@ import { createFactory } from 'hono/factory'
 import { z } from 'zod'
 import type { EntityWrite } from '../../db/services/entities'
 import { assertAuthenticatedUser } from '../../middleware/auth'
+import { corruptedDataHook, invalidInputHook } from '../../middleware/error'
 import {
   createEntity,
   deleteEntity,
@@ -68,8 +69,8 @@ const IsDraftQueryParameter = z
   .default(false)
 
 export const searchEntitiesHandlers = factory.createHandlers(
-  zValidator('json', SearchEntitiesBody),
-  zValidator('response', SearchEntitiesResponse),
+  zValidator('json', SearchEntitiesBody, invalidInputHook),
+  zValidator('response', SearchEntitiesResponse, corruptedDataHook),
   async (c: SearchEntitiesContext) => {
     return c.json(
       await searchEntities(
@@ -84,10 +85,12 @@ export const createEntityHandlers = factory.createHandlers(
   zValidator(
     'json',
     CreateEntityBody.superRefine(refineUniqueLangStringLanguages),
+    invalidInputHook,
   ),
   zValidator(
     'query',
     CreateEntityQueryParams.extend({ isDraft: IsDraftQueryParameter }),
+    invalidInputHook,
   ),
   async (c: CreateEntityContext) => {
     const user = c.get('user')
@@ -105,8 +108,8 @@ export const createEntityHandlers = factory.createHandlers(
   },
 )
 export const getEntityByIdHandlers = factory.createHandlers(
-  zValidator('param', GetEntityByIdParams),
-  zValidator('response', GetEntityByIdResponse),
+  zValidator('param', GetEntityByIdParams, invalidInputHook),
+  zValidator('response', GetEntityByIdResponse, corruptedDataHook),
   async (c: GetEntityByIdContext) => {
     const { entityId } = c.req.valid('param')
 
@@ -120,15 +123,17 @@ export const getEntityByIdHandlers = factory.createHandlers(
   },
 )
 export const updateEntityByIdHandlers = factory.createHandlers(
-  zValidator('param', UpdateEntityByIdParams),
+  zValidator('param', UpdateEntityByIdParams, invalidInputHook),
   zValidator(
     'json',
     UpdateEntityByIdBody.superRefine(refineUniqueLangStringLanguages),
+    invalidInputHook,
   ),
-  zValidator('response', UpdateEntityByIdResponse),
+  zValidator('response', UpdateEntityByIdResponse, corruptedDataHook),
   zValidator(
     'query',
     UpdateEntityByIdQueryParams.extend({ isDraft: IsDraftQueryParameter }),
+    invalidInputHook,
   ),
   async (c: UpdateEntityByIdContext) => {
     const user = c.get('user')
@@ -149,7 +154,7 @@ export const updateEntityByIdHandlers = factory.createHandlers(
   },
 )
 export const deleteEntityByIdHandlers = factory.createHandlers(
-  zValidator('param', DeleteEntityByIdParams),
+  zValidator('param', DeleteEntityByIdParams, invalidInputHook),
   async (c: DeleteEntityByIdContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
@@ -166,8 +171,8 @@ export const deleteEntityByIdHandlers = factory.createHandlers(
 )
 
 export const searchEntityTagsHandlers = factory.createHandlers(
-  zValidator('query', SearchEntityTagsQueryParams),
-  zValidator('response', SearchEntityTagsResponse),
+  zValidator('query', SearchEntityTagsQueryParams, invalidInputHook),
+  zValidator('response', SearchEntityTagsResponse, corruptedDataHook),
   async (c: SearchEntityTagsContext) => {
     const { q, limit = searchEntityTagsQueryLimitDefault } =
       c.req.valid('query')
@@ -176,9 +181,9 @@ export const searchEntityTagsHandlers = factory.createHandlers(
 )
 
 export const suggestEntityFieldValuesHandlers = factory.createHandlers(
-  zValidator('json', SuggestEntityFieldValuesBody),
-  zValidator('response', SuggestEntityFieldValuesResponse),
-  zValidator('query', SuggestEntityFieldValuesQueryParams),
+  zValidator('json', SuggestEntityFieldValuesBody, invalidInputHook),
+  zValidator('response', SuggestEntityFieldValuesResponse, corruptedDataHook),
+  zValidator('query', SuggestEntityFieldValuesQueryParams, invalidInputHook),
   async (c: SuggestEntityFieldValuesContext) => {
     const user = c.get('user')
     assertAuthenticatedUser(user)
