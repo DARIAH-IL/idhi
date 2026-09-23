@@ -31,6 +31,7 @@ export function ExternalLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      dir={refText ? undefined : 'ltr'}
       aria-label={preferFaviconOnly ? linkText : undefined}
       className="app-link break-all"
     >
