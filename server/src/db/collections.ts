@@ -5,6 +5,8 @@ export const COLLECTIONS = {
   distributedLocks: 'distributedLocks',
   entities: 'entities',
   entityGraveyard: 'entityGraveyard',
+  marketplaceActors: 'marketplaceActors',
+  marketplaceItems: 'marketplaceItems',
   userInvites: 'userInvites',
   users: 'users',
 } as const

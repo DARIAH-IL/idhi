@@ -19,6 +19,11 @@ export type Bindings = {
   >
   MONGO_CONNECTION_PROMISE?: Promise<Connection>
 
+  MARKETPLACE_API_URL: string
+  MARKETPLACE_FRONTEND_URL: string
+  MARKETPLACE_USERNAME: string
+  MARKETPLACE_PASSWORD: string
+
   OTP_DIGITS?: string
   OTP_MAX_ATTEMPTS?: string
 

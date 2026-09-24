@@ -73,7 +73,7 @@ const FACET_VALUES_LIMIT = 100
 const ENTITY_AUDIT_OPERATIONS = ['create', 'update', 'delete'] as const
 type EntityAuditOperation = (typeof ENTITY_AUDIT_OPERATIONS)[number]
 
-const ENTITY_AUDIT_SOURCES = ['web', 'mcp'] as const
+const ENTITY_AUDIT_SOURCES = ['web', 'mcp', 'marketplace-sync'] as const
 export type EntityAuditSource = (typeof ENTITY_AUDIT_SOURCES)[number]
 
 export interface EntityAuditContext {

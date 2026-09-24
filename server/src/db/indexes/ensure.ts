@@ -4,6 +4,7 @@ import { initializeAuthChallengeIndexes } from './authChallenges.ts'
 import { initializeAuthRateLimitIndexes } from './authRateLimits.ts'
 import { initializeEntityIndexes } from './entities.ts'
 import { initializeDistributedLockIndexes } from './locks.ts'
+import { initializeMarketplaceIndexes } from './marketplace.ts'
 import { initializeUserIndexes } from './users.ts'
 import { initializeUserInviteIndexes } from './userInvites.ts'
 
@@ -39,6 +40,10 @@ export async function ensureIndexes(db: mongo.Db): Promise<void> {
     initializeEntityIndexes(
       db.collection(COLLECTIONS.entities),
       db.collection(COLLECTIONS.audit),
+    ),
+    initializeMarketplaceIndexes(
+      db.collection(COLLECTIONS.marketplaceItems),
+      db.collection(COLLECTIONS.marketplaceActors),
     ),
   ])
 }

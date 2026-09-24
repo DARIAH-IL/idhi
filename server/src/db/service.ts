@@ -7,6 +7,8 @@ import { createDistributedLockDatabaseService } from './services/locks'
 import type { DistributedLockDatabaseService } from './services/locks'
 import { createEntityDatabaseService } from './services/entities'
 import type { EntityDatabaseService } from './services/entities'
+import { createMarketplaceDatabaseService } from './services/marketplace'
+import type { MarketplaceDatabaseService } from './services/marketplace'
 import { createUserDatabaseService } from './services/users'
 import type { UserDatabaseService } from './services/users'
 import { createUserInviteDatabaseService } from './services/userInvites'
@@ -18,6 +20,7 @@ export interface DatabaseService {
   entities: EntityDatabaseService
   isLive: () => Promise<boolean>
   locks: DistributedLockDatabaseService
+  marketplace: MarketplaceDatabaseService
   userInvites: UserInviteDatabaseService
   users: UserDatabaseService
 }
@@ -25,15 +28,23 @@ export interface DatabaseService {
 export const createDatabaseService = async (
   connection: Connection,
 ): Promise<DatabaseService> => {
-  const [authChallenges, authRateLimits, entities, locks, users, userInvites] =
-    await Promise.all([
-      createAuthChallengeDatabaseService(connection),
-      createAuthRateLimitDatabaseService(connection),
-      createEntityDatabaseService(connection),
-      createDistributedLockDatabaseService(connection),
-      createUserDatabaseService(connection),
-      createUserInviteDatabaseService(connection),
-    ])
+  const [
+    authChallenges,
+    authRateLimits,
+    entities,
+    locks,
+    marketplace,
+    users,
+    userInvites,
+  ] = await Promise.all([
+    createAuthChallengeDatabaseService(connection),
+    createAuthRateLimitDatabaseService(connection),
+    createEntityDatabaseService(connection),
+    createDistributedLockDatabaseService(connection),
+    createMarketplaceDatabaseService(connection),
+    createUserDatabaseService(connection),
+    createUserInviteDatabaseService(connection),
+  ])
 
   return {
     authChallenges,
@@ -52,6 +63,7 @@ export const createDatabaseService = async (
       }
     },
     locks,
+    marketplace,
     userInvites,
     users,
   }

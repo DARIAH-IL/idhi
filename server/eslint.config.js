@@ -26,7 +26,12 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/handlers/**', 'src/models/**', 'src/routes.ts'],
+    files: [
+      'src/handlers/**',
+      'src/models/**',
+      'src/routes.ts',
+      'src/marketplace/api/generated/**',
+    ],
     rules: {
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/consistent-type-assertions': 'off',

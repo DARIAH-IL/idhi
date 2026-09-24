@@ -93,6 +93,17 @@ mongorestore \
 unset TARGET_MONGODB_CONNECTION_STRING
 ```
 
+## SSH Open Marketplace sync
+
+`src/cli/marketplace-sync.ts` pushes published IDHI entities to the
+[SSH Open Marketplace](https://marketplace.sshopencloud.eu/).
+
+```sh
+pnpm --filter @idhi/server marketplace:generate
+pnpm --filter @idhi/server marketplace:sync --dry-run
+pnpm --filter @idhi/server marketplace:sync
+```
+
 ## Testing MCP
 
 The server exposes an MCP endpoint at `/mcp` with entity tools: `get_entity`

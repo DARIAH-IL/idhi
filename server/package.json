@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "SENTRY_DISABLED=true vite",
+    "dev": "SENTRY_DISABLED=true FRONTEND_URL=http://localhost:3000 vite",
     "build": "tsc --noEmit && vite build",
     "deploy": "pnpm run build && wrangler deploy",
     "secrets:sync": "wrangler secret bulk .dev.vars",
@@ -12,7 +12,9 @@
     "format": "prettier --write .",
     "validate": "orval && pnpm lint --fix && pnpm format && pnpm build",
     "test-data:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/import-test-data.mjs",
-    "indexes:ensure": "node --env-file-if-exists=.env --env-file-if-exists=.env.local src/cli/ensure-indexes.ts"
+    "indexes:ensure": "node --env-file-if-exists=.env --env-file-if-exists=.env.local src/cli/ensure-indexes.ts",
+    "marketplace:generate": "orval --config src/marketplace/api/config/orval.config.ts && pnpm lint --fix && pnpm format",
+    "marketplace:sync": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local src/cli/marketplace-sync.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.9.1",
@@ -29,6 +31,7 @@
     "eslint": "^10.9.1",
     "orval": "^8.27.0",
     "prettier": "^3.9.6",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "latest",
     "vite": "^8.2.2",

@@ -7,7 +7,7 @@ type StringBindingKey = {
 }[keyof Bindings]
 
 export function requiredValue(
-  bindings: Bindings,
+  bindings: Partial<Pick<Bindings, StringBindingKey>>,
   key: StringBindingKey,
 ): string {
   const value = bindings[key]
