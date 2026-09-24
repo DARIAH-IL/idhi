@@ -1,0 +1,44 @@
+name: Marketplace sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Log planned changes without writing to the marketplace or the database
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync to SSH Open Marketplace
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync marketplace
+        env:
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+          MARKETPLACE_USERNAME: ${{ secrets.MARKETPLACE_USERNAME }}
+          MARKETPLACE_PASSWORD: ${{ secrets.MARKETPLACE_PASSWORD }}
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          if [[ "${DRY_RUN}" == "true" ]]; then
+            pnpm --filter @idhi/server marketplace:sync --dry-run
+          else
+            pnpm --filter @idhi/server marketplace:sync
+          fi
