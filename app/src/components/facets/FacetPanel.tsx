@@ -67,48 +67,48 @@ export function FacetPanel({
   return (
     <aside
       aria-label={t('board.facets.title')}
-      className="self-start rounded-lg border bg-muted/20 md:max-h-full md:overflow-y-auto"
+      className="flex max-h-full flex-col self-start overflow-hidden rounded-lg border bg-muted/20"
     >
-      <div className="border-b p-4">
+      <div className="shrink-0 border-b p-4">
         <h2 className="text-sm font-semibold">{t('board.facets.title')}</h2>
       </div>
 
-      <div className="p-4">
-        <div className="mb-4 border-b pb-4">
-          <Button
-            className="w-full"
-            isDisabled={!isDirty}
-            onPress={() => onApply(draftFilters)}
-          >
-            {t('board.facets.apply')}
-          </Button>
+      <div className="shrink-0 border-b p-4">
+        <Button
+          className="w-full"
+          isDisabled={!isDirty}
+          onPress={() => onApply(draftFilters)}
+        >
+          {t('board.facets.apply')}
+        </Button>
 
-          <InputGroup className="mt-2">
-            <InputGroupInput
-              type="search"
-              value={facetSearch}
-              placeholder={t('board.facets.filter_placeholder')}
-              aria-label={t('board.facets.filter_label')}
-              onChange={(event) => setFacetSearch(event.target.value)}
-              className="[&::-webkit-search-cancel-button]:hidden"
-            />
-            <InputGroupAddon align="inline-end">
-              <InputGroupButton
-                size="icon-xs"
-                aria-label={t('board.clear_search')}
-                isDisabled={!facetSearch}
-                onPress={() => setFacetSearch('')}
-              >
-                <HugeiconsIcon
-                  icon={Cancel01Icon}
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
-              </InputGroupButton>
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
+        <InputGroup className="mt-2">
+          <InputGroupInput
+            type="search"
+            value={facetSearch}
+            placeholder={t('board.facets.filter_placeholder')}
+            aria-label={t('board.facets.filter_label')}
+            onChange={(event) => setFacetSearch(event.target.value)}
+            className="[&::-webkit-search-cancel-button]:hidden"
+          />
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              size="icon-xs"
+              aria-label={t('board.clear_search')}
+              isDisabled={!facetSearch}
+              onPress={() => setFacetSearch('')}
+            >
+              <HugeiconsIcon
+                icon={Cancel01Icon}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
+      </div>
 
+      <div className="min-h-0 flex-1 overflow-y-auto p-4">
         {DEFAULT_FACETS.map((field) => {
           const selectedValues = new Set<string>(
             draftFilters[field]?.include ?? [],

@@ -57,7 +57,7 @@ export function EntityFacetsDrawer({
       />
       <DrawerContent className="rounded-none m-0 [&_aside]:rounded-none">
         <DrawerTitle className="sr-only">{t('board.facets.title')}</DrawerTitle>
-        <div className="relative flex-1 overflow-y-auto">
+        <div className="relative flex-1 overflow-hidden">
           <DrawerClose
             render={
               <Button

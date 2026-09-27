@@ -102,7 +102,7 @@ function HomePage() {
   }
 
   return (
-    <div className="relative isolate -m-6 min-h-full overflow-hidden">
+    <div className="relative isolate -m-6 min-h-[calc(100%+3rem)] overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 bg-linear-to-b from-white to-[#3aafd2]"
