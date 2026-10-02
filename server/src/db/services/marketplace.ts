@@ -51,12 +51,14 @@ export interface MarketplaceDatabaseService {
     get: (entityId: string) => Promise<MarketplaceItemMapping | null>
     upsert: (mapping: MarketplaceItemMapping) => Promise<void>
     delete: (entityId: string) => Promise<void>
+    clear: () => Promise<number>
   }
   actors: {
     list: () => Promise<MarketplaceActorMapping[]>
     get: (entityId: string) => Promise<MarketplaceActorMapping | null>
     upsert: (mapping: MarketplaceActorMapping) => Promise<void>
     delete: (entityId: string) => Promise<void>
+    clear: () => Promise<number>
   }
 }
 
@@ -143,6 +145,11 @@ export async function createMarketplaceDatabaseService(
       async delete(entityId) {
         await items.deleteOne({ _id: entityId }).exec()
       },
+
+      async clear() {
+        const { deletedCount } = await items.deleteMany({}).exec()
+        return deletedCount
+      },
     },
 
     actors: {
@@ -171,6 +178,11 @@ export async function createMarketplaceDatabaseService(
 
       async delete(entityId) {
         await actors.deleteOne({ _id: entityId }).exec()
+      },
+
+      async clear() {
+        const { deletedCount } = await actors.deleteMany({}).exec()
+        return deletedCount
       },
     },
   }
