@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 2 * * *' # Every day at 2:00 AM UTC
   workflow_dispatch:
+    inputs:
+      force:
+        description: Back up even if there were no audits in the last 24 hours
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -35,7 +40,47 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check for audits in the last 24 hours
+        id: activity
+        env:
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+          FORCE_BACKUP: ${{ inputs.force }}
+        run: |
+          if [[ -z "${MONGODB_CONNECTION_STRING}" ]]; then
+            echo "::error::MONGODB_CONNECTION_STRING repository secret is required"
+            exit 1
+          fi
+
+          recent_audits="$(pnpm --silent --filter @idhi/server exec node --input-type=module --eval '
+            import mongoose from "mongoose"
+            const connection = await mongoose
+              .createConnection(process.env.MONGODB_CONNECTION_STRING, {
+                dbName: process.env.MONGODB_DATABASE_NAME,
+              })
+              .asPromise()
+            try {
+              const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+              const count = await connection.db
+                .collection("audit")
+                .countDocuments({ at: { $gte: since } }, { limit: 1 })
+              process.stdout.write(String(count))
+            } finally {
+              await connection.close()
+            }
+          ')"
+
+          if [[ "${FORCE_BACKUP}" == "true" ]]; then
+            echo "Force backup requested"
+            echo "has_audits=true" >> "${GITHUB_OUTPUT}"
+          elif [[ "${recent_audits}" == "0" ]]; then
+            echo "No audits in the last 24 hours, skipping backup"
+            echo "has_audits=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "has_audits=true" >> "${GITHUB_OUTPUT}"
+          fi
+
       - name: Install MongoDB Database Tools
+        if: steps.activity.outputs.has_audits == 'true'
         run: |
           tools_package="${RUNNER_TEMP}/mongodb-database-tools.deb"
           curl --fail --location --silent --show-error \
@@ -46,6 +91,7 @@ jobs:
 
       - name: Create compressed database backup
         id: dump
+        if: steps.activity.outputs.has_audits == 'true'
         env:
           MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
         run: |
@@ -72,6 +118,7 @@ jobs:
           echo "path=${backup_path}" >> "${GITHUB_OUTPUT}"
 
       - name: Upload backup to Cloudflare R2
+        if: steps.activity.outputs.has_audits == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
