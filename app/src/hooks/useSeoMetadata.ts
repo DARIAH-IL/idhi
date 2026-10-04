@@ -50,9 +50,9 @@ export function useSeoMetadata() {
           name: getEntityDisplayName(entity),
         }))
       : pathname.startsWith('/privacy-policy')
-        ? t('legal.privacy.placeholder')
+        ? t('legal.privacy.description')
         : pathname.startsWith('/terms-of-use')
-          ? t('legal.terms.placeholder')
+          ? t('legal.terms.description')
           : pathname.startsWith('/about/ai')
             ? t('about.ai.intro')
             : pathname.startsWith('/about')

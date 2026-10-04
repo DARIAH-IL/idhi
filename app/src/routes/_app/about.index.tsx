@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next'
 import {
   ApiIcon,
   BookOpenTextIcon,
+  Mail01Icon,
   OpenSourceIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { CONTACT_EMAIL } from '@/lib/legal'
 
 const technicalResources = [
   {
@@ -56,6 +58,29 @@ function AboutPage() {
           />
         </div>
       </header>
+
+      <section
+        aria-labelledby="about-contact"
+        className="rounded-2xl border p-6 sm:p-8"
+      >
+        <h2 id="about-contact" className="text-xl font-semibold">
+          {t('about.contact.title')}
+        </h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          {t('about.contact.body')}
+        </p>
+        <p className="mt-4 flex items-center gap-2 font-semibold">
+          <HugeiconsIcon
+            icon={Mail01Icon}
+            strokeWidth={1.8}
+            className="size-5 shrink-0 text-muted-foreground"
+            aria-hidden="true"
+          />
+          <a className="app-link" href={`mailto:${CONTACT_EMAIL}`} dir="ltr">
+            {CONTACT_EMAIL}
+          </a>
+        </p>
+      </section>
 
       <section aria-labelledby="about-why">
         <h2 id="about-why" className="text-xl font-semibold">

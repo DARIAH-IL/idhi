@@ -125,6 +125,10 @@
       "idhi": "Israeli Digital Humanities Index",
       "dariah_il": "DARIAH-IL"
     },
+    "contact": {
+      "title": "Contact us",
+      "body": "Have a suggestion for content to add to the index, a correction or edit to an existing entry, or any other question or concern? We would be glad to hear from you."
+    },
     "why": {
       "title": "Bringing a distributed community together",
       "body": "Digital humanities projects, publications, datasets, tools, and expertise in Israel are spread across many institutions. This makes valuable work harder to discover, reuse, and build upon. IDHI brings these resources together in one publicly accessible place, strengthening connections within the community and opening its work to researchers and the wider public."
@@ -234,12 +238,13 @@
   "legal": {
     "privacy": {
       "title": "Privacy policy",
-      "placeholder": "Our privacy policy is being prepared. This page will be updated with information about how the Israeli Digital Humanities Index collects, uses, and protects personal information."
+      "description": "How the Israeli Digital Humanities Index handles information: community-curated public data, no cookies and no tracking."
     },
     "terms": {
       "title": "Terms of use",
-      "placeholder": "Our terms of use are being prepared. This page will be updated with the conditions that apply when accessing and using the Israeli Digital Humanities Index."
-    }
+      "description": "The conditions for accessing, using and contributing to the Israeli Digital Humanities Index."
+    },
+    "english_only": "The text below is currently available in English only."
   },
   "api": {
     "errors": {
