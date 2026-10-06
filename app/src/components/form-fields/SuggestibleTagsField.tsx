@@ -143,6 +143,7 @@ export function SuggestibleTagsField({
             }}
             isInvalid={Boolean(error)}
             menuTrigger="focus"
+            allowsEmptyCollection
           >
             <ComboboxChips>
               <ComboboxChipList aria-labelledby={labelId}>
