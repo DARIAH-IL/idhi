@@ -1068,7 +1068,7 @@
           "description": "Training materials created as outcomes of the project."
         },
         "project_participations": {
-          "label": "Project participations",
+          "label": "Project participants",
           "description": "The people involved in the project, with their role and dates."
         },
         "research_disciplines": {
