@@ -297,8 +297,11 @@ export async function createEntityDatabaseService(
       }
       for (const [index, field] of facetFields.entries()) {
         const fieldPath = storedEntityField(field)
+        const pathSegments = fieldPath.split('.')
         facets[`facet${index}`] = [
-          { $unwind: `$${fieldPath}` },
+          ...pathSegments.map((_, segmentIndex) => ({
+            $unwind: `$${pathSegments.slice(0, segmentIndex + 1).join('.')}`,
+          })),
           { $match: { [fieldPath]: { $type: 'string' } } },
           {
             $group: {
