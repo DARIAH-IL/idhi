@@ -37,7 +37,13 @@ export function TextField({
             type={type}
             dir={type === 'url' || type === 'email' ? 'ltr' : undefined}
             value={field.state.value == null ? '' : String(field.state.value)}
-            onBlur={field.handleBlur}
+            onBlur={() => {
+              const value = field.state.value
+              if (typeof value === 'string' && value.trim() !== value) {
+                field.handleChange(value.trim())
+              }
+              field.handleBlur()
+            }}
             onChange={(event) => {
               const value = event.target.value
               field.handleChange(

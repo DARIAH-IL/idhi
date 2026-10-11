@@ -28,7 +28,9 @@ export function cleanValue(value: unknown): unknown {
     return Object.fromEntries(entries)
   }
 
-  return value === '' || value === null || value === undefined
+  const trimmed = typeof value === 'string' ? value.trim() : value
+
+  return trimmed === '' || trimmed === null || trimmed === undefined
     ? undefined
-    : value
+    : trimmed
 }

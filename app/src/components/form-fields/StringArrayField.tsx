@@ -66,6 +66,15 @@ export function StringArrayField({
                   ),
                 )
               }
+              onBlur={() => {
+                if (item.trim() !== item) {
+                  field.handleChange(
+                    items.map((value, itemIndex) =>
+                      itemIndex === index ? item.trim() : value,
+                    ),
+                  )
+                }
+              }}
               placeholder={placeholder}
               className="flex-1"
               list={options ? `${field.name}-options` : undefined}

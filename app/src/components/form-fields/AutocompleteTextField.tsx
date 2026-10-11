@@ -58,13 +58,10 @@ export function AutocompleteTextField<T extends object>({
   )
 
   const handleBlur = () => {
-    let finalValue = value
-    if (normalizeValue) {
-      const normalized = normalizeValue(value)
-      if (normalized !== value) {
-        field.handleChange(normalized)
-        finalValue = normalized
-      }
+    const trimmed = value.trim()
+    const finalValue = normalizeValue ? normalizeValue(trimmed) : trimmed
+    if (finalValue !== value) {
+      field.handleChange(finalValue)
     }
     field.handleBlur()
     onBlurValue?.(finalValue)

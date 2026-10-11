@@ -175,6 +175,14 @@ export function LangStringField({
     return TOP_LANGUAGE_CODES[0] ?? 'en'
   }
 
+  function handleItemBlur(index: number, value: string) {
+    const trimmed = value.trim()
+    if (trimmed !== value) {
+      updateItem(index, { value: trimmed })
+    }
+    onItemBlur?.(trimmed)
+  }
+
   function updateItem(index: number, next: Partial<LocalizedValue>) {
     field.handleChange(
       items.map((item, itemIndex) =>
@@ -222,7 +230,7 @@ export function LangStringField({
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })
               }
-              onBlur={() => onItemBlur?.(item.value)}
+              onBlur={() => handleItemBlur(index, item.value)}
               className="flex-1"
               rows={3}
             />
@@ -235,7 +243,7 @@ export function LangStringField({
               onChange={(event) =>
                 updateItem(index, { value: event.target.value })
               }
-              onBlur={() => onItemBlur?.(item.value)}
+              onBlur={() => handleItemBlur(index, item.value)}
               className="flex-1"
             />
           )}

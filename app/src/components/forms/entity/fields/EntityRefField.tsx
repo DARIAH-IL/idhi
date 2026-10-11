@@ -58,6 +58,11 @@ export function EntityRefField({
           value={value.startsWith('http') ? value : ''}
           placeholder={t('entity.form.external_url_placeholder')}
           onChange={(event) => field.handleChange(event.target.value)}
+          onBlur={() => {
+            if (value.trim() !== value) {
+              field.handleChange(value.trim())
+            }
+          }}
           aria-invalid={Boolean(error)}
         />
       )}
