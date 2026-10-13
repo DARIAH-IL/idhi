@@ -54,7 +54,12 @@ function HomePage() {
     getSearchEntitiesTypedQueryOptions(
       {
         pageSize: FEATURED_PAGE_SIZE,
-        filter: { field: 'isDraft', op: 'ne', value: true },
+        filter: {
+          and: [
+            { field: 'isDraft', op: 'ne', value: true },
+            { field: 'type', op: 'ne', value: 'idhi:Person' },
+          ],
+        },
         sort: [{ property: 'id', direction: 'random' }],
       },
       {
