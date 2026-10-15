@@ -1,9 +1,10 @@
 import type { QueryFilter } from 'mongoose'
 import type { Filter, FilterOperator, FilterableField } from '../../models'
+import { escapeRegExpQuery } from './search'
 
 export type MongoFieldMapper = (field: FilterableField) => string
 
-const MONGO_OPERATORS: Record<FilterOperator, string> = {
+const MONGO_OPERATORS: Record<Exclude<FilterOperator, 'contains'>, string> = {
   eq: '$eq',
   ne: '$ne',
   gt: '$gt',
@@ -24,6 +25,15 @@ function comparisonFilter(
   mapField: MongoFieldMapper,
 ): QueryFilter<Record<string, unknown>> {
   const mongoField = mapField(field)
+
+  if (operator === 'contains') {
+    return {
+      [mongoField]: {
+        $regex: escapeRegExpQuery(String(value)),
+        $options: 'i',
+      },
+    }
+  }
 
   if (operator === 'in' || operator === 'nin') {
     const values = Array.isArray(value) ? value : [value]

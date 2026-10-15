@@ -38,7 +38,7 @@ export type AdvancedSearchFieldKind =
   'string' | 'number' | 'boolean' | 'date' | 'enum'
 
 export const FIELD_KIND_OPERATORS = {
-  string: ['eq', 'ne', 'in', 'nin', 'exists'],
+  string: ['eq', 'ne', 'contains', 'in', 'nin', 'exists'],
   number: ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'in', 'nin', 'exists'],
   boolean: ['eq', 'ne', 'exists'],
   date: ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'exists'],

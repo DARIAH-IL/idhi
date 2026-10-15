@@ -658,6 +658,7 @@ components:
 
     FilterOperator:
       type: string
+      description: Comparison operator. `contains` matches a case-insensitive substring of a string value, or of any string element of an array value.
       enum:
         - eq
         - ne
@@ -668,6 +669,7 @@ components:
         - in
         - nin
         - exists
+        - contains
 
     SortDirection:
       type: string

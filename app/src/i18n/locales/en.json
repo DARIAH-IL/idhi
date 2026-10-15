@@ -415,7 +415,8 @@
         "lte": "is less than or equal to",
         "in": "is one of",
         "nin": "is none of",
-        "exists": "presence"
+        "exists": "presence",
+        "contains": "contains"
       }
     }
   },

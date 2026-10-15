@@ -5,6 +5,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
+/**
+ * Comparison operator. `contains` matches a case-insensitive substring of a string value, or of any string element of an array value.
+ */
 export type FilterOperator =
   (typeof FilterOperator)[keyof typeof FilterOperator]
 
@@ -18,4 +21,5 @@ export const FilterOperator = {
   in: 'in',
   nin: 'nin',
   exists: 'exists',
+  contains: 'contains',
 } as const

@@ -55,17 +55,22 @@ export const SearchEntitiesBody = zod.object({
           .describe(
             'A dot-separated entity field path. Operators and array indexes are not allowed.',
           ),
-        op: zod.enum([
-          'eq',
-          'ne',
-          'gt',
-          'gte',
-          'lt',
-          'lte',
-          'in',
-          'nin',
-          'exists',
-        ]),
+        op: zod
+          .enum([
+            'eq',
+            'ne',
+            'gt',
+            'gte',
+            'lt',
+            'lte',
+            'in',
+            'nin',
+            'exists',
+            'contains',
+          ])
+          .describe(
+            'Comparison operator. `contains` matches a case-insensitive substring of a string value, or of any string element of an array value.',
+          ),
         value: zod.unknown(),
       }),
       zod.object({
@@ -79,17 +84,22 @@ export const SearchEntitiesBody = zod.object({
                   .describe(
                     'A dot-separated entity field path. Operators and array indexes are not allowed.',
                   ),
-                op: zod.enum([
-                  'eq',
-                  'ne',
-                  'gt',
-                  'gte',
-                  'lt',
-                  'lte',
-                  'in',
-                  'nin',
-                  'exists',
-                ]),
+                op: zod
+                  .enum([
+                    'eq',
+                    'ne',
+                    'gt',
+                    'gte',
+                    'lt',
+                    'lte',
+                    'in',
+                    'nin',
+                    'exists',
+                    'contains',
+                  ])
+                  .describe(
+                    'Comparison operator. `contains` matches a case-insensitive substring of a string value, or of any string element of an array value.',
+                  ),
                 value: zod.unknown(),
               }),
               zod.object({
@@ -113,17 +123,22 @@ export const SearchEntitiesBody = zod.object({
                   .describe(
                     'A dot-separated entity field path. Operators and array indexes are not allowed.',
                   ),
-                op: zod.enum([
-                  'eq',
-                  'ne',
-                  'gt',
-                  'gte',
-                  'lt',
-                  'lte',
-                  'in',
-                  'nin',
-                  'exists',
-                ]),
+                op: zod
+                  .enum([
+                    'eq',
+                    'ne',
+                    'gt',
+                    'gte',
+                    'lt',
+                    'lte',
+                    'in',
+                    'nin',
+                    'exists',
+                    'contains',
+                  ])
+                  .describe(
+                    'Comparison operator. `contains` matches a case-insensitive substring of a string value, or of any string element of an array value.',
+                  ),
                 value: zod.unknown(),
               }),
               zod.object({
