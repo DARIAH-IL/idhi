@@ -21,3 +21,6 @@ https://:version.idhi.pages.dev/*
 
 /sitemap.xml
   Cache-Control: public, max-age=3600
+
+/*
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.idh-index.org https://api.crossref.org https://api.ror.org https://pub.orcid.org https://*.ingest.us.sentry.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
