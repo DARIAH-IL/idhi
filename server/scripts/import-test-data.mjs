@@ -189,8 +189,6 @@ export const entities = [
         start_date: `202${index}-01-01`,
       },
     ],
-    services_offered: [related(serviceIds, index)],
-    tools_provided: [related(toolIds, index)],
     location: localized('Jerusalem', index),
     address: localized('1 Mock Street', index),
     contact_email: `lab${index + 1}@example.test`,

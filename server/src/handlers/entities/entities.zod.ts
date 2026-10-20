@@ -685,23 +685,11 @@ export const SearchEntitiesResponse = zod.object({
               .describe(
                 "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
               ),
-            services_offered: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-              ),
             tags: zod
               .array(zod.string())
               .nullish()
               .describe(
                 'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-              ),
-            tools_provided: zod
-              .array(zod.string())
-              .nullish()
-              .describe(
-                'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
               ),
             type: zod
               .enum(['idhi:Organization'])
@@ -1644,6 +1632,7 @@ export const SearchEntitiesResponse = zod.object({
                         'CREATOR',
                         'DEVELOPER',
                         'MAINTAINER',
+                        'PROVIDER',
                         'DATA_CURATOR',
                         'CONTRIBUTOR',
                       ])
@@ -1658,7 +1647,7 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
                   ),
               )
               .nullish()
@@ -2962,6 +2951,7 @@ export const SearchEntitiesResponse = zod.object({
                         'CREATOR',
                         'DEVELOPER',
                         'MAINTAINER',
+                        'PROVIDER',
                         'DATA_CURATOR',
                         'CONTRIBUTOR',
                       ])
@@ -2976,7 +2966,7 @@ export const SearchEntitiesResponse = zod.object({
                       ),
                   })
                   .describe(
-                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                    'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
                   ),
               )
               .nullish()
@@ -4038,23 +4028,11 @@ export const CreateEntityBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
-      services_offered: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-        ),
       tags: zod
         .array(zod.string())
         .nullish()
         .describe(
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-        ),
-      tools_provided: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -4971,6 +4949,7 @@ export const CreateEntityBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -4985,7 +4964,7 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -6239,6 +6218,7 @@ export const CreateEntityBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -6253,7 +6233,7 @@ export const CreateEntityBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -7271,23 +7251,11 @@ export const CreateEntityResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        services_offered: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-          ),
         tags: zod
           .array(zod.string())
           .nullish()
           .describe(
             'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-          ),
-        tools_provided: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -8222,6 +8190,7 @@ export const CreateEntityResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -8236,7 +8205,7 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()
@@ -9526,6 +9495,7 @@ export const CreateEntityResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -9540,7 +9510,7 @@ export const CreateEntityResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()
@@ -10633,23 +10603,11 @@ export const SuggestEntityFieldValuesBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
-      services_offered: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-        ),
       tags: zod
         .array(zod.string())
         .nullish()
         .describe(
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-        ),
-      tools_provided: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -11596,6 +11554,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -11610,7 +11569,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -12928,6 +12887,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -12942,7 +12902,7 @@ export const SuggestEntityFieldValuesBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -13996,23 +13956,11 @@ export const GetEntityByIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        services_offered: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-          ),
         tags: zod
           .array(zod.string())
           .nullish()
           .describe(
             'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-          ),
-        tools_provided: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -14947,6 +14895,7 @@ export const GetEntityByIdResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -14961,7 +14910,7 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()
@@ -16253,6 +16202,7 @@ export const GetEntityByIdResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -16267,7 +16217,7 @@ export const GetEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()
@@ -17359,23 +17309,11 @@ export const UpdateEntityByIdBody = zod.union([
         .describe(
           "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
         ),
-      services_offered: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-        ),
       tags: zod
         .array(zod.string())
         .nullish()
         .describe(
           'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-        ),
-      tools_provided: zod
-        .array(zod.string())
-        .nullish()
-        .describe(
-          'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
         ),
       type: zod
         .literal('idhi:Organization')
@@ -18316,6 +18254,7 @@ export const UpdateEntityByIdBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -18330,7 +18269,7 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -19630,6 +19569,7 @@ export const UpdateEntityByIdBody = zod.union([
                   'CREATOR',
                   'DEVELOPER',
                   'MAINTAINER',
+                  'PROVIDER',
                   'DATA_CURATOR',
                   'CONTRIBUTOR',
                 ])
@@ -19644,7 +19584,7 @@ export const UpdateEntityByIdBody = zod.union([
                 ),
             })
             .describe(
-              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+              'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
             ),
         )
         .nullish()
@@ -20681,23 +20621,11 @@ export const UpdateEntityByIdResponse = zod
           .describe(
             "URIs of records in OTHER systems describing the same real-world entity (Wikidata, PeriodO, GeoNames...). Use for linked-data alignment, not for the entity's own pages (use homepage).",
           ),
-        services_offered: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            "Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.",
-          ),
         tags: zod
           .array(zod.string())
           .nullish()
           .describe(
             'Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.',
-          ),
-        tools_provided: zod
-          .array(zod.string())
-          .nullish()
-          .describe(
-            'Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.',
           ),
         type: zod
           .enum(['idhi:Organization'])
@@ -21632,6 +21560,7 @@ export const UpdateEntityByIdResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -21646,7 +21575,7 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()
@@ -22940,6 +22869,7 @@ export const UpdateEntityByIdResponse = zod
                     'CREATOR',
                     'DEVELOPER',
                     'MAINTAINER',
+                    'PROVIDER',
                     'DATA_CURATOR',
                     'CONTRIBUTOR',
                   ])
@@ -22954,7 +22884,7 @@ export const UpdateEntityByIdResponse = zod
                   ),
               })
               .describe(
-                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
+                'A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.',
               ),
           )
           .nullish()

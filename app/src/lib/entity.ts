@@ -168,8 +168,6 @@ const ENTITY_FIELD_ORDER = {
     contact_email: true,
     additional_urls: true,
     organization_structure: true,
-    services_offered: true,
-    tools_provided: true,
     same_as: true,
   },
   OrganizationStructure: {

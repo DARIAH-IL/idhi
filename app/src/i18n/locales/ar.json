@@ -843,7 +843,8 @@
         "CREATOR": "إنشاء",
         "DATA_CURATOR": "رعاية البيانات",
         "DEVELOPER": "تطوير",
-        "MAINTAINER": "صيانة"
+        "MAINTAINER": "صيانة",
+        "PROVIDER": "توفير"
       },
       "service_type": {
         "API_SERVICE": "خدمة API",
@@ -986,17 +987,9 @@
           "label": "$t(common.labels.same_as)",
           "description": "روابط تحدّد المؤسسة نفسها في أنظمة أخرى، مثل Wikidata."
         },
-        "services_offered": {
-          "label": "الخدمات المقدّمة",
-          "description": "الخدمات التي تقدّمها هذه المؤسسة لمجتمع البحث. تُدرَج لدى الوحدة التي تقدّمها فعليًا، مثل مختبر، لا لدى المؤسسة الأم."
-        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
-        },
-        "tools_provided": {
-          "label": "الأدوات المتوفرة",
-          "description": "أدوات برمجية تصونها المؤسسة أو تتيحها، بما في ذلك الخدمات المستضافة والبرمجيات المدعومة من المختبر."
         },
         "type": {
           "label": "$t(common.labels.type)",
@@ -1176,7 +1169,7 @@
         },
         "resource_contributions": {
           "label": "$t(common.labels.resource_contributions)",
-          "description": "الأشخاص والمؤسسات الذين أنشأوا الأداة أو طوّروها أو يصونونها، بما في ذلك مسؤولياتهم وفترات مشاركتهم."
+          "description": "الأشخاص والمؤسسات الذين أنشأوا الأداة أو طوّروها أو يصونونها أو يتيحون الوصول إليها، بما في ذلك مسؤولياتهم وفترات مشاركتهم."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1842,7 +1835,7 @@
         },
         "resource_contribution_role": {
           "label": "دور المساهمة",
-          "description": "مسؤولية الجهة المساهمة عن المورد، مثل الإنشاء أو التطوير أو الصيانة أو رعاية البيانات."
+          "description": "مسؤولية الجهة المساهمة عن المورد، مثل الإنشاء أو التطوير أو الصيانة أو توفير الوصول أو رعاية البيانات."
         },
         "start_date": {
           "label": "$t(common.labels.start_date)",
@@ -1862,8 +1855,6 @@
       "labels": {
         "people_affiliated_with_organization": "أشخاص منتمون",
         "organizations_within_organization": "مؤسسات فرعية",
-        "organizations_offering_service": "متاحة في مؤسسات",
-        "organizations_providing_tool": "متوفرة عبر مؤسسات",
         "projects_involving_organization": "مشاريع ذات مشاركة",
         "projects_involving_person": "مشاريع ذات مشاركة",
         "projects_funded_by_organization": "مشاريع ممولة",

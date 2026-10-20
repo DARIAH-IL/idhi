@@ -135,9 +135,6 @@ export const ADVANCED_SEARCH_FIELDS = {
   'organization_structure.end_date': { kind: 'date' },
   ror: { kind: 'string' },
 
-  services_offered: { kind: 'string' },
-  tools_provided: { kind: 'string' },
-
   digital_humanities_activities: enumSpecFromI18n(
     'digital_humanities_activities',
   ),

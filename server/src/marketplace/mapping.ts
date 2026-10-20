@@ -49,6 +49,7 @@ const CONTRIBUTION_ROLE_CODES: Record<string, string> = {
   CREATOR: 'creator',
   DEVELOPER: 'programmer',
   MAINTAINER: 'contributor',
+  PROVIDER: 'provider',
   DATA_CURATOR: 'curator',
   CONTRIBUTOR: 'contributor',
   AUTHOR: 'author',

@@ -841,7 +841,8 @@
         "CREATOR": "יצירה",
         "DATA_CURATOR": "אוצרות נתונים",
         "DEVELOPER": "פיתוח",
-        "MAINTAINER": "תחזוקה"
+        "MAINTAINER": "תחזוקה",
+        "PROVIDER": "אספקה"
       },
       "service_type": {
         "API_SERVICE": "שירות API",
@@ -984,17 +985,9 @@
           "label": "$t(common.labels.same_as)",
           "description": "קישורים המזהים את אותו ארגון במערכות אחרות, כגון Wikidata."
         },
-        "services_offered": {
-          "label": "שירותים מוצעים",
-          "description": "שירותים שארגון זה מציע לקהילת המחקר. יש לרשום אותם אצל היחידה שמספקת אותם בפועל, כגון מעבדה, ולא אצל מוסד האב."
-        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
-        },
-        "tools_provided": {
-          "label": "כלים מסופקים",
-          "description": "כלי תוכנה שהארגון מתחזק או מנגיש, כולל שירותים מאוחסנים ותוכנות בתמיכת המעבדה."
         },
         "type": {
           "label": "$t(common.labels.type)",
@@ -1174,7 +1167,7 @@
         },
         "resource_contributions": {
           "label": "$t(common.labels.resource_contributions)",
-          "description": "האנשים והארגונים שיצרו, פיתחו או מתחזקים את הכלי, כולל תחומי אחריותם ותקופות מעורבותם."
+          "description": "האנשים והארגונים שיצרו, פיתחו, מתחזקים או מנגישים את הכלי, כולל תחומי אחריותם ותקופות מעורבותם."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1840,7 +1833,7 @@
         },
         "resource_contribution_role": {
           "label": "תפקיד בתרומה",
-          "description": "אחריות הגורם התורם על המשאב, כגון יצירה, פיתוח, תחזוקה או אוצרות נתונים."
+          "description": "אחריות הגורם התורם על המשאב, כגון יצירה, פיתוח, תחזוקה, אספקת גישה או אוצרות נתונים."
         },
         "start_date": {
           "label": "$t(common.labels.start_date)",
@@ -1860,8 +1853,6 @@
       "labels": {
         "people_affiliated_with_organization": "אנשים משתייכים",
         "organizations_within_organization": "ארגוני משנה",
-        "organizations_offering_service": "זמין בארגונים",
-        "organizations_providing_tool": "מסופק על ידי ארגונים",
         "projects_involving_organization": "פרויקטים מעורבים",
         "projects_involving_person": "פרויקטים מעורבים",
         "projects_funded_by_organization": "פרויקטים במימון",

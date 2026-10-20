@@ -43,16 +43,6 @@ const ENTITY_RELATIONSHIPS = {
       targetTypes: ['idhi:Organization'],
       label: 'organizations_within_organization',
     },
-    {
-      path: 'services_offered',
-      targetTypes: ['idhi:Service'],
-      label: 'organizations_offering_service',
-    },
-    {
-      path: 'tools_provided',
-      targetTypes: ['idhi:Tool'],
-      label: 'organizations_providing_tool',
-    },
   ],
   'idhi:Project': [
     {

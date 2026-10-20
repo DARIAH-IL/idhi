@@ -7,7 +7,7 @@
 import type { ToolResourceContributionsItemResourceContributionRole } from './toolResourceContributionsItemResourceContributionRole.ts'
 
 /**
- * A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.
+ * A person or organization contributing to the containing Tool or Dataset in a defined capacity, with optional dates for time-bounded responsibility. Use in Tool.resource_contributions or Dataset.resource_contributions for creation, software development, maintenance, hosting or provision of access, data curation or other named contributions; use publisher where supported for formal publication responsibility and Project.project_participations for project-level work.
  */
 export type ToolResourceContributionsItem = {
   /** The person or organization contributing to the containing Tool or Dataset (by IDHI URN). Use only in resource_contributions; do not duplicate the relationship on the Agent. */

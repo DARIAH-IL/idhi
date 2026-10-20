@@ -839,7 +839,8 @@
         "CREATOR": "Creator",
         "DATA_CURATOR": "Data curator",
         "DEVELOPER": "Developer",
-        "MAINTAINER": "Maintainer"
+        "MAINTAINER": "Maintainer",
+        "PROVIDER": "Provider"
       },
       "service_type": {
         "API_SERVICE": "API service",
@@ -982,17 +983,9 @@
           "label": "$t(common.labels.same_as)",
           "description": "Links that identify the same organization in other systems, such as Wikidata."
         },
-        "services_offered": {
-          "label": "Services offered",
-          "description": "Services this organization offers to researchers. List them on the unit that actually delivers them, such as a lab, rather than on its parent institution."
-        },
         "tags": {
           "label": "$t(common.labels.tags)",
           "description": "$t(common.field_descriptions.tags)"
-        },
-        "tools_provided": {
-          "label": "Tools provided",
-          "description": "Software tools maintained by the organization or made available through it, including hosted services and lab-supported software."
         },
         "type": {
           "label": "$t(common.labels.type)",
@@ -1172,7 +1165,7 @@
         },
         "resource_contributions": {
           "label": "$t(common.labels.resource_contributions)",
-          "description": "The people and organizations that created, developed or maintain the tool, including their responsibilities and periods of involvement."
+          "description": "The people and organizations that created, developed, maintain or provide access to the tool, including their responsibilities and periods of involvement."
         },
         "same_as": {
           "label": "$t(common.labels.same_as)",
@@ -1838,7 +1831,7 @@
         },
         "resource_contribution_role": {
           "label": "Contribution role",
-          "description": "The contributor’s responsibility for the resource, such as creation, development, maintenance or data curation."
+          "description": "The contributor’s responsibility for the resource, such as creation, development, maintenance, providing access or data curation."
         },
         "start_date": {
           "label": "$t(common.labels.start_date)",
@@ -1858,8 +1851,6 @@
       "labels": {
         "people_affiliated_with_organization": "Affiliated people",
         "organizations_within_organization": "Sub-organizations",
-        "organizations_offering_service": "Available at organizations",
-        "organizations_providing_tool": "Provided by organizations",
         "projects_involving_organization": "Involved projects",
         "projects_involving_person": "Involved projects",
         "projects_funded_by_organization": "Funded projects",

@@ -70,8 +70,6 @@ export const ENTITY_FORM_FIELD_COVERAGE = {
     'organization_structure[].start_date': 'rendered',
     organization_type: 'rendered',
     ror: 'rendered',
-    services_offered: 'rendered',
-    tools_provided: 'rendered',
   } satisfies FormCoverage<Organization>,
   project: {
     ...COMMON_ENTITY_FIELDS,

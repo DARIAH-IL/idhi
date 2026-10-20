@@ -7,7 +7,6 @@ import { withForm } from '#/components/forms/app-form.ts'
 import { useDuplicateCheck } from '#/components/forms/entity/duplicate-check.tsx'
 import { FieldPair } from '#/components/form-fields/FieldPair.tsx'
 import {
-  entityRefArrayValidators,
   entityRefValidators,
   enumValidators,
   localizedValueValidators,
@@ -151,38 +150,6 @@ export const OrganizationFields = withForm({
                 />
               }
               placeholder="https://…"
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="services_offered"
-          validators={entityRefArrayValidators(['idhi:Service'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Organization"
-                  field="services_offered"
-                />
-              }
-              entityTypes={['idhi:Service']}
-            />
-          )}
-        </form.AppField>
-        <form.AppField
-          name="tools_provided"
-          validators={entityRefArrayValidators(['idhi:Tool'])}
-        >
-          {(field) => (
-            <field.EntityRefArrayField
-              label={
-                <EntityFieldLabel
-                  entityClass="Organization"
-                  field="tools_provided"
-                />
-              }
-              entityTypes={['idhi:Tool']}
             />
           )}
         </form.AppField>

@@ -79,20 +79,10 @@ export interface Organization {
    */
   same_as?: string[] | null
   /**
-   * Services this organization offers to researchers. Reference Service records by id; list them on the unit that actually delivers them — a lab's services belong on the lab's own record rather than on its parent university. This uses an IDHI-specific property because schema.org offers only schema:makesOffer, whose range is an Offer rather than the service itself, and no other vocabulary has a provider-to-service property.
-   * @nullable
-   */
-  services_offered?: string[] | null
-  /**
    * Free-text tags for discovery, filtering and grouping; usable on any top-level entity. Deliberately NOT a controlled enum, but prefer wording that matches a concept in an established ontology or thesaurus (e.g. Wikidata, Getty AAT, TaDiRAH) so tags can later be reconciled against it.
    * @nullable
    */
   tags?: string[] | null
-  /**
-   * Tools this organization maintains or gives access to (by id). Use for hosted instances and lab-maintained software, not for every tool staff members happen to use. This uses an IDHI-specific property because the relation is custodial rather than authorial, so foaf:made and schema:producer would both overstate it.
-   * @nullable
-   */
-  tools_provided?: string[] | null
   /** Discriminator identifying the record's class; used for polymorphic serialization and deserialization. */
   type: OrganizationType
 }

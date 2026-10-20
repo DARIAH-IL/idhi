@@ -15,6 +15,7 @@ export const DatasetResourceContributionsItemResourceContributionRole = {
   CREATOR: 'CREATOR',
   DEVELOPER: 'DEVELOPER',
   MAINTAINER: 'MAINTAINER',
+  PROVIDER: 'PROVIDER',
   DATA_CURATOR: 'DATA_CURATOR',
   CONTRIBUTOR: 'CONTRIBUTOR',
 } as const
