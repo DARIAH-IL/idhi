@@ -24,6 +24,7 @@ const DATE_FIELDS = fieldSet('start_date', 'end_date')
 const URL_TERMS = new Set([
   'schema:sameAs',
   'foaf:homepage',
+  'foaf:page',
   'schema:url',
   'schema:softwareHelp',
   'schema:codeRepository',
