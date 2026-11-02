@@ -67,7 +67,7 @@
     "eslint": "^10.9.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "i18next-cli": "^1.72.2",
-    "orval": "^8.27.0",
+    "orval": "8.37.0",
     "prettier": "^3.9.6",
     "sitemap": "^9.0.1",
     "typescript": "^6.0.3",

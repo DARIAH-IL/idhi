@@ -30,7 +30,7 @@
     "@cloudflare/vite-plugin": "^1.54.3",
     "@types/node": "^26.5.1",
     "eslint": "^10.9.1",
-    "orval": "^8.27.0",
+    "orval": "8.37.0",
     "prettier": "^3.9.6",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
