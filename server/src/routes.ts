@@ -13,6 +13,7 @@ import {
   completePasskeyRegistrationHandlers,
   startPasskeyAuthenticationHandlers,
   completePasskeyAuthenticationHandlers,
+  getSessionHandlers,
 } from './handlers/user-auth/user-auth.handlers.ts'
 import {
   searchEntitiesHandlers,
@@ -53,6 +54,7 @@ const app = new Hono()
     '/api/v1/auth/passkey/login/:challengeId',
     ...completePasskeyAuthenticationHandlers,
   )
+  .get('/api/v1/session', ...getSessionHandlers)
   .post('/api/v1/entities', ...searchEntitiesHandlers)
   .put('/api/v1/entities', ...createEntityHandlers)
   .get('/api/v1/entities/tags', ...searchEntityTagsHandlers)

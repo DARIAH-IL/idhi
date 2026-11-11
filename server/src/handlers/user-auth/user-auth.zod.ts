@@ -118,3 +118,17 @@ export const CompletePasskeyAuthenticationBody = zod
 export const CompletePasskeyAuthenticationResponse = zod.object({
   jwt: zod.string().describe('JSON Web Token used as a bearer token'),
 })
+
+export const getSessionResponseGroupsItemMax = 64
+
+export const GetSessionResponse = zod.object({
+  id: zod.email(),
+  name: zod.string().optional(),
+  email: zod.email(),
+  isAdmin: zod.boolean(),
+  groups: zod
+    .array(zod.string().min(1).max(getSessionResponseGroupsItemMax))
+    .describe(
+      'Names of the groups the user belongs to. Groups have no records of their own and exist only as the names listed here. Users who share a group may read and write the entity drafts created by one another, so the groups of the user who created a draft determine who may access it.',
+    ),
+})

@@ -10,6 +10,7 @@ import { useAuthStorageSync } from '@/stores/auth'
 import { useUIStorageSync, useUIStore } from '@/stores/ui'
 import { useLanguageQueryParam } from '@/hooks/useLanguageQueryParam'
 import { useAuthLinkQueryParams } from '@/hooks/useAuthLinkQueryParams'
+import { useSessionVerification } from '@/hooks/useSessionVerification'
 import { getRouter } from './router'
 
 import * as Sentry from '@sentry/react'
@@ -69,6 +70,7 @@ function startApp() {
     useUIStorageSync()
     useLanguageQueryParam()
     useAuthLinkQueryParams()
+    useSessionVerification()
     const language = useUIStore((state) => state.language)
 
     return (

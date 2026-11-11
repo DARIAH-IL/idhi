@@ -168,6 +168,22 @@ paths:
         "400":
           $ref: "#/components/responses/Error"
 
+  /api/v1/session:
+    get:
+      operationId: getSession
+      tags:
+        - UserAuth
+      summary: Verify the current session
+      responses:
+        "200":
+          description: Session is valid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/Error"
+
   /api/v1/entities:
     post:
       operationId: searchEntities

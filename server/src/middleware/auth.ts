@@ -74,9 +74,9 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
       path,
       resolution,
     })
-  const authorizeAdmin = async (
+  const authorizeStoredUser = async (
     scope: string,
-  ): Promise<Response | undefined> => {
+  ): Promise<User | Response> => {
     const tokenUser = await getAuthenticatedUser()
 
     if (!tokenUser) {
@@ -99,6 +99,17 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
       ...(storedUser.name ? { name: storedUser.name } : {}),
     }
     c.set('user', user)
+
+    return user
+  }
+  const authorizeAdmin = async (
+    scope: string,
+  ): Promise<Response | undefined> => {
+    const user = await authorizeStoredUser(scope)
+
+    if (user instanceof Response) {
+      return user
+    }
 
     const response = requireAdmin(user)
 
@@ -134,6 +145,17 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
     }
 
     logResolution('auth_anonymous')
+    return next()
+  }
+
+  if (method === 'GET' && path === '/api/v1/session') {
+    const user = await authorizeStoredUser('session')
+
+    if (user instanceof Response) {
+      return user
+    }
+
+    logResolution('session_authenticated')
     return next()
   }
 

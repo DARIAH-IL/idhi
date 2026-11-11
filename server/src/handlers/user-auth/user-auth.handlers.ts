@@ -51,6 +51,7 @@ import type {
   CompletePasskeyRegistrationContext,
   StartPasskeyAuthenticationContext,
   CompletePasskeyAuthenticationContext,
+  GetSessionContext,
 } from './user-auth.context.ts'
 import {
   StartOtpChallengeBody,
@@ -67,6 +68,7 @@ import {
   CompletePasskeyAuthenticationParams,
   CompletePasskeyAuthenticationBody,
   CompletePasskeyAuthenticationResponse,
+  GetSessionResponse,
 } from './user-auth.zod.ts'
 
 const factory = createFactory()
@@ -725,5 +727,15 @@ export const completePasskeyAuthenticationHandlers = factory.createHandlers(
     return c.json({
       jwt: await createJwtForUser(updatedUser, c.env),
     })
+  },
+)
+
+export const getSessionHandlers = factory.createHandlers(
+  zValidator('response', GetSessionResponse, corruptedDataHook),
+  async (c: GetSessionContext) => {
+    const user = c.get('user')
+    assertAuthenticatedUser(user)
+
+    return c.json(user)
   },
 )

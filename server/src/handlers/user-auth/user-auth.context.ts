@@ -87,3 +87,7 @@ export type CompletePasskeyAuthenticationContext<E extends Env = any> = Context<
     }
   }
 >
+export type GetSessionContext<E extends Env = any> = Context<
+  E,
+  '/api/v1/session'
+>
